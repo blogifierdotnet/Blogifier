@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +11,7 @@ using WebApp.Services;
 
 namespace WebApp
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -53,8 +49,7 @@ namespace WebApp
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-			Blogifier.Core.Configuration.AddCoreServices(services);
-
+			Blogifier.Core.Configuration.InitServices(services);
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,10 +70,7 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
-
             app.UseIdentity();
-
-			// Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
@@ -86,8 +78,6 @@ namespace WebApp
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-			Blogifier.Core.Configuration.InitApplication(app);
 		}
     }
 }
