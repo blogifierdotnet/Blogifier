@@ -1,7 +1,11 @@
-﻿@{
+﻿@using Blogifier.Core.Common
+@{
     Layout = "~/Views/Blogifier/Themes/Blog/Standard/_Layout.cshtml";
+
+    var os = Settings.OSDescription;
 }
 <div>
     <h1>Big header</h1>
     <h2>Blog standard theme index page</h2>
+    <div>OSDescription: @os</div>
 </div>

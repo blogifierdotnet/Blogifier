@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 
 namespace Blogifier.Core.Common
 {
-    public class Settings
+	public class Settings
     {
 		public static string Title { get; set; } = "Application Name";
 
@@ -18,6 +15,14 @@ namespace Blogifier.Core.Common
 					.Assembly
 					.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
 					.InformationalVersion;
+			}
+		}
+
+		public static string OSDescription
+		{
+			get
+			{
+				return System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 			}
 		}
 	}
