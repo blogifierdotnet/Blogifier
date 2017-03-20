@@ -7,7 +7,9 @@ namespace Blogifier.Core.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View();
+			var theme = "Standard";
+
+			return View(string.Format("~/Views/Blogifier/Themes/Blog/{0}/Index.cshtml", theme));
 		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Blogifier.Core.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -10,6 +12,11 @@ namespace Blogifier.Core
 		public static void InitServices(IServiceCollection services)
 		{
 			AddFileProviders(services);
+		}
+
+		public static void InitApplication(IApplicationBuilder app)
+		{
+			app.UseMiddleware<AdminResources>();
 		}
 
 		static void AddFileProviders(IServiceCollection services)
