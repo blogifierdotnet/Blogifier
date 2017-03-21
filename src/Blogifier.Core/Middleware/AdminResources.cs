@@ -20,6 +20,8 @@ namespace Blogifier.Core.Middleware
 			_resources = new List<string>();
 			_assembly = typeof(AdminResources).GetTypeInfo().Assembly;
 
+			var xxx = _assembly.GetManifestResourceNames();
+
 			foreach (var name in _assembly.GetManifestResourceNames())
 			{
 				System.Diagnostics.Debug.WriteLine("RESOURCE: " + name);

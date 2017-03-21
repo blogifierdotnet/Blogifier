@@ -12,9 +12,6 @@
 
   <ItemGroup>
 	  <EmbeddedResource Include="Views\**\*;Blogifier\**\*" />
-	<Content Include="Blogifier\Content\site.css">
-	  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	</Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +21,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Blogifier\Content\images\" />
   </ItemGroup>
 
 </Project>
