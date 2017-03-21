@@ -57,7 +57,7 @@ namespace Blogifier.Core.Middleware
 
 						var stream = _assembly.GetManifestResourceStream(resource);
 
-						//context.Response.Headers.Add("Content-Length", stream.Length.ToString());
+						context.Response.Headers.Add("Content-Length", stream.Length.ToString());
 						//context.Response.ContentLength = stream.Length;
 
 						await stream.CopyToAsync(context.Response.Body);
