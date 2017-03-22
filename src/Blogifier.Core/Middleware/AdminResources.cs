@@ -20,11 +20,11 @@ namespace Blogifier.Core.Middleware
 			_resources = new List<string>();
 			_assembly = typeof(AdminResources).GetTypeInfo().Assembly;
 
-			var xxx = _assembly.GetManifestResourceNames();
+			// var xxx = _assembly.GetManifestResourceNames();
 
 			foreach (var name in _assembly.GetManifestResourceNames())
 			{
-				System.Diagnostics.Debug.WriteLine("RESOURCE: " + name);
+				// System.Diagnostics.Debug.WriteLine("RESOURCE: " + name);
 				if (name.Contains("Blogifier.Content") && Include(name))
 				{
 					_resources.Add(name);
@@ -36,7 +36,7 @@ namespace Blogifier.Core.Middleware
 		{
 			var path = context.Request.Path.ToString().ToLower().Replace("/", ".");
 
-			System.Diagnostics.Debug.WriteLine("PATH: " + path);
+			// System.Diagnostics.Debug.WriteLine("PATH: " + path);
 
 			if (path.Contains(".blogifier.", StringComparison.OrdinalIgnoreCase))
 			{
@@ -65,7 +65,10 @@ namespace Blogifier.Core.Middleware
 						await stream.CopyToAsync(context.Response.Body);
 					}
 				}
-				catch { }
+				catch(Exception ex)
+				{
+					throw new Exception("Exception invoking embedded resources: " + ex.Message);
+				}
 			}
 			await _next.Invoke(context);
 		}
