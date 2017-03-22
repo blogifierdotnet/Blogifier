@@ -46,16 +46,28 @@ namespace Blogifier.Core.Middleware
 					if (!string.IsNullOrEmpty(resource))
 					{
 						if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
-							context.Response.ContentType = "text/css";
+						{
+							//context.Response.ContentType = "text/css";
+							context.Response.Headers.Remove("Content-Type");
+							context.Response.Headers.Add("Content-Type", "text/css");
+						}
 
 						if (resource.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
-							context.Response.ContentType = "application/javascript";
+						{
+							//context.Response.ContentType = "application/javascript";
+							context.Response.Headers.Remove("Content-Type");
+							context.Response.Headers.Add("Content-Type", "application/javascript");
+						}
 
 						if (resource.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
 							context.Response.ContentType = "image/jpeg";
 
 						if (resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-							context.Response.ContentType = "image/png";
+						{
+							//context.Response.ContentType = "image/png";
+							context.Response.Headers.Remove("Content-Type");
+							context.Response.Headers.Add("Content-Type", "image/png");
+						}
 
 						var stream = _assembly.GetManifestResourceStream(resource);
 
