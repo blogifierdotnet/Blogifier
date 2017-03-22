@@ -36,6 +36,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Blogifier\Themes\Admin\Yellow\Index.cshtml" />
     <EmbeddedResource Include="Views\Blogifier\Themes\Blog\Custom\Index.cshtml" />
+    <EmbeddedResource Include="Views\Blogifier\Themes\Blog\Red\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />

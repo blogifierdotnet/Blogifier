@@ -1,9 +1,17 @@
 ﻿@using Blogifier.Core.Common
 @{
     Layout = "~/Views/Blogifier/Themes/Admin/Standard/_Layout.cshtml";
+    var themes = (List<string>)ViewBag.Themes;
 }
 <div>
     <h2>Admin standard theme index page</h2>
     <p>This is a standard admin theme from core package, should look green</p>
     <button onclick="test()" value="Test">Test</button>
 </div>
+
+@{ 
+    foreach (var item in themes)
+    {
+        <div>@item</div>
+    }
+}
