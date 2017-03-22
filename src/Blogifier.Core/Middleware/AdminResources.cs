@@ -38,24 +38,25 @@ namespace Blogifier.Core.Middleware
 
 			// System.Diagnostics.Debug.WriteLine("PATH: " + path);
 
-			if (path.Contains(".blogifier.", StringComparison.OrdinalIgnoreCase))
+			if (path.Contains(".blogifier.content.", StringComparison.OrdinalIgnoreCase))
 			{
 				try
 				{
 					var resource = _resources.Where(r => r.Contains(path, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 					if (!string.IsNullOrEmpty(resource))
 					{
+						context.Response.Headers.Remove("Content-Type");
+						context.Response.Headers.Add("Content-Embedded", "From middleware");
+
 						if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
 						{
 							//context.Response.ContentType = "text/css";
-							context.Response.Headers.Remove("Content-Type");
 							context.Response.Headers.Add("Content-Type", "text/css");
 						}
 
 						if (resource.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
 						{
 							//context.Response.ContentType = "application/javascript";
-							context.Response.Headers.Remove("Content-Type");
 							context.Response.Headers.Add("Content-Type", "application/javascript");
 						}
 
@@ -65,7 +66,6 @@ namespace Blogifier.Core.Middleware
 						if (resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
 						{
 							//context.Response.ContentType = "image/png";
-							context.Response.Headers.Remove("Content-Type");
 							context.Response.Headers.Add("Content-Type", "image/png");
 						}
 
