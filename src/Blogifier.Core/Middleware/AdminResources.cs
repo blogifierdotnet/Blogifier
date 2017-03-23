@@ -20,11 +20,8 @@ namespace Blogifier.Core.Middleware
 			_resources = new List<string>();
 			_assembly = typeof(AdminResources).GetTypeInfo().Assembly;
 
-			// var xxx = _assembly.GetManifestResourceNames();
-
 			foreach (var name in _assembly.GetManifestResourceNames())
 			{
-				// System.Diagnostics.Debug.WriteLine("RESOURCE: " + name);
 				if (name.Contains("Blogifier.Content") && Include(name))
 				{
 					_resources.Add(name);
@@ -36,44 +33,38 @@ namespace Blogifier.Core.Middleware
 		{
 			var path = context.Request.Path.ToString().ToLower().Replace("/", ".");
 
-			// System.Diagnostics.Debug.WriteLine("PATH: " + path);
-
 			if (path.Contains(".blogifier.content.", StringComparison.OrdinalIgnoreCase))
 			{
 				try
 				{
 					var resource = _resources.Where(r => r.Contains(path, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
 					if (!string.IsNullOrEmpty(resource))
 					{
-						context.Response.Headers.Remove("Content-Type");
-						context.Response.Headers.Add("Content-Embedded", "From middleware");
-
-						if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
-						{
-							//context.Response.ContentType = "text/css";
-							context.Response.Headers.Add("Content-Type", "text/css");
-						}
-
-						if (resource.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
-						{
-							//context.Response.ContentType = "application/javascript";
-							context.Response.Headers.Add("Content-Type", "application/javascript");
-						}
-
-						if (resource.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
-							context.Response.ContentType = "image/jpeg";
-
-						if (resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-						{
-							//context.Response.ContentType = "image/png";
-							context.Response.Headers.Add("Content-Type", "image/png");
-						}
-
 						var stream = _assembly.GetManifestResourceStream(resource);
 
-						context.Response.Headers.Add("Content-Length", stream.Length.ToString());
-						//context.Response.ContentLength = stream.Length;
+						if (Common.Settings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+						{
+							context.Response.Headers.Add("Content-Length", stream.Length.ToString());
+							context.Response.Headers.Remove("Content-Type");
 
+							if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
+							{
+								context.Response.Headers.Add("Content-Type", "text/css");
+							}
+							if (resource.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
+							{
+								context.Response.Headers.Add("Content-Type", "application/javascript");
+							}
+							if (resource.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+							{
+								context.Response.Headers.Add("Content-Type", "image/jpeg");
+							}
+							if (resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+							{
+								context.Response.Headers.Add("Content-Type", "image/png");
+							}
+						}
 						await stream.CopyToAsync(context.Response.Body);
 					}
 				}
