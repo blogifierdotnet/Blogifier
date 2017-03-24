@@ -1,9 +1,10 @@
 ﻿@using Blogifier.Core.Common
 @{
-    Layout = "~/Views/Blogifier/Themes/Blog/Standard/_Layout.cshtml";
-
     var os = Settings.OSDescription;
 }
+<div>
+    @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
+</div>
 <div>
     <h2>Blog standard theme index page</h2>
     <p>The standard blog theme from core package, should look blue</p>
