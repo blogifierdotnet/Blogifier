@@ -11,7 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <EmbeddedResource Include="Views\**\*;Blogifier\**\*" />
+	  <EmbeddedResource Include="Views\**\*" />
+	  <EmbeddedResource Include="Embedded\**\*" />
   </ItemGroup>
 
   <ItemGroup>

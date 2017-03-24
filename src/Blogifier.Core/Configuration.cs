@@ -16,7 +16,7 @@ namespace Blogifier.Core
 
 		public static void InitApplication(IApplicationBuilder app)
 		{
-			app.UseMiddleware<AdminResources>();
+			app.UseMiddleware<EmbeddedResources>();
 		}
 
 		static void AddFileProviders(IServiceCollection services)
