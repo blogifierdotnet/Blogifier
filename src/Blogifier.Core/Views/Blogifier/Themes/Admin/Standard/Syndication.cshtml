@@ -1,0 +1,45 @@
+﻿@model Blogifier.Core.Services.Syndication.Rss.RssImportModel
+@using Blogifier.Core.Common
+@using Blogifier.Core.Services.FileSystem
+@using Blogifier.Core.Services.Syndication.Rss
+@{
+    //var storage = new BlogStorage(Model.Slug);
+    //var themes = storage.GetThemes();
+}
+<div>
+    <h2>Syndication</h2>
+    <form id="frmRssImport" asp-controller="Admin" asp-action="RssImport" method="post">
+        <div id="importForm">
+            <div class="form-group">
+                <label asp-for="FeedUrl">RSS Url</label>
+                <input type="text" asp-for="FeedUrl" class="form-control" />
+                <span asp-validation-for="FeedUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Domain">Domain Url</label>
+                <input asp-for="Domain" type="text" class="form-control" />
+                <span asp-validation-for="Domain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubDomain">Sub Folder</label>
+                <input asp-for="SubDomain" type="text" class="form-control" />
+                <span asp-validation-for="SubDomain" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label><span class="form-checkbox"><input type="checkbox" id="chkImportImgs" name="chkImportImgs" /></span> Import Images</label>
+            </div>
+            <div class="form-group">
+                <label><span class="form-checkbox"><input type="checkbox" id="chkImportAttachements" name="chkImportAttachements" /></span> Import Attachements</label>
+            </div>
+            <div id="btnImport">
+                @*<button type="button" onclick="return AdminController.importRss();" class="btn btn-success btn-save-setting btn-block">Import</button>*@
+                <button type="submit" class="btn btn-success btn-save-setting btn-block">Import</button>
+            </div>
+        </div>
+        <div class="form-group text-center" id="importSpin" style="display: none">
+            <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </form>
+</div>

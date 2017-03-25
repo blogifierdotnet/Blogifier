@@ -1,0 +1,33 @@
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Domain.Publisher
+<div>
+    <h2>Profile</h2>
+</div>
+
+<form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input type="text" asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Blog Description</label>
+        <input asp-for="Description" type="text" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AuthorName">Author Name</label>
+        <input type="text" asp-for="AuthorName" class="form-control" />
+        <span asp-validation-for="AuthorName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AuthorEmail">Email</label>
+        <input type="text" asp-for="AuthorEmail" class="form-control" />
+        <span asp-validation-for="AuthorEmail" class="text-danger"></span>
+    </div>
+    <input asp-for="Id" hidden="hidden" />
+    <input asp-for="IdentityName" hidden="hidden" />
+    <input asp-for="Slug" hidden="hidden" />
+    <input asp-for="Theme" hidden="hidden" />
+    <button type="submit" class="btn btn-success btn-save-setting btn-block">Save</button>
+</form>

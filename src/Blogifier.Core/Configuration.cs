@@ -1,9 +1,18 @@
 ﻿using System.Reflection;
+using Blogifier.Core.Common;
+using Blogifier.Core.Data;
+using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Repositories;
 using Blogifier.Core.Middleware;
+using Blogifier.Core.Services.FileSystem;
+using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core
 {
@@ -11,12 +20,28 @@ namespace Blogifier.Core
     {
 		public static void InitServices(IServiceCollection services)
 		{
+			services.AddTransient<IRssService, RssService>();
+			services.AddTransient<IBlogStorage, BlogStorage>();
+
+			AddDatabase(services);
+
 			AddFileProviders(services);
 		}
 
-		public static void InitApplication(IApplicationBuilder app)
+		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			app.UseMiddleware<EmbeddedResources>();
+
+			ApplicationSettings.WebRootPath = env.WebRootPath;
+			ApplicationSettings.ContentRootPath = env.ContentRootPath;
+		}
+
+		static void AddDatabase(IServiceCollection services)
+		{
+			services.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+			services.AddDbContext<BlogifierDbContext>(options =>
+				options.UseInMemoryDatabase());
 		}
 
 		static void AddFileProviders(IServiceCollection services)

@@ -43,7 +43,7 @@ namespace Blogifier.Core.Middleware
 					{
 						var stream = _assembly.GetManifestResourceStream(resource);
 
-						if (Common.Settings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+						if (Common.ApplicationSettings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
 						{
 							context.Response.Headers.Add("Content-Length", stream.Length.ToString());
 							context.Response.Headers.Remove("Content-Type");

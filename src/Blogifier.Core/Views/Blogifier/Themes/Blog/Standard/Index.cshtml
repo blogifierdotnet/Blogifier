@@ -1,13 +1,15 @@
 ﻿@using Blogifier.Core.Common
-@{
-    var os = Settings.OSDescription;
-}
-<div>
-    @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
-</div>
-<div>
-    <h2>Blog standard theme index page</h2>
-    <p>The standard blog theme from core package, should look blue</p>
-    <div>OSDescription: @os</div>
-    <button onclick="test()" value="Test">Test</button>
-</div>
+<table>
+    <tr>
+        <td>
+            <div>
+                <h2>Blog standard theme index page</h2>
+                <p>The standard blog theme from core package, should look blue</p>
+                <button onclick="test()" value="Test">Test</button>
+            </div>
+        </td>
+        <td>
+            @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
+        </td>
+    </tr>
+</table>

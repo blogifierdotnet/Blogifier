@@ -8,13 +8,14 @@ namespace Blogifier.Test
         [Fact]
         public void Test1()
         {
-			Assert.True(Core.Common.Settings.Title.Length > 0);
+			var x = Core.Common.ApplicationSettings.ContentRootPath;
+			Assert.True(Core.Common.ApplicationSettings.Title.Length > 0);
         }
 
 		[Fact]
 		public void Test2()
 		{
-			Assert.True(!string.IsNullOrEmpty(Core.Common.Settings.Title));
+			Assert.True(!string.IsNullOrEmpty(Core.Common.ApplicationSettings.Title));
 		}
 	}
 }
