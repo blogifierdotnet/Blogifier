@@ -1,15 +1,26 @@
 ﻿@using Blogifier.Core.Common
-<table>
-    <tr>
-        <td>
-            <div>
-                <h2>Blog standard theme index page</h2>
-                <p>The standard blog theme from core package, should look blue</p>
+@using Blogifier.Core.Data.Domain
+@using System.Collections.Generic
+@model List<Publication>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <h2>Blog standard theme index page</h2>
+                    <p>The standard blog theme from core package, should look blue</p>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <h4>@item.Title</h4>
+                            <div>@item.Description</div>
+                        }
+                    }
+                </div>
+            </td>
+            <td>
+                @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
                 <button onclick="test()" value="Test">Test</button>
-            </div>
-        </td>
-        <td>
-            @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
-        </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+    </table>

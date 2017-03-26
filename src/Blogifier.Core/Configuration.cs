@@ -47,12 +47,22 @@ namespace Blogifier.Core
 		static void AddFileProviders(IServiceCollection services)
 		{
 			var assemblyName = "Blogifier.Core";
-			var assembly = Assembly.Load(new AssemblyName(assemblyName));
 
-			services.Configure<RazorViewEngineOptions>(options =>
+			try
 			{
-				options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
-			});
+				var assembly = Assembly.Load(new AssemblyName(assemblyName));
+
+				services.Configure<RazorViewEngineOptions>(options =>
+				{
+					//options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
+					options.FileProviders.Add(new EmbeddedFileProvider(assembly, assemblyName));
+				});
+			}
+			catch (System.Exception ex)
+			{
+				var x = ex.Message;
+			}
+			
 		}
 	}
 }
