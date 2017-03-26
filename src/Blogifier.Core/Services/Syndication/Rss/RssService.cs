@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Services.FileSystem;
 
@@ -23,7 +24,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             _db = db;
         }
 
-        public async Task Import(RssImportModel model, string root)
+        public async Task Import(AdminSyndicationModel model, string root)
         {
             var blog = _db.Blogs.Single(b => b.Id == model.PublisherId);
             if (blog == null)
@@ -104,7 +105,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        async Task ImportImages(Publication post, RssImportModel model, IBlogStorage storage)
+        async Task ImportImages(Publication post, AdminSyndicationModel model, IBlogStorage storage)
         {
             var imgLinks = GetImages(post.Content);
             if (imgLinks != null && imgLinks.Count > 0)
@@ -128,7 +129,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        async Task ImportAttachements(Publication post, RssImportModel model, IBlogStorage storage)
+        async Task ImportAttachements(Publication post, AdminSyndicationModel model, IBlogStorage storage)
         {
             var links = GetAttachements(post.Content);
             if (links.Any())

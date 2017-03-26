@@ -1,84 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
-using System.Collections.Generic;
-using Blogifier.Core.Data.Interfaces;
-using System.Threading.Tasks;
-using Blogifier.Core.Services.Syndication.Rss;
-using Blogifier.Core.Data.Domain;
+﻿using System.Threading.Tasks;
 using Blogifier.Core.Common;
-using Blogifier.Core.Extensions;
+using Blogifier.Core.Data.Domain;
+using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Extensions;
+using Blogifier.Core.Services.Syndication.Rss;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blogifier.Core.Controllers
 {
 	[Route("admin")]
 	public class AdminController : Controller
 	{
-		private readonly IHostingEnvironment _hostingEnvironment;
-		private readonly string _theme;
-		private string _identity;
-		
+		private readonly string _theme;	
 		IUnitOfWork _db;
 		IRssService _rss;
 
 		public AdminController(IUnitOfWork db, IRssService rss)
 		{
 			_db = db;
-			_rss = rss;
-			
+			_rss = rss;		
 			_theme = "~/Views/Blogifier/Themes/Admin/Standard/";
 		}
 
 		public IActionResult Index()
 		{
-			//var adminThemesDir = System.IO.Path.Combine(contentRootPath, "Views\\Blogifier\\Themes\\Admin");
-
-			//var dirInfo = new System.IO.DirectoryInfo(adminThemesDir);
-			//var themes = new List<string>();
-			//themes.Add("Standard");
-
-			//foreach (var item in dirInfo.GetDirectories())
-			//{
-			//	// System.Diagnostics.Debug.WriteLine(item.ToString());
-			//	themes.Add(item.Name);
-			//}
-
-			//ViewBag.Themes = themes;
-
-			//var blog = _db.Blogs.Single(b => b.IdentityName == _identity);
-
-			_identity = User.Identity.Name;
-
 			var posts = _db.Posts.All();
-			var model = new AdminPostsModel();
-			model.Publications = posts;
-
+			var model = new AdminPostsModel { Blog = GetBlog(), Publications = posts };
 			return View(_theme + "Index.cshtml", model);
-		}
-
-		[Route("about")]
-		public IActionResult About()
-		{
-			return View(_theme + "About.cshtml");
 		}
 
 		[HttpGet]
 		[Route("syndication")]
 		public IActionResult Syndication()
 		{
-			return View(_theme + "Syndication.cshtml");
+			var model = new AdminSyndicationModel { Blog = GetBlog() };
+			return View(_theme + "Syndication.cshtml", model);
 		}
 
 		[HttpPost]
 		[Route("rssimport")]
-		public async Task<IActionResult> RssImport(RssImportModel model)
+		public async Task<IActionResult> RssImport(AdminSyndicationModel model)
 		{
-			var blog = _db.Blogs.Single(b => b.IdentityName == _identity);
+			model.Blog = GetBlog();
 
-			if (blog == null)
+			if (model.Blog == null)
 				return View("Error");
 
-			model.PublisherId = blog.Id;
+			model.PublisherId = model.Blog.Id;
 			await _rss.Import(model, Url.Content("~/"));
 
 			return RedirectToAction("Index", "Admin");
@@ -88,48 +57,62 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile()
 		{
-			var blog = _db.Blogs.Single(b => b.IdentityName == _identity);
-
-			return View(_theme + "Profile.cshtml", blog);
+			var model = new AdminProfileModel { Blog = GetBlog() };
+			return View(_theme + "Profile.cshtml", model);
 		}
 
 		[HttpPost]
 		[Route("profile")]
-		public async Task<IActionResult> Profile(Publisher model)
+		public IActionResult Profile(AdminProfileModel model)
 		{
-			model.LastUpdated = SystemClock.Now();
+			var blog = model.Blog;
+			blog.LastUpdated = SystemClock.Now();
 
-			if (model.Id == 0)
+			if (blog.Id == 0)
 			{
-				model.Slug = BlogSlugFromTitle(model.Title);
-				model.IdentityName = _identity;
-				model.Theme = "Standard"; //------------------------------------------------
+				blog.Slug = BlogSlugFromTitle(blog.Title);
+
+				if(User != null)
+					blog.IdentityName = User.Identity.Name;
+
+				blog.Theme = "Standard"; //  <------------------------------------------------
 			}
 			ModelState.Clear();
 			TryValidateModel(model);
 
 			if (ModelState.IsValid)
 			{
-				if (model.Id > 0)
+				if (blog.Id > 0)
 				{
-					var blog = _db.Blogs.Single(b => b.Id == model.Id);
-					blog.Title = model.Title;
-					blog.Description = model.Description;
-					blog.AuthorName = model.AuthorName;
-					blog.AuthorEmail = model.AuthorEmail;
+					var dbBlog = _db.Blogs.Single(b => b.Id == blog.Id);
+					blog.Title = dbBlog.Title;
+					blog.Description = dbBlog.Description;
+					blog.AuthorName = dbBlog.AuthorName;
+					blog.AuthorEmail = dbBlog.AuthorEmail;
 				}
 				else
 				{
-					_db.Blogs.Add(model);
+					_db.Blogs.Add(blog);
 				}
 				_db.Complete();
-				var view = _db.Blogs.Single(b => b.IdentityName == model.IdentityName);
-				return View(_theme + "Profile.cshtml", view);
+				var updatedBlog = _db.Blogs.Single(b => b.IdentityName == blog.IdentityName);
+				model.Blog = updatedBlog;
+				return View(_theme + "Profile.cshtml", model);
 			}
 			return RedirectToAction("Index", "Admin");
 		}
 
+		[Route("about")]
+		public IActionResult About()
+		{
+			return View(_theme + "About.cshtml", new AdminBaseModel { Blog = GetBlog() });
+		}
+
 		#region Private members
+		private Publisher GetBlog()
+		{
+			return _db.Blogs.Single(b => b.IdentityName == User.Identity.Name);
+		}
 		private string BlogSlugFromTitle(string title)
 		{
 			var slug = title.ToSlug();

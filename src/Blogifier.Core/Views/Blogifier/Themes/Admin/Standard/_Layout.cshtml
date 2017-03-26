@@ -15,12 +15,21 @@
         <div class="row">
             <div class="col-lg-3">
                 <h3>Navigation</h3>
+                <div>Blog exists: @Model.BlogExists</div>
                 <ul>
                     <li><a href="~/">Home</a></li>
+                    <li><a href="~/blog">Blog</a></li>
                     <li><a href="~/admin">Admin</a></li>
                     <li><a href="~/admin/profile">Profile</a></li>
-                    <li><a href="~/admin/syndication">Tools</a></li>
+                    @if(Model.BlogExists)
+                    {
+                    <li><a href="#">Tools</a>
+                        <ul>
+                            <li><a href="~/admin/syndication">Import RSS</a></li>
+                        </ul>
+                    </li>
                     <li><a href="~/admin/about">About</a></li>
+                    }                 
                 </ul>
             </div>
             <div class="col-lg-9">
