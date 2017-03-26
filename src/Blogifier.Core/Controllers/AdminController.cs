@@ -7,6 +7,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Common;
 using Blogifier.Core.Extensions;
+using Blogifier.Core.Data.Models;
 
 namespace Blogifier.Core.Controllers
 {
@@ -16,6 +17,7 @@ namespace Blogifier.Core.Controllers
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly string _theme;
 		private string _identity;
+		
 		IUnitOfWork _db;
 		IRssService _rss;
 
@@ -23,7 +25,7 @@ namespace Blogifier.Core.Controllers
 		{
 			_db = db;
 			_rss = rss;
-			_identity = "test"; //---------------------------------------------- User.Identity.Name
+			
 			_theme = "~/Views/Blogifier/Themes/Admin/Standard/";
 		}
 
@@ -45,9 +47,13 @@ namespace Blogifier.Core.Controllers
 
 			//var blog = _db.Blogs.Single(b => b.IdentityName == _identity);
 
-			var posts = _db.Posts.All();
+			_identity = User.Identity.Name;
 
-			return View(_theme + "Index.cshtml", posts);
+			var posts = _db.Posts.All();
+			var model = new AdminPostsModel();
+			model.Publications = posts;
+
+			return View(_theme + "Index.cshtml", model);
 		}
 
 		[Route("about")]
@@ -67,7 +73,6 @@ namespace Blogifier.Core.Controllers
 		[Route("rssimport")]
 		public async Task<IActionResult> RssImport(RssImportModel model)
 		{
-			//var blog = _db.Blogs.Single(b => b.IdentityName == User.Identity.Name);
 			var blog = _db.Blogs.Single(b => b.IdentityName == _identity);
 
 			if (blog == null)

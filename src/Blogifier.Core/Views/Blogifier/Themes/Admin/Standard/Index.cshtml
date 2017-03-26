@@ -1,7 +1,8 @@
 ﻿@using Blogifier.Core.Common
 @using Blogifier.Core.Data.Domain
+@using Blogifier.Core.Data.Models
 @using System.Collections.Generic
-@model List<Publication>
+@model AdminPostsModel
 @{
 
 }
@@ -10,9 +11,9 @@
     <p>This is a standard admin theme from core package, should look green</p>
     <button onclick="test()" value="Test">Test</button>
 </div>
-@if (Model != null)
+@if (Model.Publications != null)
 {
-    foreach (var item in Model)
+    foreach (var item in Model.Publications)
     {
         <h4>@item.Title</h4>
         <div>@item.Description</div>
