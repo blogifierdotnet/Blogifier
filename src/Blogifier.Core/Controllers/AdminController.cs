@@ -6,10 +6,12 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogifier.Core.Controllers
 {
+	[Authorize]
 	[Route("admin")]
 	public class AdminController : Controller
 	{
