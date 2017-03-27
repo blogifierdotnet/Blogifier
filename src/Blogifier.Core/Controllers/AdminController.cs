@@ -4,6 +4,7 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
+using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,8 +40,8 @@ namespace Blogifier.Core.Controllers
 		}
 
 		[HttpPost]
-		[Route("rssimport")]
-		public async Task<IActionResult> RssImport(AdminSyndicationModel model)
+		[Route("syndication")]
+		public async Task<IActionResult> Syndication(AdminSyndicationModel model)
 		{
 			model.Blog = GetBlog();
 
@@ -57,7 +58,12 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile()
 		{
-			var model = new AdminProfileModel { Blog = GetBlog() };
+			var blog = GetBlog();
+
+			var storage = new BlogStorage("");
+
+			var model = new AdminProfileModel { Blog = blog, AdminThemes = storage.GetThemes(ThemeType.Admin) };
+
 			return View(_theme + "Profile.cshtml", model);
 		}
 
@@ -74,9 +80,8 @@ namespace Blogifier.Core.Controllers
 
 				if(User != null)
 					blog.IdentityName = User.Identity.Name;
-
-				blog.Theme = "Standard"; //  <------------------------------------------------
 			}
+
 			ModelState.Clear();
 			TryValidateModel(model);
 

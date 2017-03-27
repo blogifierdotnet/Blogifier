@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.FileSystem
 {
+	public enum ThemeType
+	{
+		Blog, Admin
+	}
+
     public class BlogStorage : IBlogStorage
     {
         string _blogSlug;
         string _separator = Path.DirectorySeparatorChar.ToString();
+		string _uploadFolder = "Blogs";
 
         public BlogStorage(string blogSlug)
         {
@@ -33,11 +39,7 @@ namespace Blogifier.Core.Services.FileSystem
         {
             get
             {
-				//var path = Path.Combine(GetRoot(), "wwwroot");
-				//path = Path.Combine(path, Settings.BlogifierFolder);
-				//path = Path.Combine(path, Settings.UploadFolder);
-
-				var path = Path.Combine(ApplicationSettings.WebRootPath, "BlogUploads");
+				var path = Path.Combine(ApplicationSettings.WebRootPath, _uploadFolder);
 				if (!string.IsNullOrEmpty(_blogSlug))
                 {
                     path = Path.Combine(path, _blogSlug);
@@ -46,7 +48,7 @@ namespace Blogifier.Core.Services.FileSystem
             }
         }
 
-        public IList<SelectListItem> GetThemes()
+        public IList<SelectListItem> GetThemes(ThemeType themeType)
         {
             var themes = new List<SelectListItem>();
             themes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
@@ -54,6 +56,9 @@ namespace Blogifier.Core.Services.FileSystem
             var path = Path.Combine(GetRoot(), "Views");
             path = Path.Combine(path, "Blogifier");
             path = Path.Combine(path, "Themes");
+
+			var themeFolder = themeType == ThemeType.Admin ? "Admin" : "Blog";
+			path = Path.Combine(path, themeFolder);
 
             if (Directory.Exists(path))
             {
@@ -163,13 +168,13 @@ namespace Blogifier.Core.Services.FileSystem
             else
                 return Path.Combine(Location, path.Replace("/", _separator));
         }
-        string GetUrl(string path, string root)
+
+		string GetUrl(string path, string root)
         {
-			//return root + Settings.BlogifierFolder + 
-			//    "/" + Settings.UploadFolder + "/" + _blogSlug +
-			//    path.Replace(Location, "").Replace(_separator, "/");
-			return "";
+			var url = path.ReplaceIgnoreCase(Location, "").Replace(_separator, "/");
+			return _uploadFolder + "/" + _blogSlug + url;
         }
+
         string GetRoot()
         {
             var root = Directory.GetCurrentDirectory();

@@ -3,9 +3,6 @@
 @using Blogifier.Core.Data.Models
 @using System.Collections.Generic
 @model Blogifier.Core.Data.Models.AdminPostsModel
-@{
-
-}
 <div>
     <h2>Admin standard theme index page</h2>
     <p>This is a standard admin theme from core package, should look green</p>
@@ -18,4 +15,8 @@
         <h4>@item.Title</h4>
         <div>@item.Description</div>
     }
+}
+else
+{
+    <div>You do not have any posts yet. You can start by creating new post or importing posts from RSS feed.</div>
 }

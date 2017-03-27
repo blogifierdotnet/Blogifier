@@ -121,6 +121,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
                         post.Content = post.Content.Replace(uri.ToString(), asset.Url);
 
+						// System.Diagnostics.Debug.WriteLine("ASSET :: " + asset.Path + " :: " + asset.Url + " :: " + asset.Image);
+
                         _db.Assets.Add(asset);
                         _db.Complete();
                     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Blogifier.Core.Data.Domain;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blogifier.Core.Data.Models
 {
@@ -17,6 +18,7 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminProfileModel : AdminBaseModel
 	{
+		public IList<SelectListItem> AdminThemes { get; set; }
 	}
 
 	public class AdminSyndicationModel : AdminBaseModel

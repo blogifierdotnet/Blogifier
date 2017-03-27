@@ -1,14 +1,7 @@
 ﻿@model Blogifier.Core.Data.Models.AdminSyndicationModel
-@using Blogifier.Core.Common
-@using Blogifier.Core.Services.FileSystem
-@using Blogifier.Core.Services.Syndication.Rss
-@{
-    //var storage = new BlogStorage(Model.Slug);
-    //var themes = storage.GetThemes();
-}
 <div>
     <h2>Syndication</h2>
-    <form id="frmRssImport" asp-controller="Admin" asp-action="RssImport" method="post">
+    <form id="frmRssImport" asp-controller="Admin" asp-action="Syndication" method="post">
         <div id="importForm">
             <div class="form-group">
                 <label asp-for="FeedUrl">RSS Url</label>
@@ -27,13 +20,14 @@
             </div>
 
             <div class="form-group">
-                <label><span class="form-checkbox"><input type="checkbox" id="chkImportImgs" name="chkImportImgs" /></span> Import Images</label>
+                <input asp-for="ImportImages" type="checkbox" class="form-checkbox" />
+                <label asp-for="ImportImages">Import Images</label>
             </div>
             <div class="form-group">
-                <label><span class="form-checkbox"><input type="checkbox" id="chkImportAttachements" name="chkImportAttachements" /></span> Import Attachements</label>
+                <input asp-for="ImportAttachements" type="checkbox" class="form-checkbox" />
+                <label asp-for="ImportAttachements">Import Attachements</label>
             </div>
             <div id="btnImport">
-                @*<button type="button" onclick="return AdminController.importRss();" class="btn btn-success btn-save-setting btn-block">Import</button>*@
                 <button type="submit" class="btn btn-success btn-save-setting btn-block">Import</button>
             </div>
         </div>

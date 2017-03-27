@@ -1,5 +1,4 @@
-﻿@using Blogifier.Core.Common
-@model Blogifier.Core.Data.Models.AdminProfileModel
+﻿@model Blogifier.Core.Data.Models.AdminProfileModel
 <div>
     <h2>Profile</h2>
 </div>
@@ -23,6 +22,10 @@
         <label asp-for="Blog.AuthorEmail">Email</label>
         <input type="text" asp-for="Blog.AuthorEmail" class="form-control" />
         <span asp-validation-for="Blog.AuthorEmail" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Blog.Theme">Theme</label>
+        <select asp-for="Blog.Theme" asp-items="Model.AdminThemes" class="form-control"></select>
     </div>
     <input asp-for="Blog.Id" hidden="hidden" />
     <input asp-for="Blog.IdentityName" hidden="hidden" />
