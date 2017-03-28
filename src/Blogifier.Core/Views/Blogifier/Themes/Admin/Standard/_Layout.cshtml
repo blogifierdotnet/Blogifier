@@ -1,45 +1,61 @@
-﻿@model Blogifier.Core.Data.Models.AdminBaseModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Title</title>
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link href="~/Embedded/css/green.css" rel="stylesheet">
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Ubuntu:300,400,500,700" rel="stylesheet">
+    <link href="~/Embedded/admin/css/styles.css" rel="stylesheet">
+
+    <!-- TITLE -->
+    <title>Admin</title>
+    <meta name="description" content="Blogifier">
 </head>
+
 <body>
-    <div class="container">
-        <div class="row">
-            <img src="~/Embedded/images/1500x500.jpg" style="width: 100%; height: 150px" />
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
-                <h3>Navigation</h3>
-                <div>Blog exists: @Model.BlogExists</div>
-                <ul>
-                    <li><a href="~/">Home</a></li>
-                    <li><a href="~/blog">Blog</a></li>
-                    <li><a href="~/admin">Admin</a></li>
-                    <li><a href="~/admin/profile">Profile</a></li>
-                    @if(Model.BlogExists)
-                    {
-                    <li><a href="#">Tools</a>
-                        <ul>
-                            <li><a href="~/admin/syndication">Import RSS</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="~/admin/about">About</a></li>
-                    }                 
-                </ul>
+    <div class="app">
+        <div class="app-side">
+            <div class="app-profile p-4">
+                <img src="~/Embedded/admin/img/profile_small.jpg" alt="">
+                <span>Admin</span>
             </div>
-            <div class="col-lg-9">
-                @RenderBody()
-            </div>
+            <ul class="app-nav">
+                <li><a id="mu-posts" href="~/admin"><i class="fa fa-align-justify"></i> Posts</a></li>
+                <li><a id="mu-profile" href="~/admin/profile"><i class="fa fa-user"></i> Profile</a></li>
+                @if(Model.BlogExists)
+                {
+                    <li><a id="mu-settings" href="~/admin/syndication"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a id="mu-about" href="~/admin/about"><i class="fa fa-info-circle"></i> About</a></li>
+                }
+            </ul>
         </div>
-        <div class="row">
-            Footer here (Version: @Blogifier.Core.Common.ApplicationSettings.Version)
+        <div class="app-body">
+            @RenderBody()
         </div>
     </div>
-    <script src="~/Embedded/js/site.js"></script>
+
+    <script src="~/Embedded/admin/js/jquery-2.2.4.min.js"></script>
+    <script src="~/Embedded/admin/js/custom.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="~/Embedded/admin/js/bootstrap.min.js"></script>
+    <script>
+        var url = window.location.href;
+        if (url.indexOf('admin/profile') > 0) {
+            $("#mu-profile").addClass("active");
+        }
+        else if (url.indexOf('admin/syndication') > 0) {
+            $("#mu-settings").addClass("active");
+        }
+        else if (url.indexOf('admin/about') > 0) {
+            $("#mu-about").addClass("active");
+        }
+        else {
+            $("#mu-posts").addClass("active");
+        }
+    </script>
+
 </body>
 </html>

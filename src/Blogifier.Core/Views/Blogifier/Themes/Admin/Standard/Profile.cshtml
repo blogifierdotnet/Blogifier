@@ -1,35 +1,42 @@
 ﻿@model Blogifier.Core.Data.Models.AdminProfileModel
-<div>
-    <h2>Profile</h2>
+
+<div class="app-header clearfix p-4">
+    <button type="button" class="app-side-toggle"><span></span><span></span><span></span></button>
+    <h3>Profile</h3>
 </div>
-<form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-    <div class="form-group">
-        <label asp-for="Blog.Title">Title</label>
-        <input type="text" asp-for="Blog.Title" class="form-control" />
-        <span asp-validation-for="Blog.Title" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Blog.Description">Blog Description</label>
-        <input asp-for="Blog.Description" type="text" class="form-control" />
-        <span asp-validation-for="Blog.Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Blog.AuthorName">Author Name</label>
-        <input type="text" asp-for="Blog.AuthorName" class="form-control" />
-        <span asp-validation-for="Blog.AuthorName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Blog.AuthorEmail">Email</label>
-        <input type="text" asp-for="Blog.AuthorEmail" class="form-control" />
-        <span asp-validation-for="Blog.AuthorEmail" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="Blog.Theme">Theme</label>
-        <select asp-for="Blog.Theme" asp-items="Model.AdminThemes" class="form-control"></select>
-    </div>
-    <input asp-for="Blog.Id" hidden="hidden" />
-    <input asp-for="Blog.IdentityName" hidden="hidden" />
-    <input asp-for="Blog.Slug" hidden="hidden" />
-    <input asp-for="Blog.Theme" hidden="hidden" />
-    <button type="submit" class="btn btn-success btn-save-setting btn-block">Save</button>
-</form>
+<div class="app-content p-4">
+    <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+        <div class="form-group">
+            <label asp-for="Blog.Title">Title</label>
+            <input type="text" asp-for="Blog.Title" class="form-control" />
+            <span asp-validation-for="Blog.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Blog.Description">Blog Description</label>
+            <input asp-for="Blog.Description" type="text" class="form-control" />
+            <span asp-validation-for="Blog.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Blog.AuthorName">Author Name</label>
+            <input type="text" asp-for="Blog.AuthorName" class="form-control" />
+            <span asp-validation-for="Blog.AuthorName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Blog.AuthorEmail">Email</label>
+            <input type="text" asp-for="Blog.AuthorEmail" class="form-control" />
+            <span asp-validation-for="Blog.AuthorEmail" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Blog.Theme">Theme</label>
+            <select asp-for="Blog.Theme" asp-items="Model.AdminThemes" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </div>
+
+        <input asp-for="Blog.Id" hidden="hidden" />
+        <input asp-for="Blog.IdentityName" hidden="hidden" />
+        <input asp-for="Blog.Slug" hidden="hidden" />
+        <input asp-for="Blog.Theme" hidden="hidden" />
+    </form>
+</div>
