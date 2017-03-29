@@ -25,7 +25,9 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
-	<PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.1" />
+	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

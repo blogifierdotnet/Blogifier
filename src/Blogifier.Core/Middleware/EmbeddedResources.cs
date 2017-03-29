@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
+using Blogifier.Core.Common;
 
 namespace Blogifier.Core.Middleware
 {
@@ -43,7 +44,8 @@ namespace Blogifier.Core.Middleware
 					{
 						var stream = _assembly.GetManifestResourceStream(resource);
 
-						if (Common.ApplicationSettings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+                        // if (Common.ApplicationSettings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
+                        if (ApplicationSettings.AddContentTypeHeaders)
 						{
 							context.Response.Headers.Add("Content-Length", stream.Length.ToString());
 							context.Response.Headers.Remove("Content-Type");

@@ -34,6 +34,9 @@ namespace Blogifier.Core
 
 			ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
+
+            var loader = new AppSettingsLoader();
+            loader.LoadFromConfigFile();
 		}
 
 		static void AddDatabase(IServiceCollection services)
@@ -60,7 +63,7 @@ namespace Blogifier.Core
 			}
 			catch (System.Exception ex)
 			{
-				var x = ex.Message;
+				// var x = ex.Message;
 			}
 			
 		}
