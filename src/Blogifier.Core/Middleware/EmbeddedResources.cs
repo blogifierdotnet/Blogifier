@@ -85,7 +85,8 @@ namespace Blogifier.Core.Middleware
 				resource.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
 				resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
 				resource.EndsWith(".woff", StringComparison.OrdinalIgnoreCase) ||
-				resource.EndsWith(".ttf", StringComparison.OrdinalIgnoreCase)
+                resource.EndsWith(".woff2", StringComparison.OrdinalIgnoreCase) ||
+                resource.EndsWith(".ttf", StringComparison.OrdinalIgnoreCase)
 				)
 				return true;
 
