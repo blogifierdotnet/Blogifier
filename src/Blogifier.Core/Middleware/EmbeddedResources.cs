@@ -48,7 +48,9 @@ namespace Blogifier.Core.Middleware
                         if (ApplicationSettings.AddContentTypeHeaders)
 						{
 							context.Response.Headers.Add("Content-Length", stream.Length.ToString());
-							context.Response.Headers.Remove("Content-Type");
+                            context.Response.Headers.Add("Embedded-Content", "true");
+
+                            context.Response.Headers.Remove("Content-Type");
 
 							if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
 							{
