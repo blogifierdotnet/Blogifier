@@ -57,8 +57,8 @@ namespace Blogifier.Core
 
 				services.Configure<RazorViewEngineOptions>(options =>
 				{
-					options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
-					//options.FileProviders.Add(new EmbeddedFileProvider(assembly, assemblyName));
+					//options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
+					options.FileProviders.Add(new EmbeddedFileProvider(assembly, assemblyName));
 				});
 			}
 			catch (System.Exception ex)
