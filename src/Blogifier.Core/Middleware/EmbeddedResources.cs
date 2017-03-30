@@ -43,11 +43,10 @@ namespace Blogifier.Core.Middleware
 					if (!string.IsNullOrEmpty(resource))
 					{
 						var stream = _assembly.GetManifestResourceStream(resource);
-                        context.Response.Headers.Add("Content-Length", stream.Length.ToString());
 
                         if (ApplicationSettings.AddContentTypeHeaders)
 						{
-							
+                            context.Response.Headers.Add("Content-Length", stream.Length.ToString());
                             context.Response.Headers.Add("Embedded-Content", "true");
 
                             var contentType = GetContentType(resource);
@@ -62,10 +61,7 @@ namespace Blogifier.Core.Middleware
 						await stream.CopyToAsync(context.Response.Body);
 					}
 				}
-				catch(Exception ex)
-				{
-					throw new Exception("Exception invoking embedded resources: " + ex.Message);
-				}
+                catch { }
 			}
 			await _next.Invoke(context);
 		}
