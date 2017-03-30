@@ -15,6 +15,8 @@ namespace Blogifier.Core.Common
 		public static string ContentRootPath { get; set; }
 
         public static bool AddContentTypeHeaders { get; set; }
+
+        public static bool PrependFileProvider { get; set; }
         
         public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
 

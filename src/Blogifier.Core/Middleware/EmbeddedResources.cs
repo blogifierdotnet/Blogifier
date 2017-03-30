@@ -26,11 +26,8 @@ namespace Blogifier.Core.Middleware
 				if (name.Contains("Blogifier.Core.Embedded") && Include(name))
 				{
                     var path = name.ReplaceIgnoreCase("Blogifier.Core", "").ToLower();
-
                     var resource = GetResource(name, assembly);
-
 					_resources.Add(path, resource);
-                    // System.Diagnostics.Debug.WriteLine(string.Format("PATH AND NAME: {0} :: {1}", path, name));
 				}
 			}
 		}
@@ -43,12 +40,17 @@ namespace Blogifier.Core.Middleware
             {
                 try
                 {
+                    // marker to identify embedded resource for troublshooting
                     context.Response.Headers.Add("Embedded-Content", "true");
 
                     var resource = _resources[path];
                     Stream stream = new MemoryStream(resource.Content);
-                    context.Response.ContentType = resource.ContentType;
-                    context.Response.ContentLength = stream.Length;
+
+                    if (ApplicationSettings.AddContentTypeHeaders)
+                    {
+                        context.Response.ContentType = resource.ContentType;
+                        context.Response.ContentLength = stream.Length;
+                    }
 
                     await stream.CopyToAsync(context.Response.Body);
                 }
