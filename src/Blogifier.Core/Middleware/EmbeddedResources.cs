@@ -43,32 +43,22 @@ namespace Blogifier.Core.Middleware
 					if (!string.IsNullOrEmpty(resource))
 					{
 						var stream = _assembly.GetManifestResourceStream(resource);
+                        context.Response.Headers.Add("Content-Length", stream.Length.ToString());
 
-                        // if (Common.ApplicationSettings.OSDescription.Contains("Linux", StringComparison.OrdinalIgnoreCase))
                         if (ApplicationSettings.AddContentTypeHeaders)
 						{
-							context.Response.Headers.Add("Content-Length", stream.Length.ToString());
+							
                             context.Response.Headers.Add("Embedded-Content", "true");
 
-                            context.Response.Headers.Remove("Content-Type");
+                            var contentType = GetContentType(resource);
 
-							if (resource.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
-							{
-								context.Response.Headers.Add("Content-Type", "text/css");
-							}
-							if (resource.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
-							{
-								context.Response.Headers.Add("Content-Type", "application/javascript");
-							}
-							if (resource.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
-							{
-								context.Response.Headers.Add("Content-Type", "image/jpeg");
-							}
-							if (resource.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-							{
-								context.Response.Headers.Add("Content-Type", "image/png");
-							}
+                            if (!string.IsNullOrEmpty(contentType))
+                            {
+                                context.Response.Headers.Remove("Content-Type");
+                                context.Response.Headers.Add("Content-Type", contentType);
+                            }
 						}
+
 						await stream.CopyToAsync(context.Response.Body);
 					}
 				}
@@ -79,6 +69,27 @@ namespace Blogifier.Core.Middleware
 			}
 			await _next.Invoke(context);
 		}
+
+        string GetContentType(string url)
+        {
+            if (url.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
+            {
+                return "text/css";
+            }
+            if (url.EndsWith(".js", StringComparison.OrdinalIgnoreCase))
+            {
+                return "application/javascript";
+            }
+            if (url.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+            {
+                return "image/jpeg";
+            }
+            if (url.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+            {
+                return "image/png";
+            }
+            return "";
+        }
 
 		bool Include(string resource)
 		{
