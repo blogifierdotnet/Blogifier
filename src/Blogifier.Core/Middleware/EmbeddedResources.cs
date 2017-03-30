@@ -40,17 +40,17 @@ namespace Blogifier.Core.Middleware
             {
                 try
                 {
-                    // marker to identify embedded resource for troublshooting
-                    context.Response.Headers.Add("Embedded-Content", "true");
-
                     var resource = _resources[path];
                     Stream stream = new MemoryStream(resource.Content);
 
+                    // marker to identify embedded resource for troublshooting
+                    context.Response.Headers.Add("Embedded-Content", "true");
+
                     if (ApplicationSettings.AddContentTypeHeaders)
-                    {
                         context.Response.ContentType = resource.ContentType;
+
+                    if(ApplicationSettings.AddContentLengthHeaders)
                         context.Response.ContentLength = stream.Length;
-                    }
 
                     await stream.CopyToAsync(context.Response.Body);
                 }

@@ -22,6 +22,9 @@ namespace Blogifier.Core.Common
                         if (section["AddContentTypeHeaders"] != null)
                             ApplicationSettings.AddContentTypeHeaders = section.GetValue<bool>("AddContentTypeHeaders");
 
+                        if (section["AddContentLengthHeaders"] != null)
+                            ApplicationSettings.AddContentLengthHeaders = section.GetValue<bool>("AddContentLengthHeaders");
+
                         if (section["PrependFileProvider"] != null)
                             ApplicationSettings.PrependFileProvider = section.GetValue<bool>("PrependFileProvider");
                     }
