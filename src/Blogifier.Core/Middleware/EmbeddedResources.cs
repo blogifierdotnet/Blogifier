@@ -13,71 +13,67 @@ namespace Blogifier.Core.Middleware
 	public class EmbeddedResources
 	{
 		readonly RequestDelegate _next;
-		List<string> _resources;
-		Assembly _assembly;
+        Dictionary<string, CachedResource> _resources;
 
 		public EmbeddedResources(RequestDelegate next)
 		{
 			_next = next;
-			_resources = new List<string>();
-			_assembly = typeof(EmbeddedResources).GetTypeInfo().Assembly;
+            _resources = new Dictionary<string, CachedResource>();
+			var assembly = typeof(EmbeddedResources).GetTypeInfo().Assembly;
 
-			foreach (var name in _assembly.GetManifestResourceNames())
+			foreach (var name in assembly.GetManifestResourceNames())
 			{
 				if (name.Contains("Blogifier.Core.Embedded") && Include(name))
 				{
-					_resources.Add(name);
+                    var path = name.ReplaceIgnoreCase("Blogifier.Core", "").ToLower();
+
+                    var resource = GetResource(name, assembly);
+
+					_resources.Add(path, resource);
+                    // System.Diagnostics.Debug.WriteLine(string.Format("PATH AND NAME: {0} :: {1}", path, name));
 				}
 			}
 		}
 
-		public async Task Invoke(HttpContext context)
-		{
-			var path = context.Request.Path.ToString().ToLower().Replace("/", ".");
+        public async Task Invoke(HttpContext context)
+        {
+            var path = context.Request.Path.ToString().ToLower().Replace("/", ".");
 
-			if (path.Contains(".embedded.", StringComparison.OrdinalIgnoreCase))
-			{
-				try
-				{
-					var resource = _resources.Where(r => r.Contains(path, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            if (path.Contains(".embedded.", StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    context.Response.Headers.Add("Embedded-Content", "true");
 
-					if (!string.IsNullOrEmpty(resource))
-					{
-                        //var stream = _assembly.GetManifestResourceStream(resource);
+                    var resource = _resources[path];
+                    Stream stream = new MemoryStream(resource.Content);
+                    context.Response.ContentType = resource.ContentType;
+                    context.Response.ContentLength = stream.Length;
 
-                        //                  if (ApplicationSettings.AddContentTypeHeaders)
-                        //{
-                        //                      context.Response.Headers.Add("Content-Length", stream.Length.ToString());
-                        //                      context.Response.Headers.Add("Embedded-Content", "true");
+                    await stream.CopyToAsync(context.Response.Body);
+                }
+                catch(Exception ex)
+                {
+                    var x = ex.Message;
+                }
+            }
+            await _next.Invoke(context);
+        }
 
-                        //                      var contentType = GetContentType(resource);
+        CachedResource GetResource(string path, Assembly assembly)
+        {
+            var stream = assembly.GetManifestResourceStream(path);
 
-                        //                      if (!string.IsNullOrEmpty(contentType))
-                        //                      {
-                        //                          context.Response.Headers.Remove("Content-Type");
-                        //                          context.Response.Headers.Add("Content-Type", contentType);
-                        //                      }
-                        //}
+            var resource = new CachedResource();
+            resource.ContentType = GetContentType(path);
 
-                        //await stream.CopyToAsync(context.Response.Body);
-
-                        var bodyStream = context.Response.Body;
-
-                        var responseBodyStream = _assembly.GetManifestResourceStream(resource);
-                        //await _next(context);
-
-                        responseBodyStream.Seek(0, SeekOrigin.Begin);
-                        var responseBody = new StreamReader(responseBodyStream).ReadToEnd();
-                        //_logger.LogInformation($"RESPONSE LOG: {responseBody}");
-                        responseBodyStream.Seek(0, SeekOrigin.Begin);
-
-                        await responseBodyStream.CopyToAsync(bodyStream);
-                    }
-				}
-                catch { }
-			}
-			await _next.Invoke(context);
-		}
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                resource.Content = memoryStream.ToArray();
+            }
+            return resource;
+        }
 
         string GetContentType(string url)
         {
@@ -115,4 +111,10 @@ namespace Blogifier.Core.Middleware
 			return false;
 		}
 	}
+
+    public class CachedResource
+    {
+        public string ContentType { get; set; }
+        public byte[] Content { get; set; }
+    }
 }
