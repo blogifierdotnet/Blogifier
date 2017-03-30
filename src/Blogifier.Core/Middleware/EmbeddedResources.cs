@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Blogifier.Core.Common;
+using System.IO;
 
 namespace Blogifier.Core.Middleware
 {
@@ -42,24 +43,36 @@ namespace Blogifier.Core.Middleware
 
 					if (!string.IsNullOrEmpty(resource))
 					{
-						var stream = _assembly.GetManifestResourceStream(resource);
+                        //var stream = _assembly.GetManifestResourceStream(resource);
 
-                        if (ApplicationSettings.AddContentTypeHeaders)
-						{
-                            context.Response.Headers.Add("Content-Length", stream.Length.ToString());
-                            context.Response.Headers.Add("Embedded-Content", "true");
+                        //                  if (ApplicationSettings.AddContentTypeHeaders)
+                        //{
+                        //                      context.Response.Headers.Add("Content-Length", stream.Length.ToString());
+                        //                      context.Response.Headers.Add("Embedded-Content", "true");
 
-                            var contentType = GetContentType(resource);
+                        //                      var contentType = GetContentType(resource);
 
-                            if (!string.IsNullOrEmpty(contentType))
-                            {
-                                context.Response.Headers.Remove("Content-Type");
-                                context.Response.Headers.Add("Content-Type", contentType);
-                            }
-						}
+                        //                      if (!string.IsNullOrEmpty(contentType))
+                        //                      {
+                        //                          context.Response.Headers.Remove("Content-Type");
+                        //                          context.Response.Headers.Add("Content-Type", contentType);
+                        //                      }
+                        //}
 
-						await stream.CopyToAsync(context.Response.Body);
-					}
+                        //await stream.CopyToAsync(context.Response.Body);
+
+                        var bodyStream = context.Response.Body;
+
+                        var responseBodyStream = _assembly.GetManifestResourceStream(resource);
+                        //await _next(context);
+
+                        responseBodyStream.Seek(0, SeekOrigin.Begin);
+                        var responseBody = new StreamReader(responseBodyStream).ReadToEnd();
+                        //_logger.LogInformation($"RESPONSE LOG: {responseBody}");
+                        responseBodyStream.Seek(0, SeekOrigin.Begin);
+
+                        await responseBodyStream.CopyToAsync(bodyStream);
+                    }
 				}
                 catch { }
 			}
