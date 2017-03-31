@@ -15,6 +15,13 @@ namespace WebApp.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString);
+
+            optionsBuilder.UseInMemoryDatabase();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
