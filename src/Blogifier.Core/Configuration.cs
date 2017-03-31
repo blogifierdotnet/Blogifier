@@ -43,11 +43,10 @@ namespace Blogifier.Core
 		{
 			services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
-            services.AddDbContext<BlogifierDbContext>(options =>
-                options.UseInMemoryDatabase());
-
-            //services.AddDbContext<BlogifierDbContext>(options =>
-            //        options.UseSqlServer(ApplicationSettings.ConnectionString));
+            if (ApplicationSettings.UseInMemoryDatabase)
+                services.AddDbContext<BlogifierDbContext>(options => options.UseInMemoryDatabase());
+            else
+                services.AddDbContext<BlogifierDbContext>(options => options.UseSqlServer(ApplicationSettings.ConnectionString));
         }
 
 		static void AddFileProviders(IServiceCollection services)

@@ -20,10 +20,11 @@ namespace Blogifier.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString);
-
-            optionsBuilder.UseInMemoryDatabase();
-		}
+            if(ApplicationSettings.UseInMemoryDatabase)
+                optionsBuilder.UseInMemoryDatabase();
+            else
+                optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

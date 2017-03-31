@@ -4,6 +4,8 @@ namespace Blogifier.Core.Common
 {
 	public class ApplicationSettings
     {
+        public static bool UseInMemoryDatabase { get; set; } = true;
+
         public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
 
         public static string Title { get; set; } = "Blog Name";

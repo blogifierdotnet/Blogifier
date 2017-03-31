@@ -19,6 +19,9 @@ namespace Blogifier.Core.Common
                     var section = config.GetSection("Blogifier");
                     if (section != null)
                     {
+                        if (section["UseInMemoryDatabase"] != null)
+                            ApplicationSettings.UseInMemoryDatabase = section.GetValue<bool>("UseInMemoryDatabase");
+
                         if (section["ConnectionString"] != null)
                             ApplicationSettings.ConnectionString = section.GetValue<string>("ConnectionString");
 

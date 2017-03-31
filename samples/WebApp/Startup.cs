@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Blogifier.Core.Common;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using WebApp.Services;
 
 namespace WebApp
 {
-	public class Startup
+    public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -36,17 +37,15 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase());
+            if (ApplicationSettings.UseInMemoryDatabase)
+                services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase());
+            else
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-			
 
 			services.AddMvc();
 
