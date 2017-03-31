@@ -6,9 +6,9 @@
 </div>
 <div class="app-content p-4">
     <div class="app-content p-4">
-        @if (Model != null && Model.Publications != null)
+        @if (Model != null && Model.BlogPosts != null)
         {
-            foreach (var item in Model.Publications)
+            foreach (var item in Model.BlogPosts)
             {
                 <h4>@item.Title</h4>
                 <div>@item.Description</div>

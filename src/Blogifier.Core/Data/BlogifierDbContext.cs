@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Data.Domain;
+﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Core.Data
@@ -9,29 +10,19 @@ namespace Blogifier.Core.Data
 
         #region DB Sets
 
-        public DbSet<Publisher> Publishers { get; set; }
-        public DbSet<Publication> Publications { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<PublicationCategory> PublicationCategories { get; set; }
+        public DbSet<BlogPostCategory> BlogPostCategories { get; set; }
         public DbSet<Asset> Assets { get; set; }
         
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-			//if (Settings.DbProvider == DbProvider.SqlServer)
-			//{
-			//    optionsBuilder.UseSqlServer(Settings.SqlServerConnectionString);
-			//}
-			//else if(Settings.DbProvider == DbProvider.PostgreSql)
-			//{
-			//    optionsBuilder.UseNpgsql(Settings.PostgreSqlConnectionString);
-			//}
-			//else
-			//{
-			//    optionsBuilder.UseInMemoryDatabase();
-			//}
-			optionsBuilder.UseInMemoryDatabase();
+            //optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString);
+
+            optionsBuilder.UseInMemoryDatabase();
 		}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -43,9 +43,12 @@ namespace Blogifier.Core
 		{
 			services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
-			services.AddDbContext<BlogifierDbContext>(options =>
-				options.UseInMemoryDatabase());
-		}
+            services.AddDbContext<BlogifierDbContext>(options =>
+                options.UseInMemoryDatabase());
+
+            //services.AddDbContext<BlogifierDbContext>(options =>
+            //        options.UseSqlServer(ApplicationSettings.ConnectionString));
+        }
 
 		static void AddFileProviders(IServiceCollection services)
 		{
@@ -57,18 +60,14 @@ namespace Blogifier.Core
 
 				services.Configure<RazorViewEngineOptions>(options =>
 				{
-                    // in some environments provider order is matters
+                    // in some environments provider order matters
                     if(ApplicationSettings.PrependFileProvider)
 					    options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
                     else
 					    options.FileProviders.Add(new EmbeddedFileProvider(assembly, assemblyName));
 				});
 			}
-			catch (System.Exception ex)
-			{
-				// var x = ex.Message;
-			}
-			
+			catch { }
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Blogifier.Core.Data.Domain
     {
         public int ParentId { get; set; }
         [Required]
-        public int PublisherId { get; set; }
+        public int ProfileId { get; set; }
 
         [Required]
         [StringLength(160)]
@@ -23,6 +23,6 @@ namespace Blogifier.Core.Data.Domain
         public string ImgSrc { get; set; }
         public int Rank { get; set; }
 
-        public List<PublicationCategory> PublicationCategories { get; set; }
+        public List<BlogPostCategory> BlogPostCategories { get; set; }
     }
 }

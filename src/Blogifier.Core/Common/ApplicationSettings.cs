@@ -4,7 +4,9 @@ namespace Blogifier.Core.Common
 {
 	public class ApplicationSettings
     {
-		public static string Title { get; set; } = "Blog Name";
+        public static string ConnectionString { get; set; } = "Server=tcp:gotofnk86n.database.windows.net,1433;Initial Catalog=BlogifierDB;Persist Security Info=False;User ID=xb1admin;Password=Rus@lan05;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"; // @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
+
+        public static string Title { get; set; } = "Blog Name";
 
 		public static string Description { get; set; } = "Short description of the blog";
 

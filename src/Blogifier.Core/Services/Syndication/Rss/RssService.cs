@@ -26,7 +26,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
         public async Task Import(AdminSyndicationModel model, string root)
         {
-            var blog = _db.Blogs.Single(b => b.Id == model.PublisherId);
+            var blog = _db.Blogs.Single(b => b.Id == model.ProfileId);
             if (blog == null)
                 return;
 
@@ -43,9 +43,9 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     {
                         desc = desc.Substring(0, 300);
                     }
-                    var post = new Publication
+                    var post = new BlogPost
                     {
-                        PublisherId = model.PublisherId,
+                        ProfileId = model.ProfileId,
                         Title = item.Title,
                         Slug = item.Title.ToSlug(),
                         Description = desc,
@@ -63,7 +63,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     _db.Posts.Add(post);
                     _db.Complete();
 
-                    await AddCategories(item, model.PublisherId);
+                    await AddCategories(item, model.ProfileId);
                 }
             }
             catch { }
@@ -105,7 +105,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        async Task ImportImages(Publication post, AdminSyndicationModel model, IBlogStorage storage)
+        async Task ImportImages(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
         {
             var imgLinks = GetImages(post.Content);
             if (imgLinks != null && imgLinks.Count > 0)
@@ -116,7 +116,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     {
                         var uri = GetUri(img, model.Domain, model.SubDomain);
                         var asset = await storage.UploadFromWeb(uri, _root);
-                        asset.PublisherId = post.PublisherId;
+                        asset.ProfileId = post.ProfileId;
                         asset.LastUpdated = SystemClock.Now();
 
                         post.Content = post.Content.Replace(uri.ToString(), asset.Url);
@@ -131,7 +131,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        async Task ImportAttachements(Publication post, AdminSyndicationModel model, IBlogStorage storage)
+        async Task ImportAttachements(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
         {
             var links = GetAttachements(post.Content);
             if (links.Any())
@@ -142,7 +142,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     {
                         var uri = GetUri(link, model.Domain, model.SubDomain);
                         var asset = await storage.UploadFromWeb(uri, _root);
-                        asset.PublisherId = post.PublisherId;
+                        asset.ProfileId = post.ProfileId;
                         asset.AssetType = AssetType.Attachment;
                         asset.LastUpdated = SystemClock.Now();
                         post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
@@ -228,19 +228,19 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
                 foreach (var cat in item.Categories)
                 {
-                    var blogCategory = _db.Categories.Single(c => c.Title == cat && c.PublisherId == blogId);
+                    var blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     if (blogCategory == null)
                     {
                         var newCat = new Category
                         {
-                            PublisherId = blogId,
+                            ProfileId = blogId,
                             Title = cat,
                             Slug = cat.ToSlug()
                         };
                         _db.Categories.Add(newCat);
                         _db.Complete();
 
-                        blogCategory = _db.Categories.Single(c => c.Title == cat && c.PublisherId == blogId);
+                        blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     }
                     catIds.Add(blogCategory.Id.ToString());
                 }

@@ -29,7 +29,7 @@ namespace Blogifier.Core.Controllers
 		public IActionResult Index()
 		{
 			var posts = _db.Posts.All();
-			var model = new AdminPostsModel { Blog = GetBlog(), Publications = posts };
+			var model = new AdminPostsModel { Blog = GetBlog(), BlogPosts = posts };
 			return View(_theme + "Index.cshtml", model);
 		}
 
@@ -50,7 +50,7 @@ namespace Blogifier.Core.Controllers
 			if (model.Blog == null)
 				return View("Error");
 
-			model.PublisherId = model.Blog.Id;
+			model.ProfileId = model.Blog.Id;
 			await _rss.Import(model, Url.Content("~/"));
 
 			return RedirectToAction("Index", "Admin");
@@ -94,7 +94,7 @@ namespace Blogifier.Core.Controllers
 					var dbBlog = _db.Blogs.Single(b => b.Id == blog.Id);
 					blog.Title = dbBlog.Title;
 					blog.Description = dbBlog.Description;
-					blog.AuthorName = dbBlog.AuthorName;
+					blog.Name = dbBlog.Name;
 					blog.AuthorEmail = dbBlog.AuthorEmail;
 				}
 				else
@@ -116,10 +116,12 @@ namespace Blogifier.Core.Controllers
 		}
 
 		#region Private members
-		private Publisher GetBlog()
+
+		private Data.Domain.Profile GetBlog()
 		{
 			return _db.Blogs.Single(b => b.IdentityName == User.Identity.Name);
 		}
+
 		private string BlogSlugFromTitle(string title)
 		{
 			var slug = title.ToSlug();
@@ -135,6 +137,7 @@ namespace Blogifier.Core.Controllers
 			}
 			return slug;
 		}
-		#endregion
+		
+        #endregion
 	}
 }

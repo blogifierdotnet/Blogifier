@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Core.Data.Domain
 {
-    public class Publication : BaseEntity
+    public class BlogPost : BaseEntity
     {
-        public Publication() { }
+        public BlogPost() { }
 
-        public int PublisherId { get; set; }
+        public int ProfileId { get; set; }
 
         [Required]
         [RegularExpression("^[a-z0-9-]+$", ErrorMessage = "Slug format not valid.")]
@@ -29,7 +29,7 @@ namespace Blogifier.Core.Data.Domain
 
         public DateTime Published { get; set; }
 
-        public Publisher Publisher { get; set; }
-        public List<PublicationCategory> PublicationCategories { get; set; }
+        public Profile Profile { get; set; }
+        public List<BlogPostCategory> BlogPostCategories { get; set; }
     }
 }

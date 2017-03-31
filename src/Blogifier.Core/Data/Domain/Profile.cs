@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Core.Data.Domain
 {
-    public class Publisher : BaseEntity
+    public class Profile : BaseEntity
     {
-        public Publisher() { }
+        public Profile() { }
 
         [Required]
         [StringLength(100)]
@@ -17,15 +17,16 @@ namespace Blogifier.Core.Data.Domain
         public string Slug { get; set; }
 
         [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
         [StringLength(160)]
         public string Title { get; set; }
 
         [Required]
         [StringLength(450)]
         public string Description { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string AuthorName { get; set; }
 
         [Required]
         [StringLength(160)]
@@ -42,7 +43,7 @@ namespace Blogifier.Core.Data.Domain
         [StringLength(160)]
         public string Image { get; set; }
 
-        public List<Publication> Publications { get; set; }
+        public List<BlogPost> BlogPosts { get; set; }
         public List<Asset> Assets { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Blogifier.Core.Data.Domain
 {
     public class Asset : BaseEntity
     {
-        public int PublisherId { get; set; }
+        public int ProfileId { get; set; }
 
         [Required]
         [StringLength(160)]

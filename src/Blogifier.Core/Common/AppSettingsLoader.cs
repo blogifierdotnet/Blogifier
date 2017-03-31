@@ -19,6 +19,9 @@ namespace Blogifier.Core.Common
                     var section = config.GetSection("Blogifier");
                     if (section != null)
                     {
+                        if (section["ConnectionString"] != null)
+                            ApplicationSettings.ConnectionString = section.GetValue<string>("ConnectionString");
+
                         if (section["AddContentTypeHeaders"] != null)
                             ApplicationSettings.AddContentTypeHeaders = section.GetValue<bool>("AddContentTypeHeaders");
 

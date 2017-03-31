@@ -7,13 +7,13 @@ namespace Blogifier.Core.Data.Models
 {
 	public class AdminBaseModel
     {
-		public Publisher Blog { get; set; }
+		public Profile Blog { get; set; }
 		public bool BlogExists { get { return Blog != null; }  }
     }
 
 	public class AdminPostsModel : AdminBaseModel
 	{
-		public IEnumerable<Publication> Publications { get; set; }
+		public IEnumerable<BlogPost> BlogPosts { get; set; }
 	}
 
 	public class AdminProfileModel : AdminBaseModel
@@ -23,7 +23,7 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminSyndicationModel : AdminBaseModel
 	{
-		public int PublisherId { get; set; }
+		public int ProfileId { get; set; }
 		[Required]
 		[StringLength(450)]
 		public string FeedUrl { get; set; }

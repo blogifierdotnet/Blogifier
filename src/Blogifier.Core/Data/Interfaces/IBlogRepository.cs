@@ -2,7 +2,7 @@
 
 namespace Blogifier.Core.Data.Interfaces
 {
-    public interface IBlogRepository : IRepository<Publisher>
+    public interface IBlogRepository : IRepository<Profile>
     {
 
     }
