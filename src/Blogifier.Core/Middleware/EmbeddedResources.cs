@@ -38,28 +38,29 @@ namespace Blogifier.Core.Middleware
 
             if (path.Contains(".embedded.", StringComparison.OrdinalIgnoreCase))
             {
-                try
-                {
-                    var resource = _resources[path];
-                    Stream stream = new MemoryStream(resource.Content);
+                var resource = _resources[path];
+                Stream stream = new MemoryStream(resource.Content);
 
-                    // marker to identify embedded resource for troublshooting
-                    context.Response.Headers.Add("Embedded-Content", "true");
+                SetContextHeaders(context, resource.ContentType, stream.Length);
 
-                    if (ApplicationSettings.AddContentTypeHeaders)
-                        context.Response.ContentType = resource.ContentType;
-
-                    if(ApplicationSettings.AddContentLengthHeaders)
-                        context.Response.ContentLength = stream.Length;
-
-                    await stream.CopyToAsync(context.Response.Body);
-                }
-                catch(Exception ex)
-                {
-                    var x = ex.Message;
-                }
+                await stream.CopyToAsync(context.Response.Body);
             }
-            await _next.Invoke(context);
+            else
+            {
+                await _next.Invoke(context);
+            }
+        }
+
+        void SetContextHeaders(HttpContext context, string resType, long length)
+        {
+            // marker to identify embedded resource for troublshooting
+            context.Response.Headers.Add("Embedded-Content", "true");
+
+            if (ApplicationSettings.AddContentTypeHeaders)
+                context.Response.ContentType = resType;
+
+            if (ApplicationSettings.AddContentLengthHeaders)
+                context.Response.ContentLength = length;
         }
 
         CachedResource GetResource(string path, Assembly assembly)

@@ -11,17 +11,20 @@ using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Services.FileSystem;
+using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core.Services.Syndication.Rss
 {
 	public class RssService : IRssService
     {
         IUnitOfWork _db;
+        private readonly ILogger _logger;
         string _root;
 
-        public RssService(IUnitOfWork db)
+        public RssService(IUnitOfWork db, ILogger<RssService> logger)
         {
             _db = db;
+            _logger = logger;
         }
 
         public async Task Import(AdminSyndicationModel model, string root)
@@ -75,6 +78,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
             {
                 var client = new HttpClient();
                 var doc = new XDocument();
+
+                _logger.LogWarning("Importing RSS from feed: " + url);
 
                 if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {

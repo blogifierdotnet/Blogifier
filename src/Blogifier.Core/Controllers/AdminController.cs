@@ -8,6 +8,7 @@ using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core.Controllers
 {
@@ -15,14 +16,16 @@ namespace Blogifier.Core.Controllers
 	[Route("admin")]
 	public class AdminController : Controller
 	{
-		private readonly string _theme;	
-		IUnitOfWork _db;
+		private readonly string _theme;
+        private readonly ILogger _logger;
+        IUnitOfWork _db;
 		IRssService _rss;
 
-		public AdminController(IUnitOfWork db, IRssService rss)
+		public AdminController(IUnitOfWork db, IRssService rss, ILogger<AdminController> logger)
 		{
 			_db = db;
-			_rss = rss;		
+			_rss = rss;
+            _logger = logger;
 			_theme = "~/Views/Blogifier/Themes/Admin/Standard/";
 		}
 
@@ -30,6 +33,10 @@ namespace Blogifier.Core.Controllers
 		{
 			var posts = _db.Posts.All();
 			var model = new AdminPostsModel { Blog = GetBlog(), BlogPosts = posts };
+
+            _logger.LogInformation("info test message");
+            _logger.LogWarning("warning test message");
+
 			return View(_theme + "Index.cshtml", model);
 		}
 
@@ -117,7 +124,7 @@ namespace Blogifier.Core.Controllers
 
 		#region Private members
 
-		private Data.Domain.Profile GetBlog()
+		private Profile GetBlog()
 		{
 			return _db.Blogs.Single(b => b.IdentityName == User.Identity.Name);
 		}

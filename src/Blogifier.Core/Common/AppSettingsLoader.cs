@@ -25,6 +25,9 @@ namespace Blogifier.Core.Common
                         if (section["ConnectionString"] != null)
                             ApplicationSettings.ConnectionString = section.GetValue<string>("ConnectionString");
 
+                        if (section["EnableLogging"] != null)
+                            ApplicationSettings.EnableLogging = section.GetValue<bool>("EnableLogging");
+
                         if (section["AddContentTypeHeaders"] != null)
                             ApplicationSettings.AddContentTypeHeaders = section.GetValue<bool>("AddContentTypeHeaders");
 

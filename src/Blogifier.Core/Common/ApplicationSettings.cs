@@ -18,6 +18,8 @@ namespace Blogifier.Core.Common
 
 		public static string ContentRootPath { get; set; }
 
+        public static bool EnableLogging { get; set; }
+
         public static bool AddContentTypeHeaders { get; set; }
 
         public static bool AddContentLengthHeaders { get; set; }
