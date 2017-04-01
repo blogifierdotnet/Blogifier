@@ -20,11 +20,13 @@ namespace Blogifier.Core.Common
 
         public static bool EnableLogging { get; set; }
 
-        public static bool AddContentTypeHeaders { get; set; }
+        public static bool AddContentTypeHeaders { get; set; } = true;
 
         public static bool AddContentLengthHeaders { get; set; }
 
         public static bool PrependFileProvider { get; set; }
+
+        public static string BlogStorageFolder { get; set; } = "blog-uploads";
         
         public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
 

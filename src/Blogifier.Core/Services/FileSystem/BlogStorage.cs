@@ -20,7 +20,7 @@ namespace Blogifier.Core.Services.FileSystem
     {
         string _blogSlug;
         string _separator = Path.DirectorySeparatorChar.ToString();
-		string _uploadFolder = "Blogs";
+		string _uploadFolder = ApplicationSettings.BlogStorageFolder;
 
         public BlogStorage(string blogSlug)
         {

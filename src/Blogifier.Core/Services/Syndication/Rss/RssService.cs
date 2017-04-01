@@ -69,7 +69,10 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     await AddCategories(item, model.ProfileId);
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                _logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
+            }
         }
 
         IList<FeedItem> GetFeedItems(string url)
@@ -105,7 +108,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
             catch (Exception ex)
             {
-                var x = ex.Message;
+                _logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
                 return new List<FeedItem>();
             }
         }
@@ -126,12 +129,13 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
                         post.Content = post.Content.Replace(uri.ToString(), asset.Url);
 
-						// System.Diagnostics.Debug.WriteLine("ASSET :: " + asset.Path + " :: " + asset.Url + " :: " + asset.Image);
-
                         _db.Assets.Add(asset);
                         _db.Complete();
                     }
-                    catch { }
+                    catch(Exception ex)
+                    {
+                        _logger.LogWarning(string.Format("Error importing image {0} : {1}", img, ex.Message));
+                    }
                 }
             }
         }

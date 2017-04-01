@@ -5,3 +5,7 @@
 p {
     color: blue;
 }
+
+img {
+    max-width: 100%;
+}

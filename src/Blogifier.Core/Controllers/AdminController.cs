@@ -81,9 +81,12 @@ namespace Blogifier.Core.Controllers
 		public IActionResult Profile(AdminProfileModel model)
 		{
 			var blog = model.Blog;
-			blog.LastUpdated = SystemClock.Now();
+            var storage = new BlogStorage("");
 
-			if (blog.Id == 0)
+            blog.LastUpdated = SystemClock.Now();
+            model.AdminThemes = storage.GetThemes(ThemeType.Admin);
+
+            if (blog.Id == 0)
 			{
 				blog.Slug = BlogSlugFromTitle(blog.Title);
 

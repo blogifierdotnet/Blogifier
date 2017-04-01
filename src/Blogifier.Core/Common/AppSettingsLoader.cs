@@ -36,6 +36,9 @@ namespace Blogifier.Core.Common
 
                         if (section["PrependFileProvider"] != null)
                             ApplicationSettings.PrependFileProvider = section.GetValue<bool>("PrependFileProvider");
+
+                        if (section["BlogStorageFolder"] != null)
+                            ApplicationSettings.BlogStorageFolder = section.GetValue<string>("BlogStorageFolder");
                     }
                 }
             }

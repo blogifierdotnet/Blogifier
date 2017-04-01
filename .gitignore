@@ -235,9 +235,9 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
-**/*bf/upload
-
 PublishProfiles/
+samples/**/Logs/*
+samples/**/blog-uploads/*
 
 # Build and CI files
 artifacts/
