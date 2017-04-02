@@ -111,9 +111,20 @@ namespace Blogifier.Core.Services.FileSystem
             }
         }
 
-        public async Task <Asset> UploadFromWeb(Uri requestUri, string root, string path = "")
+        public async Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "")
         {
             path = path.Replace("/", _separator);
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                var dir = Path.Combine(Location, path);
+
+                if (!Directory.Exists(dir))
+                {
+                    CreateFolder(dir);
+                }
+            }
+            
             var fileName = TitleFromUri(requestUri);
             var filePath = string.IsNullOrEmpty(path) ? 
                 Path.Combine(Location, fileName) : 

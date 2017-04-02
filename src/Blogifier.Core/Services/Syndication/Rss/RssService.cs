@@ -66,6 +66,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     _db.Posts.Add(post);
                     _db.Complete();
 
+                    _logger.LogError(string.Format("RSS item added : {0}", item.Title));
+
                     await AddCategories(item, model.ProfileId);
                 }
             }
@@ -123,7 +125,11 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     try
                     {
                         var uri = GetUri(img, model.Domain, model.SubDomain);
-                        var asset = await storage.UploadFromWeb(uri, _root);
+
+                        var path = string.Format("{0}\\{1}", post.Published.Year, post.Published.Month);
+
+                        var asset = await storage.UploadFromWeb(uri, _root, path);
+
                         asset.ProfileId = post.ProfileId;
                         asset.LastUpdated = SystemClock.Now();
 
