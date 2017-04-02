@@ -20,7 +20,7 @@ The goal of this project is to "blogify" new or existing ASP.NET applications; B
 ### Using Blogifier.Core Nuget Package
 
 1. In VS 2017, create new ASP.NET Core 1.1 application with user authentication
-2. Open Nuget Package Manager and add Blogifier feed to package sorces:
+2. Open Nuget Package Manager and add Blogifier feed to package sources:
 ```
 https://www.myget.org/F/rtur/api/v2
 ```
@@ -28,20 +28,17 @@ https://www.myget.org/F/rtur/api/v2
 ```
 Install-Package Blogifier.Core 
 ```
-4. In the Startup.cs, add Blogifier.Core to application services:
+4. Configure services and application in Startup.cs:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
   ...
   Blogifier.Core.Configuration.InitServices(services);
 }
-```
-5. Configure Blogifier.Core application:
-```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
   ...
   Blogifier.Core.Configuration.InitApplication(app, env, loggerFactory);
 }
 ```
-6. You should be able to run application and navigate to `/blog` and `/admin`
+5. You should be able to run application and navigate to `/blog` and `/admin`
