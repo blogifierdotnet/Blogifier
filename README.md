@@ -1,15 +1,18 @@
-# Blogifier.Core ![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core)
+# Blogifier.Core [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core)
 
 Project currently in the early Beta stage and not yet ready for any production use. Sample application set to use in-memory database and all changes will be lost when application stops or restarts.
 
 ### What is Blogifier.Core
 
-The goal of this project is to "blogify" new or existing ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality. 
+The goal of this project is to "blogify" new and existing ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality. 
 
 ### System Requirements
 
- * Visual Studio 2017
  * ASP.NET Core 1.1
+ * Visual Studio 2017
+ * Visual Studio Code
+
+Designed for cross-platform, every build pushed to Windows and Linux servers
 
 ### Getting Started
 
