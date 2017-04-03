@@ -7,7 +7,7 @@ namespace Blogifier.Core.Data.Interfaces
         IAssetRepository Assets { get; }
         IProfileRepository Profiles { get; }
         ICategoryRepository Categories { get; }
-        IPostRepository Posts { get; }
+        IPostRepository BlogPosts { get; }
 
         int Complete();
     }

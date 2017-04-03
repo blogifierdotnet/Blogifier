@@ -20,7 +20,7 @@ namespace Blogifier.Core.Controllers
 
 		public IActionResult Index()
 		{
-			var posts = _db.Posts.All();
+			var posts = _db.BlogPosts.All();
 			return View(_theme + "Index.cshtml", posts);
 		}
 	}

@@ -63,7 +63,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     {
                         await ImportAttachements(post, model, storage);
                     }
-                    _db.Posts.Add(post);
+                    _db.BlogPosts.Add(post);
                     _db.Complete();
                     _logger.LogWarning(string.Format("RSS item added : {0}", item.Title));
 
@@ -246,8 +246,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     catIds.Add(blogCategory.Id.ToString());
                 }
-                var blogPost = _db.Posts.Single(p => p.Slug == item.Title.ToSlug());
-                await _db.Posts.UpdatePostCategories(blogPost.Id, catIds);
+                var blogPost = _db.BlogPosts.Single(p => p.Slug == item.Title.ToSlug());
+                await _db.BlogPosts.UpdatePostCategories(blogPost.Id, catIds);
             }
         }
 

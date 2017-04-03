@@ -31,7 +31,7 @@ namespace Blogifier.Core.Controllers
 
 		public IActionResult Index()
 		{
-			var posts = _db.Posts.All();
+			var posts = _db.BlogPosts.All();
 			var model = new AdminPostsModel { Blog = GetProfile(), BlogPosts = posts };
 
             _logger.LogInformation("info test message");

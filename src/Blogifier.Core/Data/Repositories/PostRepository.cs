@@ -62,14 +62,14 @@ namespace Blogifier.Core.Data.Repositories
 
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
         {
-            _db.BlogPostCategories.RemoveRange(_db.BlogPostCategories.Where(c => c.BlogPostId == postId));
+            _db.PostCategories.RemoveRange(_db.PostCategories.Where(c => c.BlogPostId == postId));
             _db.SaveChanges();
 
             if (catIds != null && catIds.Count() > 0)
             {
                 foreach (var id in catIds)
                 {
-                    _db.BlogPostCategories.Add(new BlogPostCategory
+                    _db.PostCategories.Add(new BlogPostCategory
                     {
                         BlogPostId = postId,
                         CategoryId = int.Parse(id),

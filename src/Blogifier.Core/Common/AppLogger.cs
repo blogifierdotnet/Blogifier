@@ -11,9 +11,17 @@ namespace Blogifier.Core.Common
             _logger = logger;
         }
 
-        public void LogWarning(string msg)
+        public void LogInformation(string msg)
         {
             if(_logger != null && ApplicationSettings.EnableLogging)
+            {
+                _logger.LogInformation("[BLOGIFIER] " + msg);
+            }
+        }
+
+        public void LogWarning(string msg)
+        {
+            if (_logger != null && ApplicationSettings.EnableLogging)
             {
                 _logger.LogWarning("[BLOGIFIER] " + msg);
             }

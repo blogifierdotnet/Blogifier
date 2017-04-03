@@ -20,7 +20,6 @@ namespace Blogifier.Test.Services.Syndication
 
         public FeedParserTests()
         {
-            
             var builder = new DbContextOptionsBuilder<BlogifierDbContext>();
             builder.UseInMemoryDatabase();
             _options = builder.Options;
@@ -68,7 +67,6 @@ namespace Blogifier.Test.Services.Syndication
             Assert.NotNull(feed);
         }
 
-
         [Theory()]
         [InlineData(null)]
         [InlineData("")]
@@ -90,7 +88,6 @@ namespace Blogifier.Test.Services.Syndication
                 Assert.Equal(dt, result);
             }
         }
-
 
         string GetRoot()
         {
