@@ -5,7 +5,7 @@ namespace Blogifier.Core.Data.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IAssetRepository Assets { get; }
-        IBlogRepository Blogs { get; }
+        IProfileRepository Profiles { get; }
         ICategoryRepository Categories { get; }
         IPostRepository Posts { get; }
 

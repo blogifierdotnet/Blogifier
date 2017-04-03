@@ -29,7 +29,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
         public async Task Import(AdminSyndicationModel model, string root)
         {
-            var blog = _db.Blogs.Single(b => b.Id == model.ProfileId);
+            var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
             if (blog == null)
                 return;
 
@@ -66,14 +66,14 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     _db.Posts.Add(post);
                     _db.Complete();
 
-                    _logger.LogError(string.Format("RSS item added : {0}", item.Title));
+                    //_logger.LogError(string.Format("RSS item added : {0}", item.Title));
 
                     await AddCategories(item, model.ProfileId);
                 }
             }
             catch(Exception ex)
             {
-                _logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
+                //_logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
             }
         }
 
@@ -84,7 +84,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 var client = new HttpClient();
                 var doc = new XDocument();
 
-                _logger.LogWarning("Importing RSS from feed: " + url);
+                //_logger.LogWarning("Importing RSS from feed: " + url);
 
                 if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
@@ -110,7 +110,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
             catch (Exception ex)
             {
-                _logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
+                //_logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
                 return new List<FeedItem>();
             }
         }
@@ -140,7 +140,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     catch(Exception ex)
                     {
-                        _logger.LogWarning(string.Format("Error importing image {0} : {1}", img, ex.Message));
+                        //_logger.LogWarning(string.Format("Error importing image {0} : {1}", img, ex.Message));
                     }
                 }
             }

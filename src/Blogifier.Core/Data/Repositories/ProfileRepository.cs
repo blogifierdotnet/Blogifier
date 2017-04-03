@@ -3,10 +3,10 @@ using Blogifier.Core.Data.Interfaces;
 
 namespace Blogifier.Core.Data.Repositories
 {
-    public class BlogRepository : Repository<Profile>, IBlogRepository
+    public class ProfileRepository : Repository<Profile>, IProfileRepository
     {
         BlogifierDbContext _db;
-        public BlogRepository(BlogifierDbContext db) : base(db)
+        public ProfileRepository(BlogifierDbContext db) : base(db)
         {
             _db = db;
         }

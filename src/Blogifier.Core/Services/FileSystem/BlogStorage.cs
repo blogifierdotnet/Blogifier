@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.FileSystem
@@ -39,8 +40,12 @@ namespace Blogifier.Core.Services.FileSystem
         {
             get
             {
-				var path = Path.Combine(ApplicationSettings.WebRootPath, _uploadFolder);
-				if (!string.IsNullOrEmpty(_blogSlug))
+                var path = ApplicationSettings.WebRootPath == null ? 
+                    Path.Combine(GetAppRoot(), "wwwroot") : ApplicationSettings.WebRootPath;
+
+                path = Path.Combine(path, _uploadFolder);
+
+                if (!string.IsNullOrEmpty(_blogSlug))
                 {
                     path = Path.Combine(path, _blogSlug);
                 }
@@ -53,7 +58,10 @@ namespace Blogifier.Core.Services.FileSystem
             var themes = new List<SelectListItem>();
             themes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
 
-            var path = Path.Combine(GetRoot(), "Views");
+            var path = ApplicationSettings.ContentRootPath == null ?
+                GetAppRoot() : ApplicationSettings.ContentRootPath;
+
+            path = Path.Combine(path, "Views");
             path = Path.Combine(path, "Blogifier");
             path = Path.Combine(path, "Themes");
 
@@ -186,11 +194,20 @@ namespace Blogifier.Core.Services.FileSystem
 			return _uploadFolder + "/" + _blogSlug + url;
         }
 
-        string GetRoot()
+        /// <summary>
+        /// This only needed when ApplicationSettings.WebRootPath not available
+        /// for example when executing unit tests
+        /// </summary>
+        /// <returns>Path to application folder</returns>
+        string GetAppRoot()
         {
-            var root = Directory.GetCurrentDirectory();
-            // unit tests workaround
-            return root.Replace("Blogifier.Tests", "Blogifier.Web");
+            var assembly = Assembly.Load(new AssemblyName("Blogifier.Test"));
+            var uri = new UriBuilder(assembly.CodeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            var root = Path.GetDirectoryName(path);
+            root = root.Substring(0, root.IndexOf("Blogifier.Test")).Replace("tests\\", "");
+
+            return Path.Combine(root, "samples\\WebApp");
         }
 
         string TitleFromUri(Uri uri)

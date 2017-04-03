@@ -10,13 +10,13 @@ namespace Blogifier.Core.Data.Repositories
         {
             _db = db;
             Assets = new AssetRepository(_db);
-            Blogs = new BlogRepository(_db);
+            Profiles = new ProfileRepository(_db);
             Categories = new CategoryRepository(_db);
             Posts = new PostRepository(_db);
         }
 
         public IAssetRepository Assets { get; private set; }
-        public IBlogRepository Blogs { get; private set; }
+        public IProfileRepository Profiles { get; private set; }
         public ICategoryRepository Categories { get; private set; }
         public IPostRepository Posts { get; private set; }
 

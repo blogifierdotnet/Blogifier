@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:blogChannel="http://backend.userland.com/blogChannelModule" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pingback="http://madskills.com/public/xml/rss/module/pingback/" xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:betag="http://dotnetblogengine.net/schemas/tags">
+  <channel>
+    <title>RTur.net</title>
+    <description>.NET and Open Source: better together</description>
+    <link>http://rtur.net/blog/</link>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>BlogEngine.NET 3.2.2.3</generator>
+    <language>en-US</language>
+    <blogChannel:blogRoll>http://rtur.net/blog/opml.axd</blogChannel:blogRoll>
+    <blogChannel:blink>http://www.dotnetblogengine.net/syndication.axd</blogChannel:blink>
+    <dc:creator>RTur.net</dc:creator>
+    <dc:title>RTur.net</dc:title>
+    <geo:lat>0.000000</geo:lat>
+    <geo:long>0.000000</geo:long>
+	
+    <item>
+      <title>Building Widgets for BlogEngine.NET 3.3</title>
+      <description>zzzzzzzzzzzzzzzzzzzzzzzzzzzzz</description>
+      <link>http://rtur.net/blog/post/2015/12/28/blogengine-net-3-2-released</link>
+      <comments>http://rtur.net/blog/post/2015/12/28/blogengine-net-3-2-released#comment</comments>
+      <guid>http://rtur.net/blog/post.aspx?id=9fba7b1d-e8e7-42f9-990b-ff02a1478769</guid>
+      <pubDate>Mon, 28 Dec 2015 13:00:00 -0800</pubDate>
+      <category>Tutorials</category>
+      <category>Widgets</category>
+      <dc:publisher>rtur.net</dc:publisher>
+      <pingback:server>http://rtur.net/blog/pingback.axd</pingback:server>
+      <pingback:target>http://rtur.net/blog/post.aspx?id=9fba7b1d-e8e7-42f9-990b-ff02a1478769</pingback:target>
+      <slash:comments>4</slash:comments>
+      <trackback:ping>http://rtur.net/blog/trackback.axd?id=9fba7b1d-e8e7-42f9-990b-ff02a1478769</trackback:ping>
+      <wfw:comment>http://rtur.net/blog/post/2015/12/28/blogengine-net-3-2-released#comment</wfw:comment>
+      <wfw:commentRss>http://rtur.net/blog/syndication.axd?post=9fba7b1d-e8e7-42f9-990b-ff02a1478769</wfw:commentRss>
+    </item>
+    
+	<item>
+      <title>Post Paging Extension</title>
+      <description>xxxxxxxxxxxxxxxxxxxxxxx</description>
+      <link>http://rtur.net/blog/post/2015/12/11/post-paging-extension</link>
+      <comments>http://rtur.net/blog/post/2015/12/11/post-paging-extension#comment</comments>
+      <guid>http://rtur.net/blog/post.aspx?id=fc03ad55-4fd0-4f51-95de-0a0a4ef58292</guid>
+      <pubDate>Fri, 11 Dec 2015 15:40:00 -0800</pubDate>
+      <category>Extensions</category>
+      <dc:publisher>rtur.net</dc:publisher>
+      <pingback:server>http://rtur.net/blog/pingback.axd</pingback:server>
+      <pingback:target>http://rtur.net/blog/post.aspx?id=fc03ad55-4fd0-4f51-95de-0a0a4ef58292</pingback:target>
+      <slash:comments>3</slash:comments>
+      <trackback:ping>http://rtur.net/blog/trackback.axd?id=fc03ad55-4fd0-4f51-95de-0a0a4ef58292</trackback:ping>
+      <wfw:comment>http://rtur.net/blog/post/2015/12/11/post-paging-extension#comment</wfw:comment>
+      <wfw:commentRss>http://rtur.net/blog/syndication.axd?post=fc03ad55-4fd0-4f51-95de-0a0a4ef58292</wfw:commentRss>
+    </item>
+	
+  </channel>
+</rss>

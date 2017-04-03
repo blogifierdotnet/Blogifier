@@ -32,7 +32,7 @@ namespace Blogifier.Core.Controllers
 		public IActionResult Index()
 		{
 			var posts = _db.Posts.All();
-			var model = new AdminPostsModel { Blog = GetBlog(), BlogPosts = posts };
+			var model = new AdminPostsModel { Blog = GetProfile(), BlogPosts = posts };
 
             _logger.LogInformation("info test message");
             _logger.LogWarning("warning test message");
@@ -44,7 +44,7 @@ namespace Blogifier.Core.Controllers
 		[Route("syndication")]
 		public IActionResult Syndication()
 		{
-			var model = new AdminSyndicationModel { Blog = GetBlog() };
+			var model = new AdminSyndicationModel { Blog = GetProfile() };
 			return View(_theme + "Syndication.cshtml", model);
 		}
 
@@ -52,7 +52,7 @@ namespace Blogifier.Core.Controllers
 		[Route("syndication")]
 		public async Task<IActionResult> Syndication(AdminSyndicationModel model)
 		{
-			model.Blog = GetBlog();
+			model.Blog = GetProfile();
 
 			if (model.Blog == null)
 				return View("Error");
@@ -67,7 +67,7 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile()
 		{
-			var blog = GetBlog();
+			var blog = GetProfile();
 
 			var storage = new BlogStorage("");
 
@@ -101,7 +101,7 @@ namespace Blogifier.Core.Controllers
 			{
 				if (blog.Id > 0)
 				{
-					var dbBlog = _db.Blogs.Single(b => b.Id == blog.Id);
+					var dbBlog = _db.Profiles.Single(b => b.Id == blog.Id);
 					blog.Title = dbBlog.Title;
 					blog.Description = dbBlog.Description;
 					blog.Name = dbBlog.Name;
@@ -109,10 +109,10 @@ namespace Blogifier.Core.Controllers
 				}
 				else
 				{
-					_db.Blogs.Add(blog);
+					_db.Profiles.Add(blog);
 				}
 				_db.Complete();
-				var updatedBlog = _db.Blogs.Single(b => b.IdentityName == blog.IdentityName);
+				var updatedBlog = _db.Profiles.Single(b => b.IdentityName == blog.IdentityName);
 				model.Blog = updatedBlog;
 				return View(_theme + "Profile.cshtml", model);
 			}
@@ -122,24 +122,24 @@ namespace Blogifier.Core.Controllers
 		[Route("about")]
 		public IActionResult About()
 		{
-			return View(_theme + "About.cshtml", new AdminBaseModel { Blog = GetBlog() });
+			return View(_theme + "About.cshtml", new AdminBaseModel { Blog = GetProfile() });
 		}
 
 		#region Private members
 
-		private Profile GetBlog()
+		private Profile GetProfile()
 		{
-			return _db.Blogs.Single(b => b.IdentityName == User.Identity.Name);
+			return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
 		}
 
 		private string BlogSlugFromTitle(string title)
 		{
 			var slug = title.ToSlug();
-			if (_db.Blogs.Single(b => b.Slug == slug) != null)
+			if (_db.Profiles.Single(b => b.Slug == slug) != null)
 			{
 				for (int i = 2; i < 100; i++)
 				{
-					if (_db.Blogs.Single(b => b.Slug == slug + i.ToString()) == null)
+					if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
 					{
 						return slug + i.ToString();
 					}
