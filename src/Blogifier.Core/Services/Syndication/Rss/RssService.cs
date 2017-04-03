@@ -18,13 +18,13 @@ namespace Blogifier.Core.Services.Syndication.Rss
 	public class RssService : IRssService
     {
         IUnitOfWork _db;
-        private readonly ILogger _logger;
         string _root;
+        private readonly AppLogger _logger;
 
         public RssService(IUnitOfWork db, ILogger<RssService> logger)
         {
             _db = db;
-            _logger = logger;
+            _logger = new AppLogger(logger);
         }
 
         public async Task Import(AdminSyndicationModel model, string root)
@@ -65,15 +65,14 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     _db.Posts.Add(post);
                     _db.Complete();
-
-                    //_logger.LogError(string.Format("RSS item added : {0}", item.Title));
+                    _logger.LogWarning(string.Format("RSS item added : {0}", item.Title));
 
                     await AddCategories(item, model.ProfileId);
                 }
             }
             catch(Exception ex)
             {
-                //_logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
+                _logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
             }
         }
 
@@ -84,7 +83,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 var client = new HttpClient();
                 var doc = new XDocument();
 
-                //_logger.LogWarning("Importing RSS from feed: " + url);
+                _logger.LogWarning("Importing RSS from feed: " + url);
 
                 if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
@@ -110,64 +109,21 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
             catch (Exception ex)
             {
-                //_logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
+                _logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
                 return new List<FeedItem>();
             }
         }
 
         async Task ImportImages(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
         {
-            var imgLinks = GetImages(post.Content);
-            if (imgLinks != null && imgLinks.Count > 0)
-            {
-                foreach (var img in imgLinks)
-                {
-                    try
-                    {
-                        var uri = GetUri(img, model.Domain, model.SubDomain);
-
-                        var path = string.Format("{0}\\{1}", post.Published.Year, post.Published.Month);
-
-                        var asset = await storage.UploadFromWeb(uri, _root, path);
-
-                        asset.ProfileId = post.ProfileId;
-                        asset.LastUpdated = SystemClock.Now();
-
-                        post.Content = post.Content.Replace(uri.ToString(), asset.Url);
-
-                        _db.Assets.Add(asset);
-                        _db.Complete();
-                    }
-                    catch(Exception ex)
-                    {
-                        //_logger.LogWarning(string.Format("Error importing image {0} : {1}", img, ex.Message));
-                    }
-                }
-            }
+            var images = GetImages(post.Content);
+            await AddAssets(images, post, storage, model, false);
         }
 
         async Task ImportAttachements(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
         {
-            var links = GetAttachements(post.Content);
-            if (links.Any())
-            {
-                foreach (var link in links)
-                {
-                    try
-                    {
-                        var uri = GetUri(link, model.Domain, model.SubDomain);
-                        var asset = await storage.UploadFromWeb(uri, _root);
-                        asset.ProfileId = post.ProfileId;
-                        asset.AssetType = AssetType.Attachment;
-                        asset.LastUpdated = SystemClock.Now();
-                        post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
-
-                        _db.Assets.Add(asset);
-                        _db.Complete();
-                    }
-                    catch { }
-                }
-            }
+            var attachements = GetAttachements(post.Content);
+            await AddAssets(attachements, post, storage, model, true);
         }
 
         IList<string> GetImages(string html)
@@ -218,6 +174,37 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 }
             }
             return links;
+        }
+
+        async Task AddAssets(IList<string> assets, BlogPost post, IBlogStorage storage, AdminSyndicationModel model, bool isAttachement)
+        {
+            if (assets.Any())
+            {
+                foreach (var item in assets)
+                {
+                    try
+                    {
+                        var uri = GetUri(item, model.Domain, model.SubDomain);
+                        var path = string.Format("{0}\\{1}", post.Published.Year, post.Published.Month);
+
+                        var asset = await storage.UploadFromWeb(uri, _root, path);
+                        asset.ProfileId = post.ProfileId;
+                        asset.LastUpdated = SystemClock.Now();
+
+                        if(isAttachement)
+                            asset.AssetType = AssetType.Attachment;
+
+                        post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
+
+                        _db.Assets.Add(asset);
+                        _db.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(string.Format("Error importing {0} : {1}", item, ex.Message));
+                    }
+                }
+            }
         }
 
         Uri GetUri(string link, string domain, string subdomain)
