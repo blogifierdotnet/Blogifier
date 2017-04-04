@@ -55,9 +55,9 @@ namespace Blogifier.Test.Services.Syndication
                 var service = new RssService(uow, null);
 
                 var model = new AdminSyndicationModel();
-                model.Blog = uow.Profiles.Single(b => b.IdentityName == "test");
+                model.Profile = uow.Profiles.Single(b => b.IdentityName == "test");
                 model.FeedUrl = path;
-                model.ProfileId = model.Blog.Id;
+                model.ProfileId = model.Profile.Id;
 
                 var result = service.Import(model, "");
 

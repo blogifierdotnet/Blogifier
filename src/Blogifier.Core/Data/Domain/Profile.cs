@@ -35,7 +35,11 @@ namespace Blogifier.Core.Data.Domain
 
         [Required]
         [StringLength(160)]
-        public string Theme { get; set; }
+        public string BlogTheme { get; set; }
+
+        [Required]
+        [StringLength(160)]
+        public string AdminTheme { get; set; }
 
 
         [StringLength(160)]

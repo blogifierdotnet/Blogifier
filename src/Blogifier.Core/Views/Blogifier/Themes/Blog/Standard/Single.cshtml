@@ -5,7 +5,7 @@
     <h2 class="blog-post-title">@Model.BlogPost.Title</h2>
     <p class="blog-post-meta">
         Posted on @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)
-        by <a href="~/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.Name</a>
+        by <a href="~/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
         in
         @foreach (var cat in Model.Categories)
             {

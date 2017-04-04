@@ -31,8 +31,13 @@ namespace Blogifier.Core.Controllers
 
 		public IActionResult Index()
 		{
-			var posts = _db.BlogPosts.All();
-			var model = new AdminPostsModel { Blog = GetProfile(), BlogPosts = posts };
+            var profile = GetProfile();
+
+            if(profile == null)
+                return RedirectToAction("Profile", "Admin");
+
+            var posts = _db.BlogPosts.All();
+			var model = new AdminPostsModel { Profile = profile, BlogPosts = posts };
 
             _logger.LogInformation("info test message");
             _logger.LogWarning("warning test message");
@@ -44,7 +49,7 @@ namespace Blogifier.Core.Controllers
 		[Route("syndication")]
 		public IActionResult Syndication()
 		{
-			var model = new AdminSyndicationModel { Blog = GetProfile() };
+			var model = new AdminSyndicationModel { Profile = GetProfile() };
 			return View(_theme + "Syndication.cshtml", model);
 		}
 
@@ -52,12 +57,12 @@ namespace Blogifier.Core.Controllers
 		[Route("syndication")]
 		public async Task<IActionResult> Syndication(AdminSyndicationModel model)
 		{
-			model.Blog = GetProfile();
+			model.Profile = GetProfile();
 
-			if (model.Blog == null)
+			if (model.Profile == null)
 				return View("Error");
 
-			model.ProfileId = model.Blog.Id;
+			model.ProfileId = model.Profile.Id;
 			await _rss.Import(model, Url.Content("~/"));
 
 			return RedirectToAction("Index", "Admin");
@@ -67,11 +72,15 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile()
 		{
-			var blog = GetProfile();
+			var profile = GetProfile();
 
 			var storage = new BlogStorage("");
 
-			var model = new AdminProfileModel { Blog = blog, AdminThemes = storage.GetThemes(ThemeType.Admin) };
+			var model = new AdminProfileModel {
+                Profile = profile,
+                AdminThemes = storage.GetThemes(ThemeType.Admin),
+                BlogThemes = storage.GetThemes(ThemeType.Blog)
+            };
 
 			return View(_theme + "Profile.cshtml", model);
 		}
@@ -80,11 +89,12 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile(AdminProfileModel model)
 		{
-			var blog = model.Blog;
+			var blog = model.Profile;
             var storage = new BlogStorage("");
 
             blog.LastUpdated = SystemClock.Now();
             model.AdminThemes = storage.GetThemes(ThemeType.Admin);
+            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
 
             if (blog.Id == 0)
 			{
@@ -113,7 +123,7 @@ namespace Blogifier.Core.Controllers
 				}
 				_db.Complete();
 				var updatedBlog = _db.Profiles.Single(b => b.IdentityName == blog.IdentityName);
-				model.Blog = updatedBlog;
+				model.Profile = updatedBlog;
 				return View(_theme + "Profile.cshtml", model);
 			}
 			return RedirectToAction("Index", "Admin");
@@ -122,7 +132,7 @@ namespace Blogifier.Core.Controllers
 		[Route("about")]
 		public IActionResult About()
 		{
-			return View(_theme + "About.cshtml", new AdminBaseModel { Blog = GetProfile() });
+			return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
 		}
 
 		#region Private members

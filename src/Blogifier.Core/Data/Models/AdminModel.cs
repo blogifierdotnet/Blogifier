@@ -7,8 +7,8 @@ namespace Blogifier.Core.Data.Models
 {
 	public class AdminBaseModel
     {
-		public Profile Blog { get; set; }
-		public bool BlogExists { get { return Blog != null; }  }
+		public Profile Profile { get; set; }
+		public bool BlogExists { get { return Profile != null; }  }
     }
 
 	public class AdminPostsModel : AdminBaseModel
@@ -18,8 +18,9 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminProfileModel : AdminBaseModel
 	{
-		public IList<SelectListItem> AdminThemes { get; set; }
-	}
+		public IList<SelectListItem> BlogThemes { get; set; }
+        public IList<SelectListItem> AdminThemes { get; set; }
+    }
 
 	public class AdminSyndicationModel : AdminBaseModel
 	{

@@ -23,7 +23,10 @@
                 <span>Admin</span>
             </div>
             <ul class="app-nav">
-                <li><a id="mu-posts" href="~/admin"><i class="fa fa-align-justify"></i> Posts</a></li>
+                @if (Model.BlogExists)
+                {
+                    <li><a id="mu-posts" href="~/admin"><i class="fa fa-align-justify"></i> Posts</a></li>
+                }
                 <li><a id="mu-profile" href="~/admin/profile"><i class="fa fa-user"></i> Profile</a></li>
                 @if(Model.BlogExists)
                 {

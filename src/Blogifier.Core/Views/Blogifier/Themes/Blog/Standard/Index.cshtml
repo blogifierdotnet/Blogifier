@@ -4,15 +4,13 @@
 @model List<BlogPost>
 
 <div class="col-sm-9">
-    <h2>Blog standard theme index page</h2>
-    <p>The standard blog theme from core package, should look blue</p>
     @if (Model != null)
     {
         foreach (var item in Model)
         {
             <h4>@item.Title</h4>
-            <div>@item.Description</div>
-            <div>@Html.Raw(item.Content)</div>
+            <div>@Html.Raw(item.Description)</div>
+            <div><a href="~/blog/@item.Slug">Read more</a></div>
         }
     }
 </div>

@@ -7,36 +7,39 @@
 <div class="app-content p-4">
     <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
         <div class="form-group">
-            <label asp-for="Blog.Title">Title</label>
-            <input type="text" asp-for="Blog.Title" class="form-control" />
-            <span asp-validation-for="Blog.Title" class="text-danger"></span>
+            <label asp-for="Profile.Title">Title</label>
+            <input type="text" asp-for="Profile.Title" class="form-control" />
+            <span asp-validation-for="Profile.Title" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Blog.Description">Blog Description</label>
-            <input asp-for="Blog.Description" type="text" class="form-control" />
-            <span asp-validation-for="Blog.Description" class="text-danger"></span>
+            <label asp-for="Profile.Description">Blog Description</label>
+            <input asp-for="Profile.Description" type="text" class="form-control" />
+            <span asp-validation-for="Profile.Description" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Blog.AuthorName">Author Name</label>
-            <input type="text" asp-for="Blog.AuthorName" class="form-control" />
-            <span asp-validation-for="Blog.AuthorName" class="text-danger"></span>
+            <label asp-for="Profile.AuthorName">Author Name</label>
+            <input type="text" asp-for="Profile.AuthorName" class="form-control" />
+            <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Blog.AuthorEmail">Email</label>
-            <input type="text" asp-for="Blog.AuthorEmail" class="form-control" />
-            <span asp-validation-for="Blog.AuthorEmail" class="text-danger"></span>
+            <label asp-for="Profile.AuthorEmail">Email</label>
+            <input type="text" asp-for="Profile.AuthorEmail" class="form-control" />
+            <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Blog.Theme">Theme</label>
-            <select asp-for="Blog.Theme" asp-items="Model.AdminThemes" class="form-control"></select>
+            <label asp-for="Profile.BlogTheme">Blog Theme</label>
+            <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Profile.AdminTheme">Admin Theme</label>
+            <select asp-for="Profile.AdminTheme" asp-items="Model.AdminThemes" class="form-control"></select>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Save</button>
         </div>
 
-        <input asp-for="Blog.Id" hidden="hidden" />
-        <input asp-for="Blog.IdentityName" hidden="hidden" />
-        <input asp-for="Blog.Slug" hidden="hidden" />
-        <input asp-for="Blog.Theme" hidden="hidden" />
+        <input asp-for="Profile.Id" hidden="hidden" />
+        <input asp-for="Profile.IdentityName" hidden="hidden" />
+        <input asp-for="Profile.Slug" hidden="hidden" />
     </form>
 </div>
