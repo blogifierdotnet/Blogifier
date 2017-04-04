@@ -185,7 +185,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     try
                     {
                         var uri = GetUri(item, model.Domain, model.SubDomain);
-                        var path = string.Format("{0}\\{1}", post.Published.Year, post.Published.Month);
+                        var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
                         var asset = await storage.UploadFromWeb(uri, _root, path);
                         asset.ProfileId = post.ProfileId;

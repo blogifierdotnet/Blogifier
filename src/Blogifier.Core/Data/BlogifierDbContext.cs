@@ -13,7 +13,7 @@ namespace Blogifier.Core.Data
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<BlogPostCategory> PostCategories { get; set; }
+        public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Asset> Assets { get; set; }
         
         #endregion

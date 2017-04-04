@@ -1,6 +1,6 @@
 ﻿namespace Blogifier.Core.Data.Domain
 {
-    public class BlogPostCategory : BaseEntity
+    public class PostCategory : BaseEntity
     {
         public int BlogPostId { get; set; }
         public BlogPost BlogPosts { get; set; }

@@ -30,6 +30,6 @@ namespace Blogifier.Core.Data.Domain
         public DateTime Published { get; set; }
 
         public Profile Profile { get; set; }
-        public List<BlogPostCategory> BlogPostCategories { get; set; }
+        public List<PostCategory> PostCategories { get; set; }
     }
 }

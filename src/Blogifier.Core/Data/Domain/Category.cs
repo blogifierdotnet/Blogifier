@@ -23,6 +23,6 @@ namespace Blogifier.Core.Data.Domain
         public string ImgSrc { get; set; }
         public int Rank { get; set; }
 
-        public List<BlogPostCategory> BlogPostCategories { get; set; }
+        public List<PostCategory> PostCategories { get; set; }
     }
 }

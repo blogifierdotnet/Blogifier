@@ -23,7 +23,7 @@ namespace Blogifier.Core.Data.Repositories
             if(pager == null)
             {
                 return _db.Categories.AsNoTracking()
-                    .Include(c => c.BlogPostCategories)
+                    .Include(c => c.PostCategories)
                     .Where(predicate)
                     .OrderBy(c => c.Title);
             }
@@ -31,7 +31,7 @@ namespace Blogifier.Core.Data.Repositories
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
             var categories = _db.Categories.AsNoTracking()
-                .Include(c => c.BlogPostCategories)
+                .Include(c => c.PostCategories)
                 .Where(predicate)
                 .OrderBy(c => c.Title)
                 .ToList();
@@ -44,7 +44,7 @@ namespace Blogifier.Core.Data.Repositories
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)
         {
             return await _db.Categories.AsNoTracking()
-                .Include(c => c.BlogPostCategories)
+                .Include(c => c.PostCategories)
                 .FirstOrDefaultAsync(predicate);
         }
     }
