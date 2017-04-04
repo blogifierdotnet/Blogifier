@@ -43,7 +43,7 @@ namespace Blogifier.Test.Services.Syndication
                 {
                     profile = new Profile();
                     profile.IdentityName = "test";
-                    profile.Name = "test";
+                    profile.AuthorName = "test";
                     profile.Slug = "test";
 
                     uow.Profiles.Add(profile);

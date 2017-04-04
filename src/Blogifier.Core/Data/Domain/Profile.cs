@@ -17,16 +17,16 @@ namespace Blogifier.Core.Data.Domain
         public string Slug { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
-
-        [Required]
         [StringLength(160)]
         public string Title { get; set; }
 
         [Required]
         [StringLength(450)]
         public string Description { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string AuthorName { get; set; }
 
         [Required]
         [StringLength(160)]
@@ -36,6 +36,8 @@ namespace Blogifier.Core.Data.Domain
         [Required]
         [StringLength(160)]
         public string Theme { get; set; }
+
+
         [StringLength(160)]
         public string Logo { get; set; }
         [StringLength(160)]

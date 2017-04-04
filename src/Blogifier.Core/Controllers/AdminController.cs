@@ -104,7 +104,7 @@ namespace Blogifier.Core.Controllers
 					var dbBlog = _db.Profiles.Single(b => b.Id == blog.Id);
 					blog.Title = dbBlog.Title;
 					blog.Description = dbBlog.Description;
-					blog.Name = dbBlog.Name;
+					blog.AuthorName = dbBlog.AuthorName;
 					blog.AuthorEmail = dbBlog.AuthorEmail;
 				}
 				else
