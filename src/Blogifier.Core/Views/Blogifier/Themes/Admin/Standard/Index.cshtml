@@ -1,22 +1,17 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 
-<div class="app-header clearfix p-4">
-    <button type="button" class="app-side-toggle"><span></span><span></span><span></span></button>
-    <h3>Posts</h3>
-</div>
-<div class="app-content p-4">
-    <div class="app-content p-4">
-        @if (Model != null && Model.BlogPosts != null)
+<div class="app-content container container-sm pt-5 pb-5">
+    <h2 class="page-title">Posts</h2>
+    @if (Model != null && Model.BlogPosts != null)
+    {
+        foreach (var item in Model.BlogPosts)
         {
-            foreach (var item in Model.BlogPosts)
-            {
-                <h4>@item.Title</h4>
-                <div>@item.Description</div>
-            }
+            <h4>@item.Title</h4>
+            <div>@item.Description</div>
         }
-        else
-        {
-            <div>You do not have any posts yet. You can start by creating new post or importing posts from RSS feed.</div>
-        }
-    </div>
+    }
+    else
+    {
+        <div>You do not have any posts yet. You can start by creating new post or importing posts from RSS feed.</div>
+    }
 </div>

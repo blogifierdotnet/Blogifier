@@ -1,16 +1,15 @@
 ﻿@using Blogifier.Core.Common
 
-<div class="app-header clearfix p-4">
-    <button type="button" class="app-side-toggle"><span></span><span></span><span></span></button>
-    <h3>About</h3>
-</div>
-<div class="app-content p-4">
-    <div class="app-content p-4">
-        <table class="table">
+<div class="app-content container container-sm pt-5 pb-5">
+    <h2 class="page-title">About</h2>
+    <table class="table">
+        <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
                 <th>Value</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>WebRootPath</td>
                 <td>@ApplicationSettings.WebRootPath</td>
@@ -39,6 +38,6 @@
                 <td>Version</td>
                 <td>@ApplicationSettings.Version</td>
             </tr>
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>

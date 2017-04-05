@@ -16,28 +16,35 @@
 </head>
 
 <body>
+
     <div class="app">
-        <div class="app-side">
-            <div class="app-profile p-4">
-                <img src="~/Embedded/admin/img/profile_small.jpg" alt="">
-                <span>Admin</span>
+        <div class="app-header">
+
+            <div class="float-left">
+                <div class="blog-info">
+                    <a href="~/blog">@Blogifier.Core.Common.ApplicationSettings.Title</a>
+                </div>
             </div>
-            <ul class="app-nav">
-                @if (Model.BlogExists)
-                {
-                    <li><a id="mu-posts" href="~/admin"><i class="fa fa-align-justify"></i> Posts</a></li>
-                }
-                <li><a id="mu-profile" href="~/admin/profile"><i class="fa fa-user"></i> Profile</a></li>
-                @if(Model.BlogExists)
-                {
-                    <li><a id="mu-settings" href="~/admin/syndication"><i class="fa fa-cog"></i> Settings</a></li>
-                }
-                <li><a id="mu-about" href="~/admin/about"><i class="fa fa-info-circle"></i> About</a></li>
-            </ul>
+
+            <div class="dropdown profile-nav float-right">
+                <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"><img src="~/Embedded/admin/img/profile_small.jpg" alt=""><span>John Doe <i class="fa fa-angle-down"></i></span></button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    @if (Model.BlogExists)
+                    {
+                        <li class="dropdown-item"><a href="~/admin" class="active"><i class="fa fa-align-justify"></i>Posts</a></li>
+                    }
+                    <li class="dropdown-item"><a href="~/admin/profile"><i class="fa fa-user"></i>Profile</a></li>
+                    @if (Model.BlogExists)
+                    {
+                        <li class="dropdown-item"><a href="~/admin/syndication"><i class="fa fa-cog"></i>Tools</a></li>
+                        <li class="dropdown-item"><a href="~/admin/about"><i class="fa fa-info-circle"></i>About</a></li>
+                    }
+                </ul>
+            </div>
         </div>
-        <div class="app-body">
-            @RenderBody()
-        </div>
+
+        @RenderBody()
+
     </div>
 
     <script src="~/Embedded/admin/js/jquery-2.2.4.min.js"></script>
