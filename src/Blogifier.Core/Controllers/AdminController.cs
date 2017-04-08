@@ -9,6 +9,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Blogifier.Core.Controllers
 {
@@ -29,23 +30,43 @@ namespace Blogifier.Core.Controllers
 			_theme = "~/Views/Blogifier/Themes/Admin/Standard/";
 		}
 
-		public IActionResult Index()
+        public async Task<IActionResult> Index()
 		{
             var profile = GetProfile();
 
             if(profile == null)
                 return RedirectToAction("Profile", "Admin");
 
-            var posts = _db.BlogPosts.All();
-			var model = new AdminPostsModel { Profile = profile, BlogPosts = posts };
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id);
+            var model = new AdminPostsModel { Profile = profile, BlogPosts = posts };
 
-            _logger.LogInformation("info test message");
-            _logger.LogWarning("warning test message");
-
-			return View(_theme + "Index.cshtml", model);
+            if (posts.Any())
+            {
+                var firstPost = posts.ToList()[0];
+                model.SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
+            }
+            return View(_theme + "Index.cshtml", model);
 		}
 
-		[HttpGet]
+        [HttpGet]
+        [Route("{slug}")]
+        public async Task<IActionResult> Index(string slug)
+        {
+            var profile = GetProfile();
+
+            if (profile == null)
+                return RedirectToAction("Profile", "Admin");
+
+            var model = new AdminPostsModel {
+                Profile = profile,
+                SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug),
+                BlogPosts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id)
+            };
+
+            return View(_theme + "Index.cshtml", model);
+        }
+
+        [HttpGet]
 		[Route("syndication")]
 		public IActionResult Syndication()
 		{

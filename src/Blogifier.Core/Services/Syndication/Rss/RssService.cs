@@ -76,6 +76,47 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
+        public async Task<string> Display(string absoluteUri)
+        {
+            var pubs = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
+
+            var feed = new Feed()
+            {
+                Title = ApplicationSettings.Title,
+                Description = ApplicationSettings.Description,
+                Link = new Uri(absoluteUri + "/rss"),
+                Copyright = "(c) " + DateTime.Now.Year
+            };
+
+            foreach (var post in pubs)
+            {
+                var postDetails = _db.BlogPosts.Single(p => p.Slug == post.Slug);
+
+                var item = new FeedItem()
+                {
+                    Title = post.Title,
+                    Body = postDetails.Content.Replace("src=\"blog-uploads/", "src=\"" + absoluteUri + "/blog-uploads/"),
+                    Link = new Uri(absoluteUri + "/blog/" + post.Slug),
+                    Permalink = absoluteUri + "/blog/" + post.Slug,
+                    PublishDate = post.Published,
+                    Author = new Author() { Name = post.Name, Email = post.AuthorEmail }
+                };
+
+                if (post.Categories != null && post.Categories.Count > 0)
+                {
+                    foreach (var cat in post.Categories)
+                    {
+                        item.Categories.Add(cat.Value);
+                    }
+                }
+
+                item.Comments = new Uri(absoluteUri + "/blog/" + post.Slug);
+                feed.Items.Add(item);
+            }
+
+            return feed.Serialize();
+        }
+
         IList<FeedItem> GetFeedItems(string url)
         {
             try

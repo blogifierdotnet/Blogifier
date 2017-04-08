@@ -13,6 +13,7 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminPostsModel : AdminBaseModel
 	{
+        public BlogPost SelectedPost { get; set; }
 		public IEnumerable<BlogPost> BlogPosts { get; set; }
 	}
 

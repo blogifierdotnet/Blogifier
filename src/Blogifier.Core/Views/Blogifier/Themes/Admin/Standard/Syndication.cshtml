@@ -5,18 +5,15 @@
         <h2 class="page-title">RSS Import</h2>
         <div id="importForm">
             <div class="form-group">
-                <label asp-for="FeedUrl">RSS Url</label>
-                <input type="text" asp-for="FeedUrl" class="form-control" />
+                <input type="text" asp-for="FeedUrl" class="form-control" placeholder="RSS Url" />
                 <span asp-validation-for="FeedUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Domain">Domain Url</label>
-                <input asp-for="Domain" type="text" class="form-control" />
+                <input asp-for="Domain" type="text" class="form-control" placeholder="Domain Url" />
                 <span asp-validation-for="Domain" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SubDomain">Sub Folder</label>
-                <input asp-for="SubDomain" type="text" class="form-control" />
+                <input asp-for="SubDomain" type="text" class="form-control" placeholder="Sub Folder" />
                 <span asp-validation-for="SubDomain" class="text-danger"></span>
             </div>
 
