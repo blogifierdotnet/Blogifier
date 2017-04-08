@@ -35,7 +35,10 @@
             </div>
         </div>
         <div class="posts-content-body">
-            @Html.Raw(Model.SelectedPost.Content)
+            @if (Model.SelectedPost != null)
+            {
+                @Html.Raw(Model.SelectedPost.Content)
+            }
         </div>
     </div>
 </div>
