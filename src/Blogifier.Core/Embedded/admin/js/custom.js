@@ -1,4 +1,11 @@
-$(".app-side-toggle").click(function() {
+toastr.options.positionClass = 'toast-bottom-right';
+toastr.options.backgroundpositionClass = 'toast-bottom-right';
+
+function profileLogOut() {
+    $("#frmLogOut").submit();
+}
+
+$(".app-side-toggle").click(function () {
     $(".app").toggleClass("toggled")
 });
 //

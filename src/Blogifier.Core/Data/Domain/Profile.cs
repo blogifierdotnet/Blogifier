@@ -29,19 +29,14 @@ namespace Blogifier.Core.Data.Domain
         public string AuthorName { get; set; }
 
         [Required]
+        [EmailAddress]
         [StringLength(160)]
-        [DataType(DataType.EmailAddress)]
         public string AuthorEmail { get; set; }
 
         [Required]
         [StringLength(160)]
         public string BlogTheme { get; set; }
-
-        [Required]
-        [StringLength(160)]
-        public string AdminTheme { get; set; }
-
-
+                
         [StringLength(160)]
         public string Logo { get; set; }
         [StringLength(160)]

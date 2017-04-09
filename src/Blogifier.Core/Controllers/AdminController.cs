@@ -99,7 +99,6 @@ namespace Blogifier.Core.Controllers
 
 			var model = new AdminProfileModel {
                 Profile = profile,
-                AdminThemes = storage.GetThemes(ThemeType.Admin),
                 BlogThemes = storage.GetThemes(ThemeType.Blog)
             };
 
@@ -110,44 +109,47 @@ namespace Blogifier.Core.Controllers
 		[Route("profile")]
 		public IActionResult Profile(AdminProfileModel model)
 		{
-			var blog = model.Profile;
-            var storage = new BlogStorage("");
+            var profile = model.Profile;
 
-            blog.LastUpdated = SystemClock.Now();
-            model.AdminThemes = storage.GetThemes(ThemeType.Admin);
+            if(profile.Id == 0)
+            {
+                profile.IdentityName = User.Identity.Name;
+                profile.BlogTheme = ApplicationSettings.AdminTheme;
+                profile.Slug = BlogSlugFromTitle(profile.Title);
+
+                ModelState.Clear();
+                TryValidateModel(model);
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (profile.Id > 0)
+                {
+                    var existing = _db.Profiles.Single(b => b.Id == profile.Id);
+                    existing.Title = profile.Title;
+                    existing.Description = profile.Description;
+                    existing.AuthorName = profile.AuthorName;
+                    existing.AuthorEmail = profile.AuthorEmail;
+                    existing.Logo = profile.Logo;
+                    existing.Avatar = profile.Avatar;
+                    existing.Image = profile.Image;
+                }
+                else
+                {
+                    _db.Profiles.Add(profile);
+                }
+                _db.Complete();
+
+                var updated = _db.Profiles.Single(b => b.IdentityName == profile.IdentityName);
+                model.Profile = updated;
+
+                ViewBag.Message = "Profile updated";
+            }
+
+            var storage = new BlogStorage("");
             model.BlogThemes = storage.GetThemes(ThemeType.Blog);
 
-            if (blog.Id == 0)
-			{
-				blog.Slug = BlogSlugFromTitle(blog.Title);
-
-				if(User != null)
-					blog.IdentityName = User.Identity.Name;
-			}
-
-			ModelState.Clear();
-			TryValidateModel(model);
-
-			if (ModelState.IsValid)
-			{
-				if (blog.Id > 0)
-				{
-					var dbBlog = _db.Profiles.Single(b => b.Id == blog.Id);
-					blog.Title = dbBlog.Title;
-					blog.Description = dbBlog.Description;
-					blog.AuthorName = dbBlog.AuthorName;
-					blog.AuthorEmail = dbBlog.AuthorEmail;
-				}
-				else
-				{
-					_db.Profiles.Add(blog);
-				}
-				_db.Complete();
-				var updatedBlog = _db.Profiles.Single(b => b.IdentityName == blog.IdentityName);
-				model.Profile = updatedBlog;
-				return View(_theme + "Profile.cshtml", model);
-			}
-			return RedirectToAction("Index", "Admin");
+            return View(_theme + "Profile.cshtml", model);
 		}
 
 		[Route("about")]

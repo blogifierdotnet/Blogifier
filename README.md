@@ -60,7 +60,6 @@ Default application settings can be overwritten in application `appsettings.json
 {
   "Blogifier": {
     "UseInMemoryDatabase": false
-    ...
   }
 }
 ```
@@ -72,6 +71,7 @@ Default application settings can be overwritten in application `appsettings.json
 | EnableLogging | To enable application logging | `false` |
 | BlogStorageFolder | Folder for uploaded files/images | `blog-uploads` |
 | SupportedStorageFiles | File types allowed for upload | `zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml` |
+| AdminTheme | Administration theme | `Standard` |
 | Title | Appliation title | `Blog Name` |
 | Description | Application description | `Short description of the blog` |
 | ItemsPerPage | Number of items per page in the lists | `10` |

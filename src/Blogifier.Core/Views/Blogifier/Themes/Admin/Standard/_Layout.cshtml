@@ -8,6 +8,7 @@
 
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Ubuntu:300,400,500,700" rel="stylesheet">
+    <link href="~/Embedded/admin/css/toastr.min.css" rel="stylesheet" />
     <link href="~/Embedded/admin/css/styles.css" rel="stylesheet">
 
     <!-- TITLE -->
@@ -39,6 +40,7 @@
                         <li class="dropdown-item"><a href="~/admin/syndication"><i class="fa fa-cog"></i>Tools</a></li>
                         <li class="dropdown-item"><a href="~/admin/about"><i class="fa fa-info-circle"></i>About</a></li>
                     }
+                    <li class="dropdown-item"><a href="" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -46,27 +48,14 @@
         @RenderBody()
 
     </div>
+    <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 
     <script src="~/Embedded/admin/js/jquery-2.2.4.min.js"></script>
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
     <script src="~/Embedded/admin/js/bootstrap.min.js"></script>
     <script src="~/Embedded/admin/js/icheck.min.js"></script>
+    <script src="~/Embedded/admin/js/toastr.min.js"></script>
     <script src="~/Embedded/admin/js/custom.js"></script>
-    <script>
-        var url = window.location.href;
-        if (url.indexOf('admin/profile') > 0) {
-            $("#mu-profile").addClass("active");
-        }
-        else if (url.indexOf('admin/syndication') > 0) {
-            $("#mu-settings").addClass("active");
-        }
-        else if (url.indexOf('admin/about') > 0) {
-            $("#mu-about").addClass("active");
-        }
-        else {
-            $("#mu-posts").addClass("active");
-        }
-    </script>
-
+    @RenderSection("Scripts", false)
 </body>
 </html>
