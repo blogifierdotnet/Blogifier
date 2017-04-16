@@ -27,7 +27,7 @@ namespace Blogifier.Core.Controllers
 			_db = db;
 			_rss = rss;
             _logger = logger;
-			_theme = "~/Views/Blogifier/Themes/Admin/Standard/";
+			_theme = "~/Views/Blogifier/Themes/Admin/" + ApplicationSettings.AdminTheme + "/";
 		}
 
         public async Task<IActionResult> Index()
@@ -42,8 +42,8 @@ namespace Blogifier.Core.Controllers
 
             if (posts.Any())
             {
-                var firstPost = posts.ToList()[0];
-                model.SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
+                //var firstPost = posts.ToList()[0];
+                model.SelectedPost = posts.ToList()[0]; // await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
             }
             return View(_theme + "Index.cshtml", model);
 		}
@@ -59,7 +59,8 @@ namespace Blogifier.Core.Controllers
 
             var model = new AdminPostsModel {
                 Profile = profile,
-                SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug),
+                //SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug),
+                SelectedPost = _db.BlogPosts.Find(p => p.Slug == slug).FirstOrDefault(),
                 BlogPosts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id)
             };
 

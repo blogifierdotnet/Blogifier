@@ -42,5 +42,77 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\blogifier\admin\reference\css\animate.css" />
+    <None Include="wwwroot\blogifier\admin\reference\css\bootstrap.css" />
+    <None Include="wwwroot\blogifier\admin\reference\css\bootstrap.css.map" />
+    <None Include="wwwroot\blogifier\admin\reference\css\bootstrap.min.css" />
+    <None Include="wwwroot\blogifier\admin\reference\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\1.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\2.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\3.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\4.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\5.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\6.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\7.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\congruent_pentagon.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\header-profile-skin-1.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\header-profile-skin-2.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\header-profile-skin-3.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\header-profile.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\otis_redding.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\shattered.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\patterns\triangular.png" />
+    <None Include="wwwroot\blogifier\admin\reference\css\style.css" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\css\font-awesome.css" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\css\font-awesome.min.css" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\animated.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\bordered-pulled.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\core.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\fixed-width.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\font-awesome.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\icons.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\larger.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\list.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\mixins.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\path.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\rotated-flipped.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\screen-reader.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\stacked.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\less\variables.less" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\font-awesome.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_animated.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_core.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_fixed-width.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_icons.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_larger.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_list.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_mixins.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_path.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_screen-reader.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_stacked.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\font-awesome\scss\_variables.scss" />
+    <None Include="wwwroot\blogifier\admin\reference\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\blogifier\admin\reference\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\blogifier\admin\reference\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\blogifier\admin\reference\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\blogifier\admin\reference\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\blogifier\admin\reference\img\profile_small.jpg" />
+    <None Include="wwwroot\blogifier\admin\reference\js\bootstrap.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\bootstrap.min.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\app.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\jquery-3.1.1.min.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\plugins\metisMenu\jquery.metisMenu.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\plugins\slimscroll\jquery.slimscroll.js" />
+    <None Include="wwwroot\blogifier\admin\reference\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+  </ItemGroup>
 
 </Project>

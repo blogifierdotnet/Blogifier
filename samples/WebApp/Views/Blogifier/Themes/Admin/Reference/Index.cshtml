@@ -1,0 +1,128 @@
+﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@{ 
+    var post = Model.SelectedPost;
+}
+<script src="~/blogifier/admin/reference/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        menubar: false,
+        statusbar: false,
+        toolbar1: 'undo redo | styleselect | bold italic underline | link unlink image | alignleft aligncenter alignright alignjustify | bullist numlist | blockquote | code fullscreen',
+        file_picker_types: 'file image media'
+
+    });
+</script>
+<style>
+    .wrap {
+        position: relative;
+        padding: 44px;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .mce-tinymce {
+        position: static !important;
+    }
+
+    .mce-toolbar-grp {
+        position: absolute !important;
+        top: 0;
+    }
+
+    iframe,
+    .mce-edit-area,
+    .mce-container-body .mce-stack-layout {
+        border: 0 !important;
+    }
+</style>
+
+<div class="app-content posts">
+    <div class="posts-content">
+        <div class="row">
+            <div class="col-md-3 posts-list">
+                <button type="button" onclick="EditPost(0)" class="btn btn-primary btn-block" style="margin-bottom: 10px">New Post</button>
+                @if (Model != null && Model.BlogPosts != null)
+                {
+                    <ul class="list-group elements-list">
+                        @foreach (var item in Model.BlogPosts)
+                        {
+                            var sel = item.Id == post.Id ? "background: #fff" : "";
+                            var dt = String.Format("{0:f}", item.Published);
+                            var pub = item.Published == DateTime.MinValue ?
+                                        "<span class='label label-warning'>Draft</span>" :
+                                        string.Format("<i class='fa fa-clock-o'></i> {0}", dt);
+
+                            <li class="list-group-item" style="@sel">
+                                <a href="~/admin/@item.Slug">
+                                    <strong>@item.Title</strong>
+                                    <div class="small m-t-xs">
+                                        <p class="m-b-none">
+                                            @Html.Raw(pub)
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>                   
+                }
+            </div>
+            <div class="col-md-9">
+                <div id="post-view" class="row">
+                    @if (post != null)
+                    {
+                        var cats = "";
+                        if (post.PostCategories != null && post.PostCategories.Count > 0)
+                        {
+                            foreach (var cat in post.PostCategories)
+                            {
+                                cats += string.Format("<span class='btn btn-white btn-xs' onclick='alert(\"{0}\")'>{1} <i class='fa fa-remove'></i></span> ", cat.CategoryId, cat.Category.Title);
+                            }
+                        }
+                        cats += " <span class='btn btn-white btn-xs' title='Add category' onclick='alert(\"0\")'> <i class='fa fa-plus'></i></span> ";
+
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                @Html.Raw(cats)
+                            </div>
+                            <div class="pull-right">
+                                <div class="tooltip-demo">
+                                    <button class="btn btn-white btn-xs" title="Edit post"><i class="fa fa-pencil"></i> Edit</button>
+                                    @if (post.Published != DateTime.MinValue)
+                                    {
+                                        <button class="btn btn-white btn-xs" title="Unpublish"><i class="fa fa-undo"></i> </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-white btn-xs" title="Publish"><i class="fa fa-send"></i> </button>
+                                    }
+                                    <a href="~/blog/@post.Slug" class="btn btn-white btn-xs" target="_blank" title="View in the blog"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;
+                                    <button class="btn btn-white btn-xs" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h1>@post.Title</h1>
+                            @Html.Raw(post.Content)
+                        </div>
+                    }
+                </div>
+                
+                <div id="post-edit" class="row" style="display: none">
+                    <div class="wrap">
+                        <input type="text" class="form-control" placeholder="Title ..." autofocus>
+                        <form method="post">
+                            <textarea id="txtEditPost" style="height: 500px" autofocus>Hello, World!</textarea>
+                        </form>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+
+    </div>
+</div>

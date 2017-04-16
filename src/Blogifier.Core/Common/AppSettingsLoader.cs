@@ -36,6 +36,9 @@ namespace Blogifier.Core.Common
                         if (section["SupportedStorageFiles"] != null)
                             ApplicationSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
 
+                        if (section["AdminTheme"] != null)
+                            ApplicationSettings.AdminTheme = section.GetValue<string>("AdminTheme");
+
                         // applicatin settings
 
                         if (section["Title"] != null)

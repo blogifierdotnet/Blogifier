@@ -191,7 +191,7 @@ namespace Blogifier.Core.Services.FileSystem
 		string GetUrl(string path, string root)
         {
 			var url = path.ReplaceIgnoreCase(Location, "").Replace(_separator, "/");
-			return _uploadFolder + "/" + _blogSlug + url;
+			return string.Concat(root, _uploadFolder , "/", _blogSlug, url);
         }
 
         /// <summary>
