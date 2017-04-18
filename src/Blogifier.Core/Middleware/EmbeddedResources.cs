@@ -7,17 +7,20 @@ using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Blogifier.Core.Common;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core.Middleware
 {
 	public class EmbeddedResources
 	{
 		readonly RequestDelegate _next;
+        readonly ILogger _logger;
         Dictionary<string, CachedResource> _resources;
 
-		public EmbeddedResources(RequestDelegate next)
+		public EmbeddedResources(RequestDelegate next, ILogger<EmbeddedResources> logger)
 		{
 			_next = next;
+            _logger = logger;
             _resources = new Dictionary<string, CachedResource>();
 			var assembly = typeof(EmbeddedResources).GetTypeInfo().Assembly;
 
@@ -28,6 +31,7 @@ namespace Blogifier.Core.Middleware
                     var path = name.ReplaceIgnoreCase("Blogifier.Core", "").ToLower();
                     var resource = GetResource(name, assembly);
 					_resources.Add(path, resource);
+                    _logger.LogInformation("EMBEDDED: " + path);
 				}
 			}
 		}

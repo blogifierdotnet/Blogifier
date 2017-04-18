@@ -311,9 +311,3 @@ function EditPost(id) {
     $("#post-view").hide();
     return false;
 }
-
-function CloseEditor() {
-    $("#post-edit").hide();
-    $("#post-view").fadeIn();
-    return false;
-}

@@ -1,0 +1,43 @@
+﻿@model Blogifier.Core.Data.Domain.BlogPost
+@if (Model != null)
+{
+    var cats = "";
+    if (Model.PostCategories != null && Model.PostCategories.Count > 0)
+    {
+        foreach (var cat in Model.PostCategories)
+        {
+            cats += string.Format("<span class='btn btn-white btn-xs' onclick='alert(\"{0}\")'>{1} <i class='fa fa-remove'></i></span> ", cat.CategoryId, cat.Category.Title);
+        }
+    }
+    cats += " <span class='btn btn-white btn-xs' title='Add category' onclick='alert(\"0\")'> <i class='fa fa-plus'></i></span> ";
+
+    <div class="col-md-12">
+        <div class="pull-left">
+            @Html.Raw(cats)
+        </div>
+        <div class="pull-right">
+            <div class="tooltip-demo">
+                <button class="btn btn-white btn-xs" title="Edit post" onclick="return EditPost('@Model.Id');"><i class="fa fa-pencil"></i> Edit</button>
+                @if (Model.Published != DateTime.MinValue)
+                {
+                    <button class="btn btn-white btn-xs" title="Unpublish"><i class="fa fa-undo"></i> </button>
+                }
+                else
+                {
+                    <button class="btn btn-white btn-xs" title="Publish"><i class="fa fa-send"></i> </button>
+                }
+                <a href="~/blog/@Model.Slug" class="btn btn-white btn-xs" target="_blank" title="View in the blog"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;
+                <button class="btn btn-white btn-xs" data-placement="top" title="Delete"><i class="fa fa-trash-o"></i> </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <h1>@Model.Title</h1>
+        @Html.Raw(Model.Content)
+    </div>
+}
+else
+{
+    <div class="list-empty">This list is empty</div>
+}

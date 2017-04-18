@@ -1,0 +1,25 @@
+﻿@model Blogifier.Core.Data.Domain.BlogPost
+@using Blogifier.Core.Data.Domain;
+@{
+    var post = Model;
+    if(post == null)
+    {
+        post = new BlogPost();
+    }
+}
+<div class="wrap">  
+    <form id="frmEditor" style="height:100%;">
+        <div class="form-group">
+            <input id="txtPostTitle" class="form-control" placeholder="Post title" value="@post.Title" />
+        </div>
+        <div class="form-group">
+            <textarea id="txtContent">@post.Content</textarea>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default" href="#" onclick="postController.close(); return false;">Cancel</a>
+            <a class="btn btn-success" href="#" onclick="postController.save(); return false;">Save</a>
+            <a class="btn btn-danger" id="divBtnDelete" href="#" onclick="postController.remove(); return false;">Delete</a>
+        </div>
+        <input id="hdnPostId" hidden="hidden" />
+    </form>
+</div>

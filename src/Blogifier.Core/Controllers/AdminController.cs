@@ -68,16 +68,16 @@ namespace Blogifier.Core.Controllers
         }
 
         [HttpGet]
-		[Route("syndication")]
-		public IActionResult Syndication()
+		[Route("tools")]
+		public IActionResult Tools()
 		{
 			var model = new AdminSyndicationModel { Profile = GetProfile() };
-			return View(_theme + "Syndication.cshtml", model);
+			return View(_theme + "Tools.cshtml", model);
 		}
 
 		[HttpPost]
-		[Route("syndication")]
-		public async Task<IActionResult> Syndication(AdminSyndicationModel model)
+		[Route("tools")]
+		public async Task<IActionResult> Tools(AdminSyndicationModel model)
 		{
 			model.Profile = GetProfile();
 

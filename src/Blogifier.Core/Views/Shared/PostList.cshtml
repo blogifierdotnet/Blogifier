@@ -1,0 +1,25 @@
+﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@if (Model != null && Model.BlogPosts != null)
+{
+    <ul class="list-group elements-list">
+        @foreach (var item in Model.BlogPosts)
+        {
+            var sel = item.Id == Model.SelectedPost.Id ? "background: #fff" : "";
+            var dt = String.Format("{0:f}", item.Published);
+            var pub = item.Published == DateTime.MinValue ?
+                        "<span class='label label-warning'>Draft</span>" :
+                        string.Format("<i class='fa fa-clock-o'></i> {0}", dt);
+
+            <li class="list-group-item" style="@sel">
+                <a href="~/admin/@item.Slug">
+                    <strong>@item.Title</strong>
+                    <div class="small m-t-xs">
+                        <p class="m-b-none">
+                            @Html.Raw(pub)
+                        </p>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+}
