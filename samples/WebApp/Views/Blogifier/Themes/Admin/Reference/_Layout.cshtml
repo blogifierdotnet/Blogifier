@@ -11,7 +11,7 @@
     <link href="~/Embedded/lib/fonts/font-awesome.min.css" rel="stylesheet">
     <link href="~/Embedded/lib/toastr/toastr.min.css" rel="stylesheet" />
 
-    <link href="~/@themeFolder/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="~/@themeFolder/css/animate.css" rel="stylesheet">
     <link href="~/@themeFolder/css/style.css" rel="stylesheet">
 </head>
@@ -74,7 +74,7 @@
                     <div id="btnNewItem" class="btn-group" style="float: left; margin-left: 20px">
                         <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="" onclick="return EditPost(0);">Blog Post</a></li>
+                            <li><a href="" onclick="return postController.open()">Blog Post</a></li>
                             <li><a href="#">Category</a></li>
                             <li><a class="font-bold" href="#">Upload File</a></li>
                         </ul>
@@ -110,15 +110,17 @@
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 
     <!-- Main scripts -->
-    <script src="~/Embedded/lib/toastr/toastr.min.js"></script>
+    
 
-    <script src="~/@themeFolder/js/jquery-3.1.1.min.js"></script>
-    <script src="~/@themeFolder/js/bootstrap.min.js"></script>
+    <script src="~/@themeFolder/lib/jquery/jquery-3.1.1.min.js"></script>
+    <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>
     <script src="~/@themeFolder/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="~/@themeFolder/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Embedded/lib/toastr/toastr.min.js"></script>
     
     <!-- Custom and plugin javascript -->
     <script src="~/@themeFolder/js/app.js"></script>
+    <script src="~/@themeFolder/js/dataService.js"></script>
 
     @RenderSection("Scripts", false)
 </body>

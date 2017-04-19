@@ -1,28 +1,21 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @{ 
-    var post = Model.SelectedPost;
     var themeFolder = "blogifier/admin/reference";
 }
-<script src="~/@themeFolder/tinymce/tinymce.min.js"></script>
-<script src="~/@themeFolder/js/editor.js"></script>
+<div class="row">
+    <div class="col-md-3 posts-list">
+        @Html.Partial("PostList", Model)
+    </div>
 
-<div class="app-content posts">
-    <div class="posts-content">
-        
-        <div id="post-view" class="row">
-            <div class="col-md-3 posts-list">
-                @Html.Partial("PostList", Model)
-            </div>
-            <div class="col-md-9 posts-list">
-                @Html.Partial("PostView", Model.SelectedPost)
-            </div>
-        </div>
-
-        <div id="post-edit" class="row" style="display: none">
-            <div  class="col-md-12">
-                @Html.Partial("PostEdit", Model.SelectedPost)
-            </div>
-        </div>
-
+    <div id="post-view" class="col-md-9 posts-list">
+        @Html.Partial("PostView", Model.SelectedPost)
+    </div>
+    <div id="post-edit" class="col-md-9 posts-list" style="display: none">
+        @Html.Partial("PostEdit", Model.SelectedPost)
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/@themeFolder/js/postController.js"></script>
+}

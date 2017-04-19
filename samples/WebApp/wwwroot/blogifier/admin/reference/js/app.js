@@ -289,6 +289,8 @@ function WinMove() {
         .disableSelection();
 }
 
+// -------- app common ------------
+
 toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
@@ -304,16 +306,4 @@ if (activated === false) { $('.posts').addClass('active'); }
 
 function profileLogOut() {
     $("#frmLogOut").submit();
-}
-
-function EditPost(id) {
-    $("#post-edit").fadeIn();
-    $("#post-view").hide();
-    return false;
-}
-
-function CloseEditor() {
-    $("#post-edit").hide();
-    $("#post-view").fadeIn();
-    return false;
 }

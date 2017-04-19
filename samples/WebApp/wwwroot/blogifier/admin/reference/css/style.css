@@ -8565,11 +8565,8 @@ body.md-skin {
 /* TinyMCE */
 .wrap {
     position: relative;
-    padding: 44px;
-}
-
-.form-control {
-    margin-bottom: 10px;
+    padding-top: 45px;
+    top: 40px;
 }
 
 .mce-tinymce {
@@ -8579,18 +8576,17 @@ body.md-skin {
 .mce-toolbar-grp {
     position: absolute !important;
     top: 0;
+    margin: 0;
 }
 
 iframe,
 .mce-edit-area,
 .mce-container-body .mce-stack-layout {
-    border: 0 !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
-div.mce-fullscreen {
-    z-index: 1050;
-    top: 51px !important;
-    left: 231px !important;
-    right: 230px !important;
-    width: calc(100% - 231px) !important;
+#txtPostTitle {
+    margin-bottom: -7px !important;
 }
