@@ -12,7 +12,7 @@ namespace Blogifier.Core.Controllers.Api
 {
     [Authorize]
     [Route("blogifier/api/[controller]")]
-    class PostsController : Controller
+    public class PostsController : Controller
     {
         IUnitOfWork _db;
 

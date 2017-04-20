@@ -1,8 +1,9 @@
 var postController = function (dataService) {
 
-    function open() {
+    function open(id) {
         $("#post-edit").fadeIn();
         $("#post-view").hide();
+        load(id);
         return false;
     };
 
@@ -10,6 +11,16 @@ var postController = function (dataService) {
         $("#post-edit").hide();
         $("#post-view").fadeIn();
         return false;
+    };
+
+    function load(id) {
+        toastr.success('load ' + id);
+        if (id === 0) {
+            
+        }
+        else {
+            dataService.get('blogifier/api/posts/post/1', reload, fail);
+        }
     };
 
     function save() {
@@ -20,9 +31,18 @@ var postController = function (dataService) {
         toastr.success('remove ' + postId);
     };
 
+    function reload() {
+        toastr.error('Reload');
+    }
+
+    function fail() {
+        toastr.error('Failed');
+    }
+
     return {
         open: open,
         close: close,
+        load: load,
         save: save,
         remove: remove
     }
