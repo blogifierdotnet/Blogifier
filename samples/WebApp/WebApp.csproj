@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\blogifier\admin\reference\css\animate.css" />
-    <None Include="wwwroot\blogifier\admin\reference\css\bootstrap.min.css" />
     <None Include="wwwroot\blogifier\admin\reference\css\patterns\1.png" />
     <None Include="wwwroot\blogifier\admin\reference\css\patterns\2.png" />
     <None Include="wwwroot\blogifier\admin\reference\css\patterns\3.png" />
@@ -168,12 +167,13 @@
     <None Include="wwwroot\blogifier\admin\reference\css\patterns\triangular.png" />
     <None Include="wwwroot\blogifier\admin\reference\css\style.css" />
     <None Include="wwwroot\blogifier\admin\reference\img\profile_small.jpg" />
-    <None Include="wwwroot\blogifier\admin\reference\js\bootstrap.min.js" />
     <None Include="wwwroot\blogifier\admin\reference\js\app.js" />
-    <None Include="wwwroot\blogifier\admin\reference\js\jquery-3.1.1.min.js" />
     <None Include="wwwroot\blogifier\admin\reference\js\plugins\metisMenu\jquery.metisMenu.js" />
     <None Include="wwwroot\blogifier\admin\reference\js\plugins\slimscroll\jquery.slimscroll.js" />
     <None Include="wwwroot\blogifier\admin\reference\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logs\" />
   </ItemGroup>
 
 </Project>

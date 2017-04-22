@@ -37,14 +37,15 @@ namespace Blogifier.Core.Controllers
             if(profile == null)
                 return RedirectToAction("Profile", "Admin");
 
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id);
-            var model = new AdminPostsModel { Profile = profile, BlogPosts = posts };
+            var pager = new Pager(1);
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id, pager);
+            var model = new AdminPostsModel { Profile = profile, BlogPosts = posts, Pager = pager };
 
-            if (posts.Any())
-            {
-                //var firstPost = posts.ToList()[0];
-                model.SelectedPost = posts.ToList()[0]; // await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
-            }
+            //if (posts.Any())
+            //{
+            //    //var firstPost = posts.ToList()[0];
+            //    model.SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
+            //}
             return View(_theme + "Index.cshtml", model);
 		}
 
@@ -57,11 +58,12 @@ namespace Blogifier.Core.Controllers
             if (profile == null)
                 return RedirectToAction("Profile", "Admin");
 
+            var pager = new Pager(1);
             var model = new AdminPostsModel {
                 Profile = profile,
                 //SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug),
                 SelectedPost = _db.BlogPosts.Find(p => p.Slug == slug).FirstOrDefault(),
-                BlogPosts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id)
+                BlogPosts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id, pager)
             };
 
             return View(_theme + "Index.cshtml", model);

@@ -6,6 +6,6 @@ namespace Blogifier.Core.Services.Syndication.Rss
     public interface IRssService
     {
         Task Import(AdminSyndicationModel model, string root);
-        Task<string> Display(string absoluteUri);
+        string Display(string absoluteUri);
     }
 }

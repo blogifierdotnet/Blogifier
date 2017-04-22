@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Blogifier.Core.Data.Repositories
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
         BlogifierDbContext _db;
+
         public CategoryRepository(BlogifierDbContext db) : base(db)
         {
             _db = db;
@@ -39,6 +41,17 @@ namespace Blogifier.Core.Data.Repositories
             pager.Configure(categories.Count());
             
             return categories.Skip(skip).Take(pager.ItemsPerPage);
+        }
+
+        public IEnumerable<SelectListItem> PostCategories(int postId)
+        {
+            var items = new List<SelectListItem>();
+            var postCategories = _db.PostCategories.Include(pc => pc.Category).Where(c => c.BlogPostId == postId);
+            foreach (var item in postCategories)
+            {
+                items.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Category.Title });
+            }
+            return items;
         }
 
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)

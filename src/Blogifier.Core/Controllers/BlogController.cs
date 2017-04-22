@@ -55,14 +55,14 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("rss")]
-        public async Task<IActionResult> Rss()
+        public IActionResult Rss()
         {
             var absoluteUri = string.Concat(
                 Request.Scheme, "://",
                 Request.Host.ToUriComponent(),
                 Request.PathBase.ToUriComponent());
 
-            var rss = await _rss.Display(absoluteUri);
+            var rss = _rss.Display(absoluteUri);
             return Content(rss, "text/xml");
         }
     }

@@ -9,7 +9,7 @@ namespace Blogifier.Core.Data.Interfaces
 {
     public interface IPostRepository : IRepository<BlogPost>
     {
-        Task<List<PostListItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
+        IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "");
         Task<BlogPost> SingleIncluded(Expression<Func<BlogPost, bool>> predicate);
         Task UpdatePostCategories(int postId, IEnumerable<string> catIds);

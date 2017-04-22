@@ -307,3 +307,9 @@ if (activated === false) { $('.posts').addClass('active'); }
 function profileLogOut() {
     $("#frmLogOut").submit();
 }
+
+function getDate(date) {
+    var d = new Date(Date.parse(date));
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+}

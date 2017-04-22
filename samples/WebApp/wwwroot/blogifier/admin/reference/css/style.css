@@ -8566,7 +8566,7 @@ body.md-skin {
 .wrap {
     position: relative;
     padding-top: 45px;
-    top: 40px;
+    top: 10px;
 }
 
 .mce-tinymce {
@@ -8589,4 +8589,13 @@ iframe,
 
 #txtPostTitle {
     margin-bottom: -7px !important;
+}
+
+.list-group-item.active {
+    background-color: #f9f9f9 !important;
+}
+
+#article-header {
+    padding: 10px 0 20px 0 !important;
+    margin: 0 !important;
 }

@@ -76,9 +76,9 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        public async Task<string> Display(string absoluteUri)
+        public string Display(string absoluteUri)
         {
-            var pubs = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
+            var pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
 
             var feed = new Feed()
             {

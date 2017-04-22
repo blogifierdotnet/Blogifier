@@ -3,15 +3,80 @@
     var themeFolder = "blogifier/admin/reference";
 }
 <div class="row">
+
     <div class="col-md-3 posts-list">
-        @Html.Partial("PostList", Model)
+        <ul id="admin-posts" class="list-group elements-list"></ul>
+        <table style="width: 100%">
+            <tr>
+                <td style="padding-left: 10px">
+                    <ul class="pagination" style="margin: 2px 0 !important">
+                        <li id="pager-newer"></li>
+                    </ul>
+                </td>
+                <td style="text-align: center"><span id="pager-label"></span></td>
+                <td style="padding-right: 10px">
+                    <ul class="pagination pull-right" style="margin: 2px 0 !important">
+                        <li id="pager-older"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <div id="post-view" class="col-md-9 posts-list">
-        @Html.Partial("PostView", Model.SelectedPost)
+    <div id="post-view" class="col-md-9 posts-list" style="padding: 0 15px 25px 35px !important">
+        <div class="row">
+            <div id="article-categories" class="col-md-9"></div>
+            <div class="col-md-3">
+                <div id="article-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
+            </div>
+        </div>
+        <h1 id="article-header"></h1>
+        <div id="article-content"></div>
     </div>
-    <div id="post-edit" class="col-md-9 posts-list" style="display: none">
-        @Html.Partial("PostEdit", Model.SelectedPost)
+
+    <div id="post-edit" class="col-md-9 posts-list" style="display: none; padding: 0 15px 25px 35px !important">
+        <div class="row">
+            <div id="edit-categories" class="col-md-9"></div>
+            <div class="col-md-3">
+                <div id="edit-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
+            </div>
+        </div>
+
+        <div class="wrap">
+            <form id="frmEditor" style="height:100%;">
+                <div class="form-group">
+                    <input id="txtPostTitle" class="form-control" placeholder="Post title" />
+                </div>
+                <div class="form-group">
+                    <textarea id="txtContent"></textarea>
+                </div>
+                <input id="hdnPostId" hidden="hidden" />
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add new category</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                    <div class="form-group">
+                        <input type="text" id="txtCategory" class="form-control" placeholder="Category Title" />
+                    </div>
+                    <input id="hdnId" hidden="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 

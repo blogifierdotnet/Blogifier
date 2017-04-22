@@ -20,7 +20,7 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public async Task<List<PostListItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
+        public IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
@@ -28,7 +28,7 @@ namespace Blogifier.Core.Data.Repositories
                 .Include(p => p.PostCategories).Include(p => p.Profile).ToList();
 
             pager.Configure(items.Count);
-            return await Task.Run(() => GetItems(items).Skip(skip).Take(pager.ItemsPerPage).ToList());
+            return GetItems(items).Skip(skip).Take(pager.ItemsPerPage);
         }
 
         public Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")

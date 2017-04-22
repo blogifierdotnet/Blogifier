@@ -6,7 +6,6 @@ using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -22,12 +21,14 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpGet("{page:int}")]
-        public async Task<IEnumerable<PostListItem>> Index(int page)
+        public AdminPostList Index(int page)
         {
             var pager = new Pager(page);
-            var blog = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            var model = new AdminPostList();
 
-            return await _db.BlogPosts.Find(p => p.Profile.IdentityName == blog.IdentityName, pager);
+            model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+            model.Pager = pager;
+            return model;
         }
 
         [HttpGet("post/{id:int}")]
@@ -37,18 +38,20 @@ namespace Blogifier.Core.Controllers.Api
             var model = new PostEditModel
             {
                 Id = post.Id,
+                Slug = post.Slug,
                 Title = post.Title,
                 Content = post.Content,
                 Published = post.Published == System.DateTime.MinValue ? false : true,
-                Categories = new List<int>()
+                Categories = _db.Categories.PostCategories(post.Id)
             };
-            if (post.PostCategories != null && post.PostCategories.Count > 0)
-            {
-                foreach (var pc in post.PostCategories)
-                {
-                    model.Categories.Add(pc.CategoryId);
-                }
-            }
+
+            //if (post.PostCategories != null && post.PostCategories.Count > 0)
+            //{
+            //    foreach (var pc in post.PostCategories)
+            //    {
+            //        model.Categories.Add(pc.CategoryId);
+            //    }
+            //}
             return model;
         }
 
@@ -80,20 +83,20 @@ namespace Blogifier.Core.Controllers.Api
             _db.Complete();
 
             // handle post categories
-            var savedPost = _db.BlogPosts.Single(p => p.Slug == post.Slug);
-            if (savedPost != null)
-            {
-                var cats = new List<string>();
-                if (model.Categories != null && model.Categories.Count > 0)
-                {
-                    foreach (var item in model.Categories)
-                    {
-                        cats.Add(item.ToString());
-                    }
-                }
-                _db.BlogPosts.UpdatePostCategories(savedPost.Id, cats);
-                _db.Complete();
-            }
+            //var savedPost = _db.BlogPosts.Single(p => p.Slug == post.Slug);
+            //if (savedPost != null)
+            //{
+            //    var cats = new List<string>();
+            //    if (model.Categories != null && model.Categories.Count > 0)
+            //    {
+            //        foreach (var item in model.Categories)
+            //        {
+            //            cats.Add(item.ToString());
+            //        }
+            //    }
+            //    _db.BlogPosts.UpdatePostCategories(savedPost.Id, cats);
+            //    _db.Complete();
+            //}
         }
 
         [HttpPut("publish/{id:int}")]
