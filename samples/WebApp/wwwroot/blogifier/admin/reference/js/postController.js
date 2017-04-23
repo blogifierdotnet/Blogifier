@@ -1,8 +1,26 @@
 var postController = function (dataService) {
-    function newPost() {
-        open();
-        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.close()">Cancel</button>';
-        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.save(0)">Save</button> &nbsp;&nbsp;';
+    function loadPage(page) {
+        if (page === null || page === '') { page = 1; }
+        $('#hdnCurrentPage').val(page);
+        dataService.get('blogifier/api/posts/' + page, loadPageCallback, fail);
+        return false;
+    }
+
+    function loadPost(id) {
+        $('#hdnSelectedPost').val(id);
+        dataService.get('blogifier/api/posts/post/' + id, loadPostCallback, fail);
+
+        $('#admin-posts li').removeClass('active');
+        var li = $('#post-' + id);
+        if (li) {
+            li.addClass('active');
+        }
+    }
+
+    function addPost() {
+        openEditor();
+        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.closeEditor()">Cancel</button>';
+        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.savePost(0)">Save</button> &nbsp;&nbsp;';
 
         $('#edit-actions').empty();
         $('#edit-actions').append(btns);
@@ -12,41 +30,41 @@ var postController = function (dataService) {
         return false;
     }
 
-    function edit(id) {
-        dataService.get('blogifier/api/posts/post/' + id, editArticle, fail);
-        return false;
-    };
-
-    function view(id) {
-        dataService.get('blogifier/api/posts/post/' + id, viewArticle, fail);
-        return false;
-    };
-
-    function open() {
-        $("#post-edit").fadeIn();
-        $("#post-view").hide();
+    function editPost(id) {
+        dataService.get('blogifier/api/posts/post/' + id, editPostCallback, fail);
         return false;
     }
+    
+    function savePost(id) {
+        var obj = {
+            Id: id,
+            Title: $("#txtPostTitle").val(),
+            Content: tinyMCE.activeEditor.getContent()
+        }
+        if (obj.Title.length === 0) {
+            toastr.error("Title is required");
+            return false;
+        }
+        if (obj.Content.length === 0) {
+            toastr.error("Content is required");
+            return false;
+        }
+        obj.categories = [];
+        //$("#categoryMgrList input[type=checkbox]").each(function () {
+        //    if ($(this).is(":checked")) {
+        //        if ($(this).attr("id")) {
+        //            var catId = $(this).attr("id").replace("cbx-", "");
+        //            obj.categories.push(catId);
+        //        }
+        //    }
+        //});
+        dataService.post("blogifier/api/posts", obj, savePostCallback, fail);
+    }
 
-    function close() {
-        $("#post-edit").hide();
-        $("#post-view").fadeIn();
+    function removePost(postId) {
+        dataService.remove('blogifier/api/posts/' + postId, postRemoveCallback, fail);
         return false;
-    };
-
-    function load(page) {
-        dataService.get('blogifier/api/posts/' + page, reload, fail);
-        return false;
-    };
-
-    function save(id) {
-        toastr.success('save ' + id);
-    };
-
-    function remove(postId) {
-        toastr.success('remove ' + postId);
-        return false;
-    };
+    }
 
     function addCategory() {
         $("#modalAddCategory").modal();
@@ -57,35 +75,30 @@ var postController = function (dataService) {
         return false;
     }
 
-    function reload(data) {
-        $('#admin-posts').empty();
-        var posts = data.blogPosts;
-        if (posts.length < 1) {
-            return false;
-        }
-        $.each(posts, function (index) {
-            var post = posts[index];
-            var draft = post.published.startsWith('0001') ? 'draft' : '';
-            var info = draft == 'draft' ? 'Draft' : '<i class="fa fa-clock-o"></i> ' + getDate(post.published);
-            var active = '';
+    function publish(id) {
+        dataService.put("blogifier/api/posts/publish/" + id, null, savedCallback, fail);
+        loadPost(id);
+        //return false;
+    }
 
-            if (index === 0) {
-                active = 'active';
-                article(post.blogPostId);
-            }
-            var anc = '<a href="" onclick="postController.article(' + post.blogPostId + '); return false;">' +
-                '	<strong>' + post.title + '</strong>' +
-                '	<div class="small m-t-xs">' +
-                '		<p class="m-b-none">' +
-                '			' + info + '<span class="pull-right">' + post.postViews + ' views</span>';
-                '		</p>' +
-                '	</div>' +
-                '</a>';
+    function unpublish(id) {
+        dataService.put("blogifier/api/posts/unpublish/" + id, null, savedCallback, fail);
+        loadPost(id);
+        //return false;
+    }
 
-                var li = '<li id="post-' + post.blogPostId + '" class="list-group-item ' + active + '">' + anc + '</li>';
-            $("#admin-posts").append(li);
-        });
-        pager(data.pager);
+    // miscellaneous
+
+    function openEditor() {
+        $("#post-edit").fadeIn();
+        $("#post-view").hide();
+        return false;
+    }
+
+    function closeEditor() {
+        $("#post-edit").hide();
+        $("#post-view").fadeIn();
+        return false;
     }
 
     function pager(pg) {
@@ -96,10 +109,10 @@ var postController = function (dataService) {
         var older = '';
         var newer = '';
         if (pg.showOlder === true) {
-            older = '<a href="" onclick="return postController.load(' + pg.older + ')"><i class="fa fa-angle-right"></i></a>';
+            older = '<a href="" onclick="return postController.loadPage(' + pg.older + ')"><i class="fa fa-angle-right"></i></a>';
         }
         if (pg.showNewer === true) {
-            newer = '<a href="" onclick="return postController.load(' + pg.newer + ')"><i class="fa fa-angle-left"></i></a>';
+            newer = '<a href="" onclick="return postController.loadPage(' + pg.newer + ')"><i class="fa fa-angle-left"></i></a>';
         }
         $('#pager-label').text('Posts ' + firstPost + '-' + lastPost + ' out of ' + pg.total);
 
@@ -110,42 +123,36 @@ var postController = function (dataService) {
         $('#pager-newer').append(newer);
     }
 
-    function article(id) {
-        dataService.get('blogifier/api/posts/post/' + id, viewArticle, fail);
+    // callbacks
 
-        $('#admin-posts li').removeClass('active');
-        var li = $('#post-' + id);
-        if (li) {
-            li.addClass('active');
+    function loadPageCallback(data) {
+        $('#admin-posts').empty();
+        var posts = data.blogPosts;
+        if (posts.length < 1) {
+            return false;
         }
-    }
+        $.each(posts, function (index) {
+            var post = posts[index];
+            var active = '';
+            if (index === 0) {
+                active = 'active';
+                loadPost(post.blogPostId);
+            }          
+            var anc = '<a class="post-list-title" id="post-title-' + post.blogPostId + '" href="" onclick="postController.loadPost(' + post.blogPostId + '); return false;">' +
+                '	' + post.title + '</a>' +
+                '	<div class="small m-t-xs" style="padding: 5px 0">' +
+                '	    <span id="post-time-' + post.blogPostId + '" class="pull-left">' + getPubDate(post.published) + '</span>' +
+                '       <span class="pull-right">' + post.postViews + ' views</span>' +
+                '	</div>';
 
-    function editArticle(data) {
-        open();
-        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.close()">Cancel</button>';
-        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.save(' + data.id + ')">Save</button> &nbsp;&nbsp;';
-        btns += '<button class="btn btn-white btn-xs" title="Delete" onclick="return postController.remove(' + data.id + ')"><i class="fa fa-trash-o"></i></button>';
-
-        $('#edit-actions').empty();
-        $('#edit-categories').empty();
-
-        var catStr = '';
-        var cats = data.categories;
-        $.each(cats, function (index) {
-            var cat = cats[index];
-            catStr += '<span class="btn btn-white btn-xs" onclick="postController.removeCategory(' + data.id + ',' + cat.value +  ')">' + cat.text + ' <i class="fa fa-remove"></i></span>';
+            var li = '<li id="post-' + post.blogPostId + '" class="list-group-item ' + active + '">' + anc + '</li>';
+            $("#admin-posts").append(li);
         });
-        catStr += '<span class="btn btn-white btn-xs" title="Add category" onclick="postController.addCategory()"><i class="fa fa-plus"></i></span>';
-
-        $('#edit-categories').append(catStr);
-        $('#edit-actions').append(btns);
-
-        $('#txtPostTitle').val(data.title);
-        tinyMCE.activeEditor.setContent(data.content);
+        pager(data.pager);
     }
 
-    function viewArticle(data) {
-        close();
+    function loadPostCallback(data) {
+        closeEditor();
         $('#article-content').empty();
         $('#article-header').empty();
         $('#article-categories').empty();
@@ -162,11 +169,70 @@ var postController = function (dataService) {
         $('#article-content').append(content);
         $('#article-header').text(data.title);
 
-        var btns = '<button class="btn btn-white btn-xs" title="Edit post" onclick="return postController.edit(' + data.id + ')"><i class="fa fa-pencil"></i> Edit</button>';
-        btns += '<a href="/blog/' + data.slug + '" class="btn btn-white btn-xs" target="_blank" title="View in the blog"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;';
-        btns += '<button class="btn btn-white btn-xs" title="Delete" onclick="return postController.remove(' + data.id + ')"><i class="fa fa-trash-o"></i></button>';
+        var btns = '<button class="btn btn-white btn-xs" title="Edit post" onclick="return postController.editPost(' + data.id + ')"><i class="fa fa-pencil"></i> Edit</button>';
+        if (data.published.startsWith('0001')) {
+            btns += '<button class="btn btn-white btn-xs" title="Publish" onclick="return postController.publish(' + data.id + ')"><i class="fa fa-send"></i> Publish</button>';
+        }
+        else {
+            btns += '<button class="btn btn-white btn-xs" title="Unpublish" onclick="return postController.unpublish(' + data.id + ')"><i class="fa fa-undo"></i> Unpublish</button>';
+        }
+        btns += '<a href="/blog/' + data.slug + '" class="btn btn-white btn-xs" target="_blank" title="View in the blog"><i class="fa fa-eye"></i> View</a> &nbsp;&nbsp;';
+        btns += '<button class="btn btn-white btn-xs" title="Delete" onclick="return postController.removePost(' + data.id + ')"><i class="fa fa-trash-o"></i></button>';
         $('#article-actions').empty();
         $('#article-actions').append(btns);
+
+        // if title was updated - sync title in the post list
+        var curTitle = $('#post-title-' + data.id);
+        if (curTitle.text() !== data.title) {
+            curTitle.text(data.title);
+        }
+        // sync post time when publish/unpublish
+        var date = getDate(new Date().toLocaleString());
+        var curTime = $('#post-time-' + data.id);
+        curTime.empty();
+        curTime.append(getPubDate(data.published));
+    }
+
+    function editPostCallback(data) {
+        openEditor();
+        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.closeEditor()">Close</button>';
+        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.savePost(' + data.id + ')">Save</button>&nbsp;&nbsp;';
+        btns += '<button class="btn btn-white btn-xs" title="Delete" onclick="return postController.removePost(' + data.id + ')"><i class="fa fa-trash-o"></i></button>';
+
+        $('#edit-actions').empty();
+        $('#edit-categories').empty();
+
+        var catStr = '';
+        var cats = data.categories;
+        $.each(cats, function (index) {
+            var cat = cats[index];
+            catStr += '<span class="btn btn-white btn-xs" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <i class="fa fa-remove"></i></span>';
+        });
+        catStr += '<span class="btn btn-white btn-xs" title="Add category" onclick="postController.addCategory()"><i class="fa fa-plus"></i></span>';
+
+        $('#edit-categories').append(catStr);
+        $('#edit-actions').append(btns);
+
+        $('#txtPostTitle').val(data.title);
+        tinyMCE.activeEditor.setContent(data.content);
+    }
+
+    function savePostCallback() {
+        toastr.success('Saved');
+        dataService.get('blogifier/api/posts/post/' + $('#hdnSelectedPost').val(), loadPostCallback, fail);
+    }
+
+    function postRemoveCallback() {
+        loadPage(1);
+        toastr.success('Removed');
+    }
+
+    function savedCallback() {
+        toastr.success('Saved');
+    }
+
+    function getPubDate(date) {
+        return date.startsWith('0001') ? 'Draft' : '<i class="fa fa-clock-o"></i> ' + getDate(date);
     }
 
     function fail(jqXHR, exception) {
@@ -182,16 +248,17 @@ var postController = function (dataService) {
     }
 
     return {
-        new: newPost,
-        edit: edit,
-        view: view,
-        close: close,
-        load: load,
-        article: article,
-        save: save,
-        remove: remove,
+        loadPage: loadPage,
+        loadPost: loadPost,
+        addPost: addPost,
+        editPost: editPost,
+        savePost: savePost,
+        removePost: removePost,
         addCategory: addCategory,
-        removeCategory: removeCategory
+        removeCategory: removeCategory,
+        closeEditor: closeEditor,
+        publish: publish,
+        unpublish: unpublish,
     }
 }(DataService);
 

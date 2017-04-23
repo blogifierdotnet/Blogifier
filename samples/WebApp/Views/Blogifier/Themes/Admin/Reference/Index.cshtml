@@ -21,6 +21,9 @@
                 </td>
             </tr>
         </table>
+
+        <input id="hdnSelectedPost" hidden="hidden" />
+        <input id="hdnCurrentPage" hidden="hidden" />
     </div>
 
     <div id="post-view" class="col-md-9 posts-list" style="padding: 0 15px 25px 35px !important">
@@ -31,7 +34,7 @@
             </div>
         </div>
         <h1 id="article-header"></h1>
-        <div id="article-content"></div>
+        <div id="article-content"></div>    
     </div>
 
     <div id="post-edit" class="col-md-9 posts-list" style="display: none; padding: 0 15px 25px 35px !important">
@@ -41,7 +44,6 @@
                 <div id="edit-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
             </div>
         </div>
-
         <div class="wrap">
             <form id="frmEditor" style="height:100%;">
                 <div class="form-group">
@@ -50,11 +52,10 @@
                 <div class="form-group">
                     <textarea id="txtContent"></textarea>
                 </div>
-                <input id="hdnPostId" hidden="hidden" />
             </form>
         </div>
-
     </div>
+
 </div>
 
 <div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
@@ -84,6 +85,6 @@
     <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
     <script src="~/@themeFolder/js/postController.js"></script>
     <script>
-        postController.load(1);
+        postController.loadPage(1);
     </script>
 }

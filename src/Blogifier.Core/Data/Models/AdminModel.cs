@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -52,7 +53,7 @@ namespace Blogifier.Core.Data.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
-        public bool Published { get; set; }
+        public DateTime Published { get; set; }
     }
 
     public class CategoryItem

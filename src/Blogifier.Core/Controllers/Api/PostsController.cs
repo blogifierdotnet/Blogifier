@@ -41,17 +41,9 @@ namespace Blogifier.Core.Controllers.Api
                 Slug = post.Slug,
                 Title = post.Title,
                 Content = post.Content,
-                Published = post.Published == System.DateTime.MinValue ? false : true,
+                Published = post.Published,
                 Categories = _db.Categories.PostCategories(post.Id)
             };
-
-            //if (post.PostCategories != null && post.PostCategories.Count > 0)
-            //{
-            //    foreach (var pc in post.PostCategories)
-            //    {
-            //        model.Categories.Add(pc.CategoryId);
-            //    }
-            //}
             return model;
         }
 
@@ -69,7 +61,7 @@ namespace Blogifier.Core.Controllers.Api
                 post.Slug = model.Title.ToSlug();
                 post.Content = model.Content;
                 post.LastUpdated = SystemClock.Now();
-                post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
+                //post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
                 post.Description = desc.Length > 300 ? desc.Substring(0, 300) : desc;
                 _db.BlogPosts.Add(post);
             }
@@ -78,7 +70,7 @@ namespace Blogifier.Core.Controllers.Api
                 post = _db.BlogPosts.Single(p => p.Id == model.Id);
                 post.Title = model.Title;
                 post.Content = model.Content;
-                post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
+                //post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
             }
             _db.Complete();
 
