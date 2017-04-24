@@ -289,6 +289,8 @@ function WinMove() {
         .disableSelection();
 }
 
+// -------- app common ------------
+
 toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
@@ -306,8 +308,8 @@ function profileLogOut() {
     $("#frmLogOut").submit();
 }
 
-function EditPost(id) {
-    $("#post-edit").fadeIn();
-    $("#post-view").hide();
-    return false;
+function getDate(date) {
+    var d = new Date(Date.parse(date));
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
 }
