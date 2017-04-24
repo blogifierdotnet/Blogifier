@@ -12,6 +12,9 @@ namespace Blogifier.Core.Data.Interfaces
     {
         IEnumerable<Category> Find(Expression<Func<Category, bool>> predicate, Pager pager);
         IEnumerable<SelectListItem> PostCategories(int postId);
+        IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate);
         Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate);
+        bool AddCategoryToPost(int postId, int categoryId);
+        bool RemoveCategoryFromPost(int postId, int categoryId);
     }
 }

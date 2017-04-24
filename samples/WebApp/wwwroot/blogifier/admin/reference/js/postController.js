@@ -59,19 +59,11 @@ var postController = function (dataService) {
         //    }
         //});
         dataService.post("blogifier/api/posts", obj, savePostCallback, fail);
+        return false;
     }
 
     function removePost(postId) {
         dataService.remove('blogifier/api/posts/' + postId, postRemoveCallback, fail);
-        return false;
-    }
-
-    function addCategory() {
-        $("#modalAddCategory").modal();
-    }
-
-    function removeCategory(postId, catId) {
-        toastr.success('removing ' + postId + ', ' + catId);
         return false;
     }
 
@@ -85,6 +77,38 @@ var postController = function (dataService) {
         dataService.put("blogifier/api/posts/unpublish/" + id, null, savedCallback, fail);
         loadPost(id);
         //return false;
+    }
+
+    // categories
+
+    function addCategory() {
+        dataService.get('blogifier/api/categories/blogcategories', loadCategories, fail);
+        return false;
+    }
+
+    function loadCategories(data) {
+        var options = { data: data };
+        $("#modalAddCategory").modal();
+        $("#txtCategory").easyAutocomplete(options);
+        $('div.easy-autocomplete').removeAttr('style');
+    }
+
+    function saveCategory() {
+        var obj = {
+            Title: $("#txtCategory").val(),
+            PostId: $('#hdnSelectedPost').val()
+        }
+        dataService.put("blogifier/api/categories/addcategorytopost", obj, saveCategoryCallback, fail);
+    }
+
+    function removeCategory(postId, catId) {
+        var obj = { CategoryId: catId, PostId: postId }
+        dataService.put("blogifier/api/categories/removecategoryfrompost", obj, removeCategoryCallback, fail);
+    }
+
+    function removeCategoryCallback(data) {
+        toastr.success('Saved');
+        editPost($('#hdnSelectedPost').val());
     }
 
     // miscellaneous
@@ -208,7 +232,7 @@ var postController = function (dataService) {
             var cat = cats[index];
             catStr += '<span class="btn btn-white btn-xs" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <i class="fa fa-remove"></i></span>';
         });
-        catStr += '<span class="btn btn-white btn-xs" title="Add category" onclick="postController.addCategory()"><i class="fa fa-plus"></i></span>';
+        catStr += '<span class="btn btn-white btn-xs" title="Add category" onclick="return postController.addCategory()"><i class="fa fa-plus"></i></span>';
 
         $('#edit-categories').append(catStr);
         $('#edit-actions').append(btns);
@@ -225,6 +249,14 @@ var postController = function (dataService) {
     function postRemoveCallback() {
         loadPage(1);
         toastr.success('Removed');
+    }
+
+    function saveCategoryCallback() {
+        var cat = $("#txtCategory").val();
+        toastr.success('saving category : ' + cat);
+        $("#modalAddCategory").modal('hide');
+        $("#txtCategory").val('');
+        editPost($('#hdnSelectedPost').val());
     }
 
     function savedCallback() {
@@ -255,6 +287,7 @@ var postController = function (dataService) {
         savePost: savePost,
         removePost: removePost,
         addCategory: addCategory,
+        saveCategory: saveCategory,
         removeCategory: removeCategory,
         closeEditor: closeEditor,
         publish: publish,

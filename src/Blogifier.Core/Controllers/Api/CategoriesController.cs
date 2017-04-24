@@ -23,6 +23,18 @@ namespace Blogifier.Core.Controllers.Api
             _cache = memoryCache;
         }
 
+        [HttpGet("blogcategories")]
+        public IEnumerable<string> GetBlogCategories()
+        {
+            var blogCats = new List<string>();
+            var cats = _db.Categories.Find(c => c.ProfileId == GetProfile().Id);
+            foreach (var cat in cats)
+            {
+                blogCats.Add(cat.Title);
+            }
+            return blogCats;
+        }
+
         [HttpGet]
         public IEnumerable<CategoryItem> Get(int page)
         {
@@ -42,6 +54,36 @@ namespace Blogifier.Core.Controllers.Api
         public CategoryItem GetById(int id)
         {
             return GetItem(_db.Categories.Single(c => c.Id == id));
+        }
+
+        [HttpPut("addcategorytopost")]
+        public void AddCategoryToPost([FromBody]AdminCategoryModel model)
+        {
+            var existing = _db.Categories.Single(c => c.Title == model.Title);
+            if(existing == null)
+            {
+                var newCategory = new Category
+                {
+                    ProfileId = GetProfile().Id,
+                    Title = model.Title,
+                    Description = model.Title,
+                    Slug = model.Title.ToSlug(),
+                    LastUpdated = SystemClock.Now()
+                };
+                _db.Categories.Add(newCategory);
+                _db.Complete();
+
+                existing = _db.Categories.Single(c => c.Title == model.Title);
+            }
+            _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
+            _db.Complete();
+        }
+
+        [HttpPut("removecategoryfrompost")]
+        public void RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
+        {
+            _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
+            _db.Complete();
         }
 
         [HttpPut]

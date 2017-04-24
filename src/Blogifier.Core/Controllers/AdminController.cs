@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Blogifier.Core.Common;
+﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
@@ -9,11 +8,11 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
-	[Authorize]
+    [Authorize]
 	[Route("admin")]
 	public class AdminController : Controller
 	{
@@ -30,44 +29,18 @@ namespace Blogifier.Core.Controllers
 			_theme = "~/Views/Blogifier/Themes/Admin/" + ApplicationSettings.AdminTheme + "/";
 		}
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
 		{
             var profile = GetProfile();
 
             if(profile == null)
                 return RedirectToAction("Profile", "Admin");
 
-            var pager = new Pager(1);
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id, pager);
-            var model = new AdminPostsModel { Profile = profile, BlogPosts = posts, Pager = pager };
+            var categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id);
 
-            //if (posts.Any())
-            //{
-            //    //var firstPost = posts.ToList()[0];
-            //    model.SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == firstPost.Slug);
-            //}
+            var model = new AdminPostsModel { Profile = profile, CategoryList = categories };
             return View(_theme + "Index.cshtml", model);
 		}
-
-        [HttpGet]
-        [Route("{slug}")]
-        public async Task<IActionResult> Index(string slug)
-        {
-            var profile = GetProfile();
-
-            if (profile == null)
-                return RedirectToAction("Profile", "Admin");
-
-            var pager = new Pager(1);
-            var model = new AdminPostsModel {
-                Profile = profile,
-                //SelectedPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug),
-                SelectedPost = _db.BlogPosts.Find(p => p.Slug == slug).FirstOrDefault(),
-                BlogPosts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id, pager)
-            };
-
-            return View(_theme + "Index.cshtml", model);
-        }
 
         [HttpGet]
 		[Route("tools")]

@@ -54,11 +54,64 @@ namespace Blogifier.Core.Data.Repositories
             return items;
         }
 
+        public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
+        {
+            var items = new List<SelectListItem>();
+            var categories = _db.Categories.Include(c => c.PostCategories).Where(predicate).ToList();
+            foreach (var item in categories)
+            {
+                items.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Title });
+            }
+            return items;
+        }
+
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)
         {
             return await _db.Categories.AsNoTracking()
                 .Include(c => c.PostCategories)
                 .FirstOrDefaultAsync(predicate);
+        }
+
+        public bool AddCategoryToPost(int postId, int categoryId)
+        {
+            try
+            {
+                var existing = _db.PostCategories.Where(
+                    pc => pc.BlogPostId == postId &&
+                    pc.CategoryId == categoryId).SingleOrDefault();
+
+                if (existing == null)
+                {
+                    _db.PostCategories.Add(new PostCategory
+                    {
+                        BlogPostId = postId,
+                        CategoryId = categoryId,
+                        LastUpdated = SystemClock.Now()
+                    });
+                    _db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveCategoryFromPost(int postId, int categoryId)
+        {
+            try
+            {
+                var existing = _db.PostCategories.Where(
+                    pc => pc.BlogPostId == postId &&
+                    pc.CategoryId == categoryId).SingleOrDefault();
+                _db.PostCategories.Remove(existing);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

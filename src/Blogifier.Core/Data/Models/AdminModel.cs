@@ -15,9 +15,7 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminPostsModel : AdminBaseModel
 	{
-        public BlogPost SelectedPost { get; set; }
-		public IEnumerable<PostListItem> BlogPosts { get; set; }
-        public Pager Pager { get; set; }
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 
 	public class AdminProfileModel : AdminBaseModel
@@ -68,5 +66,12 @@ namespace Blogifier.Core.Data.Models
         public int ViewCount { get; set; }
         public int PostCount { get; set; }
         public bool Selected { get; set; }
+    }
+
+    public class AdminCategoryModel
+    {
+        public string Title { get; set; }
+        public string PostId { get; set; }
+        public string CategoryId { get; set; }
     }
 }
