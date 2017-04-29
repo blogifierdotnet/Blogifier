@@ -8605,3 +8605,7 @@ iframe,
 .post-list-title {
     font-weight: bold;
 }
+
+#profile-img {
+    width: 48px;
+}

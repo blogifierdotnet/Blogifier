@@ -23,17 +23,16 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
+                            <span>
+                                <img id="profile-img" alt="image" class="img-circle" src="~/Embedded/lib/img/avatar.jpg">
+                            </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs">
-                                        <strong class="font-bold">David Williams</strong>
-                                    </span> 
-                                    <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                                        <strong class="font-bold">@User.Identity.Name</strong>
+                                    </span>
                                 </span>
                             </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="" onclick="profileLogOut(); return false;">Logout</a></li>
-                            </ul>
                         </div>
                         <div class="logo-element">
                             BF
@@ -97,10 +96,10 @@
 
             <div class="footer">
                 <div class="pull-right">
-                    10GB of <strong>250GB</strong> Free.
+                    <strong>Version</strong> @Blogifier.Core.Common.ApplicationSettings.Version
                 </div>
                 <div>
-                    <strong>Copyright</strong> Example Company &copy; 2014-2017
+                    <strong>Blogifier.NET</strong> &copy; @DateTime.Now.Year
                 </div>
             </div>
 

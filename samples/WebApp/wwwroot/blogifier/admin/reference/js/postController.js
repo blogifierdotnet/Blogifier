@@ -243,7 +243,12 @@ var postController = function (dataService) {
 
     function savePostCallback() {
         toastr.success('Saved');
-        dataService.get('blogifier/api/posts/post/' + $('#hdnSelectedPost').val(), loadPostCallback, fail);
+        if ($('#hdnSelectedPost').val().length == 0) {
+            loadPage(1);
+        }
+        else {
+            dataService.get('blogifier/api/posts/post/' + $('#hdnSelectedPost').val(), loadPostCallback, fail);
+        }
     }
 
     function postRemoveCallback() {
