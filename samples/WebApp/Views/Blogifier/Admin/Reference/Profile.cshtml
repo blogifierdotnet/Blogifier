@@ -1,5 +1,7 @@
 ﻿@model Blogifier.Core.Data.Models.AdminProfileModel
-
+@{ 
+    var pr = Model.Profile;
+}
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
         <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">

@@ -26,7 +26,7 @@ namespace Blogifier.Core.Controllers
 			_db = db;
 			_rss = rss;
             _logger = logger;
-			_theme = "~/Views/Blogifier/Themes/Admin/" + ApplicationSettings.AdminTheme + "/";
+			_theme = "~/Views/Blogifier/Admin/" + ApplicationSettings.AdminTheme + "/";
 		}
 
         public IActionResult Index()
@@ -90,7 +90,6 @@ namespace Blogifier.Core.Controllers
             if(profile.Id == 0)
             {
                 profile.IdentityName = User.Identity.Name;
-                profile.BlogTheme = ApplicationSettings.AdminTheme;
                 profile.Slug = BlogSlugFromTitle(profile.Title);
 
                 ModelState.Clear();
@@ -106,6 +105,7 @@ namespace Blogifier.Core.Controllers
                     existing.Description = profile.Description;
                     existing.AuthorName = profile.AuthorName;
                     existing.AuthorEmail = profile.AuthorEmail;
+                    existing.BlogTheme = profile.BlogTheme;
                     existing.Logo = profile.Logo;
                     existing.Avatar = profile.Avatar;
                     existing.Image = profile.Image;

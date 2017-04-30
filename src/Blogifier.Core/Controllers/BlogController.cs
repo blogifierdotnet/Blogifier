@@ -22,7 +22,7 @@ namespace Blogifier.Core.Controllers
 			_db = db;
             _rss = rss;
             _logger = logger;
-			_theme = "~/Views/Blogifier/Themes/Blog/Standard/";
+			_theme = "~/Views/Blogifier/Blog/Standard/";
         }
 
 		public IActionResult Index()

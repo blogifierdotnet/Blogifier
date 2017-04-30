@@ -63,7 +63,6 @@ namespace Blogifier.Core.Services.FileSystem
 
             path = Path.Combine(path, "Views");
             path = Path.Combine(path, "Blogifier");
-            path = Path.Combine(path, "Themes");
 
 			var themeFolder = themeType == ThemeType.Admin ? "Admin" : "Blog";
 			path = Path.Combine(path, themeFolder);

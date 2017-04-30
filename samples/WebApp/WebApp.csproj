@@ -142,8 +142,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blogifier\Themes\Blog\Custom\Index.cshtml" />
-    <EmbeddedResource Include="Views\Blogifier\Themes\Blog\Red\Index.cshtml" />
+    <EmbeddedResource Include="Views\Blogifier\Blog\Custom\Index.cshtml" />
+    <EmbeddedResource Include="Views\Blogifier\Blog\Red\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
@@ -173,6 +173,7 @@
     <None Include="wwwroot\blogifier\admin\reference\js\plugins\slimscroll\jquery.slimscroll.min.js" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 
