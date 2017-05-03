@@ -11,7 +11,8 @@ namespace Blogifier.Core.Common
         public static bool EnableLogging { get; set; }
         public static string BlogStorageFolder { get; set; } = "blog-uploads";
         public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
-        public static string AdminTheme { get; set; } = "bootstrap";
+        public static string AdminTheme { get; set; } = "Standard";
+        public static string BlogTheme { get; set; } = "Standard";
 
         #endregion
 

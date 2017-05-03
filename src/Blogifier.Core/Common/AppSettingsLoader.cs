@@ -39,6 +39,9 @@ namespace Blogifier.Core.Common
                         if (section["AdminTheme"] != null)
                             ApplicationSettings.AdminTheme = section.GetValue<string>("AdminTheme");
 
+                        if (section["BlogTheme"] != null)
+                            ApplicationSettings.BlogTheme = section.GetValue<string>("BlogTheme");
+
                         // applicatin settings
 
                         if (section["Title"] != null)

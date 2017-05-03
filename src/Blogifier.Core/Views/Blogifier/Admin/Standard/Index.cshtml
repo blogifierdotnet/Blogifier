@@ -1,44 +1,92 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@{ 
+    var themeFolder = "Embedded/admin/standard";
+}
+<link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
+<div class="row">
 
-<div class="app-content posts">
-    <div class="posts-list">
-        <div class="posts-list-header">
-            <input type="checkbox"> <button type="button" class="btn btn-block btn-primary">New Post</button>
-        </div>
-        @if (Model != null && Model.BlogPosts != null)
-        {
-        <ul>              
-            @foreach (var item in Model.BlogPosts)
-            {
-                if (item.Id == Model.SelectedPost.Id)
-                {
-                    <li class="active"><input type="checkbox"><a href="~/admin/@item.Slug">@item.Title</a></li>
-                }
-                else
-                {
-                    <li><input type="checkbox"><a href="~/admin/@item.Slug">@item.Title</a></li>
-                }
-            }
-        </ul>
-        }
+    <div class="col-md-3 posts-list">
+        <ul id="admin-posts" class="list-group elements-list"></ul>
+        <table style="width: 100%">
+            <tr>
+                <td style="padding-left: 10px">
+                    <ul class="pagination" style="margin: 2px 0 !important">
+                        <li id="pager-newer"></li>
+                    </ul>
+                </td>
+                <td style="text-align: center"><span id="pager-label"></span></td>
+                <td style="padding-right: 10px">
+                    <ul class="pagination pull-right" style="margin: 2px 0 !important">
+                        <li id="pager-older"></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <input id="hdnSelectedPost" hidden="hidden" />
+        <input id="hdnCurrentPage" hidden="hidden" />
     </div>
-    <div class="posts-content">
-        <div class="posts-content-header clearfix">
-            <div class="btn-group float-left" role="group">
-                <button type="button" class="btn btn-secondary">Edit</button>
-                <button type="button" class="btn btn-secondary">Delete</button>
-                <button type="button" class="btn btn-secondary">Publish</button>
-            </div>
-            <div class="btn-group float-right" role="group">
-                <button type="button" class="btn btn-secondary"><i class="fa fa-tags"></i></button>
-                <button type="button" class="btn btn-secondary"><i class="fa fa-clock-o"></i></button>
+
+    <div id="post-view" class="col-md-9 posts-list" style="padding: 0 15px 25px 35px !important">
+        <div class="row">
+            <div id="article-categories" class="col-md-9"></div>
+            <div class="col-md-3">
+                <div id="article-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
             </div>
         </div>
-        <div class="posts-content-body">
-            @if (Model.SelectedPost != null)
-            {
-                @Html.Raw(Model.SelectedPost.Content)
-            }
+        <h1 id="article-header"></h1>
+        <div id="article-content"></div>
+    </div>
+
+    <div id="post-edit" class="col-md-9 posts-list" style="display: none; padding: 0 15px 25px 35px !important">
+        <div class="row">
+            <div id="edit-categories" class="col-md-9"></div>
+            <div class="col-md-3">
+                <div id="edit-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
+            </div>
+        </div>
+        <div class="wrap">
+            <form id="frmEditor" style="height:100%;">
+                <div class="form-group">
+                    <input id="txtPostTitle" class="form-control" placeholder="Post title" />
+                </div>
+                <div class="form-group">
+                    <textarea id="txtContent"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add category</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                    <div class="form-group">
+                        <input type="text" id="txtCategory" class="form-control" style="width: 100% !important" placeholder="Type new or existing category..." />
+                    </div>
+                    <input id="hdnId" hidden="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="postController.saveCategory()">Save</button>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/@themeFolder/lib/autocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/@themeFolder/js/postController.js"></script>
+    <script>
+        postController.loadPage(1);
+    </script>
+}

@@ -1,61 +1,131 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@{ 
+    var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
+    var themeFolder = "Embedded/admin/standard";
+}
+<!DOCTYPE html>
+<html>
 <head>
-    <!-- META -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogifier</title>
+    <link href="~/Embedded/lib/fonts/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Embedded/lib/toastr/toastr.min.css" rel="stylesheet" />
 
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Ubuntu:300,400,500,700" rel="stylesheet">
-    <link href="~/Embedded/admin/css/toastr.min.css" rel="stylesheet" />
-    <link href="~/Embedded/admin/css/styles.css" rel="stylesheet">
-
-    <!-- TITLE -->
-    <title>Admin</title>
-    <meta name="description" content="Blogifier">
+    <link href="~/@themeFolder/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/css/animate.css" rel="stylesheet">
+    <link href="~/@themeFolder/css/style.css" rel="stylesheet">
 </head>
-
 <body>
+    <div id="wrapper">
 
-    <div class="app">
-        <div class="app-header">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span>
+                                <img id="profile-img" alt="image" class="img-circle" src="~/Embedded/lib/img/avatar.jpg">
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs">
+                                        <strong class="font-bold">@User.Identity.Name</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">
+                            BF
+                        </div>
+                    </li>
+                    @if (Model.BlogExists)
+                    {
+                        <li class="posts">
+                            <a href="~/admin"><i class="fa fa-th-large"></i> <span class="nav-label">Posts</span></a>
+                        </li>
+                    }
+                    <li class="profile">
+                        <a href="~/admin/profile"><i class="fa fa-user"></i> <span class="nav-label">Profile</span> </a>
+                    </li>
+                    @if (Model.BlogExists)
+                    {
+                        <li class="tools">
+                            <a href="~/admin/tools"><i class="fa fa-wrench"></i> <span class="nav-label">Tools</span> </a>
+                        </li>
+                        <li class="about">
+                            <a href="~/admin/about"><i class="fa fa-gear"></i> <span class="nav-label">Settings</span> </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
 
-            <div class="float-left">
-                <div class="blog-info">
-                    <a href="~/blog">@Blogifier.Core.Common.ApplicationSettings.Title</a>
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+
+                    @if (showNewItemBtn)
+                    {
+                        <div id="btnNewItem" class="btn-group" style="float: left; margin-left: 20px">
+                            <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="" onclick="return postController.addPost()">Blog Post</a></li>
+                                <li><a href="#">Category</a></li>
+                                <li><a class="font-bold" href="#">Upload File</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="" onclick="profileLogOut(); return false;">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeIn">
+                @RenderBody()
+            </div>
+
+            <div class="footer">
+                <div class="pull-right">
+                    <strong>Version</strong> @Blogifier.Core.Common.ApplicationSettings.Version
+                </div>
+                <div>
+                    <strong>Blogifier.NET</strong> &copy; @DateTime.Now.Year
                 </div>
             </div>
 
-            <div class="dropdown profile-nav float-right">
-                <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"><img src="~/Embedded/admin/img/profile_small.jpg" alt=""><span>John Doe <i class="fa fa-angle-down"></i></span></button>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    @if (Model.BlogExists)
-                    {
-                        <li class="dropdown-item"><a href="~/admin" class="active"><i class="fa fa-align-justify"></i>Posts</a></li>
-                    }
-                    <li class="dropdown-item"><a href="~/admin/profile"><i class="fa fa-user"></i>Profile</a></li>
-                    @if (Model.BlogExists)
-                    {
-                        <li class="dropdown-item"><a href="~/admin/tools"><i class="fa fa-cog"></i>Tools</a></li>
-                        <li class="dropdown-item"><a href="~/admin/about"><i class="fa fa-info-circle"></i>About</a></li>
-                    }
-                    <li class="dropdown-item"><a href="" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logout</a></li>
-                </ul>
-            </div>
         </div>
-
-        @RenderBody()
-
     </div>
+
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 
-    <script src="~/Embedded/admin/js/jquery-2.2.4.min.js"></script>
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-    <script src="~/Embedded/admin/js/bootstrap.min.js"></script>
-    <script src="~/Embedded/admin/js/icheck.min.js"></script>
-    <script src="~/Embedded/admin/js/toastr.min.js"></script>
-    <script src="~/Embedded/admin/js/custom.js"></script>
+    <!-- Main scripts -->
+
+
+    <script src="~/@themeFolder/lib/jquery/jquery-3.1.1.min.js"></script>
+    <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="~/@themeFolder/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/@themeFolder/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Embedded/lib/toastr/toastr.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="~/@themeFolder/js/app.js"></script>
+    <script src="~/@themeFolder/js/dataService.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) {
+            return webRoot + str;
+        };
+    </script>
     @RenderSection("Scripts", false)
 </body>
 </html>

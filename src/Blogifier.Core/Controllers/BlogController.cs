@@ -51,7 +51,7 @@ namespace Blogifier.Core.Controllers
                     vm.Categories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
-            return View(_theme + "Single.cshtml", vm);
+            return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
         }
 
         [Route("rss")]
