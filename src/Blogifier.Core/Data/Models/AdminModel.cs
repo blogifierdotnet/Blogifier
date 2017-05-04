@@ -23,26 +23,31 @@ namespace Blogifier.Core.Data.Models
 		public IList<SelectListItem> BlogThemes { get; set; }
     }
 
+	public class AdminToolsModel : AdminBaseModel
+	{
+		public RssImportModel RssImportModel { get; set; }
+	}
+
+    public class RssImportModel
+    {
+        public int ProfileId { get; set; }
+        [Required]
+        [StringLength(450)]
+        public string FeedUrl { get; set; }
+        [StringLength(150)]
+        public string Domain { get; set; }
+        [StringLength(150)]
+        public string SubDomain { get; set; }
+
+        public bool ImportImages { get; set; }
+        public bool ImportAttachements { get; set; }
+    }
+
     public class AdminPostList
     {
         public Pager Pager { get; set; }
         public IEnumerable<PostListItem> BlogPosts { get; set; }
     }
-
-	public class AdminSyndicationModel : AdminBaseModel
-	{
-		public int ProfileId { get; set; }
-		[Required]
-		[StringLength(450)]
-		public string FeedUrl { get; set; }
-		[StringLength(150)]
-		public string Domain { get; set; }
-		[StringLength(150)]
-		public string SubDomain { get; set; }
-
-		public bool ImportImages { get; set; }
-		public bool ImportAttachements { get; set; }
-	}
 
     public class PostEditModel
     {

@@ -18,6 +18,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 	public class RssService : IRssService
     {
         IUnitOfWork _db;
+        RssImportModel _model;
         string _root;
         private readonly AppLogger _logger;
 
@@ -27,12 +28,13 @@ namespace Blogifier.Core.Services.Syndication.Rss
             _logger = new AppLogger(logger);
         }
 
-        public async Task Import(AdminSyndicationModel model, string root)
+        public async Task Import(RssImportModel model, string root)
         {
             var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
             if (blog == null)
                 return;
 
+            _model = model;
             _root = root;
 
             var storage = new BlogStorage(blog.Slug);
@@ -57,11 +59,11 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     };
                     if (model.ImportImages)
                     {
-                        await ImportImages(post, model, storage);
+                        await ImportImages(post, storage);
                     }
                     if (model.ImportAttachements)
                     {
-                        await ImportAttachements(post, model, storage);
+                        await ImportAttachements(post, storage);
                     }
                     _db.BlogPosts.Add(post);
                     _db.Complete();
@@ -155,16 +157,16 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        async Task ImportImages(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
+        async Task ImportImages(BlogPost post, IBlogStorage storage)
         {
             var images = GetImages(post.Content);
-            await AddAssets(images, post, storage, model, false);
+            await AddAssets(images, post, storage, false);
         }
 
-        async Task ImportAttachements(BlogPost post, AdminSyndicationModel model, IBlogStorage storage)
+        async Task ImportAttachements(BlogPost post, IBlogStorage storage)
         {
             var attachements = GetAttachements(post.Content);
-            await AddAssets(attachements, post, storage, model, true);
+            await AddAssets(attachements, post, storage, true);
         }
 
         IList<string> GetImages(string html)
@@ -217,7 +219,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             return links;
         }
 
-        async Task AddAssets(IList<string> assets, BlogPost post, IBlogStorage storage, AdminSyndicationModel model, bool isAttachement)
+        async Task AddAssets(IList<string> assets, BlogPost post, IBlogStorage storage, bool isAttachement)
         {
             if (assets.Any())
             {
@@ -225,7 +227,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 {
                     try
                     {
-                        var uri = GetUri(item, model.Domain, model.SubDomain);
+                        var uri = GetUri(item, _model.Domain, _model.SubDomain);
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
                         var asset = await storage.UploadFromWeb(uri, _root, path);

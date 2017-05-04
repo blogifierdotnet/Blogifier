@@ -46,21 +46,22 @@ namespace Blogifier.Core.Controllers
 		[Route("tools")]
 		public IActionResult Tools()
 		{
-			var model = new AdminSyndicationModel { Profile = GetProfile() };
+			var model = new AdminToolsModel { Profile = GetProfile(), RssImportModel = new RssImportModel() };
 			return View(_theme + "Tools.cshtml", model);
 		}
 
 		[HttpPost]
 		[Route("tools")]
-		public async Task<IActionResult> Tools(AdminSyndicationModel model)
+		public async Task<IActionResult> Tools(RssImportModel rss)
 		{
-			model.Profile = GetProfile();
+            var model = new AdminToolsModel { Profile = GetProfile() };
 
 			if (model.Profile == null)
 				return View("Error");
 
-			model.ProfileId = model.Profile.Id;
-			await _rss.Import(model, Url.Content("~/"));
+			rss.ProfileId = model.Profile.Id;
+
+			await _rss.Import(rss, Url.Content("~/"));
 
 			return RedirectToAction("Index", "Admin");
 		}
