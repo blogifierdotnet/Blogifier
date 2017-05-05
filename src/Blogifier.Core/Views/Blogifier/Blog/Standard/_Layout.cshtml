@@ -23,13 +23,13 @@
                     <span class="icon-bar bar2"></span>
                     <span class="icon-bar bar3"></span>
                 </button>
-                <a href="~/">
+                <a href="~/blog">
                     <div class="logo-container">
                         <div class="logo">
                             <img src="~/Embedded/blog/standard/img/logo.png" alt="Blogifier Logo" width="48">
                         </div>
                         <div class="brand">
-                            Creative Tim
+                            Blogifier.NET
                         </div>
                     </div>
                 </a>
@@ -37,17 +37,23 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="~/blog">Blog</a>
+                        <a href="~/">Home</a>
                     </li>
                     <li>
-                        <a href="~/blog">Another link</a>
+                        <a href="~/blog">Blog</a>
                     </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <li>
+                        <a href="~/admin">Admin</a>
+                    </li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
     <div class="wrapper">
-        <div class="header header-filter" style="background-image: url('/Embedded/blog/standard/img/city.jpg');">
+        <div class="header header-filter" style="background-image: url('/Embedded/blog/standard/img/ny.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
@@ -69,40 +75,29 @@
             <nav class="pull-left">
                 <ul>
                     <li>
-                        <a href="http://www.creative-tim.com">
-                            Creative Tim
-                        </a>
+                        <a href="http://blogifier.net" target="_blank">Blogifier.NET</a>
                     </li>
                     <li>
-                        <a href="http://presentation.creative-tim.com">
-                            About Us
-                        </a>
+                        <a href="http://blogifier.azurewebsites.net" target="_blank">Azure</a>
                     </li>
                     <li>
-                        <a href="http://blog.creative-tim.com">
-                            Blog
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.creative-tim.com/license">
-                            Licenses
-                        </a>
+                        <a href="https://github.com/blogifierdotnet" target="_blank">Github</a>
                     </li>
                 </ul>
             </nav>
             <div class="social-area pull-right">
-                <a class="btn btn-social btn-twitter btn-just-icon" href="https://twitter.com/CreativeTim">
+                <a class="btn btn-social btn-twitter btn-just-icon" href="https://twitter.com/blogifierdotnet" target="_blank">
                     <i class="fa fa-twitter"></i>
                 </a>
-                <a class="btn btn-social btn-facebook btn-just-icon" href="https://www.facebook.com/CreativeTim">
+                <a class="btn btn-social btn-facebook btn-just-icon" href="https://www.facebook.com/blogifierdotnet/" target="_blank">
                     <i class="fa fa-facebook-square"></i>
                 </a>
-                <a class="btn btn-social btn-google btn-just-icon" href="https://plus.google.com/+CreativetimPage">
+                <a class="btn btn-social btn-google btn-just-icon" href="https://plus.google.com/u/0/100922379349290637756" target="_blank">
                     <i class="fa fa-google-plus"></i>
                 </a>
             </div>
             <div class="copyright">
-                &copy; 2016 Creative Tim, made with love
+                &copy; @DateTime.Now.Year Blogifier.NET
             </div>
         </div>
     </footer>
