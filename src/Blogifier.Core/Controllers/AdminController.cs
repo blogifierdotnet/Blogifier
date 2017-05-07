@@ -8,6 +8,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -87,6 +88,11 @@ namespace Blogifier.Core.Controllers
 		public IActionResult Profile(AdminProfileModel model)
 		{
             var profile = model.Profile;
+
+            if(_db.Profiles.All().ToList().Count == 0)
+            {
+                model.Profile.IsAdmin = true;
+            }
 
             if(profile.Id == 0)
             {

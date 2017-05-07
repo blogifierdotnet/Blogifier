@@ -21,24 +21,33 @@
                 <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Logo" />
-                <span asp-validation-for="Profile.Logo" class="text-danger"></span>
+            @if (Model.BlogExists)
+            {
+            <div class="form-group input-group">
+                <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Logo" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileLogo');">Logo</button>
+                </span>
             </div>
-            <div class="form-group">
-                <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" />
-                <span asp-validation-for="Profile.Avatar" class="text-danger"></span>
+            <div class="form-group input-group">
+                <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileAvatar');">Avatar</button>
+                </span>
             </div>
-            <div class="form-group">
-                <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Image" />
-                <span asp-validation-for="Profile.Image" class="text-danger"></span>
+            <div class="form-group input-group">
+                <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Image" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileImage');">Image</button>
+                </span>
             </div>
+            }
 
             <div class="form-group">
                 <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control"></select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success btn-block">Save</button>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
             </div>
             <input asp-for="Profile.Id" hidden="hidden" />
             <input asp-for="Profile.IdentityName" hidden="hidden" />

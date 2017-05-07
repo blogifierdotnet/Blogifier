@@ -1,6 +1,13 @@
-﻿@{ 
+﻿@using Blogifier.Core.Common
+@{ 
     var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
     var themeFolder = "Embedded/admin/standard";
+
+    var avatar = ApplicationSettings.ProfileAvatar;
+    if (Model.Profile != null && !string.IsNullOrEmpty(Model.Profile.Avatar))
+    {
+        avatar = Model.Profile.Avatar;
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -24,7 +31,7 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element">
                             <span>
-                                <img id="profile-img" alt="image" class="img-circle" src="~/Embedded/lib/img/avatar.jpg">
+                                <img id="profile-img" alt="image" class="img-circle" src="@avatar">
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
@@ -52,9 +59,12 @@
                         <li class="tools">
                             <a href="~/admin/tools"><i class="fa fa-wrench"></i> <span class="nav-label">Tools</span> </a>
                         </li>
+                        @if (Model.Profile != null && Model.Profile.IsAdmin)
+                        {
                         <li class="about">
                             <a href="~/admin/about"><i class="fa fa-gear"></i> <span class="nav-label">Settings</span> </a>
                         </li>
+                        }
                     }
                 </ul>
             </div>
@@ -107,10 +117,18 @@
     </div>
 
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+    <div style="display:none;">
+        <form method="post" name="frmUploadMultiple" id="frmUploadMultiple" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+            <input type="file" name="files" id="files" multiple onchange="uploadController.uploadMultiple(); return false;" />
+            <input type="submit" value="Upload Multiple" />
+        </form>
+        <form method="post" name="frmUpload" id="frmUpload" asp-action="Index" asp-controller="Blogifier/Api/Assets" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" onchange="uploadController.uploadSingle()" />
+            <input type="submit" name="submitUpload" id="submitUpload" value="Upload Single" />
+        </form>
+    </div>
 
     <!-- Main scripts -->
-
-
     <script src="~/@themeFolder/lib/jquery/jquery-3.1.1.min.js"></script>
     <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>
     <script src="~/@themeFolder/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -120,6 +138,7 @@
     <!-- Custom and plugin javascript -->
     <script src="~/@themeFolder/js/app.js"></script>
     <script src="~/@themeFolder/js/dataService.js"></script>
+    <script src="~/@themeFolder/js/uploadController.js"></script>
     <script>
         var webRoot = '@Url.Content("~/")';
         function getUrl(str) {

@@ -33,6 +33,8 @@ namespace Blogifier.Core.Data.Domain
         [StringLength(160)]
         public string AuthorEmail { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         [Required]
         [StringLength(160)]
         public string BlogTheme { get; set; }

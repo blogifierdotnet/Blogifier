@@ -8609,3 +8609,7 @@ iframe,
 #profile-img {
     width: 48px;
 }
+
+.btn-upload {
+    min-width: 100px;
+}

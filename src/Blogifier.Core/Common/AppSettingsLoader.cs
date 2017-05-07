@@ -53,6 +53,9 @@ namespace Blogifier.Core.Common
                         if (section["ItemsPerPage"] != null)
                             ApplicationSettings.ItemsPerPage = section.GetValue<int>("ItemsPerPage");
 
+                        if (section["ProfileAvatar"] != null)
+                            ApplicationSettings.ProfileAvatar = section.GetValue<string>("ProfileAvatar");
+
                         // troubleshooting
 
                         if (section["AddContentTypeHeaders"] != null)

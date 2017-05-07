@@ -100,6 +100,9 @@ namespace Blogifier.Core.Services.FileSystem
         public async Task <Asset> UploadFormFile(IFormFile file, string root, string path = "")
         {
             path = path.Replace("/", _separator);
+
+            VerifyPath(path);
+
             var fileName = file.FileName;
             var filePath = string.IsNullOrEmpty(path) ?
                 Path.Combine(Location, fileName) :
@@ -122,16 +125,8 @@ namespace Blogifier.Core.Services.FileSystem
         {
             path = path.Replace("/", _separator);
 
-            if (!string.IsNullOrEmpty(path))
-            {
-                var dir = Path.Combine(Location, path);
+            VerifyPath(path);
 
-                if (!Directory.Exists(dir))
-                {
-                    CreateFolder(dir);
-                }
-            }
-            
             var fileName = TitleFromUri(requestUri);
             var filePath = string.IsNullOrEmpty(path) ? 
                 Path.Combine(Location, fileName) : 
@@ -177,6 +172,19 @@ namespace Blogifier.Core.Services.FileSystem
         public void DeleteFile(string path)
         {
             File.Delete(GetFullPath(path));
+        }
+
+        void VerifyPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+            {
+                var dir = Path.Combine(Location, path);
+
+                if (!Directory.Exists(dir))
+                {
+                    CreateFolder(dir);
+                }
+            }
         }
 
         string GetFullPath(string path)
