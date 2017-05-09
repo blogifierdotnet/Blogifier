@@ -4,8 +4,10 @@ using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -35,6 +37,10 @@ namespace Blogifier.Core.Controllers.Api
         public PostEditModel GetById(int id)
         {
             var post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
+            if (id < 1)
+            {
+                post = _db.BlogPosts.SingleIncluded(p => p.Profile.IdentityName == User.Identity.Name).Result;
+            }
             var model = new PostEditModel
             {
                 Id = post.Id,
@@ -48,47 +54,34 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPost]
-        public void Post([FromBody]PostEditModel model)
+        public PostEditModel Index([FromBody]PostEditModel model)
         {
-            BlogPost post;
+            BlogPost bp;
             if (model.Id == 0)
             {
                 var blog = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
-                post = new BlogPost();
+                bp = new BlogPost();
                 var desc = model.Content.StripHtml();
-                post.ProfileId = blog.Id;
-                post.Title = model.Title;
-                post.Slug = model.Title.ToSlug();
-                post.Content = model.Content;
-                post.LastUpdated = SystemClock.Now();
-                //post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
-                post.Description = desc.Length > 300 ? desc.Substring(0, 300) : desc;
-                _db.BlogPosts.Add(post);
+                bp.ProfileId = blog.Id;
+                bp.Title = model.Title;
+                bp.Slug = model.Title.ToSlug();
+                bp.Content = model.Content;
+                bp.LastUpdated = SystemClock.Now();
+                bp.Description = desc.Length > 300 ? desc.Substring(0, 300) : desc;
+                _db.BlogPosts.Add(bp);
             }
             else
             {
-                post = _db.BlogPosts.Single(p => p.Id == model.Id);
-                post.Title = model.Title;
-                post.Content = model.Content;
-                //post.Published = model.Published ? SystemClock.Now() : System.DateTime.MinValue;
+                bp = _db.BlogPosts.Single(p => p.Id == model.Id);
+                bp.Title = model.Title;
+                bp.Content = model.Content;
             }
             _db.Complete();
 
-            // handle post categories
-            //var savedPost = _db.BlogPosts.Single(p => p.Slug == post.Slug);
-            //if (savedPost != null)
-            //{
-            //    var cats = new List<string>();
-            //    if (model.Categories != null && model.Categories.Count > 0)
-            //    {
-            //        foreach (var item in model.Categories)
-            //        {
-            //            cats.Add(item.ToString());
-            //        }
-            //    }
-            //    _db.BlogPosts.UpdatePostCategories(savedPost.Id, cats);
-            //    _db.Complete();
-            //}
+            model.Id = bp.Id;
+            model.Slug = bp.Slug;
+
+            return model;
         }
 
         [HttpPut("publish/{id:int}")]
