@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
@@ -22,7 +23,15 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        // POST api/assets/single/{profileAvatar}
+        // GET: api/assets
+        [HttpGet]
+        public IEnumerable<Asset> Get()
+        {
+            var profile = GetProfile();
+            return _db.Assets.Find(a => a.ProfileId == profile.Id).OrderByDescending(a => a.LastUpdated);
+        }
+
+        // POST api/assets/single/{type}
         [HttpPost]
         [Route("single/{type}")]
         public async Task<Asset> Post(IFormFile file, string type)

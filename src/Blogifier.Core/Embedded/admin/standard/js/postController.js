@@ -280,9 +280,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         plugins: [
             "advlist autolink autoresize lists link image charmap print preview anchor",
             "searchreplace visualblocks code textcolor imagetools",
-            "insertdatetime media table contextmenu paste"
+            "insertdatetime media table contextmenu paste fileupload"
         ],
-        toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media | code",
+        toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media | code fileupload",
         autosave_ask_before_unload: false,
         autoresize_min_height: 320,
         menubar: false,
