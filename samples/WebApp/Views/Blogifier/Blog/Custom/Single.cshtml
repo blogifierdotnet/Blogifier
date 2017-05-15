@@ -1,0 +1,29 @@
+﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
+@using Blogifier.Core.Common
+<!-- Post Content -->
+<article>
+    <h2 class="blog-post-title">@Model.BlogPost.Title</h2>
+    <p class="blog-post-meta">
+        Posted on @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)
+        by <a href="~/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
+        in
+        @foreach (var cat in Model.Categories)
+            {
+            <span> <a href="~/category/@cat.Value">@cat.Text</a></span>
+        }
+    </p>
+    @Html.Raw(Model.BlogPost.Content)
+</article>
+<hr>
+<form role="form">
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {  // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//blogifierdotnet.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</form>

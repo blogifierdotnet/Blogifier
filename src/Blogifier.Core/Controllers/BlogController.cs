@@ -15,6 +15,7 @@ namespace Blogifier.Core.Controllers
 		IUnitOfWork _db;
         IRssService _rss;
         private readonly ILogger _logger;
+        private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
 		public BlogController(IUnitOfWork db, IRssService rss, ILogger<BlogController> logger)
@@ -22,7 +23,7 @@ namespace Blogifier.Core.Controllers
 			_db = db;
             _rss = rss;
             _logger = logger;
-			_theme = "~/Views/Blogifier/Blog/Standard/";
+			_theme = string.Format(_themePattern, Common.ApplicationSettings.BlogTheme);
         }
 
 		public IActionResult Index()

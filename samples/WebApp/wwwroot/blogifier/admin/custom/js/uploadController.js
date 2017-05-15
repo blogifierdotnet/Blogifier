@@ -47,6 +47,15 @@ var uploadController = function (dataService) {
         toastr.success('added to editor');
     }
 
+    function remove(type) {
+        dataService.remove('blogifier/api/assets/' + type, removeCallback, fail);
+    }
+
+    function removeCallback(data) {
+        toastr.success('Removed');
+        location.reload();
+    }
+
     // file picker
 
     function openFilePicker() {
@@ -72,6 +81,12 @@ var uploadController = function (dataService) {
             }
             $("#filePickerList").append(tag);
         });
+        if (data && data.length > 0) {
+            $('.modal-list-empty').hide();
+        }
+        else {
+            $('.modal-list-empty').show();
+        }
         $('#modalFilePicker').modal();
     }
 
@@ -108,6 +123,12 @@ var uploadController = function (dataService) {
         toastr.success('Uploaded');
     }
 
+    function firstUpload() {
+        $('#modalFilePicker').modal('hide');
+        clickMultiple();
+        return false;
+    }
+
     function fail() {
         toastr.error('Failed');
     }
@@ -118,8 +139,10 @@ var uploadController = function (dataService) {
         uploadSingle: uploadSingle,
         uploadMultiple: uploadMultiple,
         openFilePicker: openFilePicker,
+        firstUpload: firstUpload,
         insertImage: insertImage,
         insertFile: insertFile,
+        remove: remove,
         uploadType: uploadType
     }
 }(DataService);

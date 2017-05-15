@@ -1,9 +1,3 @@
-/*!
- * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
 body {
     overflow-x: hidden;
     font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -195,8 +189,9 @@ div.mce-fullscreen {
 }
 
 .badge {
-    padding: 7px;
     margin-right: 5px;
+    margin-top: 5px;
+    line-height: 22px;
     background-color: #fff;
     border: 1px solid #ccc;
     color: #696C6E;
@@ -212,6 +207,27 @@ div.mce-fullscreen {
 
 .pager .counter {
     line-height: 32px;
+}
+
+h2 {
+    color: #696C6E;
+    font-size: 28px;
+}
+
+h1 {
+    color: #696C6E;
+    font-size: 28px;
+}
+
+.btn-upload {
+    min-width: 100px;
+}
+
+.first-post {
+    padding: 20px 20px 20px 0;
+    color: #696C6E;
+    text-align: center;
+    display: none;
 }
 
 @media(min-width:768px) {

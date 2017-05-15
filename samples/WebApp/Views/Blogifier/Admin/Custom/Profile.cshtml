@@ -36,18 +36,27 @@
                         <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Logo" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileLogo');">Logo</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileLogo');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
                         </span>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileAvatar');">Avatar</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileAvatar');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
                         </span>
                     </div>
                     <div class="form-group input-group">
                         <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Image" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileImage');">Image</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileImage');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
                         </span>
                     </div>
                     }

@@ -74,6 +74,38 @@ namespace Blogifier.Core.Controllers.Api
             return Ok("Created");
         }
 
+        // DELETE api/assets/5
+        [HttpDelete("{id:int}")]
+        public void Delete(int id)
+        {
+            var asset = _db.Assets.Single(a => a.Id == id);
+
+            var blog = GetProfile();
+            var storage = new BlogStorage(blog.Slug);
+            storage.DeleteFile(asset.Path);
+
+            _db.Assets.Remove(asset);
+            _db.Complete();
+        }
+
+        // DELETE api/assets/profilelogo
+        [HttpDelete("{type}")]
+        public void Delete(string type)
+        {
+            var profile = GetProfile();
+
+            if (type == "profileAvatar")
+                profile.Avatar = null;
+
+            if(type == "profileLogo")
+                profile.Logo = null;
+
+            if (type == "profileImage")
+                profile.Image = null;
+
+            _db.Complete();
+        }
+
         async Task<Asset> SaveFile(IFormFile file)
         {
             var profile = GetProfile();

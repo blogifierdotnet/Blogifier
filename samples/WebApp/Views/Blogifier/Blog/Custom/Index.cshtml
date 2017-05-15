@@ -1,0 +1,25 @@
+﻿@using Blogifier.Core.Common
+@using Blogifier.Core.Data.Domain
+@using System.Collections.Generic
+@using Blogifier.Core.Extensions
+@model List<BlogPost>
+
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+        <div class="post-preview">
+            <a href="~/blog/@item.Slug">
+                <h2 class="post-title">
+                    @item.Title
+                </h2>
+                <h3 class="post-subtitle">
+                    @Html.Raw(item.Description)
+                </h3>
+            </a>
+            <p class="post-meta">Posted by <a href="#">@item.Profile.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+        </div>
+        <hr>
+        }
+    }

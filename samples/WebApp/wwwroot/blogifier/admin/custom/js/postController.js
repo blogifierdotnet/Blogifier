@@ -20,7 +20,7 @@
         $('#admin-posts').empty();
         var posts = data.blogPosts;
         if (posts.length < 1) {
-            $("#admin-posts").append('<li class="list-group-item">Empty</li>');
+            $('.first-post').show();
             return false;
         }
         $.each(posts, function (index) {
@@ -134,6 +134,7 @@
     }
 
     function newPost() {
+        $('.first-post').hide();
         $("#post-view").hide();
         $("#post-edit").fadeIn();
         current.post = 0;
@@ -256,6 +257,7 @@
 
     function closeEditor() {
         current.mode = 'view';
+        $("#post-edit").hide();
         reload();
         return false;
     }
