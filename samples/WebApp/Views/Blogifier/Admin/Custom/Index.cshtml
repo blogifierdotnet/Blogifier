@@ -1,0 +1,109 @@
+﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@{ 
+    var themeFolder = "blogifier/admin/custom";
+}
+<link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
+
+<div class="row top">
+    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </a>
+    <div id="btnNewItem" class="btn-group" style="float: right; margin-right: 2px">
+        <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="" onclick="return postController.newPost()">Blog Post</a></li>
+            <li><a href="" onclick="return uploadController.clickMultiple()">Upload Files</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        
+        <div class="row">
+
+            <div class="col-md-3 posts-list">
+                <ul id="admin-posts" class="list-group elements-list"></ul>
+                <ul class="pager"></ul>
+            </div>
+
+            <div id="post-view" class="col-md-9 posts-list" style="padding: 0 15px 25px 35px !important">
+                <div class="row post-action">
+                    <div id="article-categories" class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div id="post-view-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
+                    </div>
+                </div>
+                <h1 id="article-header"></h1>
+                <div id="article-content"></div>
+            </div>
+
+            <div id="post-edit" class="col-md-9 posts-list" style="display: none; padding: 0 15px 25px 35px !important">
+                <div class="row post-action">
+                    <div id="edit-categories" class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div id="post-edit-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
+                    </div>
+                </div>
+                <div class="wrap">
+                    <form id="frmEditor" style="height:100%;">
+                        <div class="form-group">
+                            <input id="txtPostTitle" class="form-control" placeholder="Post title" />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="txtContent"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>       
+
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add category</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                    <div class="form-group">
+                        <input type="text" id="txtCategory" class="form-control" style="width: 100% !important" placeholder="Type new or existing category..." />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="postController.saveCategory()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="modalFilePicker" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">File picker</h4>
+            </div>
+            <div class="modal-body">
+                <div class="lightBoxGallery" id="filePickerList"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary" onclick="uploadController.clickSingle('editor')">Upload</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/@themeFolder/lib/autocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/@themeFolder/js/postController.js"></script>
+}

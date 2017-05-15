@@ -135,10 +135,10 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Profile.cshtml", model);
 		}
 
-		[Route("about")]
-		public IActionResult About()
+		[Route("settings")]
+		public IActionResult Settings()
 		{
-			return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
+			return View(_theme + "Settings.cshtml", new AdminBaseModel { Profile = GetProfile() });
 		}
 
 		#region Private members

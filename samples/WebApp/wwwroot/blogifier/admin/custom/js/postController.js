@@ -1,13 +1,19 @@
-var postController = function (dataService) {
-
-    var currentPage = 1;
-    var currentPost = 0;
+﻿var postController = function (dataService) {
+    var current = {
+        page: 1,
+        post: 0,
+        mode: 'view'
+    }
 
     function loadPage(page) {
-        loading();
-        currentPage = page;
-        dataService.get('blogifier/api/posts/' + currentPage, loadList, fail);
+        current.page = page;
+        current.post = 0;
+        reload();
         return false;
+    }
+
+    function reload() {
+        dataService.get('blogifier/api/posts/' + current.page, loadList, fail);
     }
 
     function loadList(data) {
@@ -15,8 +21,6 @@ var postController = function (dataService) {
         var posts = data.blogPosts;
         if (posts.length < 1) {
             $("#admin-posts").append('<li class="list-group-item">Empty</li>');
-            $('#btnNewItem').show();
-            loaded();
             return false;
         }
         $.each(posts, function (index) {
@@ -33,27 +37,29 @@ var postController = function (dataService) {
 
         pager(data.pager);
 
-        if (posts[0]) {
-            loadPostView(posts[0].blogPostId);
+        postId = current.post > 0 ? current.post : posts[0].blogPostId;
+        if (current.mode === "view") {
+            loadPostView(postId);
         }
-        $('#btnNewItem').show();
-        loaded();
+        else {
+            loadPostEdit(postId);
+        }
     }
 
     function loadPostView(postId) {
-        currentPost = postId;
-        if (currentPost > 0) {
-            dataService.get('blogifier/api/posts/post/' + currentPost, loadPostViewCallback, fail);
-        }
         $('#admin-posts li').removeClass('active');
-        var li = $('#post-' + currentPost);
+        var li = $('#post-' + postId);
         if (li) {
             li.addClass('active');
         }
+        current.post = postId;
+        current.mode = 'view';
+        $("#post-edit").hide();
+        $("#post-view").fadeIn();
+        dataService.get('blogifier/api/posts/post/' + postId, loadPostViewCallback, fail);
     }
 
     function loadPostViewCallback(data) {
-        closeEditor();
         $('#article-content').empty();
         $('#article-header').empty();
         $('#article-categories').empty();
@@ -62,7 +68,7 @@ var postController = function (dataService) {
         var cats = data.categories;
         $.each(cats, function (index) {
             var cat = cats[index];
-            catStr += '<span class="btn btn-white btn-xs">' + cat.text + '</span>';
+            catStr += '<span class="badge">' + cat.text + '</span>';
         });
         $('#article-categories').append(catStr);
 
@@ -70,8 +76,8 @@ var postController = function (dataService) {
         $('#article-content').append(content);
         $('#article-header').text(data.title);
 
-        var btns = '<button class="btn btn-white btn-xs" title="Edit post" onclick="return postController.loadPostEdit(' + data.id + ')"><i class="fa fa-pencil"></i> Edit</button>';
-        btns += '<a href="/blog/' + data.slug + '" class="btn btn-white btn-xs" target="_blank" title="View in the blog"><i class="fa fa-eye"></i> View</a>';
+        var btns = '<div class="btn-group"><button class="btn btn-default btn-sm" title="Edit post" onclick="return postController.loadPostEdit(' + data.id + ')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>';
+        btns += '<a href="/blog/' + data.slug + '" class="btn btn-default btn-sm" target="_blank" title="View in the blog"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View</a></div>';
         $('#post-view-actions').empty();
         $('#post-view-actions').append(btns);
 
@@ -87,30 +93,38 @@ var postController = function (dataService) {
         curTime.append(getPubDate(data.published));
     }
 
-    function loadPostEdit(id) {
-        dataService.get('blogifier/api/posts/post/' + id, loadPostEditCallback, fail);
+    function loadPostEdit(postId) {
+        $('#admin-posts li').removeClass('active');
+        var li = $('#post-' + postId);
+        if (li) {
+            li.addClass('active');
+        }
+        current.post = postId;
+        current.mode = 'edit';
+        $("#post-view").hide();
+        $("#post-edit").fadeIn();
+        dataService.get('blogifier/api/posts/post/' + postId, loadPostEditCallback, fail);
     }
 
     function loadPostEditCallback(data) {
-        openEditor();
-        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.closeEditor()">Close</button>';
-        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.savePost(' + data.id + ')">Save</button>';
+        var btns = '<div class="btn-group"><button class="btn btn-default btn-sm" title="Cancel" onclick="return postController.closeEditor()">Close</button>';
+        btns += '<button class="btn btn-primary btn-sm" title="Save" onclick="return postController.savePost(' + data.id + ')">Save</button>';
         if (data.published.startsWith('0001')) {
-            btns += '<button class="btn btn-white btn-xs" title="Publish" onclick="return postController.publish(' + data.id + ')"><i class="fa fa-send"></i> Publish</button>';
+            btns += '<button class="btn btn-default btn-sm" title="Publish" onclick="return postController.publish(' + data.id + ')"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Publish</button>';
         }
         else {
-            btns += '<button class="btn btn-white btn-xs" title="Unpublish" onclick="return postController.unpublish(' + data.id + ')"><i class="fa fa-undo"></i> Unpublish</button>';
+            btns += '<button class="btn btn-default btn-sm" title="Unpublish" onclick="return postController.unpublish(' + data.id + ')"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Unpublish</button>';
         }
-        btns += '&nbsp;&nbsp;<button class="btn btn-white btn-xs" title="Delete" onclick="return postController.removePost(' + data.id + ')"><i class="fa fa-trash-o"></i></button>';
+        btns += '<button class="btn btn-default btn-sm" title="Delete" onclick="return postController.removePost(' + data.id + ')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>';
 
         $('#post-edit-actions').empty();
         $('#edit-categories').empty();
 
-        var catStr = '<i class="fa fa-tags"></i> <span class="btn btn-white btn-xs" title="Add category" onclick="return postController.addCategory()"><i class="fa fa-plus"></i></span>';
+        var catStr = '<span class="badge clickable" title="Add category" onclick="return postController.addCategory()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>';
         var cats = data.categories;
         $.each(cats, function (index) {
             var cat = cats[index];
-            catStr += '<span class="btn btn-white btn-xs" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <i class="fa fa-remove"></i></span>';
+            catStr += '<span class="badge clickable" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>';
         });
         $('#edit-categories').append(catStr);
         $('#post-edit-actions').append(btns);
@@ -120,22 +134,26 @@ var postController = function (dataService) {
     }
 
     function newPost() {
-        openEditor();
-        currentPost = 0;
-        var btns = '<button class="btn btn-white btn-xs" title="Cancel" onclick="return postController.closeEditor()">Cancel</button>';
-        btns += '<button class="btn btn-white btn-xs" title="Save" onclick="return postController.savePost()">Save</button> &nbsp;&nbsp;';
+        $("#post-view").hide();
+        $("#post-edit").fadeIn();
+        current.post = 0;
+        current.mode = 'edit';
+
+        var btns = '<div class="btn-group"><button class="btn btn-default btn-sm" title="Cancel" onclick="return postController.closeEditor()">Cancel</button>';
+        btns += '<button class="btn btn-primary btn-sm" title="Save" onclick="return postController.savePost()">Save</button></div>';
 
         $('#post-edit-actions').empty();
         $('#post-edit-actions').append(btns);
 
         $('#txtPostTitle').val('');
+        $('#txtPostTitle').focus();
         tinyMCE.activeEditor.setContent('');
         return false;
     }
 
     function savePost() {
         var obj = {
-            Id: currentPost,
+            Id: current.post,
             Title: $("#txtPostTitle").val(),
             Content: tinyMCE.activeEditor.getContent()
         }
@@ -151,7 +169,7 @@ var postController = function (dataService) {
     }
 
     function savePostCallback(data) {
-        currentPost = JSON.parse(data).id;
+        current.post = JSON.parse(data).id;
         savedCallback();
     }
 
@@ -164,12 +182,18 @@ var postController = function (dataService) {
     }
 
     function removePost(postId) {
-        dataService.remove('blogifier/api/posts/' + postId, savedCallback, fail);
+        dataService.remove('blogifier/api/posts/' + postId, removeCallback, fail);
     }
 
     function savedCallback() {
         toastr.success('Saved');
-        loadPage(currentPage);
+        reload();
+    }
+
+    function removeCallback() {
+        toastr.success('Removed');
+        current.post = 0;
+        reload();
     }
 
     // categories
@@ -187,16 +211,16 @@ var postController = function (dataService) {
     }
 
     function saveCategory() {
-        var obj = { Title: $("#txtCategory").val(), PostId: currentPost }
+        var obj = { Title: $("#txtCategory").val(), PostId: current.post }
         dataService.put("blogifier/api/categories/addcategorytopost", obj, saveCategoryCallback, fail);
     }
 
     function saveCategoryCallback() {
         var cat = $("#txtCategory").val();
-        toastr.success('saving category : ' + cat);
+        toastr.success('Saved');
         $("#modalAddCategory").modal('hide');
         $("#txtCategory").val('');
-        loadPostEdit(currentPost);
+        loadPostEdit(current.post);
     }
 
     function removeCategory(postId, catId) {
@@ -206,7 +230,7 @@ var postController = function (dataService) {
 
     function removeCategoryCallback(data) {
         toastr.success('Saved');
-        loadPostEdit(currentPost);
+        loadPostEdit(current.post);
     }
 
     // miscellaneous
@@ -216,37 +240,28 @@ var postController = function (dataService) {
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '';
-        var newer = '';
+        var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
+        var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
         if (pg.showOlder === true) {
-            older = '<a href="" onclick="return postController.loadPage(' + pg.older + ')"><i class="fa fa-angle-right"></i></a>';
+            older = '<li class="previous" onclick="return postController.loadPage(' + pg.older + ')"><a href="">← Older</a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<a href="" onclick="return postController.loadPage(' + pg.newer + ')"><i class="fa fa-angle-left"></i></a>';
+            newer = '<li class="next" onclick="return postController.loadPage(' + pg.newer + ')"><a href="#">Newer →</a></li>';
         }
-        $('#pager-label').text('Posts ' + firstPost + '-' + lastPost + ' out of ' + pg.total);
-
-        $('#pager-older').empty();
-        $('#pager-older').append(older);
-
-        $('#pager-newer').empty();
-        $('#pager-newer').append(newer);
-    }
-
-    function openEditor() {
-        $("#post-edit").fadeIn();
-        $("#post-view").hide();
-        return false;
+        $('.pager').empty();
+        $('.pager').append(older);
+        $('.pager').append('<li class="counter">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</li>');
+        $('.pager').append(newer);
     }
 
     function closeEditor() {
-        $("#post-edit").hide();
-        $("#post-view").fadeIn();
+        current.mode = 'view';
+        reload();
         return false;
     }
 
     function getPubDate(date) {
-        return date.startsWith('0001') ? 'Draft' : '<i class="fa fa-clock-o"></i> ' + getDate(date);
+        return date.startsWith('0001') ? 'Draft' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
     }
 
     function fail(jqXHR, exception) {
@@ -283,13 +298,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({
         selector: '#txtContent',
         plugins: [
-            "advlist autolink autoresize lists link image charmap print preview anchor",
+            "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code textcolor imagetools",
-            "insertdatetime media table contextmenu paste fileupload"
+            "insertdatetime media table contextmenu paste fullscreen fileupload"
         ],
-        toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media | code fileupload",
+        toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media fileupload | code fullscreen",
         autosave_ask_before_unload: false,
-        autoresize_min_height: 320,
+        height: "515",
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,

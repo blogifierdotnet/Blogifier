@@ -1,0 +1,111 @@
+﻿@using Blogifier.Core.Common
+@{
+    var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
+    var themeFolder = "blogifier/admin/custom";
+
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Blogifier</title>
+    <link href="~/blogifier/admin/custom/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/blogifier/admin/custom/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/blogifier/admin/custom/css/simple-sidebar.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrapper" class="toggled">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" id="side-menu">
+                <li class="sidebar-brand">
+                    <img id="profile-img" alt="image" class="img-circle" src="@avatar">
+                    <span>&nbsp; @userName</span>
+                </li>
+                @if (Model.BlogExists)
+                {
+                    <li class="posts">
+                        <a href="~/admin"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> <span class="nav-label">Posts</span></a>
+                    </li>
+                }
+                <li class="profile">
+                    <a href="~/admin/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
+                </li>
+                @if (Model.BlogExists)
+                {
+                    <li class="tools">
+                        <a href="~/admin/tools"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="nav-label">Tools</span></a>
+                    </li>
+                    @if (Model.Profile != null && Model.Profile.IsAdmin)
+                    {
+                    <li class="settings">
+                        <a href="~/admin/settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="nav-label">Settings</span>
+                        </a>
+                    </li>
+                    }
+                }
+                <li class="back">
+                    <a href="~/blog"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> <span class="nav-label">Back to blog</span></a>
+                </li>
+                <li class="logoff">
+                    <a href="" onclick="profileLogOut(); return false;"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <span class="nav-label">Logoff</span></a>
+                </li>
+            </ul>
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+    <div style="display:none;">
+        <form method="post" name="frmUploadMultiple" id="frmUploadMultiple" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+            <input type="file" name="files" id="files" multiple onchange="uploadController.uploadMultiple(); return false;" />
+            <input type="submit" value="Upload Multiple" />
+        </form>
+        <form method="post" name="frmUpload" id="frmUpload" asp-action="Index" asp-controller="Blogifier/Api/Assets" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" onchange="uploadController.uploadSingle()" />
+            <input type="submit" name="submitUpload" id="submitUpload" value="Upload Single" />
+        </form>
+    </div>
+ 
+    <script src="~/blogifier/admin/custom/lib/jquery/jquery.js"></script>
+    <script src="~/blogifier/admin/custom/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="~/blogifier/admin/custom/lib/toastr/toastr.min.js"></script>
+
+    <script src="~/@themeFolder/js/app.js"></script>
+    <script src="~/@themeFolder/js/dataService.js"></script>
+    <script src="~/@themeFolder/js/uploadController.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        function getUrl(str) {
+            return webRoot + str;
+        };
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

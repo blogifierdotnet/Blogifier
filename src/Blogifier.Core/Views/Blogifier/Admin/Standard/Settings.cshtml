@@ -1,0 +1,44 @@
+﻿@using Blogifier.Core.Common
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <h2 class="page-title">Application Settings</h2>
+        <table class="table">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>WebRootPath</td>
+                    <td>@ApplicationSettings.WebRootPath</td>
+                </tr>
+                <tr>
+                    <td>ContentRootPath</td>
+                    <td>@ApplicationSettings.ContentRootPath</td>
+                </tr>
+                <tr>
+                    <td>Operating System</td>
+                    <td>@ApplicationSettings.OSDescription</td>
+                </tr>
+                <tr>
+                    <td>Add ContentType headers</td>
+                    <td>@ApplicationSettings.AddContentTypeHeaders</td>
+                </tr>
+                <tr>
+                    <td>Add Content Length Headers</td>
+                    <td>@ApplicationSettings.AddContentLengthHeaders</td>
+                </tr>
+                <tr>
+                    <td>Prepend File Provider</td>
+                    <td>@ApplicationSettings.PrependFileProvider</td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td>@ApplicationSettings.Version</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -52,17 +52,17 @@
                         </li>
                     }
                     <li class="profile">
-                        <a href="~/admin/profile"><i class="fa fa-user"></i> <span class="nav-label">Profile</span> </a>
+                        <a href="~/admin/profile"><i class="fa fa-user"></i> <span class="nav-label">Profile</span></a>
                     </li>
                     @if (Model.BlogExists)
                     {
                         <li class="tools">
-                            <a href="~/admin/tools"><i class="fa fa-wrench"></i> <span class="nav-label">Tools</span> </a>
+                            <a href="~/admin/tools"><i class="fa fa-wrench"></i> <span class="nav-label">Tools</span></a>
                         </li>
                         @if (Model.Profile != null && Model.Profile.IsAdmin)
                         {
-                        <li class="about">
-                            <a href="~/admin/about"><i class="fa fa-gear"></i> <span class="nav-label">Settings</span> </a>
+                        <li class="settings">
+                            <a href="~/admin/settings"><i class="fa fa-gear"></i> <span class="nav-label">Settings</span></a>
                         </li>
                         }
                     }
@@ -80,7 +80,7 @@
 
                     @if (showNewItemBtn)
                     {
-                    <div id="btnNewItem" class="btn-group" style="float: left; margin-left: 20px">
+                    <div id="btnNewItem" class="btn-group" style="float: left; margin-left: 20px; display:none">
                         <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a href="" onclick="return postController.newPost()">Blog Post</a></li>
@@ -99,7 +99,10 @@
                 </nav>
             </div>
 
-            <div class="wrapper wrapper-content animated fadeIn">
+            <div id="app-module" class="wrapper wrapper-content animated fadeIn">
+                <span id="app-spinner" style="display: none">
+                    <i class="fa fa-refresh fa-spin fa-2x fa-fw" style="color:#1ab394"></i>
+                </span>
                 @RenderBody()
             </div>
 

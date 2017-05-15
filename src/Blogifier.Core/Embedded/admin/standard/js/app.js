@@ -313,3 +313,11 @@ function getDate(date) {
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
 }
+
+function loading() {
+    $('#app-spinner').show();
+}
+
+function loaded() {
+    $('#app-spinner').hide();
+}
