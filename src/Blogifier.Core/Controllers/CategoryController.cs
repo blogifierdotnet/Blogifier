@@ -35,6 +35,10 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.ByCategory(slug, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
             var category = _db.Categories.Single(c => c.Slug == slug);
             return View(_theme + "Category.cshtml", new BlogCategoryModel { Category = category, Posts = posts.Result, Pager = pager });
         }

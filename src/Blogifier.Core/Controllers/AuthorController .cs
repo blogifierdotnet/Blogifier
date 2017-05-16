@@ -36,6 +36,10 @@ namespace Blogifier.Core.Controllers
             var pager = new Pager(page);
             var profile = _db.Profiles.Single(p => p.Slug == slug);
             var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > System.DateTime.MinValue, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
             return View(_theme + "Author.cshtml", new BlogAuthorModel { Profile = profile, Posts = posts, Pager = pager });
         }
     }

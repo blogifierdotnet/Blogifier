@@ -41,6 +41,10 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
             return View(_theme + "Index.cshtml", new BlogPostsModel { Posts = posts, Pager = pager });
         }
 
@@ -77,6 +81,12 @@ namespace Blogifier.Core.Controllers
 
             var rss = _rss.Display(absoluteUri);
             return Content(rss, "text/xml");
+        }
+
+        [Route("error/{statusCode}")]
+        public IActionResult Error(int statusCode)
+        {
+            return View(_theme + "Error.cshtml", statusCode);
         }
     }
 }
