@@ -1,59 +1,83 @@
 ﻿@model Blogifier.Core.Data.Models.AdminProfileModel
-<div class="row">
-    <div class="col-lg-6 col-lg-offset-3">
-        <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-            <h2>Profile</h2>
-            <div class="form-group">
-                <input type="text" asp-for="Profile.Title" class="form-control" placeholder="Blog Title" />
-                <span asp-validation-for="Profile.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="Profile.Description" type="text" class="form-control" placeholder="Blog Description" />
-                <span asp-validation-for="Profile.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" asp-for="Profile.AuthorName" class="form-control" placeholder="Author Name" />
-                <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" asp-for="Profile.AuthorEmail" class="form-control" placeholder="Email" />
-                <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
-            </div>
 
-            @if (Model.BlogExists)
-            {
-            <div class="form-group input-group">
-                <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Logo" readonly />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileLogo');">Logo</button>
-                </span>
-            </div>
-            <div class="form-group input-group">
-                <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" readonly />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileAvatar');">Avatar</button>
-                </span>
-            </div>
-            <div class="form-group input-group">
-                <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Image" readonly />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileImage');">Image</button>
-                </span>
-            </div>
-            }
+<div class="row top">
+    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </a>
+</div>
 
-            <div class="form-group">
-                <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control"></select>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                    <h2>Profile</h2>
+                    <div class="form-group">
+                        <input type="text" asp-for="Profile.Title" class="form-control" placeholder="Blog Title" />
+                        <span asp-validation-for="Profile.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Profile.Description" type="text" class="form-control" placeholder="Blog Description" />
+                        <span asp-validation-for="Profile.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="Profile.AuthorName" class="form-control" placeholder="Author Name" />
+                        <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="Profile.AuthorEmail" class="form-control" placeholder="Email" />
+                        <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
+                    </div>
+
+                    @if (Model.BlogExists)
+                    {
+                    <div class="form-group input-group">
+                        <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Logo" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileLogo');">Logo</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileLogo');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="form-group input-group">
+                        <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileAvatar');">Avatar</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileAvatar');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="form-group input-group">
+                        <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Image" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-upload" onclick="return uploadController.clickSingle('profileImage');">Image</button>
+                            <button type="button" class="btn btn-danger" onclick="return uploadController.remove('profileImage');">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                    }
+
+                    <div class="form-group">
+                        <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Save</button>
+                    </div>
+                    <input asp-for="Profile.Id" hidden="hidden" />
+                    <input asp-for="Profile.IdentityName" hidden="hidden" />
+                    <input asp-for="Profile.Slug" hidden="hidden" />
+                </form>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Save</button>
-            </div>
-            <input asp-for="Profile.Id" hidden="hidden" />
-            <input asp-for="Profile.IdentityName" hidden="hidden" />
-            <input asp-for="Profile.Slug" hidden="hidden" />
-        </form>
+        </div>
+
     </div>
 </div>
+
+
 
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))

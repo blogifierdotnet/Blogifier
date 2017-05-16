@@ -1,19 +1,25 @@
 ﻿@using Blogifier.Core.Common
 @using Blogifier.Core.Data.Domain
 @using System.Collections.Generic
-@model List<BlogPost>
+@using Blogifier.Core.Extensions
+@model IEnumerable<PostListItem>
 
-<div class="col-sm-9">
+
     @if (Model != null)
     {
         foreach (var item in Model)
         {
-            <h4>@item.Title</h4>
-            <div>@Html.Raw(item.Description)</div>
-            <div><a href="~/blog/@item.Slug">Read more</a></div>
+        <div class="post-preview">
+            <a href="~/blog/@item.Slug">
+                <h2 class="post-title">
+                    @item.Title
+                </h2>
+                <h3 class="post-subtitle">
+                    @Html.Raw(item.Content)
+                </h3>
+            </a>
+            <p class="post-meta">Posted by <a href="#">@item.Name</a> on @item.Published.ToFriendlyDateString()</p>
+        </div>
+        <hr>
         }
     }
-</div>
-<div class="col-sm-3">
-    @await Component.InvokeAsync("Blogifier.Core.Views.Blogifier.Widgets.BlogList")
-</div>

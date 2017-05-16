@@ -1,121 +1,80 @@
 ﻿@using Blogifier.Core.Common
-@{ 
+@{
     var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
     var themeFolder = "Embedded/admin/standard";
 
     var avatar = ApplicationSettings.ProfileAvatar;
-    if (Model.Profile != null && !string.IsNullOrEmpty(Model.Profile.Avatar))
+    var userName = "";
+    if (Model.Profile != null)
     {
-        avatar = Model.Profile.Avatar;
+        userName = Model.Profile.AuthorName;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
     }
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>Blogifier</title>
-    <link href="~/Embedded/lib/fonts/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Embedded/lib/toastr/toastr.min.css" rel="stylesheet" />
-
-    <link href="~/@themeFolder/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="~/@themeFolder/css/animate.css" rel="stylesheet">
-    <link href="~/@themeFolder/css/style.css" rel="stylesheet">
+    <link href="~/Embedded/admin/standard/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/Embedded/admin/standard/css/bootstrap.min.css" rel="stylesheet">   
+    <link href="~/Embedded/admin/standard/css/simple-sidebar.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="toggled">
 
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav metismenu" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <span>
-                                <img id="profile-img" alt="image" class="img-circle" src="@avatar">
-                            </span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear">
-                                    <span class="block m-t-xs">
-                                        <strong class="font-bold">@User.Identity.Name</strong>
-                                    </span>
-                                </span>
-                            </a>
-                        </div>
-                        <div class="logo-element">
-                            BF
-                        </div>
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" id="side-menu">
+                <li class="sidebar-brand">
+                    <img id="profile-img" alt="image" class="img-circle" src="@avatar">
+                    <span>&nbsp; @userName</span>
+                </li>
+                @if (Model.BlogExists)
+                {
+                    <li class="posts">
+                        <a href="~/admin"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> <span class="nav-label">Posts</span></a>
                     </li>
-                    @if (Model.BlogExists)
-                    {
-                        <li class="posts">
-                            <a href="~/admin"><i class="fa fa-th-large"></i> <span class="nav-label">Posts</span></a>
-                        </li>
-                    }
-                    <li class="profile">
-                        <a href="~/admin/profile"><i class="fa fa-user"></i> <span class="nav-label">Profile</span></a>
+                }
+                <li class="profile">
+                    <a href="~/admin/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
+                </li>
+                @if (Model.BlogExists)
+                {
+                    <li class="tools">
+                        <a href="~/admin/tools"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="nav-label">Tools</span></a>
                     </li>
-                    @if (Model.BlogExists)
+                    @if (Model.Profile != null && Model.Profile.IsAdmin)
                     {
-                        <li class="tools">
-                            <a href="~/admin/tools"><i class="fa fa-wrench"></i> <span class="nav-label">Tools</span></a>
-                        </li>
-                        @if (Model.Profile != null && Model.Profile.IsAdmin)
-                        {
-                        <li class="settings">
-                            <a href="~/admin/settings"><i class="fa fa-gear"></i> <span class="nav-label">Settings</span></a>
-                        </li>
-                        }
+                    <li class="settings">
+                        <a href="~/admin/settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="nav-label">Settings</span>
+                        </a>
+                    </li>
                     }
-                </ul>
-            </div>
-        </nav>
-
-        <div id="page-wrapper" class="gray-bg">
-
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
-                    </div>
-
-                    @if (showNewItemBtn)
-                    {
-                    <div id="btnNewItem" class="btn-group" style="float: left; margin-left: 20px; display:none">
-                        <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="" onclick="return postController.newPost()">Blog Post</a></li>
-                            <li><a href="" onclick="return uploadController.clickMultiple()">Upload Files</a></li>
-                        </ul>
-                    </div>
-                    }
-
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="" onclick="profileLogOut(); return false;">
-                                <i class="fa fa-sign-out"></i> Log out
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            <div id="app-module" class="wrapper wrapper-content animated fadeIn">
-                <span id="app-spinner" style="display: none">
-                    <i class="fa fa-refresh fa-spin fa-2x fa-fw" style="color:#1ab394"></i>
-                </span>
-                @RenderBody()
-            </div>
-
-            <div class="footer">
-                <div class="pull-right">
-                    <strong>Version</strong> @Blogifier.Core.Common.ApplicationSettings.Version
-                </div>
-                <div>
-                    <strong>Blogifier.NET</strong> &copy; @DateTime.Now.Year
-                </div>
-            </div>
-
+                }
+                <li class="back">
+                    <a href="~/blog"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> <span class="nav-label">Back to blog</span></a>
+                </li>
+                <li class="logoff">
+                    <a href="" onclick="profileLogOut(); return false;"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <span class="nav-label">Logoff</span></a>
+                </li>
+            </ul>
         </div>
+
+        @RenderBody()
     </div>
 
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
@@ -129,20 +88,20 @@
             <input type="submit" name="submitUpload" id="submitUpload" value="Upload Single" />
         </form>
     </div>
+ 
+    <script src="~/Embedded/admin/standard/lib/jquery/jquery.js"></script>
+    <script src="~/Embedded/admin/standard/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Embedded/admin/standard/lib/toastr/toastr.min.js"></script>
 
-    <!-- Main scripts -->
-    <script src="~/@themeFolder/lib/jquery/jquery-3.1.1.min.js"></script>
-    <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>
-    <script src="~/@themeFolder/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/@themeFolder/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="~/Embedded/lib/toastr/toastr.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
     <script src="~/@themeFolder/js/app.js"></script>
     <script src="~/@themeFolder/js/dataService.js"></script>
     <script src="~/@themeFolder/js/uploadController.js"></script>
     <script>
         var webRoot = '@Url.Content("~/")';
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
         function getUrl(str) {
             return webRoot + str;
         };

@@ -1,6 +1,18 @@
 ﻿@model Blogifier.Core.Data.Models.AdminToolsModel
-<div class="row">
-    <div class="col-lg-6 col-lg-offset-3">
-        @Html.Partial("RssImportForm", Model.RssImportModel)
+
+<div class="row top">
+    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </a>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                @Html.Partial("RssImportForm", Model.RssImportModel)
+            </div>
+        </div>
     </div>
 </div>
+
