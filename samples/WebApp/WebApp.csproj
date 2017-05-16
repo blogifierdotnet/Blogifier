@@ -35,6 +35,15 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\font-awesome.min.css" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.eot" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.svg" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.ttf" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.woff" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.woff2" />
+    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
 

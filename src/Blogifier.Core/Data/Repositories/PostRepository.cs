@@ -121,9 +121,9 @@ namespace Blogifier.Core.Data.Repositories
                 Image = post.Image,
                 Content = post.Description,
                 Published = post.Published,
-                Name = post.Profile.AuthorName,
-                BlogSlug = post.Profile.Slug,
+                AuthorName = post.Profile.AuthorName,
                 AuthorEmail = post.Profile.AuthorEmail,
+                BlogSlug = post.Profile.Slug,
                 PostViews = post.PostViews,
                 Categories = new List<SelectListItem>()
             };

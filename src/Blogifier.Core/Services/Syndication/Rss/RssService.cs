@@ -101,7 +101,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     Link = new Uri(absoluteUri + "/blog/" + post.Slug),
                     Permalink = absoluteUri + "/blog/" + post.Slug,
                     PublishDate = post.Published,
-                    Author = new Author() { Name = post.Name, Email = post.AuthorEmail }
+                    Author = new Author() { Name = post.AuthorName, Email = post.AuthorEmail }
                 };
 
                 if (post.Categories != null && post.Categories.Count > 0)

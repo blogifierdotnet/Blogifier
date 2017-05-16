@@ -33,7 +33,7 @@ namespace Blogifier.Core.Controllers
 		{
             var pager = new Pager(1);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            return View(_theme + "Index.cshtml", posts);
+            return View(_theme + "Index.cshtml", new BlogPostsModel { Posts = posts, Pager = pager });
         }
 
         [Route("{page:int}")]
@@ -41,7 +41,7 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            return View(_theme + "Index.cshtml", posts);
+            return View(_theme + "Index.cshtml", new BlogPostsModel { Posts = posts, Pager = pager });
         }
 
         [Route("{slug}")]

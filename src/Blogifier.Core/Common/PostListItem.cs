@@ -11,11 +11,12 @@ namespace Blogifier.Core.Common
         public string Title { get; set; }
         public string Image { get; set; }
         public string Content { get; set; }
-        public DateTime Published { get; set; }
+        public DateTime Published { get; set; }     
 
-        public string BlogSlug { get; set; }
-        public string Name { get; set; }
+        public string AuthorName { get; set; }
         public string AuthorEmail { get; set; }
+        public string BlogSlug { get; set; }
+
         public int PostViews { get; set; }
 
         public ICollection<SelectListItem> Categories { get; set; }
