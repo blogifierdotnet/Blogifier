@@ -410,3 +410,19 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #0085A1;
 }
+
+#term {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    width: 120px;
+    padding: 5px !important;
+}
+
+h2.search-term {
+    font-size: 36px;
+}

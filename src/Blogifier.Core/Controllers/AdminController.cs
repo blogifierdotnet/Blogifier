@@ -97,7 +97,7 @@ namespace Blogifier.Core.Controllers
             if(profile.Id == 0)
             {
                 profile.IdentityName = User.Identity.Name;
-                profile.Slug = BlogSlugFromTitle(profile.Title);
+                profile.Slug = SlugFromTitle(profile.AuthorName);
 
                 ModelState.Clear();
                 TryValidateModel(model);
@@ -148,7 +148,7 @@ namespace Blogifier.Core.Controllers
 			return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
 		}
 
-		private string BlogSlugFromTitle(string title)
+		private string SlugFromTitle(string title)
 		{
 			var slug = title.ToSlug();
 			if (_db.Profiles.Single(b => b.Slug == slug) != null)

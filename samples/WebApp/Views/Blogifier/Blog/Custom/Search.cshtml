@@ -4,9 +4,15 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
+@{
+    var term = ViewBag.Term;
+}
 
 @if (Model != null)
 {
+    <div class="jumbotron">
+        <h2 class="search-term"><i class="fa fa-search" aria-hidden="true"></i> @term</h2>
+    </div>
     foreach (var item in Model.Posts)
     {
     <div class="post-preview">
@@ -27,11 +33,11 @@
         <ul class="pager">
             @if (Model.Pager.ShowOlder)
             {
-            <li class="previous"><a href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+            <li class="previous"><a href="~/search/@Model.Pager.Older/@term"><span aria-hidden="true">&larr;</span> Older</a></li>
             }
             @if (Model.Pager.ShowNewer)
             {
-            <li class="next"><a href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            <li class="next"><a href="~/search/@Model.Pager.Newer/@term">Newer <span aria-hidden="true">&rarr;</span></a></li>
             }
         </ul>
     </nav>

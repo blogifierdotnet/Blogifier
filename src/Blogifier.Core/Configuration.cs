@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Blogifier.Core.Services.Search;
 
 namespace Blogifier.Core
 {
@@ -22,6 +23,7 @@ namespace Blogifier.Core
 		{
 			services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
+            services.AddTransient<ISearchService, SearchService>();
 
 			AddDatabase(services);
 

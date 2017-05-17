@@ -34,16 +34,22 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    
                     <li><a href="~/blog">Blog</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
                     <li><a href="~/admin">Admin</a></li>
                     }
+                    <li style="padding: 10px 25px">
+                        <form role="search" asp-controller="Search" asp-action="Index" method="post">
+                            <input type="text" id="term" name="term" class="form-control" placeholder="Search...">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <header class="intro-header" style="background-image: url('/blogifier/blog/custom/img/home-bg.jpg')">
+    <header class="intro-header" style="background-image: url('/@themeFolder/img/home-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">

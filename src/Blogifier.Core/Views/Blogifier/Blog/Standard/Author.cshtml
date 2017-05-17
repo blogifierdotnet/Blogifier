@@ -3,7 +3,7 @@
 @using System.Collections.Generic
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
-@model BlogPostsModel
+@model BlogAuthorModel
 
 @if (Model != null)
 {
@@ -27,11 +27,11 @@
         <ul class="pager">
             @if (Model.Pager.ShowOlder)
             {
-            <li class="previous"><a href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+            <li class="previous"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
             }
             @if (Model.Pager.ShowNewer)
             {
-            <li class="next"><a href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            <li class="next"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
             }
         </ul>
     </nav>
