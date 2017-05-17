@@ -53,8 +53,18 @@ namespace Blogifier.Core.Common
                         if (section["ItemsPerPage"] != null)
                             ApplicationSettings.ItemsPerPage = section.GetValue<int>("ItemsPerPage");
 
+
                         if (section["ProfileAvatar"] != null)
                             ApplicationSettings.ProfileAvatar = section.GetValue<string>("ProfileAvatar");
+
+                        if (section["ProfileLogo"] != null)
+                            ApplicationSettings.ProfileLogo = section.GetValue<string>("ProfileLogo");
+
+                        if (section["ProfileImage"] != null)
+                            ApplicationSettings.ProfileImage = section.GetValue<string>("ProfileImage");
+
+                        if (section["PostImage"] != null)
+                            ApplicationSettings.PostImage = section.GetValue<string>("PostImage");
 
                         // troubleshooting
 

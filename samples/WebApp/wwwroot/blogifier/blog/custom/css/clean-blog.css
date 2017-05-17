@@ -421,6 +421,12 @@ body {
     letter-spacing: 1px;
     width: 120px;
     padding: 5px !important;
+    background-color: #ECEBE9;
+}
+
+#term:focus {
+    border: none !important;
+    box-shadow: none !important;
 }
 
 h2.search-term {

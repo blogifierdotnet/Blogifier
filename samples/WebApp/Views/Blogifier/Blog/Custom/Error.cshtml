@@ -1,32 +1,54 @@
-﻿@model int
+﻿@using Blogifier.Core.Common
+@model int
 @{
-var statusCode = Model;
-var statusmessage = "";
+    var statusCode = Model;
+    var statusmessage = "";
+    var bg = ApplicationSettings.ProfileImage;
 
-switch (statusCode)
-	{
-		case 400:
-			statusmessage = "Bad request: The request cannot be fulfilled due to bad syntax";
-			break;
-		case 403:
-			statusmessage = "Forbidden";
-			break;
-		case 404:
-			statusmessage = "Page not found";
-			break;
-		case 408:
-			statusmessage = "The server timed out waiting for the request";
-			break;
-		case 500:
-			statusmessage = "Internal Server Error - server was unable to finish processing the request";
-			break;
-		default:
-			statusmessage = "That’s odd... Something we didn't expect happened";
-			break;
-	}
+    switch (statusCode)
+    {
+        case 400:
+            statusmessage = "Bad request: The request cannot be fulfilled due to bad syntax";
+            break;
+        case 403:
+            statusmessage = "Forbidden";
+            break;
+        case 404:
+            statusmessage = "Page not found";
+            break;
+        case 408:
+            statusmessage = "The server timed out waiting for the request";
+            break;
+        case 500:
+            statusmessage = "Internal Server Error - server was unable to finish processing the request";
+            break;
+        default:
+            statusmessage = "That’s odd... Something we didn't expect happened";
+            break;
+    }
 }
+<header class="intro-header" style="background-image: url('@bg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ApplicationSettings.Title</h1>
+                    <hr class="small">
+                    <span class="subheading">@ApplicationSettings.Description</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-<div class="jumbotron">
-    <h1>Error @Model</h1>
-    <h3>@statusmessage</h3>
+            <div class="jumbotron">
+                <h1>Error @Model</h1>
+                <h3>@statusmessage</h3>
+            </div>
+
+        </div>
+    </div>
 </div>

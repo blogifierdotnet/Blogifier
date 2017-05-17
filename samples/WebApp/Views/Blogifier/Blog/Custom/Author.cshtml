@@ -4,35 +4,58 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogAuthorModel
-
-@if (Model != null)
-{
-    foreach (var item in Model.Posts)
-    {
-    <div class="post-preview">
-        <a href="~/blog/@item.Slug">
-            <h2 class="post-title">
-                @item.Title
-            </h2>
-            <h3 class="post-subtitle">
-                @Html.Raw(item.Content)
-            </h3>
-        </a>
-        <p class="post-meta">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
-    </div>
-    <hr>
-    }
-
-    <nav aria-label="...">
-        <ul class="pager">
-            @if (Model.Pager.ShowOlder)
-            {
-            <li class="previous"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
-            {
-            <li class="next"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
-    </nav>
+@{
+    var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
 }
+<header class="intro-header" style="background-image: url('@bg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>@ApplicationSettings.Title</h1>
+                    <hr class="small">
+                    <span class="subheading">@ApplicationSettings.Description</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+            @if (Model != null)
+            {
+                foreach (var item in Model.Posts)
+                {
+                    <div class="post-preview">
+                        <a href="~/blog/@item.Slug">
+                            <h2 class="post-title">
+                                @item.Title
+                            </h2>
+                            <h3 class="post-subtitle">
+                                @Html.Raw(item.Content)
+                            </h3>
+                        </a>
+                        <p class="post-meta">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+                    </div>
+                    <hr>
+                }
+
+                <nav aria-label="...">
+                    <ul class="pager">
+                        @if (Model.Pager.ShowOlder)
+                        {
+                            <li class="previous"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+                        }
+                        @if (Model.Pager.ShowNewer)
+                        {
+                            <li class="next"><a href="~/author/@Model.Profile.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                        }
+                    </ul>
+                </nav>
+            }
+
+        </div>
+    </div>
+</div>

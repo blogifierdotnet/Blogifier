@@ -49,26 +49,7 @@
             </div>
         </div>
     </nav>
-    <header class="intro-header" style="background-image: url('/@themeFolder/img/home-bg.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading">
-                        <h1>@ApplicationSettings.Title</h1>
-                        <hr class="small">
-                        <span class="subheading">@ApplicationSettings.Description</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                @RenderBody()
-            </div>
-        </div>
-    </div>
+    @RenderBody()
     <hr>
     <footer>
         <div class="container">
@@ -76,7 +57,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
-                            <a href="#">
+                            <a href="https://twitter.com/@@blogifierdotnet" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -84,7 +65,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://www.facebook.com/blogifierdotnet/" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -92,10 +73,10 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="~/blog/rss" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
                         </li>
