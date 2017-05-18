@@ -1,68 +1,40 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @{ 
-    var themeFolder = "Embedded/admin/standard";
+    //var themeFolder = "Embedded/admin/standard";
+    var themeFolder = "blogifier/admin/custom";
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
 <div class="row top">
-    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+    <a href="#menu-toggle" class="btn btn-primary pull-left" id="menu-toggle">
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
     </a>
-    <div id="btnNewItem" class="btn-group" style="float: right; margin-right: 2px">
-        <button class="btn btn-primary minimalize-styl-2 dropdown-toggle" aria-expanded="false" data-toggle="dropdown">Add New <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="" onclick="return postController.newPost()">Blog Post</a></li>
-            <li><a href="" onclick="return uploadController.clickMultiple()">Upload Files</a></li>
-        </ul>
+    <div id="post-edit-actions" class="pull-right">
+        <button class="btn btn-primary" title="Save" onclick="return postController.savePost()">Save</button>
     </div>
 </div>
 
 <div id="page-content-wrapper">
     <div class="container-fluid">
-
-        <div class="first-post">
-            You have not created any posts yet - <a href="" onclick="return postController.newPost()">lets get started</a>!
-        </div>
-        
         <div class="row">
-
-            <div class="col-md-3 posts-list">
-                <ul id="admin-posts" class="list-group elements-list"></ul>
-                <ul class="pager"></ul>
-            </div>
-
-            <div id="post-view" class="col-md-9 posts-list" style="padding: 0 15px 25px 35px !important">
-                <div class="row post-action">
-                    <div id="article-categories" class="col-md-6"></div>
-                    <div class="col-md-6">
-                        <div id="post-view-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
-                    </div>
-                </div>
-                <h1 id="article-header"></h1>
-                <div id="article-content"></div>
-            </div>
-
-            <div id="post-edit" class="col-md-9 posts-list" style="display: none; padding: 0 15px 25px 35px !important">
-                <div class="row post-action">
-                    <div id="edit-categories" class="col-md-8"></div>
-                    <div class="col-md-4">
-                        <div id="post-edit-actions" class="tooltip-demo pull-right" style="margin-top: 5px"></div>
-                    </div>
-                </div>
+            <div id="post-edit" class="col-md-8 posts-list" style="padding: 0 15px 25px 10px !important">
                 <div class="wrap">
                     <form id="frmEditor" style="height:100%;">
                         <div class="form-group">
                             <input id="txtPostTitle" class="form-control" placeholder="Post title" />
                         </div>
                         <div class="form-group">
-                            <textarea id="txtContent"></textarea>
+                            <textarea id="txtContent" name="txtContent"></textarea>
                         </div>
+                        <div id="edit-categories"></div>
                     </form>
                 </div>
             </div>
-
+            <div class="col-md-4 posts-list" style="padding-right: 5px">
+                <ul id="admin-posts" class="list-group elements-list"></ul>
+                <ul class="pager"></ul>
+            </div>
         </div>       
-
     </div>
 </div>
 

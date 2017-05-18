@@ -169,7 +169,7 @@ body {
 .list-group-item {
     background-color: #F3F3F4;
     color: #8A8C8E;
-    padding: 15px 15px 20px 15px;
+    padding: 10px 15px;
     border: none;
 }
 
@@ -207,6 +207,8 @@ div.mce-fullscreen {
 
 .pager .counter {
     line-height: 32px;
+    font-size: 12px;
+    color: #8A8C8E;
 }
 
 h2 {
@@ -228,6 +230,22 @@ h1 {
     color: #696C6E;
     text-align: center;
     display: none;
+}
+
+div.post-excerpt {
+    color: #8A8C8E !important;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.post-list-title h4 {
+    margin: 0 0 2px 0 !important;
+    font-size: 16px;
+}
+
+.clock {
+    color: #8A8C8E !important;
+    font-size: 12px;
 }
 
 @media(min-width:768px) {

@@ -1,7 +1,8 @@
 ﻿@using Blogifier.Core.Common
 @{
     var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
-    var themeFolder = "Embedded/admin/standard";
+    //var themeFolder = "Embedded/admin/standard";
+    var themeFolder = "blogifier/admin/custom";
 
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
@@ -23,9 +24,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Blogifier</title>
-    <link href="~/Embedded/admin/standard/lib/toastr/toastr.min.css" rel="stylesheet" />
-    <link href="~/Embedded/admin/standard/css/bootstrap.min.css" rel="stylesheet">   
-    <link href="~/Embedded/admin/standard/css/simple-sidebar.css" rel="stylesheet">
+    <link href="~/@themeFolder/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/@themeFolder/css/bootstrap.min.css" rel="stylesheet">   
+    <link href="~/@themeFolder/css/simple-sidebar.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -89,9 +90,9 @@
         </form>
     </div>
  
-    <script src="~/Embedded/admin/standard/lib/jquery/jquery.js"></script>
-    <script src="~/Embedded/admin/standard/lib/bootstrap/bootstrap.min.js"></script>
-    <script src="~/Embedded/admin/standard/lib/toastr/toastr.min.js"></script>
+    <script src="~/@themeFolder/lib/jquery/jquery.js"></script>
+    <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
 
     <script src="~/@themeFolder/js/app.js"></script>
     <script src="~/@themeFolder/js/dataService.js"></script>
