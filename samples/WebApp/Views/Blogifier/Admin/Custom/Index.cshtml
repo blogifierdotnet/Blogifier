@@ -9,15 +9,23 @@
     <a href="#menu-toggle" class="btn btn-primary pull-left" id="menu-toggle">
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
     </a>
-    <div id="post-edit-actions" class="pull-right">
-        <button class="btn btn-primary" title="Save" onclick="return postController.savePost()">Save</button>
-    </div>
+    <div id="post-edit-actions" class="btn-group pull-right"></div>
 </div>
 
 <div id="page-content-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div id="post-edit" class="col-md-8 posts-list" style="padding: 0 15px 25px 10px !important">
+
+            <div id="post-list" class="col-lg-6 col-lg-offset-3 posts-list">
+                <h2>Posts</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search..." />
+                </div>
+                <ul id="admin-posts" class="list-group elements-list"></ul>
+                <ul class="pager"></ul>
+            </div>
+
+            <div id="post-edit" class="col-md-12 posts-list" style="padding: 0 15px 25px 10px !important; display: none">
                 <div class="wrap">
                     <form id="frmEditor" style="height:100%;">
                         <div class="form-group">
@@ -30,10 +38,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-4 posts-list" style="padding-right: 5px">
-                <ul id="admin-posts" class="list-group elements-list"></ul>
-                <ul class="pager"></ul>
-            </div>
+            
         </div>       
     </div>
 </div>

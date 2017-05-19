@@ -4,10 +4,7 @@ using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -61,13 +58,12 @@ namespace Blogifier.Core.Controllers.Api
             {
                 var blog = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
                 bp = new BlogPost();
-                var desc = model.Content.StripHtml();
                 bp.ProfileId = blog.Id;
                 bp.Title = model.Title;
                 bp.Slug = model.Title.ToSlug();
                 bp.Content = model.Content;
                 bp.LastUpdated = SystemClock.Now();
-                bp.Description = desc.Length > 300 ? desc.Substring(0, 300) : desc;
+                bp.Description = model.Content.ToDescription();
                 _db.BlogPosts.Add(bp);
             }
             else
@@ -75,6 +71,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp = _db.BlogPosts.Single(p => p.Id == model.Id);
                 bp.Title = model.Title;
                 bp.Content = model.Content;
+                bp.Description = model.Content.ToDescription();
             }
             _db.Complete();
 

@@ -34,6 +34,11 @@ namespace Blogifier.Core.Extensions
 			}
 		}
 
+        /// <summary>
+        /// Converts title to valid URL slug
+        /// </summary>
+        /// <param name="str">Title</param>
+        /// <returns>Slug</returns>
 		public static string ToSlug(this string str)
 		{
 			if (string.IsNullOrEmpty(str))
@@ -48,6 +53,17 @@ namespace Blogifier.Core.Extensions
 			str = Regex.Replace(str, @"([-_]){2,}", "$1", RegexOptions.Compiled);
 			return str;
 		}
+
+        /// <summary>
+        /// Converts post body to post description
+        /// </summary>
+        /// <param name="str">HTML post body</param>
+        /// <returns>Post decription as plain text</returns>
+        public static string ToDescription(this string str)
+        {
+            str = str.StripHtml();
+            return str.Length > 300 ? str.Substring(0, 300) : str;
+        }
 
 		public static bool Contains(this string source, string toCheck, StringComparison comp)
 		{

@@ -169,10 +169,15 @@ body {
 .list-group-item {
     background-color: #F3F3F4;
     color: #8A8C8E;
-    padding: 10px 15px;
+    padding: 15px;
+    margin: 2px;
     border: none;
 }
 
+.list-group-item.draft{
+    border: 2px dashed #ccc;
+}
+    
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
     background-color: #F9F9F9;
     color: #8A8C8E;
@@ -182,6 +187,10 @@ body {
     color: #696C6E;
     text-decoration: none;
     font-weight: 600;
+}
+
+.list-group-item:hover {
+    background-color: #F9F9F9 !important;
 }
 
 div.mce-fullscreen {
@@ -234,13 +243,18 @@ h1 {
 
 div.post-excerpt {
     color: #8A8C8E !important;
-    font-size: 12px;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
     font-weight: normal;
 }
 
+/*.post-list-title a:hover{
+    background-color: red;
+}*/
+
 .post-list-title h4 {
-    margin: 0 0 2px 0 !important;
-    font-size: 16px;
+    margin: 0 0 10px 0 !important;
+    font-size: 18px;
 }
 
 .clock {
