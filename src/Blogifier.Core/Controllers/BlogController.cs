@@ -52,10 +52,10 @@ namespace Blogifier.Core.Controllers
         public async Task<IActionResult> SinglePublication(string slug)
         {
             var vm = new BlogPostDetailModel();
-            vm.BlogPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug);
+            vm.BlogPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug && p.Published > DateTime.MinValue);
 
             if (vm.BlogPost == null)
-                return View("Error");
+                return View(_theme + "Error.cshtml", 404);
 
             vm.Profile = _db.Profiles.Single(b => b.Id == vm.BlogPost.ProfileId);
             vm.Categories = new List<SelectListItem>();

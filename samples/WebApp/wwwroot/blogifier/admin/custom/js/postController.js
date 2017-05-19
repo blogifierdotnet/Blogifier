@@ -20,12 +20,27 @@
     function loadList(data) {
         $('#admin-posts').empty();
         var posts = data.blogPosts;
-        
         $.each(posts, function (index) {
             var post = posts[index];
             var draft = post.published.startsWith('0001') ? 'draft' : '';
-            var anc = '<a class="post-list-title" id="post-title-' + post.blogPostId + '" href="" onclick="postController.loadPostEdit(' + post.blogPostId + '); return false;">' +
-                '<h4>' + post.title + '<span class="pull-right clock">' + getPubDate(post.published) + '</span></h4><div class="post-excerpt">' + post.content + '</div></a>';
+            var anc = '<a class="post-list-title" id="post-title-' + post.blogPostId + '" href="" onclick="postController.loadPostEdit(' + post.blogPostId + '); return false;">';
+            anc += '<h4>' + post.title + '</h4>';
+            anc += '<div class="post-excerpt">' + post.content + '</div>';
+            anc += '</a>';
+
+            anc += '<div class="post-footer">';          
+            anc += '<span class="pull-left clock">' + getPubDate(post.published) + '</span>';
+            anc += '<div id="post-footer-actions" class="btn-group pull-right">';
+            anc += '<a href="' + webRoot + 'blog/' + post.slug + '" class="btn btn-default btn-xs" title="View" target="_blank">' + post.postViews + ' views</a>';
+            if (draft === 'draft') {
+                anc += '<button class="btn btn-primary btn-xs" title="Publish" onclick="return postController.publish(' + post.blogPostId + ')"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>';
+            }
+            else {
+                anc += '<button class="btn btn-default btn-xs" title="Unpublish" onclick="return postController.unpublish(' + post.blogPostId + ')"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></button>';
+            }
+            anc += '<button class="btn btn-default btn-xs" title="Delete" onclick="return postController.removePost(' + post.blogPostId + ')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+            anc += '</div></div>';
+
             var li = '<li id="post-' + post.blogPostId + '" class="list-group-item ' + draft + '">' + anc + '</li>';
             $("#admin-posts").append(li);
         });
@@ -47,6 +62,7 @@
         $('#edit-categories').empty();
         var catStr = '<span class="badge clickable" title="Add category" onclick="return postController.addCategory()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>';
         var cats = data.categories;
+        if (cats === null) { cats = []; }
         $.each(cats, function (index) {
             var cat = cats[index];
             catStr += '<span class="badge clickable" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>';
@@ -62,26 +78,12 @@
     function loadButtons() {
         $('#post-edit-actions').empty();
         var btns = '';
-
         if (current.mode === 'view') {
             btns += '<button class="btn btn-primary" title="Add" onclick="return postController.newPost()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</button>';
         }
         else {
-            if (current.post === 0) {
-                btns += '<button class="btn btn-default" title="Cancel" onclick="return postController.cancel()">Close</button>';
-                btns += '<button class="btn btn-primary" title="Save" onclick="return postController.savePost()">Save</button>';
-            }
-            else {
-                btns += '<div class="btn-group"><div class="btn-group"><button class="btn btn-default" title="Cancel" onclick="return postController.cancel()">Close</button>';
-                btns += '<button class="btn btn-primary" title="Save" onclick="return postController.savePost(' + current.post + ')">Save</button>';
-                if (current.published.startsWith('0001')) {
-                    btns += '<button class="btn btn-default" title="Publish" onclick="return postController.publish(' + current.post + ')"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Publish</button>';
-                }
-                else {
-                    btns += '<button class="btn btn-default" title="Unpublish" onclick="return postController.unpublish(' + current.post + ')"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Unpublish</button>';
-                }
-                btns += '<button class="btn btn-default" title="Delete" onclick="return postController.removePost(' + current.post + ')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></div>';
-            }
+            btns += '<button class="btn btn-default" title="Cancel" onclick="return postController.cancel()">Close</button>';
+            btns += '<button class="btn btn-primary" title="Save" onclick="return postController.savePost(' + current.post + ')">Save</button>';
         }
         $('#post-edit-actions').append(btns);
     }
@@ -135,32 +137,30 @@
         var post = JSON.parse(data);
         current.post = post.id;
         current.published = post.published;
-        savedCallback();
+        toastr.success('Saved');
+        loadPostEditCallback(post);
     }
 
     function publish(id) {
-        dataService.put("blogifier/api/posts/publish/" + id, null, savedCallback, fail);
+        dataService.put("blogifier/api/posts/publish/" + id, null, publishCallback, fail);
     }
 
     function unpublish(id) {
-        dataService.put("blogifier/api/posts/unpublish/" + id, null, savedCallback, fail);
+        dataService.put("blogifier/api/posts/unpublish/" + id, null, publishCallback, fail);
     }
 
     function removePost(postId) {
         dataService.remove('blogifier/api/posts/' + postId, removeCallback, fail);
     }
 
-    function savedCallback() {
-        toastr.success('Saved');
-        loadPostEdit(current.post);
-        loadButtons();
+    function publishCallback() {
+        toastr.success('Updated');
+        reload();
     }
 
     function removeCallback() {
         toastr.success('Removed');
         current.post = 0;
-        current.mode = 'view';
-        closeEditor();
         reload();
     }
 
@@ -225,7 +225,7 @@
     }
 
     function getPubDate(date) {
-        return date.startsWith('0001') ? 'Draft' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
+        return date.startsWith('0001') ? 'DRAFT' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
     }
 
     function fail(jqXHR, exception) {

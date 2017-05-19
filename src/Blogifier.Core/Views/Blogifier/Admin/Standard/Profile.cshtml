@@ -1,6 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminProfileModel
 
-<div class="row top">
+<div class="row top-row">
     <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
     </a>
@@ -84,4 +84,5 @@
     {
         <script>toastr.success('@ViewBag.Message')</script>
     }
+    <script>document.getElementById('Profile_Title').focus()</script>
 }
