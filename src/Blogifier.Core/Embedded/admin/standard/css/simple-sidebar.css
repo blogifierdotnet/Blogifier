@@ -270,6 +270,27 @@ div.post-excerpt {
     font-size: 12px;
 }
 
+.asset-gallery {
+    text-align: center;
+}
+
+.asset-gallery img {
+    max-height: 140px;
+}
+
+.asset-gallery a {
+    border: 1px solid #ddd;
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    margin: 2px;
+}
+    
+#king {
+    margin: 10px 10px 0 0;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 0;

@@ -31,6 +31,14 @@ namespace Blogifier.Core.Controllers.Api
             return _db.Assets.Find(a => a.ProfileId == profile.Id).OrderByDescending(a => a.LastUpdated);
         }
 
+        // GET api/assets/5
+        [HttpGet("{assetId:int}")]
+        public async Task<Asset> Get(int assetId)
+        {
+            var model = _db.Assets.Single(a => a.Id == assetId);
+            return await Task.Run(() => model);
+        }
+
         // POST api/assets/single/{type}
         [HttpPost]
         [Route("single/{type}")]

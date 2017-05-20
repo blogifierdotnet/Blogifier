@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyVersion>0.4.0.0</AssemblyVersion>
-    <FileVersion>0.4.0.0</FileVersion>
-    <Version>0.4.0.0</Version>
+    <AssemblyVersion>0.4.1.0</AssemblyVersion>
+    <FileVersion>0.4.1.0</FileVersion>
+    <Version>0.4.1.0</Version>
     <Authors>Blogifier</Authors>
     <Company>Blogifier.NET</Company>
     <Description>Blogifier.Core package: pre-release version</Description>

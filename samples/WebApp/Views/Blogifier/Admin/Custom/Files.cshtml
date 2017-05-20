@@ -1,0 +1,35 @@
+﻿@using Blogifier.Core.Common
+@{
+    //var themeFolder = "Embedded/admin/standard";
+    var themeFolder = "blogifier/admin/custom";
+}
+<div class="row top-row">
+    <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </a>
+    <div id="asset-edit-actions" class="btn-group pull-right"></div>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+                <h2>Files</h2>
+                <div>
+                    <div class="asset-edit" id="assetEdit"></div>
+                    <div class="asset-gallery" id="assetList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display:none;">
+    <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+        <input type="file" name="files" id="files" multiple onchange="filesController.uploadAssets(); return false;" />
+        <input type="submit" value="Upload Multiple" />
+    </form>
+</div>
+@section Scripts{
+    <script src="~/@themeFolder/js/filesController.js"></script>
+    <script>filesController.loadFileManager()</script>
+}

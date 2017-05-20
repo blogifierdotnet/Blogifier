@@ -4,6 +4,8 @@
     //var themeFolder = "Embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
 
+    var profileIcon = Model.Profile != null && Model.Profile.IsAdmin ? "glyphicon-king" : "glyphicon-user";
+
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
     if (Model.Profile != null)
@@ -48,12 +50,9 @@
                     <li class="posts">
                         <a href="~/admin"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> <span class="nav-label">Posts</span></a>
                     </li>
-                }
-                <li class="profile">
-                    <a href="~/admin/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
-                </li>
-                @if (Model.BlogExists)
-                {
+                    <li class="files">
+                        <a href="~/admin/files"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span class="nav-label">Files</span></a>
+                    </li>
                     <li class="tools">
                         <a href="~/admin/tools"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="nav-label">Tools</span></a>
                     </li>
@@ -66,6 +65,9 @@
                     </li>
                     }
                 }
+                <li class="profile">
+                    <a href="~/admin/profile"><span class="glyphicon @profileIcon" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
+                </li>
                 <li class="back">
                     <a href="~/blog"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> <span class="nav-label">Back to blog</span></a>
                 </li>
@@ -80,10 +82,10 @@
 
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
     <div style="display:none;">
-        <form method="post" name="frmUploadMultiple" id="frmUploadMultiple" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+        @*<form method="post" name="frmUploadMultiple" id="frmUploadMultiple" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
             <input type="file" name="files" id="files" multiple onchange="uploadController.uploadMultiple(); return false;" />
             <input type="submit" value="Upload Multiple" />
-        </form>
+        </form>*@
         <form method="post" name="frmUpload" id="frmUpload" asp-action="Index" asp-controller="Blogifier/Api/Assets" enctype="multipart/form-data">
             <input type="file" name="file" id="file" onchange="uploadController.uploadSingle()" />
             <input type="submit" name="submitUpload" id="submitUpload" value="Upload Single" />

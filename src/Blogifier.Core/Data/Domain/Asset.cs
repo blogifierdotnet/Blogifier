@@ -58,7 +58,7 @@ namespace Blogifier.Core.Data.Domain
                     Url.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
                     ext = "xls.png";
 
-                return $"Resources/img/types/{ext}";
+                return $"Embedded/lib/img/doctypes/{ext}";
             }
         }
     }

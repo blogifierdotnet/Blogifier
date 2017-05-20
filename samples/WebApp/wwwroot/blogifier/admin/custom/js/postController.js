@@ -164,6 +164,10 @@
         reload();
     }
 
+    function addImage() {
+        toastr.warning('Not implemented');
+    }
+
     // categories
 
     function addCategory() {
@@ -247,7 +251,8 @@
         savePost: savePost,
         removePost: removePost,
         publish: publish,
-        unpublish: unpublish,      
+        unpublish: unpublish,
+        addImage: addImage,
         addCategory: addCategory,
         saveCategory: saveCategory,
         removeCategory: removeCategory,

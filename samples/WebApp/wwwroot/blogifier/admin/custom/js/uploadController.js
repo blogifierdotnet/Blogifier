@@ -77,7 +77,7 @@ var uploadController = function (dataService) {
                 // attachement
                 tag = '<a href="#" onclick="uploadController.insertFile(\'' +
                     asset.url + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
-                    webRoot + 'Embedded/lib/img/zip.png" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
+                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
             }
             $("#filePickerList").append(tag);
         });

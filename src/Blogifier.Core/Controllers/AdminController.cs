@@ -43,6 +43,12 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Index.cshtml", model);
 		}
 
+        [Route("files")]
+        public IActionResult Files()
+        {
+            return View(_theme + "Files.cshtml", new AdminBaseModel { Profile = GetProfile() });
+        }
+
         [HttpGet]
 		[Route("tools")]
 		public IActionResult Tools()
