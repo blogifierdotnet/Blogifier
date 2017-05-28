@@ -12,7 +12,7 @@
 
   <ItemGroup>
 	  <EmbeddedResource Include="Views\**\*" />
-	  <EmbeddedResource Include="Embedded\**\*" />
+	  <EmbeddedResource Include="embedded\**\*" />
   </ItemGroup>
 
   <ItemGroup>

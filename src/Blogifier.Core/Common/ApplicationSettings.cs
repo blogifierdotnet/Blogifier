@@ -22,10 +22,10 @@ namespace Blogifier.Core.Common
         public static string Description { get; set; } = "Short description of the blog";
         public static int ItemsPerPage { get; set; } = 10;
 
-        public static string ProfileAvatar { get; set; } = "/Embedded/lib/img/avatar.jpg";
-        public static string ProfileLogo { get; set; } = "/Embedded/lib/img/logo.jpg";
-        public static string ProfileImage { get; set; } = "/Embedded/lib/img/home-bg.jpg";
-        public static string PostImage { get; set; } = "/Embedded/lib/img/post-bg.jpg";
+        public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
+        public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.jpg";
+        public static string ProfileImage { get; set; } = "/embedded/lib/img/home-bg.jpg";
+        public static string PostImage { get; set; } = "/embedded/lib/img/post-bg.jpg";
 
         #endregion
 

@@ -1,7 +1,7 @@
 ﻿@using Blogifier.Core.Common
 @{
     var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
-    var themeFolder = "Embedded/admin/standard";
+    var themeFolder = "embedded/admin/standard";
     //var themeFolder = "blogifier/admin/custom";
 
     var profileIcon = Model.Profile != null && Model.Profile.IsAdmin ? "glyphicon-king" : "glyphicon-user";

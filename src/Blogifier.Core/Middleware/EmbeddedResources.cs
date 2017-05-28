@@ -26,7 +26,7 @@ namespace Blogifier.Core.Middleware
 
 			foreach (var name in assembly.GetManifestResourceNames())
 			{
-				if (name.Contains("Blogifier.Core.Embedded") && Include(name))
+				if (name.Contains("Blogifier.Core.embedded") && Include(name))
 				{
                     var path = name.ReplaceIgnoreCase("Blogifier.Core", "").ToLower();
                     var resource = GetResource(name, assembly);
