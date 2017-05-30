@@ -1,4 +1,4 @@
-﻿var postController = function (dataService) {
+﻿var postController = function (dataService, filePickerController) {
     var current = {
         page: 1,
         post: 0,
@@ -69,6 +69,7 @@
         });
         $('#edit-categories').append(catStr);
         $('#txtPostTitle').val(data.title);
+        $('#txtPostImage').val(data.image);
         tinyMCE.activeEditor.setContent(data.content);
         current.published = data.published;
         openEditor();
@@ -207,6 +208,19 @@
 
     // miscellaneous
 
+    function openFilePicker() {
+        filePickerController.open('postImage', current.post);
+    }
+
+    function resetPostImage() {
+        dataService.remove('blogifier/api/assets/resetpostimage/' + current.post, imgResetCallback, fail);
+    }
+
+    function imgResetCallback(data) {
+        toastr.success('Updated');
+        loadPostEdit(current.post);
+    }
+
     function pager(pg) {
         var lastPost = pg.currentPage * pg.itemsPerPage;
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
@@ -256,9 +270,11 @@
         addCategory: addCategory,
         saveCategory: saveCategory,
         removeCategory: removeCategory,
+        openFilePicker: openFilePicker,
+        resetPostImage: resetPostImage,
         cancel: cancel
     }
-}(DataService);
+}(DataService, filePickerController);
 
 document.addEventListener("DOMContentLoaded", function (event) { 
     tinymce.init({

@@ -81,16 +81,6 @@
     </div>
 
     <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-    <div style="display:none;">
-        @*<form method="post" name="frmUploadMultiple" id="frmUploadMultiple" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
-            <input type="file" name="files" id="files" multiple onchange="uploadController.uploadMultiple(); return false;" />
-            <input type="submit" value="Upload Multiple" />
-        </form>*@
-        <form method="post" name="frmUpload" id="frmUpload" asp-action="Index" asp-controller="Blogifier/Api/Assets" enctype="multipart/form-data">
-            <input type="file" name="file" id="file" onchange="uploadController.uploadSingle()" />
-            <input type="submit" name="submitUpload" id="submitUpload" value="Upload Single" />
-        </form>
-    </div>
  
     <script src="~/@themeFolder/lib/jquery/jquery.js"></script>
     <script src="~/@themeFolder/lib/bootstrap/bootstrap.min.js"></script>

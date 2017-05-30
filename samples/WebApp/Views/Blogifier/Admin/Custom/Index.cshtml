@@ -25,34 +25,28 @@
             <div id="post-edit" class="col-md-12 posts-list" style="padding: 0 15px 25px 10px !important; display: none">
                 <div class="wrap">
                     <form id="frmEditor" style="height:100%;">
-                        <div class="row">
-                            <div id="post-list" class="col-lg-6">
-                                <div class="form-group">
-                                    <input id="txtPostTitle" class="form-control" placeholder="Post title" />
-                                </div>
-                            </div>
-                            <div id="post-list" class="col-lg-6">
-                                <div class="form-group input-group">
-                                    <input type="text" class="form-control" placeholder="Post image" readonly />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary" onclick="return postController.addImage();">
-                                            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" onclick="return postController.addImage();">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>                      
+                        <div class="form-group">
+                            <input id="txtPostTitle" class="form-control" placeholder="Post title" />
+                        </div>                
                         <div class="form-group">
                             <textarea id="txtContent" name="txtContent"></textarea>
+                        </div>
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" id="txtPostImage" placeholder="Post image" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" onclick="return postController.openFilePicker();">
+                                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="return postController.resetPostImage();">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </span>
                         </div>
                         <div id="edit-categories"></div>
                     </form>
                 </div>
             </div>
-            
+           
         </div>       
     </div>
 </div>
@@ -102,5 +96,6 @@
 @section Scripts{
     <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
     <script src="~/@themeFolder/lib/autocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/@themeFolder/js/filePickerController.js"></script>
     <script src="~/@themeFolder/js/postController.js"></script>
 }

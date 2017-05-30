@@ -23,14 +23,6 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        // GET: api/assets
-        [HttpGet]
-        public IEnumerable<Asset> Get()
-        {
-            var profile = GetProfile();
-            return _db.Assets.Find(a => a.ProfileId == profile.Id).OrderByDescending(a => a.LastUpdated);
-        }
-
         // GET api/assets/5
         [HttpGet("{assetId:int}")]
         public async Task<Asset> Get(int assetId)
@@ -39,34 +31,64 @@ namespace Blogifier.Core.Controllers.Api
             return await Task.Run(() => model);
         }
 
-        // POST api/assets/single/{type}
-        [HttpPost]
-        [Route("single/{type}")]
-        public async Task<Asset> Post(IFormFile file, string type)
+        // GET: api/assets/images
+        [HttpGet("{type}")]
+        public IEnumerable<Asset> Get(string type)
         {
-            if (file == null)
-                return null;
+            var profile = GetProfile();
+            if(type == "images")
+            {
+                return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
+            }
+            return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
+        }
 
-            var asset = await SaveFile(file);
+        // GET: api/assets
+        [HttpGet]
+        public IEnumerable<Asset> Get()
+        {
+            var profile = GetProfile();
+            return _db.Assets.Find(a => a.ProfileId == profile.Id).OrderByDescending(a => a.LastUpdated);
+        }
+
+        // GET: api/assets/profilelogo/3
+        [HttpGet]
+        [Route("{type}/{id:int}")]
+        public Asset UpdateProfileImage(string type, int id)
+        {
+            var asset = _db.Assets.Single(a => a.Id == id);
+            type = type.ToLower();
 
             if (!string.IsNullOrEmpty(type))
             {
                 var profile = GetProfile();
 
-                if (type == "profileLogo")
+                if (type == "profilelogo")
                 {
                     profile.Logo = asset.Url;
                 }
-                if (type == "profileAvatar")
+                if (type == "profileavatar")
                 {
                     profile.Avatar = asset.Url;
                 }
-                if (type == "profileImage")
+                if (type == "profileimage")
                 {
                     profile.Image = asset.Url;
                 }
                 _db.Complete();
             }
+            return asset;
+        }
+
+        // GET: api/assets/postimage/3/5
+        [HttpGet]
+        [Route("postimage/{assetId:int}/{postId:int}")]
+        public Asset UpdatePostImage(string type, int assetId, int postId)
+        {
+            var asset = _db.Assets.Single(a => a.Id == assetId);
+            var post = _db.BlogPosts.Single(p => p.Id == postId);
+            post.Image = asset.Url;
+            _db.Complete();
             return asset;
         }
 
@@ -111,6 +133,15 @@ namespace Blogifier.Core.Controllers.Api
             if (type == "profileImage")
                 profile.Image = null;
 
+            _db.Complete();
+        }
+
+        // DELETE api/assets/resetpostimage/5
+        [HttpDelete("resetpostimage/{id:int}")]
+        public void ResetPostImage(int id)
+        {
+            var post = _db.BlogPosts.Single(p => p.Id == id);
+            post.Image = null;
             _db.Complete();
         }
 
