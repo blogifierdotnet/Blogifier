@@ -21,11 +21,14 @@ namespace Blogifier.Core
     {
 		public static void InitServices(IServiceCollection services)
 		{
-			services.AddTransient<IRssService, RssService>();
+            var loader = new AppSettingsLoader();
+            loader.LoadFromConfigFile();
+
+            services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
 
-			AddDatabase(services);
+            AddDatabase(services);
 
 			AddFileProviders(services);
 		}
@@ -37,16 +40,13 @@ namespace Blogifier.Core
 			ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
 
-            var loader = new AppSettingsLoader();
-            loader.LoadFromConfigFile();
-
             if (!ApplicationSettings.UseInMemoryDatabase)
             {
                 using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
                     scope.ServiceProvider.GetService<BlogifierDbContext>().Database.Migrate();
                 }
-            }  
+            }
         }
 
 		static void AddDatabase(IServiceCollection services)

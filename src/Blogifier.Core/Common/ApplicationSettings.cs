@@ -6,9 +6,9 @@ namespace Blogifier.Core.Common
     {
         #region System settings
 
+        public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; } = true;
         public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
-        public static bool EnableLogging { get; set; }
         public static string BlogStorageFolder { get; set; } = "blogifier/data";
         public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
         public static string AdminTheme { get; set; } = "Standard";
