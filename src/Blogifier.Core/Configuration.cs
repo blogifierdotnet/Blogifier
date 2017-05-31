@@ -39,7 +39,15 @@ namespace Blogifier.Core
 
             var loader = new AppSettingsLoader();
             loader.LoadFromConfigFile();
-		}
+
+            if (!ApplicationSettings.UseInMemoryDatabase)
+            {
+                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    scope.ServiceProvider.GetService<BlogifierDbContext>().Database.Migrate();
+                }
+            }  
+        }
 
 		static void AddDatabase(IServiceCollection services)
 		{

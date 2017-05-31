@@ -26,11 +26,11 @@
 </div>
 <div style="display:none;">
     <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
-        <input type="file" name="files" id="files" multiple onchange="filesController.uploadAssets(); return false;" />
+        <input type="file" name="files" id="files" multiple onchange="assetController.uploadAssets(); return false;" />
         <input type="submit" value="Upload Multiple" />
     </form>
 </div>
 @section Scripts{
-    <script src="~/@themeFolder/js/filesController.js"></script>
-    <script>filesController.loadFileManager()</script>
+    <script src="~/@themeFolder/js/assetController.js"></script>
+    <script>assetController.loadFileManager()</script>
 }
