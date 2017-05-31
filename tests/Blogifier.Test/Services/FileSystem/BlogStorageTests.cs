@@ -19,7 +19,7 @@ namespace Blogifier.Tests.Services.FileSystem
         [Fact]
         public void VerifyStorageLocation()
         {
-            var path = string.Format("WebApp{0}wwwroot{0}blog-uploads{0}test", _separator);
+            var path = string.Format("WebApp{0}wwwroot{0}blogifier{0}data{0}test", _separator);
             Assert.True(_storage.Location.EndsWith(path));
         }
 

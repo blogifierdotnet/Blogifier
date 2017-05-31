@@ -43,7 +43,7 @@ namespace Blogifier.Core.Services.FileSystem
                 var path = ApplicationSettings.WebRootPath == null ? 
                     Path.Combine(GetAppRoot(), "wwwroot") : ApplicationSettings.WebRootPath;
 
-                path = Path.Combine(path, _uploadFolder);
+                path = Path.Combine(path, _uploadFolder.Replace("/", Path.DirectorySeparatorChar.ToString()));
 
                 if (!string.IsNullOrEmpty(_blogSlug))
                 {
