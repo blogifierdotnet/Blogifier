@@ -13,7 +13,7 @@
     <div class="container-fluid">
         
         <div class="row">
-            <div class="col-lg-6 col-lg-offset-3">
+            <div class="col-lg-8 col-lg-offset-2">
                 <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
                     <h2>Profile</h2>
                     <div class="form-group">
@@ -92,6 +92,7 @@
                     You do not have any files yet - <a href="~/admin/files">upload now</a>!
                 </div>
                 <div class="asset-gallery" id="filePickerList"></div>
+                <ul class="pager"></ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>

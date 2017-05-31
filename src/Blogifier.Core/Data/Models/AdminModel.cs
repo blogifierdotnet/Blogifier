@@ -49,6 +49,12 @@ namespace Blogifier.Core.Data.Models
         public IEnumerable<PostListItem> BlogPosts { get; set; }
     }
 
+    public class AdminAssetList
+    {
+        public Pager Pager { get; set; }
+        public IEnumerable<Asset> Assets { get; set; }
+    }
+
     public class PostEditModel
     {
         public int Id { get; set; }

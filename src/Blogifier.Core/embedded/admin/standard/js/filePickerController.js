@@ -1,22 +1,24 @@
-var filePickerController = function (dataService) {
+﻿var filePickerController = function (dataService) {
     var uploadType = '';
     var postId = 0;
+    var page = 1;
 
     function open(type, id) {
         uploadType = type;
         postId = id;
-        if (type === 'editor') {
-            dataService.get('blogifier/api/assets', loadFilePicker, fail);
-        }
-        else {
-            dataService.get('blogifier/api/assets/' + type, loadFilePicker, fail);
-        }
+        loadPage(1);
+    }
+
+    function loadPage(page) {
+        dataService.get('blogifier/api/assets/' + page + '?type=' + uploadType, loadFilePicker, fail);
+        return false;
     }
 
     function loadFilePicker(data) {
         $('#filePickerList').empty();
-        $.each(data, function (index) {
-            var asset = data[index];
+        var assets = data.assets;
+        $.each(assets, function (index) {
+            var asset = assets[index];
             var tag = "";
             if (asset.assetType === 0) {
                 // image
@@ -32,13 +34,14 @@ var filePickerController = function (dataService) {
             }
             $("#filePickerList").append(tag);
         });
-        if (data && data.length > 0) {
+        if (assets && assets.length > 0) {
             $('.modal-list-empty').hide();
         }
         else {
             $('.modal-list-empty').show();
         }
         $('#modalFilePicker').modal();
+        pager(data.pager);
     }
 
     function pick(assetId) {
@@ -78,6 +81,27 @@ var filePickerController = function (dataService) {
         close();
     }
 
+    function pager(pg) {
+        var lastPost = pg.currentPage * pg.itemsPerPage;
+        var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
+        if (lastPost > pg.total) { lastPost = pg.total; }
+
+        var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
+        var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
+        if (pg.showOlder === true) {
+            older = '<li class="previous" onclick="return filePickerController.load(' + pg.older + ')"><a href="">← Older</a></li>';
+        }
+        if (pg.showNewer === true) {
+            newer = '<li class="next" onclick="return filePickerController.load(' + pg.newer + ')"><a href="#">Newer →</a></li>';
+        }
+        $('.pager').empty();
+        if (pg.showNewer === true || pg.showOlder === true) {
+            $('.pager').append(older);
+            $('.pager').append('<li class="counter">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</li>');
+            $('.pager').append(newer);
+        }
+    }
+
     function humanFileSize(size) {
         var i = Math.floor(Math.log(size) / Math.log(1024));
         return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
@@ -93,6 +117,7 @@ var filePickerController = function (dataService) {
 
     return {
         open: open,
+        load: loadPage,
         pick: pick
     }
 }(DataService);

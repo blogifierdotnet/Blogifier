@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,33 +24,50 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        // GET api/assets/5
-        [HttpGet("{assetId:int}")]
-        public async Task<Asset> Get(int assetId)
-        {
-            var model = _db.Assets.Single(a => a.Id == assetId);
-            return await Task.Run(() => model);
-        }
-
         // GET: api/assets/images
-        [HttpGet("{type}")]
-        public IEnumerable<Asset> Get(string type)
-        {
-            var profile = GetProfile();
-            if(type == "images")
-            {
-                return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
-            }
-            return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
-        }
+        //[HttpGet("{type}")]
+        //public IEnumerable<Asset> Get(string type)
+        //{
+        //    var profile = GetProfile();
+        //    if (type == "images")
+        //    {
+        //        return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
+        //    }
+        //    return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
+        //}
 
         // GET: api/assets
         [HttpGet]
-        public IEnumerable<Asset> Get()
+        public AdminAssetList Get()
+        {
+            return Get(1);
+        }
+
+        // GET: api/assets/2?type=profileImage
+        [HttpGet("{page:int}")]
+        public AdminAssetList Get(int page)
         {
             var profile = GetProfile();
-            return _db.Assets.Find(a => a.ProfileId == profile.Id).OrderByDescending(a => a.LastUpdated);
+            var pager = new Pager(page);
+            IEnumerable<Asset> assets;
+
+            if (Request.Query.ContainsKey("type") && Request.Query["type"] == "editor")
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id, pager);
+            else
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0, pager);                  
+            
+            return new AdminAssetList { Assets = assets, Pager = pager };
         }
+
+        // GET api/assets/asset/5
+        [HttpGet("asset/{id:int}")]
+        public async Task<Asset> GetSingle(int id)
+        {
+            var model = _db.Assets.Single(a => a.Id == id);
+            return await Task.Run(() => model);
+        }
+
+        // ------------------------
 
         // GET: api/assets/profilelogo/3
         [HttpGet]
@@ -91,6 +109,8 @@ namespace Blogifier.Core.Controllers.Api
             _db.Complete();
             return asset;
         }
+
+        // ------------------------
 
         // POST api/assets/multiple
         [HttpPost]
