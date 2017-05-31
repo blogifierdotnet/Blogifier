@@ -13,12 +13,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\blogifier\admin\custom\js\filesController.js">
+    <Content Include="wwwroot\blogifier\admin\custom\js\assetController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\blogifier\admin\custom\js\filePickerController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\app.js" />
+    <Content Include="wwwroot\blogifier\blog\custom\app.min.js" />
+    <Content Include="wwwroot\blogifier\blog\custom\css\style.css" />
+    <Content Include="wwwroot\blogifier\blog\custom\css\style.min.css" />
+    <Content Include="wwwroot\blogifier\blog\custom\js\app.js" />
+    <Content Include="wwwroot\blogifier\blog\custom\js\app.min.js" />
+    <Content Include="wwwroot\blogifier\blog\custom\style.css" />
+    <Content Include="wwwroot\blogifier\blog\custom\style.min.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -56,6 +64,7 @@
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

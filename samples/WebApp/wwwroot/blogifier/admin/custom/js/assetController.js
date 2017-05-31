@@ -1,4 +1,4 @@
-﻿var filesController = function (dataService) {
+﻿var assetController = function (dataService) {
     var currentPage = 1;
     function clickUpload() {
         $('#files').trigger('click');
@@ -32,19 +32,19 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<a href="#" onclick="filesController.getAsset(\'' +
+                tag = '<a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\'); return false;"><img src="' +
                     asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
             }
             else {
                 // attachement
-                tag = '<a href="#" onclick="filesController.getAsset(\'' +
+                tag = '<a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
                     webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
             }
             $("#assetList").append(tag);
         });
-        var btn = '<button class="btn btn-primary pull-right" title="Add" onclick="return filesController.clickUpload()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</button>';
+        var btn = '<button class="btn btn-primary pull-right" title="Add" onclick="return assetController.clickUpload()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
         pager(data.pager);
@@ -58,10 +58,10 @@
         var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
         var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
         if (pg.showOlder === true) {
-            older = '<li class="previous" onclick="return filesController.loadFileManager(' + pg.older + ')"><a href="">← Older</a></li>';
+            older = '<li class="previous" onclick="return assetController.loadFileManager(' + pg.older + ')"><a href="">← Older</a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li class="next" onclick="return filesController.loadFileManager(' + pg.newer + ')"><a href="#">Newer →</a></li>';
+            newer = '<li class="next" onclick="return assetController.loadFileManager(' + pg.newer + ')"><a href="#">Newer →</a></li>';
         }
         $('.pager').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
@@ -90,8 +90,8 @@
         tag += '<img src="' + url + '" style="max-width: 100%" />';
         $('#assetEdit').append(tag);
 
-        var btn = '<button class="btn btn-default" title="Close" onclick="return filesController.loadFileManager()">Close</button>';
-        btn += '<button class="btn btn-danger" title="Delete" onclick="return filesController.remove(' + data.id + ')">Delete</button>';
+        var btn = '<button class="btn btn-default" title="Close" onclick="return assetController.loadFileManager()">Close</button>';
+        btn += '<button class="btn btn-danger" title="Delete" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
     }
