@@ -21,7 +21,12 @@ namespace Blogifier.Test.Services.Syndication
         public FeedParserTests()
         {
             var builder = new DbContextOptionsBuilder<BlogifierDbContext>();
-            builder.UseInMemoryDatabase();
+
+            if (ApplicationSettings.UseInMemoryDatabase)
+                builder.UseInMemoryDatabase();
+            else
+                builder.UseSqlServer(ApplicationSettings.ConnectionString);
+
             _options = builder.Options;
         }
 
@@ -44,7 +49,11 @@ namespace Blogifier.Test.Services.Syndication
                     profile = new Profile();
                     profile.IdentityName = "test";
                     profile.AuthorName = "test";
+                    profile.AuthorEmail = "test@us.com";
+                    profile.Title = "test";
                     profile.Slug = "test";
+                    profile.Description = "the test";
+                    profile.BlogTheme = "Standard";
 
                     uow.Profiles.Add(profile);
                     uow.Complete();

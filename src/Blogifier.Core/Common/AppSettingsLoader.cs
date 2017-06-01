@@ -16,6 +16,10 @@ namespace Blogifier.Core.Common
                 var config = builder.Build();
                 if (config != null)
                 {
+                    var defaultConnections = config.GetSection("ConnectionStrings");
+                    if(defaultConnections != null)
+                        ApplicationSettings.ConnectionString = defaultConnections.GetValue<string>("DefaultConnection");
+
                     var section = config.GetSection("Blogifier");
                     if (section != null)
                     {
