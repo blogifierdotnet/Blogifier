@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

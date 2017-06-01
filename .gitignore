@@ -237,7 +237,7 @@ _Pvt_Extensions
 
 PublishProfiles/
 samples/**/Logs/*
-samples/**/blog-uploads/*
+samples/**/blogifier/data/*
 
 # Build and CI files
 artifacts/

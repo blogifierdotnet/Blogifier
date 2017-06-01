@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;

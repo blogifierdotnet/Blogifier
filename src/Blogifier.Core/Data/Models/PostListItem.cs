@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Blogifier.Core.Common
+namespace Blogifier.Core.Data.Models
 {
     public class PostListItem
     {
@@ -11,7 +11,7 @@ namespace Blogifier.Core.Common
         public string Title { get; set; }
         public string Image { get; set; }
         public string Content { get; set; }
-        public DateTime Published { get; set; }     
+        public DateTime Published { get; set; }
 
         public string AuthorName { get; set; }
         public string AuthorEmail { get; set; }

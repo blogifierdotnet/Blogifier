@@ -97,7 +97,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 var item = new FeedItem()
                 {
                     Title = post.Title,
-                    Body = postDetails.Content.Replace("src=\"blog-uploads/", "src=\"" + absoluteUri + "/blog-uploads/"),
+                    Body = postDetails.Content.Replace("src=\"blogifier/data/", "src=\"" + absoluteUri + "/blogifier/data/"),
                     Link = new Uri(absoluteUri + "/blog/" + post.Slug),
                     Permalink = absoluteUri + "/blog/" + post.Slug,
                     PublishDate = post.Published,

@@ -69,7 +69,7 @@ Default application settings can be overwritten in application `appsettings.json
 | UseInMemoryDatabase | If in-memory or SQL database should be used | `true` |
 | ConnectionString | Database connection string | `Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;` |
 | EnableLogging | To enable application logging | `false` |
-| BlogStorageFolder | Folder for uploaded files/images | `blog-uploads` |
+| BlogStorageFolder | Folder for uploaded files/images | `blogifier/data` |
 | SupportedStorageFiles | File types allowed for upload | `zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml` |
 | AdminTheme | Administration theme | `Standard` |
 | Title | Appliation title | `Blog Name` |
