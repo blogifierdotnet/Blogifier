@@ -97,7 +97,7 @@
     }
 
     function remove(id) {
-        dataService.remove('blogifier/api/assets/asset/' + id, removeCallback, fail);
+        dataService.remove('blogifier/api/assets/' + id, removeCallback, fail);
     }
 
     function removeCallback(data) {

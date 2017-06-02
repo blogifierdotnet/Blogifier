@@ -110,6 +110,9 @@
         current.mode = 'edit';
         $('#post-list').hide();
         $('#post-edit').show();
+        if (current.post > 0) {
+            $('#post-image').show();
+        }
     }
     function closeEditor() {
         current.mode = 'view';

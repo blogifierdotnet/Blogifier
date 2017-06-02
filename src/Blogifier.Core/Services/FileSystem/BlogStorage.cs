@@ -103,7 +103,7 @@ namespace Blogifier.Core.Services.FileSystem
 
             VerifyPath(path);
 
-            var fileName = file.FileName;
+            var fileName = GetFileName(file.FileName);
             var filePath = string.IsNullOrEmpty(path) ?
                 Path.Combine(Location, fileName) :
                 Path.Combine(Location, path + _separator + fileName);
@@ -193,6 +193,18 @@ namespace Blogifier.Core.Services.FileSystem
                 return Location;
             else
                 return Path.Combine(Location, path.Replace("/", _separator));
+        }
+
+        string GetFileName(string fileName)
+        {
+            // some browsers pass uploaded file name as short file name 
+            // and others include the path; remove path part if needed
+            if (fileName.Contains(_separator))
+            {
+                fileName = fileName.Substring(fileName.LastIndexOf(_separator));
+                fileName = fileName.Replace(_separator, "");
+            }
+            return fileName;
         }
 
 		string GetUrl(string path, string root)
