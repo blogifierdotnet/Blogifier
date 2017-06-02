@@ -46,8 +46,8 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 ## Security
 
-* Blogifier.Core inherits user authentication from �parent� application and acts accordingly.
-* If user authenticated but there is no profile for user�s identity, navigating to `/admin` will redirect to profile page. Filling in profile will effectively create a new blog. 
+* Blogifier.Core inherits user authentication from `parent` application and acts accordingly.
+* If user authenticated but there is no profile for user identity, navigating to `/admin` will redirect to profile page. Filling in profile will effectively create a new blog. 
 * First application user will be marked as application administrator and will be able manage application settings and profiles.
 
 ## Application Settings
