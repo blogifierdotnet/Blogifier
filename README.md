@@ -1,6 +1,6 @@
 # Blogifier.Core [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core)
 
-Project currently in the early Beta stage and not yet ready for any production use. Sample application set to use in-memory database and all changes will be lost when application stops or restarts.
+This project currently in the pre-release and not yet ready for production use.
 
 ## What is Blogifier.Core
 
@@ -8,11 +8,13 @@ The goal of this project is to "blogify" new and existing ASP.NET applications; 
 
 ## System Requirements
 
- * ASP.NET Core 1.1
- * Visual Studio 2017
- * Visual Studio Code
+* ASP.NET Core 1.1
+* .NET Framework 4.5.2
+* Visual Studio 2017 or VS Code
+* ASP.NET Authentication
+* SQL Server (Express, LocalDB both fine)
 
-Designed for cross-platform development, every build pushed to Windows and Linux servers
+Designed for cross-platform development, every build pushed to Windows and Linux servers. For Linux will be separate PostgreSql install.
 
 ## Getting Started
 
@@ -22,16 +24,12 @@ Designed for cross-platform development, every build pushed to Windows and Linux
 
 ## Using Blogifier.Core Nuget Package
 
-1. In VS 2017, create new ASP.NET Core 1.1 application with user authentication
-2. Open Nuget Package Manager and add Blogifier feed to package sources:
+1. In VS 2017, create new ASP.NET Core 1.1 Web Application with user authentication (single user accounts)
+2. Open Nuget Package Manager console and run this command:
 ```
-https://www.myget.org/F/rtur/api/v2
+Install-Package Blogifier.Core -Source https://www.myget.org/F/rtur/api/v3/index.json
 ```
-3. Search for "Blogifier.Core" or install from PM console:
-```
-Install-Package Blogifier.Core 
-```
-4. Configure services and application in Startup.cs:
+3. Configure services and application in Startup.cs:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
@@ -48,8 +46,8 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 ## Security
 
-* Blogifier.Core inherits user authentication from “parent” application and acts accordingly.
-* If user authenticated but there is no profile for user’s identity, navigating to `/admin` will redirect to profile page. Filling in profile will effectively create a new blog. 
+* Blogifier.Core inherits user authentication from ï¿½parentï¿½ application and acts accordingly.
+* If user authenticated but there is no profile for userï¿½s identity, navigating to `/admin` will redirect to profile page. Filling in profile will effectively create a new blog. 
 * First application user will be marked as application administrator and will be able manage application settings and profiles.
 
 ## Application Settings
