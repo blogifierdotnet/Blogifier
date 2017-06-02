@@ -42,7 +42,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
   Blogifier.Core.Configuration.InitApplication(app, env, loggerFactory);
 }
 ```
-5. You should be able to run application and navigate to `/blog` and `/admin`
+4. You should be able to run application and navigate to `/blog` and `/admin`
 
 ## Security
 
