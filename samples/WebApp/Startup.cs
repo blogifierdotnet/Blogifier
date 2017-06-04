@@ -37,8 +37,8 @@ namespace WebApp
         {
             // Add framework services.
 
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase());
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase());
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
