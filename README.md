@@ -1,6 +1,8 @@
-# Blogifier.Core [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core)
+## Blogifier.Core [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core)
 
-This project currently in the pre-release and not yet ready for production use.
+## Blogifier.Core.PostgreSql [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core.PostgreSql)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core.PostgreSql)
+
+This project currently in the pre-release and not completely ready for production use.
 
 ## What is Blogifier.Core
 
@@ -10,13 +12,14 @@ The goal of this project is to "blogify" new and existing ASP.NET applications; 
 
 ## System Requirements
 
+* Windows or Linux
 * ASP.NET Core 1.1
 * .NET Framework 4.5.2
 * Visual Studio 2017 or VS Code
 * ASP.NET Authentication
-* SQL Server (Express, LocalDB both fine)
+* SQL Server (Windows) or PostgreSql (Linux)
 
-Designed for cross-platform development, every build pushed to Windows and Linux servers. For Linux will be separate PostgreSql install.
+Designed for cross-platform development, every build pushed to Windows and Linux servers. For Linux use `Blogifier.Core.PostgreSql` package.
 
 ## Getting Started
 
@@ -50,16 +53,16 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerF
 
 * Blogifier.Core inherits user authentication from `parent` application and acts accordingly.
 * If user authenticated but there is no profile for user identity, navigating to `/admin` will redirect to profile page. Filling in profile will effectively create a new blog. 
-* First application user will be marked as application administrator and will be able manage application settings and profiles.
+* First application user will be marked as application administrator and will be able manage application settings.
 
 ## Application Settings
 
-Default application settings can be overwritten in application `appsettings.json` configuration file (you can add one if not exists). For example, to turn off default in-memory database provider:
+Default application settings can be overwritten in application `appsettings.json` configuration file (you can add one if not exists). For example, to change connection string for your database provider:
 
 ```json
 {
   "Blogifier": {
-    "UseInMemoryDatabase": false
+    "ConnectionString": "your connection string here"
   }
 }
 ```
@@ -83,17 +86,19 @@ The last three items are to adjust resource embedding for different environments
 
 ## Database Providers
 
-Blogifier.Core implements Entity Framework (code first) as ORM. It uses in-memory provider out of the box. 
+Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider out of the box and PostgreSql as secondary provider.
 
-To use SQL Server provider (local SQL Express in example), turn off default and specify connection string in the parent `appsettings.json`.
+Connection string cascades based on conditions:
+* Use default built-in Blogifier connection string
+* Use default parent application connection string in `appsettings.json`
+* Use Blogifier connection string in `appsettings.json`.
 
 ```json
 {
   "Blogifier": {
-    "UseInMemoryDatabase": false,
     "ConnectionString": "Server=.\\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;"
   }
 }
 ```
 
-For Linux, there will be separate `Blogifier.Core.PosgreSql` package built specifically for PostgreSql database.
+For Linux, use [Blogifier.Core.PosgreSql](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core.PostgreSql) package built specifically for PostgreSql database.
