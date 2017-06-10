@@ -19,7 +19,7 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        [HttpGet("{page:int}")]
+        [HttpGet("{page:int?}")]
         public AdminPostList Index(int page)
         {
             var pager = new Pager(page);
@@ -83,27 +83,39 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPut("publish/{id:int}")]
-        public void Publish(int id)
+        public IActionResult Publish(int id)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
+            if (post == null)
+                return NotFound();
+
             post.Published = SystemClock.Now();
             _db.Complete();
+            return new NoContentResult();
         }
 
         [HttpPut("unpublish/{id:int}")]
-        public void Unpublish(int id)
+        public IActionResult Unpublish(int id)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
+            if (post == null)
+                return NotFound();
+
             post.Published = System.DateTime.MinValue;
             _db.Complete();
+            return new NoContentResult();
         }
 
         [HttpDelete("{id:int}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
+            if (post == null)
+                return NotFound();
+
             _db.BlogPosts.Remove(post);
             _db.Complete();
+            return new NoContentResult();
         }
     }
 }

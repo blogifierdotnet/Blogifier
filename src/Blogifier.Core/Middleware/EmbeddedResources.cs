@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using Blogifier.Core.Common;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
-using Blogifier.Core.Common;
-using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Middleware
 {
-	public class EmbeddedResources
+    public class EmbeddedResources
 	{
 		readonly RequestDelegate _next;
         readonly ILogger _logger;
@@ -42,10 +46,17 @@ namespace Blogifier.Core.Middleware
 
             if (path.Contains(".embedded.", StringComparison.OrdinalIgnoreCase))
             {
+                // embedded resources never change, set eTag and cache for a year
+                var requestedETag = context.Request.Headers[HeaderNames.IfNoneMatch];
+                var responseETag = GetToken(Encoding.ASCII.GetBytes(path));
+
+                if (requestedETag == responseETag)
+                    context.Response.StatusCode = (int)HttpStatusCode.NotModified;
+                
                 var resource = _resources[path];
                 Stream stream = new MemoryStream(resource.Content);
 
-                SetContextHeaders(context, resource.ContentType, stream.Length);
+                SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
 
                 await stream.CopyToAsync(context.Response.Body);
             }
@@ -55,10 +66,13 @@ namespace Blogifier.Core.Middleware
             }
         }
 
-        void SetContextHeaders(HttpContext context, string resType, long length)
+        void SetContextHeaders(HttpContext context, string etag, string resType, long length)
         {
             // marker to identify embedded resource for troublshooting
             context.Response.Headers.Add("Embedded-Content", "true");
+
+            context.Response.Headers.Add(HeaderNames.CacheControl, "max-age=" + TimeSpan.FromDays(365));
+            context.Response.Headers.Add(HeaderNames.ETag, new[] { etag });
 
             if (ApplicationSettings.AddContentTypeHeaders)
                 context.Response.ContentType = resType;
@@ -117,7 +131,13 @@ namespace Blogifier.Core.Middleware
 
 			return false;
 		}
-	}
+
+        private static string GetToken(byte[] bytes)
+        {
+            var checksum = MD5.Create().ComputeHash(bytes);
+            return Convert.ToBase64String(checksum, 0, checksum.Length);
+        }
+    }
 
     public class CachedResource
     {

@@ -87,7 +87,7 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPut]
-        public void Put([FromBody]CategoryItem category)
+        public IActionResult Put([FromBody]CategoryItem category)
         {
             var blog = GetProfile();
             if (ModelState.IsValid)
@@ -96,12 +96,12 @@ namespace Blogifier.Core.Controllers.Api
                 if (id > 0)
                 {
                     var existing = _db.Categories.Single(c => c.Id == id);
-                    if (existing != null)
-                    {
-                        existing.Title = category.Title;
-                        existing.Description = string.IsNullOrEmpty(category.Description) ? category.Title : category.Description;
-                        existing.LastUpdated = SystemClock.Now();
-                    }
+                    if (existing == null)
+                        return NotFound();
+
+                    existing.Title = category.Title;
+                    existing.Description = string.IsNullOrEmpty(category.Description) ? category.Title : category.Description;
+                    existing.LastUpdated = SystemClock.Now();
                     _db.Complete();
                 }
                 else
@@ -118,15 +118,19 @@ namespace Blogifier.Core.Controllers.Api
                     _db.Complete();
                 }
             }
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var category = _db.Categories.Single(c => c.Id == id);
+            if (category == null)
+                return NotFound();
 
             _db.Categories.Remove(category);
             _db.Complete();
+            return new NoContentResult();
         }
 
         CategoryItem GetItem(Category category)

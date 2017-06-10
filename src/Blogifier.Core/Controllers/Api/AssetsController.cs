@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
@@ -24,27 +23,8 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        // GET: api/assets/images
-        //[HttpGet("{type}")]
-        //public IEnumerable<Asset> Get(string type)
-        //{
-        //    var profile = GetProfile();
-        //    if (type == "images")
-        //    {
-        //        return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
-        //    }
-        //    return _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0).OrderByDescending(a => a.LastUpdated);
-        //}
-
-        // GET: api/assets
-        [HttpGet]
-        public AdminAssetList Get()
-        {
-            return Get(1);
-        }
-
-        // GET: api/assets/2?type=profileImage
-        [HttpGet("{page:int}")]
+        // GET: api/assets/2?type=editor
+        [HttpGet("{page:int?}")]
         public AdminAssetList Get(int page)
         {
             var profile = GetProfile();
@@ -66,8 +46,6 @@ namespace Blogifier.Core.Controllers.Api
             var model = _db.Assets.Single(a => a.Id == id);
             return await Task.Run(() => model);
         }
-
-        // ------------------------
 
         // GET: api/assets/profilelogo/3
         [HttpGet]
@@ -110,8 +88,6 @@ namespace Blogifier.Core.Controllers.Api
             return asset;
         }
 
-        // ------------------------
-
         // POST api/assets/multiple
         [HttpPost]
         [Route("multiple")]
@@ -126,9 +102,11 @@ namespace Blogifier.Core.Controllers.Api
 
         // DELETE api/assets/5
         [HttpDelete("{id:int}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var asset = _db.Assets.Single(a => a.Id == id);
+            if (asset == null)
+                return NotFound();
 
             var blog = GetProfile();
             var storage = new BlogStorage(blog.Slug);
@@ -136,11 +114,12 @@ namespace Blogifier.Core.Controllers.Api
 
             _db.Assets.Remove(asset);
             _db.Complete();
+            return new NoContentResult();
         }
 
         // DELETE api/assets/profilelogo
         [HttpDelete("{type}")]
-        public void Delete(string type)
+        public IActionResult Delete(string type)
         {
             var profile = GetProfile();
 
@@ -154,15 +133,17 @@ namespace Blogifier.Core.Controllers.Api
                 profile.Image = null;
 
             _db.Complete();
+            return new NoContentResult();
         }
 
         // DELETE api/assets/resetpostimage/5
         [HttpDelete("resetpostimage/{id:int}")]
-        public void ResetPostImage(int id)
+        public IActionResult ResetPostImage(int id)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
             post.Image = null;
             _db.Complete();
+            return new NoContentResult();
         }
 
         async Task<Asset> SaveFile(IFormFile file)

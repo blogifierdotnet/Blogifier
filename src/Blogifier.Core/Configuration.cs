@@ -37,6 +37,8 @@ namespace Blogifier.Core
 		{
 			app.UseMiddleware<EmbeddedResources>();
 
+            
+
 			ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
 
