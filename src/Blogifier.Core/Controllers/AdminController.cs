@@ -58,15 +58,16 @@ namespace Blogifier.Core.Controllers
             if (profile == null)
                 return RedirectToAction("Profile", "Admin");
 
-            var disqus = _db.CustomFields.Single(f => 
-                f.CustomKey == "disqus" && 
-                f.CustomType == CustomType.Profile && 
+            var disqus = _db.CustomFields.Single(f =>
+                f.CustomKey == "disqus" &&
+                f.CustomType == CustomType.Profile &&
                 f.ParentId == profile.Id);
 
             if (disqus == null)
                 disqus = new CustomField { CustomKey = "disqus", CustomType = CustomType.Profile, ParentId = profile.Id };
 
-			var model = new AdminToolsModel {
+            var model = new AdminToolsModel
+            {
                 Profile = GetProfile(),
                 RssImportModel = new RssImportModel(),
                 DisqusModel = disqus
@@ -87,8 +88,8 @@ namespace Blogifier.Core.Controllers
 
 			await _rss.Import(rss, Url.Content("~/"));
 
-			return RedirectToAction("Index", "Admin");
-		}
+            return RedirectToAction("Tools", new { msg = "Imported" });
+        }
 
         [HttpPost]
         [Route("disqus")]
@@ -104,8 +105,7 @@ namespace Blogifier.Core.Controllers
                 _db.CustomFields.Add(disqus);
             }
             _db.Complete();
-
-            return RedirectToAction("Tools", "Admin");
+            return RedirectToAction("Tools", new { msg = "Saved" });
         }
 
         [HttpGet]
@@ -189,7 +189,7 @@ namespace Blogifier.Core.Controllers
 			return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
 		}
 
-		private string SlugFromTitle(string title)
+        private string SlugFromTitle(string title)
 		{
 			var slug = title.ToSlug();
 			if (_db.Profiles.Single(b => b.Slug == slug) != null)

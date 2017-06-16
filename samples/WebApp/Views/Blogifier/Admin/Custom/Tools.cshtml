@@ -16,4 +16,9 @@
         </div>
     </div>
 </div>
-
+@section Scripts{
+    @if (!string.IsNullOrEmpty(Context.Request.Query["msg"]))
+    {
+        <script>toastr.success('@Context.Request.Query["msg"]')</script>
+    }
+}
