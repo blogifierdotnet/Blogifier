@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Blogifier.Core.Migrations
+namespace Blogifier.Core.Data.Migrations
 {
     public partial class InitBlogifierDb : Migration
     {
@@ -27,6 +27,24 @@ namespace Blogifier.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomFields",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CustomKey = table.Column<string>(maxLength: 140, nullable: false),
+                    CustomType = table.Column<int>(nullable: false),
+                    CustomValue = table.Column<string>(nullable: true),
+                    LastUpdated = table.Column<DateTime>(nullable: false),
+                    ParentId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 160, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomFields", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +176,9 @@ namespace Blogifier.Core.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Assets");
+
+            migrationBuilder.DropTable(
+                name: "CustomFields");
 
             migrationBuilder.DropTable(
                 name: "PostCategories");

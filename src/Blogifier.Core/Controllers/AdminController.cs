@@ -53,7 +53,24 @@ namespace Blogifier.Core.Controllers
 		[Route("tools")]
 		public IActionResult Tools()
 		{
-			var model = new AdminToolsModel { Profile = GetProfile(), RssImportModel = new RssImportModel() };
+            var profile = GetProfile();
+
+            if (profile == null)
+                return RedirectToAction("Profile", "Admin");
+
+            var disqus = _db.CustomFields.Single(f => 
+                f.CustomKey == "disqus" && 
+                f.CustomType == CustomType.Profile && 
+                f.ParentId == profile.Id);
+
+            if (disqus == null)
+                disqus = new CustomField { CustomKey = "disqus", CustomType = CustomType.Profile, ParentId = profile.Id };
+
+			var model = new AdminToolsModel {
+                Profile = GetProfile(),
+                RssImportModel = new RssImportModel(),
+                DisqusModel = disqus
+            };
 			return View(_theme + "Tools.cshtml", model);
 		}
 
@@ -73,7 +90,25 @@ namespace Blogifier.Core.Controllers
 			return RedirectToAction("Index", "Admin");
 		}
 
-		[HttpGet]
+        [HttpPost]
+        [Route("disqus")]
+        public IActionResult Disqus(CustomField disqus)
+        {
+            if(disqus.Id > 0)
+            {
+                var existing = _db.CustomFields.Single(f => f.Id == disqus.Id);
+                existing.CustomValue = disqus.CustomValue;
+            }
+            else
+            {
+                _db.CustomFields.Add(disqus);
+            }
+            _db.Complete();
+
+            return RedirectToAction("Tools", "Admin");
+        }
+
+        [HttpGet]
 		[Route("profile")]
 		public IActionResult Profile()
 		{

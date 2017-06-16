@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Blogifier.Core.Data;
 using Blogifier.Core.Data.Domain;
 
-namespace Blogifier.Core.Migrations
+namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(BlogifierDbContext))]
-    [Migration("20170531180344_InitBlogifierDb")]
-    partial class InitBlogifierDb
+    partial class BlogifierDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -120,6 +119,32 @@ namespace Blogifier.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Blogifier.Core.Data.Domain.CustomField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CustomKey")
+                        .IsRequired()
+                        .HasMaxLength(140);
+
+                    b.Property<int>("CustomType");
+
+                    b.Property<string>("CustomValue");
+
+                    b.Property<DateTime>("LastUpdated");
+
+                    b.Property<int>("ParentId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomFields");
                 });
 
             modelBuilder.Entity("Blogifier.Core.Data.Domain.PostCategory", b =>

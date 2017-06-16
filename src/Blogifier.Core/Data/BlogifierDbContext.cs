@@ -15,7 +15,8 @@ namespace Blogifier.Core.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Asset> Assets { get; set; }
-        
+        public DbSet<CustomField> CustomFields { get; set; }
+
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
