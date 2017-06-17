@@ -1,7 +1,12 @@
 ﻿@model Blogifier.Core.Data.Domain.CustomField
 
 <form id="frmDisqus" asp-controller="Admin" asp-action="Disqus" method="post">
-    <h2>Disqus script</h2>
+    <h2>
+        Disqus script 
+        <a href="https://github.com/blogifierdotnet/Blogifier.Core/wiki/Disqus-script" class="pull-right" target="_blank" title="Help">
+            <span class="glyphicon glyphicon-question-sign help-icon" aria-hidden="true"></span>
+        </a>
+    </h2>
     <div id="disqusForm">
         <div class="form-group">
             <textarea asp-for="CustomValue" class="form-control" placeholder="Disqus script" rows="10" cols="70"></textarea>

@@ -15,7 +15,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-                    <h2>Profile</h2>
+                    <h2>
+                        Profile
+                        <a href="https://github.com/blogifierdotnet/Blogifier.Core/wiki/User-profile" class="pull-right" target="_blank" title="Help">
+                            <span class="glyphicon glyphicon-question-sign help-icon" aria-hidden="true"></span>
+                        </a>
+                    </h2>
                     <div class="form-group">
                         <input type="text" asp-for="Profile.Title" class="form-control" placeholder="Blog Title" />
                         <span asp-validation-for="Profile.Title" class="text-danger"></span>

@@ -1,7 +1,12 @@
 ﻿@model Blogifier.Core.Data.Models.RssImportModel
 
 <form id="frmRssImport" asp-controller="Admin" asp-action="Tools" method="post">
-    <h2>RSS Import</h2>
+    <h2>
+        RSS Import
+        <a href="https://github.com/blogifierdotnet/Blogifier.Core/wiki/RSS-Import" class="pull-right" style="color:#ccc" target="_blank" title="Help">
+            <span class="glyphicon glyphicon-question-sign help-icon" aria-hidden="true"></span>
+        </a>
+    </h2>
     <div id="importForm">
         <div class="form-group">
             <input type="text" asp-for="FeedUrl" class="form-control" placeholder="RSS Url" />

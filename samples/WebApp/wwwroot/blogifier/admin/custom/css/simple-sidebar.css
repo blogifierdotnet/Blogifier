@@ -291,6 +291,11 @@ div.post-excerpt {
     margin: 10px 10px 0 0;
 }
 
+.help-icon {
+    color: #8A8C8E;
+    font-size: 0.8em;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 0;
