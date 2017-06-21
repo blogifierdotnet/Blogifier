@@ -5,24 +5,15 @@
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
-<div class="row top-row">
-    <a href="#menu-toggle" class="btn btn-primary pull-left" id="menu-toggle">
-        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-    </a>
-    <div id="post-edit-actions" class="btn-group pull-right"></div>
-</div>
+    <div id="post-edit-actions"></div>
 
 <div id="page-content-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-
-            <div id="post-list" class="col-lg-8 col-lg-offset-2 posts-list">
+            <div id="post-list" class="posts-list">
                 <h2>Posts</h2>
                 <ul id="admin-posts" class="list-group elements-list"></ul>
                 <ul class="pager"></ul>
             </div>
-
-            <div id="post-edit" class="col-lg-8 col-lg-offset-2 posts-list" style="display: none">
+            <div id="post-edit" class="posts-list" style="display: none">
                 <div class="wrap">
                     <form id="frmEditor" style="height:100%;">
                         <div class="form-group">
@@ -46,9 +37,6 @@
                     </form>
                 </div>
             </div>
-           
-        </div>       
-    </div>
 </div>
 
 <div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
