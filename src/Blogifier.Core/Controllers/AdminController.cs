@@ -75,39 +75,6 @@ namespace Blogifier.Core.Controllers
 			return View(_theme + "Tools.cshtml", model);
 		}
 
-		[HttpPost]
-		[Route("tools")]
-		public async Task<IActionResult> Tools(RssImportModel rss)
-		{
-            var model = new AdminToolsModel { Profile = GetProfile() };
-
-			if (model.Profile == null)
-				return View("Error");
-
-			rss.ProfileId = model.Profile.Id;
-
-			await _rss.Import(rss, Url.Content("~/"));
-
-            return RedirectToAction("Tools", new { msg = "Imported" });
-        }
-
-        [HttpPost]
-        [Route("disqus")]
-        public IActionResult Disqus(CustomField disqus)
-        {
-            if(disqus.Id > 0)
-            {
-                var existing = _db.CustomFields.Single(f => f.Id == disqus.Id);
-                existing.CustomValue = disqus.CustomValue;
-            }
-            else
-            {
-                _db.CustomFields.Add(disqus);
-            }
-            _db.Complete();
-            return RedirectToAction("Tools", new { msg = "Saved" });
-        }
-
         [HttpGet]
 		[Route("profile")]
 		public IActionResult Profile()

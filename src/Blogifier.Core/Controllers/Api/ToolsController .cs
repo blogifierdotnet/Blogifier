@@ -2,17 +2,12 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -20,17 +15,13 @@ namespace Blogifier.Core.Controllers.Api
     [Route("blogifier/api/[controller]")]
     public class ToolsController : Controller
     {
-        private readonly string _theme;
-        private readonly ILogger _logger;
         IUnitOfWork _db;
         IRssService _rss;
 
-        public ToolsController(IUnitOfWork db, IRssService rss, ILogger<AdminController> logger)
+        public ToolsController(IUnitOfWork db, IRssService rss)
         {
             _db = db;
             _rss = rss;
-            _logger = logger;
-            _theme = "~/Views/Blogifier/Admin/" + ApplicationSettings.AdminTheme + "/Tools.cshtml";
         }
 
         // PUT: api/tools/rssimport
@@ -41,17 +32,25 @@ namespace Blogifier.Core.Controllers.Api
             return await _rss.Import(rss, Url.Content("~/"));
         }
 
-        Profile GetProfile()
+        // PUT: api/tools/disqus
+        [HttpPut]
+        [Route("disqus")]
+        public HttpResponseMessage Disqus([FromBody]CustomField disqus)
         {
-            try
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            if (disqus.Id > 0)
             {
-                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                var existing = _db.CustomFields.Single(f => f.Id == disqus.Id);
+                existing.CustomValue = disqus.CustomValue;
             }
-            catch
+            else
             {
-                RedirectToAction("Login", "Account");
+                _db.CustomFields.Add(disqus);
             }
-            return null;
+            _db.Complete();
+
+            response.ReasonPhrase = Constants.ItemSaved;
+            return response;
         }
     }
 }

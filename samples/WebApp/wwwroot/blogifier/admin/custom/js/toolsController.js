@@ -4,15 +4,27 @@
         var data = {
             ProfileId: 1,
             FeedUrl: $('#txtFeedUrl').val(),
-            Domain: 'bbb',
-            SubDomain: 'ccc',
+            Domain: $('#txtDomain').val(),
+            SubDomain: $('#txtSubDomain').val(),
             ImportImages: $('#chkImportImages').is(':checked'),
             ImportAttachements: $('#chkImportAttachements').is(':checked')
         };
-        dataService.put('blogifier/api/tools/rssimport', data, importRssCallback, fail);
+        dataService.put('blogifier/api/tools/rssimport', data, actionCallback, fail);
     }
 
-    function importRssCallback(data) {
+    function updateDisqus() {
+        var data = {
+            CustomKey: $('#DisqusModel_CustomKey').val(),
+            CustomValue: $('#DisqusModel_CustomValue').val(),
+            Id: $('#DisqusModel_Id').val(),
+            ParentId: $('#DisqusModel_ParentId').val(),
+            Title: $('#DisqusModel_Title').val(),
+            CustomType: $('#DisqusModel_CustomType').val()
+        };
+        dataService.put('blogifier/api/tools/disqus', data, actionCallback, fail);
+    }
+
+    function actionCallback(data) {
         var msg = JSON.parse(data);
         if (msg.isSuccessStatusCode) {
             toastr.success(msg.reasonPhrase);
@@ -23,11 +35,11 @@
     }
 
     function fail(data) {
-        var x = data;
         toastr.error('Failed');
     }
 
     return {
-        importRss: importRss
+        importRss: importRss,
+        updateDisqus: updateDisqus
     }
 }(DataService);
