@@ -1,0 +1,106 @@
+﻿@using Blogifier.Core.Common
+@{
+    var showNewItemBtn = ViewContext.RouteData.Values["action"].ToString().ToLower() == "index";
+    //var themeFolder = "embedded/admin/standard";
+    var themeFolder = "blogifier/admin/custom";
+
+    var profileIcon = Model.Profile != null && Model.Profile.IsAdmin ? "glyphicon-king" : "glyphicon-user";
+
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Blogifier</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="~/@themeFolder/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/@themeFolder/css/styles.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div id="wrapper">
+        <div class="header">
+            <div class="dropdown float-left">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-navicon"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @if (Model.BlogExists)
+                    {
+                        <a class="dropdown-item" href="~/admin"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> <span class="nav-label">Posts</span></a>
+                        <a class="dropdown-item" href="~/admin/files"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span class="nav-label">Files</span></a>
+                        <a class="dropdown-item" href="~/admin/tools"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="nav-label">Tools</span></a>
+                        @if (Model.Profile != null && Model.Profile.IsAdmin)
+                        {
+                            <a class="dropdown-item" href="~/admin/settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="nav-label">Settings</span>
+                            </a>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
+
+            <div class="btn-group float-right">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="profile-image" alt="@userName" src="@avatar">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="~/admin/profile"><span class="glyphicon @profileIcon" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
+                    <a class="dropdown-item" href="" onclick="profileLogOut(); return false;"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <span class="nav-label">Logoff</span></a>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="main">
+            <div class="row">
+                <div class="col-2">
+                    <ul>
+                        <li><a href="~/admin/settings/basic">Basic</a></li>
+                        <li><a href="~/admin/settings/general">General</a></li>
+                        <li><a href="~/admin/settings/profile">Profile</a></li>
+                        <li><a href="~/admin/settings/imprt">Import</a></li>
+                    </ul>
+                </div>
+                <div class="col-10">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+
+    <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
+    <script src="~/@themeFolder/js/tether.min.js"></script>
+    <script src="~/@themeFolder/js/bootstrap.min.js"></script>
+    <script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
+    <script src="~/@themeFolder/js/app.js"></script>
+    <script src="~/@themeFolder/js/dataService.js"></script>
+    <script src="~/@themeFolder/js/uploadController.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) {
+            return webRoot + str;
+        };
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>
