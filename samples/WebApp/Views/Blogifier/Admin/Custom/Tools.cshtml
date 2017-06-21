@@ -1,12 +1,17 @@
 ﻿@model Blogifier.Core.Data.Models.AdminToolsModel
+@{
+    //var themeFolder = "embedded/admin/standard";
+    var themeFolder = "blogifier/admin/custom";
+}
 
 <div id="page-content-wrapper">
-                @Html.Partial("RssImportForm", Model.RssImportModel)
-                @Html.Partial("DisqusForm", Model.DisqusModel)
+    @Html.Partial("RssImportForm", Model.RssImportModel)
+    @Html.Partial("DisqusForm", Model.DisqusModel)
 </div>
 @section Scripts{
     @if (!string.IsNullOrEmpty(Context.Request.Query["msg"]))
     {
         <script>toastr.success('@Context.Request.Query["msg"]')</script>
     }
+    <script src="~/@themeFolder/js/toolsController.js"></script>
 }
