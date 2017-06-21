@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Blogifier.Core.Common;
+﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Blogifier.Core.Services.Syndication.Rss
 {
-	public class RssService : IRssService
+    public class RssService : IRssService
     {
         IUnitOfWork _db;
         RssImportModel _model;
@@ -28,33 +29,47 @@ namespace Blogifier.Core.Services.Syndication.Rss
             _logger = new AppLogger(logger);
         }
 
-        public async Task Import(RssImportModel model, string root)
+        public async Task<HttpResponseMessage> Import(RssImportModel model, string root)
         {
-            var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
-            if (blog == null)
-                return;
-
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
             _model = model;
             _root = root;
 
-            var storage = new BlogStorage(blog.Slug);
-            var items = GetFeedItems(model.FeedUrl);
+            if(model == null || string.IsNullOrEmpty(model.FeedUrl))
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = "RSS feed URL is required";
+                return response;
+            }
+
+            var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
+            if (blog == null)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.ReasonPhrase = Constants.ProfileNotFound;
+                return response;
+            }
+
             try
             {
+                var storage = new BlogStorage(blog.Slug);
+                var items = GetFeedItems(model.FeedUrl);
+
                 foreach (var item in items)
                 {
-                    var desc = item.Body.StripHtml();
+                    var content = item.Body.Length > item.Description.Length ? item.Body : item.Description;
+
+                    var desc = content.StripHtml();
                     if (desc.Length > 300)
-                    {
                         desc = desc.Substring(0, 300);
-                    }
+
                     var post = new BlogPost
                     {
                         ProfileId = model.ProfileId,
                         Title = item.Title,
                         Slug = item.Title.ToSlug(),
                         Description = desc,
-                        Content = item.Body,
+                        Content = content,
                         Published = item.PublishDate
                     };
                     if (model.ImportImages)
@@ -67,14 +82,20 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     _db.BlogPosts.Add(post);
                     _db.Complete();
-                    _logger.LogWarning(string.Format("RSS item added : {0}", item.Title));
+                    _logger.LogInformation(string.Format("RSS item added : {0}", item.Title));
 
                     await AddCategories(item, model.ProfileId);
                 }
+                response.ReasonPhrase = string.Format("Imported {0} blog posts", items.Count);
+                return response;
             }
             catch(Exception ex)
             {
                 _logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
+
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.ReasonPhrase = ex.Message;
+                return response;
             }
         }
 
@@ -121,40 +142,33 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
         IList<FeedItem> GetFeedItems(string url)
         {
-            try
+            var client = new HttpClient();
+            var doc = new XDocument();
+
+            _logger.LogInformation("Importing RSS from feed: " + url);
+
+            if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
-                var client = new HttpClient();
-                var doc = new XDocument();
-
-                _logger.LogWarning("Importing RSS from feed: " + url);
-
-                if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                {
-                    var stream = client.GetStreamAsync(url);
-                    doc = XDocument.Load(stream.Result);
-                }
-                else
-                {
-                    doc = XDocument.Load(url);
-                }
-
-                // RSS/Channel/item
-                var entries = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel").Elements().Where(i => i.Name.LocalName == "item")
-                    select new FeedItem
-                    {
-                        Body = item.Elements().First(i => i.Name.LocalName == "description").Value,
-                        Link = new Uri(item.Elements().First(i => i.Name.LocalName == "link").Value),
-                        PublishDate = SystemClock.RssPubishedToDateTime(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
-                        Title = item.Elements().First(i => i.Name.LocalName == "title").Value,
-                        Categories = (from category in item.Elements("category") select category.Value).ToList()
-                    };
-                return entries.ToList();
+                var stream = client.GetStreamAsync(url);
+                doc = XDocument.Load(stream.Result);
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(string.Format("Error importing RSS feed {0} : {1}", url, ex.Message));
-                return new List<FeedItem>();
+                doc = XDocument.Load(url);
             }
+            var ns = XNamespace.Get(@"http://purl.org/rss/1.0/modules/content/");
+            var entries = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel")
+                .Elements().Where(i => i.Name.LocalName == "item")
+                select new FeedItem
+                {
+                    Description = item.Element("description").Value,
+                    Body = item.Element(ns + "encoded") == null ? "" : item.Element(ns + "encoded").Value,
+                    Link = new Uri(item.Element("link").Value),
+                    PublishDate = SystemClock.RssPubishedToDateTime(item.Element("pubDate").Value),
+                    Title = item.Element("title").Value,
+                    Categories = (from category in item.Elements("category") select category.Value).ToList()
+                };
+            return entries.ToList();
         }
 
         async Task ImportImages(BlogPost post, IBlogStorage storage)

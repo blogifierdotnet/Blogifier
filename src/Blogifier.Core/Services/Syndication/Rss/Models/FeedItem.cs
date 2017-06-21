@@ -6,6 +6,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
     public class FeedItem
     {
         public Author Author { get; set; }
+        public string Description { get; set; }
         public string Body { get; set; }
         public ICollection<string> Categories { get; set; } = new List<string>();
         public Uri Comments { get; set; }

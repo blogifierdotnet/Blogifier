@@ -275,7 +275,7 @@ div.post-excerpt {
 }
 
 .asset-gallery img {
-    max-height: 140px;
+    width: 100%;
 }
 
 .asset-gallery a {
@@ -285,6 +285,11 @@ div.post-excerpt {
     height: 140px;
     overflow: hidden;
     margin: 2px;
+    line-height: 140px;
+}
+
+.asset-gallery a img {
+    vertical-align: middle;
 }
     
 #king {

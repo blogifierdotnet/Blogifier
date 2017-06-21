@@ -13,6 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\blogifier\admin\custom\js\toolsController.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\blogifier\admin\custom\js\assetController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
