@@ -88,6 +88,14 @@
         function getUrl(str) {
             return webRoot + str;
         };
+
+        $('.post-list [data-toggle="tooltip"]').tooltip({
+            offset: '-15px 0',
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+
     </script>
     @RenderSection("Scripts", false)
 </body>

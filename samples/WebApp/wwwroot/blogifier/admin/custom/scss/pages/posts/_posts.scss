@@ -1,1 +1,58 @@
-﻿
+﻿.post-list {
+    .post-item {
+        position: relative;
+        padding: 0;
+
+        &-link {
+            display: block;
+            height: 100%;
+            height: 3.5rem;
+            line-height: 3.5rem;
+            padding-left: 1rem;
+            width: 100%;
+        }
+
+        &-info {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 3.5rem;
+            vertical-align: top;
+            display: table;
+
+            button, a, span {
+                display: table-cell;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                border: none;
+                min-width: 3.5rem;
+                line-height: 3.5rem;
+                text-align: center;
+                background: none;
+            }
+
+            button, a {
+                cursor: pointer;
+
+                &:hover {
+                    i {
+                        color: #000;
+                    }
+                }
+            }
+
+            i {
+                color: $color-gray;
+            }
+        }
+    }
+}
+
+.tooltip-inner {
+    text-transform: uppercase;
+    font-size: 10px;
+    padding: 3px 10px 4px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}

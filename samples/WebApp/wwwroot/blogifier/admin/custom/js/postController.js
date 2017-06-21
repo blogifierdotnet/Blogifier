@@ -23,25 +23,21 @@
         $.each(posts, function (index) {
             var post = posts[index];
             var draft = post.published.startsWith('0001') ? 'draft' : '';
-            var anc = '<a class="post-list-title" id="post-title-' + post.blogPostId + '" href="" onclick="postController.loadPostEdit(' + post.blogPostId + '); return false;">';
-            anc += '<h4>' + post.title + '</h4>';
-            anc += '<div class="post-excerpt">' + post.content + '</div>';
-            anc += '</a>';
 
-            anc += '<div class="post-footer">';          
-            anc += '<span class="pull-left clock">' + getPubDate(post.published) + '</span>';
-            anc += '<div id="post-footer-actions" class="btn-group pull-right">';
-            anc += '<a href="' + webRoot + 'blog/' + post.slug + '" class="btn btn-default btn-xs" title="View" target="_blank">' + post.postViews + ' views</a>';
+            var anc = ' <a href="#" class="post-item-link" id="post-title-' + post.blogPostId + '" onclick="postController.loadPostEdit(' + post.blogPostId + '); return false;">' + post.title + '</a>' +
+                '<div class="post-item-info">' +
+                '<span>' + getPubDate(post.published) + '</span>' +
+                '<a href="' + webRoot + 'blog/' + post.slug + '" data-toggle="tooltip" title="' + post.postViews + ' views" target="_blank"><i class="fa fa-eye"></i></a>';
             if (draft === 'draft') {
-                anc += '<button class="btn btn-primary btn-xs" title="Publish" onclick="return postController.publish(' + post.blogPostId + ')"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></button>';
+                anc += '<button data-toggle="tooltip" title="Publish" onclick="return postController.publish(' + post.blogPostId + ')"><i class="fa fa-check"></i></button>';
             }
             else {
-                anc += '<button class="btn btn-default btn-xs" title="Unpublish" onclick="return postController.unpublish(' + post.blogPostId + ')"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></button>';
+                anc += '<button data-toggle="tooltip" title="Unpublish" onclick="return postController.unpublish(' + post.blogPostId + ')"><i class="fa fa-archive"></i></button>';
             }
-            anc += '<button class="btn btn-default btn-xs" title="Delete" onclick="return postController.removePost(' + post.blogPostId + ')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-            anc += '</div></div>';
+            anc += '<button data-toggle="tooltip" title="Delete" onclick="return postController.removePost(' + post.blogPostId + ')"><i class="fa fa-trash"></i></button>';
+            anc += ' </div>';
 
-            var li = '<li id="post-' + post.blogPostId + '" class="list-group-item ' + draft + '">' + anc + '</li>';
+            var li = '<li id="post-' + post.blogPostId + '" class="list-group-item post-item ' + draft + '">' + anc + '</li>';
             $("#admin-posts").append(li);
         });
         pager(data.pager);
@@ -279,7 +275,7 @@
     }
 }(DataService, filePickerController);
 
-document.addEventListener("DOMContentLoaded", function (event) { 
+document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({
         selector: '#txtContent',
         plugins: [
