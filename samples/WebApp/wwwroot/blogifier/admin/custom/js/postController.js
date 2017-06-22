@@ -76,11 +76,11 @@
         $('#post-edit-actions').empty();
         var btns = '';
         if (current.mode === 'view') {
-            btns += '<button class="btn btn-primary" title="Add" onclick="return postController.newPost()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</button>';
+            btns += '<button class="btn btn-primary" title="New Post" onclick="return postController.newPost()">New</button>';
         }
         else {
-            btns += '<button class="btn btn-default" title="Cancel" onclick="return postController.cancel()">Close</button>';
-            btns += '<button class="btn btn-primary" title="Save" onclick="return postController.savePost(' + current.post + ')">Save</button>';
+            btns += '<button class="btn btn-success" title="Save" onclick="return postController.savePost(' + current.post + ')">Save</button>';
+            btns += '<button class="btn btn-secondary" title="Cancel" onclick="return postController.cancel()">Cancel</button>';
         }
         $('#post-edit-actions').append(btns);
     }

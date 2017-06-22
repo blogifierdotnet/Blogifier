@@ -3,4 +3,9 @@
     color: #666;
     cursor: default;
     background-color:$color-bg;
+    overflow-y:scroll;
+}
+.container {
+    width:100%;
+    max-width:75rem;
 }

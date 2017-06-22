@@ -2,44 +2,52 @@
     background-color: #fff;
     position: relative;
     height: 3.5rem;
-    padding:.75rem;
+    margin-bottom:3rem;
+    .container {
+        height: 3.5rem;
+        position: relative;
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
 
     .brand {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        font-weight:$font-weight-medium;
-        a{
-            color:#000;
+        font-weight: $font-weight-medium;
+
+        a {
+            color: #000;
         }
     }
 
     .profile-image {
-        width:2rem;
-        height:2rem;
-        border-radius:100%;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 100%;
     }
 
 
-    button{
-        padding:0;
-        border:0;
-        height:2rem;
-        width:2rem;
-        border-radius:0;
-        display:block;
-        outline:none !important;
-        box-shadow:none !important;
-        cursor:pointer;
-        &::after{
-            display:none;
+    button {
+        padding: 0;
+        border: 0;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 0;
+        display: block;
+        outline: none !important;
+        box-shadow: none !important;
+        cursor: pointer;
+
+        &::after {
+            display: none;
         }
 
         .fa-navicon {
-            font-size:1.5rem;
-            display:block;
-            line-height:2rem;
+            font-size: 1.5rem;
+            display: block;
+            line-height: 2rem;
         }
     }
 }
