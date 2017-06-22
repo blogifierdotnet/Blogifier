@@ -3,21 +3,20 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core.Controllers
 {
-    [Route("admin/settings")]
+    [Route("admin/[controller]")]
 	public class SettingsController : Controller
 	{
 		IUnitOfWork _db;
-        private readonly string _themePattern = "~/Views/Blogifier/Admin/{0}/Settings/";
         string _theme;
 
-		public SettingsController(IUnitOfWork db, ILogger<AuthorController> logger)
+		public SettingsController(IUnitOfWork db)
 		{
 			_db = db;
-			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
+			_theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
+                ApplicationSettings.BlogTheme);
         }
 
         [Route("basic")]
