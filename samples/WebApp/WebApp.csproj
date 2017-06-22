@@ -22,6 +22,7 @@
     <Content Include="wwwroot\blogifier\admin\custom\js\filePickerController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="wwwroot\blogifier\admin\custom\scss\pages\assets\_assets.scss" />
     <Content Include="wwwroot\blogifier\blog\custom\app.js" />
     <Content Include="wwwroot\blogifier\blog\custom\app.min.js" />
     <Content Include="wwwroot\blogifier\blog\custom\css\style.css" />

@@ -44,14 +44,11 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         @if (Model.BlogExists)
                         {
-                            <a class="dropdown-item" href="~/admin"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> <span class="nav-label">Posts</span></a>
-                            <a class="dropdown-item" href="~/admin/files"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> <span class="nav-label">Files</span></a>
-                            <a class="dropdown-item" href="~/admin/tools"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <span class="nav-label">Tools</span></a>
+                            <a class="dropdown-item" href="~/admin">Posts</a>
+                            <a class="dropdown-item" href="~/admin/files">Files</a>
                             @if (Model.Profile != null && Model.Profile.IsAdmin)
                             {
-                                <a class="dropdown-item" href="~/admin/settings">
-                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <span class="nav-label">Settings</span>
-                                </a>
+                                <a class="dropdown-item" href="~/admin/settings/basic">Settings</a>
                             }
                         }
                     </div>
@@ -71,16 +68,16 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-2">
+            <div class="settings-page">
+                <div class="settings-page-sidebar">
                     <ul>
-                        <li><a href="~/admin/settings/basic">Basic</a></li>
-                        <li><a href="~/admin/settings/general">General</a></li>
-                        <li><a href="~/admin/settings/profile">Profile</a></li>
-                        <li><a href="~/admin/settings/import">Import</a></li>
+                        <li class="basic"><a href="~/admin/settings/basic">Basic</a></li>
+                        <li class="application"><a href="~/admin/settings/application">Application</a></li>
+                        <li class="profile"><a href="~/admin/settings/profile">Profile</a></li>
+                        <li class="import"><a href="~/admin/settings/import">Import</a></li>
                     </ul>
                 </div>
-                <div class="col-10">
+                <div class="settings-page-content">
                     @RenderBody()
                 </div>
             </div>
