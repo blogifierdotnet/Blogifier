@@ -32,19 +32,19 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<a href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-6 col-md-4 col-lg-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\'); return false;"><img src="' +
-                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
+                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
             }
             else {
                 // attachement
-                tag = '<a href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-6 col-md-4 col-lg-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
-                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
+                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><div>';
             }
             $("#assetList").append(tag);
         });
-        var btn = '<button class="btn btn-primary pull-right" title="Add" onclick="return assetController.clickUpload()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New</button>';
+        var btn = '<button class="btn btn-primary" onclick="return assetController.clickUpload()">Upload</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
         pager(data.pager);
@@ -80,18 +80,26 @@
         $('#assetList').empty();
         $('.pager').empty();
         var url = data.assetType === 0 ? data.url : webRoot + data.image;
-        var tag = '<h4>' + data.title + '</h4>';
-        tag += '<p>Url: ' + data.url + '</p>';
+
+
+        var tag = '<div class="col-sm-4 col-md-4 col-lg-3"><div class="asset-edit-img"><img src="' + url + '"/></div></div>';
+        tag += '<div class="col-sm-8 col-md-8 col-lg-9">';
+        tag += '<h4>' + data.title + '</h4>';
+        tag += '<hr>';
+        tag += '<p>URL: <a href="' + data.url + '" target="_blank">' + data.url + '</a></p>';
         tag += '<p>Size: ' + bytesToSize(data.length) + '</p>';
         if (data.assetType === 1) {
             tag += '<p>Download count: ' + data.downloadCount + '</p>';
         }
         tag += '<p>Last updated: ' + getDate(data.lastUpdated) + '</p>';
-        tag += '<img src="' + url + '" style="max-width: 100%" />';
+        tag += '</div>';
+
+
+        
         $('#assetEdit').append(tag);
 
-        var btn = '<button class="btn btn-default" title="Close" onclick="return assetController.loadFileManager()">Close</button>';
-        btn += '<button class="btn btn-danger" title="Delete" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
+        var btn = '<button class="btn btn-danger" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
+        btn += '<button class="btn btn-secondary" onclick="return assetController.loadFileManager()">Cancel</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
     }
