@@ -1,0 +1,32 @@
+﻿<div class="header">
+    <div class="container">
+        <div class="dropdown float-left">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-navicon"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @if (Model.BlogExists)
+                {
+                    <a class="dropdown-item" href="~/admin">Posts</a>
+                            <a class="dropdown-item" href="~/admin/files">Files</a>
+                            @if (Model.Profile != null && Model.Profile.IsAdmin)
+                            {
+                                <a class="dropdown-item" href="~/admin/settings/basic">Settings</a>
+                            }
+                }
+            </div>
+        </div>
+        <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
+
+        <div class="btn-group float-right">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="profile-image" alt="@userName" src="@avatar">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="~/admin/profile"><span class="glyphicon @profileIcon" aria-hidden="true"></span> <span class="nav-label">Profile</span></a>
+                <a class="dropdown-item" href="" onclick="profileLogOut(); return false;"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> <span class="nav-label">Logoff</span></a>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -18,6 +18,9 @@
 // Layout
 @import "layout/header";
 @import "layout/main"; 
-
+ 
 // Pages
-@import "pages/posts/_posts";
+@import "pages/posts/posts";
+@import "pages/assets/assets";
+@import "pages/settings/settings";
+ 

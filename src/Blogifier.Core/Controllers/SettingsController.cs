@@ -25,10 +25,10 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Basic.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
-        [Route("general")]
-        public IActionResult General()
+        [Route("application")]
+        public IActionResult Application()
         {
-            return View(_theme + "General.cshtml", new AdminBaseModel { Profile = GetProfile() });
+            return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
         [Route("profile")]
