@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\blogifier\admin\custom\img\avatar.jpg" />
+    <Content Include="wwwroot\blogifier\admin\custom\img\images.jpg" />
     <Content Include="wwwroot\blogifier\admin\custom\js\toolsController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

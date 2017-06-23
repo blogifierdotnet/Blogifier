@@ -56,12 +56,13 @@
 
     function loadPostEditCallback(data) {
         $('#edit-categories').empty();
-        var catStr = '<span class="badge clickable" title="Add category" onclick="return postController.addCategory()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span>';
+        //var catStr = '<span class="btn btn-success clickable" title="Add category" onclick="return postController.addCategory()"><span class="fa fa-plus" aria-hidden="true"></span></span>';
+        var catStr = '';
         var cats = data.categories;
         if (cats === null) { cats = []; }
         $.each(cats, function (index) {
             var cat = cats[index];
-            catStr += '<span class="badge clickable" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')">' + cat.text + ' <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>';
+            catStr += '<li>'+ cat.text +'<button type="button" class="clickable float-right" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')"><i class="fa fa-remove"></i></button></li>';
         });
         $('#edit-categories').append(catStr);
         $('#txtPostTitle').val(data.title);

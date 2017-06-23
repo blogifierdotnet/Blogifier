@@ -22,6 +22,8 @@
             padding: 0;
 
             li {
+                text-transform: uppercase;
+
                 &.active {
                     background: #fff;
 
@@ -46,5 +48,3 @@
         padding: 3rem;
     }
 }
-
-

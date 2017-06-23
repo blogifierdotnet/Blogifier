@@ -25,40 +25,39 @@
                 </div>
                 <div class="col-3">
                     <div id="post-image" class="form-group" style="display: none">
-                        <input type="text" class="form-control" id="txtPostImage" placeholder="Post image" readonly />
-                        <button type="button" class="btn btn-primary" onclick="return postController.openFilePicker();">
-                            <i class="fa fa-upload"></i>
+                        <!-- display none when we did upload a photo -->
+                        <button type="button" class="post-image-upload" onclick="return postController.openFilePicker();">
+                            <i class="fa fa-photo"></i><span>Add Post Cover</span>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="return postController.resetPostImage();">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                        <!-- display none when we didn't upload a photo -->
+                        <div class="post-image-uploaded">
+                            @*<input type="text" class="form-control" id="txtPostImage" placeholder="Post image" readonly />*@
+                            <img src="~/blogifier/admin/custom/img/images.jpg" />
+                            <div class="post-image-actions btn-group">
+                                <button type="button" class="btn"><i class="fa fa-link"></i></button>
+                                <button type="button" class="btn" onclick="return postController.resetPostImage();">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div id="edit-categories"></div>
+
+                    <div class="post-category">
+
+                       <ul id="edit-categories"></ul>
+                        <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                            <div class="input-group">
+                                <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary" onclick="postController.saveCategory()">Save</button>
+                                </span>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div class="modal inmodal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Add category</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-                    <div class="form-group">
-                        <input type="text" id="txtCategory" class="form-control" style="width: 100% !important" placeholder="Type new or existing category..." />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="postController.saveCategory()">Save</button>
-            </div>
-        </div>
     </div>
 </div>
 
