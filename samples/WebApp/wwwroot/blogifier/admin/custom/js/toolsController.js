@@ -4,16 +4,20 @@
         var data = {
             ProfileId: 1,
             FeedUrl: $('#txtFeedUrl').val(),
-            Domain: 'bbb',
-            SubDomain: 'ccc',
+            Domain: $('#txtDomain').val(),
+            SubDomain: $('#txtSubDomain').val(),
             ImportImages: $('#chkImportImages').is(':checked'),
             ImportAttachements: $('#chkImportAttachements').is(':checked')
         };
+        $('.spin-icon').fadeIn();
+        $('#btnImport').fadeOut();
         dataService.put('blogifier/api/tools/rssimport', data, importRssCallback, fail);
     }
 
     function importRssCallback(data) {
         var msg = JSON.parse(data);
+        $('.spin-icon').fadeOut();
+        $('#btnImport').fadeIn();
         if (msg.isSuccessStatusCode) {
             toastr.success(msg.reasonPhrase);
         }
@@ -23,7 +27,6 @@
     }
 
     function fail(data) {
-        var x = data;
         toastr.error('Failed');
     }
 
