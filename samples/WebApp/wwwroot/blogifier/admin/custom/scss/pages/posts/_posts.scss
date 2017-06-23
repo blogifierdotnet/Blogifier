@@ -3,14 +3,15 @@
     .btn {
         margin-right:.5rem;
     }
-} 
- 
+}
+
 .post-list {
 
     .post-item {
         position: relative;
         padding: 0;
-        border:none;
+        border: none;
+        margin-bottom: 1px;
 
         &-link {
             display: block;
@@ -53,6 +54,10 @@
 
             i {
                 color: $color-gray;
+            }
+
+            span {
+                font-size: .75rem;
             }
         }
     }

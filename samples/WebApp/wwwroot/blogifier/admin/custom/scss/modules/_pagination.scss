@@ -1,32 +1,54 @@
-﻿.pagination {
+﻿.pagination-custom {
+    text-align: center;
+    @include unstyled();
+    margin-top: 2rem;
+    border-radius: 3px;
+
     li {
-        @include user-select(none);
+        background: #fff;
+        display: inline-block;
+        font-size: 0;
+        margin-right: 1px;
 
-        a {
-            color: #888;
+        &:last-child {
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 3px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
 
-            i {
-                line-height: 20px;
+        &:first-child {
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-bottom-left-radius: 3px;
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-bottomleft: 3px;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .item-count {
+            position: relative;
+            top: -1px;
+        }
+
+        &.disabled {
+            a {
+                color: $color-gray !important;
+                cursor: default;
             }
-
-            cursor: pointer;
         }
     }
 
-    &.disabled {
-        a {
-            &:hover {
-                background-color: #fff !important;
-            }
-        }
-    }
+    a {
+        font-size: .875rem;
+        display: block;
+        height: 100%;
+        padding: .5rem .75rem;
 
-    .active {
-        a {
-            z-index: 4;
-            border-color: lighten($color-base, 25%) !important;
-            background-color: lighten($color-base, 25%) !important;
-            color: #fff !important;
+        &:hover {
+            color: #000;
         }
     }
 }

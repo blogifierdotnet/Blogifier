@@ -225,19 +225,19 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
-        var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
+        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
         if (pg.showOlder === true) {
-            older = '<li class="previous" onclick="return postController.loadPage(' + pg.older + ')"><a href="">← Older</a></li>';
+            older = '<li onclick="return postController.loadPage(' + pg.older + ')"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li class="next" onclick="return postController.loadPage(' + pg.newer + ')"><a href="#">Newer →</a></li>';
+            newer = '<li onclick="return postController.loadPage(' + pg.newer + ')"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
         }
-        $('.pager').empty();
+        $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
-            $('.pager').append(older);
-            $('.pager').append('<li class="counter">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</li>');
-            $('.pager').append(newer);
+            $('.pagination-custom').append(older);
+            $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
+            $('.pagination-custom').append(newer);
         }
     }
 
