@@ -1,4 +1,4 @@
-﻿var postController = function (dataService, filePickerController) {
+﻿var editorController = function (dataService, filePickerController) {
     var current = {
         page: 1,
         post: 0,
@@ -293,5 +293,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
         paste_data_images: true
     });
 
-    postController.loadPage(1);
+    //postsController.loadPage(1);
 });

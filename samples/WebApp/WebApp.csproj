@@ -15,6 +15,11 @@
   <ItemGroup>
     <Content Include="wwwroot\blogifier\admin\custom\img\avatar.jpg" />
     <Content Include="wwwroot\blogifier\admin\custom\img\images.jpg" />
+    <Content Include="wwwroot\blogifier\admin\custom\js\editorController.js" />
+    <Content Include="wwwroot\blogifier\admin\custom\js\postController - Copy.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\admin\custom\js\postsController.js" />
     <Content Include="wwwroot\blogifier\admin\custom\js\toolsController.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -70,6 +75,7 @@
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

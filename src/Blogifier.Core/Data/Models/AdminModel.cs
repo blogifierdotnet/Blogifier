@@ -13,12 +13,13 @@ namespace Blogifier.Core.Data.Models
 		public bool BlogExists { get { return Profile != null; }  }
     }
 
-	public class AdminPostsModel : AdminBaseModel
-	{
+    public class AdminEditorModel : AdminBaseModel
+    {
+        public BlogPost  BlogPost { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 
-	public class AdminProfileModel : AdminBaseModel
+    public class AdminProfileModel : AdminBaseModel
 	{
 		public IList<SelectListItem> BlogThemes { get; set; }
     }

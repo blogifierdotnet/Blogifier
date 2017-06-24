@@ -1,0 +1,6 @@
+﻿var postsController = function () {
+
+    return {
+
+    }
+}();

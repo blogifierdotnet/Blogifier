@@ -1,7 +1,45 @@
 ﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+@using Blogifier.Core.Common
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_LayoutSettings.cshtml";
 }
 <div id="page-content-wrapper">
-    <h1>Application</h1>
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>WebRootPath</td>
+                <td>@ApplicationSettings.WebRootPath</td>
+            </tr>
+            <tr>
+                <td>ContentRootPath</td>
+                <td>@ApplicationSettings.ContentRootPath</td>
+            </tr>
+            <tr>
+                <td>Operating System</td>
+                <td>@ApplicationSettings.OSDescription</td>
+            </tr>
+            <tr>
+                <td>Add ContentType headers</td>
+                <td>@ApplicationSettings.AddContentTypeHeaders</td>
+            </tr>
+            <tr>
+                <td>Add Content Length Headers</td>
+                <td>@ApplicationSettings.AddContentLengthHeaders</td>
+            </tr>
+            <tr>
+                <td>Prepend File Provider</td>
+                <td>@ApplicationSettings.PrependFileProvider</td>
+            </tr>
+            <tr>
+                <td>Version</td>
+                <td>@ApplicationSettings.Version</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
