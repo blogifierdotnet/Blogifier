@@ -1,125 +1,28 @@
 ﻿var editorController = function (dataService, filePickerController) {
-    var current = {
-        page: 1,
-        post: 0,
-        mode: 'view',
-        published: false
-    }
-
-    function loadPage(page) {
-        current.page = page;
-        current.post = 0;
-        reload();
-        return false;
-    }
-
-    function reload() {
-        dataService.get('blogifier/api/posts/' + current.page, loadList, fail);
-    }
-
-    function loadList(data) {
-        $('#admin-posts').empty();
-        var posts = data.blogPosts;
-        $.each(posts, function (index) {
-            var post = posts[index];
-            var draft = post.published.startsWith('0001') ? 'draft' : '';
-
-            var anc = ' <a href="#" class="post-item-link" id="post-title-' + post.blogPostId + '" onclick="postController.loadPostEdit(' + post.blogPostId + '); return false;">' + post.title + '</a>' +
-                '<div class="post-item-info">' +
-                '<span>' + getPubDate(post.published) + '</span>' +
-                '<a href="' + webRoot + 'blog/' + post.slug + '" data-toggle="tooltip" title="' + post.postViews + ' views" target="_blank"><i class="fa fa-eye"></i></a>';
-            if (draft === 'draft') {
-                anc += '<button data-toggle="tooltip" title="Publish" onclick="return postController.publish(' + post.blogPostId + ')"><i class="fa fa-check"></i></button>';
-            }
-            else {
-                anc += '<button data-toggle="tooltip" title="Unpublish" onclick="return postController.unpublish(' + post.blogPostId + ')"><i class="fa fa-archive"></i></button>';
-            }
-            anc += '<button data-toggle="tooltip" title="Delete" onclick="return postController.removePost(' + post.blogPostId + ')"><i class="fa fa-trash"></i></button>';
-            anc += ' </div>';
-
-            var li = '<li id="post-' + post.blogPostId + '" class="list-group-item post-item ' + draft + '">' + anc + '</li>';
-            $("#admin-posts").append(li);
-        });
-        pager(data.pager);
-        loadButtons();
-    }
 
     function loadPostEdit(postId) {
-        $('#admin-posts li').removeClass('active');
-        var li = $('#post-' + postId);
-        if (li) {
-            li.addClass('active');
-        }
-        current.post = postId;
         dataService.get('blogifier/api/posts/post/' + postId, loadPostEditCallback, fail);
     }
 
     function loadPostEditCallback(data) {
-        $('#edit-categories').empty();
-        //var catStr = '<span class="btn btn-success clickable" title="Add category" onclick="return postController.addCategory()"><span class="fa fa-plus" aria-hidden="true"></span></span>';
-        var catStr = '';
-        var cats = data.categories;
-        if (cats === null) { cats = []; }
-        $.each(cats, function (index) {
-            var cat = cats[index];
-            catStr += '<li>'+ cat.text +'<button type="button" class="clickable float-right" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')"><i class="fa fa-remove"></i></button></li>';
-        });
-        $('#edit-categories').append(catStr);
+        //$('#edit-categories').empty();
+        ////var catStr = '<span class="btn btn-success clickable" title="Add category" onclick="return postController.addCategory()"><span class="fa fa-plus" aria-hidden="true"></span></span>';
+        //var catStr = '';
+        //var cats = data.categories;
+        //if (cats === null) { cats = []; }
+        //$.each(cats, function (index) {
+        //    var cat = cats[index];
+        //    catStr += '<li>'+ cat.text +'<button type="button" class="clickable float-right" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')"><i class="fa fa-remove"></i></button></li>';
+        //});
+        //$('#edit-categories').append(catStr);
         $('#txtPostTitle').val(data.title);
         $('#txtPostImage').val(data.image);
         tinyMCE.activeEditor.setContent(data.content);
-        current.published = data.published;
-        openEditor();
-        loadButtons();
-    }
-
-    function loadButtons() {
-        $('#post-edit-actions').empty();
-        var btns = '';
-        if (current.mode === 'view') {
-            btns += '<button class="btn btn-primary" title="New Post" onclick="return postController.newPost()">New</button>';
-        }
-        else {
-            btns += '<button class="btn btn-success" title="Save" onclick="return postController.savePost(' + current.post + ')">Save</button>';
-            btns += '<button class="btn btn-secondary" title="Cancel" onclick="return postController.cancel()">Cancel</button>';
-        }
-        $('#post-edit-actions').append(btns);
-    }
-
-    function newPost() {
-        current.post = 0;
-        current.mode = 'edit';
-        loadButtons();
-        openEditor();
-        $('#edit-categories').empty();
-        $('#txtPostTitle').val('');
-        $('#txtPostTitle').focus();
-        tinyMCE.activeEditor.setContent('');
-        return false;
-    }
-
-    function cancel() {
-        closeEditor();
-        reload();
-    }
-
-    function openEditor() {
-        current.mode = 'edit';
-        $('#post-list').hide();
-        $('#post-edit').show();
-        if (current.post > 0) {
-            $('#post-image').show();
-        }
-    }
-    function closeEditor() {
-        current.mode = 'view';
-        $('#post-list').show();
-        $('#post-edit').hide();
     }
 
     function savePost() {
         var obj = {
-            Id: current.post,
+            Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
             Content: tinyMCE.activeEditor.getContent()
         }
@@ -135,116 +38,113 @@
     }
 
     function savePostCallback(data) {
-        var post = JSON.parse(data);
-        current.post = post.id;
-        current.published = post.published;
+        // var post = JSON.parse(data);
         toastr.success('Saved');
-        loadPostEditCallback(post);
     }
 
-    function publish(id) {
-        dataService.put("blogifier/api/posts/publish/" + id, null, publishCallback, fail);
-    }
+    //function publish(id) {
+    //    dataService.put("blogifier/api/posts/publish/" + id, null, publishCallback, fail);
+    //}
 
-    function unpublish(id) {
-        dataService.put("blogifier/api/posts/unpublish/" + id, null, publishCallback, fail);
-    }
+    //function unpublish(id) {
+    //    dataService.put("blogifier/api/posts/unpublish/" + id, null, publishCallback, fail);
+    //}
 
-    function removePost(postId) {
-        dataService.remove('blogifier/api/posts/' + postId, removeCallback, fail);
-    }
+    //function removePost(postId) {
+    //    dataService.remove('blogifier/api/posts/' + postId, removeCallback, fail);
+    //}
 
-    function publishCallback() {
-        toastr.success('Updated');
-        reload();
-    }
+    //function publishCallback() {
+    //    toastr.success('Updated');
+    //    reload();
+    //}
 
-    function removeCallback() {
-        toastr.success('Removed');
-        current.post = 0;
-        reload();
-    }
+    //function removeCallback() {
+    //    toastr.success('Removed');
+    //    current.post = 0;
+    //    reload();
+    //}
 
-    function addImage() {
-        toastr.warning('Not implemented');
-    }
+    //function addImage() {
+    //    toastr.warning('Not implemented');
+    //}
 
     // categories
 
-    function addCategory() {
-        dataService.get('blogifier/api/categories/blogcategories', loadCategories, fail);
-        return false;
-    }
+    //function addCategory() {
+    //    dataService.get('blogifier/api/categories/blogcategories', loadCategories, fail);
+    //    return false;
+    //}
 
-    function loadCategories(data) {
-        var options = { data: data };
-        $("#modalAddCategory").modal();
-        $("#txtCategory").easyAutocomplete(options);
-        $('div.easy-autocomplete').removeAttr('style');
-    }
+    //function loadCategories(data) {
+    //    var options = { data: data };
+    //    $("#modalAddCategory").modal();
+    //    $("#txtCategory").easyAutocomplete(options);
+    //    $('div.easy-autocomplete').removeAttr('style');
+    //}
 
-    function saveCategory() {
-        var obj = { Title: $("#txtCategory").val(), PostId: current.post }
-        dataService.put("blogifier/api/categories/addcategorytopost", obj, saveCategoryCallback, fail);
-    }
+    //function saveCategory() {
+    //    var obj = { Title: $("#txtCategory").val(), PostId: current.post }
+    //    dataService.put("blogifier/api/categories/addcategorytopost", obj, saveCategoryCallback, fail);
+    //}
 
-    function saveCategoryCallback() {
-        var cat = $("#txtCategory").val();
-        toastr.success('Saved');
-        $("#modalAddCategory").modal('hide');
-        $("#txtCategory").val('');
-        loadPostEdit(current.post);
-    }
+    //function saveCategoryCallback() {
+    //    var cat = $("#txtCategory").val();
+    //    toastr.success('Saved');
+    //    $("#modalAddCategory").modal('hide');
+    //    $("#txtCategory").val('');
+    //    loadPostEdit(current.post);
+    //}
 
-    function removeCategory(postId, catId) {
-        var obj = { CategoryId: catId, PostId: postId }
-        dataService.put("blogifier/api/categories/removecategoryfrompost", obj, removeCategoryCallback, fail);
-    }
+    //function removeCategory(postId, catId) {
+    //    var obj = { CategoryId: catId, PostId: postId }
+    //    dataService.put("blogifier/api/categories/removecategoryfrompost", obj, removeCategoryCallback, fail);
+    //}
 
-    function removeCategoryCallback(data) {
-        toastr.success('Saved');
-        loadPostEdit(current.post);
-    }
+    //function removeCategoryCallback(data) {
+    //    toastr.success('Saved');
+    //    loadPostEdit(current.post);
+    //}
 
     // miscellaneous
 
-    function openFilePicker() {
-        filePickerController.open('postImage', current.post);
-    }
+    //function openFilePicker() {
+    //    filePickerController.open('postImage', current.post);
+    //}
 
-    function resetPostImage() {
-        dataService.remove('blogifier/api/assets/resetpostimage/' + current.post, imgResetCallback, fail);
-    }
+    //function resetPostImage() {
+    //    dataService.remove('blogifier/api/assets/resetpostimage/' + current.post, imgResetCallback, fail);
+    //}
 
-    function imgResetCallback(data) {
-        toastr.success('Updated');
-        loadPostEdit(current.post);
-    }
+    //function imgResetCallback(data) {
+    //    toastr.success('Updated');
+    //    loadPostEdit(current.post);
+    //}
 
-    function pager(pg) {
-        var lastPost = pg.currentPage * pg.itemsPerPage;
-        var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
-        if (lastPost > pg.total) { lastPost = pg.total; }
+    //function pager(pg) {
+    //    var lastPost = pg.currentPage * pg.itemsPerPage;
+    //    var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
+    //    if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
-        if (pg.showOlder === true) {
-            older = '<li onclick="return postController.loadPage(' + pg.older + ')"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-        }
-        if (pg.showNewer === true) {
-            newer = '<li onclick="return postController.loadPage(' + pg.newer + ')"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
-        }
-        $('.pagination-custom').empty();
-        if (pg.showNewer === true || pg.showOlder === true) {
-            $('.pagination-custom').append(older);
-            $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
-            $('.pagination-custom').append(newer);
-        }
-    }
+    //    var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+    //    var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
+    //    if (pg.showOlder === true) {
+    //        older = '<li onclick="return postController.loadPage(' + pg.older + ')"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+    //    }
+    //    if (pg.showNewer === true) {
+    //        newer = '<li onclick="return postController.loadPage(' + pg.newer + ')"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
+    //    }
+    //    $('.pagination-custom').empty();
+    //    if (pg.showNewer === true || pg.showOlder === true) {
+    //        $('.pagination-custom').append(older);
+    //        $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
+    //        $('.pagination-custom').append(newer);
+    //    }
+    //}
 
-    function getPubDate(date) {
-        return date.startsWith('0001') ? 'DRAFT' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
-    }
+    //function getPubDate(date) {
+    //    return date.startsWith('0001') ? 'DRAFT' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
+    //}
 
     function fail(jqXHR, exception) {
         var msg = '';
@@ -259,20 +159,20 @@
     }
 
     return {
-        loadPage: loadPage,
+        //loadPage: loadPage,
         loadPostEdit: loadPostEdit,
-        newPost: newPost,
-        savePost: savePost,
-        removePost: removePost,
-        publish: publish,
-        unpublish: unpublish,
-        addImage: addImage,
-        addCategory: addCategory,
-        saveCategory: saveCategory,
-        removeCategory: removeCategory,
-        openFilePicker: openFilePicker,
-        resetPostImage: resetPostImage,
-        cancel: cancel
+        //newPost: newPost,
+        savePost: savePost
+        //removePost: removePost,
+        //publish: publish,
+        //unpublish: unpublish,
+        //addImage: addImage,
+        //addCategory: addCategory,
+        //saveCategory: saveCategory,
+        //removeCategory: removeCategory,
+        //openFilePicker: openFilePicker,
+        //resetPostImage: resetPostImage,
+        //cancel: cancel
     }
 }(DataService, filePickerController);
 
@@ -292,6 +192,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         browser_spellcheck: true,
         paste_data_images: true
     });
-
-    //postsController.loadPage(1);
+    
+    //editorController.loadPostEdit(1);
 });

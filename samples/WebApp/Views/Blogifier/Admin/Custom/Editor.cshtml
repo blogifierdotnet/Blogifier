@@ -10,15 +10,21 @@
 <div id="page-content-wrapper">
     <div id="post-edit" class="post-edit">
 
+        <div class="page-toolbar">
+            <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-success">Save</button>
+            <a href="~/admin" class="btn btn-secondary">Cancel</a>
+        </div>
+
         <div class="row">
             <div class="col-9">
                 <form id="frmEditor" style="height:100%;">
                     <div class="form-group">
-                        <input id="txtPostTitle" class="form-control" placeholder="Post title..." />
+                        <input id="txtPostTitle" class="form-control" value="@Model.BlogPost.Title" placeholder="Post title..." />
                     </div>
                     <div class="form-group">
-                        <textarea id="txtContent" name="txtContent"></textarea>
+                        <textarea id="txtContent" name="txtContent">@Model.BlogPost.Content</textarea>
                     </div>
+                    <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
                 </form>
             </div>
             <div class="col-3">

@@ -1,16 +1,50 @@
-﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@using Blogifier.Core.Extensions
 @{
     //var themeFolder = "embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
+    var x = Model.Pager;
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
 <div id="post-edit-actions" class="page-toolbar"></div>
 
 <div id="page-content-wrapper">
+    <div class="page-toolbar">
+        <a href="~/admin/editor/0" class="btn btn-primary">New</a>
+    </div>
     <div id="post-list">
-        <ul id="admin-posts" class="list-group post-list elements-list"></ul>
-        <ul class="pagination-custom"></ul>
+        <ul id="admin-posts" class="list-group post-list elements-list">
+            @foreach (var item in Model.BlogPosts)
+            {
+                var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
+                <li class="list-group-item post-item draft">
+                    <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
+                    <div class="post-item-info">
+                        <span>@published</span>
+                        <a href="/blog/@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <button data-toggle="tooltip" title="Publish" onclick="return postController.publish(2)">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <button data-toggle="tooltip" title="Delete" onclick="return postController.removePost(2)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            }
+        </ul>
+        <ul class="pagination-custom">
+            @if (Model.Pager.ShowNewer)
+            {
+                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-left"></i></a></li>
+            }
+            @if (Model.Pager.ShowOlder)
+            {
+                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-right"></i></a></li>
+            }
+        </ul>
     </div>
 </div>
 

@@ -4,15 +4,12 @@ using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Middleware;
-using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
@@ -34,21 +31,23 @@ namespace Blogifier.Core.Controllers
 			_theme = "~/Views/Blogifier/Admin/" + ApplicationSettings.AdminTheme + "/";
 		}
 
-        public IActionResult Index()
+        [HttpGet("{page:int?}")]
+        public IActionResult Index(int page)
 		{
-            var profile = GetProfile();
-            if (profile == null)
-                return RedirectToAction("Profile", "Admin");
+            if (page == 0) page = 1;
+            var pager = new Pager(page);
+            var model = new AdminPostsModel { Profile = GetProfile() };
 
-            return View(_theme + "Index.cshtml", new AdminBaseModel { Profile = profile });
+            model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+            model.Pager = pager;
+
+            return View(_theme + "Index.cshtml", model);
         }
 
         [Route("editor/{id:int}")]
         public IActionResult Editor(int id)
         {
             var profile = GetProfile();
-            if (profile == null)
-                return RedirectToAction("Profile", "Admin");
 
             IEnumerable<SelectListItem> categories = null;
             var post = new BlogPost();
@@ -101,34 +100,9 @@ namespace Blogifier.Core.Controllers
 			return View(_theme + "Settings.cshtml", new AdminBaseModel { Profile = GetProfile() });
 		}
 
-		#region Private members
-
 		private Profile GetProfile()
 		{
-			var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
-
-            //if (profile == null)
-            //    Profile();
-
-            return profile;
+			return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
-
-        private string SlugFromTitle(string title)
-		{
-			var slug = title.ToSlug();
-			if (_db.Profiles.Single(b => b.Slug == slug) != null)
-			{
-				for (int i = 2; i < 100; i++)
-				{
-					if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
-					{
-						return slug + i.ToString();
-					}
-				}
-			}
-			return slug;
-		}
-		
-        #endregion
 	}
 }
