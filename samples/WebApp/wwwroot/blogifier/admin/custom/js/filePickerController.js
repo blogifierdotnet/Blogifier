@@ -46,7 +46,6 @@
 
     function pick(assetId) {
         if (uploadType === "postImage") {
-            toastr.success(assetId + ' ' + postId);
             dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
         }
         else {
@@ -66,7 +65,9 @@
             $('#Profile_Image').val(data.url);
         }
         if (uploadType === "postImage") {
-            $('#txtPostImage').val(data.url);
+            setTimeout(function () {
+                window.location.href = webRoot + 'admin/editor/' + postId;
+            }, 1000); 
         }
         if (uploadType === "editor") {
             if (data.assetType === 0) {

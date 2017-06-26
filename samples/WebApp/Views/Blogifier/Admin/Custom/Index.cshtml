@@ -25,10 +25,19 @@
                         <a href="/blog/@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <button data-toggle="tooltip" title="Publish" onclick="return postController.publish(2)">
-                            <i class="fa fa-check"></i>
-                        </button>
-                        <button data-toggle="tooltip" title="Delete" onclick="return postController.removePost(2)">
+                        @if (item.Published == DateTime.MinValue)
+                        {
+                            <button data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)">
+                                <i class="fa fa-archive"></i>
+                            </button>
+                        }
+                        <button data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </div>

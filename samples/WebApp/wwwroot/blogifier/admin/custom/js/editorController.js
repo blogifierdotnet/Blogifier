@@ -38,36 +38,12 @@
     }
 
     function savePostCallback(data) {
-        // var post = JSON.parse(data);
+        var url = JSON.parse(data);
         toastr.success('Saved');
+        setTimeout(function () {
+            window.location.href = webRoot + url;
+        }, 2000); 
     }
-
-    //function publish(id) {
-    //    dataService.put("blogifier/api/posts/publish/" + id, null, publishCallback, fail);
-    //}
-
-    //function unpublish(id) {
-    //    dataService.put("blogifier/api/posts/unpublish/" + id, null, publishCallback, fail);
-    //}
-
-    //function removePost(postId) {
-    //    dataService.remove('blogifier/api/posts/' + postId, removeCallback, fail);
-    //}
-
-    //function publishCallback() {
-    //    toastr.success('Updated');
-    //    reload();
-    //}
-
-    //function removeCallback() {
-    //    toastr.success('Removed');
-    //    current.post = 0;
-    //    reload();
-    //}
-
-    //function addImage() {
-    //    toastr.warning('Not implemented');
-    //}
 
     // categories
 
@@ -108,18 +84,21 @@
 
     // miscellaneous
 
-    //function openFilePicker() {
-    //    filePickerController.open('postImage', current.post);
-    //}
+    function openFilePicker(postId) {
+        filePickerController.open('postImage', postId);
+    }
 
-    //function resetPostImage() {
-    //    dataService.remove('blogifier/api/assets/resetpostimage/' + current.post, imgResetCallback, fail);
-    //}
+    function resetPostImage(postId) {
+        dataService.remove('blogifier/api/assets/resetpostimage/' + postId, imgResetCallback, fail);
+    }
 
-    //function imgResetCallback(data) {
-    //    toastr.success('Updated');
-    //    loadPostEdit(current.post);
-    //}
+    function imgResetCallback(data) {
+        var url = JSON.parse(data);
+        toastr.success('Updated');
+        setTimeout(function () {
+            window.location.href = webRoot + url;
+        }, 1000); 
+    }
 
     //function pager(pg) {
     //    var lastPost = pg.currentPage * pg.itemsPerPage;
@@ -159,20 +138,13 @@
     }
 
     return {
-        //loadPage: loadPage,
         loadPostEdit: loadPostEdit,
-        //newPost: newPost,
-        savePost: savePost
-        //removePost: removePost,
-        //publish: publish,
-        //unpublish: unpublish,
-        //addImage: addImage,
+        savePost: savePost,
         //addCategory: addCategory,
         //saveCategory: saveCategory,
         //removeCategory: removeCategory,
-        //openFilePicker: openFilePicker,
-        //resetPostImage: resetPostImage,
-        //cancel: cancel
+        openFilePicker: openFilePicker,
+        resetPostImage: resetPostImage
     }
 }(DataService, filePickerController);
 
@@ -192,6 +164,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
         browser_spellcheck: true,
         paste_data_images: true
     });
-    
-    //editorController.loadPostEdit(1);
 });

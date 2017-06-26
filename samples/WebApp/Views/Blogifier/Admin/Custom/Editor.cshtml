@@ -2,6 +2,7 @@
 @{
     //var themeFolder = "embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
+    var colNum = Model.BlogPost.Id > 0 ? 9 : 12;
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
@@ -16,7 +17,7 @@
         </div>
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-@colNum">
                 <form id="frmEditor" style="height:100%;">
                     <div class="form-group">
                         <input id="txtPostTitle" class="form-control" value="@Model.BlogPost.Title" placeholder="Post title..." />
@@ -27,39 +28,45 @@
                     <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
                 </form>
             </div>
-            <div class="col-3">
-                <div id="post-image" class="form-group" style="display: none">
-                    <!-- display none when we did upload a photo -->
-                    <button type="button" class="post-image-upload" onclick="return postController.openFilePicker();">
-                        <i class="fa fa-photo"></i><span>Add Post Cover</span>
-                    </button>
-                    <!-- display none when we didn't upload a photo -->
-                    <div class="post-image-uploaded">
-                        @*<input type="text" class="form-control" id="txtPostImage" placeholder="Post image" readonly />*@
-                        <img src="~/blogifier/admin/custom/img/images.jpg" />
-                        <div class="post-image-actions btn-group">
-                            <button type="button" class="btn"><i class="fa fa-link"></i></button>
-                            <button type="button" class="btn" onclick="return postController.resetPostImage();">
-                                <i class="fa fa-trash"></i>
+            @if (Model.BlogPost.Id > 0)
+            {
+                <div class="col-3">
+                    <div id="post-image" class="form-group">
+                        @if (Model.BlogPost.Image == null)
+                        {
+                            <button type="button" class="post-image-upload" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);">
+                                <i class="fa fa-photo"></i><span>Add Post Cover</span>
                             </button>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="post-image-uploaded">
+                                <img src="@Model.BlogPost.Image" />
+                                <div class="post-image-actions btn-group">
+                                    <a href="~/blog/@Model.BlogPost.Slug" target="_blank" title="Post image" class="btn"><i class="fa fa-link"></i></a>
+                                    <button type="button" class="btn" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="post-category">
+
+                        <ul id="edit-categories"></ul>
+                        <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                            <div class="input-group">
+                                <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary" onclick="postController.saveCategory()">Save</button>
+                                </span>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
-
-                <div class="post-category">
-
-                    <ul id="edit-categories"></ul>
-                    <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-                        <div class="input-group">
-                            <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-secondary" onclick="postController.saveCategory()">Save</button>
-                            </span>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
+            }
         </div>
 
     </div>

@@ -143,7 +143,7 @@ namespace Blogifier.Core.Controllers.Api
             var post = _db.BlogPosts.Single(p => p.Id == id);
             post.Image = null;
             _db.Complete();
-            return new NoContentResult();
+            return Json("admin/editor/" + id);
         }
 
         async Task<Asset> SaveFile(IFormFile file)

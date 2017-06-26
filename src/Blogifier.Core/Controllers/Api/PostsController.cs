@@ -52,7 +52,7 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPost]
-        public PostEditModel Index([FromBody]PostEditModel model)
+        public IActionResult Index([FromBody]PostEditModel model)
         {
             BlogPost bp;
             if (model.Id == 0)
@@ -76,11 +76,8 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Description = model.Content.ToDescription();
             }
             _db.Complete();
-
-            model.Id = bp.Id;
-            model.Slug = bp.Slug;
-
-            return model;
+            //return RedirectToAction("GetById", new { id = model.Id });
+            return Json("admin/editor/" + bp.Id);
         }
 
         [HttpPut("publish/{id:int}")]
