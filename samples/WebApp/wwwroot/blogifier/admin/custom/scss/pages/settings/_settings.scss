@@ -3,7 +3,8 @@
     width: 100%;
     overflow: hidden;
     border-radius: 5px;
-    min-height: 500px;
+    min-height: 100%;
+    margin-bottom:3rem;
 
     &-sidebar,
     &-content {

@@ -2,14 +2,12 @@
     font-family: $font-family-base;
     color: #666;
     cursor: default;
-    background-color:$color-bg;
-    overflow-y:scroll;
+    background-color: $color-bg;
+    overflow-y: scroll;
+    padding-top: 6.5rem;
+    padding-bottom: 3rem;
 }
 .container {
     width:100%;
     max-width:75rem;
-}
-
-#wrapper {
-    padding-bottom:3rem;
 }
