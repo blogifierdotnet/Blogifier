@@ -53,20 +53,23 @@
                     </div>
 
                     <div class="post-category">
-
                         <ul id="edit-categories">
                             @foreach (var category in Model.CategoryList)
                             {
                             <li>
-                                @if (category.Selected)
-                                {
-                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" />
-                                }
-                                else
-                                {
-                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" />
-                                }
-                                <label for="cbx-@category.Value">@category.Text</label>
+                                <label class="custom-control custom-checkbox">
+
+                                    @if (category.Selected)
+                                    {
+                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                    }
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">@category.Text</span>
+                                </label>
                             </li>
                             }
                         </ul>
@@ -78,12 +81,10 @@
                                 </span>
                             </div>
                         </form>
-
                     </div>
                 </div>
             }
         </div>
-
     </div>
 </div>
 
