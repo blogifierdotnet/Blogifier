@@ -15,7 +15,7 @@
         {
             <div class="col-md-6">
                 <div class="post-item">
-                    <img src="@item.Image" alt="@item.Title" />
+                    <img class="post-item-img" src="@item.Image" alt="@item.Title" />
                     <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
                     <p class="post-item-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
                     <p class="post-item-content">@Html.Raw(item.Content)</p>
@@ -24,18 +24,19 @@
         }
     }
 </div>
-
-<nav>
-    <ul class="pager">
-        @if (Model.Pager.ShowOlder)
+@if (Model != null)
+{
+    <nav>
+        <ul class="pagination">
+            @if (Model.Pager.ShowOlder)
             {
-            <li class="previous"><a href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-        }
-        @if (Model.Pager.ShowNewer)
+                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+            }
+            @if (Model.Pager.ShowNewer)
             {
-            <li class="next"><a href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-        }
-    </ul>
-</nav>
-
+                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            }
+        </ul>
+    </nav>
+}
 

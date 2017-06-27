@@ -1,0 +1,17 @@
+﻿.blog-footer {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+
+    .float-right {
+        @include unstyled();
+
+        li {
+            float: left;
+            margin-left: 1rem;
+
+            a {
+                color: #888;
+            }
+        }
+    }
+}

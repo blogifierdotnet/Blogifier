@@ -1,0 +1,29 @@
+﻿.post-item {
+    margin-bottom: 2rem;
+
+    &-img {
+        height: 300px;
+        width: 100%;
+        background: #000;
+        margin-bottom: .5rem;
+    }
+
+    &-title {
+        font-size: 2rem;
+        margin-bottom: .5rem;
+
+        a {
+            color: #000;
+        }
+    }
+
+    &-info {
+        margin-bottom: .5rem;
+        font-size: .75rem;
+    }
+
+    &-content {
+        margin: 0;
+    }
+}
+
