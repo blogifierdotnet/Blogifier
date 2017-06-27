@@ -2,10 +2,16 @@
 .btn {
     text-transform: uppercase;
     outline: none !important;
-    font-size:.75rem;
-    letter-spacing:1px;
-    cursor:pointer;
+    font-size: .875rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    padding: 0.65625rem 2rem;
+    font-weight: $font-weight-medium;
+
     [class*="fa-angle-"] {
-        font-size: 16px;
+        font-size: 1rem;
     }
+}
+.btn-lg {
+    padding: 1rem 2rem;
 }
