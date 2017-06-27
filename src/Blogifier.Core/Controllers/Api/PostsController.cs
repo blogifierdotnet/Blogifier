@@ -5,6 +5,7 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -76,7 +77,13 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Description = model.Content.ToDescription();
             }
             _db.Complete();
-            //return RedirectToAction("GetById", new { id = model.Id });
+
+            if(model.Categories != null && model.Categories.Count() > 0)
+            {
+                _db.BlogPosts.UpdatePostCategories(
+                    bp.Id, model.Categories.Select(c => c.Value).ToList());
+                _db.Complete();
+            }
             return Json("admin/editor/" + bp.Id);
         }
 

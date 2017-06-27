@@ -56,7 +56,21 @@ namespace Blogifier.Core.Controllers
             {
                 categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id);
                 post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
-            }        
+            }
+
+            if(post.PostCategories != null)
+            {
+                foreach (var pc in post.PostCategories)
+                {
+                    foreach (var cat in categories)
+                    {
+                        if (pc.CategoryId.ToString() == cat.Value)
+                        {
+                            cat.Selected = true;
+                        }
+                    }
+                }
+            }
 
             var model = new AdminEditorModel { Profile = profile, CategoryList = categories, BlogPost = post };
             return View(_theme + "Editor.cshtml", model);

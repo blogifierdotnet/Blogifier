@@ -24,7 +24,8 @@
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
-            Content: tinyMCE.activeEditor.getContent()
+            Content: tinyMCE.activeEditor.getContent(),
+            Categories: []
         }
         if (obj.Title.length === 0) {
             toastr.error("Title is required");
@@ -34,6 +35,12 @@
             toastr.error("Content is required");
             return false;
         }
+        $("#edit-categories input[type=checkbox]").each(function () {
+            if ($(this).is(':checked')) {
+                var cat = { Value: $(this).attr('value') };
+                obj.Categories.push(cat);
+            }
+        });
         dataService.post("blogifier/api/posts", obj, savePostCallback, fail);
     }
 

@@ -34,27 +34,42 @@
                     <div id="post-image" class="form-group">
                         @if (Model.BlogPost.Image == null)
                         {
-                            <button type="button" class="post-image-upload" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);">
-                                <i class="fa fa-photo"></i><span>Add Post Cover</span>
-                            </button>
+                        <button type="button" class="post-image-upload" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);">
+                            <i class="fa fa-photo"></i><span>Add Post Cover</span>
+                        </button>
                         }
                         else
                         {
-                            <div class="post-image-uploaded">
-                                <img src="@Model.BlogPost.Image" />
-                                <div class="post-image-actions btn-group">
-                                    <a href="~/blog/@Model.BlogPost.Slug" target="_blank" title="Post image" class="btn"><i class="fa fa-link"></i></a>
-                                    <button type="button" class="btn" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
+                        <div class="post-image-uploaded">
+                            <img src="@Model.BlogPost.Image" />
+                            <div class="post-image-actions btn-group">
+                                <a href="~/blog/@Model.BlogPost.Slug" target="_blank" title="Post image" class="btn"><i class="fa fa-link"></i></a>
+                                <button type="button" class="btn" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </div>
+                        </div>
                         }
                     </div>
 
                     <div class="post-category">
 
-                        <ul id="edit-categories"></ul>
+                        <ul id="edit-categories">
+                            @foreach (var category in Model.CategoryList)
+                            {
+                            <li>
+                                @if (category.Selected)
+                                {
+                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" />
+                                }
+                                else
+                                {
+                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" />
+                                }
+                                <label for="cbx-@category.Value">@category.Text</label>
+                            </li>
+                            }
+                        </ul>
                         <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
                             <div class="input-group">
                                 <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
