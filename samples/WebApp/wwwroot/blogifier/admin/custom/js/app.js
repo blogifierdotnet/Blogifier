@@ -10,7 +10,26 @@ $(".settings-page-sidebar ul li").each(function (idx, li) {
         activated = true;
     }
 });
-if (activated === false) { $('.basic').addClass('active'); }
+if (activated === false) { $('.settings-page-sidebar .basic').addClass('active'); }
+
+
+
+$('.dropdown-menu-app li').removeClass('active');
+var activatedAD = false;
+$(".dropdown-menu-app li").each(function (idx, li) {
+    if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
+        $(li).children().addClass('active');
+        $(".nav-title").text($(li).children().text());
+
+        activatedAD = true;
+    }
+});
+if (activatedAD === false) {
+    $('.dropdown-menu-app .admin').children().addClass('active');
+    $(".nav-title").text($('.dropdown-menu-app .admin').children().text());
+}
+
+
 
 //
 function profileLogOut() {

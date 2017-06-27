@@ -40,18 +40,19 @@
                 <div class="dropdown float-left">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-navicon"></i>
+                        <span class="nav-title"></span>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
                         @if (Model.BlogExists)
                         {
-                            <a class="dropdown-item" href="~/admin">Posts</a>
-                            <a class="dropdown-item" href="~/admin/files">Files</a>
+                            <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
+                            <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
                             @if (Model.Profile != null && Model.Profile.IsAdmin)
                             {
-                                <a class="dropdown-item" href="~/admin/settings/basic">Settings</a>
+                                <li class="basic"><a class="dropdown-item " href="~/admin/settings/basic">Settings</a></li>
                             }
                         }
-                    </div>
+                    </ul>
                 </div>
                 <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
                 <div class="btn-group float-right">
@@ -89,8 +90,11 @@
         $(document).ready(function () {
             $('.post-list [data-toggle="tooltip"]').tooltip({
                 offset: '-15px 0',
+                animation: false
             });
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip({
+                animation: false
+            });
         });
 
     </script>
