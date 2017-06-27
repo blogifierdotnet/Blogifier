@@ -1,0 +1,12 @@
+﻿body {
+    font-family: $font-family-base;
+    color: #666;
+    cursor: default;
+    background-color: #fff;
+    overflow-y: scroll;
+}
+
+.container {
+    width: 100%;
+    max-width: 60rem;
+}

@@ -27,14 +27,42 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\blogifier\admin\custom\scss\pages\assets\_assets.scss" />
-    <Content Include="wwwroot\blogifier\blog\custom\app.js" />
-    <Content Include="wwwroot\blogifier\blog\custom\app.min.js" />
-    <Content Include="wwwroot\blogifier\blog\custom\css\style.css" />
-    <Content Include="wwwroot\blogifier\blog\custom\css\style.min.css" />
-    <Content Include="wwwroot\blogifier\blog\custom\js\app.js" />
-    <Content Include="wwwroot\blogifier\blog\custom\js\app.min.js" />
-    <Content Include="wwwroot\blogifier\blog\custom\style.css" />
-    <Content Include="wwwroot\blogifier\blog\custom\style.min.css" />
+    <Content Include="wwwroot\blogifier\blog\custom\css\bootstrap.min.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\css\font-awesome.min.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\css\styles.min.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\fontawesome-webfont.eot">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\fontawesome-webfont.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\fontawesome-webfont.ttf">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\fontawesome-webfont.woff">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\fontawesome-webfont.woff2">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\fonts\FontAwesome.otf">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\js\bootstrap.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\js\jquery-3.2.1.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\blogifier\blog\custom\js\tether.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -60,16 +88,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\font-awesome.min.css" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.eot" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.svg" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.ttf" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.woff" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\fontawesome-webfont.woff2" />
-    <EmbeddedResource Include="wwwroot\blogifier\blog\custom\lib\fonts\FontAwesome.otf" />
+    <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
+    <Folder Include="wwwroot\blogifier\blog\custom\scss\" />
   </ItemGroup>
 
 </Project>

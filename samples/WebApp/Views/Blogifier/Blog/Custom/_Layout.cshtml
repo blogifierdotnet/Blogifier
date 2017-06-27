@@ -1,93 +1,63 @@
 ﻿@using Blogifier.Core.Common
-@{ 
-    //var themeFolder = "embedded/blog/standard";
+@{
     var themeFolder = "blogifier/blog/custom";
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@ApplicationSettings.Description">
-    <meta name="author" content="Blogifier">
     <title>@ApplicationSettings.Title</title>
-    <link href="~/@themeFolder/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/@themeFolder/lib/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="~/@themeFolder/style.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta name="description" content="@ApplicationSettings.Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="~/@themeFolder/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/@themeFolder/css/styles.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="~/">Home</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    
-                    <li><a href="~/blog">Blog</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                    <li><a href="~/admin">Admin</a></li>
-                    }
-                    <li style="padding: 10px 25px">
-                        <form role="search" asp-controller="Search" asp-action="Index" method="post">
-                            <input type="text" id="term" name="term" class="form-control" placeholder="Search...">
-                        </form>
-                    </li>
-                </ul>
-            </div>
+
+    <header class="blog-header container clearfix">
+        <div class="blog-nav float-left">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-navicon"></i>
+                <span class="nav-title"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="~/blog">Blog</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a class="dropdown-item" href="~/admin">Admin</a></li>
+                }
+                <li class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Category</a></li>
+                <li><a class="dropdown-item" href="#">Examples</a></li>
+                <li><a class="dropdown-item" href="#">Tech</a></li>
+                <li><a class="dropdown-item" href="#">News</a></li>
+                <li><a class="dropdown-item" href="#">Blogging</a></li>
+            </ul>
         </div>
-    </nav>
-    @RenderBody()
-    <hr>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="https://twitter.com/@@blogifierdotnet" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/blogifierdotnet/" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/blog/rss" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted">Copyright &copy; @ApplicationSettings.Title @DateTime.Now.Year</p>
-                </div>
-            </div>
-        </div>
+        <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
+        <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
+            <button><i class="fa fa-search"></i></button>
+            <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
+        </form>
+    </header>
+    
+    <div class="blog-content container">
+        @RenderBody()
+    </div>
+
+    <footer class="footer container">
+        <p class="float-left">Copyright © 2017 @ApplicationSettings.Title. All rights reserved.</p>
+        <ul class="float-right">
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+        </ul>
     </footer>
-    <script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
-    <script src="~/@themeFolder/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/@themeFolder/app.js"></script>
+
+    <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
+    <script src="~/@themeFolder/js/tether.min.js"></script>
+    <script src="~/@themeFolder/js/bootstrap.min.js"></script>
 </body>
 </html>
