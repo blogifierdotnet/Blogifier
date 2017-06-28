@@ -1,0 +1,38 @@
+﻿.post-single {
+    &-cover{
+        height:30rem;
+        margin-bottom:4rem;
+        background-position:center center;
+        background-size:cover;
+        .container {
+            height:100%;
+        }
+    }
+
+    &-title {
+        padding-bottom:3rem;
+        position:absolute;
+        bottom:0;
+        color:#fff;
+
+h1 {
+    font-size:2.5rem;
+    margin-bottom:1rem;
+}        
+    }
+
+    &-info {
+        color:#fff;
+        opacity:.75;
+        font-size:.75rem;
+        text-transform:uppercase;
+        a{
+            color:#fff;
+            &:hover{
+                border-bottom:2px solid #fff;
+                padding-bottom:.25rem;
+            }
+        }
+    }
+}
+ 

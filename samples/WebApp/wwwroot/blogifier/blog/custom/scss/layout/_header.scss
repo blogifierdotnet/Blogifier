@@ -1,6 +1,19 @@
 ﻿.blog-header {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    .single-layout & {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+
+        .blog-title {
+            a{
+                color:#fff;
+            }
+        }
+    }
 
     .blog-title {
         position: absolute;

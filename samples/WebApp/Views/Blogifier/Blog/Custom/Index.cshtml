@@ -7,36 +7,37 @@
 @{
     var bg = ApplicationSettings.ProfileImage;
 }
-
-<div class="row">
+<div class="container">
+    <div class="row">
+        @if (Model != null)
+        {
+            foreach (var item in Model.Posts)
+            {
+                <div class="col-md-6">
+                    <div class="post-item">
+                        <img class="post-item-img" src="@item.Image" alt="@item.Title" />
+                        <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                        <p class="post-item-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+                        <p class="post-item-content">@Html.Raw(item.Content)</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     @if (Model != null)
     {
-        foreach (var item in Model.Posts)
-        {
-            <div class="col-md-6">
-                <div class="post-item">
-                    <img class="post-item-img" src="@item.Image" alt="@item.Title" />
-                    <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
-                    <p class="post-item-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
-                    <p class="post-item-content">@Html.Raw(item.Content)</p>
-                </div>
-            </div>
-        }
+        <nav>
+            <ul class="pagination">
+                @if (Model.Pager.ShowOlder)
+                {
+                    <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+                }
+                @if (Model.Pager.ShowNewer)
+                {
+                    <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                }
+            </ul>
+        </nav>
     }
-</div>
-@if (Model != null)
-{
-    <nav>
-        <ul class="pagination">
-            @if (Model.Pager.ShowOlder)
-            {
-                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
-            {
-                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
-    </nav>
-}
 
+</div>
