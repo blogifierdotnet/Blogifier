@@ -1,7 +1,7 @@
 ﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
 @{
-    Layout = "~/Views/Blogifier/Blog/Custom/_LayoutSingle.cshtml";
+    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_LayoutSingle.cshtml";
     var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
 }
 
