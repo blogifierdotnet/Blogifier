@@ -68,7 +68,7 @@ namespace Blogifier.Core.Controllers
             {
                 profile.IdentityName = User.Identity.Name;
                 profile.Slug = SlugFromTitle(profile.AuthorName);
-                profile.BlogTheme = "Standard";
+                profile.BlogTheme = ApplicationSettings.BlogTheme;
 
                 ModelState.Clear();
                 TryValidateModel(model);
