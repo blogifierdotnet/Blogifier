@@ -39,7 +39,7 @@
             </div>
             <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
             <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
-                <button><i class="fa fa-search"></i></button>
+                <button type="button"><i class="fa fa-search"></i></button>
                 <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
             </form>
         </div>
@@ -61,5 +61,14 @@
     <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
     <script src="~/@themeFolder/js/tether.min.js"></script>
     <script src="~/@themeFolder/js/bootstrap.min.js"></script>
+    <script>
+        $(".blog-search button").click(function () {
+            $(".blog-search").addClass("active");
+            $(".blog-search input").focus();
+        });
+        $(".blog-search input").blur(function () {
+            $(".blog-search").removeClass("active");
+        });
+    </script>
 </body>
 </html>

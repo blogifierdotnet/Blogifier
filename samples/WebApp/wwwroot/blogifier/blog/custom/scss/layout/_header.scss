@@ -9,8 +9,8 @@
         z-index: 1000;
 
         .blog-title {
-            a{
-                color:#fff;
+            a {
+                color: #fff;
             }
         }
     }
@@ -98,6 +98,8 @@
     }
 
     .blog-search {
+        position: relative;
+
         i {
             font-size: 1.125rem !important;
             color: #888;
@@ -108,7 +110,21 @@
         }
 
         input {
-            display: none;
+            width: 0;
+            opacity: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+        }
+
+        &.active {
+            input {
+                width: 15rem;
+                opacity: 1;
+                padding: .5rem;
+            }
         }
     }
 }
