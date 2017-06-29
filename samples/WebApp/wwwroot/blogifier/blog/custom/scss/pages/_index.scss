@@ -1,8 +1,15 @@
 ﻿.post-item {
-    margin-bottom: 2rem;
+    height: 100%;
+    border-bottom:1px solid #eee;
 
-    &-img {
-        height: 300px;
+    .container, .row, class[col-], img {
+        height: 100%;
+    }
+
+    .post-item-col {
+        padding-bottom:8rem;
+        padding-top:8rem;
+    } &-img {
         width: 100%;
         background: #000;
         margin-bottom: .5rem;
@@ -26,4 +33,3 @@
         margin: 0;
     }
 }
-

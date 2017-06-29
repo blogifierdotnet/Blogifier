@@ -11,18 +11,20 @@
 
     &-title {
         position: absolute;
-        bottom: 8rem;
+        bottom: 10rem;
         left: 0;
         width: 100%;
         color: #fff;
         text-transform: uppercase;
+        text-align: center;
 
         h1 {
-            font-weight: bold;
+            font-weight: 900;
+            font-size: 5rem;
         }
 
         p {
-            font-size: 2rem;
+            font-size: 3rem;
             font-weight: 100;
         }
     }

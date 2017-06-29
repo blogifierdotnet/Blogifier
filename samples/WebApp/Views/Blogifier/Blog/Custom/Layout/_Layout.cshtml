@@ -9,7 +9,7 @@
     <title>@ApplicationSettings.Title</title>
     <meta name="description" content="@ApplicationSettings.Description">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="~/@themeFolder/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/@themeFolder/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/@themeFolder/css/styles.min.css" rel="stylesheet">
@@ -37,7 +37,7 @@
                     <li><a class="dropdown-item" href="#">Blogging</a></li>
                 </ul>
             </div>
-            <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
+            <h1 class="blog-title"><a href="~/blog" title="">LOGO</a></h1>
             <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
                 <button type="button"><i class="fa fa-search"></i></button>
                 <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
@@ -46,16 +46,14 @@
 
         <div class="blog-header-title">
             <div class="container">
-                <h1>Blog Title</h1>
-                <p>Blog Description Goes Here...</p>
+                <h1>@ApplicationSettings.Title</h1>
+                <p>@ApplicationSettings.Description</p>
             </div>
         </div>
     </header>
 
-    
-    <div class="blog-content">
-        @RenderBody()
-    </div>
+
+    @RenderBody()
 
     <footer class="blog-footer container">
         <p class="float-left">Copyright © 2017 @ApplicationSettings.Title. All rights reserved.</p>
