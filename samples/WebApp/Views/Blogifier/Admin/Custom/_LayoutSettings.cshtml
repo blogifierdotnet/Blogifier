@@ -42,17 +42,18 @@
                         <i class="fa fa-navicon"></i>
                         <span class="nav-title"></span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
-                        @if (Model.BlogExists)
-                        {
+                    @if (Model.BlogExists)
+                    {
+                        <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
                             <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
                             <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
                             @if (Model.Profile != null && Model.Profile.IsAdmin)
                             {
-                                <li class="basic"><a class="dropdown-item " href="~/admin/settings/basic">Settings</a></li>
+                                <li class="application"><a class="dropdown-item " href="~/admin/settings/application">Global</a></li>
                             }
-                        }
-                    </ul>
+                        </ul>
+                    }
+                    
                 </div>
                 <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
                 <div class="btn-group float-right">
@@ -70,10 +71,13 @@
             <div class="settings-page">
                 <div class="settings-page-sidebar">
                     <ul>
-                        <li class="basic"><a href="~/admin/settings/basic">Basic</a></li>
-                        <li class="application"><a href="~/admin/settings/application">Application</a></li>
                         <li class="profile"><a href="~/admin/settings/profile">Profile</a></li>
                         <li class="import"><a href="~/admin/settings/import">Import</a></li>
+                        <li class="disqus"><a href="~/admin/settings/disqus">Disqus</a></li>
+                        @if (Model.Profile != null && Model.Profile.IsAdmin)
+                        {
+                            <li class="application"><a href="~/admin/settings/application">Global</a></li>
+                        }
                     </ul>
                 </div>
                 <div class="settings-page-content">

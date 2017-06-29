@@ -29,7 +29,15 @@ namespace Blogifier.Core.Controllers
         [Route("basic")]
         public IActionResult Basic()
         {
-            return View(_theme + "Basic.cshtml", new AdminBaseModel { Profile = GetProfile() });
+            var profile = GetProfile();
+            var storage = new BlogStorage("");
+
+            var model = new AdminProfileModel
+            {
+                Profile = profile,
+                BlogThemes = storage.GetThemes(ThemeType.Blog)
+            };
+            return View(_theme + "Basic.cshtml", model);
         }
 
         [VerifyProfile]
@@ -37,6 +45,57 @@ namespace Blogifier.Core.Controllers
         public IActionResult Application()
         {
             return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
+        }
+
+        [VerifyProfile]
+        [Route("disqus")]
+        public IActionResult Disqus()
+        {
+            var profile = GetProfile();
+
+            var disqus = _db.CustomFields.Single(f =>
+                f.CustomKey == "disqus" &&
+                f.CustomType == CustomType.Profile &&
+                f.ParentId == profile.Id);
+
+            if (disqus == null)
+                disqus = new CustomField { CustomKey = "disqus", CustomType = CustomType.Profile, ParentId = profile.Id };
+
+            var model = new AdminToolsModel
+            {
+                Profile = GetProfile(),
+                RssImportModel = new RssImportModel(),
+                DisqusModel = disqus
+            };
+            return View(_theme + "Disqus.cshtml", model);
+        }
+
+        [HttpPost]
+        [Route("disqus")]
+        public IActionResult Disqus(AdminToolsModel model)
+        {
+            model.Profile = GetProfile();
+
+            var existing = _db.CustomFields.Single(f =>
+                f.CustomKey == "disqus" &&
+                f.CustomType == CustomType.Profile &&
+                f.ParentId == model.Profile.Id);
+
+            if (existing != null)
+                model.DisqusModel.Id = existing.Id;
+
+            if (model.DisqusModel.Id > 0)
+            {
+                existing.CustomValue = model.DisqusModel.CustomValue;
+            }
+            else
+            {
+                _db.CustomFields.Add(model.DisqusModel);
+            }
+            _db.Complete();
+
+            ViewBag.Message = "Updated";
+            return View(_theme + "Disqus.cshtml", model);
         }
 
         [Route("profile")]

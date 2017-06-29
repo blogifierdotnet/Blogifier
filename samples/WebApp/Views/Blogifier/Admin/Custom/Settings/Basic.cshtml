@@ -1,13 +1,13 @@
-﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+﻿@model Blogifier.Core.Data.Models.AdminProfileModel
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_LayoutSettings.cshtml";
 }
 <div id="page-content-wrapper">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Blog Title" />
+        <input type="text" asp-for="Profile.Title" class="form-control" placeholder="Blog Title" />
     </div>
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Blog Description" />
+        <input type="text" asp-for="Profile.Description" class="form-control" placeholder="Blog Description" />
     </div>
     <div class="input-group form-group">
         <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Blog Logo" readonly />
@@ -38,6 +38,9 @@
             <option value="2">Two</option>
             <option value="3">Three</option>
         </select>
+    </div>
+    <div class="form-group">
+        <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
     </div>
     <div class="form-group">
         <div class="input-group">
