@@ -1,6 +1,35 @@
 ﻿.blog-header {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    position: relative;
+    height: 100%;
+    background-image: url(../img/header-cover.png);
+    background-size: cover;
+
+    &-global {
+        padding: 4rem 0;
+    }
+
+
+    &-title {
+        position: absolute;
+        bottom: 8rem;
+        left: 0;
+        width: 100%;
+        color: #fff;
+        text-transform: uppercase;
+
+        h1 {
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 2rem;
+            font-weight: 100;
+        }
+    }
+
+
+
+
 
     .single-layout & {
         position: absolute;
@@ -23,7 +52,7 @@
         font-weight: $font-weight-medium;
 
         a {
-            color: #000;
+            color: #fff;
         }
     }
 
@@ -44,16 +73,16 @@
 
         &.show {
             i {
-                color: #000;
+                color: #eee;
             }
         }
 
         i {
             font-size: 1.5rem !important;
-            color: #888;
+            color: #fff;
 
             &:hover {
-                color: #000;
+                color: #fff;
             }
         }
 
@@ -102,10 +131,10 @@
 
         i {
             font-size: 1.125rem !important;
-            color: #888;
+            color: #fff;
 
             &:hover {
-                color: #000;
+                color: #fff;
             }
         }
 

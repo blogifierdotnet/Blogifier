@@ -16,32 +16,42 @@
 </head>
 <body>
 
-    <header class="blog-header container clearfix">
-        <div class="blog-nav float-left">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-navicon"></i>
-                <span class="nav-title"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="~/blog">Blog</a></li>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a class="dropdown-item" href="~/admin">Admin</a></li>
-                }
-                <li class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Category</a></li>
-                <li><a class="dropdown-item" href="#">Examples</a></li>
-                <li><a class="dropdown-item" href="#">Tech</a></li>
-                <li><a class="dropdown-item" href="#">News</a></li>
-                <li><a class="dropdown-item" href="#">Blogging</a></li>
-            </ul>
+    <header class="blog-header clearfix">
+        <div class="blog-header-global container">
+            <div class="blog-nav float-left">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-navicon"></i>
+                    <span class="nav-title"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="~/blog">Blog</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a class="dropdown-item" href="~/admin">Admin</a></li>
+                    }
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Category</a></li>
+                    <li><a class="dropdown-item" href="#">Examples</a></li>
+                    <li><a class="dropdown-item" href="#">Tech</a></li>
+                    <li><a class="dropdown-item" href="#">News</a></li>
+                    <li><a class="dropdown-item" href="#">Blogging</a></li>
+                </ul>
+            </div>
+            <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
+            <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
+                <button type="button"><i class="fa fa-search"></i></button>
+                <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
+            </form>
         </div>
-        <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
-        <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
-            <button type="button"><i class="fa fa-search"></i></button>
-            <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
-        </form>
+
+        <div class="blog-header-title">
+            <div class="container">
+                <h1>Blog Title</h1>
+                <p>Blog Description Goes Here...</p>
+            </div>
+        </div>
     </header>
+
     
     <div class="blog-content">
         @RenderBody()
