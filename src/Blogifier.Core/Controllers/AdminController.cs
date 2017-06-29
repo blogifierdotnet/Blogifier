@@ -2,7 +2,6 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Extensions;
 using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
@@ -81,38 +80,6 @@ namespace Blogifier.Core.Controllers
         {
             return View(_theme + "Files.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
-
-        [HttpGet]
-		[Route("tools")]
-		public IActionResult Tools()
-		{
-            var profile = GetProfile();
-
-            if (profile == null)
-                return RedirectToAction("Profile", "Admin");
-
-            var disqus = _db.CustomFields.Single(f =>
-                f.CustomKey == "disqus" &&
-                f.CustomType == CustomType.Profile &&
-                f.ParentId == profile.Id);
-
-            if (disqus == null)
-                disqus = new CustomField { CustomKey = "disqus", CustomType = CustomType.Profile, ParentId = profile.Id };
-
-            var model = new AdminToolsModel
-            {
-                Profile = GetProfile(),
-                RssImportModel = new RssImportModel(),
-                DisqusModel = disqus
-            };
-			return View(_theme + "Tools.cshtml", model);
-		}
-
-		[Route("settings")]
-		public IActionResult Settings()
-		{
-			return View(_theme + "Settings.cshtml", new AdminBaseModel { Profile = GetProfile() });
-		}
 
 		private Profile GetProfile()
 		{

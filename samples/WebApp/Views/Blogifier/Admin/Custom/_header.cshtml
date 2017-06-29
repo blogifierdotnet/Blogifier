@@ -1,21 +1,36 @@
-﻿<div class="header">
+﻿@using Blogifier.Core.Common
+@{
+    var profileIcon = Model.Profile != null && Model.Profile.IsAdmin ? "glyphicon-king" : "glyphicon-user";
+
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+}
+<div class="header">
     <div class="container">
         <div class="dropdown float-left">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-navicon"></i>
                 <span class="nav-title"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
-                @if (Model.BlogExists)
-                {
+            @if (Model.BlogExists)
+            {
+                <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
                     <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
-                            <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
-                            @if (Model.Profile != null && Model.Profile.IsAdmin)
-                            {
-                                <li class="basic"><a class="dropdown-item " href="~/admin/settings/basic">Settings</a></li>
-                            }
-                }
-            </ul>
+                    <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
+                    @if (Model.Profile != null && Model.Profile.IsAdmin)
+                    {
+                        <li class="application"><a class="dropdown-item " href="~/admin/settings/application">Global</a></li>
+                    }
+                </ul>
+            }
         </div>
         <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
         <div class="btn-group float-right">
