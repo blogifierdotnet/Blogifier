@@ -14,10 +14,10 @@
     <link href="~/@themeFolder/css/font-awesome.min.css" rel="stylesheet">
     <link href="~/@themeFolder/css/styles.min.css" rel="stylesheet">
 </head>
-<body class="single-layout">
+<body>
 
-    <header class="blog-header clearfix">
-        <div class="container clearfix">
+    <header class="blog-header blog-header-post clearfix">
+        <div class="blog-header-global container">
             <div class="blog-nav float-left">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-navicon"></i>
@@ -37,7 +37,7 @@
                     <li><a class="dropdown-item" href="#">Blogging</a></li>
                 </ul>
             </div>
-            <h1 class="blog-title"><a href="~/blog" title="@ApplicationSettings.Description">@ApplicationSettings.Title</a></h1>
+            <h1 class="blog-title"><a href="~/blog" title="">LOGO</a></h1>
             <form class="blog-search float-right" role="search" asp-controller="Search" asp-action="Index" method="post">
                 <button type="button"><i class="fa fa-search"></i></button>
                 <input type="search" id="term" name="term" class="form-control hidden" placeholder="Search...">
@@ -45,17 +45,17 @@
         </div>
     </header>
     
-    <div class="blog-content">
-        @RenderBody()
-    </div>
+    @RenderBody()
 
-    <footer class="blog-footer container">
-        <p class="float-left">Copyright © 2017 @ApplicationSettings.Title. All rights reserved.</p>
-        <ul class="float-right">
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-github"></i></a></li>
-            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-        </ul>
+    <footer class="blog-footer ">
+        <div class="container clearfix">
+            <p class="float-left">Copyright © 2017 @ApplicationSettings.Title. All rights reserved.</p>
+            <ul class="float-right">
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-github"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+        </div>
     </footer>
 
     <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>

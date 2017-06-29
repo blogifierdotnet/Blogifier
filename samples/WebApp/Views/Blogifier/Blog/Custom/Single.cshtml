@@ -4,15 +4,15 @@
     Layout = "~/Views/Blogifier/Blog/Custom/Layout/_LayoutSingle.cshtml";
     var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
 }
-
+s
 <article class="post-single">
     <header class="post-single-cover" style="background-image: url('@bg')">
         <div class="container">
             <div class="post-single-title">
                 <h1>@Model.BlogPost.Title</h1>
                 <div class="post-single-info">
-                    <span> by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a> </span>
-                    <span> at @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published) </span>
+                    <span> by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
+                    &mdash; @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published) </span>
                     @if (Model.Categories.Count > 0)
                     {
                         <span>in</span>
@@ -26,9 +26,9 @@
         </div>
     </header>
     <div class="container">
-        <article>
+        <div class="post-single-content">
             @Html.Raw(Model.BlogPost.Content)
-        </article>
+        </div>
         <form role="form">
             <div id="disqus_thread"></div>
             @if (Model.DisqusScript != null)

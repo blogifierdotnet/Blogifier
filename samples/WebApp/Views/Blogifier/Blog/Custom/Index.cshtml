@@ -32,17 +32,15 @@
 }
 @if (Model != null)
 {
-    <nav class="container">
-        <ul class="pagination">
-            @if (Model.Pager.ShowOlder)
+    <ul class="pagination justify-content-center">
+        @if (Model.Pager.ShowOlder)
                 {
-                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
+            <li class="page-item"><a class="page-link" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+        }
+        @if (Model.Pager.ShowNewer)
                 {
-                <li><a class="btn btn-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
-    </nav>
+            <li class="page-item"><a class="page-link" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+        }
+    </ul>
 }
 
