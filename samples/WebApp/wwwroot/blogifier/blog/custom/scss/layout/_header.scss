@@ -3,14 +3,20 @@
     height: 100%;
     background-image: url(../img/header-cover.png);
     background-size: cover;
-    z-index:1000;
+    z-index: 1000;
+
     &-global {
         padding: 4rem 0;
     }
 
+    &-page {
+        height: auto;
+        margin-bottom: 4rem;
+    }
+
     &-post {
-        height:auto;
-        background:none;
+        height: auto;
+        background: none;
     }
 
     &-title {

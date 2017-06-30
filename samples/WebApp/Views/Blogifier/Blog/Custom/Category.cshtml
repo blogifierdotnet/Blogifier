@@ -4,27 +4,23 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogCategoryModel
+@{
+    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_layoutPage.cshtml";
+}
 
 
 <div class="container">
-    <div class="row">
-
-        @if (Model != null)
+    @if (Model != null)
             {
                 foreach (var item in Model.Posts)
                 {
-                <div class="col-md-6">
-                    <div class="post-item">
-                        <img class="post-item-img" src="@item.Image" alt="@item.Title" />
-                        <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
-                        <p class="post-item-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
-                        <p class="post-item-content">@Html.Raw(item.Content)</p>
-                    </div>
-                </div>
-            }
+            <div class="post-category">
+                <h2 class="post-category-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                <p class="post-category-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+                <p class="post-category-content">@Html.Raw(item.Content)</p>
+            </div>
         }
-    </div>
-
+    }
     @if (Model != null)
             {
         <ul class="pager">
