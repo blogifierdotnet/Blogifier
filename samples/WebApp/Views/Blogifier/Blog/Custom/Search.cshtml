@@ -5,6 +5,7 @@
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
 @{
+    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_layoutPage.cshtml";
     var term = ViewBag.Term;
 }
 <div class="container">
@@ -13,19 +14,14 @@
             {
 
         <h1>Search Results: "@term"</h1>
-
-                <hr />
+        <hr />
         foreach (var item in Model.Posts)
         {
-            <div class="search-item">
-                <a href="~/blog/@item.Slug">
-                    <h3 class="post-title">
-                        @item.Title
-                    </h3>
-                </a>
-                <p class="post-meta">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
-            </div>
-                    <hr>
+            <article class="post-list-item">
+                <h2 class="post-list-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                <p class="post-list-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+                <p class="post-list-content">@Html.Raw(item.Content)</p>
+            </article>
         }
 
         <ul class="pager">

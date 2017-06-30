@@ -1,12 +1,14 @@
-﻿.post-category {
-    border-bottom:1px solid #eee;
-    margin-bottom:2rem;
-    padding-bottom:2rem;
+﻿.post-list-item {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+
     &:last-child {
-        margin:0; 
-        border:none !important;
+        margin: 0;
+        border: none !important;
     }
-    .post-category-title {
+
+    .post-list-title {
         margin-bottom: .5rem;
 
         a {
@@ -15,7 +17,7 @@
         }
     }
 
-    .post-category-info {
+    .post-list-info {
         font-size: .75rem;
         text-transform: uppercase;
         font-weight: 300;
@@ -28,7 +30,7 @@
         }
     }
 
-    .post-category-content {
-        margin:0;
+    .post-list-content {
+        margin: 0;
     }
 }

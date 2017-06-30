@@ -3,6 +3,8 @@
     height: 100%;
     background-image: url(../img/header-cover.png);
     background-size: cover;
+    background-position:center center;
+    background-repeat:no-repeat;
     z-index: 1000;
 
     &-global {
