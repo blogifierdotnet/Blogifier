@@ -51,9 +51,10 @@ namespace Blogifier.Core.Controllers
             IEnumerable<SelectListItem> categories = null;
             var post = new BlogPost();
 
+            categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id);
+
             if (id > 0)
             {
-                categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id);
                 post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
             }
 

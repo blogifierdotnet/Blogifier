@@ -56,6 +56,27 @@ namespace Blogifier.Core.Controllers.Api
             return GetItem(_db.Categories.Single(c => c.Id == id));
         }
 
+        [HttpPost("addcategory")]
+        public IActionResult AddCategory([FromBody]AdminCategoryModel model)
+        {
+            var existing = _db.Categories.Single(c => c.Title == model.Title);
+            if (existing == null)
+            {
+                var newCategory = new Category
+                {
+                    ProfileId = GetProfile().Id,
+                    Title = model.Title,
+                    Description = model.Title,
+                    Slug = model.Title.ToSlug(),
+                    LastUpdated = SystemClock.Now()
+                };
+                _db.Categories.Add(newCategory);
+                _db.Complete();
+                existing = _db.Categories.Single(c => c.Title == model.Title);
+            }
+            return new CreatedResult("blogifier/api/categories/" + existing.Id, new { Id = existing.Id, Title = existing.Title });
+        }
+
         [HttpPut("addcategorytopost")]
         public void AddCategoryToPost([FromBody]AdminCategoryModel model)
         {

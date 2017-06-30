@@ -5,16 +5,6 @@
     }
 
     function loadPostEditCallback(data) {
-        //$('#edit-categories').empty();
-        ////var catStr = '<span class="btn btn-success clickable" title="Add category" onclick="return postController.addCategory()"><span class="fa fa-plus" aria-hidden="true"></span></span>';
-        //var catStr = '';
-        //var cats = data.categories;
-        //if (cats === null) { cats = []; }
-        //$.each(cats, function (index) {
-        //    var cat = cats[index];
-        //    catStr += '<li>'+ cat.text +'<button type="button" class="clickable float-right" onclick="postController.removeCategory(' + data.id + ',' + cat.value + ')"><i class="fa fa-remove"></i></button></li>';
-        //});
-        //$('#edit-categories').append(catStr);
         $('#txtPostTitle').val(data.title);
         $('#txtPostImage').val(data.image);
         tinyMCE.activeEditor.setContent(data.content);
@@ -52,44 +42,24 @@
         }, 2000); 
     }
 
-    // categories
+    function saveCategory() {
+        var obj = { Title: $("#txtCategory").val() }
+        dataService.post("blogifier/api/categories/addcategory", obj, saveCategoryCallback, fail);
+    }
 
-    //function addCategory() {
-    //    dataService.get('blogifier/api/categories/blogcategories', loadCategories, fail);
-    //    return false;
-    //}
-
-    //function loadCategories(data) {
-    //    var options = { data: data };
-    //    $("#modalAddCategory").modal();
-    //    $("#txtCategory").easyAutocomplete(options);
-    //    $('div.easy-autocomplete').removeAttr('style');
-    //}
-
-    //function saveCategory() {
-    //    var obj = { Title: $("#txtCategory").val(), PostId: current.post }
-    //    dataService.put("blogifier/api/categories/addcategorytopost", obj, saveCategoryCallback, fail);
-    //}
-
-    //function saveCategoryCallback() {
-    //    var cat = $("#txtCategory").val();
-    //    toastr.success('Saved');
-    //    $("#modalAddCategory").modal('hide');
-    //    $("#txtCategory").val('');
-    //    loadPostEdit(current.post);
-    //}
-
-    //function removeCategory(postId, catId) {
-    //    var obj = { CategoryId: catId, PostId: postId }
-    //    dataService.put("blogifier/api/categories/removecategoryfrompost", obj, removeCategoryCallback, fail);
-    //}
-
-    //function removeCategoryCallback(data) {
-    //    toastr.success('Saved');
-    //    loadPostEdit(current.post);
-    //}
-
-    // miscellaneous
+    function saveCategoryCallback(data) {
+        var obj = JSON.parse(data);
+        var li = '<li>';
+        li += '	<label class="custom-control custom-checkbox">';
+        li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" class="custom-control-input">';
+        li += '   <span class="custom-control-indicator"></span>';
+        li += '   <span class="custom-control-description">' + obj.title + '</span>';
+        li += '	</label>';
+        li += '</li>';
+        $("#edit-categories").append(li);
+        $("#txtCategory").val('');
+        toastr.success('Saved');
+    }
 
     function openFilePicker(postId) {
         filePickerController.open('postImage', postId);
@@ -107,31 +77,6 @@
         }, 1000); 
     }
 
-    //function pager(pg) {
-    //    var lastPost = pg.currentPage * pg.itemsPerPage;
-    //    var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
-    //    if (lastPost > pg.total) { lastPost = pg.total; }
-
-    //    var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-    //    var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
-    //    if (pg.showOlder === true) {
-    //        older = '<li onclick="return postController.loadPage(' + pg.older + ')"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-    //    }
-    //    if (pg.showNewer === true) {
-    //        newer = '<li onclick="return postController.loadPage(' + pg.newer + ')"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
-    //    }
-    //    $('.pagination-custom').empty();
-    //    if (pg.showNewer === true || pg.showOlder === true) {
-    //        $('.pagination-custom').append(older);
-    //        $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
-    //        $('.pagination-custom').append(newer);
-    //    }
-    //}
-
-    //function getPubDate(date) {
-    //    return date.startsWith('0001') ? 'DRAFT' : '<span class="glyphicon glyphicon-time" aria-hidden="true"></span> ' + getDate(date);
-    //}
-
     function fail(jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) { msg = 'Not connect.\n Verify Network.'; }
@@ -147,9 +92,7 @@
     return {
         loadPostEdit: loadPostEdit,
         savePost: savePost,
-        //addCategory: addCategory,
-        //saveCategory: saveCategory,
-        //removeCategory: removeCategory,
+        saveCategory: saveCategory,
         openFilePicker: openFilePicker,
         resetPostImage: resetPostImage
     }
