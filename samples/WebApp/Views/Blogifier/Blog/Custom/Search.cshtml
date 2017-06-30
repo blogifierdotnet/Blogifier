@@ -9,10 +9,8 @@
     var term = ViewBag.Term;
 }
 <div class="container">
-
     @if (Model != null)
             {
-
         <h1>Search Results: "@term"</h1>
         <hr />
         foreach (var item in Model.Posts)
@@ -23,17 +21,18 @@
                 <p class="post-list-content">@Html.Raw(item.Content)</p>
             </article>
         }
-
-        <ul class="pager">
-            @if (Model.Pager.ShowOlder)
-            {
-                <li class="previous"><a href="~/search/@Model.Pager.Older/@term"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
-            {
-                <li class="next"><a href="~/search/@Model.Pager.Newer/@term">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
     }
-
 </div>
+@if (Model != null)
+{
+    <ul class="pagination justify-content-center">
+        @if (Model.Pager.ShowOlder)
+        {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/search/@Model.Pager.Older/@term"><span aria-hidden="true">&larr;</span> Older</a></li>
+        }
+        @if (Model.Pager.ShowNewer)
+        {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/search/@Model.Pager.Newer/@term">Newer <span aria-hidden="true">&rarr;</span></a></li>
+        }
+    </ul>
+}

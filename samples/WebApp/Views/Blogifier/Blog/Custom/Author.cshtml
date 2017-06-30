@@ -6,29 +6,31 @@
 @model BlogAuthorModel
 @{
     var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
+    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_layoutPage.cshtml";
 }
 <div class="container">
-
     @if (Model != null)
             {
                 foreach (var item in Model.Posts)
                 {
-            <article>
-                <h3 class="post-title"><a href="~/blog/@item.Slug">@item.Title</a></h3>
-                <p class="post-meta">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+            <article class="post-list-item">
+                <h2 class="post-list-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                <p class="post-list-info">Posted by <a href="~/author/@item.BlogSlug">@item.AuthorName</a> on @item.Published.ToFriendlyDateString()</p>
+                <p class="post-list-content">@Html.Raw(item.Content)</p>
             </article>
-                <hr>
         }
-
-        <ul class="pagination">
-            @if (Model.Pager.ShowOlder)
-                {
-                <li><a class="btn btn-secondary" href="~/author/@Model.Profile.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
-                {
-                <li><a class="btn btn-secondary" href="~/author/@Model.Profile.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
     }
 </div>
+@if (Model != null)
+{
+    <ul class="pagination justify-content-center">
+        @if (Model.Pager.ShowOlder)
+        {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/author/@Model.Profile.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+        }
+        @if (Model.Pager.ShowNewer)
+        {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/author/@Model.Profile.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+        }
+    </ul>
+}

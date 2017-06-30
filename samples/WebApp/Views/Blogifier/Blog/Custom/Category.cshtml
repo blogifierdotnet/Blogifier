@@ -7,8 +7,6 @@
 @{
     Layout = "~/Views/Blogifier/Blog/Custom/Layout/_layoutPage.cshtml";
 }
-
-
 <div class="container">
     @if (Model != null)
             {
@@ -21,17 +19,18 @@
             </article>
         }
     }
-    @if (Model != null)
-            {
-        <ul class="pager">
-            @if (Model.Pager.ShowOlder)
-                {
-                <li class="previous"><a href="~/category/@Model.Category.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-            }
-            @if (Model.Pager.ShowNewer)
-                {
-                <li class="next"><a href="~/category/@Model.Category.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-            }
-        </ul>
-    }
 </div>
+@if (Model != null)
+            {
+    <ul class="pagination justify-content-center">
+        @if (Model.Pager.ShowOlder)
+                {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/category/@Model.Category.Slug/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+        }
+        @if (Model.Pager.ShowNewer)
+                {
+            <li class="page-item"><a class="btn btn-outline-secondary" href="~/category/@Model.Category.Slug/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+        }
+    </ul>
+}
+
