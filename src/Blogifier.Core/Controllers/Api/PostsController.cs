@@ -5,6 +5,7 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace Blogifier.Core.Controllers.Api
@@ -66,6 +67,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Content = model.Content;
                 bp.LastUpdated = SystemClock.Now();
                 bp.Description = model.Content.ToDescription();
+                bp.Published = model.IsPublished ? SystemClock.Now() : DateTime.MinValue;
                 _db.BlogPosts.Add(bp);
             }
             else
@@ -75,6 +77,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Slug = GetSlug(model.Title);
                 bp.Content = model.Content;
                 bp.Description = model.Content.ToDescription();
+                bp.Published = model.IsPublished ? SystemClock.Now() : DateTime.MinValue;
             }
             _db.Complete();
 
@@ -84,7 +87,8 @@ namespace Blogifier.Core.Controllers.Api
                     bp.Id, model.Categories.Select(c => c.Value).ToList());
                 _db.Complete();
             }
-            return Json("admin/editor/" + bp.Id);
+            var callback = new { Id = bp.Id, Slug = bp.Slug };
+            return new CreatedResult("blogifier/api/posts/" + bp.Id, callback);
         }
 
         [HttpPut("publish/{id:int}")]

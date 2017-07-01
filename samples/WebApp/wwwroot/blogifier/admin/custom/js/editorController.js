@@ -15,6 +15,7 @@
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
             Content: tinyMCE.activeEditor.getContent(),
+            IsPublished: $('#cbxPublished').is(':checked'),
             Categories: []
         }
         if (obj.Title.length === 0) {
@@ -35,11 +36,9 @@
     }
 
     function savePostCallback(data) {
-        var url = JSON.parse(data);
+        var callback = JSON.parse(data);
+        $('#hdnPostId').val(callback.id);
         toastr.success('Saved');
-        setTimeout(function () {
-            window.location.href = webRoot + url;
-        }, 2000); 
     }
 
     function saveCategory() {
@@ -58,6 +57,7 @@
         li += '</li>';
         $("#edit-categories").append(li);
         $("#txtCategory").val('');
+        $("#txtCategory").focus();
         toastr.success('Saved');
     }
 

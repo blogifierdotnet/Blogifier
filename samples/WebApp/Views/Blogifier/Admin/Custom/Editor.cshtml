@@ -2,6 +2,8 @@
 @{
     //var themeFolder = "embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
+
+    var isPublished = Model.BlogPost.Published > DateTime.MinValue ? "checked" : "";
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
@@ -11,6 +13,11 @@
         <div class="page-toolbar">
             <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-success">Save</button>
             <a href="~/admin" class="btn btn-secondary">Cancel</a>
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" id="cbxPublished" value="published" @isPublished class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Publish</span>
+            </label>
         </div>
 
         <div class="row">
@@ -73,7 +80,7 @@
                         <div class="input-group">
                             <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">New</button>
+                                <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">Add</button>
                             </span>
                         </div>
                     </form>

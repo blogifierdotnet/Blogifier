@@ -74,7 +74,8 @@ namespace Blogifier.Core.Controllers.Api
                 _db.Complete();
                 existing = _db.Categories.Single(c => c.Title == model.Title);
             }
-            return new CreatedResult("blogifier/api/categories/" + existing.Id, new { Id = existing.Id, Title = existing.Title });
+            var callback = new { Id = existing.Id, Title = existing.Title };
+            return new CreatedResult("blogifier/api/categories/" + existing.Id, callback);
         }
 
         [HttpPut("addcategorytopost")]
