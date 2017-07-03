@@ -11,16 +11,20 @@ s
             <div class="post-single-title">
                 <h1>@Model.BlogPost.Title</h1>
                 <div class="post-single-info">
-                    <span> by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
-                    &mdash; @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published) </span>
-                    @if (Model.Categories.Count > 0)
-                    {
-                        <span>in</span>
-                        foreach (var cat in Model.Categories)
+                    by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
+                   / @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published) 
+                    <span>
+                        @if (Model.Categories.Count > 0)
                         {
-                            <span> <a href="~/category/@cat.Value">@cat.Text</a></span>
+                            <span>/</span>
+                            foreach (var cat in Model.Categories)
+                            {
+                                <a href="~/category/@cat.Value">@cat.Text</a>
+                            }
+
                         }
-                    }
+                    </span>
+
                 </div>
             </div>
         </div>

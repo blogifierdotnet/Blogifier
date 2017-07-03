@@ -11,6 +11,17 @@
         background-position: center center;
         background-size: cover;
 
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.47);
+            z-index: 0;
+        }
+
         .container {
             height: 100%;
         }
@@ -21,6 +32,7 @@
         position: absolute;
         bottom: 0;
         color: #fff;
+        z-index: 2;
 
         h1 {
             font-size: 3rem;
@@ -40,11 +52,33 @@
         a {
             color: #fff;
         }
+
+        > span {
+            a {
+                &::after {
+                    content: ",";
+                }
+                &:last-child {
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
 
     &-content {
         font-size: 1.37500rem;
         font-weight: 300;
-        margin-bottom:4rem;
+        margin-bottom: 4rem;
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-bottom: 0;
+            margin-top: 1rem;
+        }
     }
 }
