@@ -1,21 +1,13 @@
-﻿// direction
-$dir-ltr: ltr;
-$dir-rtl: rtl;
-
-// colors
-$color-bg: #e6e9f0;
-$color-gray: #6c7281;
-$color-base: #000;
-$color-base-dark: darken($color-base, 3%);
-$color-base-light: lighten($color-base, 5%);
-
-// fonts
+﻿// FONT FAMILY
 $font-family-roboto: "Roboto";
 $font-family-base: $font-family-roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// FONT SIZE
 $font-size-base: 1rem;
 $line-height-base: 1.8;
 
+// FONT WEIGHT
 $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
-$font-weight-bold: 700;
+$font-weight-bold: 700; 

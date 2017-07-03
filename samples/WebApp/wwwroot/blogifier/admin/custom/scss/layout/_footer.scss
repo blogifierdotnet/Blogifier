@@ -1,0 +1,15 @@
+﻿.admin-footer {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+    font-size: .75rem;
+    font-weight: 400;
+
+    a {
+        color: rgba(0, 0, 0, 0.45);
+        &:hover{
+            color:#000;
+        }
+    }
+}

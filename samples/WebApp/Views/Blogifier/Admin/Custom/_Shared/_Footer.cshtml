@@ -2,6 +2,13 @@
 @{ 
     var themeFolder = "blogifier/admin/custom";
 }
+
+<div class="admin-footer container">
+    &copy; @DateTime.Now.Year 
+    &mdash; <a href="http://blogifier.net/" target="_blank">Blogifier</a> (Version @Blogifier.Core.Common.ApplicationSettings.Version) 
+    &mdash; <a href="https://github.com/blogifierdotnet/" target="_blank">GitHub</a>
+</div>
+
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
 <script src="~/@themeFolder/js/tether.min.js"></script>

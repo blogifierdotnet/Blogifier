@@ -11,22 +11,24 @@
     @Html.Partial(headView)
 </head>
 <body>
-    @Html.Partial(headerView)
-    <div class="container main">
-        <div class="settings-page">
-            <div class="settings-page-sidebar">
-                <ul>
-                    <li class="profile"><a href="~/admin/settings/profile">Profile</a></li>
-                    <li class="import"><a href="~/admin/settings/import">Import</a></li>
-                    <li class="disqus"><a href="~/admin/settings/disqus">Disqus</a></li>
-                    @if (Model.Profile != null && Model.Profile.IsAdmin)
-                    {
-                        <li class="application"><a href="~/admin/settings/application">Global</a></li>
-                    }
-                </ul>
-            </div>
-            <div class="settings-page-content">
-                @RenderBody()
+    <div class="admin">
+        @Html.Partial(headerView)
+        <div class="admin-content container">
+            <div class="admin-settings">
+                <div class="admin-settings-sidebar">
+                    <ul>
+                        <li class="profile"><a href="~/admin/settings/profile">Profile</a></li>
+                        <li class="import"><a href="~/admin/settings/import">Import</a></li>
+                        <li class="disqus"><a href="~/admin/settings/disqus">Disqus</a></li>
+                        @if (Model.Profile != null && Model.Profile.IsAdmin)
+                        {
+                            <li class="application"><a href="~/admin/settings/application">Global</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="admin-settings-content">
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>

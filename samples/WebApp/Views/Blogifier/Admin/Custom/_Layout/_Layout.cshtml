@@ -11,9 +11,11 @@
     @Html.Partial(headView)
 </head>
 <body>
-    @Html.Partial(headerView)
-    <div class="container">
-        @RenderBody()
+    <div class="admin">
+        @Html.Partial(headerView)
+        <div class="admin-content container">
+            @RenderBody()
+        </div>
     </div>
     @Html.Partial(footerView)
     @RenderSection("Scripts", false)

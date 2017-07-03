@@ -1,25 +1,21 @@
-﻿.header {
+﻿.admin-header {
     background-color: rgba(255,255,255,.45);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3.5rem;
+    height: 4rem;
 
     .container {
-        height: 3.5rem;
+        display: flex;
+        height: 4rem;
         position: relative;
-        padding-top: .75rem;
-        padding-bottom: .75rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 
     .brand {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        font-weight: $font-weight-medium;
-
+        flex: 1;
+        text-align: center;
+        font-weight:400;
+        margin: auto;
+        text-transform:uppercase;
         a {
             color: #000;
         }
@@ -29,6 +25,38 @@
         width: 1.875rem;
         height: 1.875rem;
         border-radius: 100%;
+    }
+
+    .nav-title {
+        position: absolute;
+        left: 1.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: $font-weight-medium;
+        font-size: .875rem;
+        letter-spacing: 0;
+        padding-left: .5rem;
+        display: block;
+        height: 1rem;
+    }
+
+    .dropdown-menu {
+        border: none;
+        text-transform: uppercase;
+        font-size: .875rem;
+        padding: 0;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.40);
+        overflow: hidden;
+
+        .dropdown-item {
+            font-weight: $font-weight-medium;
+            padding: .75rem 1.25rem;
+            border-bottom: 1px solid #eee;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
 
     button {
@@ -56,38 +84,6 @@
             display: block;
             line-height: 2rem;
             width: 1.75rem;
-        }
-    }
-
-    .nav-title {
-        position: absolute;
-        left: 1.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-weight: $font-weight-medium;
-        font-size: .875rem;
-        letter-spacing: 0;
-        padding-left:.5rem;
-        display: block;
-        height: 1rem;
-    }
-
-    .dropdown-menu {
-        border: none;
-        text-transform: uppercase;
-        font-size: .875rem;
-        padding: 0;
-        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.40);
-        overflow: hidden;
-
-        .dropdown-item {
-            font-weight: $font-weight-medium;
-            padding: .75rem 1.25rem;
-            border-bottom: 1px solid #eee;
-
-            &:last-child {
-                border-bottom: none;
-            }
         }
     }
 }

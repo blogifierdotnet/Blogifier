@@ -1,19 +1,11 @@
-﻿.settings-page {
-    display: table;
+﻿.admin-settings {
+    display: flex;
     width: 100%;
     overflow: hidden;
     border-radius: 5px;
-    min-height: 100%;
-    margin-bottom:3rem;
-
-    &-sidebar,
-    &-content {
-        display: table-cell;
-        vertical-align: top;
-    }
-
     &-sidebar {
         width: 200px;
+        flex: 1;
         background: rgba(255,255,255,0.3);
 
         ul {
@@ -43,8 +35,8 @@
         }
     }
 
-
     &-content {
+        flex: 4;
         background: #fff;
         padding: 3rem;
     }

@@ -2,12 +2,10 @@
     font-family: $font-family-base;
     color: #666;
     cursor: default;
-    background-color: $color-bg;
+    background-color: #e6e9f0;
     overflow-y: scroll;
-    padding-top: 6.5rem;
-    padding-bottom: 3rem;
-}
-.container {
-    width:100%;
-    max-width:75rem;
+
+    // Sticky footer
+    display: flex;
+    flex-direction: column;
 }

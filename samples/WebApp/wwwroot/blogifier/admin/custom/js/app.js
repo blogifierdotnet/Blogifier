@@ -2,18 +2,18 @@ toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
 //
-$('.settings-page-sidebar ul li').removeClass('active');
+$('.admin-settings-sidebar ul li').removeClass('active');
 var activated = false;
-$(".settings-page-sidebar ul li").each(function (idx, li) {
+$(".admin-settings-sidebar ul li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).addClass('active');
         activated = true;
     }
 });
-if (activated === false) { $('.settings-page-sidebar .basic').addClass('active'); }
+if (activated === false) { $('.admin-settings-sidebar .basic').addClass('active'); }
 
 
-
+//
 $('.dropdown-menu-app li').removeClass('active');
 var activatedAD = false;
 $(".dropdown-menu-app li").each(function (idx, li) {
@@ -28,7 +28,6 @@ if (activatedAD === false) {
     $('.dropdown-menu-app .admin').children().addClass('active');
     $(".nav-title").text($('.dropdown-menu-app .admin').children().text());
 }
-
 
 
 //
