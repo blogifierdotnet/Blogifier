@@ -1,9 +1,9 @@
 ﻿@model Blogifier.Core.Data.Models.AdminProfileModel
 @{
-    Layout = "~/Views/Blogifier/Admin/Custom/_LayoutSettings.cshtml";
+    Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
     var themeFolder = "blogifier/admin/custom";
     var isDisabled = Model.BlogExists ? "" : "disabled";
-    var filePicker = string.Format("~/Views/{0}/_FilePicker.cshtml", themeFolder);
+    var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
 <div id="page-content-wrapper">
     @if (!Model.BlogExists)

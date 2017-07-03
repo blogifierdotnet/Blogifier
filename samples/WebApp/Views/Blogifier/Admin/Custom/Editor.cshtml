@@ -1,10 +1,8 @@
 ﻿@model Blogifier.Core.Data.Models.AdminEditorModel
 @{
-    //var themeFolder = "embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
-
     var isPublished = Model.BlogPost.Published > DateTime.MinValue ? "checked" : "";
-    var filePicker = string.Format("~/Views/{0}/_FilePicker.cshtml", themeFolder);
+    var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
 <link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 

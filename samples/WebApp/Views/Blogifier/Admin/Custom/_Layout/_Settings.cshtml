@@ -1,0 +1,36 @@
+﻿@using Blogifier.Core.Common
+@{
+    var themeFolder = "blogifier/admin/custom";
+    var headView = string.Format("~/Views/{0}/_Shared/_Head.cshtml", themeFolder);
+    var headerView = string.Format("~/Views/{0}/_Shared/_Header.cshtml", themeFolder);
+    var footerView = string.Format("~/Views/{0}/_Shared/_Footer.cshtml", themeFolder);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Partial(headView)
+</head>
+<body>
+    @Html.Partial(headerView)
+    <div class="container main">
+        <div class="settings-page">
+            <div class="settings-page-sidebar">
+                <ul>
+                    <li class="profile"><a href="~/admin/settings/profile">Profile</a></li>
+                    <li class="import"><a href="~/admin/settings/import">Import</a></li>
+                    <li class="disqus"><a href="~/admin/settings/disqus">Disqus</a></li>
+                    @if (Model.Profile != null && Model.Profile.IsAdmin)
+                    {
+                        <li class="application"><a href="~/admin/settings/application">Global</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="settings-page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Html.Partial(footerView)
+    @RenderSection("Scripts", false)
+</body>
+</html>

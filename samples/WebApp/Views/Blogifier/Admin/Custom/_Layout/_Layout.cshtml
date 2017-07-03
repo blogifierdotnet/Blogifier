@@ -1,0 +1,21 @@
+﻿@using Blogifier.Core.Common
+@{
+    var themeFolder = "blogifier/admin/custom";
+    var headView = string.Format("~/Views/{0}/_Shared/_Head.cshtml", themeFolder);
+    var headerView = string.Format("~/Views/{0}/_Shared/_Header.cshtml", themeFolder);
+    var footerView = string.Format("~/Views/{0}/_Shared/_Footer.cshtml", themeFolder);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Partial(headView)
+</head>
+<body>
+    @Html.Partial(headerView)
+    <div class="container">
+        @RenderBody()
+    </div>
+    @Html.Partial(footerView)
+    @RenderSection("Scripts", false)
+</body>
+</html>

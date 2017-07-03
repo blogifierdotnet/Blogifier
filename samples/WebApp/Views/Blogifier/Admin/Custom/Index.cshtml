@@ -1,12 +1,9 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @using Blogifier.Core.Extensions
 @{
-    //var themeFolder = "embedded/admin/standard";
     var themeFolder = "blogifier/admin/custom";
     var x = Model.Pager;
 }
-<link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
-
 <div id="page-content-wrapper">
     <div class="page-toolbar">
         <a href="~/admin/editor/0" class="btn btn-success">New</a>
