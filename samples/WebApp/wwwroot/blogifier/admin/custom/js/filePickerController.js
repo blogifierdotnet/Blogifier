@@ -54,14 +54,15 @@
     }
 
     function pickCallback(data) {
-        if (uploadType === "profileLogo") {
+        if (uploadType === "profilelogo") {
             $('#Profile_Logo').val(data.url);
         }
-        if (uploadType === "profileAvatar") {
+        if (uploadType === "profileavatar") {
             $('#Profile_Avatar').val(data.url);
-            $('#profile-img').attr("src", data.url);
+            //alert($('img.profile-img').attr('src') + ' :: ' + data.url);
+            $('img.profile-img').attr('src', data.url);
         }
-        if (uploadType === "profileImage") {
+        if (uploadType === "profileimage") {
             $('#Profile_Image').val(data.url);
         }
         if (uploadType === "postImage") {
@@ -87,19 +88,19 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
-        var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
+        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
         if (pg.showOlder === true) {
-            older = '<li class="previous" onclick="return filePickerController.load(' + pg.older + ')"><a href="">← Older</a></li>';
+            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li class="next" onclick="return filePickerController.load(' + pg.newer + ')"><a href="#">Newer →</a></li>';
+            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href=""><i class="fa fa-arrow-right"></i></a></li>';
         }
-        $('.pager').empty();
+        $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
-            $('.pager').append(older);
-            $('.pager').append('<li class="counter">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</li>');
-            $('.pager').append(newer);
+            $('.pagination-custom').append(older);
+            $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
+            $('.pagination-custom').append(newer);
         }
     }
 
