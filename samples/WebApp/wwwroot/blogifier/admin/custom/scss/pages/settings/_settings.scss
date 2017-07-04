@@ -1,24 +1,48 @@
 ﻿.admin-settings {
-    display: flex;
+    border: 1px solid #dbdbdb;
+    height: 100%;
+    display: table;
     width: 100%;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 3px;
+    background: #fff;
+
+
     &-sidebar {
         width: 200px;
-        flex: 1;
-        background: rgba(255,255,255,0.3);
+        display: table-cell;
+        vertical-align: top;
+        border-right: 1px solid #ddd;
 
         ul {
             display: block;
             list-style: none;
             margin: 0;
             padding: 0;
-
+            padding-top:1rem;
             li {
-                text-transform: uppercase;
 
                 &.active {
                     background: #fff;
+                    position: relative;
+                    font-weight:$font-weight-medium;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        right: -1px;
+                        top: 50%;
+                        margin-top: -10px;
+                        @include triangle(left, 10px, #fff);
+                    }
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0px;
+                        top: 50%;
+                        margin-top: -10px;
+                        @include triangle(left, 10px, #ccc);
+                    }
 
                     a {
                         color: #000;
@@ -36,8 +60,8 @@
     }
 
     &-content {
-        flex: 4;
-        background: #fff;
+        display: table-cell;
+        vertical-align: top;
         padding: 3rem;
     }
 }

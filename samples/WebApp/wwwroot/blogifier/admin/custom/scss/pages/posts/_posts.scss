@@ -11,8 +11,7 @@
     .post-item {
         position: relative;
         padding: 0;
-        border: none;
-        margin-bottom: 1px;
+        border: 1px solid #dbdbdb;
 
         &-link {
             display: block;
@@ -67,7 +66,6 @@
 
 .post-image {
     position: relative;
-
 
     &-upload {
         display: block;

@@ -1,11 +1,10 @@
-﻿body {
+﻿html,body {
+    height:100%;
+}
+body {
     font-family: $font-family-base;
     color: #666;
     cursor: default;
-    background-color: #e6e9f0;
+    background-color: #fafafa;
     overflow-y: scroll;
-
-    // Sticky footer
-    display: flex;
-    flex-direction: column;
 }

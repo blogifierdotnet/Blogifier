@@ -1,10 +1,18 @@
-﻿.admin {
-    flex: 1 0 auto;
+﻿.container {
+    width:100%;
+    max-width:60rem;
+}
+.admin {
+    min-height: 100%;
+    margin-bottom: -4rem;
+
+    &::after {
+        content: "";
+        display: block;
+        height: 4rem;
+    }
 
     &-content {
         padding-top: 3rem;
-        padding-bottom: 3rem;
     }
-}
-.container {
 }
