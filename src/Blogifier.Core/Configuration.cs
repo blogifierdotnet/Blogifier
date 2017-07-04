@@ -37,18 +37,16 @@ namespace Blogifier.Core
 		{
 			app.UseMiddleware<EmbeddedResources>();
 
-            
-
 			ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
 
-            if (!ApplicationSettings.UseInMemoryDatabase)
-            {
-                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    scope.ServiceProvider.GetService<BlogifierDbContext>().Database.Migrate();
-                }
-            }
+            //if (!ApplicationSettings.UseInMemoryDatabase)
+            //{
+            //    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            //    {
+            //        scope.ServiceProvider.GetService<BlogifierDbContext>().Database.Migrate();
+            //    }
+            //}
         }
 
 		static void AddDatabase(IServiceCollection services)

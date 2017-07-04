@@ -2,9 +2,11 @@
 @{
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
+    var blogTitle = ApplicationSettings.Title;
     if (Model.Profile != null)
     {
         userName = Model.Profile.AuthorName;
+        blogTitle = Model.Profile.Title;
         if (!string.IsNullOrEmpty(Model.Profile.Avatar))
         {
             avatar = Model.Profile.Avatar;
@@ -24,13 +26,10 @@
                     <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
                     <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
                 }
-                @if (Model.Profile != null && Model.Profile.IsAdmin)
-                {
-                    <li class="settings"><a class="dropdown-item " href="~/admin/settings/profile">Settings</a></li>
-                }
+                <li class="settings"><a class="dropdown-item " href="~/admin/settings/profile">Settings</a></li>
             </ul>
         </div>
-        <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
+        <div class="brand"><a href="~/blog" target="_blank">@blogTitle</a></div>
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="profile-image" alt="@userName" src="@avatar">
