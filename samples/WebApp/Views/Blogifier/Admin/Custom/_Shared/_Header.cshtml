@@ -1,7 +1,5 @@
 ﻿@using Blogifier.Core.Common
 @{
-    var profileIcon = Model.Profile != null && Model.Profile.IsAdmin ? "glyphicon-king" : "glyphicon-user";
-
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
     if (Model.Profile != null)
@@ -20,17 +18,17 @@
                 <i class="fa fa-navicon"></i>
                 <span class="nav-title"></span>
             </button>
-            @if (Model.BlogExists)
-            {
-                <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
+            <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
+                @if (Model.BlogExists)
+                {
                     <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
                     <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
-                    @if (Model.Profile != null && Model.Profile.IsAdmin)
-                    {
-                        <li class="settings"><a class="dropdown-item " href="~/admin/settings/application">Global</a></li>
-                    }
-                </ul>
-            }
+                }
+                @if (Model.Profile != null && Model.Profile.IsAdmin)
+                {
+                    <li class="profile"><a class="dropdown-item " href="~/admin/settings/profile">Profile</a></li>
+                }
+            </ul>
         </div>
         <div class="brand"><a href="~/blog" target="_blank">Name of the blog</a></div>
         <div class="btn-group">
@@ -39,9 +37,9 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="~/blog">View Blog</a>
-                <a class="dropdown-item" href="~/admin/settings/profile"><i class="fa @profileIcon"></i>Edit Profile</a>
                 <a class="dropdown-item" href="" onclick="profileLogOut(); return false;">Logoff</a>
             </div>
         </div>
+        <div id="foo">FOO</div>
     </div>
 </div>

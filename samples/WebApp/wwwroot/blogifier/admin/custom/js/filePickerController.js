@@ -59,8 +59,12 @@
         }
         if (uploadType === "profileavatar") {
             $('#Profile_Avatar').val(data.url);
-            //alert($('img.profile-img').attr('src') + ' :: ' + data.url);
-            $('img.profile-img').attr('src', data.url);
+
+            // TODO: can not access page element from modal
+            setTimeout(function () {
+                var zzz = $('img.profile-img');
+                $('img.profile-img').attr('src', data.url);
+            }, 3000);
         }
         if (uploadType === "profileimage") {
             $('#Profile_Image').val(data.url);
