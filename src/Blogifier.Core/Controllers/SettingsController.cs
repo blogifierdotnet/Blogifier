@@ -7,6 +7,9 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Blogifier.Core.Controllers
@@ -16,12 +19,16 @@ namespace Blogifier.Core.Controllers
 	public class SettingsController : Controller
 	{
 		IUnitOfWork _db;
+        ILogger _logger;
+        private readonly IConfiguration _config;
         string _theme;
 
-		public SettingsController(IUnitOfWork db)
+		public SettingsController(IUnitOfWork db, IConfiguration config, ILogger<SettingsController> logger)
 		{
 			_db = db;
-			_theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
+            _config = config;
+            _logger = logger;
+            _theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
                 ApplicationSettings.BlogTheme);
         }
 
@@ -44,6 +51,16 @@ namespace Blogifier.Core.Controllers
         [Route("application")]
         public IActionResult Application()
         {
+            if (_config.GetConnectionString("BLOGIFIER") != null)
+            {
+                _logger.LogInformation("XXXXX -> BLOGIFIER -> " + _config.GetConnectionString("BLOGIFIER"));
+            }
+
+            if (_config.GetConnectionString("DefaultConnection") != null)
+            {
+                _logger.LogInformation("XXXXX -> DefaultConnection -> " + _config.GetConnectionString("DefaultConnection"));
+            }
+
             return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 

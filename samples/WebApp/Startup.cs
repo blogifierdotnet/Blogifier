@@ -18,8 +18,7 @@ namespace WebApp
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
             {
@@ -51,7 +50,9 @@ namespace WebApp
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-			Blogifier.Core.Configuration.InitServices(services);
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            Blogifier.Core.Configuration.InitServices(services);
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

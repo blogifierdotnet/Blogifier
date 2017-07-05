@@ -40,13 +40,22 @@ namespace Blogifier.Core
 			ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
 
-            //if (!ApplicationSettings.UseInMemoryDatabase)
-            //{
-            //    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            //    {
-            //        scope.ServiceProvider.GetService<BlogifierDbContext>().Database.Migrate();
-            //    }
-            //}
+            if (!ApplicationSettings.UseInMemoryDatabase)
+            {
+                try
+                {
+                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                    {
+                        var db = scope.ServiceProvider.GetService<BlogifierDbContext>().Database;
+                        db.EnsureCreated();
+                        if (db.GetPendingMigrations() != null)
+                        {
+                            db.Migrate();
+                        }
+                    }
+                }
+                catch { }
+            }
         }
 
 		static void AddDatabase(IServiceCollection services)
