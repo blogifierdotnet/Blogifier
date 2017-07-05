@@ -4,9 +4,13 @@
 }
 
 <div class="admin-footer container">
-    &copy; @DateTime.Now.Year
-    &mdash; <a href="http://blogifier.net/" target="_blank">Blogifier</a> (Version @Blogifier.Core.Common.ApplicationSettings.Version)
-    &mdash; <a href="https://github.com/blogifierdotnet/" target="_blank">GitHub</a>
+    <a href="http://blogifier.net/" target="_blank"> <img src="~/blogifier/admin/custom/img/logo-sm.png" alt="Blogifier" /></a>
+    Copyright &copy; @DateTime.Now.Year Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)
+    <ul class="float-right">
+        <li><a href="https://github.com/blogifierdotnet/Blogifier.Core" target="_blank">GitHub</a></li>
+        <li><a href="https://github.com/blogifierdotnet/Blogifier.Core/wiki" target="_blank">Documents</a></li>  
+        <li><a href="https://github.com/blogifierdotnet/Blogifier.Core/issues" target="_blank">Support</a></li>  
+    </ul>
 </div>
 
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
