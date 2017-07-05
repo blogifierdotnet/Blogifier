@@ -53,12 +53,12 @@ namespace Blogifier.Core.Controllers
         {
             if (_config.GetConnectionString("BLOGIFIER") != null)
             {
-                _logger.LogInformation("XXXXX -> BLOGIFIER -> " + _config.GetConnectionString("BLOGIFIER"));
+                _logger.LogWarning("XXXXX -> BLOGIFIER -> " + _config.GetConnectionString("BLOGIFIER"));
             }
 
             if (_config.GetConnectionString("DefaultConnection") != null)
             {
-                _logger.LogInformation("XXXXX -> DefaultConnection -> " + _config.GetConnectionString("DefaultConnection"));
+                _logger.LogWarning("XXXXX -> DefaultConnection -> " + _config.GetConnectionString("DefaultConnection"));
             }
 
             return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
