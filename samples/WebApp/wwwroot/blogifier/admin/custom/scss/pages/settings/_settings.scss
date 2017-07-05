@@ -19,13 +19,15 @@
             list-style: none;
             margin: 0;
             padding: 0;
-            padding-top:1rem;
+            padding-top: 1rem;
+
             li {
 
                 &.active {
                     background: #fff;
                     position: relative;
-                    font-weight:$font-weight-medium;
+                    font-weight: $font-weight-medium;
+
                     &::after {
                         content: "";
                         position: absolute;
@@ -51,9 +53,9 @@
 
                 a {
                     display: block;
-                    line-height: 3.5rem;
-                    padding-left: 2rem;
-                    color: #888;
+                    line-height: 3rem;
+                    padding-left: 2.25rem;
+                    color: #666;
                 }
             }
         }

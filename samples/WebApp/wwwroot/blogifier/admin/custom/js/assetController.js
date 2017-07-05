@@ -44,7 +44,7 @@
             }
             $("#assetList").append(tag);
         });
-        var btn = '<button class="btn btn-success" onclick="return assetController.clickUpload()">Upload</button>';
+        var btn = '<button class="btn btn-black" onclick="return assetController.clickUpload()">Upload</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
         pager(data.pager);
