@@ -13,13 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\blogifier\admin\custom\img\logo.png">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\blogifier\logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
