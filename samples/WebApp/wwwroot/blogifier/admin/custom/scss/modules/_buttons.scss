@@ -15,4 +15,22 @@
 }
 .btn-lg {
     padding: 1rem 2rem;
-} 
+}
+
+
+.btn-black {
+    color: #fff;
+    background-color: #222;
+    /* border-color: #5cb85c; */
+    &:hover {
+        color: #fff;
+        background-color: #000;
+        border-color: #000;
+    }
+
+    &.focus, &:focus {
+        color:#fff !important;
+        -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.50);
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.50);
+    }
+}
