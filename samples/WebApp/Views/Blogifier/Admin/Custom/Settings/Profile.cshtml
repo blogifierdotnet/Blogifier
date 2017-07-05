@@ -12,63 +12,86 @@
             You must save your profile before you can navigate to other pages.
         </div>
     }
-    <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
-        <div class="form-group">
-            <input type="text" asp-for="Profile.AuthorName" class="form-control" placeholder="Author Name" />
-            <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Profile.AuthorEmail" class="form-control" placeholder="Email" />
-            <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="text" asp-for="Profile.Title" class="form-control" placeholder="Blog Title" />
-            <span asp-validation-for="Profile.Title" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input asp-for="Profile.Description" type="text" class="form-control" placeholder="Blog Description" />
-            <span asp-validation-for="Profile.Description" class="text-danger"></span>
-        </div>
-        
-        <div class="input-group form-group">
-            <input type="text" asp-for="Profile.Avatar" class="form-control" placeholder="Avatar" readonly />
-            <span class="input-group-btn" style="display:none;">
-                <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');">
-                    remove
-                </button>
-            </span>
-            <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');"> upload</button>
-            </span>
-        </div>
-        <div class="input-group form-group">
-            <input type="text" asp-for="Profile.Logo" class="form-control" placeholder="Blog Logo" readonly />
-            <span class="input-group-btn" style="display:none;">
-                <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');">
-                    remove
-                </button>
-            </span>
-            <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
-            </span>
-        </div>
-        <div class="input-group form-group">
-            <input type="text" asp-for="Profile.Image" class="form-control" placeholder="Blog Cover" readonly />
-            <span class="input-group-btn" style="display:none;">
-                <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');">
-                    remove
-                </button>
-            </span>
-            <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
-            </span>
-        </div>
-        <div class="form-group">
-            <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
-        </div>
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-black btn-lg btn-block">Save</button>
+
+    <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Author Name</label>
+            <div class="col-sm-6">
+                <input type="text" asp-for="Profile.AuthorName" class="form-control" />
+                <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Email Address</label>
+            <div class="col-sm-6">
+                <input type="text" asp-for="Profile.AuthorEmail" class="form-control" />
+                <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Blog Title</label>
+            <div class="col-sm-6">
+                <input type="text" asp-for="Profile.Title" class="form-control" />
+                <span asp-validation-for="Profile.Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Blog Description</label>
+            <div class="col-sm-9">
+                <input asp-for="Profile.Description" type="text" class="form-control />
+                <span asp-validation-for="Profile.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Blog Theme</label>
+            <div class="col-sm-9">
+                <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
+            </div>
+        </div>
+        <div class=" form-group row">
+            <label class="col-sm-3 col-form-label text-right">Profile Photo</label>
+            <div class="input-group col-sm-9">
+                <input type="text" asp-for="Profile.Avatar" class="form-control" readonly />
+                <span class="input-group-btn" style="display:none;">
+                    <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
+                </span>
+                <span class="input-group-btn">
+                    <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Blog Logo</label>
+            <div class="input-group col-sm-9">
+                <input type="text" asp-for="Profile.Logo" class="form-control" readonly />
+                <span class="input-group-btn" style="display:none;">
+                    <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
+                </span>
+                <span class="input-group-btn">
+                    <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label text-right">Blog Cover</label>
+            <div class="input-group col-sm-9">
+                <input type="text" asp-for="Profile.Image" class="form-control" readonly />
+                <span class="input-group-btn" style="display:none;">
+                    <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
+                </span>
+                <span class="input-group-btn">
+                    <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+
+            <div class="col-sm-9">
+                <button type="submit" class="btn btn-black">Save</button>
+            </div>
         </div>
         <input asp-for="Profile.Id" hidden="hidden" />
         <input asp-for="Profile.IdentityName" hidden="hidden" />

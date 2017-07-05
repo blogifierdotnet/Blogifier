@@ -4,12 +4,12 @@
 }
 .admin {
     min-height: 100%;
-    margin-bottom: -4rem;
+    margin-bottom: -4.5rem;
 
     &::after {
         content: "";
         display: block;
-        height: 4rem;
+        height: 4.5rem;
     }
 
     &-content {
