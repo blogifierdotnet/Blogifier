@@ -1,28 +1,29 @@
-﻿using System.Reflection;
-using Blogifier.Core.Common;
+﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Repositories;
 using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
+using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Blogifier.Core.Services.Search;
+using System.Reflection;
 
 namespace Blogifier.Core
 {
-	public class Configuration
+    public class Configuration
     {
-		public static void InitServices(IServiceCollection services)
+		public static void InitServices(IServiceCollection services, IConfiguration config)
 		{
             var loader = new AppSettingsLoader();
-            loader.LoadFromConfigFile();
+            loader.LoadFromConfigFile(config);
 
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();

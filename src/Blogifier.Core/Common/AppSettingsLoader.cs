@@ -5,20 +5,33 @@ namespace Blogifier.Core.Common
 {
     public class AppSettingsLoader
     {
-        public void LoadFromConfigFile()
+        public void LoadFromConfigFile(IConfiguration config)
         {
-            var builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
+            //var builder = new ConfigurationBuilder();
+            //builder.SetBasePath(Directory.GetCurrentDirectory());
+            //builder.AddJsonFile("appsettings.json");
 
             try
             {
-                var config = builder.Build();
+                //var config = builder.Build();
                 if (config != null)
                 {
-                    var defaultConnections = config.GetSection("ConnectionStrings");
-                    if(defaultConnections != null && !string.IsNullOrEmpty(defaultConnections.GetValue<string>("DefaultConnection")))
-                        ApplicationSettings.ConnectionString = defaultConnections.GetValue<string>("DefaultConnection");
+                    // connection string cascading
+                    //var defaultConnections = config.GetSection("ConnectionStrings");
+
+                    if (!string.IsNullOrEmpty(config.GetConnectionString("DefaultConnection")))
+                    {
+                        ApplicationSettings.ConnectionString = config.GetConnectionString("DefaultConnection");
+                    }
+                    if (!string.IsNullOrEmpty(config.GetConnectionString("BLOGIFIER")))
+                    {
+                        ApplicationSettings.ConnectionString = config.GetConnectionString("BLOGIFIER");
+                    }
+
+                    //if(defaultConnections != null && !string.IsNullOrEmpty(defaultConnections.GetValue<string>("DefaultConnection")))
+                    //    ApplicationSettings.ConnectionString = defaultConnections.GetValue<string>("DefaultConnection");
+
+                    // end connection string
 
                     var section = config.GetSection("Blogifier");
                     if (section != null)
