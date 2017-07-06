@@ -4,88 +4,92 @@
     var isPublished = Model.BlogPost.Published > DateTime.MinValue ? "checked" : "";
     var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
-<link href="~/@themeFolder/lib/autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
 
 <div id="page-content-wrapper">
     <div id="post-edit" class="post-edit">
-
-        <div class="page-toolbar">
-            <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black">Save</button>
-            <a href="~/admin" class="btn btn-secondary">Cancel</a>
-            <label class="custom-control custom-checkbox">
-                <input type="checkbox" id="cbxPublished" value="published" @isPublished class="custom-control-input">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Publish</span>
-            </label>
-        </div>
-
-        <div class="row">
-            <div class="col-8">
-                <form id="frmEditor" style="height:100%;">
-                    <div class="form-group">
-                        <input id="txtPostTitle" class="form-control" value="@Model.BlogPost.Title" placeholder="Post title..." />
-                    </div>
-                    <div class="form-group">
-                        <textarea id="txtContent" name="txtContent">@Model.BlogPost.Content</textarea>
-                    </div>
-                    <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
-                </form>
+        <form id="frmEditor" style="height:100%;">
+            <div class="form-group">
+                <input id="txtPostTitle" class="form-control" value="@Model.BlogPost.Title" placeholder="Post title..." />
             </div>
-
-            <div class="col-4">
-                <div id="post-image" class="form-group">
-                    @if (Model.BlogPost.Image == null)
-                    {
-                    <button type="button" class="post-image-upload" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);">
-                        <i class="fa fa-photo"></i><span>Add Post Cover</span>
-                    </button>
-                    }
-                    else
-                    {
-                    <div class="post-image-uploaded">
-                        <img src="@Model.BlogPost.Image" />
-                        <div class="post-image-actions btn-group">
-                            <a href="~/blog/@Model.BlogPost.Slug" target="_blank" title="Post image" class="btn"><i class="fa fa-link"></i></a>
-                            <button type="button" class="btn" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    }
-                </div>
-
-                <div class="post-category">
-                    <ul id="edit-categories">
-                        @foreach (var category in Model.CategoryList)
+            <div class="form-group">
+                <textarea id="txtContent" name="txtContent" class="form-control form-control-textcontent">@Model.BlogPost.Content</textarea>
+            </div>
+            <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
+        </form>
+        <div class="page-toolbar clearfix">
+            <div class="float-left">
+                <button type="button" class="btn btn-black">Publish</button>
+                <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black">Save</button>
+                <a href="~/admin" class="btn btn-secondary">Cancel</a>
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" id="cbxPublished" value="published" @isPublished class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Publish</span>
+                </label>
+            </div>
+            <div class="float-right">
+                <div class="btn-group">
+                    <div class="btn-group dropup" id="post-image">
+                        @if (Model.BlogPost.Image == null)
                         {
-                        <li>
-                            <label class="custom-control custom-checkbox">
-
-                                @if (category.Selected)
-                                {
-                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                                }
-                                else
-                                {
-                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                                }
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">@category.Text</span>
-                            </label>
-                        </li>
+                            <button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);"><i class="fa fa-image"></i></button>
                         }
-                    </ul>
-                    <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
-                        <div class="input-group">
-                            <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">Add</button>
-                            </span>
+                        else
+                        {
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-image"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                                <div class="post-image">
+                                    <img src="@Model.BlogPost.Image" />
+                                    <div class="post-image-actions btn-group">
+                                        <button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="btn-group dropup">
+                        <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bookmark"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop2">
+                            <div class="post-category">
+                                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                                    <div class="input-group">
+                                        <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">Add</button>
+                                        </span>
+                                    </div>
+                                </form>
+                                <ul id="edit-categories">
+                                    @foreach (var category in Model.CategoryList)
+                                    {
+                                        <li>
+                                            <label class="custom-control custom-checkbox">
+
+                                                @if (category.Selected)
+                                                {
+                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                                }
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">@category.Text</span>
+                                            </label>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

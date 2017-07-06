@@ -1,5 +1,11 @@
-toastr.options.positionClass = 'toast-bottom-right';
+﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
+
+$(".post-edit .page-toolbar").delay(500).fadeIn();
+
+$(".page-toolbar .dropdown-menu").click(function (event) {
+    event.stopPropagation();
+});
 
 //
 $('.admin-settings-sidebar ul li').removeClass('active');

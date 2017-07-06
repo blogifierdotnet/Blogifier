@@ -22,4 +22,10 @@
     .btn {
         margin-right: .5rem;
     }
+
+    .float-right {
+        .btn {
+            margin-right:0;
+        }
+    }
 }

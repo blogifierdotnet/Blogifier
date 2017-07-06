@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         ],
         toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media fileupload | code fullscreen",
         autosave_ask_before_unload: false,
-        height: "515",
+        height: "400",
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,
