@@ -1,14 +1,9 @@
 ﻿.post-edit {
-    .editor {
-    }
-
     .page-toolbar {
-        display:none;
+        display: none;
 
         .float-right {
-            .btn {
-            }
-
+            .btn,
             .dropdown-toggle {
                 letter-spacing: 0;
                 padding-right: 1rem;
@@ -38,6 +33,7 @@
     position: relative;
     overflow: hidden;
     max-height: 300px;
+
     &-actions {
         position: absolute;
         bottom: 0;
@@ -59,24 +55,56 @@
 
 
 .post-category {
-    padding: 1rem;
     max-height: 300px;
+    text-transform: none;
+
+    form {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+    }
 
     ul {
         @include unstyled();
-        margin-top: 1rem;
         height: 215px;
         overflow-y: scroll;
 
-        button {
-            padding: 0;
-            height: 1rem;
-            border: none;
-            background: none;
+        li {
+            position: relative;
+            border-bottom: 1px solid #eee;
+
+            &:hover {
+                background: #fafafa;
+            }
+
+            label {
+                margin-bottom: 0;
+                display: block;
+                padding: .44rem 1rem .44rem 2.5rem;
+            }
+
+            .custom-control-indicator {
+                top: .55rem;
+                left: 1rem;
+            }
         }
 
-        li {
-            padding-left: .25rem;
+        button {
+            border: none;
+            display: block;
+            border-left: 1px solid #eee;
+            padding: 0;
+            height: 100%;
+            background: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: #aaa;
+            width: 2.25rem;
+            cursor: pointer;
+
+            &:hover {
+                color: red;
+            }
         }
     }
 }
