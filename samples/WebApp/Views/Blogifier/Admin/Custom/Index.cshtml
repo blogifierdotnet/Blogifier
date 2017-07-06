@@ -9,7 +9,7 @@
         <a href="~/admin/editor/0" class="btn btn-black">New</a>
     </div>
     <div id="post-list">
-        <ul id="admin-posts" class="list-group post-list elements-list">
+        <ul id="admin-posts" class="list-group post-list">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
@@ -42,11 +42,11 @@
         <ul class="pagination-custom">
             @if (Model.Pager.ShowNewer)
             {
-                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-left"></i></a></li>
+                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-right"></i></a></li>
             }
             @if (Model.Pager.ShowOlder)
             {
-                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-right"></i></a></li>
+                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-left"></i></a></li>
             }
         </ul>
     </div>

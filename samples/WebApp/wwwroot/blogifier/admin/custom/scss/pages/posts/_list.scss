@@ -1,12 +1,4 @@
-﻿.page-toolbar {
-    margin-bottom: 1rem;
-
-    .btn {
-        margin-right: .5rem;
-    }
-}
-
-.post-list {
+﻿.post-list {
 
     .post-item {
         position: relative;
@@ -20,6 +12,8 @@
             line-height: 3.5rem;
             padding-left: 1rem;
             width: 100%;
+            font-weight: 500;
+            font-size: 1rem;
         }
 
         &-info {
@@ -53,11 +47,16 @@
             }
 
             i {
-                color: #444;
+                color: #666;
+                font-size: 14px;
+
+                &.fa-trash {
+                }
             }
 
             span {
                 font-size: .75rem;
+                color: #888;
             }
         }
     }
@@ -121,7 +120,7 @@
     background-color: #fff;
     padding: 1rem;
     border-radius: 3px;
-    border:1px solid #dbdbdb;
+    border: 1px solid #dbdbdb;
 
     ul {
         @include unstyled();
@@ -130,7 +129,7 @@
             padding: 0;
             height: 1rem;
             border: none;
-            background:none;
+            background: none;
         }
     }
 }

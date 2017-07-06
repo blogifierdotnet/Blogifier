@@ -8,12 +8,13 @@
         position: relative;
         border-radius: 3px;
         margin-bottom: 2rem;
-        border:0.5rem solid #fff;
-        box-shadow:0 0 0px 1px #dbdbdb;
+        border: 0.5rem solid #fff;
+        box-shadow: 0 0 0px 1px #dbdbdb;
+
         img {
             min-height: 100%;
-            max-width:150%;
-            max-height:150%;
+            max-width: 150%;
+            max-height: 150%;
             display: block;
             position: absolute;
             top: 50%;
@@ -22,7 +23,6 @@
         }
     }
 }
-
 .asset-edit {
     &-img {
         height: 200px;
