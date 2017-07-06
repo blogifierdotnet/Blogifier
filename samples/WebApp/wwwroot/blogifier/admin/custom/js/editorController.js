@@ -54,6 +54,7 @@
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
+        li += '<button type="button" tabindex="-1"><i class="fa fa-times"></i></button>';
         li += '</li>';
         $("#edit-categories").append(li);
         $("#txtCategory").val('');
