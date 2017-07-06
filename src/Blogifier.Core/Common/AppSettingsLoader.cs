@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace Blogifier.Core.Common
 {
@@ -7,31 +6,12 @@ namespace Blogifier.Core.Common
     {
         public void LoadFromConfigFile(IConfiguration config)
         {
-            //var builder = new ConfigurationBuilder();
-            //builder.SetBasePath(Directory.GetCurrentDirectory());
-            //builder.AddJsonFile("appsettings.json");
-
             try
             {
-                //var config = builder.Build();
                 if (config != null)
                 {
-                    // connection string cascading
-                    //var defaultConnections = config.GetSection("ConnectionStrings");
-
                     if (!string.IsNullOrEmpty(config.GetConnectionString("DefaultConnection")))
-                    {
                         ApplicationSettings.ConnectionString = config.GetConnectionString("DefaultConnection");
-                    }
-                    if (!string.IsNullOrEmpty(config.GetConnectionString("BLOGIFIER")))
-                    {
-                        ApplicationSettings.ConnectionString = config.GetConnectionString("BLOGIFIER");
-                    }
-
-                    //if(defaultConnections != null && !string.IsNullOrEmpty(defaultConnections.GetValue<string>("DefaultConnection")))
-                    //    ApplicationSettings.ConnectionString = defaultConnections.GetValue<string>("DefaultConnection");
-
-                    // end connection string
 
                     var section = config.GetSection("Blogifier");
                     if (section != null)

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Blogifier.Core.Controllers
@@ -33,34 +32,9 @@ namespace Blogifier.Core.Controllers
         }
 
         [VerifyProfile]
-        [Route("basic")]
-        public IActionResult Basic()
-        {
-            var profile = GetProfile();
-            var storage = new BlogStorage("");
-
-            var model = new AdminProfileModel
-            {
-                Profile = profile,
-                BlogThemes = storage.GetThemes(ThemeType.Blog)
-            };
-            return View(_theme + "Basic.cshtml", model);
-        }
-
-        [VerifyProfile]
         [Route("application")]
         public IActionResult Application()
         {
-            if (_config.GetConnectionString("BLOGIFIER") != null)
-            {
-                _logger.LogWarning("XXXXX -> BLOGIFIER -> " + _config.GetConnectionString("BLOGIFIER"));
-            }
-
-            if (_config.GetConnectionString("DefaultConnection") != null)
-            {
-                _logger.LogWarning("XXXXX -> DefaultConnection -> " + _config.GetConnectionString("DefaultConnection"));
-            }
-
             return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 

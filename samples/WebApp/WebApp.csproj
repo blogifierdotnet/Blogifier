@@ -39,8 +39,6 @@
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logs\" />
-    <Folder Include="Logs\" />
     <Folder Include="wwwroot\blogifier\blog\custom\scss\" />
   </ItemGroup>
 
