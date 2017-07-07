@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Blogifier.Core.Controllers
 {
@@ -48,10 +49,10 @@ namespace Blogifier.Core.Controllers
         {
             var profile = GetProfile();
 
-            IEnumerable<SelectListItem> categories = null;
+            List<SelectListItem> categories = null;
             var post = new BlogPost();
 
-            categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id);
+            categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id).ToList();
 
             if (id > 0)
             {

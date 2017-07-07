@@ -57,9 +57,9 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop2">
                             <div class="post-category">
-                                <form method="post" asp-controller="Admin" asp-action="Profile" asp-antiforgery="true">
+                                <form id="frmCategory">
                                     <div class="input-group">
-                                        <input type="text" id="txtCategory" class="form-control" placeholder="category..." />
+                                        <input type="text" id="txtCategory" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="category..." />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">Add</button>
                                         </span>
@@ -68,9 +68,8 @@
                                 <ul id="edit-categories">
                                     @foreach (var category in Model.CategoryList)
                                     {
-                                        <li>
+                                        <li id="cat-@category.Value">
                                             <label class="custom-control custom-checkbox">
-
                                                 @if (category.Selected)
                                                 {
                                                     <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
@@ -82,7 +81,7 @@
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description">@category.Text</span>
                                             </label>
-                                            <button type="button" tabindex="-1"><i class="fa fa-times"></i></button>
+                                            <button type="button" tabindex="-1" onclick="editorController.removeCategory('@category.Value')"><i class="fa fa-times"></i></button>
                                         </li>
                                     }
                                 </ul>

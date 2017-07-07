@@ -41,6 +41,14 @@
         toastr.success('Saved');
     }
 
+    function categoryKeyPress(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            saveCategory();
+        }
+        return false;
+    }
+
     function saveCategory() {
         var obj = { Title: $("#txtCategory").val() }
         dataService.post("blogifier/api/categories/addcategory", obj, saveCategoryCallback, fail);
@@ -48,18 +56,26 @@
 
     function saveCategoryCallback(data) {
         var obj = JSON.parse(data);
-        var li = '<li>';
+        var li = '<li id="cat-' + obj.id + '">';
         li += '	<label class="custom-control custom-checkbox">';
         li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" class="custom-control-input">';
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
-        li += '<button type="button" tabindex="-1"><i class="fa fa-times"></i></button>';
+        li += '<button type="button" tabindex="-1" onclick="editorController.removeCategory(\'' + obj.id + '\')"><i class="fa fa-times"></i></button>';
         li += '</li>';
         $("#edit-categories").append(li);
         $("#txtCategory").val('');
         $("#txtCategory").focus();
-        toastr.success('Saved');
+    }
+
+    function removeCategory(id) {
+        dataService.remove("blogifier/api/categories/" + id, removeCategoryCallback(id), fail);
+    }
+
+    function removeCategoryCallback(id) {
+        $("#cat-" + id).remove();
+        $("#txtCategory").focus();
     }
 
     function openFilePicker(postId) {
@@ -94,10 +110,20 @@
         loadPostEdit: loadPostEdit,
         savePost: savePost,
         saveCategory: saveCategory,
+        removeCategory: removeCategory,
+        categoryKeyPress: categoryKeyPress,
         openFilePicker: openFilePicker,
         resetPostImage: resetPostImage
     }
 }(DataService, filePickerController);
+
+//$(function () {
+//    $('#txtCategory').on('keypress', function (e) {
+//        e.which !== 13 || $('[tabIndex=' + (+this.tabIndex + 1) + ']')[0].focus();
+//        //alert(e.which);
+//        return false;
+//    });
+//});
 
 document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({
