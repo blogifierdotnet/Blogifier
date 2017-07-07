@@ -19,14 +19,21 @@
         </form>
         <div class="page-toolbar clearfix">
             <div class="float-left">
-                <button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>
-                <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black">Save</button>
+                <div class="btn-group">
+                    <button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>
+                    <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black btn-block">Save</button>
+                    <button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>
+                        <a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>
+                        <a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>
+                    </div>
+                </div>
                 <a href="~/admin" class="btn btn-secondary">Cancel</a>
             </div>
             <div class="float-right">
                 <div class="btn-group">
-                    <div class="btn-group dropup" id="post-image">                      
-                    </div>
+                    <div class="btn-group dropup" id="post-image"></div>
                     <div class="btn-group dropup">
                         <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bookmark"></i>

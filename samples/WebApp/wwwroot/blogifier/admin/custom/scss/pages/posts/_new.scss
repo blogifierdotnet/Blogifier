@@ -3,7 +3,7 @@
         display: none;
 
         .float-right {
-            > .btn,
+           .btn, 
             .dropdown-toggle {
                 letter-spacing: 0;
                 padding-right: 1rem;
@@ -42,7 +42,7 @@
         width: 100%;
 
         .btn {
-            width: 100%;
+            width: 100% !important;
             border-radius: 0;
         }
 
@@ -106,5 +106,11 @@
                 color: red;
             }
         }
+    }
+}
+
+.btn-group {
+    .btn {
+        margin-right:0;
     }
 }
