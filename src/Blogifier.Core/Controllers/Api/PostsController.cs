@@ -77,7 +77,9 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Slug = GetSlug(model.Title);
                 bp.Content = model.Content;
                 bp.Description = model.Content.ToDescription();
-                bp.Published = model.IsPublished ? SystemClock.Now() : DateTime.MinValue;
+                // when publish button clicked, save and publish
+                // but do not unpublish - use unpublish/{id} for this
+                if (model.IsPublished) { bp.Published = SystemClock.Now(); }
             }
             _db.Complete();
 

@@ -10,12 +10,12 @@
         tinyMCE.activeEditor.setContent(data.content);
     }
 
-    function savePost() {
+    function savePost(publish) {
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
             Content: tinyMCE.activeEditor.getContent(),
-            IsPublished: $('#cbxPublished').is(':checked'),
+            IsPublished: publish === true ? publish : false,
             Categories: []
         }
         if (obj.Title.length === 0) {
