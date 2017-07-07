@@ -1,15 +1,5 @@
 ﻿var editorController = function (dataService, filePickerController) {
 
-    function loadPostEdit(postId) {
-        dataService.get('blogifier/api/posts/post/' + postId, loadPostEditCallback, fail);
-    }
-
-    function loadPostEditCallback(data) {
-        $('#txtPostTitle').val(data.title);
-        $('#txtPostImage').val(data.image);
-        tinyMCE.activeEditor.setContent(data.content);
-    }
-
     function savePost(publish) {
         var obj = {
             Id: $('#hdnPostId').val(),
@@ -94,6 +84,28 @@
         }, 1000); 
     }
 
+    function loadPostImage() {
+        var postId = $('#hdnPostId').val();
+        var postImg = $('#hdnPostImg').val();
+        // toastr.success(postId + ' :: ' + postImg);
+
+        var btn = '<button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(' + postId + ');">';
+        btn += '<i class="fa fa-image" ></i></button >';
+
+        if (postImg.length > 0) {
+            btn = '<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+            btn += '<i class="fa fa-image"></i></button>';
+        }
+        $('#post-image').append(btn);
+
+        var dd = '<div id="ddPostImg" class="dropdown-menu dropdown-menu-right" aria-labelledby="btnPostImgToggle">';
+        dd += '<div class="post-image"><img src="' + postImg + '" /><div class="post-image-actions btn-group">';
+        dd += '<button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage(' + postId + ');">';
+        dd += '<i class="fa fa-trash"></i></button></div></div></div>';
+
+        $('#post-image').append(dd);
+    }
+
     function fail(jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) { msg = 'Not connect.\n Verify Network.'; }
@@ -107,23 +119,15 @@
     }
 
     return {
-        loadPostEdit: loadPostEdit,
         savePost: savePost,
         saveCategory: saveCategory,
         removeCategory: removeCategory,
         categoryKeyPress: categoryKeyPress,
         openFilePicker: openFilePicker,
+        loadPostImage: loadPostImage,
         resetPostImage: resetPostImage
     }
 }(DataService, filePickerController);
-
-//$(function () {
-//    $('#txtCategory').on('keypress', function (e) {
-//        e.which !== 13 || $('[tabIndex=' + (+this.tabIndex + 1) + ']')[0].focus();
-//        //alert(e.which);
-//        return false;
-//    });
-//});
 
 document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({

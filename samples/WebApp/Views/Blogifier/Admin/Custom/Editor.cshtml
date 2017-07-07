@@ -15,6 +15,7 @@
                 <textarea id="txtContent" name="txtContent" class="form-control form-control-textcontent">@Model.BlogPost.Content</textarea>
             </div>
             <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
+            <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
         </form>
         <div class="page-toolbar clearfix">
             <div class="float-left">
@@ -24,27 +25,7 @@
             </div>
             <div class="float-right">
                 <div class="btn-group">
-                    <div class="btn-group dropup" id="post-image">
-                        @if (Model.BlogPost.Image == null)
-                        {
-                            <button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(@Model.BlogPost.Id);"><i class="fa fa-image"></i></button>
-                        }
-                        else
-                        {
-                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-image"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                                <div class="post-image">
-                                    <img src="@Model.BlogPost.Image" />
-                                    <div class="post-image-actions btn-group">
-                                        <button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage(@Model.BlogPost.Id);">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                    <div class="btn-group dropup" id="post-image">                      
                     </div>
                     <div class="btn-group dropup">
                         <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,4 +77,7 @@
     <script src="~/@themeFolder/lib/autocomplete/jquery.easy-autocomplete.min.js"></script>
     <script src="~/@themeFolder/js/filePickerController.js"></script>
     <script src="~/@themeFolder/js/editorController.js"></script>
+    <script>
+        editorController.loadPostImage();
+    </script>
 }

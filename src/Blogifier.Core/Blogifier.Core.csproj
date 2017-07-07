@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyVersion>0.6.1.0</AssemblyVersion>
-    <FileVersion>0.6.1.0</FileVersion>
-    <Version>0.6.1.0</Version>
+    <AssemblyVersion>0.6.2.0</AssemblyVersion>
+    <FileVersion>0.6.2.0</FileVersion>
+    <Version>0.6.2.0</Version>
     <Authors>Blogifier</Authors>
     <Company>Blogifier.NET</Company>
     <Description>Blogifier.Core is designed to blogify new and existing ASP.NET Core applications</Description>
