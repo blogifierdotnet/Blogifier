@@ -89,7 +89,7 @@ namespace Blogifier.Core.Controllers.Api
                     bp.Id, model.Categories.Select(c => c.Value).ToList());
                 _db.Complete();
             }
-            var callback = new { Id = bp.Id, Slug = bp.Slug };
+            var callback = new { Id = bp.Id, Slug = bp.Slug, Published = bp.Published, Image = bp.Image };
             return new CreatedResult("blogifier/api/posts/" + bp.Id, callback);
         }
 

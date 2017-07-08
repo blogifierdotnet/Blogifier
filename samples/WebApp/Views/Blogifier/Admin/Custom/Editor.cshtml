@@ -16,19 +16,11 @@
             </div>
             <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
             <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
+            <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
         </form>
         <div class="page-toolbar clearfix">
             <div class="float-left">
-                <div class="btn-group">
-                    <button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>
-                    <button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black btn-block">Save</button>
-                    <button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>
-                        <a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>
-                        <a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>
-                    </div>
-                </div>
+                <div id="action-buttons" class="btn-group"></div>
                 <a href="~/admin" class="btn btn-secondary">Cancel</a>
             </div>
             <div class="float-right">
@@ -86,5 +78,6 @@
     <script src="~/@themeFolder/js/editorController.js"></script>
     <script>
         editorController.loadPostImage();
+        editorController.loadActionButtons();
     </script>
 }

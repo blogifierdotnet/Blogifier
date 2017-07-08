@@ -28,7 +28,10 @@
     function savePostCallback(data) {
         var callback = JSON.parse(data);
         $('#hdnPostId').val(callback.id);
+        $('#hdnPostImg').val(callback.image);
+        $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
+        loadActionButtons();
     }
 
     function categoryKeyPress(e) {
@@ -87,7 +90,6 @@
     function loadPostImage() {
         var postId = $('#hdnPostId').val();
         var postImg = $('#hdnPostImg').val();
-        // toastr.success(postId + ' :: ' + postImg);
 
         var btn = '<button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(' + postId + ');">';
         btn += '<i class="fa fa-image" ></i></button >';
@@ -104,6 +106,43 @@
         dd += '<i class="fa fa-trash"></i></button></div></div></div>';
 
         $('#post-image').append(dd);
+    }
+
+    function loadActionButtons() {
+        var postId = $('#hdnPostId').val();
+        var published = $('#hdnPublished').val();
+        $('#action-buttons').empty();
+        var btn = '';
+        if (postId === '0') {
+            // new
+            btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>';
+            btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
+            btn += '<div class="dropdown-menu">';
+            btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
+            btn += '</div>';
+        }
+        else {
+            if (published === '1/1/0001 12:00:00 AM') {
+                // draft
+                btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>';
+                btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
+                btn += '<div class="dropdown-menu">';
+                btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
+                btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
+                btn += '</div>';
+            }
+            else {
+                // published
+                btn += '<button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black btn-block">Save</button>';
+                btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
+                btn += '<div class="dropdown-menu">';
+                btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
+                btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
+                btn += '</div>';
+            }
+        }
+        
+        $('#action-buttons').append(btn);
     }
 
     function fail(jqXHR, exception) {
@@ -125,7 +164,8 @@
         categoryKeyPress: categoryKeyPress,
         openFilePicker: openFilePicker,
         loadPostImage: loadPostImage,
-        resetPostImage: resetPostImage
+        resetPostImage: resetPostImage,
+        loadActionButtons: loadActionButtons
     }
 }(DataService, filePickerController);
 
