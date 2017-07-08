@@ -51,6 +51,7 @@
     // BLOG-SEARCH
     .blog-search {
         float: right;
+        position: relative;
 
         i {
             font-size: 1.125rem;
@@ -58,6 +59,18 @@
 
         input {
             display: none;
+        }
+
+        &.active {
+            input {
+                display: block;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 12rem;
+                border-color:#ddd !important;
+            }
         }
     }
 }
