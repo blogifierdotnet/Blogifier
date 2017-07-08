@@ -1,8 +1,12 @@
-﻿.blog-cover {
+﻿.blog-content{
+    padding-top:4rem;
+    padding-bottom:4rem;
+}
+
+.blog-cover {
     position: relative;
     height: 30rem;
     overflow: hidden;
-    margin-bottom: 4rem;
 
     &::after {
         content: "";
@@ -47,4 +51,10 @@
             color: #fff;
         }
     }
+}
+
+
+.pagination {
+    margin-bottom: 0;
+    border-radius: 0;
 }
