@@ -16,6 +16,7 @@
             left: 50%;
             top: 50%;
             font-size: 0;
+            max-width:200%;
         }
     }
 
@@ -30,9 +31,10 @@
 
     .post-item-title {
         font-size: 1.5rem;
-        margin-bottom:1rem;
+        margin-bottom: 1rem;
+
         a {
-            font-weight:600;
+            font-weight: 600;
             color: #000;
         }
     }
