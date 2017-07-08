@@ -75,13 +75,13 @@
         var obj = JSON.parse(data);
         var li = '<li id="cat-' + obj.id + '">';
         li += '	<label class="custom-control custom-checkbox">';
-        li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" class="custom-control-input">';
+        li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" checked="checked" class="custom-control-input">';
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
         li += '<button type="button" tabindex="-1" onclick="editorController.removeCategory(\'' + obj.id + '\')"><i class="fa fa-times"></i></button>';
         li += '</li>';
-        $("#edit-categories").append(li);
+        $("#edit-categories").prepend(li);
         $("#txtCategory").val('');
         $("#txtCategory").focus();
     }
