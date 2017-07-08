@@ -112,7 +112,7 @@ namespace Blogifier.Core.Controllers.Api
             if (post == null)
                 return NotFound();
 
-            post.Published = System.DateTime.MinValue;
+            post.Published = DateTime.MinValue;
             _db.Complete();
             return new NoContentResult();
         }
