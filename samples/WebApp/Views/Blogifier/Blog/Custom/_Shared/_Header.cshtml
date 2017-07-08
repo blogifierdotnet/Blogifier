@@ -11,8 +11,13 @@
             <ul class="dropdown-menu" aria-labelledby="blogNav">
                 <li><a class="dropdown-item" href="~/blog">Blog</a></li>
                 @if (User.Identity.IsAuthenticated)
-            {
+                {
                     <li><a class="dropdown-item" href="~/admin">Admin</a></li>
+                    <li><a class="dropdown-item" href="" return false;">Logoff</a></li>
+                }
+                else
+                {
+                    <li><a class="dropdown-item" href="~/account/login">Login</a></li>
                 }
                 <li class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Category</a></li>

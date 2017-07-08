@@ -1,30 +1,33 @@
 ﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
-@{ 
+@{
     var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
 }
 <article class="post-single">
-    <div class="blog-cover">
-        <img class="blog-cover-img" src="@bg" alt="Alternate Text" />
-        <div class="blog-cover-title">
-            <h1>@Model.BlogPost.Title</h1>
-            <p>
-                by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
-                / @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)
-                <span>
-                    @if (Model.Categories.Count > 0)
-                    {
-                        <span>/</span>
-                        foreach (var cat in Model.Categories)
-                        {
-                            <a href="~/category/@cat.Value">@cat.Text</a>
-                        }
 
-                    }
-                </span>
+    <header class="post-single-cover">
+        <img class="post-single-img" src="@bg" alt="Alternate Text" />
+        <div class="post-single-title">
+            <h1>@Model.BlogPost.Title</h1>
+            <p class="post-single-info">
+                <span class="post-single-author">by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
+                /
+                <span class="post-single-date">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</span>
+                @if (Model.Categories.Count > 0)
+                {
+                    <span class="post-single-category">
+                        /
+                        @foreach (var cat in Model.Categories)
+                        {
+                        <a href="~/category/@cat.Value">@cat.Text</a>
+                        }
+                    </span>
+                }
             </p>
         </div>
-    </div>
+    </header>
+
+
     <div class="container">
         <div class="post-single-content">
             @Html.Raw(Model.BlogPost.Content)
