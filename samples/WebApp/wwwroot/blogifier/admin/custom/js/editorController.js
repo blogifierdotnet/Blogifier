@@ -34,6 +34,30 @@
         loadActionButtons();
     }
 
+    function deletePost() {
+        var postId = $('#hdnPostId').val();
+        dataService.remove("blogifier/api/posts/" + postId, deletePostCallback, fail);
+    }
+
+    function deletePostCallback(data) {
+        toastr.success('Deleted');
+        setTimeout(function () {
+            window.location.href = webRoot + 'admin';
+        }, 1000); 
+    }
+
+    function unpublishPost() {
+        var postId = $('#hdnPostId').val();
+        var obj = { };
+        dataService.put("blogifier/api/posts/unpublish/" + postId, obj, unpublishPostCallback, fail);
+    }
+
+    function unpublishPostCallback() {
+        toastr.success('Unpublished');
+        $('#hdnPublished').val('1/1/0001 12:00:00 AM');
+        loadActionButtons();
+    }
+
     function categoryKeyPress(e) {
         if (e.which === 13) {
             e.preventDefault();
@@ -51,13 +75,13 @@
         var obj = JSON.parse(data);
         var li = '<li id="cat-' + obj.id + '">';
         li += '	<label class="custom-control custom-checkbox">';
-        li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" class="custom-control-input">';
+        li += '	  <input type="checkbox" id="cbx-' + obj.id + '" value="' + obj.id + '" checked="checked" class="custom-control-input">';
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
         li += '<button type="button" tabindex="-1" onclick="editorController.removeCategory(\'' + obj.id + '\')"><i class="fa fa-times"></i></button>';
         li += '</li>';
-        $("#edit-categories").append(li);
+        $("#edit-categories").prepend(li);
         $("#txtCategory").val('');
         $("#txtCategory").focus();
     }
@@ -122,7 +146,7 @@
             btn += '</div>';
         }
         else {
-            if (published === '1/1/0001 12:00:00 AM') {
+            if (published.indexOf("0001") >= 0) {
                 // draft
                 btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>';
                 btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
@@ -141,7 +165,6 @@
                 btn += '</div>';
             }
         }
-        
         $('#action-buttons').append(btn);
     }
 
@@ -159,6 +182,8 @@
 
     return {
         savePost: savePost,
+        unpublishPost: unpublishPost,
+        deletePost: deletePost,
         saveCategory: saveCategory,
         removeCategory: removeCategory,
         categoryKeyPress: categoryKeyPress,
