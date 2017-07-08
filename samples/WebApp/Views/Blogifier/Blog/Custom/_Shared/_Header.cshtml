@@ -1,7 +1,4 @@
 ﻿@using Blogifier.Core.Common
-@{
-    var themeFolder = "blogifier/blog/custom";
-}
 <!-- HEADER -->
 <header class="blog-header">
     <section class="container clearfix">
@@ -13,7 +10,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a class="dropdown-item" href="~/admin">Admin</a></li>
-                    <li><a class="dropdown-item" href="" return false;">Logoff</a></li>
+                    <li><a class="dropdown-item" href="">Logoff</a></li>
                 }
                 else
                 {
