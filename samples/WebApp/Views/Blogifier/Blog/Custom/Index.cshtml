@@ -35,18 +35,17 @@
             }
         }
     </div>
+    @if (Model != null)
+    {
+        <ul class="pagination justify-content-center">
+            @if (Model.Pager.ShowOlder)
+                {
+                <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+            }
+            @if (Model.Pager.ShowNewer)
+                {
+                <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            }
+        </ul>
+    }
 </div>
-@if (Model != null)
-{
-    <ul class="pagination justify-content-center">
-        @if (Model.Pager.ShowOlder)
-                {
-            <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
-        }
-        @if (Model.Pager.ShowNewer)
-                {
-            <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
-        }
-    </ul>
-}
-
