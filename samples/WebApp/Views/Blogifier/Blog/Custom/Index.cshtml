@@ -19,12 +19,14 @@
             {
                 <div class="col-4 post-item-wrapper">
                     <article class="post-item">
-                        <a class="post-item-cover" href="~/blog/@item.Slug">
+                        <div class="post-item-cover">
                             <img class="post-item-img" src="@item.Image" alt="@item.Title" />
-                        </a>
+                            <div class="post-item-head">
+                                <p class="post-item-info">By <a href="~/author/@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
+                                <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                            </div>
+                        </div>
                         <div class="post-item-content">
-                            <p class="post-item-info">By <a href="~/author/@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
-                            <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
                             <p class="post-item-text dot-resize-update">@Html.Raw(item.Content) </p>
                             <a class="post-item-more" href="~/blog/@item.Slug">Read More...</a>
                         </div>
