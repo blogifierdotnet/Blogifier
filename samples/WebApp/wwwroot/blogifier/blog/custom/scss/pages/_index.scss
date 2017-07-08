@@ -1,57 +1,53 @@
-﻿.post-item {
+﻿.post-row {
+    margin-bottom: 2rem;
+}
+.post-item {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
     height: 100%;
-    border-bottom: 1px solid #eee;
+    // POST-COVER
+    .post-item-cover {
+        height: 15rem;
+        position: relative;
+        overflow: hidden;
 
-    .container, .row, class[col-], img {
-        height: 100%;
+        .post-item-img {
+            transform: translate(-50%,-50%);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            font-size: 0;
+        }
     }
 
-    .post-item-col {
-        padding-bottom: 8rem;
-        padding-top: 8rem;
-    }
-
-    &-img {
-        width: 100%;
-        background: #000;
-        margin-bottom: .5rem;
-    }
-
-    &-title {
-        font-size: 4rem;
-        margin-bottom: 2rem;
-        font-weight: 900;
+    .post-item-info {
+        font-size: .75rem;
+        color: #aaa;
 
         a {
+            color: #aaa;
+        }
+    }
+
+    .post-item-title {
+        font-size: 1.5rem;
+        margin-bottom:1rem;
+        a {
+            font-weight:600;
             color: #000;
         }
     }
 
-    &-info {
-        font-size: 1rem;
-        text-transform: uppercase;
-        font-weight: 300;
-        letter-spacing: 1px;
-        color: #666;
-        margin-bottom: 2rem;
-
-        a {
-            color: #666;
-        }
+    .post-item-content {
+        padding: 2rem;
     }
 
-    &-content {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 300;
-        margin-bottom:1rem;
+    .post-item-text {
+        height: 100px;
+        overflow: hidden;
     }
-    &-more{
-        display:inline-block;
-        border:2px solid #000;
-        padding:1.125rem 3rem 1rem;
-        font-weight:500;
-        text-transform:uppercase;
-        color:#000 !important;
+
+    .post-item-more {
+        margin-top: auto;
+        display: block;
     }
 }

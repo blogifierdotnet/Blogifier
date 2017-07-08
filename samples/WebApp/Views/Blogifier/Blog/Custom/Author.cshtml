@@ -6,7 +6,6 @@
 @model BlogAuthorModel
 @{
     var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
-    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_layoutPage.cshtml";
 }
 <div class="container">
     @if (Model != null)

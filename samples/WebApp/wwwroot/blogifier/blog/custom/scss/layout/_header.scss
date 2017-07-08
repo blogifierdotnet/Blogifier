@@ -1,156 +1,63 @@
 ﻿.blog-header {
-    position: relative;
-    height: 100%;
-    background-image: url(../img/header-cover.png);
-    background-size: cover;
-    background-position:center center;
-    background-repeat:no-repeat;
-    z-index: 1000;
-
-    &-global {
-        padding: 4rem 0;
-    }
-
-    &-page {
-        height: auto;
-        margin-bottom: 4rem;
-    }
-
-    &-post {
-        height: auto;
-        background: none;
-    }
-
-    &-title {
-        position: absolute;
-        bottom: 10rem;
-        left: 0;
-        width: 100%;
-        color: #fff;
-        text-transform: uppercase;
-        text-align: center;
-
-        h1 {
-            font-weight: 900;
-            font-size: 5rem;
-        }
-
-        p {
-            font-size: 3rem;
-            font-weight: 100;
-        }
-    }
-
-    .blog-title {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        font-weight: $font-weight-medium;
-
-        a {
-            color: #fff;
-        }
-    }
+    background-color: #fff;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 
     button {
+        border: none;
+        background: none;
         padding: 0;
-        border: 0;
-        background: none !important;
+        display: block;
+        height: 2rem;
+        width: 2rem;
         cursor: pointer;
-        box-shadow: none !important;
+
+        &:hover {
+            background: #eee;
+        }
+
+        i {
+            font-size: 1.3rem;
+            width: 100%;
+            height: 100%;
+            line-height: 2rem;
+            display: block;
+        }
 
         &:after {
             display: none;
         }
     }
-
+    // BLOG-NAV
     .blog-nav {
-        position: relative;
-
-        &.show {
-            i {
-                color: #eee;
-            }
-        }
-
-        i {
-            font-size: 1.5rem !important;
-            color: #fff;
-
-            &:hover {
-                color: #fff;
-            }
-        }
-
-
-
-        .dropdown-menu {
-            border: none;
-            text-transform: uppercase;
-            font-size: .875rem;
-            padding: 0;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.40);
-            overflow: hidden;
-            left: 0;
-            top: 2rem;
-
-            .dropdown-item {
-                font-weight: $font-weight-medium;
-                padding: .75rem 1.25rem;
-                border-bottom: 1px solid #eee;
-
-                &:last-child {
-                    border-bottom: none;
-                }
-            }
-
-            .dropdown-divider {
-            }
-        }
+        float: left;
     }
-
-    .nav-title {
+    // BLOG-LOGO
+    .blog-logo {
         position: absolute;
-        left: 1.75rem;
+        left: 50%;
         top: 50%;
-        transform: translateY(-50%);
-        font-weight: $font-weight-medium;
-        font-size: .875rem;
-        letter-spacing: 0;
-        padding-left: .5rem;
-        display: block;
-        height: 1rem;
-    }
+        transform: translate(-50%,-50%);
+        text-align: center;
+        font-size: 0;
 
+        img {
+            display: block;
+            margin: auto;
+            height: 2rem;
+            border: none;
+        }
+    }
+    // BLOG-SEARCH
     .blog-search {
-        position: relative;
+        float: right;
 
         i {
-            font-size: 1.125rem !important;
-            color: #fff;
-
-            &:hover {
-                color: #fff;
-            }
+            font-size: 1.125rem;
         }
 
         input {
-            width: 0;
-            opacity: 0;
-            padding: 0;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 0;
-        }
-
-        &.active {
-            input {
-                width: 15rem;
-                opacity: 1;
-                padding: .5rem;
-            }
+            display: none;
         }
     }
 }

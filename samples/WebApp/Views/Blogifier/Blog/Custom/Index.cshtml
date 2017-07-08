@@ -4,32 +4,37 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
-@{
-    var bg = ApplicationSettings.ProfileImage;
-}
-@if (Model != null)
-{
-    foreach (var item in Model.Posts)
-    {
 
-        <article class="post-item">
-            <div class="container">
-                <div class="row">
-                    <div class="post-item-col col-6">
-                        <img class="post-item-img" src="@item.Image" alt="@item.Title" />
-                    </div>
-                    <div class="post-item-col col-6">
-                        <p class="post-item-info">By <a href="~/author/@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
-                        <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
-                        <p class="post-item-content">@Html.Raw(item.Content)</p>
-                        <a class="post-item-more" href="~/blog/@item.Slug">Read More</a>
-                    </div>
+<div class="blog-cover">
+    <img class="blog-cover-img" src="@ApplicationSettings.ProfileImage" alt="Alternate Text" />
+    <div class="blog-cover-title">
+        <h1>@ApplicationSettings.Title</h1>
+        <p>@ApplicationSettings.Description</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        @if (Model != null)
+        {
+            foreach (var item in Model.Posts)
+            {
+                <div class="col-4 post-row">
+                    <article class="post-item">
+                        <div class="post-item-cover">
+                            <img class="post-item-img" src="@item.Image" alt="@item.Title" />
+                        </div>
+                        <div class="post-item-content">
+                            <p class="post-item-info">By <a href="~/author/@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
+                            <h2 class="post-item-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                            <p class="post-item-text">@Html.Raw(item.Content)</p>
+                            <a class="post-item-more" href="~/blog/@item.Slug">Read More...</a>
+                        </div>
+                    </article>
                 </div>
-            </div>
-        </article>
-
-    }
-}
+            }
+        }
+    </div>
+</div>
 @if (Model != null)
 {
     <ul class="pagination justify-content-center">

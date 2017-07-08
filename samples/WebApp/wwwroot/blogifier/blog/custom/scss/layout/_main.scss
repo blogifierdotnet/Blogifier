@@ -1,4 +1,37 @@
-﻿#wrapper,
-.main {
-    height:100%;
+﻿.blog-cover {
+    position: relative;
+    height: 30rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+
+    .blog-cover-img {
+        width: 100%;
+        transform: translateY(-50%);
+        position: absolute;
+        left: 0;
+        top: 50%;
+    }
+
+    .blog-cover-title {
+        transform: translate(-50%,-50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        color: #fff;
+        text-align: center;
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 0;
+            opacity:.75;
+        }
+        a{
+            color:#fff;
+        }
+    }
 }

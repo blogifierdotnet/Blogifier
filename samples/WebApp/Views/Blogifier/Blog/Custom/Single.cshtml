@@ -1,34 +1,30 @@
 ﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
-@{
-    Layout = "~/Views/Blogifier/Blog/Custom/Layout/_LayoutSingle.cshtml";
+@{ 
     var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
 }
-s
 <article class="post-single">
-    <header class="post-single-cover" style="background-image: url('@bg')">
-        <div class="container">
-            <div class="post-single-title">
-                <h1>@Model.BlogPost.Title</h1>
-                <div class="post-single-info">
-                    by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
-                   / @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published) 
-                    <span>
-                        @if (Model.Categories.Count > 0)
+    <div class="blog-cover">
+        <img class="blog-cover-img" src="@bg" alt="Alternate Text" />
+        <div class="blog-cover-title">
+            <h1>@Model.BlogPost.Title</h1>
+            <p>
+                by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
+                / @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)
+                <span>
+                    @if (Model.Categories.Count > 0)
+                    {
+                        <span>/</span>
+                        foreach (var cat in Model.Categories)
                         {
-                            <span>/</span>
-                            foreach (var cat in Model.Categories)
-                            {
-                                <a href="~/category/@cat.Value">@cat.Text</a>
-                            }
-
+                            <a href="~/category/@cat.Value">@cat.Text</a>
                         }
-                    </span>
 
-                </div>
-            </div>
+                    }
+                </span>
+            </p>
         </div>
-    </header>
+    </div>
     <div class="container">
         <div class="post-single-content">
             @Html.Raw(Model.BlogPost.Content)
