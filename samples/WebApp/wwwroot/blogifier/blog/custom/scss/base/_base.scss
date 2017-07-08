@@ -10,3 +10,16 @@
     width: 100%;
     max-width: 75rem;
 }
+
+
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -5rem;
+}
+
+.wrapper:after {
+    content: "";
+    display: block;
+    height: 5rem;
+}

@@ -1,0 +1,23 @@
+﻿.blog-error {
+    background: #ddd;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: -1;
+
+    .blog-error-content {
+        transform: translate(-50%,-50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        color: #333;
+        text-align: center;
+        z-index: 1;
+        text-transform: uppercase;
+
+        h1 {
+            font-size: 5rem;
+        }
+    }
+}

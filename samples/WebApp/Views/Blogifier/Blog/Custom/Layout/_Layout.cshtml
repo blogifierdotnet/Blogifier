@@ -11,8 +11,10 @@
     @Html.Partial(headView)
 </head>
 <body>
-    @Html.Partial(headerView)
-    @RenderBody()
+    <div class="wrapper">
+        @Html.Partial(headerView)
+        @RenderBody()
+    </div>
     @Html.Partial(footerView)
 </body>
 </html>
