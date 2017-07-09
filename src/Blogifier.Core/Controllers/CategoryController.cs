@@ -22,12 +22,12 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("{slug}")]
-        public IActionResult Category(string slug)
+        public async System.Threading.Tasks.Task<IActionResult> CategoryAsync(string slug)
         {
             var pager = new Pager(1);
-            var posts = _db.BlogPosts.ByCategory(slug, pager);
+            var posts = await _db.BlogPosts.ByCategory(slug, pager);
             var category = _db.Categories.Single(c => c.Slug == slug);
-            return View(_theme + "Category.cshtml", new BlogCategoryModel { Category = category, Posts = posts.Result, Pager = pager });
+            return View(_theme + "Category.cshtml", new BlogCategoryModel { Category = category, Posts = posts, Pager = pager });
         }
 
         [Route("{slug}/{page:int}")]
