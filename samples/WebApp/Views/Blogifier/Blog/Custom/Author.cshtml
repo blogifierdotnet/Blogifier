@@ -8,10 +8,10 @@
     var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
 }
 <div class="blog-cover">
-    <img class="blog-cover-img" src="@ApplicationSettings.ProfileImage" alt="Alternate Text" />
+    <img class="blog-cover-img" src="@Model.Profile.Image" alt="Alternate Text" />
     <div class="blog-cover-title">
-        <h1>@ApplicationSettings.Title</h1>
-        <p>@ApplicationSettings.Description</p>
+        <h1>@Model.Profile.Title</h1>
+        <p>@Model.Profile.Description</p>
     </div>
 </div>
 <div class="blog-content container">

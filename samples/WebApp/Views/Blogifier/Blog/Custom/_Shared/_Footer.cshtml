@@ -12,6 +12,12 @@
         </ul>
     </div>
 </footer>
+<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+<script>
+    function profileLogOut() {
+        $("#frmLogOut").submit();
+    }
+</script>
 <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
 <script src="~/@themeFolder/js/tether.min.js"></script>
 <script src="~/@themeFolder/js/bootstrap.min.js"></script>

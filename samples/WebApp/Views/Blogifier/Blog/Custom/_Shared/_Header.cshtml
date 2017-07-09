@@ -10,7 +10,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a class="dropdown-item" href="~/admin">Admin</a></li>
-                    <li><a class="dropdown-item" href="">Logoff</a></li>
+                    <li><a class="dropdown-item" href="" onclick="profileLogOut(); return false;">Logoff</a></li>
                 }
                 else
                 {
