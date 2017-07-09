@@ -4,6 +4,7 @@
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
+            Image: $('#hdnPostImg').val(),
             Content: tinyMCE.activeEditor.getContent(),
             IsPublished: publish === true ? publish : false,
             Categories: []
@@ -99,21 +100,25 @@
         filePickerController.open('postImage', postId);
     }
 
-    function resetPostImage(postId) {
-        dataService.remove('blogifier/api/assets/resetpostimage/' + postId, imgResetCallback, fail);
+    function resetPostImage() {
+        var postId = $('#hdnPostId').val();
+        if (postId == "0") {
+            imgResetCallback();
+        }
+        else {
+            dataService.remove('blogifier/api/assets/resetpostimage/' + postId, imgResetCallback, fail);
+        }
     }
 
-    function imgResetCallback(data) {
-        var url = JSON.parse(data);
-        toastr.success('Updated');
-        setTimeout(function () {
-            window.location.href = webRoot + url;
-        }, 1000); 
+    function imgResetCallback() {
+        $('#hdnPostImg').val('');
+        loadPostImage();
     }
 
     function loadPostImage() {
         var postId = $('#hdnPostId').val();
         var postImg = $('#hdnPostImg').val();
+        $('#post-image').empty();
 
         var btn = '<button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(' + postId + ');">';
         btn += '<i class="fa fa-image" ></i></button >';
@@ -126,9 +131,8 @@
 
         var dd = '<div id="ddPostImg" class="dropdown-menu dropdown-menu-right" aria-labelledby="btnPostImgToggle">';
         dd += '<div class="post-image"><img src="' + postImg + '" /><div class="post-image-actions btn-group">';
-        dd += '<button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage(' + postId + ');">';
+        dd += '<button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage();">';
         dd += '<i class="fa fa-trash"></i></button></div></div></div>';
-
         $('#post-image').append(dd);
     }
 

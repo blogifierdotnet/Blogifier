@@ -46,11 +46,23 @@
 
     function pick(assetId) {
         if (uploadType === "postImage") {
-            dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
+            if ($('#hdnPostId').val() === '0') {
+                dataService.get('blogifier/api/assets/asset/' + assetId , pickPostImgCallback, fail);
+            }
+            else {
+                dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
+            }
         }
         else {
             dataService.get('blogifier/api/assets/' + uploadType + '/' + assetId, pickCallback, fail);
         }
+    }
+
+    function pickPostImgCallback(data) {
+        $('#hdnPostImg').val(data.url);
+        editorController.loadPostImage();
+        toastr.success('Updated');
+        close();
     }
 
     function pickCallback(data) {
