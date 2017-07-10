@@ -10,7 +10,7 @@
             display: block;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.5);
             position: absolute;
             top: 0;
             left: 0;
@@ -33,8 +33,6 @@
             color: #fff;
             text-align: center;
             z-index: 1;
-
-
             h1 {
                 font-size: 3rem;
                 margin-bottom: 1rem;
@@ -43,16 +41,15 @@
             p {
                 font-size: .75rem;
                 margin-bottom: 0;
-                opacity: 1;
                 text-transform: uppercase;
                 letter-spacing: 1px;
+                opacity: .75;
             }
 
             a {
                 color: #fff;
             }
         }
-
         .post-single-category {
             a {
                 &::after {
