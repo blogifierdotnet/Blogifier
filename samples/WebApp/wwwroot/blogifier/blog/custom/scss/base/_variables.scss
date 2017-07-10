@@ -11,8 +11,11 @@ $color-base-light: lighten($color-base, 5%);
 
 // fonts
 $font-family-roboto: "Roboto";
-$font-family-base: $font-family-roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-size-base: 1rem;
+$font-family-Zilla: "Zilla Slab";
+$font-family-base: $font-family-Zilla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans: $font-family-roboto;
+
+$font-size-base: 1.25rem;
 $line-height-base: 1.8;
 
 $font-weight-light: 300;

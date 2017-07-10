@@ -1,10 +1,11 @@
 ﻿.blog-footer {
-    background:#fff;
-    box-shadow:0px -1px 0 #eee;
+    background: #fff;
+    box-shadow: 0px -1px 0 #eee;
     height: 5rem;
     line-height: 5rem;
     font-size: 1rem;
     color: #777;
+    font-family: $font-family-sans;
 
     .float-left {
         margin: 0;
@@ -20,7 +21,7 @@
         @include unstyled();
 
         li {
-          display:inline-block;
+            display: inline-block;
             margin-left: 1rem;
 
             a {
@@ -30,19 +31,19 @@
     }
 
     @media screen and (max-width:768px) {
-        padding-top:.5rem;
-        line-height:2rem;
+        padding-top: .5rem;
+        line-height: 2rem;
         text-align: center;
 
         .float-right,
         .float-left {
             float: none;
             width: 100%;
-           
         }
+
         .float-right {
             li {
-                margin:0;
+                margin: 0;
             }
         }
     }

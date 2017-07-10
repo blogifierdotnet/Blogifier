@@ -33,6 +33,7 @@
             color: #fff;
             text-align: center;
             z-index: 1;
+
             h1 {
                 font-size: 3rem;
                 margin-bottom: 1rem;
@@ -44,12 +45,14 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 opacity: .75;
+                font-family: $font-family-sans;
             }
 
             a {
                 color: #fff;
             }
         }
+
         .post-single-category {
             a {
                 &::after {
@@ -84,7 +87,7 @@
     // CONTENT
     .post-single-content {
         font-size: 1.37500rem;
-        font-weight: 300;
+        font-weight: 400;
 
         p {
             margin-bottom: 1rem;
@@ -92,7 +95,17 @@
 
         h1, h2, h3, h4, h5 {
             margin-bottom: 0;
-            margin-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        figure {
+            margin: 2rem 0;
+
+            figcaption {
+                font-size: .75rem;
+                color: #666;
+                font-family: $font-family-sans;
+            }
         }
     }
 }
