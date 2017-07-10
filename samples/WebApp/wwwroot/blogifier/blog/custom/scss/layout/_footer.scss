@@ -1,5 +1,5 @@
 ﻿.blog-footer {
-    background: #eee;
+    border-top: 1px solid #eee;
     height: 5rem;
     line-height: 5rem;
     font-size: 1rem;
@@ -7,6 +7,12 @@
 
     .float-left {
         margin: 0;
+        font-size: .75rem;
+        text-transform: uppercase;
+
+        a {
+            color: #777;
+        }
     }
 
     .float-right {

@@ -11,3 +11,6 @@ $(".blog-search input").blur(function () {
 $(function () {
     $('.post-item-text').dotdotdot();
 });
+
+//
+$('[data-toggle="tooltip"]').tooltip();
