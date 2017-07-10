@@ -11,9 +11,10 @@
         height: 2rem;
         width: 2rem;
         cursor: pointer;
+        color: #888;
 
         &:hover {
-            background: #eee;
+            color: #000;
         }
 
         i {
@@ -31,6 +32,33 @@
     // BLOG-NAV
     .blog-nav {
         float: left;
+
+        &.show {
+            button {
+                color: #000;
+            }
+        }
+
+        .dropdown-menu {
+            border: 0;
+            border-radius: 3px;
+            left: 1rem;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.50);
+
+            .dropdown-divider {
+                margin: 0;
+            }
+
+            .dropdown-item {
+                padding: .5rem 1rem;
+
+                &:hover {
+                    background: #eceeef;
+                }
+            }
+        }
     }
     // BLOG-LOGO
     .blog-logo {
@@ -69,7 +97,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 width: 12rem;
-                border-color:#ddd !important;
+                border-color: #ddd !important;
             }
         }
     }
