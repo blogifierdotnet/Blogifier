@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -26,7 +25,7 @@ namespace Blogifier.Core.Controllers
 			_db = db;
             _rss = rss;
             _logger = logger;
-			_theme = string.Format(_themePattern, Common.ApplicationSettings.BlogTheme);
+			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
 
 		public IActionResult Index()

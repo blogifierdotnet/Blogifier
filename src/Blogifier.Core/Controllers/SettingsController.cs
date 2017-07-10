@@ -118,7 +118,6 @@ namespace Blogifier.Core.Controllers
             {
                 profile.IdentityName = User.Identity.Name;
                 profile.Slug = SlugFromTitle(profile.AuthorName);
-                profile.BlogTheme = ApplicationSettings.BlogTheme;
 
                 ModelState.Clear();
                 TryValidateModel(model);
@@ -133,6 +132,7 @@ namespace Blogifier.Core.Controllers
                     existing.Description = profile.Description;
                     existing.AuthorName = profile.AuthorName;
                     existing.AuthorEmail = profile.AuthorEmail;
+                    existing.BlogTheme = profile.BlogTheme;
                 }
                 else
                 {
