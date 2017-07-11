@@ -59,12 +59,13 @@ namespace Blogifier.Core.Controllers.Api
         [HttpPost("addcategory")]
         public IActionResult AddCategory([FromBody]AdminCategoryModel model)
         {
-            var existing = _db.Categories.Single(c => c.Title == model.Title);
+            var profile = GetProfile();
+            var existing = _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             if (existing == null)
             {
                 var newCategory = new Category
                 {
-                    ProfileId = GetProfile().Id,
+                    ProfileId = profile.Id,
                     Title = model.Title,
                     Description = model.Title,
                     Slug = model.Title.ToSlug(),
@@ -72,7 +73,7 @@ namespace Blogifier.Core.Controllers.Api
                 };
                 _db.Categories.Add(newCategory);
                 _db.Complete();
-                existing = _db.Categories.Single(c => c.Title == model.Title);
+                existing = _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             }
             var callback = new { Id = existing.Id, Title = existing.Title };
             return new CreatedResult("blogifier/api/categories/" + existing.Id, callback);
