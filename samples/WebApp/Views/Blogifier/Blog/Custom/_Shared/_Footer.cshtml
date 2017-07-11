@@ -3,21 +3,18 @@
     var themeFolder = "blogifier/blog/custom";
 }
 <footer class="blog-footer">
-    <div class="container clearfix">
-        <p class="float-left">Copyright © 2017 @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.</p>
+    <section class="container clearfix">
+        <p class="float-left">
+            Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.
+        </p>
         <ul class="float-right">
             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
             <li><a href="#"><i class="fa fa-github"></i></a></li>
             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
         </ul>
-    </div>
+    </section>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-<script>
-    function profileLogOut() {
-        $("#frmLogOut").submit();
-    }
-</script>
 <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
 <script src="~/@themeFolder/js/tether.min.js"></script>
 <script src="~/@themeFolder/js/bootstrap.min.js"></script>

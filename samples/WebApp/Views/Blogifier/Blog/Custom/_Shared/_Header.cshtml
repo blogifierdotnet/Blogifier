@@ -1,8 +1,6 @@
 ﻿@using Blogifier.Core.Common
-<!-- HEADER -->
 <header class="blog-header">
     <section class="container clearfix">
-        <!-- BLOG-NAV -->
         <nav class="blog-nav">
             <button class="dropdown-toggle" type="button" id="blogNav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-navicon"></i></button>
             <ul class="dropdown-menu" aria-labelledby="blogNav">
@@ -10,25 +8,20 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a class="dropdown-item" href="~/admin">Admin</a></li>
-                    <li><a class="dropdown-item" href="" onclick="profileLogOut(); return false;">Logoff</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
                 }
                 else
                 {
-                    <li><a class="dropdown-item" href="~/account/login">Login</a></li>
+                    <li><a class="dropdown-item" href="~/account/login?ReturnUrl=%2Fadmin">Login</a></li>
                 }
                 <li class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Category</a></li>
             </ul>
         </nav>
-
-        <!-- BLOG-LOGO -->
         <h1 class="blog-logo"><a href="~/blog"><img src="@ApplicationSettings.ProfileLogo" alt="@ApplicationSettings.Title" /></a></h1>
-
-        <!-- BLOG-SEARCH -->
         <form class="blog-search" role="search" asp-controller="Search" asp-action="Index" method="post">
             <button type="button"><i class="fa fa-search"></i></button>
             <input type="search" id="term" name="term" class="form-control" placeholder="Search...">
         </form>
-
     </section>
 </header>

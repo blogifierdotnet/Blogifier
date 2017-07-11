@@ -4,20 +4,19 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
-
-<div class="blog-cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
+<section class="blog-cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
     <div class="blog-cover-title container">
         <h1>@ApplicationSettings.Title</h1>
         <p>@ApplicationSettings.Description</p>
     </div>
-</div>
-<div class="blog-content container">
-    <div class="row">
+</section>
+<main class="blog-content container">
+    <section class="row">
         @if (Model != null)
         {
             foreach (var item in Model.Posts)
             {
-                <div class="col-md-6 post-item-wrapper">
+                <div class="col-md-6 post">
                     <article class="post-item">
                         <div class="post-item-cover">
                             <img class="post-item-img" src="@item.Image" alt="@item.Title" />
@@ -34,18 +33,18 @@
                 </div>
             }
         }
-    </div>
+    </section>
     @if (Model != null)
     {
         <ul class="pagination justify-content-center">
             @if (Model.Pager.ShowOlder)
                 {
-                <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Older"><span aria-hidden="true">&larr;</span> Older</a></li>
+                <li class="page-item prev"><a href="~/blog/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
             }
             @if (Model.Pager.ShowNewer)
                 {
-                <li class="page-item"><a class="btn btn-outline-secondary" href="~/blog/@Model.Pager.Newer">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                <li class="page-item next"><a href="~/blog/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
             }
         </ul>
     }
-</div>
+</main>

@@ -16,10 +16,11 @@
 @import "layout/header";
 @import "layout/main";
 @import "layout/footer";
-
+ 
 // Components
 @import "components/cover";
 @import "components/pagination";
+@import "components/browserupgrade";
 
 // Pages
 @import "pages/index";
