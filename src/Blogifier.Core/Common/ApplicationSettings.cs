@@ -24,8 +24,8 @@ namespace Blogifier.Core.Common
 
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
         public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";
-        public static string ProfileImage { get; set; } = "/embedded/lib/img/home-bg.jpg";
-        public static string PostImage { get; set; } = "/embedded/lib/img/post-bg.jpg";
+        public static string ProfileImage { get; set; } = "/embedded/lib/img/cover.png";
+        public static string PostImage { get; set; } = "/embedded/lib/img/cover.jpg";
 
         #endregion
 
