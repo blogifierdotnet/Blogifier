@@ -55,6 +55,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 var storage = new BlogStorage(blog.Slug);
                 var items = GetFeedItems(model.FeedUrl);
 
+                _logger.LogInformation(string.Format("Start importing {0} posts", items.Count));
+
                 foreach (var item in items)
                 {
                     var content = item.Body.Length > item.Description.Length ? item.Body : item.Description;

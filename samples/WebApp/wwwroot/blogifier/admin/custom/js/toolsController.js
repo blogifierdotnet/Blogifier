@@ -2,7 +2,7 @@
 
     function importRss() {
         var data = {
-            ProfileId: 1,
+            ProfileId: $('#hdnProfileId').val(),
             FeedUrl: $('#txtFeedUrl').val(),
             Domain: $('#txtDomain').val(),
             SubDomain: $('#txtSubDomain').val(),

@@ -46,6 +46,7 @@
                     <span class="sr-only">Loading...</span>
                 </div>
                 <div id="btnImport">
+                    <input type="hidden" id="hdnProfileId" value="@Model.Profile.Id" />
                     <button type="button" class="btn btn-black  btn-save-setting" onclick="toolsController.importRss()">Import</button>
                 </div>
             </div>
