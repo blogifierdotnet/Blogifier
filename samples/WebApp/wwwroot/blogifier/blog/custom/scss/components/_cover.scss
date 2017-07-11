@@ -1,0 +1,67 @@
+﻿.blog-cover {
+    position: relative;
+    height: 34rem;
+    overflow: hidden;
+    background-color: #000;
+    background-position: center center;
+    background-size: cover;
+    background-image: url(/cover.png);
+    background-repeat: no-repeat;
+
+
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .blog-cover-title {
+        transform: translate(-50%,-50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        color: #fff;
+        text-align: center;
+        z-index: 1;
+        width: 100%;
+        text-transform: uppercase;
+
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: $font-weight-bold;
+        }
+
+        p {
+            font-size: .875rem;
+            margin-bottom: 0;
+            opacity: .75;
+            letter-spacing: 1px;
+            font-family: $font-family-sans;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
+
+    @media screen and (max-width:768px) {
+        height: 20rem;
+
+        .blog-cover-title {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+    }
+
+    @media screen and (max-width:480px) {
+        height: 12rem;
+    }
+}

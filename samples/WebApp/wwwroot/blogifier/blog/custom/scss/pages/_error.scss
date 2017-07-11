@@ -1,10 +1,25 @@
 ﻿.blog-error {
-    background: #000;
+    background-color: #000;
+    background-position: center center;
+    background-size: cover;
+    background-image: url(/cover.png);
+    background-repeat: no-repeat;
     position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
     z-index: -1;
+
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
     .blog-error-content {
         transform: translate(-50%,-50%);
@@ -15,9 +30,16 @@
         text-align: center;
         z-index: 1;
         text-transform: uppercase;
+    }
 
+    h1 {
+        font-size: 5rem;
+        font-family: $font-family-sans;
+    }
+
+    @media screen and (max-width:22.5rem) {
         h1 {
-            font-size: 5rem;
+            font-size: 3rem;
         }
     }
 }
