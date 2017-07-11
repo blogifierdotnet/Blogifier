@@ -16,7 +16,11 @@
 @import "layout/header";
 @import "layout/main";
 @import "layout/footer";
- 
+
+// Components
+@import "components/cover";
+@import "components/pagination";
+
 // Pages
 @import "pages/index";
 @import "pages/single";
