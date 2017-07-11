@@ -10,27 +10,23 @@
 
 .blog-cover {
     position: relative;
-    height: 30rem;
+    height: 34rem;
     overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-image: url(/cover.png);
+    background-repeat: no-repeat;
+
 
     &::after {
         content: "";
         display: block;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.25);
+        background: rgba(0, 0, 0, 0.4);
         position: absolute;
         top: 0;
         left: 0;
-    }
-
-    .blog-cover-img {
-        max-width: 200%;
-        min-width: 100%;
-        transform: translate(-50%,-50%);
-        position: absolute;
-        left: 50%;
-        top: 50%;
     }
 
     .blog-cover-title {
@@ -42,7 +38,7 @@
         text-align: center;
         z-index: 1;
         width: 100%;
-
+        text-transform: uppercase;
 
 
         h1 {
@@ -52,9 +48,11 @@
         }
 
         p {
-            font-size: 1rem;
+            font-size: .875rem;
             margin-bottom: 0;
             opacity: .75;
+            letter-spacing: 1px;
+            font-family: $font-family-sans;
         }
 
         a {
