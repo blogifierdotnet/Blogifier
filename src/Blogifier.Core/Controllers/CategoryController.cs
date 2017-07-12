@@ -35,9 +35,9 @@ namespace Blogifier.Core.Controllers
 
             var category = _db.Categories.Single(c => c.Slug == slug);
 
-            var categories = _db.Categories.All().OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).Distinct().ToList();
+            var categories = _db.Categories.All().OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             return View(_theme, new BlogCategoryModel { Categories = categories,
                 Category = category, Posts = posts, Pager = pager });

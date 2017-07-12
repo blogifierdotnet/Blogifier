@@ -34,8 +34,8 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            var categories = _db.Categories.All().OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
+            var categories = _db.Categories.All().OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
                 .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             if (page < 1 || page > pager.LastPage)
@@ -65,9 +65,9 @@ namespace Blogifier.Core.Controllers
                 }
             }
 
-            vm.Categories = _db.Categories.Find(c => c.ProfileId == vm.Profile.Id).OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).Distinct().ToList();
+            vm.Categories = _db.Categories.Find(c => c.ProfileId == vm.Profile.Id).OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 

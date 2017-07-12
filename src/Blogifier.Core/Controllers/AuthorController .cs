@@ -31,9 +31,9 @@ namespace Blogifier.Core.Controllers
             if (page < 1 || page > pager.LastPage)
                 return View(string.Format(_theme, profile.BlogTheme) + "Error.cshtml", 404);
 
-            var categories = _db.Categories.Find(c => c.ProfileId == profile.Id).OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).Distinct().ToList();
+            var categories = _db.Categories.Find(c => c.ProfileId == profile.Id).OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             return View(string.Format(_theme, profile.BlogTheme) + "Author.cshtml", 
                 new BlogAuthorModel { Categories = categories, Profile = profile, Posts = posts, Pager = pager });

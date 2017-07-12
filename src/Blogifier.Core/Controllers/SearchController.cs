@@ -32,8 +32,8 @@ namespace Blogifier.Core.Controllers
             var model = new BlogPostsModel();
             model.Pager = new Pager(1);
             model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.Categories = _db.Categories.All().OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
+            model.Categories = _db.Categories.All().OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
                 .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             return View(_theme + "Search.cshtml", model);
@@ -47,8 +47,8 @@ namespace Blogifier.Core.Controllers
             var model = new BlogPostsModel();
             model.Pager = new Pager(page);
             model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.Categories = _db.Categories.All().OrderBy(c => c.Title).Take(10).ToList()
-                .GroupBy(c => c.Title).Select(group => group.First())
+            model.Categories = _db.Categories.All().OrderBy(c => c.Title)
+                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
                 .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             if (page < 1 || page > model.Pager.LastPage)
