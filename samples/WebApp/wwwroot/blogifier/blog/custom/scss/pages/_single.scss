@@ -111,5 +111,9 @@
                 font-family: $font-family-sans;
             }
         }
+
+        @media screen and (max-width:48rem) {
+            padding: 2rem;
+        }
     }
 }

@@ -8,11 +8,6 @@
         }
     }
 
-    @media screen and (max-width:48rem) {
-        &:nth-child(1) {
-            margin-top: 0;
-        }
-    }
 
     &-item {
         background: #fff;
@@ -97,6 +92,37 @@
 
             .post-item-more {
                 height: 1.25rem;
+            }
+        }
+    }
+
+
+
+    @media screen and (max-width:48rem) {
+        margin: 0;
+
+        &-item {
+            background: none;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+
+            .post-item-cover {
+                margin-bottom: 2rem;
+            }
+
+
+
+            .post-item-content {
+                padding: 0;
+
+                .post-item-text {
+                    height: auto;
+                    max-height: 100px;
+                    overflow: hidden;
+                    margin-bottom: .25rem;
+                }
             }
         }
     }

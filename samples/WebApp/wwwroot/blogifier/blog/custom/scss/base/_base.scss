@@ -28,7 +28,12 @@
     padding-bottom: 4rem;
 
     @media screen and (max-width:48rem) {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding: 0rem;
+
+        > .row,
+        > .row > .col-md-6 {
+            margin: 0rem;
+            padding: 0;
+        }
     }
 }

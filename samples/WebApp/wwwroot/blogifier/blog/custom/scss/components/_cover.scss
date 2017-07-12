@@ -39,7 +39,7 @@
             font-size: .875rem;
             font-family: $font-family-sans;
             letter-spacing: 0.0625rem;
-            text-transform:capitalize;
+            text-transform: capitalize;
             margin-bottom: 0;
         }
 
@@ -48,17 +48,35 @@
         }
     }
 
-    @media screen and (max-width:768px) {
-        height: 20rem;
+    @media screen and (max-width:48rem) {
+        height: auto;
+        padding-bottom: 1rem;
+        margin-top: -.75rem;
+        background: #fff !important;
+
+        &:after {
+            display: none;
+        }
 
         .blog-cover-title {
+            position: relative;
+            transform: none;
+            left: 0;
+            top: 0;
+            color: #000;
+
             h1 {
-                font-size: 3rem;
+                font-size: 1.5rem;
+                margin: 0;
+            }
+
+            p {
+                display: none;
             }
         }
     }
 
-    @media screen and (max-width:480px) {
+    @media screen and (max-width:30rem) {
         height: 12rem;
     }
 }

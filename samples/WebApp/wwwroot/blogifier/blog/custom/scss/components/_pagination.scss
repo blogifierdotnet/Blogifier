@@ -2,9 +2,7 @@
     margin-bottom: 0;
     border-radius: 0;
 
-    @media screen and (max-width:576px) {
-        margin-top: 2rem;
-    }
+
 
     li {
         margin-top: 4rem;
@@ -59,6 +57,10 @@
             i {
                 margin-left: 1rem;
             }
+        }
+
+        @media screen and (max-width:48rem) {
+            margin:2rem 0;
         }
     }
 }
