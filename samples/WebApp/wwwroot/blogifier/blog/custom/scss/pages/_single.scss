@@ -1,8 +1,8 @@
 ﻿.post-single {
-    // HEADER
+    // --
     .post-single-cover {
-        position: relative;
         height: 34rem;
+        position: relative;
         overflow: hidden;
 
         &::after {
@@ -17,7 +17,7 @@
         }
 
         .post-single-img {
-            max-width: 200%;
+            max-width: 170%;
             min-width: 100%;
             transform: translate(-50%,-50%);
             position: absolute;
@@ -44,7 +44,7 @@
                 margin-bottom: 0;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                opacity: .75;
+                opacity: 1;
                 font-family: $font-family-sans;
             }
 
@@ -84,13 +84,17 @@
             height: 12rem;
         }
     }
-    // CONTENT
+    // --
     .post-single-content {
         font-size: 1.37500rem;
         font-weight: 400;
 
         p {
             margin-bottom: 1rem;
+        }
+
+        a {
+           @include word-wrap();
         }
 
         h1, h2, h3, h4, h5 {

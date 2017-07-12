@@ -1,13 +1,12 @@
 ﻿.blog-cover {
-    position: relative;
     height: 34rem;
-    overflow: hidden;
+    position: relative;
     background-color: #000;
-    background-position: center center;
-    background-size: cover;
     background-image: url(/cover.png);
     background-repeat: no-repeat;
-
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
 
     &::after {
         content: "";
@@ -26,24 +25,21 @@
         left: 50%;
         top: 50%;
         color: #fff;
-        text-align: center;
         z-index: 1;
-        width: 100%;
-        text-transform: uppercase;
-
+        text-align: center;
 
         h1 {
-            font-size: 4rem;
+            font-size: 5rem;
+            font-weight: $font-weight-medium;
             margin-bottom: 1rem;
-            font-weight: $font-weight-bold;
         }
 
         p {
-            font-size: .875rem;
-            margin-bottom: 0;
             opacity: .75;
-            letter-spacing: 1px;
+            font-size: .875rem;
             font-family: $font-family-sans;
+            letter-spacing: 1px;
+            margin-bottom: 0;
         }
 
         a {

@@ -29,7 +29,7 @@
             display: none;
         }
     }
-    // BLOG-NAV
+    // --
     .blog-nav {
         float: left;
 
@@ -42,7 +42,7 @@
         .dropdown-menu {
             overflow: hidden;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.50);
-            border-radius:.1875rem;
+            border-radius: .1875rem;
             border: 0;
             padding: 0;
             left: 1rem;
@@ -61,7 +61,7 @@
             }
         }
     }
-    // BLOG-LOGO
+    // --
     .blog-logo {
         transform: translate(-50%,-50%);
         position: absolute;
@@ -77,28 +77,33 @@
             border: none;
         }
     }
-    // BLOG-SEARCH
+    // --
     .blog-search {
         float: right;
         position: relative;
 
         i {
-            font-size: 1.125rem;
+            font-size: 1.0625rem;
         }
 
         input {
-            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-50%);
+            position: absolute;
+            right: -100%;
+            top: 50%;
+            width: 1rem;
+            border-color: #ddd !important;
+            transition: width ease .5s;
         }
 
         &.active {
             input {
-                display: block;
-                position: absolute;
+                opacity: 1;
+                visibility: visible;
                 right: 0;
-                top: 50%;
-                transform: translateY(-50%);
                 width: 12rem;
-                border-color: #ddd !important;
             }
         }
     }
