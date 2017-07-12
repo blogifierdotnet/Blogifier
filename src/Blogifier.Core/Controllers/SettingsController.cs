@@ -28,7 +28,7 @@ namespace Blogifier.Core.Controllers
             _config = config;
             _logger = logger;
             _theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
-                ApplicationSettings.BlogTheme);
+                ApplicationSettings.AdminTheme);
         }
 
         [VerifyProfile]
@@ -81,6 +81,7 @@ namespace Blogifier.Core.Controllers
             }
             else
             {
+                model.DisqusModel.Title = "Disqus";
                 _db.CustomFields.Add(model.DisqusModel);
             }
             _db.Complete();
