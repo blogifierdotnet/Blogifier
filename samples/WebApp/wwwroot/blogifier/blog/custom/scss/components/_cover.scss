@@ -34,6 +34,12 @@
             margin-bottom: 1rem;
         }
 
+        h2 {
+            font-size: 3rem;
+            font-weight: $font-weight-medium;
+            margin-bottom: 1rem;
+        }
+
         p {
             opacity: .75;
             font-size: .875rem;
@@ -65,7 +71,7 @@
             top: 0;
             color: #000;
 
-            h1 {
+            h1, h2 {
                 font-size: 1.5rem;
                 margin: 0;
             }
