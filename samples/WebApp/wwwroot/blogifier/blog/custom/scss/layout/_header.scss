@@ -87,23 +87,18 @@
         }
 
         input {
-            opacity: 0;
-            visibility: hidden;
+            display:none;
             transform: translateY(-50%);
             position: absolute;
-            right: -100%;
+            right: 0;
             top: 50%;
-            width: 1rem;
+            width: 12rem;
             border-color: #ddd !important;
-            transition: width ease .5s;
         }
 
         &.active {
             input {
-                opacity: 1;
-                visibility: visible;
-                right: 0;
-                width: 12rem;
+              display:block;
             }
         }
     }
