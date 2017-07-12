@@ -43,7 +43,7 @@
                 font-size: .75rem;
                 margin-bottom: 0;
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: .0625rem;
                 opacity: 1;
                 font-family: $font-family-sans;
             }
@@ -68,7 +68,7 @@
             }
         }
 
-        @media screen and (max-width:768px) {
+        @media screen and (max-width:48rem) {
             height: 20rem;
 
             .post-single-title {
@@ -80,7 +80,7 @@
             }
         }
 
-        @media screen and (max-width:480px) {
+        @media screen and (max-width:30rem) {
             height: 12rem;
         }
     }
@@ -94,7 +94,7 @@
         }
 
         a {
-           @include word-wrap();
+            @include word-wrap();
         }
 
         h1, h2, h3, h4, h5 {

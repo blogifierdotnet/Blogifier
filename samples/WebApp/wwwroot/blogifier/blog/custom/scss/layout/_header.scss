@@ -41,15 +41,11 @@
 
         .dropdown-menu {
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.50);
+            box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, 0.50);
             border-radius: .1875rem;
             border: 0;
             padding: 0;
             left: 1rem;
-
-            .dropdown-divider {
-                margin: 0;
-            }
 
             .dropdown-item {
                 padding: .5rem 1.25rem;
@@ -87,7 +83,7 @@
         }
 
         input {
-            display:none;
+            display: none;
             transform: translateY(-50%);
             position: absolute;
             right: 0;
@@ -98,7 +94,7 @@
 
         &.active {
             input {
-              display:block;
+                display: block;
             }
         }
     }

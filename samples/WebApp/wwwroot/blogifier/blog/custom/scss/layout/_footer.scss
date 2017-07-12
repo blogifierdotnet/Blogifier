@@ -1,5 +1,5 @@
 ﻿.blog-footer {
-    box-shadow: 0px -1px 0 #e5e5e5;
+    box-shadow: 0 -0.0625rem 0 #e5e5e5;
     background: #fafafa;
     color: #777;
     height: $footer-height;
@@ -30,7 +30,7 @@
         }
     }
     // --
-    @media screen and (max-width:768px) {
+    @media screen and (max-width:48rem) {
         padding-top: .5rem;
         line-height: 2rem;
         text-align: center;

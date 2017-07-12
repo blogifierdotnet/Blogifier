@@ -38,7 +38,8 @@
             opacity: .75;
             font-size: .875rem;
             font-family: $font-family-sans;
-            letter-spacing: 1px;
+            letter-spacing: 0.0625rem;
+            text-transform:capitalize;
             margin-bottom: 0;
         }
 
