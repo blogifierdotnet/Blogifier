@@ -82,6 +82,12 @@ namespace Blogifier.Core.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
+        public IEnumerable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate)
+        {
+            return _db.BlogPosts.AsNoTracking().Where(predicate).OrderByDescending(p => p.LastUpdated)
+                .Include(p => p.PostCategories).Include(p => p.Profile);
+        }
+
         public async Task<BlogPost> SingleIncluded(Expression<Func<BlogPost, bool>> predicate)
         {
             var post = await _db.BlogPosts.FirstOrDefaultAsync(predicate);

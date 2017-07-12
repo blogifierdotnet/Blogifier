@@ -2,7 +2,9 @@
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Blogifier.Core.Controllers
 {
@@ -19,18 +21,8 @@ namespace Blogifier.Core.Controllers
             _logger = logger;
         }
 
-        [Route("{slug}")]
-        public IActionResult Index(string slug)
-        {
-            var pager = new Pager(1);
-            var profile = _db.Profiles.Single(p => p.Slug == slug);
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > System.DateTime.MinValue, pager);
-            return View(string.Format(_theme, profile.BlogTheme) + "Author.cshtml", 
-                new BlogAuthorModel { Profile = profile, Posts = posts, Pager = pager });
-        }
-
-        [Route("{slug}/{page:int}")]
-        public IActionResult Index(string slug, int page)
+        [Route("{slug}/{page:int?}")]
+        public IActionResult Index(string slug, int page = 1)
         {
             var pager = new Pager(page);
             var profile = _db.Profiles.Single(p => p.Slug == slug);
@@ -39,8 +31,12 @@ namespace Blogifier.Core.Controllers
             if (page < 1 || page > pager.LastPage)
                 return View(string.Format(_theme, profile.BlogTheme) + "Error.cshtml", 404);
 
+            var categories = _db.Categories.Find(c => c.ProfileId == profile.Id).OrderBy(c => c.Title).Take(10).ToList()
+                .GroupBy(c => c.Title).Select(group => group.First())
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).Distinct().ToList();
+
             return View(string.Format(_theme, profile.BlogTheme) + "Author.cshtml", 
-                new BlogAuthorModel { Profile = profile, Posts = posts, Pager = pager });
+                new BlogAuthorModel { Categories = categories, Profile = profile, Posts = posts, Pager = pager });
         }
     }
 }

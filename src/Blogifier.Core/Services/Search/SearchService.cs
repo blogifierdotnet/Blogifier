@@ -26,7 +26,7 @@ namespace Blogifier.Core.Services.Search
             var results = new List<Result>();
             var list = new List<PostListItem>();
 
-            var posts = _db.BlogPosts.All().Where(p => p.Published > DateTime.MinValue).ToList();
+            var posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue).ToList();
 
             foreach (var item in posts)
             {
@@ -57,10 +57,7 @@ namespace Blogifier.Core.Services.Search
             results = results.OrderByDescending(r => r.Rank).ToList();
             for (int i = 0; i < results.Count; i++)
             {
-                //if (i >= skip && i <= skip + pager.ItemsPerPage)
-                //{
-                    list.Add(results[i].Item);
-                //}
+                list.Add(results[i].Item);
             }
             pager.Configure(list.Count);
             return await Task.Run(() => list.Skip(skip).Take(pager.ItemsPerPage).ToList());
@@ -68,15 +65,6 @@ namespace Blogifier.Core.Services.Search
 
         #region Private methods
 
-        private List<PostListItem> GetItems(List<BlogPost> postList)
-        {
-            var posts = new List<PostListItem>();
-            foreach (var p in postList)
-            {
-                posts.Add(GetItem(p));
-            }
-            return posts;
-        }
         private PostListItem GetItem(BlogPost post)
         {
             var item = new PostListItem

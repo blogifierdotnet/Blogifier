@@ -15,7 +15,10 @@
                     <li><a class="dropdown-item" href="~/account/login?ReturnUrl=%2Fadmin">Login</a></li>
                 }
                 <li class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Category</a></li>
+                @foreach (var item in Model.Categories)
+                {
+                    <li><a class="dropdown-item" href="~/category/@item.Value">@item.Text</a></li>
+                }
             </ul>
         </nav>
         <h1 class="blog-logo"><a href="~/blog"><img src="@ApplicationSettings.ProfileLogo" alt="@ApplicationSettings.Title" /></a></h1>

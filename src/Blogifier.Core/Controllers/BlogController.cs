@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -28,23 +29,19 @@ namespace Blogifier.Core.Controllers
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
 
-		public IActionResult Index()
-		{
-            var pager = new Pager(1);
-            var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            return View(_theme + "Index.cshtml", new BlogPostsModel { Posts = posts, Pager = pager });
-        }
-
-        [Route("{page:int}")]
-        public IActionResult Index(int page)
+        [Route("{page:int?}")]
+        public IActionResult Index(int page = 1)
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
+            var categories = _db.Categories.All().OrderBy(c => c.Title).Take(10).ToList()
+                .GroupBy(c => c.Title).Select(group => group.First())
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
 
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View(_theme + "Index.cshtml", new BlogPostsModel { Posts = posts, Pager = pager });
+            return View(_theme + "Index.cshtml", new BlogPostsModel { Categories = categories, Posts = posts, Pager = pager });
         }
 
         [Route("{slug}")]
@@ -57,16 +54,20 @@ namespace Blogifier.Core.Controllers
                 return View(_theme + "Error.cshtml", 404);
 
             vm.Profile = _db.Profiles.Single(b => b.Id == vm.BlogPost.ProfileId);
-            vm.Categories = new List<SelectListItem>();
+            vm.BlogCategories = new List<SelectListItem>();
 
             if (vm.BlogPost.PostCategories != null && vm.BlogPost.PostCategories.Count > 0)
             {
                 foreach (var pc in vm.BlogPost.PostCategories)
                 {
                     var cat = _db.Categories.Single(c => c.Id == pc.CategoryId);
-                    vm.Categories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
+                    vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
+
+            vm.Categories = _db.Categories.Find(c => c.ProfileId == vm.Profile.Id).OrderBy(c => c.Title).Take(10).ToList()
+                .GroupBy(c => c.Title).Select(group => group.First())
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).Distinct().ToList();
 
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 
