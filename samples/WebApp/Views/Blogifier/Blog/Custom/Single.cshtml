@@ -18,24 +18,23 @@
                         /
                         @foreach (var cat in Model.Categories)
                         {
-                        <a href="~/category/@cat.Value">@cat.Text</a>
+                            <a href="~/category/@cat.Value">@cat.Text</a>
                         }
                     </span>
                 }
             </p>
         </div>
     </header>
-    <div class="blog-content container">
+    <section class="blog-content container">
         <div class="post-single-content">
             @Html.Raw(Model.BlogPost.Content)
         </div>
-        <form role="form">
-            <div id="disqus_thread"></div>
-            @if (Model.DisqusScript != null)
+        @if (Model.DisqusScript != null)
             {
+            <footer class="post-single-comment">
+                <div id="disqus_thread"></div>
                 @Html.Raw(Model.DisqusScript.CustomValue)
-            }
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-        </form>
-    </div>
+            </footer>
+        }
+    </section>
 </article>

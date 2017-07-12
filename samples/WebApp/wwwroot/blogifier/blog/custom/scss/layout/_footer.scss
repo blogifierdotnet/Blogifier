@@ -1,9 +1,9 @@
 ﻿.blog-footer {
-    box-shadow: 0 -0.0625rem 0 #e5e5e5;
+    border-top: .0625rem solid #ddd;
     background: #fafafa;
     color: #777;
-    height: $footer-height;
-    line-height: $footer-height;
+    height: $footer-height - .0625rem;
+    line-height: $footer-height - .0625rem;
     font-family: $font-family-sans;
     font-size: 1rem;
     // --
