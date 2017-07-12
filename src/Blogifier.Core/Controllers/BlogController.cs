@@ -34,9 +34,7 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            var categories = _db.Categories.All().OrderBy(c => c.Title)
-                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
+            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
 
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
@@ -65,9 +63,7 @@ namespace Blogifier.Core.Controllers
                 }
             }
 
-            vm.Categories = _db.Categories.Find(c => c.ProfileId == vm.Profile.Id).OrderBy(c => c.Title)
-                .GroupBy(c => c.Title).Select(group => group.First()).Take(10)
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
+            vm.Categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == vm.Profile.Id, 10).ToList();
 
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 
