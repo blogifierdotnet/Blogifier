@@ -1,24 +1,16 @@
-﻿// direction
-$dir-ltr: ltr;
-$dir-rtl: rtl;
-
-// colors
-$color-bg: #e6e9f0;
-$color-gray: #6c7281;
-$color-base: #000;
-$color-base-dark: darken($color-base, 3%);
-$color-base-light: lighten($color-base, 5%);
-
-// fonts
-$font-family-roboto: "Roboto";
+﻿// Fonts
+$font-family-roboto:"Roboto";
 $font-family-Zilla: "Zilla Slab";
 $font-family-base: $font-family-Zilla, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-sans: $font-family-roboto;
 
-$font-size-base: 1.25rem;
-$line-height-base: 1.8;
+$font-size-base: 1.125rem;
+$line-height-base: 1.5;
 
 $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-bold: 700;
+
+// Footer
+$footer-height: 5rem;

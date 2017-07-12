@@ -24,7 +24,7 @@ form {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     margin: 0;
 }
 
@@ -36,9 +36,7 @@ iframe {
 button {
     font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
 
-
     &:focus {
         outline: none !important;
     }
 }
-

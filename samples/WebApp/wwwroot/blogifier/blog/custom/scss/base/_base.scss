@@ -1,24 +1,34 @@
 ﻿body {
-    font-family: $font-family-base;
-    font-size:1.25rem;
-    color: #333;
-    cursor: default;
     background-color: #fafafa;
+    color: #333;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    cursor: default;
     overflow-y: scroll;
 }
 
 .container {
     width: 100%;
-    max-width: 53.75rem;
+    max-width: 55rem;
 }
 
-.wrapper {
+.blog-wrapper {
     min-height: 100%;
-    margin-bottom: -5rem;
+    margin-bottom: -$footer-height;
+
+    &::after {
+        content: "";
+        display: block;
+        height: $footer-height;
+    }
 }
 
-.wrapper:after {
-    content: "";
-    display: block;
-    height: 5rem;
+.blog-content {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    @media screen and (max-width:768px) {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
 }

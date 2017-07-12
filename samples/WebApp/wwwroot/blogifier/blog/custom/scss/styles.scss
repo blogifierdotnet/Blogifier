@@ -10,16 +10,15 @@
 @import "base/mixins";
 @import "base/reset";
 @import "base/base";
-@import "base/utilites";
 
 // Layout
 @import "layout/header";
-@import "layout/main";
 @import "layout/footer";
  
 // Components
 @import "components/cover";
 @import "components/pagination";
+@import "components/tooltip";
 @import "components/browserupgrade";
 
 // Pages

@@ -1,14 +1,14 @@
 ﻿.blog-error {
     background-color: #000;
-    background-position: center center;
-    background-size: cover;
     background-image: url(/cover.png);
     background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
     position: absolute;
-    height: 100%;
-    width: 100%;
     top: 0;
     z-index: -1;
+    height: 100%;
+    width: 100%;
 
     &::after {
         content: "";
@@ -27,14 +27,20 @@
         left: 50%;
         top: 50%;
         color: #fff;
-        text-align: center;
         z-index: 1;
+        text-align: center;
         text-transform: uppercase;
+        font-family: $font-family-sans;
+        letter-spacing: 1px;
     }
 
     h1 {
         font-size: 5rem;
-        font-family: $font-family-sans;
+    }
+
+    p {
+        font-size: 1rem;
+        font-weight: $font-weight-light;
     }
 
     @media screen and (max-width:22.5rem) {
