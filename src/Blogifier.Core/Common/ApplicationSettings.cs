@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace Blogifier.Core.Common
 {
@@ -26,6 +27,8 @@ namespace Blogifier.Core.Common
         public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";
         public static string ProfileImage { get; set; } = "/embedded/lib/img/cover.png";
         public static string PostImage { get; set; } = "/embedded/lib/img/cover.png";
+
+        public static Dictionary<string, string> SocialButtons { get; set; }
 
         #endregion
 

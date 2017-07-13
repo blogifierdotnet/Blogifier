@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Blogifier.Core.Common
 {
@@ -73,6 +74,16 @@ namespace Blogifier.Core.Common
 
                         if (section["PrependFileProvider"] != null)
                             ApplicationSettings.PrependFileProvider = section.GetValue<bool>("PrependFileProvider");
+                    }
+
+                    ApplicationSettings.SocialButtons = new Dictionary<string, string>();
+                    var social = config.GetSection("Blogifier:SocialButtons");
+                    if(social != null)
+                    {
+                        foreach (var btn in social.GetChildren())
+                        {
+                            ApplicationSettings.SocialButtons.Add(btn.Key, btn.Value);
+                        }
                     }
                 }
             }
