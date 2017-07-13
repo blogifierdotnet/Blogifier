@@ -1,3 +1,32 @@
 ﻿.page-author {
+    .cover {
+        .cover-title {
+            img {
+                border-radius: 100%;
+                margin-bottom: 1rem;
+            }
 
+            p {
+                opacity: .75;
+                font-size: .875rem;
+                font-family: $font-family-sans;
+                text-transform: capitalize;
+                margin-bottom: 0;
+            }
+
+            a {
+                color: #fff;
+            }
+
+            ul {
+                @include unstyled();
+                margin-top: 1rem;
+
+                li {
+                    display: inline-block;
+                    margin: 0 .5rem;
+                }
+            }
+        }
+    }
 }

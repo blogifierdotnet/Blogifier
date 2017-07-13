@@ -2,10 +2,6 @@
     // --
     .cover {
         .cover-title {
-            h1 {
-                font-size: 3.5rem;
-                margin-bottom: 1rem;
-            }
             p {
                 font-size: .75rem;
                 margin-bottom: 0;
@@ -13,10 +9,6 @@
                 letter-spacing: .0625rem;
                 opacity: 1;
                 font-family: $font-family-sans;
-            }
-
-            a {
-                color: #fff;
             }
         }
 
@@ -34,8 +26,6 @@
                 }
             }
         }
-
-       
     }
     // --
     .post-single-content {

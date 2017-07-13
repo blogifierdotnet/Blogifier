@@ -17,44 +17,27 @@
         left: 50%;
         bottom: 35%;
         z-index: 1;
-
         color: #fff;
         text-align: center;
         text-shadow: 0 0 1rem rgba(0, 0, 0, 0.20);
 
         h1 {
             font-size: 4rem;
-            font-weight: $font-weight-medium;
             margin-bottom: 1rem;
         }
 
         h2 {
             font-size: 3rem;
-            font-weight: $font-weight-medium;
             margin-bottom: 1rem;
         }
 
         p {
-            opacity: .75;
             font-size: .875rem;
             font-family: $font-family-sans;
-            letter-spacing: 0.0625rem;
-            text-transform: capitalize;
-            margin-bottom: 0;
         }
 
         a {
             color: #fff;
-        }
-
-
-        ul {
-            @include unstyled();
-            margin-top:1rem;
-            li {
-                display:inline-block;
-                margin:0 .5rem;
-            }
         }
     }
 
