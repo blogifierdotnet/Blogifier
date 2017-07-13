@@ -7,12 +7,14 @@
 @{
     var term = ViewBag.Term;
 }
-<section class="blog-cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
-    <div class="blog-cover-title container">
+
+<header class="cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
+    <div class="cover-title container">
         <h2>@term</h2>
         <p>Search Results:</p>
     </div>
-</section>
+</header>
+
 <main class="blog-content container">
     <section class="row">
         @if (Model != null)

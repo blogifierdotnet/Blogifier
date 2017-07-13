@@ -17,6 +17,7 @@
  
 // Components
 @import "components/cover";
+@import "components/post";
 @import "components/pagination";
 @import "components/tooltip";
 @import "components/browserupgrade";
@@ -25,4 +26,7 @@
 // Pages
 @import "pages/index";
 @import "pages/single";
+@import "pages/author";
+@import "pages/category";
+@import "pages/search";
 @import "pages/error";

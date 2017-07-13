@@ -4,12 +4,14 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
-<section class="blog-cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
-    <div class="blog-cover-title container">
+
+<section class="cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
+    <div class="cover-title container">
         <h1>@ApplicationSettings.Title</h1>
         <p>@ApplicationSettings.Description</p>
     </div>
 </section>
+
 <main class="blog-content container">
     <section class="row">
         @if (Model != null)

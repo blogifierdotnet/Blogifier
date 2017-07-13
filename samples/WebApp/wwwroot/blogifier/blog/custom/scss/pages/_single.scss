@@ -1,44 +1,11 @@
 ﻿.post-single {
     // --
-    .post-single-cover {
-        height: 34rem;
-        position: relative;
-        overflow: hidden;
-
-        &::after {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .post-single-img {
-            max-width: 170%;
-            min-width: 100%;
-            transform: translate(-50%,-50%);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-        }
-
-        .post-single-title {
-            transform: translate(-50%,-50%);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            color: #fff;
-            text-align: center;
-            z-index: 1;
-
+    .cover {
+        .cover-title {
             h1 {
-                font-size: 3rem;
+                font-size: 3.5rem;
                 margin-bottom: 1rem;
             }
-
             p {
                 font-size: .75rem;
                 margin-bottom: 0;
@@ -68,21 +35,7 @@
             }
         }
 
-        @media screen and (max-width:48rem) {
-            height: 20rem;
-
-            .post-single-title {
-                width: 80%;
-
-                h1 {
-                    font-size: 2rem;
-                }
-            }
-        }
-
-        @media screen and (max-width:30rem) {
-            height: 12rem;
-        }
+       
     }
     // --
     .post-single-content {
