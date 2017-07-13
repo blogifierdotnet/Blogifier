@@ -14,10 +14,13 @@
                 {
                     <li><a class="dropdown-item" href="~/account/login?ReturnUrl=%2Fadmin">Login</a></li>
                 }
-                <li class="dropdown-divider"></li>
-                @foreach (var item in Model.Categories)
+                @if (Model.Categories != null && Model.Categories.Count > 0)
                 {
-                    <li><a class="dropdown-item" href="~/category/@item.Value">@item.Text</a></li>
+                    <li class="dropdown-divider"></li>
+                    foreach (var item in Model.Categories)
+                    {
+                        <li><a class="dropdown-item" href="~/category/@item.Value">@item.Text</a></li>
+                    }
                 }
             </ul>
         </nav>

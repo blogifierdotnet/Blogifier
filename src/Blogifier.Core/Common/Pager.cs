@@ -26,9 +26,10 @@
                 NotFound = true;
             }
             LastPage = (total % ItemsPerPage) == 0 ? total / ItemsPerPage : (total / ItemsPerPage) + 1;
+            if (LastPage == 0) LastPage = 1;
         }
 
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
         public int ItemsPerPage { get; set; }
         public int Total { get; set; }
         public bool NotFound { get; set; }
@@ -39,6 +40,6 @@
         public int Older { get; set; }
         public bool ShowOlder { get; set; }
 
-        public int LastPage { get; set; }
+        public int LastPage { get; set; } = 1;
     }
 }
