@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace Blogifier.Core.Controllers
 {
     [Route("blog")]
-    public class BlogController : Controller
-    {
-        IUnitOfWork _db;
+	public class BlogController : Controller
+	{
+		IUnitOfWork _db;
         IRssService _rss;
         ISocialService _social;
         private readonly ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-        public BlogController(IUnitOfWork db, IRssService rss, ISocialService social, ILogger<BlogController> logger)
-        {
-            _db = db;
+		public BlogController(IUnitOfWork db, IRssService rss, ISocialService social, ILogger<BlogController> logger)
+		{
+			_db = db;
             _rss = rss;
             _social = social;
             _logger = logger;
-            _theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
+			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
 
         [Route("{page:int?}")]
@@ -43,29 +43,18 @@ namespace Blogifier.Core.Controllers
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View(_theme + "Index.cshtml", new BlogPostsModel
-            {
-                Categories = categories,
-                SocialButtons = social,
-                Posts = posts,
-                Pager = pager
-            });
+            return View(_theme + "Index.cshtml", new BlogPostsModel {
+                Categories = categories, SocialButtons = social, Posts = posts, Pager = pager });
         }
 
         [Route("{slug}")]
-        public async Task<IActionResult> SinglePublication(string slug, bool partial = false)
+        public async Task<IActionResult> SinglePublication(string slug)
         {
             var vm = new BlogPostDetailModel();
             vm.BlogPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug && p.Published > DateTime.MinValue);
 
             if (vm.BlogPost == null)
-            {
-                if (partial)
-                    return PartialView(_theme + "ErrorPartial.cshtml", 404);
-                else
-                    return View(_theme + "Error.cshtml", 404);
-            }
-
+                return View(_theme + "Error.cshtml", 404);
 
             if (string.IsNullOrEmpty(vm.BlogPost.Image))
                 vm.BlogPost.Image = ApplicationSettings.PostImage;
@@ -85,16 +74,12 @@ namespace Blogifier.Core.Controllers
             vm.Categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == vm.Profile.Id, 10).ToList();
             vm.SocialButtons = _social.GetSocialButtons(vm.Profile).Result;
 
-            vm.DisqusScript = _db.CustomFields.Single(f =>
-                f.ParentId == vm.Profile.Id &&
-                f.CustomKey == "disqus" &&
+            vm.DisqusScript = _db.CustomFields.Single(f => 
+                f.ParentId == vm.Profile.Id && 
+                f.CustomKey == "disqus" && 
                 f.CustomType == Data.Domain.CustomType.Profile);
 
-            if (partial)
-                return PartialView("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/SinglePartial.cshtml", vm);
-            else
-                return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
-
+            return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
         }
 
         [Route("rss")]
