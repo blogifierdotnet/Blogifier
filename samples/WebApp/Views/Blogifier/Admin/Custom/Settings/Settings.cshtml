@@ -1,0 +1,32 @@
+﻿@model Blogifier.Core.Data.Models.AdminToolsModel
+@{
+    Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
+}
+<div id="page-content-wrapper">
+    <form method="post" asp-controller="Settings" asp-action="Disqus" asp-antiforgery="true">
+        <div id="disqusForm">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label text-right">Disqus Script</label>
+                <div class="col-sm-9">
+                    <textarea asp-for="DisqusModel.CustomValue" class="form-control" rows="10" cols="70"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div id="btnDisqus" class="col-md-9 offset-md-3">
+                    <button type="submit" class="btn btn-black btn-save-setting">Save</button>
+                    <input type="hidden" asp-for="DisqusModel.CustomKey" />
+                    <input type="hidden" asp-for="DisqusModel.Id" />
+                    <input type="hidden" asp-for="DisqusModel.ParentId" />
+                    <input type="hidden" asp-for="DisqusModel.Title" />
+                    <input type="hidden" asp-for="DisqusModel.CustomType" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script>toastr.success('@ViewBag.Message')</script>
+    }
+}

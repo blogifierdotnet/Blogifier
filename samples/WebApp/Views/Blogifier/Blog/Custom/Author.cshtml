@@ -6,34 +6,35 @@
 @model BlogAuthorModel
 @{
     var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
+    var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
     var social = (Dictionary<string, string>)Model.SocialButtons;
 }
 <main class="page-author">
     <header class="cover" style="background-image: url('@bg')">
         <div class="cover-title container">
-            <img src="~/embedded/lib/img/avatar.jpg" alt="@Model.Profile.Title" />
+            <img src="@avatar" width="100" alt="@Model.Profile.Title" />
             <h2>@Model.Profile.Title</h2>
             <p>My name is Jhon Doe and I am a web developer.</p>
             <ul>
-                @if (social.ContainsKey("social-google"))
-            {
-                    <li><a href='@social["social-google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
+                @if (social.ContainsKey("Google"))
+                {
+                    <li><a href='@social["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
                 }
-                @if (social.ContainsKey("social-twitter"))
-            {
-                    <li><a href='@social["social-twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                @if (social.ContainsKey("Twitter"))
+                {
+                    <li><a href='@social["Twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                 }
-                @if (social.ContainsKey("social-github"))
-            {
-                    <li><a href='@social["social-github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
+                @if (social.ContainsKey("Github"))
+                {
+                    <li><a href='@social["Github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
                 }
-                @if (social.ContainsKey("social-instagram"))
-            {
-                    <li><a href='@social["social-instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                @if (social.ContainsKey("Instagram"))
+                {
+                    <li><a href='@social["Instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
                 }
-                @if (social.ContainsKey("social-facebook"))
-            {
-                    <li><a href='@social["social-facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                @if (social.ContainsKey("Facebook"))
+                {
+                    <li><a href='@social["Facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                 }
             </ul>
         </div>
