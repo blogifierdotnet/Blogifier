@@ -5,6 +5,7 @@ using Blogifier.Core.Data.Repositories;
 using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Search;
+using Blogifier.Core.Services.Social;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace Blogifier.Core
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<ISocialService, SocialService>();
 
             AddDatabase(services);
 

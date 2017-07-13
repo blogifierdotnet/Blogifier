@@ -1,6 +1,7 @@
 ﻿@using Blogifier.Core.Common
 @{
     var themeFolder = "blogifier/blog/custom";
+    var social = (Dictionary<string, string>)Model.SocialButtons;
 }
 <footer class="blog-footer">
     <section class="container clearfix">
@@ -8,10 +9,26 @@
             Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.
         </p>
         <ul class="float-right">
-            <li><a href="#" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
-            <li><a href="#" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+            @if (social.ContainsKey("social-google"))
+            {
+                <li><a href='@social["social-google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
+            }
+            @if (social.ContainsKey("social-twitter"))
+            {
+                <li><a href='@social["social-twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            }
+            @if (social.ContainsKey("social-github"))
+            {
+                <li><a href='@social["social-github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
+            }
+            @if (social.ContainsKey("social-instagram"))
+            {
+                <li><a href='@social["social-instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+            }
+            @if (social.ContainsKey("social-facebook"))
+            {
+                <li><a href='@social["social-facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+            }
         </ul>
     </section>
 </footer>

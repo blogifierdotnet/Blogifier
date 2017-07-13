@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.Social;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -13,13 +14,15 @@ namespace Blogifier.Core.Controllers
 	public class CategoryController : Controller
 	{
 		IUnitOfWork _db;
+        ISocialService _social;
         ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/Category.cshtml";
         string _theme;
 
-		public CategoryController(IUnitOfWork db, ILogger<CategoryController> logger)
+		public CategoryController(IUnitOfWork db, ISocialService social, ILogger<CategoryController> logger)
 		{
 			_db = db;
+            _social = social;
             _logger = logger;
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
@@ -36,9 +39,10 @@ namespace Blogifier.Core.Controllers
             var category = _db.Categories.Single(c => c.Slug == slug);
 
             var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
+            var social = _social.GetSocialButtons(null).Result;
 
             return View(_theme, new BlogCategoryModel { Categories = categories,
-                Category = category, Posts = posts, Pager = pager });
+                SocialButtons = social, Category = category, Posts = posts, Pager = pager });
         }
     }
 }

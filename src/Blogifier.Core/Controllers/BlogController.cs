@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.Social;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,14 +18,16 @@ namespace Blogifier.Core.Controllers
 	{
 		IUnitOfWork _db;
         IRssService _rss;
+        ISocialService _social;
         private readonly ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-		public BlogController(IUnitOfWork db, IRssService rss, ILogger<BlogController> logger)
+		public BlogController(IUnitOfWork db, IRssService rss, ISocialService social, ILogger<BlogController> logger)
 		{
 			_db = db;
             _rss = rss;
+            _social = social;
             _logger = logger;
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
@@ -35,11 +38,13 @@ namespace Blogifier.Core.Controllers
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
             var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
+            var social = _social.GetSocialButtons(null).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View(_theme + "Index.cshtml", new BlogPostsModel { Categories = categories, Posts = posts, Pager = pager });
+            return View(_theme + "Index.cshtml", new BlogPostsModel {
+                Categories = categories, SocialButtons = social, Posts = posts, Pager = pager });
         }
 
         [Route("{slug}")]
@@ -67,6 +72,7 @@ namespace Blogifier.Core.Controllers
             }
 
             vm.Categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == vm.Profile.Id, 10).ToList();
+            vm.SocialButtons = _social.GetSocialButtons(vm.Profile).Result;
 
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 
