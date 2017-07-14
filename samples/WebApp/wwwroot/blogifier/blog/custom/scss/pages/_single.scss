@@ -8,7 +8,6 @@
                 text-transform: uppercase;
                 letter-spacing: .0625rem;
                 opacity: 1;
-                font-family: $font-family-sans;
             }
         }
 
@@ -29,18 +28,20 @@
     }
     // --
     .post-single-content {
-        font-size: 1.37500rem;
-        font-weight: 400;
+
+        @media screen and (max-width:48rem) {
+            padding: 2rem;
+        }
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         a {
             @include word-wrap();
         }
 
-        h1, h2, h3, h4, h5 {
+        h1, h2, h3, h4 {
             margin-bottom: 0;
             margin-top: 2rem;
         }
@@ -51,12 +52,11 @@
             figcaption {
                 font-size: .75rem;
                 color: #666;
-                font-family: $font-family-sans;
             }
         }
 
-        @media screen and (max-width:48rem) {
-            padding: 2rem;
+        .card-title {
+            margin: 0;
         }
     }
     // --
