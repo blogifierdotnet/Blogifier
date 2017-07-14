@@ -7,7 +7,7 @@
 @{
     var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
-    var social = (Dictionary<string, string>)Model.SocialButtons;
+    var social = Model.SocialButtons;
 }
 <main class="page-author">
     <header class="cover" style="background-image: url('@bg')">

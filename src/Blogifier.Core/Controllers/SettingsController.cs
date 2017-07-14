@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Blogifier.Core.Controllers
@@ -32,62 +33,82 @@ namespace Blogifier.Core.Controllers
         }
 
         [VerifyProfile]
-        [Route("application")]
-        public IActionResult Application()
-        {
-            return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
-        }
-
-        [VerifyProfile]
-        [Route("disqus")]
-        public IActionResult Disqus()
+        [Route("custom")]
+        public IActionResult Custom()
         {
             var profile = GetProfile();
+            var fields = ApplicationSettings.SocialButtons;
 
-            var disqus = _db.CustomFields.Single(f =>
-                f.CustomKey == "disqus" &&
-                f.CustomType == CustomType.Profile &&
-                f.ParentId == profile.Id);
+            if(!fields.ContainsKey("disqus"))
+                fields.Add("disqus", "");
 
-            if (disqus == null)
-                disqus = new CustomField { CustomKey = "disqus", CustomType = CustomType.Profile, ParentId = profile.Id };
-
+            var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profile.Id);
+            if (dbFields != null && dbFields.Count() > 0)
+            {
+                foreach (var field in dbFields)
+                {
+                    if(fields.ContainsKey(field.CustomKey))
+                    {
+                        fields[field.CustomKey] = field.CustomValue;
+                    }
+                }
+            }
             var model = new AdminToolsModel
             {
                 Profile = GetProfile(),
-                RssImportModel = new RssImportModel(),
-                DisqusModel = disqus
+                CustomFields = fields
             };
-            return View(_theme + "Disqus.cshtml", model);
+            return View(_theme + "Custom.cshtml", model);
         }
 
         [HttpPost]
-        [Route("disqus")]
-        public IActionResult Disqus(AdminToolsModel model)
+        [Route("custom")]
+        public IActionResult Custom(AdminToolsModel model)
         {
             model.Profile = GetProfile();
 
-            var existing = _db.CustomFields.Single(f =>
-                f.CustomKey == "disqus" &&
-                f.CustomType == CustomType.Profile &&
-                f.ParentId == model.Profile.Id);
+            var updated = new List<string>();
+            var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == model.Profile.Id);
 
-            if (existing != null)
-                model.DisqusModel.Id = existing.Id;
-
-            if (model.DisqusModel.Id > 0)
+            // update existing DB fields
+            if (dbFields != null && dbFields.Count() > 0)
             {
-                existing.CustomValue = model.DisqusModel.CustomValue;
+                foreach (var field in dbFields)
+                {
+                    if (model.CustomFields.ContainsKey(field.CustomKey))
+                    {
+                        field.CustomValue = model.CustomFields[field.CustomKey];
+                        updated.Add(field.CustomKey);
+                    }
+                }
             }
-            else
+            _db.Complete();
+
+            // add new DB entries
+            foreach (var item in model.CustomFields)
             {
-                model.DisqusModel.Title = "Disqus";
-                _db.CustomFields.Add(model.DisqusModel);
+                if (!updated.Contains(item.Key))
+                {
+                    _db.CustomFields.Add(new CustomField {
+                        CustomKey = item.Key,
+                        CustomValue = item.Value,
+                        Title = item.Key,
+                        CustomType = CustomType.Profile,
+                        ParentId = model.Profile.Id
+                    });
+                }
             }
             _db.Complete();
 
             ViewBag.Message = "Updated";
-            return View(_theme + "Disqus.cshtml", model);
+            return View(_theme + "Custom.cshtml", model);
+        }
+
+        [VerifyProfile]
+        [Route("application")]
+        public IActionResult Application()
+        {
+            return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
         [Route("profile")]

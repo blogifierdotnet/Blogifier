@@ -32,8 +32,7 @@ namespace Blogifier.Core.Data.Models
 
 	public class AdminToolsModel : AdminBaseModel
 	{
-		public RssImportModel RssImportModel { get; set; }
-        public CustomField DisqusModel { get; set; }
+        public Dictionary<string, string> CustomFields { get; set; }
 	}
 
     public class RssImportModel
