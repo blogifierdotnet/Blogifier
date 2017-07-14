@@ -3,11 +3,7 @@
     var themeFolder = "blogifier/blog/custom";
 }
 <footer class="blog-footer">
-    <section class="container clearfix">
-        <p class="float-left">
-            Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.
-        </p>
-    </section>
+    <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.</p>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
