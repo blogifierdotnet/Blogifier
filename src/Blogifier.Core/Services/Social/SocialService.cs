@@ -36,6 +36,10 @@ namespace Blogifier.Core.Services.Social
                         {
                             buttons[field.CustomKey] = field.CustomValue;
                         }
+                        else
+                        {
+                            buttons.Add(field.CustomKey, field.CustomValue);
+                        }
                     }
                 }
             }

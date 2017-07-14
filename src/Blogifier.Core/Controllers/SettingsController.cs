@@ -39,8 +39,12 @@ namespace Blogifier.Core.Controllers
             var profile = GetProfile();
             var fields = ApplicationSettings.SocialButtons;
 
-            if(!fields.ContainsKey("disqus"))
-                fields.Add("disqus", "");
+            if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
+            if (!fields.ContainsKey("Google")) fields.Add("Google", "");
+            if (!fields.ContainsKey("Twitter")) fields.Add("Twitter", "");
+            if (!fields.ContainsKey("Github")) fields.Add("Github", "");
+            if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
+            if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
 
             var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profile.Id);
             if (dbFields != null && dbFields.Count() > 0)

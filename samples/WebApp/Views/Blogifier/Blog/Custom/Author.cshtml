@@ -16,23 +16,23 @@
             <h2>@Model.Profile.Title</h2>
             <p>My name is Jhon Doe and I am a web developer.</p>
             <ul>
-                @if (social.ContainsKey("Google"))
+                @if (social.ContainsKey("Google") && !string.IsNullOrEmpty(social["Google"]))
                 {
                     <li><a href='@social["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
                 }
-                @if (social.ContainsKey("Twitter"))
+                @if (social.ContainsKey("Twitter") && !string.IsNullOrEmpty(social["Twitter"]))
                 {
                     <li><a href='@social["Twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                 }
-                @if (social.ContainsKey("Github"))
+                @if (social.ContainsKey("Github") && !string.IsNullOrEmpty(social["Github"]))
                 {
                     <li><a href='@social["Github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
                 }
-                @if (social.ContainsKey("Instagram"))
+                @if (social.ContainsKey("Instagram") && !string.IsNullOrEmpty(social["Instagram"]))
                 {
                     <li><a href='@social["Instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
                 }
-                @if (social.ContainsKey("Facebook"))
+                @if (social.ContainsKey("Facebook") && !string.IsNullOrEmpty(social["Facebook"]))
                 {
                     <li><a href='@social["Facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                 }
