@@ -98,4 +98,9 @@
             }
         }
     }
+
+    @media screen and (max-height:48rem) and (max-width:48rem) {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
 }
