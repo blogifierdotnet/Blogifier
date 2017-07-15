@@ -14,11 +14,10 @@
         <header class="sample-header container">
             <h1><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/sample/img/logotype.png" alt="Blogifier" /></a></h1>
             <p>Sample application for Blogifier.Core</p>
+            @await Html.PartialAsync("_LoginPartial")
         </header>
         <div class="sample-content container">
-            @*@await Html.PartialAsync("_LoginPartial")*@
             @RenderBody()
-
         </div>
     </div>
     <footer class="sample-footer container">
