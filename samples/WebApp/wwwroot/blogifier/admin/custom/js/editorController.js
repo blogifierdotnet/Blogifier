@@ -1,6 +1,8 @@
 ﻿var editorController = function (dataService, filePickerController) {
 
     function savePost(publish) {
+        $('.spin-icon').fadeIn();
+        $('#action-buttons').fadeOut();
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
@@ -33,6 +35,8 @@
         $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
         loadActionButtons();
+        $('.spin-icon').fadeOut();
+        $('#action-buttons').fadeIn();
     }
 
     function deletePost() {
