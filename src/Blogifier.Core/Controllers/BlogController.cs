@@ -47,6 +47,23 @@ namespace Blogifier.Core.Controllers
                 Categories = categories, SocialButtons = social, Posts = posts, Pager = pager });
         }
 
+        [Route("{slug:author}/{page:int?}")]
+        public IActionResult Author(string slug, int page = 1)
+        {
+            var pager = new Pager(page);
+            var profile = _db.Profiles.Single(p => p.Slug == slug);
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > DateTime.MinValue, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
+            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == profile.Id, 10).ToList();
+            var social = _social.GetSocialButtons(profile).Result;
+
+            return View(string.Format(_theme, profile.BlogTheme) + "Author.cshtml",
+                new BlogAuthorModel { Categories = categories, SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+        }
+
         [Route("{slug}")]
         public async Task<IActionResult> SinglePublication(string slug)
         {
