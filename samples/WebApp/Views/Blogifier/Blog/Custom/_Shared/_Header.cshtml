@@ -4,6 +4,8 @@
         <nav class="blog-nav">
             <button class="dropdown-toggle" type="button" id="blogNav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-navicon"></i></button>
             <ul class="dropdown-menu" aria-labelledby="blogNav">
+                <li><a class="dropdown-item" href="~/">Home</a></li>
+                <li class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="~/blog">Blog</a></li>
                 @if (User.Identity.IsAuthenticated)
                 {
