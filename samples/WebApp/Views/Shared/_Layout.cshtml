@@ -6,43 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - WebApp</title>
     <link rel="stylesheet" href="~/sample/lib/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="~/sample/css/site.css" asp-append-version="true">
-
+    <link rel="stylesheet" href="~/sample/css/styles.min.css" asp-append-version="true">
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebApp</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Blog" asp-action="Index">Blog</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
-                    }
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+    <div class="sample-wrapper">
+        <header class="sample-header container">
+            <h1><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/sample/img/logotype.png" alt="Blogifier" /></a></h1>
+            <p>Sample application for Blogifier.Core</p>
+        </header>
+        <div class="sample-content container">
+            @*@await Html.PartialAsync("_LoginPartial")*@
+            @RenderBody()
+
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - WebApp (Version @Blogifier.Core.Common.ApplicationSettings.Version)</p>
-        </footer>
     </div>
+    <footer class="sample-footer container">
+        <p>&copy; @DateTime.Now.Year - Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version) - <a asp-area="" asp-controller="Home" asp-action="About">About</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></p>
+    </footer>
     <script src="~/sample/lib/jquery/dist/jquery.js"></script>
     <script src="~/sample/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/sample/js/site.js" asp-append-version="true"></script>

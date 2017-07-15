@@ -1,9 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
-
-<h2>@ViewData["Title"].</h2>
-<h3>Sample application for Blogifier.Core</h3>
-
-<p>Use this area to provide additional information.</p>
-
+<section class="sample-page-home">
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="" asp-area="" asp-controller="Blog" asp-action="Index"><img src="~/sample/img/sample-blog.png" alt="Blog Demo" /><span>Blog Demo</span></a>
+        </div>
+        <div class="col-sm-6">
+            <a asp-area="" asp-controller="Admin" asp-action="Index"><img src="~/sample/img/sample-admin.png" alt="Admin Demo" /><span>Admin Demo</span></a>
+        </div>
+    </div>
+</section>

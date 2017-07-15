@@ -13,6 +13,82 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\sample\css\**" />
+    <Content Remove="wwwroot\sample\css\**" />
+    <EmbeddedResource Remove="wwwroot\sample\css\**" />
+    <None Remove="wwwroot\sample\css\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\sample\favicon.ico" />
+    <Content Include="wwwroot\sample\Gruntfile.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\img\banner1.svg" />
+    <Content Include="wwwroot\sample\img\banner2.svg" />
+    <Content Include="wwwroot\sample\img\banner3.svg" />
+    <Content Include="wwwroot\sample\img\banner4.svg" />
+    <Content Include="wwwroot\sample\img\cover.png" />
+    <Content Include="wwwroot\sample\img\favicon.ico" />
+    <Content Include="wwwroot\sample\img\logotype.png" />
+    <Content Include="wwwroot\sample\js\site.js" />
+    <Content Include="wwwroot\sample\js\site.min.js" />
+    <Content Include="wwwroot\sample\lib\bootstrap\.bower.json" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap-theme.min.css" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="wwwroot\sample\lib\bootstrap\dist\js\npm.js" />
+    <Content Include="wwwroot\sample\lib\bootstrap\LICENSE" />
+    <Content Include="wwwroot\sample\lib\jquery-validation-unobtrusive\.bower.json" />
+    <Content Include="wwwroot\sample\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\.bower.json" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="wwwroot\sample\lib\jquery-validation\LICENSE.md" />
+    <Content Include="wwwroot\sample\lib\jquery\.bower.json" />
+    <Content Include="wwwroot\sample\lib\jquery\dist\jquery.js" />
+    <Content Include="wwwroot\sample\lib\jquery\dist\jquery.min.js" />
+    <Content Include="wwwroot\sample\lib\jquery\dist\jquery.min.map" />
+    <Content Include="wwwroot\sample\lib\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\sample\package.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\base\_base.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\base\_reset.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\base\_variables.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\layout\_footer.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\layout\_header.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\sample\scss\page\_home.scss" />
+    <Content Include="wwwroot\sample\scss\styles.scss" />
+    <Content Include="wwwroot\sample\site.css" />
+    <Content Include="wwwroot\sample\site.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
@@ -42,7 +118,7 @@
     <Folder Include="Logs\" />
     <Folder Include="Logs\" />
     <Folder Include="wwwroot\blogifier\blog\custom\scss\" />
-    <Folder Include="wwwroot\sample\" />
+    <Folder Include="wwwroot\sample\css\" />
   </ItemGroup>
 
 </Project>
