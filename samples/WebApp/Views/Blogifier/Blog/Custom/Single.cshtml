@@ -9,7 +9,7 @@
         <div class="cover-title container">
             <h1>@Model.BlogPost.Title</h1>
             <p>
-            <span class="post-single-author">by <a href="~/blog/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
+            <span class="post-single-author">by <a href="~/@Constants.BlogRoute@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
             /
             <span class="post-single-date">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</span>
             @if (Model.Categories.Count > 0)

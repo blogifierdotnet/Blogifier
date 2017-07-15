@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
-    [Route("blog")]
+    [Route(Constants.BlogRoute)]
 	public class BlogController : Controller
 	{
 		IUnitOfWork _db;

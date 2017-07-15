@@ -6,7 +6,7 @@
             <ul class="dropdown-menu" aria-labelledby="blogNav">
                 <li><a class="dropdown-item" href="~/">Home</a></li>
                 <li class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="~/blog">Blog</a></li>
+                <li><a class="dropdown-item" href="~/@Constants.BlogRoute">Blog</a></li>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a class="dropdown-item" href="~/admin">Admin</a></li>
@@ -18,7 +18,7 @@
                 }
             </ul>
         </nav>
-        <h1 class="blog-logo"><a href="~/blog"><img src="@ApplicationSettings.ProfileLogo" alt="@ApplicationSettings.Title" /></a></h1>
+        <h1 class="blog-logo"><a href="~/@Constants.BlogRoute"><img src="@ApplicationSettings.ProfileLogo" alt="@ApplicationSettings.Title" /></a></h1>
         <form class="blog-search" role="search" asp-controller="Search" asp-action="Index" method="post">
             <button type="button"><i class="fa fa-search"></i></button>
             <input type="search" id="term" name="term" class="form-control" placeholder="Search...">
