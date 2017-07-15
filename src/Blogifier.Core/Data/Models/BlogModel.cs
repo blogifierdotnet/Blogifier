@@ -27,6 +27,7 @@ namespace Blogifier.Core.Data.Models
 
     public class BlogCategoryModel : BlogBaseModel
     {
+        public Profile Profile { get; set; }
         public Category Category { get; set; }
         public IEnumerable<PostListItem> Posts { get; set; }
         public Pager Pager { get; set; }

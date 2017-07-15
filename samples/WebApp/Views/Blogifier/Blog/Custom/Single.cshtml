@@ -18,7 +18,7 @@
                     /
                     @foreach (var cat in Model.Categories)
                     {
-                        <a href="~/category/@cat.Value">@cat.Text</a>
+                        <a href="~/@Constants.BlogRoute@Model.Profile.Slug/@cat.Value">@cat.Text</a>
                     }
                 </span>
             }

@@ -60,8 +60,35 @@ namespace Blogifier.Core.Controllers
             var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == profile.Id, 10).ToList();
             var social = _social.GetSocialButtons(profile).Result;
 
-            return View(string.Format(_theme, profile.BlogTheme) + "Author.cshtml",
-                new BlogAuthorModel { Categories = categories, SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+            return View(_theme + "Author.cshtml", new BlogAuthorModel {
+                Categories = categories, SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+        }
+
+        [Route("{slug:author}/{cat}/{page:int?}")]
+        public async Task<IActionResult> AuthorCategory(string slug, string cat, int page = 1)
+        {
+            var pager = new Pager(page);
+            var profile = _db.Profiles.Single(p => p.Slug == slug);
+            var posts = await _db.BlogPosts.ByCategory(cat, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
+            var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
+
+            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
+            var social = _social.GetSocialButtons(null).Result;
+
+            return View(_theme + "Category.cshtml", 
+                new BlogCategoryModel
+                {
+                    Profile = profile,
+                    Categories = categories,
+                    SocialButtons = social,
+                    Category = category,
+                    Posts = posts,
+                    Pager = pager
+                });
         }
 
         [Route("{slug}")]
