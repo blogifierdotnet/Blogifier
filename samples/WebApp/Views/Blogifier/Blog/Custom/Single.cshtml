@@ -12,11 +12,11 @@
             <span class="post-single-author">by <a href="~/@Constants.BlogRoute@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
             /
             <span class="post-single-date">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</span>
-            @if (Model.Categories.Count > 0)
+            @if (Model.BlogCategories.Count > 0)
             {
                 <span class="post-single-category">
                     /
-                    @foreach (var cat in Model.Categories)
+                    @foreach (var cat in Model.BlogCategories)
                     {
                         <a href="~/@Constants.BlogRoute@Model.Profile.Slug/@cat.Value">@cat.Text</a>
                     }

@@ -25,8 +25,15 @@ namespace Blogifier.Core.Data.Repositories
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var items = _db.BlogPosts.AsNoTracking().Where(predicate).OrderByDescending(p => p.LastUpdated)
+            var drafts = _db.BlogPosts.AsNoTracking().Where(p => p.Published == DateTime.MinValue)
+                .Where(predicate).OrderByDescending(p => p.LastUpdated)
                 .Include(p => p.PostCategories).Include(p => p.Profile).ToList();
+
+            var pubs = _db.BlogPosts.AsNoTracking().Where(p => p.Published > DateTime.MinValue)
+                .Where(predicate).OrderByDescending(p => p.Published)
+                .Include(p => p.PostCategories).Include(p => p.Profile).ToList();
+
+            var items = drafts.Concat(pubs).ToList();
 
             pager.Configure(items.Count);
             return GetItems(items).Skip(skip).Take(pager.ItemsPerPage);
