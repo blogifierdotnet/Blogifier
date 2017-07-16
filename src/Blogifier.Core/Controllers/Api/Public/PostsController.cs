@@ -6,6 +6,7 @@ using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Blogifier.Core.Controllers.Api.Public
@@ -24,6 +25,18 @@ namespace Blogifier.Core.Controllers.Api.Public
             _logger = logger;
         }
 
+        /// <summary>
+        /// Remove potentially private information from the PostListItem for the public API
+        /// </summary>
+        IEnumerable<PostListItem> SantizePostListItems(IEnumerable<PostListItem> posts)
+        {
+            foreach(PostListItem post in posts)
+            {
+                post.AuthorEmail = "";
+            }
+            return posts;
+        }
+
         // GET blogifier/api/public/posts
         // GET blogifier/api/public/posts?page=2
         /// <summary>
@@ -32,12 +45,12 @@ namespace Blogifier.Core.Controllers.Api.Public
         public BlogPostsModel Get(int page = 1)
         {
             var pager = new Pager(page);
-            var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            //var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
-            //var social = _social.GetSocialButtons(null).Result;
+            IEnumerable<PostListItem> posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
 
             if (page < 1 || page > pager.LastPage)
                 return null;
+
+            posts = SantizePostListItems(posts);
 
             return new BlogPostsModel
             {
@@ -46,8 +59,8 @@ namespace Blogifier.Core.Controllers.Api.Public
             };
         }
 
-        // GET blogifier/api/public/posts/autor/filip-stanek
-        // GET blogifier/api/public/posts/autor/filip-stanek?page=2
+        // GET blogifier/api/public/posts/author/filip-stanek
+        // GET blogifier/api/public/posts/author/filip-stanek?page=2
         /// <summary>
         /// Get posts for author, by page
         /// </summary>
@@ -56,10 +69,12 @@ namespace Blogifier.Core.Controllers.Api.Public
         {
             var pager = new Pager(page);
             var profile = _db.Profiles.Single(p => p.Slug == slug);
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > System.DateTime.MinValue, pager);
+            IEnumerable<PostListItem> posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > System.DateTime.MinValue, pager);
 
             if (page < 1 || page > pager.LastPage)
                 return null;
+
+            posts = SantizePostListItems(posts);
 
             return new BlogPostsModel
             {
@@ -77,10 +92,12 @@ namespace Blogifier.Core.Controllers.Api.Public
         public BlogPostsModel Category(string slug, int page = 1)
         {
             var pager = new Pager(page);
-            var posts = _db.BlogPosts.ByCategory(slug, pager).Result;
+            IEnumerable<PostListItem> posts = _db.BlogPosts.ByCategory(slug, pager).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return null;
+
+            posts = SantizePostListItems(posts);
 
             return new BlogPostsModel
             {
@@ -92,16 +109,18 @@ namespace Blogifier.Core.Controllers.Api.Public
         // GET blogifier/api/public/posts/search/dot%20net
         // GET blogifier/api/public/posts/search/dot%20net?page=2
         /// <summary>
-        /// Get single post by slug
+        /// Search the posts for terms, by page
         /// </summary>
         [HttpGet("[action]/{term}")]
         public BlogPostsModel Search(string term, int page = 1)
         {
             var pager = new Pager(page);
-            var posts = _search.Find(pager, term).Result;
+            IEnumerable<PostListItem> posts = _search.Find(pager, term).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return null;
+
+            posts = SantizePostListItems(posts);
 
             return new BlogPostsModel
             {
@@ -127,6 +146,18 @@ namespace Blogifier.Core.Controllers.Api.Public
 
             if (string.IsNullOrEmpty(post.Image))
                 post.Image = ApplicationSettings.PostImage;
+
+            // sanitize the post so that any potentially private information is not contained
+            post.Profile.AuthorEmail = "";
+            post.Profile.IdentityName = "";
+            post.Profile.IsAdmin = false;
+
+            // clear variables which will cause looping issues during serialization 
+            post.Profile.BlogPosts = null;
+            foreach(PostCategory category in post.PostCategories)
+            {
+                category.BlogPost = null;
+            }
 
             return post;
         }
