@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
-    [Route("blog")]
+    [Route(Constants.BlogRoute)]
 	public class BlogController : Controller
 	{
 		IUnitOfWork _db;
@@ -45,6 +45,50 @@ namespace Blogifier.Core.Controllers
 
             return View(_theme + "Index.cshtml", new BlogPostsModel {
                 Categories = categories, SocialButtons = social, Posts = posts, Pager = pager });
+        }
+
+        [Route("{slug:author}/{page:int?}")]
+        public IActionResult Author(string slug, int page = 1)
+        {
+            var pager = new Pager(page);
+            var profile = _db.Profiles.Single(p => p.Slug == slug);
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > DateTime.MinValue, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
+            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == profile.Id, 10).ToList();
+            var social = _social.GetSocialButtons(profile).Result;
+
+            return View(_theme + "Author.cshtml", new BlogAuthorModel {
+                Categories = categories, SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+        }
+
+        [Route("{slug:author}/{cat}/{page:int?}")]
+        public async Task<IActionResult> AuthorCategory(string slug, string cat, int page = 1)
+        {
+            var pager = new Pager(page);
+            var profile = _db.Profiles.Single(p => p.Slug == slug);
+            var posts = await _db.BlogPosts.ByCategory(cat, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
+            var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
+
+            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
+            var social = _social.GetSocialButtons(null).Result;
+
+            return View(_theme + "Category.cshtml", 
+                new BlogCategoryModel
+                {
+                    Profile = profile,
+                    Categories = categories,
+                    SocialButtons = social,
+                    Category = category,
+                    Posts = posts,
+                    Pager = pager
+                });
         }
 
         [Route("{slug}")]

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
+<PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
@@ -41,6 +41,7 @@
   <ItemGroup>
     <Folder Include="Logs\" />
     <Folder Include="wwwroot\blogifier\blog\custom\scss\" />
+    <Folder Include="wwwroot\sample\" />
   </ItemGroup>
 
 </Project>

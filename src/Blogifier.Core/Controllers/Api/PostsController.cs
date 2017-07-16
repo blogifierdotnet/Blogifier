@@ -63,7 +63,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp = new BlogPost();
                 bp.ProfileId = blog.Id;
                 bp.Title = model.Title;
-                bp.Slug = GetSlug(model.Title);
+                bp.Slug = GetSlug(model.Title, model.Id);
                 bp.Content = model.Content;
                 bp.LastUpdated = SystemClock.Now();
                 bp.Description = model.Content.ToDescription();
@@ -75,7 +75,7 @@ namespace Blogifier.Core.Controllers.Api
             {
                 bp = _db.BlogPosts.Single(p => p.Id == model.Id);
                 bp.Title = model.Title;
-                bp.Slug = GetSlug(model.Title);
+                bp.Slug = GetSlug(model.Title, model.Id);
                 bp.Content = model.Content;
                 bp.Description = model.Content.ToDescription();
                 // when publish button clicked, save and publish
@@ -131,13 +131,13 @@ namespace Blogifier.Core.Controllers.Api
             return new NoContentResult();
         }
 
-        string GetSlug(string title)
+        string GetSlug(string title, int id)
         {
             var slug = title.ToSlug();
             var cnt = 2;
 
-            var blog = _db.BlogPosts.Single(p => p.Slug == slug);
-            if(blog == null)
+            var post = _db.BlogPosts.Single(p => p.Slug == slug);
+            if(post == null || post.Id == id)
                 return slug;
 
             while (cnt < 100)

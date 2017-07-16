@@ -4,12 +4,13 @@
             img {
                 border-radius: 100%;
                 margin-bottom: 1rem;
+                width:8rem;
+                height:8rem;
             }
 
             p {
                 opacity: .75;
                 font-size: .875rem;
-                font-family: $font-family-sans;
                 text-transform: capitalize;
                 margin-bottom: 0;
             }

@@ -1,41 +1,13 @@
 ﻿@using Blogifier.Core.Common
 @{
     var themeFolder = "blogifier/blog/custom";
-    var social = (Dictionary<string, string>)Model.SocialButtons;
 }
 <footer class="blog-footer">
-    <section class="container clearfix">
-        <p class="float-left">
-            Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.
-        </p>
-        <ul class="float-right">
-            @if (social.ContainsKey("Google"))
-            {
-                <li><a href='@social["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
-            }
-            @if (social.ContainsKey("Twitter"))
-            {
-                <li><a href='@social["Twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-            }
-            @if (social.ContainsKey("Github"))
-            {
-                <li><a href='@social["Github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
-            }
-            @if (social.ContainsKey("Instagram"))
-            {
-                <li><a href='@social["Instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
-            }
-            @if (social.ContainsKey("Facebook"))
-            {
-                <li><a href='@social["Facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-            }
-        </ul>
-    </section>
+    <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @Blogifier.Core.Common.ApplicationSettings.Version">Blogifier</a>.</p>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/js/jquery-3.2.1.min.js"></script>
 <script src="~/@themeFolder/js/tether.min.js"></script>
 <script src="~/@themeFolder/js/bootstrap.min.js"></script>
 <script src="~/@themeFolder/js/jquery.dotdotdot.min.js"></script>
-<script src="~/@themeFolder/js/prism.js"></script>
-<script src="~/@themeFolder/js/blog.js"></script>
+<script src="~/@themeFolder/js/blog.js" asp-append-version="true"></script>

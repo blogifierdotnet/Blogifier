@@ -1,5 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @using Blogifier.Core.Extensions
+@using Blogifier.Core.Common;
 @{
     var themeFolder = "blogifier/admin/custom";
     var x = Model.Pager;
@@ -17,7 +18,7 @@
                     <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                     <div class="post-item-info">
                         <span>@published</span>
-                        <a href="/blog/@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
+                        <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
                             <i class="fa fa-eye"></i>
                         </a>
                         @if (item.Published == DateTime.MinValue)

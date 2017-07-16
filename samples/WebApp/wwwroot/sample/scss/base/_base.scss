@@ -1,0 +1,36 @@
+﻿html, body {
+    height: 100%;
+}
+html {font-size:1em;}
+body {
+    background-color: $color;
+    background-image: url(/sample/img/cover.png); 
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    color: #fff;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    cursor: default;
+    overflow-y: scroll;
+}
+
+.container {
+    width: 100%;
+    max-width: 40rem;
+}
+.sample-wrapper {
+    min-height: 100%;
+    margin-bottom: -$footer-height;
+
+    &::after {
+        content: "";
+        display: block;
+        height: $footer-height;
+    }
+}
+
+.sample-content {
+    padding-top:4rem;
+    padding-bottom:4rem;
+}

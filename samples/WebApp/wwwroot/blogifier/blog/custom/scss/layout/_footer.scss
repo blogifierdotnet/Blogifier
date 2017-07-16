@@ -4,47 +4,16 @@
     color: #777;
     height: $footer-height - .0625rem;
     line-height: $footer-height - .0625rem;
-    font-family: $font-family-sans;
     font-size: 1rem;
+    text-align:center;
     // --
-    .float-left {
+    p {
         margin: 0;
         font-size: .75rem;
         text-transform: uppercase;
 
         a {
             color: #777;
-        }
-    }
-    // --
-    .float-right {
-        @include unstyled();
-
-        li {
-            display: inline-block;
-            margin-left: 1rem;
-
-            a {
-                color: #888;
-            }
-        }
-    }
-    // --
-    @media screen and (max-width:48rem) {
-        padding-top: 1rem;
-        line-height: 1.5rem;
-        text-align: center;
-
-        .float-right,
-        .float-left {
-            float: none;
-            width: 100%;
-        }
-
-        .float-right {
-            li {
-                margin: 0;
-            }
         }
     }
 }

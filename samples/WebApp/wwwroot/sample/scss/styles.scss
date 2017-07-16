@@ -1,0 +1,15 @@
+﻿// Base
+@import "base/variables";
+@import "base/reset";
+@import "base/base";
+
+// Layout
+.sample {
+    @import "layout/header";
+    @import "layout/footer";
+
+    &-page {
+        @import "page/home";
+    }
+}
+ 

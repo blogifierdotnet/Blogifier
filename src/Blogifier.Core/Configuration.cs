@@ -10,6 +10,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,11 @@ namespace Blogifier.Core
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ISocialService, SocialService>();
+
+            // add route constraint
+            services.Configure<RouteOptions>(options =>
+                options.ConstraintMap.Add("author", typeof(Services.Routing.AuthorRouteConstraint)));
+
 
             AddDatabase(services);
 
