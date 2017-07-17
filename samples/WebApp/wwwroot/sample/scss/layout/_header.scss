@@ -20,6 +20,15 @@
         text-transform:uppercase;
         margin-left:1rem;
     }
+    .dropdown-menu {
+        padding:0;
+        width:100%;
+        text-align:center;
+        a,.btn{
+            padding:.5rem;
+            border-radius:0;
+        }
+    }
 }
 
 

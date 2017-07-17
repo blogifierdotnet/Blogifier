@@ -15,7 +15,7 @@ label {
 }
 
 hr {
-    border-color: #ddd;
+    border-color: #555;
     margin: 2rem 0;
 }
 
@@ -58,4 +58,13 @@ pre {
 ::-moz-selection {
     background: #000;
     color: #fff;
+}
+
+.form-control {
+    background:rgba(0, 0, 0, 0.50);
+    border-width:2px;
+    border-color:#666;
+}
+
+form {
 }
