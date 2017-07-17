@@ -154,6 +154,7 @@ namespace Blogifier.Core.Controllers.Api.Public
 
             // clear variables which will cause looping issues during serialization 
             post.Profile.BlogPosts = null;
+            post.Profile.Assets = null;
             foreach(PostCategory category in post.PostCategories)
             {
                 category.BlogPost = null;
