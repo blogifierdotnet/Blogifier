@@ -6,6 +6,7 @@
 @model BlogPostsModel
 @{
     var term = ViewBag.Term;
+    var search = "search";
 }
 
 <header class="cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
@@ -44,11 +45,11 @@
         <ul class="pagination justify-content-center">
             @if (Model.Pager.ShowOlder)
                 {
-                <li class="page-item prev"><a href="~/search/@Model.Pager.Older/@term"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
+                <li class="page-item prev"><a href="~/@Constants.BlogRoute@search/@term/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
             }
             @if (Model.Pager.ShowNewer)
                 {
-                <li class="page-item next"><a href="~/search/@Model.Pager.Newer/@term"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
+                <li class="page-item next"><a href="~/@Constants.BlogRoute@search/@term/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
             }
         </ul>
     }

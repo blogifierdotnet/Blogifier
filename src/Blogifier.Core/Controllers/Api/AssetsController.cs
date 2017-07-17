@@ -6,6 +6,7 @@ using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,10 +18,12 @@ namespace Blogifier.Core.Controllers.Api
     public class AssetsController : Controller
     {
         IUnitOfWork _db;
+        ILogger _logger;
 
-        public AssetsController(IUnitOfWork db)
+        public AssetsController(IUnitOfWork db, ILogger<AssetsController> logger)
         {
             _db = db;
+            _logger = logger;
         }
 
         // GET: api/assets/2?type=editor
@@ -109,8 +112,15 @@ namespace Blogifier.Core.Controllers.Api
                 return NotFound();
 
             var blog = GetProfile();
-            var storage = new BlogStorage(blog.Slug);
-            storage.DeleteFile(asset.Path);
+            try
+            {
+                var storage = new BlogStorage(blog.Slug);
+                storage.DeleteFile(asset.Path);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
 
             _db.Assets.Remove(asset);
             _db.Complete();

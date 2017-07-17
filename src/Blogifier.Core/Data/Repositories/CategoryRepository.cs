@@ -43,13 +43,6 @@ namespace Blogifier.Core.Data.Repositories
             return categories.Skip(skip).Take(pager.ItemsPerPage);
         }
 
-        public IEnumerable<SelectListItem> CategoryMenu(Expression<Func<Category, bool>> predicate, int take)
-        {
-            return _db.Categories.Include(c => c.PostCategories).Where(predicate)
-                .OrderBy(c => c.Title).GroupBy(c => c.Title).Select(group => group.First()).Take(take)
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Slug }).ToList();
-        }
-
         public IEnumerable<SelectListItem> PostCategories(int postId)
         {
             var items = new List<SelectListItem>();
@@ -63,13 +56,9 @@ namespace Blogifier.Core.Data.Repositories
 
         public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
         {
-            var items = new List<SelectListItem>();
-            var categories = _db.Categories.Include(c => c.PostCategories).Where(predicate).ToList();
-            foreach (var item in categories)
-            {
-                items.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Title });
-            }
-            return items;
+            return _db.Categories.Include(c => c.PostCategories).Where(predicate)
+                .OrderBy(c => c.Title).GroupBy(c => c.Title).Select(group => group.First())
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
         }
 
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)

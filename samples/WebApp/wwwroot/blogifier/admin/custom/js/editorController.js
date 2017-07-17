@@ -8,7 +8,7 @@
             Title: $("#txtPostTitle").val(),
             Image: $('#hdnPostImg').val(),
             Content: tinyMCE.activeEditor.getContent(),
-            IsPublished: publish === true ? publish : false,
+            IsPublished: publish ? true : false,
             Categories: []
         }
         if (obj.Title.length === 0) {
