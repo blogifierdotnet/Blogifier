@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Social;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,16 @@ namespace Blogifier.Core.Controllers
 	{
 		IUnitOfWork _db;
         IRssService _rss;
+        ISearchService _search;
         ISocialService _social;
         private readonly ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-		public BlogController(IUnitOfWork db, IRssService rss, ISocialService social, ILogger<BlogController> logger)
+		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ISocialService social, ILogger<BlogController> logger)
 		{
 			_db = db;
+            _search = search;
             _rss = rss;
             _social = social;
             _logger = logger;
@@ -37,14 +40,13 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
             var social = _social.GetSocialButtons(null).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
             return View(_theme + "Index.cshtml", new BlogPostsModel {
-                Categories = categories, SocialButtons = social, Posts = posts, Pager = pager });
+                SocialButtons = social, Posts = posts, Pager = pager });
         }
 
         [Route("{slug:author}/{page:int?}")]
@@ -57,11 +59,10 @@ namespace Blogifier.Core.Controllers
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
-            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == profile.Id, 10).ToList();
             var social = _social.GetSocialButtons(profile).Result;
 
             return View(_theme + "Author.cshtml", new BlogAuthorModel {
-                Categories = categories, SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+                SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
         }
 
         [Route("{slug:author}/{cat}/{page:int?}")]
@@ -75,15 +76,12 @@ namespace Blogifier.Core.Controllers
                 return View(_theme + "Error.cshtml", 404);
 
             var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
-
-            var categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0, 10).ToList();
             var social = _social.GetSocialButtons(null).Result;
 
             return View(_theme + "Category.cshtml", 
                 new BlogCategoryModel
                 {
                     Profile = profile,
-                    Categories = categories,
                     SocialButtons = social,
                     Category = category,
                     Posts = posts,
@@ -114,16 +112,42 @@ namespace Blogifier.Core.Controllers
                     vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
-
-            vm.Categories = _db.Categories.CategoryMenu(c => c.PostCategories.Count > 0 && c.ProfileId == vm.Profile.Id, 10).ToList();
             vm.SocialButtons = _social.GetSocialButtons(vm.Profile).Result;
-
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 
                 f.CustomKey == "disqus" && 
                 f.CustomType == Data.Domain.CustomType.Profile);
 
             return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
+        }
+
+        [Route("search/{term}/{page:int?}")]
+        public async Task<IActionResult> PagedSearch(string term, int page = 1)
+        {
+            ViewBag.Term = term;
+
+            var model = new BlogPostsModel();
+            model.Pager = new Pager(page);
+            model.Posts = await _search.Find(model.Pager, ViewBag.Term);
+            model.SocialButtons = _social.GetSocialButtons(null).Result;
+
+            if (page < 1 || page > model.Pager.LastPage)
+                return View(_theme + "Error.cshtml", 404);
+
+            return View(_theme + "Search.cshtml", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search()
+        {
+            ViewBag.Term = HttpContext.Request.Form["term"];
+
+            var model = new BlogPostsModel();
+            model.Pager = new Pager(1);
+            model.Posts = await _search.Find(model.Pager, ViewBag.Term);
+            model.SocialButtons = _social.GetSocialButtons(null).Result;
+
+            return View(_theme + "Search.cshtml", model);
         }
 
         [Route("rss")]

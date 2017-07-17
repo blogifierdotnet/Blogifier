@@ -7,7 +7,6 @@ namespace Blogifier.Core.Data.Models
 {
     public class BlogBaseModel
     {
-        public List<SelectListItem> Categories { get; set; }
         public Dictionary<string, string> SocialButtons { get; set; }
     }
 
