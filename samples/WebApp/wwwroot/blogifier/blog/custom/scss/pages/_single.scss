@@ -2,6 +2,9 @@
     // --
     .cover {
         .cover-title {
+            h1 {
+                font-size: 2.5rem;
+            }
             p {
                 font-size: .75rem;
                 margin-bottom: 0;
@@ -23,6 +26,11 @@
                         display: none;
                     }
                 }
+            }
+        }
+        .cover-title {
+            h1 {
+                font-size: 2rem;
             }
         }
     }
