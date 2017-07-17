@@ -40,7 +40,9 @@
         else {
             $('.modal-list-empty').show();
         }
-        $('#modalFilePicker').modal();
+        if ($('#modalFilePicker').is(':visible') === false) {
+            $('#modalFilePicker').modal();
+        }
         pager(data.pager);
     }
 

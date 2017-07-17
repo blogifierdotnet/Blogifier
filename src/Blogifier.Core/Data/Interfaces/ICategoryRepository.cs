@@ -14,7 +14,7 @@ namespace Blogifier.Core.Data.Interfaces
 
         IEnumerable<SelectListItem> PostCategories(int postId);
         IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate);
-        IEnumerable<SelectListItem> CategoryMenu(Expression<Func<Category, bool>> predicate, int take);
+        //IEnumerable<SelectListItem> CategoryMenu(Expression<Func<Category, bool>> predicate, int take);
 
         Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate);
 
