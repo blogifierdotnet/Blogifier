@@ -1,0 +1,30 @@
+﻿<div layout="column" flex style="width: 100%" ng-cloak>
+    <md-toolbar class="md-accent" ng-show="postsListCtrl.header">
+        <div class="md-toolbar-tools">
+            <h2 flex md-truncate>{{postsListCtrl.header}}</h2>
+        </div>
+    </md-toolbar>
+    <div layout="column" flex>
+        <div class="featured-posts" layout="column" layout-gt-sm="row" layout-align="space-around stretch">
+            <div ng-repeat="post in postsListCtrl.featuredPosts" flex-gt-sm="40">
+                <post-list-item-featured post="post" />
+            </div>
+        </div>
+        <md-list>
+            <div>
+                <post-list-item post="post" ng-repeat="post in postsListCtrl.posts" />
+            </div>
+        </md-list>
+        <div flex layout="row" layout-align="center center" ng-show="postsListCtrl.moreUrl">
+            <div style="width: 400px" layout="row" layout-align="space-around center">
+                <md-button ng-click="postsListCtrl.showMore()" style="max-width: 150px;" ng-show="postsListCtrl.state != 'more'">
+                    <div layout="row">
+                        <span>Show More Posts</span>
+                        <md-icon>skip_next</md-icon>
+                    </div>
+                </md-button>
+                <md-progress-circular md-mode="indeterminate" ng-show="postsListCtrl.state == 'more'"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+</div>

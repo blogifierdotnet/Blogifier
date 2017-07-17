@@ -1,0 +1,17 @@
+﻿@using Blogifier.Core.Common
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu" ng-click="openSidenav('left-menu')">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <h2 flex md-truncate  ng-click="sidenavNavigate('left-menu', 'home', { page: '1' })" style="cursor: pointer; user-select: none;" tabindex="-1">@ApplicationSettings.Title</h2>
+        <md-button ng-click="showSearch()" ng-hide="blogsearch">
+            <md-icon>search</md-icon>
+        </md-button>
+        <div ng-show="blogsearch">
+            <!--<form class="blog-search" role="search" asp-controller="Search" asp-action="Index" method="post">-->
+                <input type="search" id="term" name="term" class="form-control" placeholder="Search..." ng-blur="blogsearch = false" style="width: 10em;">
+            <!--</form>-->
+        </div>
+    </div>
+</md-toolbar>

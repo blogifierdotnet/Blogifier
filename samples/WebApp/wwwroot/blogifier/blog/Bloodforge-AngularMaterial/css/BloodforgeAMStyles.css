@@ -1,0 +1,31 @@
+﻿.blog-wrapper {
+    min-height: 100%;
+}
+
+.load-progress {
+    margin: 5em 0;
+}
+
+.content-wrapper {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    position: relative;
+}
+
+[ui-view].ng-enter, [ui-view].ng-leave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+[ui-view].ng-enter {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight;
+}
+
+[ui-view].ng-leave {
+    -webkit-animation-name: fadeOutLeft;
+    animation-name: fadeOutLeft;
+}

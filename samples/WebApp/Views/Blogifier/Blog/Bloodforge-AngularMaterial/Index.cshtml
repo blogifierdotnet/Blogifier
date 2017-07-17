@@ -1,0 +1,30 @@
+﻿@using Blogifier.Core.Data.Models
+@model BlogPostsModel
+
+<div ui-view flex style="width: 100%;" layout="column"></div>
+<div id="load-progress" layout="row" layout-align="center center" style="position: fixed; width: 100%; height: 100%; z-index: 9999; top: 0; left: 0; pointer-events: none;">
+    <md-progress-linear class="load-progress" md-mode="indeterminate" flex="50"></md-progress-linear>
+</div>
+<div layout="column" layout-align="space-between end" style="position: fixed; bottom: 20px; right: 20px; z-index: 99" ng-cloak>
+    <md-button ng-click="scrollToTop()" class="md-fab md-primary md-hue-2" aria-label="Top" ng-show="scrollY > 20">
+        <md-tooltip md-direction="top">Scroll To Top</md-tooltip>
+        <md-icon>vertical_align_top</md-icon>
+    </md-button>
+    <md-fab-speed-dial md-direction="left" class="md-scale" md-open="shareOpen">
+        <md-fab-trigger>
+            <md-button aria-label="share" class="md-fab md-accent">
+                <md-tooltip md-direction="top">Share</md-tooltip>
+                <md-icon>share</md-icon>
+            </md-button>            
+        </md-fab-trigger>
+        <md-fab-actions>
+            @foreach(var key in Model.SocialButtons.Keys)
+            {
+                <md-button aria-label="@key" class="md-fab md-raised md-mini" href="@Model.SocialButtons[key]" target="_blank">
+                    <md-tooltip md-direction="top">@key</md-tooltip>
+                    <md-icon md-svg-src="@key" aria-label="@key"></md-icon>
+                </md-button>
+            }
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>

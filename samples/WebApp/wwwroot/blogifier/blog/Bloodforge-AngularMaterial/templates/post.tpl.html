@@ -1,0 +1,23 @@
+﻿<md-content layout-padding ng-show="postCtrl.state == 'done'">
+    <div md-whiteframe="4" flex flex-gt-sm="90" style="margin: 0 auto;">
+        <h1 style="margin-bottom: 0;">{{postCtrl.post.title}}</h1>
+        <div>
+            <span class="post-single-author">by <a ui-sref="author({ slug: postCtrl.post.profile.slug })">{{postCtrl.post.profile.authorName}}</a></span>
+            on 
+            <span class="post-single-date">{{postCtrl.post.published | date: 'shortDate'}}</span>
+        </div>
+        <div>
+            <md-chips readonly="true" md-removable="false">
+                <md-chip ng-repeat="cat in postCtrl.categories"><a ui-sref="category({ slug: cat.slug })" style="text-decoration: none; color: black;">{{cat.text}}</a></md-chip>
+            </md-chips>
+        </div>
+        <div ng-bind-html="postCtrl.post.content | unsafe">
+        </div>
+    </div>
+    <form role="form" ng-show="postCtrl.disqusScript">
+        <div id="disqus_thread"></div>
+        {{postCtrl.disqusScript}}
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </form>
+
+</md-content>
