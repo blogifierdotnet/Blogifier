@@ -24,8 +24,9 @@ form {
 }
 
 h1, h2, h3, h4 {
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-medium;
     letter-spacing: -1px;
+    margin:0;
 }
 
 iframe {
@@ -64,7 +65,5 @@ pre {
     background:rgba(0, 0, 0, 0.50);
     border-width:2px;
     border-color:#666;
-}
-
-form {
+    color:#fff;
 }

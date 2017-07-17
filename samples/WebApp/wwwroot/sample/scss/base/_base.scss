@@ -1,10 +1,10 @@
 ﻿html, body {
-    height: 100%;
+    min-height: 100%;
 }
 html {font-size:1em;}
 body {
     background-color: $color;
-    background-image: url(/sample/img/cover.png); 
+    background-image: url(/sample/img/cover.png);
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: cover;
@@ -13,6 +13,10 @@ body {
     font-size: $font-size-base;
     cursor: default;
     overflow-y: scroll;
+
+    @media screen and (max-width:460px) {
+        background:#333;
+    }
 }
 
 .container {
@@ -31,6 +35,10 @@ body {
 }
 
 .sample-content {
-    padding-top:4rem;
-    padding-bottom:4rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    @media screen and (max-width:460px) {
+        padding: 2rem;
+    }
 }
