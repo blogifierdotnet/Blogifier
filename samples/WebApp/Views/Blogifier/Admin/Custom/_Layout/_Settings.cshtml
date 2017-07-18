@@ -10,23 +10,21 @@
 <head>
 @Html.Partial(headView)
 </head>
-<body class="admin-layout-settings">
+<body>
     @Html.Partial(headerView)
-    <div class="admin-content admin-content-settings container">
-        <div class="admin-settings">
-            <div class="admin-settings-sidebar">
-                <ul>
-                    <li class="profile"><a href="~/admin/settings/profile">Edit Profile</a></li>
-                    <li class="import"><a href="~/admin/settings/import">Import Rss</a></li>
-                    <li class="custom"><a href="~/admin/settings/custom">Custom Fields</a></li>
-                    @if (Model.Profile != null && Model.Profile.IsAdmin)
-                    {
-                        <li class="application"><a href="~/admin/settings/application">Global Settings</a></li>
-                    }
-                </ul>
-            </div>
-            <div class="admin-settings-content">
-                @RenderBody()
+    <div class="admin-content container d-flex flex-column">
+        <div class="admin-settings row no-gutters rounded">
+            <ul class="admin-settings-sidebar col-sm-3 pt-5">
+                <li class="profile"><a href="~/admin/settings/profile">Edit Profile</a></li>
+                <li class="import"><a href="~/admin/settings/import">Import Rss</a></li>
+                <li class="custom"><a href="~/admin/settings/custom">Custom Fields</a></li>
+                @if (Model.Profile != null && Model.Profile.IsAdmin)
+                {
+                    <li class="application"><a href="~/admin/settings/application">Global Settings</a></li>
+                }
+            </ul>
+            <div class="admin-settings-content col-sm-9">
+               <div class="p-5">@RenderBody()</div>
             </div>
         </div>
     </div>

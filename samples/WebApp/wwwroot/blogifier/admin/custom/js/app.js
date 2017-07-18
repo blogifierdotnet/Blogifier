@@ -8,9 +8,9 @@ $(".page-toolbar .dropdown-menu").click(function (event) {
 });
 
 //
-$('.admin-settings-sidebar ul li').removeClass('active');
+$('.admin-settings-sidebar li').removeClass('active');
 var activated = false;
-$(".admin-settings-sidebar ul li").each(function (idx, li) {
+$(".admin-settings-sidebar li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).addClass('active');
         activated = true;

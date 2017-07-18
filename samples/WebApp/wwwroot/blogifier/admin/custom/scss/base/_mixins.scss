@@ -56,25 +56,27 @@
 
 // triangle
 @mixin triangle($direction, $size, $color) {
+    content: "";
     width: 0;
     height: 0;
-
-    @if $direction == 'up' {
+    position: absolute;
+    display: block;
+    @if $direction=='up' {
         border-right: $size solid transparent;
         border-bottom: $size solid $color;
         border-left: $size solid transparent;
     }
-    @else if $direction == 'down' {
+    @else if $direction=='down' {
         border-top: $size solid $color;
         border-right: $size solid transparent;
         border-left: $size solid transparent;
     }
-    @else if $direction == 'left' {
+    @else if $direction=='left' {
         border-top: $size solid transparent;
         border-right: $size solid $color;
         border-bottom: $size solid transparent;
     }
-    @else if $direction == 'right' {
+    @else if $direction=='right' {
         border-top: $size solid transparent;
         border-bottom: $size solid transparent;
         border-left: $size solid $color;
@@ -82,22 +84,22 @@
 }
 
 @mixin corner-triangle($corner, $size, $color) {
+    content: "";
     width: 0;
     height: 0;
-
-    @if $corner == 'top-left' {
+    @if $corner=='top-left' {
         border-top: $size solid $color;
         border-right: $size solid transparent;
     }
-    @else if $corner == 'top-right' {
+    @else if $corner=='top-right' {
         border-top: $size solid $color;
         border-left: $size solid transparent;
     }
-    @else if $corner == 'bottom-left' {
+    @else if $corner=='bottom-left' {
         border-right: $size solid transparent;
         border-bottom: $size solid $color;
     }
-    @else if $corner == 'bottom-right' {
+    @else if $corner=='bottom-right' {
         border-bottom: $size solid $color;
         border-left: $size solid transparent;
     }

@@ -1,85 +1,52 @@
-﻿.admin-layout-settings {}
-
-.admin-content-settings {
-    display: flex;
-}
-
-.admin-settings {
+﻿.admin-settings {
     flex: 1;
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 3px;
-    background: #fff;
-    border: 1px solid $color-border;
+    border: .0625rem solid $color-border;
     &-sidebar {
-        width: 200px;
-        min-width: 200px;
-        vertical-align: top;
-        border-right: 1px solid $color-border;
-        padding-top: 1.5rem;
-        ul {
-            display: block;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            li {
-                margin-bottom: 1rem;
-                &.active {
-                    background: #fff;
-                    position: relative;
-                    font-weight: $font-weight-medium;
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        right: -1px;
-                        top: 50%;
-                        margin-top: -10px;
-                        @include triangle(left, 10px, #fff);
-                    }
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        right: 0px;
-                        top: 50%;
-                        margin-top: -10px;
-                        @include triangle(left, 10px, #ccc);
-                    }
-                    a {
-                        color: #000;
-                    }
-                }
+        border-right: .0625rem solid $color-border;
+        @include unstyled();
+        li {
+            margin-bottom: 1rem;
+            &.active {
+                position: relative;
+                font-weight: $font-weight-medium;
                 a {
-                    display: block;
-                    line-height: 2.37500;
-                    color: #666;
-                    padding-left: 2rem;
+                    color: #000;
                 }
+                &::after,
+                &::before {
+                    @include triangle(left, .625rem, #fff);
+                    top: 50%;
+                    right: -.0625rem;
+                    margin-top: -625rem;
+                }
+                &::before {
+                    @include triangle(left, .6875rem, darken($color-border, 10%));
+                    margin-top: -6875rem;
+                }
+            }
+            a {
+                color: #666;
+                display: block;
+                padding-left: 3rem;
+                line-height: 2.375;
             }
         }
     }
     &-content {
-        flex: 1;
-        vertical-align: top;
-        padding:3rem;
         table {
-            margin-bottom: 2.5rem;
-            width: 100%;
-            max-width: 100%;
+            margin-bottom: 2rem;
             &:last-child {
                 margin-bottom: 0;
             }
-            thead {
-                border-bottom: 1px solid #eee;
+            td {
+                font-size: .875rem;
+                &:first-child {
+                    width: 13rem;
+                }
             }
             th,
             td {
-                padding: .25rem 1rem;
-                text-align: left;
-                vertical-align: top;
-                &:first-child {
-                    padding-left: 0;
-                }
+                padding: .25rem 0;
                 &:last-child {
                     overflow-wrap: break-word;
                     word-wrap: break-word;
@@ -87,12 +54,10 @@
                     hyphens: none;
                 }
             }
-            tr {
-                border-bottom: 1px solid #eee;
-            }
-            td {
-                &:first-child {
-                    width: 13.75rem;
+            thead {
+                th {
+                    border-top: 0;
+                    font-weight: $font-weight-medium;
                 }
             }
         }
