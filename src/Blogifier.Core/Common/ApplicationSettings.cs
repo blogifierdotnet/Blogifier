@@ -5,24 +5,20 @@ namespace Blogifier.Core.Common
 {
 	public class ApplicationSettings
     {
-        #region System settings
+        #region Application settings
 
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }
         public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
         public static string BlogStorageFolder { get; set; } = "blogifier/data";
         public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
-        public static string AdminTheme { get; set; } = "Standard";
-        public static string BlogTheme { get; set; } = "Standard";
-
-        #endregion
-
-        #region Application settings
-
+        
         public static string Title { get; set; } = "Blog Name";
         public static string Description { get; set; } = "Short description of the blog";
         public static int ItemsPerPage { get; set; } = 10;
 
+        public static string AdminTheme { get; set; } = "Standard";
+        public static string BlogTheme { get; set; } = "Standard";
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
         public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";
         public static string ProfileImage { get; set; } = "/embedded/lib/img/cover.png";

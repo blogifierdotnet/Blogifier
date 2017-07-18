@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
@@ -124,6 +125,20 @@ namespace Blogifier.Core.Controllers.Api
 
             _db.Assets.Remove(asset);
             _db.Complete();
+
+            // reset profile image to default
+            // if asset was removed
+            var profiles = _db.Profiles.Find(p => p.Image == asset.Url || p.Avatar == asset.Url || p.Logo == asset.Url).ToList();
+            if(profiles != null)
+            {
+                foreach (var item in profiles)
+                {
+                    if (item.Image == asset.Url) item.Image = null;
+                    if (item.Avatar == asset.Url) item.Avatar = null;
+                    if (item.Logo == asset.Url) item.Logo = null;
+                    _db.Complete();
+                }
+            }
             return new NoContentResult();
         }
 
