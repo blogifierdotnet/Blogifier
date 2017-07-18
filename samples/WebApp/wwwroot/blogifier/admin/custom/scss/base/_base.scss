@@ -11,7 +11,6 @@ body {
     color: #666;
     cursor: default;
     overflow-y: scroll;
-    padding-top: 7rem;
 }
 
 .container {
@@ -21,7 +20,9 @@ body {
 
 .admin-content {
     min-height: 100%;
-    padding-bottom: 4rem;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+    
 }
 
 .page-toolbar {
