@@ -37,7 +37,11 @@ namespace Blogifier.Core.Controllers
         public IActionResult Custom()
         {
             var profile = GetProfile();
-            var fields = ApplicationSettings.SocialButtons;
+            var fields = new Dictionary<string, string>();
+            foreach (var item in ApplicationSettings.SocialButtons)
+            {
+                fields.Add(item.Key, item.Value);
+            }
 
             if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
             if (!fields.ContainsKey("Google")) fields.Add("Google", "");
