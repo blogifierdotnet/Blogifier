@@ -1,33 +1,31 @@
-﻿.admin-settings {
-    border: 1px solid #dbdbdb;
-    height: 100%;
-    display: table;
+﻿.admin-content-settings {
+    display: flex;
+}
+
+.admin-settings {
+    flex: 1;
+    display: flex;
+    border: 1px solid $color-border;
     width: 100%;
     overflow: hidden;
     border-radius: 3px;
     background: #fff;
-
-
     &-sidebar {
         width: 200px;
-        display: table-cell;
+        min-width: 200px;
         vertical-align: top;
-        border-right: 1px solid #ddd;
-
+        border-right: 1px solid $color-border;
         ul {
             display: block;
             list-style: none;
             margin: 0;
             padding: 0;
             padding-top: 1rem;
-
             li {
-
                 &.active {
                     background: #fff;
                     position: relative;
                     font-weight: $font-weight-medium;
-
                     &::after {
                         content: "";
                         position: absolute;
@@ -36,7 +34,6 @@
                         margin-top: -10px;
                         @include triangle(left, 10px, #fff);
                     }
-
                     &::before {
                         content: "";
                         position: absolute;
@@ -45,12 +42,10 @@
                         margin-top: -10px;
                         @include triangle(left, 10px, #ccc);
                     }
-
                     a {
                         color: #000;
                     }
                 }
-
                 a {
                     display: block;
                     line-height: 3rem;
@@ -60,10 +55,43 @@
             }
         }
     }
-
     &-content {
-        display: table-cell;
+        flex: 1;
         vertical-align: top;
         padding: 3rem;
+        table {
+            margin-bottom: 2.5rem;
+            width: 100%;
+            max-width: 100%;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            thead {
+                border-bottom: 1px solid #eee;
+            }
+            th,
+            td {
+                padding: .25rem 1rem;
+                text-align: left;
+                vertical-align: top;
+                &:first-child {
+                    padding-left: 0;
+                }
+                &:last-child {
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                    hyphens: none;
+                }
+            }
+            tr {
+                border-bottom: 1px solid #eee;
+            }
+            td {
+                &:first-child {
+                    width: 13.75rem;
+                }
+            }
+        }
     }
 }

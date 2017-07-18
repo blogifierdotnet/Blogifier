@@ -7,39 +7,31 @@ body {
     font-family: $font-family-base;
     font-size: $font-size-base;
     line-height: $line-height-base;
-    background-color: #fafafa;
+    background-color: #fff;
     color: #666;
     cursor: default;
     overflow-y: scroll;
+    padding-top: 7rem;
 }
+
 .container {
-    width:100%;
-    max-width:60rem;
+    width: 100%;
+    max-width: 60rem;
 }
-.admin {
+
+.admin-content {
     min-height: 100%;
-    margin-bottom: -4.5rem;
-
-    &::after {
-        content: "";
-        display: block;
-        height: 4.5rem;
-    }
-
-    &-content {
-        padding-top: 3rem;
-    }
+    padding-bottom: 5rem;
 }
+
 .page-toolbar {
     margin-bottom: 1rem;
-
     .btn {
         margin-right: .5rem;
     }
-
     .float-right {
         .btn {
-            margin-right:0;
+            margin-right: 0;
         }
     }
 }
