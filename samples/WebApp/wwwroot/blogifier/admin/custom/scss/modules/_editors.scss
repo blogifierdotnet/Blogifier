@@ -1,1 +1,10 @@
-﻿
+﻿.mce-tinymce.mce-container.mce-panel {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.mce-toolbar-grp {
+    border-bottom: 1px solid #ccc !important;
+    padding: 5px !important;
+}

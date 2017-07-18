@@ -1,8 +1,5 @@
 ﻿/*
-
-    Author:     Francis - http://francis.bio/
-    Version:    1.0
-     
+    Author: Francis - http://francis.bio/blogifier/
 */
 
 // Base 
@@ -10,20 +7,20 @@
 @import "base/mixins";
 @import "base/reset";
 @import "base/base";
-@import "base/utilites";
 
 // Modules
-@import "modules/buttons";
-@import "modules/pagination";
-@import "modules/forms";
-@import "modules/dropdown";
-@import "modules/alerts";
+@import "modules/editors";
 @import "modules/filepicker";
+@import "modules/dropdown";
+@import "modules/buttons";
+@import "modules/forms";
 @import "modules/modals";
+@import "modules/pagination";
+@import "modules/tooltip";
+@import "modules/alerts";
 
 // Layout
 @import "layout/header";
-@import "layout/main";
 @import "layout/footer";
  
 // Pages
