@@ -4,8 +4,8 @@
     var url = Constants.BlogRoute;
     try
     {
-        logo = Model.Profile.Logo == null ? logo : Model.Profile.Logo;
-        url += "/" + Model.Profile.Slug;
+        if (!string.IsNullOrEmpty(Model.Profile.Logo)) { logo = Model.Profile.Logo; }
+        if (!string.IsNullOrEmpty(Model.Profile.Slug)) { url += "/" + Model.Profile.Slug; }
     } catch { }
 }
 <header class="blog-header">
