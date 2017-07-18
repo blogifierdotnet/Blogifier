@@ -1,13 +1,4 @@
 ﻿@using Blogifier.Core.Common
-@{ 
-    var logo = ApplicationSettings.ProfileLogo;
-    var url = Constants.BlogRoute;
-    try
-    {
-        if (!string.IsNullOrEmpty(Model.Profile.Logo)) { logo = Model.Profile.Logo; }
-        if (!string.IsNullOrEmpty(Model.Profile.Slug)) { url += "/" + Model.Profile.Slug; }
-    } catch { }
-}
 <header class="blog-header">
     <section class="container clearfix">
         <nav class="blog-nav">
@@ -27,7 +18,7 @@
                 }
             </ul>
         </nav>
-        <h1 class="blog-logo"><a href="~/@url"><img src="@logo" alt="@ApplicationSettings.Title" /></a></h1>
+        <h1 class="blog-logo"><a href="~/@Model.LogoUrl"><img src="@Model.LogoImg" alt="@ApplicationSettings.Title" /></a></h1>
         <form class="blog-search" role="search" asp-controller="Blog" asp-action="Search" method="post">
             <button type="button"><i class="fa fa-search"></i></button>
             <input type="search" id="term" name="term" class="form-control" placeholder="Search...">

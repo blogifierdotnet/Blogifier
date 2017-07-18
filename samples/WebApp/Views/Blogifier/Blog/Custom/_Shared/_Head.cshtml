@@ -1,16 +1,10 @@
 ﻿@using Blogifier.Core.Common
 @{
     var themeFolder = "blogifier/blog/custom";
-
-    // set app title and let override down the line
-    var title = ApplicationSettings.Title;
-    try { title = Model.Profile.Title; } catch { }
-    try { title = Model.BlogPost.Title; } catch { }
-    try { title = ViewBag.Title == null ? title : ViewBag.Title; } catch { }
 }
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>@title</title>
+<title>@Model.PageTitle</title>
 <meta name="description" content="@ApplicationSettings.Description">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet">
