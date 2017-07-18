@@ -14,7 +14,7 @@
         <div class="cover-title container">
             <img src="@avatar" width="100" alt="@Model.Profile.Title" />
             <h2>@Model.Profile.Title</h2>
-            <p>My name is Jhon Doe and I am a web developer.</p>
+            <p>@Model.Profile.Description</p>
             <ul>
                 @if (social.ContainsKey("Google") && !string.IsNullOrEmpty(social["Google"]))
                 {
