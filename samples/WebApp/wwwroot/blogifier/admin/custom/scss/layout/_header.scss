@@ -6,66 +6,101 @@
     left: 0;
     z-index: 2;
     border-bottom: 1px solid $color-border;
-
     .container {
-        display: flex;
-        height: 4rem;
-        position: relative;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        height: 100%;
+        padding: 0;
     }
-    .brand {
-        flex: 1;
-        text-align: center;
-        font-weight: 500;
-        margin: auto;
-        font-size: 1rem;
-        text-transform: uppercase;
-        a {
-            color: #000;
+    @media screen and (max-width:460px) {}
+}
+
+.admin-nav {
+    @include unstyled();
+    >li {
+        float: left;
+        >a {
+            display: block;
+            line-height: 4rem;
+            padding: 0 1rem;
+            font-weight: $font-weight-medium;
+            color: #888;
+            position: relative;
+            text-transform: uppercase;
+            font-size: .875rem;
+            &.active {
+                color: #000;
+                &::after,
+                {
+                    bottom: 0;
+                    left: 50%;
+                    margin-left: -.5rem;
+                    @include triangle(up, .5rem, #fff);
+                }
+                &::before {
+                    bottom: 0;
+                    left: 50%;
+                    margin-left: -.5625rem;
+                    @include triangle(up, .5625rem, darken($color-border, 10%));
+                }
+            }
         }
     }
-    .profile-image {
-        width: 1.875rem;
-        height: 1.875rem;
-        border-radius: 100%;
+    @media screen and (max-width:460px) {
+        display: table;
+        width: 100%;
+      >  li {
+            float: none !important;
+            display: table-cell;
+            vertical-align: top;
+            text-align: center;
+        }
     }
-    .nav-title {
-        position: absolute;
-        left: 1.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-weight: $font-weight-medium;
-        font-size: .875rem;
-        letter-spacing: 0;
-        padding-left: .5rem;
-        display: block;
-        height: 1rem;
-    }
-    button {
-        padding: 0;
-        border: 0;
-        height: 2rem;
-        min-width: 2rem;
-        border-radius: 0;
-        display: block;
-        outline: none !important;
-        box-shadow: none !important;
+}
+
+.user-nav {
+    .dropdown-toggle {
         cursor: pointer;
-        background: none;
         &::after {
             display: none;
         }
-        &:hover,
-        &:focus,
-        &:active {
-            background: none !important;
-        }
-        .fa-navicon {
-            font-size: 1.75rem;
-            display: block;
-            line-height: 2rem;
+        img {
+            display: inline-block;
             width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 100%;
+            margin-right: .125rem;
+        }
+        span {
+            position: relative;
+            top: .0625rem;
+            color: #888;
         }
     }
+    .dropdown-menu {
+        margin-top: -.125rem;
+        margin-right: 1rem;
+        &::after,
+        {
+            top: -.5rem;
+            right: 1.5rem;
+            margin-right: -.5rem;
+            @include triangle(up, .5rem, #fff);
+        }
+        &::before {
+            top: -.5625rem;
+            right: 1.5rem;
+            margin-right: -.5625rem;
+            @include triangle(up, .5625rem, darken($color-border, 10%));
+        }
+        .dropdown-item {
+            text-transform: uppercase;
+            font-size: .875rem;
+        }
+    }
+    @media screen and (max-width:460px) {
+        .dropdown-toggle {
+            span {
+                display: none;
+            }
+        }
+    }    
 }

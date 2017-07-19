@@ -12,16 +12,17 @@
                 a {
                     color: #000;
                 }
-                &::after,
-                &::before {
-                    @include triangle(left, .625rem, #fff);
+                &::after {
                     top: 50%;
                     right: -.0625rem;
-                    margin-top: -.625rem;
+                    margin-top: -.5rem;
+                    @include triangle(left, .5rem, #fff);
                 }
                 &::before {
-                    @include triangle(left, .6875rem, darken($color-border, 10%));
-                    margin-top: -.6875rem;
+                    top: 50%;
+                    right: -.0625rem;
+                    margin-top: -.5625rem;
+                    @include triangle(left, .5625rem, darken($color-border, 10%));
                 }
             }
             a {
