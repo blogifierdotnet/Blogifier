@@ -9,6 +9,7 @@ namespace Blogifier.Core.Data.Models
     {
         public virtual string LogoImg { get; set; }
         public virtual string LogoUrl { get; set; }
+        public virtual string CoverImg { get; set; }
         public virtual string PageTitle { get; set; }
         public Dictionary<string, string> SocialButtons { get; set; }
     }
@@ -16,6 +17,17 @@ namespace Blogifier.Core.Data.Models
     public class BlogPostDetailModel : BlogBaseModel
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
+        public override string CoverImg
+        {
+            get
+            {
+                var img = ApplicationSettings.ProfileImage;
+                if (!string.IsNullOrEmpty(ApplicationSettings.PostImage)) { img = ApplicationSettings.PostImage; }
+                if (!string.IsNullOrEmpty(Profile.Image)) { img = Profile.Image; }
+                if (!string.IsNullOrEmpty(BlogPost.Image)) { img = BlogPost.Image; }
+                return img;
+            }
+        }
         public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => BlogPost.Title; }
 
@@ -28,6 +40,7 @@ namespace Blogifier.Core.Data.Models
     public class BlogPostsModel : BlogBaseModel
     {
         public override string LogoImg { get => ApplicationSettings.ProfileLogo; }
+        public override string CoverImg { get => ApplicationSettings.ProfileImage; }
         public override string LogoUrl { get => Constants.BlogRoute; }
         public override string PageTitle { get => ApplicationSettings.Title; }
 
@@ -38,6 +51,7 @@ namespace Blogifier.Core.Data.Models
     public class BlogCategoryModel : BlogBaseModel
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
+        public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
         public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => "Category: " + Category.Title; }
 
@@ -50,6 +64,7 @@ namespace Blogifier.Core.Data.Models
     public class BlogAuthorModel : BlogBaseModel
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
+        public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
         public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => Profile.Title; }
 

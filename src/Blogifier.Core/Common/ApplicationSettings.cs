@@ -7,6 +7,7 @@ namespace Blogifier.Core.Common
     {
         #region Application settings
 
+        public static bool SingleBlog { get; set; } = false;
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }
         public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";

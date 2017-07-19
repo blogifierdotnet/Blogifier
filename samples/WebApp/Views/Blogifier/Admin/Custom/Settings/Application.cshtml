@@ -1,5 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminBaseModel
 @using Blogifier.Core.Common
+@using Blogifier.Core.Extensions
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
 }
@@ -23,6 +24,10 @@
             <td style="word-break:break-all">@ApplicationSettings.ContentRootPath</td>
         </tr>
         <tr>
+            <td>SingleBlog</td>
+            <td>@ApplicationSettings.SingleBlog</td>
+        </tr>
+        <tr>
             <td>EnableLogging</td>
             <td>@ApplicationSettings.EnableLogging</td>
         </tr>
@@ -32,7 +37,7 @@
         </tr>
         <tr>
             <td>ConnectionString</td>
-            <td>@ApplicationSettings.ConnectionString</td>
+            <td>@ApplicationSettings.ConnectionString.MaskPassword()</td>
         </tr>
         <tr>
             <td>BlogStorageFolder</td>

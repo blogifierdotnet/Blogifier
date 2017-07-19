@@ -81,7 +81,7 @@ namespace Blogifier.Core.Extensions
 			return result;
 		}
 
-        public static string RemovePassword(this string str)
+        public static string MaskPassword(this string str)
         {
             var idx = str.IndexOf("password=", StringComparison.OrdinalIgnoreCase);
 

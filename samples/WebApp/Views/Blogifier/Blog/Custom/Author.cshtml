@@ -5,12 +5,11 @@
 @using Blogifier.Core.Data.Models
 @model BlogAuthorModel
 @{
-    var bg = Model.Profile.Image == null ? ApplicationSettings.ProfileImage : Model.Profile.Image;
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
     var social = Model.SocialButtons;
 }
 <main class="page-author">
-    <header class="cover" style="background-image: url('@bg')">
+    <header class="cover" style="background-image: url('@Model.CoverImg')">
         <div class="cover-title container">
             <img src="@avatar" width="100" alt="@Model.Profile.Title" />
             <h2>@Model.Profile.Title</h2>

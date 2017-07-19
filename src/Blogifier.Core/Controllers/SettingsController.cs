@@ -148,6 +148,9 @@ namespace Blogifier.Core.Controllers
             {
                 profile.IdentityName = User.Identity.Name;
                 profile.Slug = SlugFromTitle(profile.AuthorName);
+                profile.Title = ApplicationSettings.Title;
+                profile.Description = ApplicationSettings.Description;
+                profile.BlogTheme = ApplicationSettings.BlogTheme;
 
                 ModelState.Clear();
                 TryValidateModel(model);
@@ -158,11 +161,8 @@ namespace Blogifier.Core.Controllers
                 if (profile.Id > 0)
                 {
                     var existing = _db.Profiles.Single(b => b.Id == profile.Id);
-                    existing.Title = profile.Title;
-                    existing.Description = profile.Description;
                     existing.AuthorName = profile.AuthorName;
                     existing.AuthorEmail = profile.AuthorEmail;
-                    existing.BlogTheme = profile.BlogTheme;
                 }
                 else
                 {
@@ -175,11 +175,54 @@ namespace Blogifier.Core.Controllers
 
                 ViewBag.Message = "Profile updated";
             }
+            return View(_theme + "Profile.cshtml", model);
+        }
+
+        [VerifyProfile]
+        [Route("personal")]
+        public IActionResult Personal()
+        {
+            if (ApplicationSettings.SingleBlog)
+                return NotFound();
+
+            var profile = GetProfile();
+            var storage = new BlogStorage("");
+
+            var model = new AdminProfileModel
+            {
+                Profile = profile,
+                BlogThemes = storage.GetThemes(ThemeType.Blog)
+            };
+            return View(_theme + "Personal.cshtml", model);
+        }
+
+        [HttpPost]
+        [Route("personal")]
+        public IActionResult Personal(AdminProfileModel model)
+        {
+            var profile = model.Profile;
+
+            ModelState.Clear();
+            TryValidateModel(model);
+
+            if (ModelState.IsValid)
+            {
+                var existing = _db.Profiles.Single(b => b.Id == profile.Id);
+                existing.Title = profile.Title;
+                existing.Description = profile.Description;
+                existing.BlogTheme = profile.BlogTheme;
+
+                _db.Complete();
+
+                var updated = _db.Profiles.Single(b => b.IdentityName == profile.IdentityName);
+                model.Profile = updated;
+                ViewBag.Message = "Updated";
+            }
 
             var storage = new BlogStorage("");
             model.BlogThemes = storage.GetThemes(ThemeType.Blog);
 
-            return View(_theme + "Profile.cshtml", model);
+            return View(_theme + "Personal.cshtml", model);
         }
 
         [VerifyProfile]
