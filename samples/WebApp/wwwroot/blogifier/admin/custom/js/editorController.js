@@ -31,6 +31,7 @@
     function savePostCallback(data) {
         var callback = JSON.parse(data);
         $('#hdnPostId').val(callback.id);
+        $('#hdnPostSlug').val(callback.slug);
         $('#hdnPostImg').val(callback.image);
         $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
@@ -142,6 +143,7 @@
 
     function loadActionButtons() {
         var postId = $('#hdnPostId').val();
+        var postSlug = $('#hdnPostSlug').val();
         var published = $('#hdnPublished').val();
         $('#action-buttons').empty();
         var btn = '';
@@ -171,6 +173,7 @@
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
                 btn += '</div>';
+                btn += '<a href="' + webRoot + 'blog/' + postSlug + '" target="_blank" class="btn btn-secondary">View</a>';
             }
         }
         $('#action-buttons').append(btn);
