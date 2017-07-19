@@ -80,5 +80,20 @@ namespace Blogifier.Core.Extensions
 			);
 			return result;
 		}
-	}
+
+        public static string RemovePassword(this string str)
+        {
+            var idx = str.IndexOf("password=", StringComparison.OrdinalIgnoreCase);
+
+            if (idx >= 0)
+            {
+                var idxEnd = str.IndexOf(";", idx);
+                if(idxEnd > idx)
+                {
+                    return str.Substring(0, idx) + "Password=******" + str.Substring(idxEnd);
+                }
+            }
+            return str;
+        }
+    }
 }
