@@ -17,11 +17,11 @@
                     @include triangle(left, .625rem, #fff);
                     top: 50%;
                     right: -.0625rem;
-                    margin-top: -625rem;
+                    margin-top: -.625rem;
                 }
                 &::before {
                     @include triangle(left, .6875rem, darken($color-border, 10%));
-                    margin-top: -6875rem;
+                    margin-top: -.6875rem;
                 }
             }
             a {
