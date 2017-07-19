@@ -10,21 +10,30 @@
     </md-toolbar>
     <md-list>
         <md-list-item ng-click="sidenavNavigate('left-menu', 'home', { page: '1' })">
-            Blog Home
+            <p>Blog Home</p>
+            <md-icon>home</md-icon>
         </md-list-item>
         @if (User.Identity.IsAuthenticated)
         {
-        <md-list-item href="/admin">Admin</md-list-item>
-        <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
-        }
-        else
-        {
-        <md-list-item href="/account/login?ReturnUrl=%2Fadmin">Login</md-list-item>
+            <md-divider></md-divider>
+            <md-subheader class="md-no-sticky">Administration</md-subheader>
+            <md-list-item href="/admin">Admin</md-list-item>
+            <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
         }
         <md-divider></md-divider>
         <md-subheader class="md-no-sticky" ng-show="categories">Categories</md-subheader>       
         <md-list-item ng-repeat="cat in categories" ng-click="sidenavNavigate('left-menu', 'category', { slug: cat.slug })" data-categorySlug="{{cat.slug}}" data-categoryId="{{cat.id}}">{{cat.title}}</md-list-item>
+        <md-divider></md-divider>
         <md-subheader class="md-no-sticky" ng-show="authors">Authors</md-subheader>
         <md-list-item ng-repeat="author in authors" ng-click="sidenavNavigate('left-menu', 'author', { slug: author.slug })">{{author.authorName}}</md-list-item>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <md-divider></md-divider>
+            <md-subheader class="md-no-sticky">Account</md-subheader>
+            <md-list-item href="/account/login?ReturnUrl=%2Fadmin">
+                <p>Login</p>
+                <md-icon>account_circle</md-icon>
+            </md-list-item>
+        }
     </md-list>
 </md-sidenav>

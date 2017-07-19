@@ -101,7 +101,10 @@
         });
     }])
 
-    .controller('bloodforgeAMController', ['$log', '$scope', '$mdSidenav', '$state', '$transitions', '$http', function ($log, $scope, $mdSidenav, $state, $transitions, $http) {
+    .controller('bloodforgeAMController', ['$log', '$scope', '$rootScope', '$mdSidenav', '$state', '$transitions', '$http', function ($log, $scope, $rootScope, $mdSidenav, $state, $transitions, $http) {
+
+        $rootScope.blogSettings = {};
+
         $transitions.onStart({}, function () {
             $('#load-progress').show();
         });
@@ -154,7 +157,7 @@
             $scope.categories = response.data;
         }, function errorCallback(response) {
 
-            });
+        });
 
         $http({
             method: 'GET',
@@ -196,8 +199,8 @@
                         // new posts
                         if (ctrl.config.type == 'home') {
                             // set up featured posts
-                            ctrl.featuredPosts = response.data.posts.slice(0, 2);
-                            ctrl.posts = response.data.posts.slice(2);
+                            ctrl.featuredPosts = response.data.posts.slice(0, 3);
+                            ctrl.posts = response.data.posts.slice(3);
                         }
                         else {
                             ctrl.posts = response.data.posts;
@@ -222,7 +225,7 @@
                                 ctrl.header = undefined;
                                 break;
                         }
-                    }                    
+                    }
                     ctrl.pager = response.data.pager;
 
                     if (ctrl.pager && ctrl.pager.showOlder) {
@@ -242,13 +245,26 @@
 
             this.$onInit = function () {
                 var url = ctrl.config.url.split('{{page}}').join(ctrl.config.page);
-                loadPosts(url);                
+                loadPosts(url);
             }
 
             this.showMore = function () {
                 ctrl.state = 'more';
                 loadPosts(ctrl.moreUrl);
             }
+
+            var $window = $(window);
+            var $moreElement = $('#show-more-posts-div');
+            $window.on('scroll', function () {
+                if (ctrl.state == 'done') {
+                    var bottomOfScreen = $window.scrollTop() + $window.height();
+                    var topOfMoreElement = $moreElement.offset().top;
+
+                    if (bottomOfScreen > topOfMoreElement) {
+                        ctrl.showMore();
+                    }
+                }
+            });
         }],
         controllerAs: 'postsListCtrl'
     })
@@ -305,7 +321,7 @@
                         }
                         ctrl.categories = categories;
                     }
-                                        
+
                     ctrl.state = 'done';
                     $scope.$emit('loadComplete');
                 }, function errorCallback(response) {
@@ -321,3 +337,15 @@
         }],
         controllerAs: 'postCtrl'
     })
+
+    .directive('disqusThread', ['$stateParams', '$http', '$compile', '$rootScope', function ($stateParams, $http, $compile, $rootScope) {
+        return {
+            restrict: 'E',
+            link: function (scope, element) {
+                var template = '<script>var disqus_config = function() { this.page.url = window.location.protocol + "//" + window.location.host + "/' + $rootScope.blogSettings.blogRoute + $stateParams.slug + '"; };</script >';
+                template += '<div ng-include src="\'/blogifier/api/public/settings/disqus\'"></div>';
+                template += '<div id="disqus_thread" style="max-width: 800px; margin: 0 auto;" layout-padding></div>';
+                element.append($compile(template)(scope));
+            }
+        }
+    }]);

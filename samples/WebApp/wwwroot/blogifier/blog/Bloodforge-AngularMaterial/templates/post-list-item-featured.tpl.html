@@ -1,18 +1,9 @@
-﻿<md-card flex style="height: 100%">
-    <div style="text-align: center;" ng-show="postListItemCtrl.post.image">
-        <a ui-sref="post({ slug: postListItemCtrl.post.slug })"><img src="{{postListItemCtrl.post.image}}" alt="{{postListItemCtrl.post.title}}" style="height: 150px;" /></a>
-    </div>
+﻿<md-card class="featured-post" flex style="height: 100%" ui-sref="post({ slug: postListItemCtrl.post.slug })">
+    <div class="featured-post-image" style="background-image: url('{{postListItemCtrl.post.image}}')"></div>
     <md-card-title>
         <md-card-title-text>
             <span class="md-title">{{postListItemCtrl.post.title}}</span>
-            <span class="md-subtitle"><span class="md-subhead">By <a ui-sref="author({ slug: postListItemCtrl.post.blogSlug })">{{postListItemCtrl.post.authorName}}</a> &mdash; {{postListItemCtrl.post.published | date: 'shortDate' }}</span></span>
+            <span class="md-subtitle" ng-bind-html="postListItemCtrl.post.content | unsafe"></span>
         </md-card-title-text>
     </md-card-title>
-    <md-card-content>
-        <p ng-bind-html="postListItemCtrl.post.content | unsafe"></p>
-        <p></p>
-    </md-card-content>
-    <md-card-actions layout="row" layout-align="center center">
-        <md-button class="md-raised" ui-sref="post({ slug: postListItemCtrl.post.slug })"><div layout="row" layout-align="center center"><div style="margin: 2px 5px 0 0">Read More</div><md-icon>forward</md-icon></div></md-button>
-    </md-card-actions>
 </md-card>

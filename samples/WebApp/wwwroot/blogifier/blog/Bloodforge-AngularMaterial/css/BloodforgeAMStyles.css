@@ -29,3 +29,20 @@
     -webkit-animation-name: fadeOutLeft;
     animation-name: fadeOutLeft;
 }
+
+.featured-post {
+    transition: 0.5s;
+    margin: 1em;
+    cursor: pointer;
+}
+
+    .featured-post:hover {
+        box-shadow: 0px 0px 1em 0px rgba(1,87,139,1);
+    }
+
+    .featured-post .featured-post-image {
+        height: 150px;
+        width: 100%;
+        background-position: center;
+        background-size: 100% auto;
+    }

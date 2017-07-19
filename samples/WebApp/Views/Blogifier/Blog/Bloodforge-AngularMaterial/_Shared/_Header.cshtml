@@ -2,16 +2,21 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Menu" ng-click="openSidenav('left-menu')">
+            <md-tooltip>Menu</md-tooltip>
             <md-icon>menu</md-icon>
         </md-button>
         <h2 flex md-truncate  ng-click="sidenavNavigate('left-menu', 'home', { page: '1' })" style="cursor: pointer; user-select: none;" tabindex="-1">@ApplicationSettings.Title</h2>
-        <md-button ng-click="showSearch()" ng-hide="blogsearch">
+        <div ng-show="blogsearch">
+                <input type="search" id="term" name="term" class="form-control" placeholder="Search..." ng-blur="blogsearch = false" style="width: 10em;">
+        </div>
+        <md-button ng-click="showSearch()" ng-hide="blogsearch" style="min-width: 50px;">
+            <md-tooltip>Search</md-tooltip>
             <md-icon>search</md-icon>
         </md-button>
-        <div ng-show="blogsearch">
-            <!--<form class="blog-search" role="search" asp-controller="Search" asp-action="Index" method="post">-->
-                <input type="search" id="term" name="term" class="form-control" placeholder="Search..." ng-blur="blogsearch = false" style="width: 10em;">
-            <!--</form>-->
-        </div>
+        <md-button ui-sref="home({ page: 1 })" style="min-width: 50px;">
+            <md-tooltip>Blog Home</md-tooltip>
+            <md-icon>home</md-icon>
+        </md-button>
+
     </div>
 </md-toolbar>

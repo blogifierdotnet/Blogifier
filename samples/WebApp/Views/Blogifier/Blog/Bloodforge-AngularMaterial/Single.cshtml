@@ -1,0 +1,16 @@
+@model Blogifier.Core.Data.Models.BlogPostDetailModel
+@using Blogifier.Core.Common
+@{
+    Layout = null;
+    var RedirectUrl = String.Format("/{0}#!/post/{1}", Constants.BlogRoute, Model.BlogPost.Slug);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=@RedirectUrl">
+</head>
+<body>
+</body>
+</html>

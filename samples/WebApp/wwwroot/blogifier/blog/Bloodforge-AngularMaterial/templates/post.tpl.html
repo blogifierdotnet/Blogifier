@@ -14,10 +14,6 @@
         <div ng-bind-html="postCtrl.post.content | unsafe">
         </div>
     </div>
-    <form role="form" ng-show="postCtrl.disqusScript">
-        <div id="disqus_thread"></div>
-        {{postCtrl.disqusScript}}
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    </form>
+    <disqus-thread></disqus-thread>
 
 </md-content>
