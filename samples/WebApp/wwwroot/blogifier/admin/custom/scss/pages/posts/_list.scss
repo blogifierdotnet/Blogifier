@@ -1,66 +1,56 @@
-﻿.post-list {
+﻿.post-list {}
 
-    .post-item {
-        position: relative;
-        padding: 0;
-        border: 1px solid #dbdbdb;
-        overflow: hidden;
-
-        &-link {
-            display: block;
-            height: 100%;
-            height: 3.5rem;
-            line-height: 3.5rem;
-            padding-left: 1rem;
-            width: 100%;
-            font-weight: 500;
-            font-size: 1rem;
+$pslh:3rem;
+.post-list-item {
+    padding: 0;
+    height: $pslh;
+    border-color: $color-border;
+    position: relative;
+    @media screen and (min-width: 640px) {
+        padding-right: 18rem;
+    }
+    &:hover {
+        background: $color-border;
+        .post-item-info {
+            a,
+            span {
+                color: #000;
+            }
         }
-
-        &-info {
-            background-color: #fff;
+    }
+    .post-item-link {
+        display: block;
+        height: 100%;
+        line-height: $pslh;
+        padding-left: 1rem;
+        @include text-overflow(ellipsis);
+    }
+    .post-item-info {
+        font-size: 12px;
+        display: none;
+        @media screen and (min-width: 640px) {
+            display: block;
             position: absolute;
             right: 0;
             top: 0;
-            height: 3.5rem;
-            vertical-align: top;
-            display: table;
-
-            button, a, span {
-                display: table-cell;
-                height: 100%;
-                padding: 0;
-                margin: 0;
-                border: none;
-                min-width: 3.5rem;
-                line-height: 3.5rem;
-                text-align: center;
-                background: none;
-            }
-
-            button, a {
-                cursor: pointer;
-
-                &:hover {
-                    i {
-                        color: #000;
-                    }
-                }
-            }
-
-            i {
-                color: #666;
-                font-size: 14px;
-
-                &.fa-trash {
-                }
-            }
-
-            span {
-                padding-right:1rem;
-                font-size: .75rem;
-                color: #888;
-            }
+            text-align: right;
+        }
+        a,
+        span {
+            text-align: center;
+            display: block;
+            min-width: $pslh;
+            height: 100%;
+            line-height: $pslh;
+            float: right;
+            color: #888;
+        }
+        i {
+            font-size: 14px;
+        }
+        span {
+            border: 0;
+            padding-right: 1rem;
         }
     }
 }

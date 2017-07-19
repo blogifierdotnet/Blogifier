@@ -1,12 +1,12 @@
 ﻿.admin-footer {
     height: 4rem - 0.0625rem;
     line-height: 4rem - 0.0625rem;
+    margin-top: -4rem;
+    border-top: 0.0625rem solid $color-border;
     color: rgba(0, 0, 0, 0.45);
     text-transform: uppercase;
     font-size: .75rem;
     font-weight: 400;
-    margin-top: -4rem;
-    border-top: 1px solid $color-border;
     a {
         color: rgba(0, 0, 0, 0.45);
         &:hover {
@@ -24,6 +24,11 @@
             opacity: 1;
         }
     }
+    .item-copyright {
+        @media screen and (max-width: 768px) {
+           text-align: center;
+        }
+    }
     ul {
         @include unstyled();
         li {
@@ -33,6 +38,9 @@
                 padding-left: 1rem;
                 border-left: 1px solid #ddd;
             }
+        }
+        @media screen and (max-width:768px) {
+            display: none;
         }
     }
 }
