@@ -1,4 +1,5 @@
-﻿a:hover, a:focus {
+﻿a:hover,
+a:focus {
     text-decoration: none;
 }
 
@@ -19,7 +20,12 @@ form {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 500;
     margin: 0;
 }
@@ -30,14 +36,12 @@ iframe {
 }
 
 button {
-    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
-
-
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     &:focus {
         outline: none !important;
     }
 }
 
 p {
-   margin-bottom:0;
+    margin-bottom: 0;
 }

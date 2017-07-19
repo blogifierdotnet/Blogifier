@@ -1,11 +1,8 @@
 ﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
-@{
-    var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
-}
 <article class="post-single">
-    <header class="cover" style="background-image: url('@bg')">
-        <img class="cover-img" src="@bg" alt="@Model.BlogPost.Title" />
+    <header class="cover" style="background-image: url('@Model.CoverImg')">
+        <img class="cover-img" src="@Model.CoverImg" alt="@Model.BlogPost.Title" />
         <div class="cover-title container">
             <h1>@Model.BlogPost.Title</h1>
             <p>

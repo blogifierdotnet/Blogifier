@@ -5,36 +5,31 @@
 
 <h2>@ViewData["Title"].</h2>
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
+<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+    <p>Create a new account.</p>
     <hr />
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
+    <br />
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
+        <button type="submit" class="btn btn-success btn-lg btn-block">Register</button>
     </div>
+    <hr />
+    <a asp-action="Login" class="btn btn-primary btn-block btn-lg" asp-route-returnurl="@ViewData["ReturnUrl"]">Already have an account? Login</a>
 </form>
 
 @section Scripts {

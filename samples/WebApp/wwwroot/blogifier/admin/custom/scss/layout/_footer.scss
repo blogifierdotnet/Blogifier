@@ -1,19 +1,18 @@
 ﻿.admin-footer {
-    height: 4.5rem;
-    line-height: 4.5rem;
+    height: 4rem - 0.0625rem;
+    line-height: 4rem - 0.0625rem;
     color: rgba(0, 0, 0, 0.45);
     text-transform: uppercase;
     font-size: .75rem;
     font-weight: 400;
-
+    margin-top: -4rem;
+    border-top: 1px solid $color-border;
     a {
         color: rgba(0, 0, 0, 0.45);
-
         &:hover {
             color: #000;
         }
     }
-
     img {
         opacity: .2;
         margin-right: .5rem;
@@ -21,18 +20,14 @@
         display: inline-block;
         position: relative;
         top: -2px;
-
         &:hover {
             opacity: 1;
         }
     }
-
     ul {
         @include unstyled();
-
         li {
             float: left;
-
             a {
                 margin-left: 1rem;
                 padding-left: 1rem;

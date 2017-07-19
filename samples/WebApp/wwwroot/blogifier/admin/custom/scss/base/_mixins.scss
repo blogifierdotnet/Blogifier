@@ -54,100 +54,29 @@
     box-sizing: $box-sizing;
 }
 
-// buttons
-@mixin button-size($btn-size) {
-    line-height: $btn-size;
-    height: $btn-size;
-    padding: 0 ($btn-size / 2);
-
-    i {
-        line-height: $btn-size;
-        display: inline-block;
-        vertical-align: top;
-        font-size: 14px;
-    }
-}
-
-@mixin button-variant($color, $background, $border) {
-    color: $color;
-    background-color: $background;
-    border-color: $border;
-
-    &:focus,
-    &.focus {
-        color: $color;
-        background-color: darken($background, 10%);
-        border-color: darken($border, 20%);
-    }
-
-    &:hover {
-        color: $color;
-        background-color: darken($background, 10%);
-        border-color: darken($border, 12%);
-    }
-
-    &:active,
-    &.active,
-    .open > &.dropdown-toggle {
-        color: $color;
-        background-color: darken($background, 10%);
-        border-color: darken($border, 12%);
-
-        &:hover,
-        &:focus,
-        &.focus {
-            color: $color;
-            background-color: darken($background, 17%);
-            border-color: darken($border, 20%);
-        }
-    }
-
-    &:active,
-    &.active,
-    .open > &.dropdown-toggle {
-        background-image: none;
-    }
-
-    &.disabled,
-    &[disabled],
-    fieldset[disabled] & {
-        background-color: $background;
-        border-color: $border;
-        &:hover,
-        &:focus,
-        &.focus {
-            background-color: $background;
-            border-color: $border;
-        }
-    }
-
-    .badge {
-        color: $background;
-        background-color: $color;
-    }
-}
-
 // triangle
 @mixin triangle($direction, $size, $color) {
+    content: "";
     width: 0;
     height: 0;
-
-    @if $direction == 'up' {
+    position: absolute;
+    display: block;
+    @if $direction=='up' {
         border-right: $size solid transparent;
         border-bottom: $size solid $color;
         border-left: $size solid transparent;
     }
-    @else if $direction == 'down' {
+    @else if $direction=='down' {
         border-top: $size solid $color;
         border-right: $size solid transparent;
         border-left: $size solid transparent;
     }
-    @else if $direction == 'left' {
+    @else if $direction=='left' {
         border-top: $size solid transparent;
         border-right: $size solid $color;
         border-bottom: $size solid transparent;
     }
-    @else if $direction == 'right' {
+    @else if $direction=='right' {
         border-top: $size solid transparent;
         border-bottom: $size solid transparent;
         border-left: $size solid $color;
@@ -155,22 +84,22 @@
 }
 
 @mixin corner-triangle($corner, $size, $color) {
+    content: "";
     width: 0;
     height: 0;
-
-    @if $corner == 'top-left' {
+    @if $corner=='top-left' {
         border-top: $size solid $color;
         border-right: $size solid transparent;
     }
-    @else if $corner == 'top-right' {
+    @else if $corner=='top-right' {
         border-top: $size solid $color;
         border-left: $size solid transparent;
     }
-    @else if $corner == 'bottom-left' {
+    @else if $corner=='bottom-left' {
         border-right: $size solid transparent;
         border-bottom: $size solid $color;
     }
-    @else if $corner == 'bottom-right' {
+    @else if $corner=='bottom-right' {
         border-bottom: $size solid $color;
         border-left: $size solid transparent;
     }
@@ -181,4 +110,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+//
+@mixin button-unstyled() {
+    background: none;
+    border: 0;
+    padding:0;
 }

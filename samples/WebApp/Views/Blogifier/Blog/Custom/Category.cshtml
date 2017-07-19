@@ -4,9 +4,12 @@
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogCategoryModel
-
+@{
+    var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
+    var social = Model.SocialButtons;
+}
 <main class="page-category">
-    <header class="cover" style="background-image: url('@ApplicationSettings.ProfileImage')">
+    <header class="cover" style="background-image: url('@Model.CoverImg')">
         <div class="cover-title container">
             <h2>@Model.Category.Title</h2>
             <p class="text-uppercase">Category</p>

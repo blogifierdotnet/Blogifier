@@ -1,69 +1,66 @@
 ﻿.admin-settings {
-    border: 1px solid #dbdbdb;
-    height: 100%;
-    display: table;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 3px;
-    background: #fff;
-
-
+    flex: 1;
+    border: .0625rem solid $color-border;
     &-sidebar {
-        width: 200px;
-        display: table-cell;
-        vertical-align: top;
-        border-right: 1px solid #ddd;
-
-        ul {
-            display: block;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            padding-top: 1rem;
-
-            li {
-
-                &.active {
-                    background: #fff;
-                    position: relative;
-                    font-weight: $font-weight-medium;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        right: -1px;
-                        top: 50%;
-                        margin-top: -10px;
-                        @include triangle(left, 10px, #fff);
-                    }
-
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        right: 0px;
-                        top: 50%;
-                        margin-top: -10px;
-                        @include triangle(left, 10px, #ccc);
-                    }
-
-                    a {
-                        color: #000;
-                    }
-                }
-
+        border-right: .0625rem solid $color-border;
+        @include unstyled();
+        li {
+            margin-bottom: 1rem;
+            &.active {
+                position: relative;
+                font-weight: $font-weight-medium;
                 a {
-                    display: block;
-                    line-height: 3rem;
-                    padding-left: 2.25rem;
-                    color: #666;
+                    color: #000;
                 }
+                &::after {
+                    top: 50%;
+                    right: -.0625rem;
+                    margin-top: -.5rem;
+                    @include triangle(left, .5rem, #fff);
+                }
+                &::before {
+                    top: 50%;
+                    right: -.0625rem;
+                    margin-top: -.5625rem;
+                    @include triangle(left, .5625rem, darken($color-border, 10%));
+                }
+            }
+            a {
+                color: #666;
+                display: block;
+                padding-left: 3rem;
+                line-height: 2.375;
             }
         }
     }
-
     &-content {
-        display: table-cell;
-        vertical-align: top;
-        padding: 3rem;
+        table {
+            margin-bottom: 2rem;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            td {
+                font-size: .875rem;
+                &:first-child {
+                    width: 13rem;
+                }
+            }
+            th,
+            td {
+                padding: .25rem 0;
+                &:last-child {
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                    hyphens: none;
+                }
+            }
+            thead {
+                th {
+                    border-top: 0;
+                    font-weight: $font-weight-medium;
+                }
+            }
+        }
     }
 }

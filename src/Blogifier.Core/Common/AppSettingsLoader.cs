@@ -19,6 +19,9 @@ namespace Blogifier.Core.Common
                     {
                         // system settings
 
+                        if (section["SingleBlog"] != null)
+                            ApplicationSettings.SingleBlog = section.GetValue<bool>("SingleBlog");
+
                         if (section["UseInMemoryDatabase"] != null)
                             ApplicationSettings.UseInMemoryDatabase = section.GetValue<bool>("UseInMemoryDatabase");
 

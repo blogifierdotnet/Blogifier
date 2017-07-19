@@ -8,9 +8,9 @@ $(".page-toolbar .dropdown-menu").click(function (event) {
 });
 
 //
-$('.admin-settings-sidebar ul li').removeClass('active');
+$('.admin-settings-sidebar li').removeClass('active');
 var activated = false;
-$(".admin-settings-sidebar ul li").each(function (idx, li) {
+$(".admin-settings-sidebar li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).addClass('active');
         activated = true;
@@ -20,19 +20,16 @@ if (activated === false) { $('.admin-settings-sidebar .basic').addClass('active'
 
 
 //
-$('.dropdown-menu-app li').removeClass('active');
+$('.admin-nav li').removeClass('active');
 var activatedAD = false;
-$(".dropdown-menu-app li").each(function (idx, li) {
+$(".admin-nav li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).children().addClass('active');
-        $(".nav-title").text($(li).children().text());
-
         activatedAD = true;
     }
 });
 if (activatedAD === false) {
-    $('.dropdown-menu-app .admin').children().addClass('active');
-    $(".nav-title").text($('.dropdown-menu-app .admin').children().text());
+    $('.admin-nav .admin').children().addClass('active');
 }
 
 

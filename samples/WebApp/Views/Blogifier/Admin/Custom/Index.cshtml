@@ -5,41 +5,41 @@
     var themeFolder = "blogifier/admin/custom";
     var x = Model.Pager;
 }
-<div id="page-content-wrapper">
-    <div class="page-toolbar">
-        <a href="~/admin/editor/0" class="btn btn-black">New</a>
-    </div>
-    <div id="post-list">
-        <ul id="admin-posts" class="list-group post-list">
-            @foreach (var item in Model.BlogPosts)
-            {
-                var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
-                <li class="list-group-item post-item draft">
-                    <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
-                    <div class="post-item-info">
-                        <span>@published</span>
-                        <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
-                            <i class="fa fa-eye"></i>
-                        </a>
-                        @if (item.Published == DateTime.MinValue)
-                        {
-                            <button data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)">
-                                <i class="fa fa-check"></i>
-                            </button>
-                        }
-                        else
-                        {
-                            <button data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)">
-                                <i class="fa fa-archive"></i>
-                            </button>
-                        }
-                        <button data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)">
-                            <i class="fa fa-trash"></i>
+<div class="page-toolbar">
+    <a href="~/admin/editor/0" class="btn btn-black">New</a>
+</div>
+<div id="post-list">
+    <ul id="admin-posts" class="list-group post-list">
+        @foreach (var item in Model.BlogPosts)
+        {
+            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
+            <li class="list-group-item post-item draft">
+                <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
+                <div class="post-item-info">
+                    <span>@published</span>
+                    <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    @if (item.Published == DateTime.MinValue)
+                    {
+                        <button data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)">
+                            <i class="fa fa-check"></i>
                         </button>
-                    </div>
-                </li>
-            }
-        </ul>
+                    }
+                    else
+                    {
+                        <button data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)">
+                            <i class="fa fa-archive"></i>
+                        </button>
+                    }
+                    <button data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </li>
+        }
+    </ul>
+    @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
         <ul class="pagination-custom">
             @if (Model.Pager.ShowNewer)
             {
@@ -50,9 +50,8 @@
                 <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-left"></i></a></li>
             }
         </ul>
-    </div>
+    }
 </div>
-
 @section Scripts{
     <script src="~/@themeFolder/js/postsController.js"></script>
 }

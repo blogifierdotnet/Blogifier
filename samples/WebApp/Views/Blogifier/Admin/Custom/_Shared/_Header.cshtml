@@ -15,32 +15,20 @@
 }
 <div class="admin-header">
     <div class="container">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-navicon"></i>
-                <span class="nav-title"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-app" aria-labelledby="dropdownMenuButton">
-                @if (Model.BlogExists)
-                {
-                    <li class="admin"> <a class="dropdown-item" href="~/admin">Posts</a></li>
-                    <li class="files"> <a class="dropdown-item " href="~/admin/files">Files</a></li>
-                }
-                <li class="settings"><a class="dropdown-item " href="~/admin/settings/profile">Settings</a></li>
-            </ul>
-        </div>
         @if (Model.BlogExists)
         {
-        <div class="brand"><a href="~/@Constants.BlogRoute@Model.Profile.Slug" target="_blank">@blogTitle</a></div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="profile-image" alt="@userName" src="@avatar">
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="~/@Constants.BlogRoute@Model.Profile.Slug">View Blog</a>
-                <a class="dropdown-item" href="" onclick="profileLogOut(); return false;">Logoff</a>
-            </div>
-        </div>
+        <ul class="admin-nav clearfix">
+            <li class="admin"><a href="~/admin">Posts</a></li>
+            <li class="files"><a href="~/admin/files">Files</a></li>
+            <li class="settings"><a href="~/admin/settings/profile">Settings</a></li>
+            <li class="user-nav float-right btn-group">
+                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="profile-image" alt="@userName" src="@avatar"> <span>@userName</span></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a class="dropdown-item" href="~/@Constants.BlogRoute@Model.Profile.Slug" target="_blank">View Blog</a></li>
+                    <li><a class="dropdown-item" href="" onclick="profileLogOut(); return false;">Logoff</a></li>
+                </ul>
+            </li>
+        </ul>
         }
     </div>
 </div>

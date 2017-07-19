@@ -6,29 +6,29 @@
     var footerView = string.Format("~/Views/{0}/_Shared/_Footer.cshtml", themeFolder);
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    @Html.Partial(headView)
+@Html.Partial(headView)
 </head>
 <body>
-    <div class="admin admin-page-settings">
-        @Html.Partial(headerView)
-        <div class="admin-content container">
-            <div class="admin-settings">
-                <div class="admin-settings-sidebar">
-                    <ul>
-                        <li class="profile"><a href="~/admin/settings/profile">Edit Profile</a></li>
-                        <li class="import"><a href="~/admin/settings/import">Import Rss</a></li>
-                        <li class="custom"><a href="~/admin/settings/custom">Custom Fields</a></li>
-                        @if (Model.Profile != null && Model.Profile.IsAdmin)
-                        {
-                            <li class="application"><a href="~/admin/settings/application">Global Settings</a></li>
-                        }
-                    </ul>
-                </div>
-                <div class="admin-settings-content">
-                    @RenderBody()
-                </div>
+    @Html.Partial(headerView)
+    <div class="admin-content container d-flex flex-column">
+        <div class="admin-settings row no-gutters rounded">
+            <ul class="admin-settings-sidebar col-sm-3 pt-5">
+                <li class="profile"><a href="~/admin/settings/profile">Edit Profile</a></li>
+                @if (!ApplicationSettings.SingleBlog)
+                {
+                    <li class="personal"><a href="~/admin/settings/personal">Personal Settings</a></li>
+                }
+                <li class="import"><a href="~/admin/settings/import">Import Rss</a></li>
+                <li class="custom"><a href="~/admin/settings/custom">Custom Fields</a></li>
+                @if (Model.Profile != null && Model.Profile.IsAdmin)
+                {
+                    <li class="application"><a href="~/admin/settings/application">Application Settings</a></li>
+                }
+            </ul>
+            <div class="admin-settings-content col-sm-9">
+               <div class="p-5">@RenderBody()</div>
             </div>
         </div>
     </div>

@@ -1,10 +1,40 @@
-﻿html,body {
-    height:100%;
+﻿html,
+body {
+    height: 100%;
 }
+
 body {
     font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    background-color: #fff;
     color: #666;
     cursor: default;
-    background-color: #fafafa;
     overflow-y: scroll;
+}
+
+.container {
+    width: 100%;
+    max-width: 60rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.admin-content {
+    min-height: 100%;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+    
+}
+
+.page-toolbar {
+    margin-bottom: 1rem;
+    .btn {
+        margin-right: .5rem;
+    }
+    .float-right {
+        .btn {
+            margin-right: 0;
+        }
+    }
 }
