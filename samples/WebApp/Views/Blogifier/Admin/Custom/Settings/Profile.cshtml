@@ -15,14 +15,14 @@
 <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
     <div class="form-group row">
         <label class="col-sm-3 col-form-label text-right">Author Name</label>
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <input type="text" asp-for="Profile.AuthorName" class="form-control" />
             <span asp-validation-for="Profile.AuthorName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-3 col-form-label text-right">Email Address</label>
-        <div class="col-sm-6">
+        <div class="col-sm-9">
             <input type="text" asp-for="Profile.AuthorEmail" class="form-control" />
             <span asp-validation-for="Profile.AuthorEmail" class="text-danger"></span>
         </div>
