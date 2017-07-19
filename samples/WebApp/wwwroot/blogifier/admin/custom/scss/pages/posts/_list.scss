@@ -10,7 +10,7 @@ $pslh:3rem;
         padding-right: 18rem;
     }
     &:hover {
-        background: $color-border;
+        background: #fbfbfb;
         .post-item-info {
             a,
             span {
@@ -20,6 +20,7 @@ $pslh:3rem;
     }
     .post-item-link {
         display: block;
+        width: 100%;
         height: 100%;
         line-height: $pslh;
         padding-left: 1rem;
