@@ -69,7 +69,7 @@
 
     function pickCallback(data) {
         if (uploadType === "profilelogo") {
-            $('#Profile_Logo').val(data.url);
+            $('#Logo').val(data.url);
         }
         if (uploadType === "profileavatar") {
             $('#Avatar').val(data.url);
@@ -81,7 +81,7 @@
             }, 3000);
         }
         if (uploadType === "profileimage") {
-            $('#Profile_Image').val(data.url);
+            $('#Image').val(data.url);
         }
         if (uploadType === "postImage") {
             setTimeout(function () {

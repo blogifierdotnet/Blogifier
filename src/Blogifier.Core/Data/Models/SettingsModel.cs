@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Core.Data.Models
@@ -17,9 +18,22 @@ namespace Blogifier.Core.Data.Models
         public Dictionary<string, string> CustomFields { get; set; }
     }
 
-    public class SettingsPersonal
+    public class SettingsPersonal : AdminBaseModel
     {
-
+        [Required]
+        [StringLength(160)]
+        public string Title { get; set; }
+        [Required]
+        [StringLength(450)]
+        public string Description { get; set; }
+        [Required]
+        [StringLength(160)]
+        public string BlogTheme { get; set; }
+        [StringLength(160)]
+        public string Logo { get; set; }
+        [StringLength(160)]
+        public string Image { get; set; }
+        public IList<SelectListItem> BlogThemes { get; set; }
     }
 
     public class SettingsCustom

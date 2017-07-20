@@ -146,6 +146,11 @@ namespace Blogifier.Core.Controllers
                 if (profile == null)
                 {
                     profile = new Profile();
+
+                    if (_db.Profiles.All().ToList().Count == 0)
+                    {
+                        profile.IsAdmin = true;
+                    }
                     profile.AuthorName = model.AuthorName;
                     profile.AuthorEmail = model.AuthorEmail;
                     profile.Avatar = model.Avatar;
@@ -189,40 +194,41 @@ namespace Blogifier.Core.Controllers
             var profile = GetProfile();
             var storage = new BlogStorage("");
 
-            var model = new AdminProfileModel
+            var model = new SettingsPersonal
             {
                 Profile = profile,
                 BlogThemes = storage.GetThemes(ThemeType.Blog)
             };
+            if (profile != null)
+            {
+                model.Title = profile.Title;
+                model.Description = profile.Description;
+                model.BlogTheme = profile.BlogTheme;
+                model.Image = profile.Image;
+                model.Logo = profile.Logo;
+            }
             return View(_theme + "Personal.cshtml", model);
         }
 
         [HttpPost]
         [Route("personal")]
-        public IActionResult Personal(AdminProfileModel model)
+        public IActionResult Personal(SettingsPersonal model)
         {
-            var profile = model.Profile;
-
-            ModelState.Clear();
-            TryValidateModel(model);
+            var storage = new BlogStorage("");
+            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
+            model.Profile = GetProfile();
 
             if (ModelState.IsValid)
             {
-                var existing = _db.Profiles.Single(b => b.Id == profile.Id);
-                existing.Title = profile.Title;
-                existing.Description = profile.Description;
-                existing.BlogTheme = profile.BlogTheme;
+                model.Profile.Title = model.Title;
+                model.Profile.Description = model.Description;
+                model.Profile.BlogTheme = model.BlogTheme;
+                model.Profile.Logo = model.Logo;
+                model.Profile.Image = model.Image;
 
                 _db.Complete();
-
-                var updated = _db.Profiles.Single(b => b.IdentityName == profile.IdentityName);
-                model.Profile = updated;
                 ViewBag.Message = "Updated";
             }
-
-            var storage = new BlogStorage("");
-            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
-
             return View(_theme + "Personal.cshtml", model);
         }
 
