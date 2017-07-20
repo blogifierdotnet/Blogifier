@@ -31,3 +31,11 @@
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.50);
     }
 }
+
+.btn-block {
+    @media screen and (max-width: 480px) {
+        &-sm {
+            width:100%;
+        }
+    }
+}

@@ -10,7 +10,6 @@
         height: 100%;
         padding: 0;
     }
-    @media screen and (max-width:460px) {}
 }
 
 .admin-nav {
@@ -65,8 +64,7 @@
     .dropdown-menu {
         margin-top: -.25rem;
         margin-right: 1rem;
-        &::after,
-        {
+        &::after {
             top: -.5rem;
             right: 1.5rem;
             margin-right: -.5rem;
@@ -83,14 +81,14 @@
             font-size: .875rem;
         }
     }
-    @media screen and (max-width:460px) {
+    @media screen and (max-width:480px) {
         .dropdown-toggle {
             span {
                 display: none;
             }
         }
     }
-    @media screen and (max-width:460px) {
+    @media screen and (max-width:480px) {
         display: table;
         width: 100%;
         >li {

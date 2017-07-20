@@ -1,14 +1,10 @@
-﻿.post-list {}
-
-$pslh:3rem;
+﻿$pslh:3rem;
 .post-list-item {
     padding: 0;
+    padding-right: 18rem;
     height: $pslh;
     border-color: $color-border;
     position: relative;
-    @media screen and (min-width: 640px) {
-        padding-right: 18rem;
-    }
     &:hover {
         background: #fbfbfb;
         .post-item-info {
@@ -27,15 +23,11 @@ $pslh:3rem;
         @include text-overflow(ellipsis);
     }
     .post-item-info {
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: right;
         font-size: 12px;
-        display: none;
-        @media screen and (min-width: 640px) {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 0;
-            text-align: right;
-        }
         a,
         span {
             text-align: center;
@@ -52,6 +44,15 @@ $pslh:3rem;
         span {
             border: 0;
             padding-right: 1rem;
+        }
+    }
+    @media screen and (max-width: 640px) {
+        padding-right: 6.5rem;
+        .post-item-info {
+            span,
+            a:nth-child(3) {
+                display: none !important;
+            }
         }
     }
 }
