@@ -4,16 +4,12 @@
             <h2 flex md-truncate>{{postsListCtrl.header}}</h2>
         </div>
     </md-toolbar>
-    <div layout="column" flex>
+    <div>
         <div class="featured-posts" layout="column" layout-gt-sm="row" layout-align="space-around stretch" ng-show="postsListCtrl.featuredPosts" style="margin-bottom: 1.5em;">
-            <div ng-repeat="post in postsListCtrl.featuredPosts" flex-gt-sm="40">
-                <post-list-item-featured post="post" />
-            </div>
+            <post-list-item-featured ng-repeat="post in postsListCtrl.featuredPosts" post="post" flex-gt-sm="40" />
         </div>
-        <md-list>
-            <div>
-                <post-list-item post="post" ng-repeat="post in postsListCtrl.posts" />
-            </div>
+        <md-list flex>
+            <post-list-item post="post" ng-repeat="post in postsListCtrl.posts" />
         </md-list>
         <div id="show-more-posts-div" flex layout="row" layout-align="center center" ng-show="postsListCtrl.moreUrl">
             <div style="width: 400px" layout="row" layout-align="space-around center">

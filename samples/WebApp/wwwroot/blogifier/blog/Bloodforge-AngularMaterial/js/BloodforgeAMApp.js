@@ -101,11 +101,14 @@
         });
     }])
 
-    .controller('bloodforgeAMController', ['$log', '$scope', '$rootScope', '$mdSidenav', '$state', '$transitions', '$http', function ($log, $scope, $rootScope, $mdSidenav, $state, $transitions, $http) {
+    .controller('bloodforgeAMController', ['$log', '$scope', '$rootScope', '$mdSidenav', '$state', '$transitions', '$http', '$mdMedia', function ($log, $scope, $rootScope, $mdSidenav, $state, $transitions, $http, $mdMedia) {
 
         $rootScope.blogSettings = {};
+        $scope.$mdMedia = $mdMedia;
+        var $window = $(window);
 
         $transitions.onStart({}, function () {
+            $window.scrollTop(0);
             $('#load-progress').show();
         });
         $scope.$on('loadComplete', function () {
@@ -114,10 +117,15 @@
 
         $scope.blogsearch = false;
         $scope.showSearch = function () {
+            if (!$('.header-toolbar-title').is(':visible')) {
+                var $toolbar = $(".header-toolbar");
+                $toolbar.width('0%');
+                $toolbar.animate({ width: '100%' }, "slow");
+            }
             $scope.blogsearch = true;
             setTimeout(function () {
                 $('#term').val('').focus();
-            }, 1);
+            }, 100);
         }
         $('#term').keydown(function (evt) {
             if (evt.which == 13) {
@@ -139,7 +147,6 @@
             $mdSidenav(sidenavId).close();
         };
 
-        var $window = $(window);
         $window.on('scroll', function () {
             $scope.$apply(function () {
                 $scope.scrollY = $window.scrollTop();
