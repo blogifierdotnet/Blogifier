@@ -72,7 +72,7 @@
             $('#Profile_Logo').val(data.url);
         }
         if (uploadType === "profileavatar") {
-            $('#Profile_Avatar').val(data.url);
+            $('#Avatar').val(data.url);
 
             // TODO: can not access page element from modal
             setTimeout(function () {
