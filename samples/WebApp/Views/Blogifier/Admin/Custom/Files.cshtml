@@ -2,16 +2,17 @@
 @{
     var themeFolder = "blogifier/admin/custom";
 }
-
-<div id="asset-edit-actions" class="admin-toolbar"></div>
-<div class="asset-edit row" id="assetEdit"></div>
-<div class="asset-list row" id="assetList"></div>
-<ul class="pagination-custom"></ul>
-<div style="display:none;">
-    <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
-        <input type="file" name="files" id="files" multiple onchange="assetController.uploadAssets(); return false;" />
-        <input type="submit" value="Upload Multiple" />
-    </form>
+<div class="admin-content container">
+    <div id="asset-edit-actions" class="admin-toolbar"></div>
+    <div class="asset-edit row" id="assetEdit"></div>
+    <div class="asset-list row" id="assetList"></div>
+    <ul class="pagination-custom"></ul>
+    <div style="display:none;">
+        <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+            <input type="file" name="files" id="files" multiple onchange="assetController.uploadAssets(); return false;" />
+            <input type="submit" value="Upload Multiple" />
+        </form>
+    </div>
 </div>
 @section Scripts{
     <script src="~/@themeFolder/js/assetController.js"></script>

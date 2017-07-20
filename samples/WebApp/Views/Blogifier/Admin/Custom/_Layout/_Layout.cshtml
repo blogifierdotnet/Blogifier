@@ -7,14 +7,10 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-<head>
 @Html.Partial(headView)
-</head>
 <body>
     @Html.Partial(headerView)
-    <div class="admin-content container">
     @RenderBody()
-    </div>
     @Html.Partial(footerView)
     @RenderSection("Scripts", false)
 </body>
