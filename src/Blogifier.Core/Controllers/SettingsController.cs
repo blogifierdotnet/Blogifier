@@ -37,31 +37,6 @@ namespace Blogifier.Core.Controllers
         public IActionResult Custom()
         {
             var profile = GetProfile();
-
-            //var fields = new Dictionary<string, string>();
-            //foreach (var item in ApplicationSettings.SocialButtons)
-            //{
-            //    fields.Add(item.Key, item.Value);
-            //}
-
-            //if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
-            //if (!fields.ContainsKey("Google")) fields.Add("Google", "");
-            //if (!fields.ContainsKey("Twitter")) fields.Add("Twitter", "");
-            //if (!fields.ContainsKey("Github")) fields.Add("Github", "");
-            //if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
-            //if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
-
-            //var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profile.Id);
-            //if (dbFields != null && dbFields.Count() > 0)
-            //{
-            //    foreach (var field in dbFields)
-            //    {
-            //        if(fields.ContainsKey(field.CustomKey))
-            //        {
-            //            fields[field.CustomKey] = field.CustomValue;
-            //        }
-            //    }
-            //}
             var model = new AdminToolsModel
             {
                 Profile = GetProfile(),
