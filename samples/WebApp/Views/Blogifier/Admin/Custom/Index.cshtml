@@ -5,47 +5,45 @@
     var themeFolder = "blogifier/admin/custom";
     var x = Model.Pager;
 }
-<div class="admin-content container">
+<div class="admin-content admin-content-posts container">
     <div class="admin-toolbar">
         <a href="~/admin/editor/0" class="btn btn-black btn-block-sm">New</a>
     </div>
-    <div id="post-list">
-        <ul id="admin-posts" class="list-group post-list">
-            @foreach (var item in Model.BlogPosts)
+    <ul id="admin-posts" class="list-group post-list">
+        @foreach (var item in Model.BlogPosts)
+        {
+            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
+            <li class="list-group-item post-list-item">
+                <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
+                <div class="post-item-info">
+                    <a data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)"><i class="fa fa-trash"></i></a>
+                    @if (item.Published == DateTime.MinValue)
+                    {
+                    <a data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)"><i class="fa fa-check"></i></a>
+                    }
+                    else
+                    {
+                    <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)"><i class="fa fa-archive"></i></a>
+                    }
+                    <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank"><i class="fa fa-eye"></i></a>
+                    <span>@published</span>
+                </div>
+            </li>
+        }
+    </ul>
+    @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
+        <ul class="pagination-custom">
+            @if (Model.Pager.ShowNewer)
             {
-                var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
-                <li class="list-group-item post-list-item">
-                    <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
-                    <div class="post-item-info">
-                        <a data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)"><i class="fa fa-trash"></i></a>
-                        @if (item.Published == DateTime.MinValue)
-                        {
-                        <a data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)"><i class="fa fa-check"></i></a>
-                        }
-                        else
-                        {
-                        <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)"><i class="fa fa-archive"></i></a>
-                        }
-                        <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank"><i class="fa fa-eye"></i></a>
-                        <span>@published</span>
-                    </div>
-                </li>
+                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-right"></i></a></li>
+            }
+            @if (Model.Pager.ShowOlder)
+            {
+                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-left"></i></a></li>
             }
         </ul>
-        @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
-            <ul class="pagination-custom">
-                @if (Model.Pager.ShowNewer)
-                {
-                    <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-right"></i></a></li>
-                }
-                @if (Model.Pager.ShowOlder)
-                {
-                    <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-left"></i></a></li>
-                }
-            </ul>
-        }
-    </div>
+    }
 </div>
 @section Scripts{
-    <script src="~/@themeFolder/js/postsController.js"></script>
+    <script src="~/@themeFolder/js/app/postsController.js"></script>
 }
