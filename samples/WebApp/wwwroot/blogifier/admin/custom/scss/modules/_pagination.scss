@@ -1,39 +1,54 @@
 ﻿.pagination-custom {
-    text-align: center;
     @include unstyled();
-    margin-top: 2rem;
-    border-radius: 3px;
+    margin-top: 3rem;
+    text-align: center;
     li {
-        background: #fff;
         display: inline-block;
-        font-size: 0;
-        margin-right: 1px;
-        &:last-child {
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-        }
-        &:first-child {
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
+        vertical-align: top;
+        a {
+            height: 2.5rem;
+            line-height: 2.5rem;
+            padding: 0 2rem;
+            display: block;
+            color: #888;
+            border: .0625rem solid transparent;
+            &:hover {
+                border-color: #000;
+                color: #000;
+            }
+            border-radius: .1875rem;
         }
         .item-count {
-            position: relative;
-            top: -1px;
+            color: #888;
+            padding: 0 1rem;
+            font-size: 1rem;
+            border-color: transparent !important;
         }
-        &.disabled {
+        i {
+            display: block;
+            font-size: 1.5rem;
+            height: 100%;
+            line-height: inherit;
+            position: relative;
+            top: -.0625rem;
+        }
+    }
+    &.pagination-custom-sm {
+        li {
             a {
-                color: #aaa !important;
-                cursor: default;
+                padding: 0 1rem;
+                line-height: 2rem;
+                height: 2rem;
+            }
+            .item-count {
+                font-size: .875rem;
+            }
+            i {
+                font-size: 1.25rem;
             }
         }
     }
-    a {
-        font-size: .875rem;
-        display: block;
-        height: 100%;
-        padding: .5rem .75rem;
-        &:hover {
-            color: #000;
-        }
+    @media screen and (max-width:40rem) {
+        margin-top: 1rem;
     }
 }

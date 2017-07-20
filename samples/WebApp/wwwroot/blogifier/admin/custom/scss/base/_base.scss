@@ -24,21 +24,8 @@ body {
     min-height: 100%;
     padding-top: 7rem;
     padding-bottom: 7rem;
-    @media screen and (max-width:640px) {
+    @media screen and (max-width: 640px) {
         padding-top: 5rem;
         padding-bottom: 5rem;
-    }
-    
-}
-
-.admin-toolbar {
-    margin-bottom: 1rem;
-    .btn {
-        margin-right: .5rem;
-    }
-    .float-right {
-        .btn {
-            margin-right: 0;
-        }
     }
 }

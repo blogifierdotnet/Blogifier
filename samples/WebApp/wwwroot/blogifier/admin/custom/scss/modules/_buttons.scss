@@ -32,10 +32,6 @@
     }
 }
 
-.btn-block {
-    @media screen and (max-width: 480px) {
-        &-sm {
-            width:100%;
-        }
-    }
+.btn-main {
+    min-width: 8rem;
 }

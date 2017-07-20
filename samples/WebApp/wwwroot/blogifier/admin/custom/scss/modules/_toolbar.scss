@@ -1,0 +1,11 @@
+.admin-toolbar {
+    margin-bottom: 1rem;
+    .btn {
+        margin-right: .5rem;
+    }
+    .float-right {
+        .btn {
+            margin-right: 0;
+        }
+    }
+}
