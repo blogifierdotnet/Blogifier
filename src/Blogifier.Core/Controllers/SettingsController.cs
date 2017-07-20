@@ -37,7 +37,7 @@ namespace Blogifier.Core.Controllers
         public IActionResult Custom()
         {
             var profile = GetProfile();
-            var model = new AdminToolsModel
+            var model = new SettingsCustom
             {
                 Profile = GetProfile(),
                 CustomFields = GetProfileCustomFields(profile.Id)
@@ -47,7 +47,7 @@ namespace Blogifier.Core.Controllers
 
         [HttpPost]
         [Route("custom")]
-        public IActionResult Custom(AdminToolsModel model)
+        public IActionResult Custom(SettingsCustom model)
         {
             model.Profile = GetProfile();
 
@@ -233,6 +233,10 @@ namespace Blogifier.Core.Controllers
             if (!fields.ContainsKey("Github")) fields.Add("Github", "");
             if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
             if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
+
+            if (!fields.ContainsKey("Head")) fields.Add("Head", "");
+            if (!fields.ContainsKey("Footer")) fields.Add("Footer", "");
+            if (!fields.ContainsKey("Post")) fields.Add("Post", "");
 
             var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profileId);
             if (dbFields != null && dbFields.Count() > 0)

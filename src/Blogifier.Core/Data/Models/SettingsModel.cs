@@ -36,12 +36,12 @@ namespace Blogifier.Core.Data.Models
         public IList<SelectListItem> BlogThemes { get; set; }
     }
 
-    public class SettingsCustom
+    public class SettingsCustom : AdminBaseModel
     {
-
+        public Dictionary<string, string> CustomFields { get; set; }
     }
 
-    public class SettingsImport
+    public class SettingsImport : AdminBaseModel
     {
 
     }
