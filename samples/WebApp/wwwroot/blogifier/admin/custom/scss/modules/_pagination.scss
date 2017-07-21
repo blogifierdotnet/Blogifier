@@ -51,4 +51,19 @@
     @media screen and (max-width:767px) {
         margin-top: 1rem;
     }
+    @media screen and (max-width:575px) {
+        li {
+            a {
+                padding: 0 1rem;
+                line-height: 2rem;
+                height: 2rem;
+            }
+            .item-count {
+                font-size: .875rem;
+            }
+            i {
+                font-size: 1.25rem;
+            }
+        }
+    }
 }

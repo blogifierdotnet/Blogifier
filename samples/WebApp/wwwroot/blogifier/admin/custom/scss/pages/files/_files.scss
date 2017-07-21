@@ -1,23 +1,24 @@
 ﻿.asset-list {
     &-item {
         position: relative;
-        height: 12.5rem;
+        height: 10rem;
         display: block;
         overflow: hidden;
-        border-radius: 3px;
+        border-radius: 2px;
         margin-bottom: 2rem;
         border: .25rem solid #fff;
         background: #fff;
         box-shadow: 0 0 0 1px #ddd;
+        &:hover {
+            box-shadow: 0 0 0 1px #000;
+        }
         img {
             min-height: 100%;
             max-width: 150%;
-            max-height: 150%;
             display: block;
-            position: absolute;
-            top: 50%;
+            position: relative;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
         }
         @media screen and (max-width:35.9375rem) {
             margin-bottom: 1rem;
@@ -26,6 +27,38 @@
     .col-sm-6 {
         &:last-child {
             .asset-list-item {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.asset-edit {
+    &-item {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        max-height: 30rem;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        border-bottom: 0;
+        background: #fafafa;
+        &-img {
+            display: block;
+            margin: 0 auto;
+        }
+        &-info {
+            font-size: .875rem;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+    }
+    @media screen and (max-width:575px) {
+        .row {
+            margin-bottom: .5rem;
+            &:last-child {
                 margin-bottom: 0;
             }
         }

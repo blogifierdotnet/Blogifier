@@ -22,15 +22,15 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<a href="#" onclick="filePickerController.pick(\'' +
+                tag = '<div class="col-sm-4"><a href="#" onclick="filePickerController.pick(\'' +
                     asset.id + '\'); return false;"><img src="' +
-                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
+                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
             }
             else {
                 // attachement
-                tag = '<a href="#" onclick="filePickerController.pick(\'' +
+                tag = '<div class="col-sm-4"><a href="#" onclick="filePickerController.pick(\'' +
                     asset.id + '\'); return false;"><img src="' +
-                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a>';
+                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
             }
             $("#filePickerList").append(tag);
         });
@@ -106,13 +106,13 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
+        var older = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
+        var newer = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
         if (pg.showOlder === true) {
-            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-arrow-left"></i></a></li>';
+            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-long-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href=""><i class="fa fa-arrow-right"></i></a></li>';
+            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href=""><i class="fa fa-long-arrow-right"></i></a></li>';
         }
         $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {

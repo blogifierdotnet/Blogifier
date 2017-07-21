@@ -5,6 +5,125 @@
 }
 
 .mce-toolbar-grp {
+    padding: 0 !important;
     border-bottom: 1px solid #ddd !important;
-    padding: .5rem !important;
+}
+
+.mce-toolbar * {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mce-btn:hover, .mce-btn:focus {
+    border: none !important;
+}
+
+.mce-colorbutton .mce-preview {
+    left: 13px !important;
+    top: auto !important;
+    bottom: 12px !important;
+    width: 15px !important;
+}
+
+#mceu_0-open {
+    .mce-caret {
+        position: relative;
+        top: 9px;
+    }
+}
+
+.mce-toolbar-grp .mce-flow-layout-item {
+    border: none !important;
+}
+
+.mce-toolbar {
+    .mce-btn {
+        border: none !important;
+
+        button:first-child {
+            border: none !important;
+            padding: .75rem !important;
+            cursor: pointer;
+        }
+    }
+
+    .mce-open {
+        padding: .75rem .125rem !important;
+        margin-left: -5px !important;
+
+
+
+        i {
+            margin-top: 8px !important;
+        }
+    }
+}
+
+@media (max-width:800px) {
+
+    .mce-toolbar {
+        .mce-btn {
+            button:first-child {
+                padding: .5rem !important;
+            }
+        }
+
+        .mce-open {
+            padding: .5rem .125rem !important;
+        }
+    }
+
+    .mce-colorbutton .mce-preview {
+        left: 10px !important;
+        bottom: 10px !important;
+        width: 13px !important;
+    }
+}
+
+@media (max-width:700px) {
+    #mceu_22 {
+        display: none !important;
+    }
+}
+
+@media (max-width:580px) {
+
+    #mceu_21 {
+        display: none !important;
+    }
+
+    .mce-toolbar {
+        .mce-btn {
+            button:first-child {
+                padding: .5rem .375rem !important;
+            }
+        }
+
+        .mce-open {
+            padding: .5rem .125rem !important;
+        }
+    }
+
+    .mce-colorbutton .mce-preview {
+        left: 8px !important;
+        bottom: 8px !important;
+        width: 13px !important;
+    }
+}
+
+@media (max-width:430px) {
+    #mceu_14 {
+        display: none !important;
+    }
+}
+@media (max-width:400px) {
+    #mceu_10 {
+        display: none !important;
+    }
+}
+
+@media (max-width:359px) {
+    #mceu_15 {
+        display: none !important;
+    }
 }

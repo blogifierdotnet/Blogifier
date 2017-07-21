@@ -5,6 +5,7 @@
         line-height: 3rem;
         padding: 0 18rem 0 0;
         border-color: $color-border;
+
         .post-item-link {
             display: block;
             width: 100%;
@@ -15,39 +16,46 @@
             @include text-overflow(ellipsis);
             padding-left: 1rem;
         }
+
         .post-item-info {
             position: absolute;
             right: 0;
             top: 0;
             font-size: .75rem;
             text-align: center;
+
             a {
                 display: block;
                 float: right;
                 min-width: 3rem;
                 color: #888;
-                text-transform: uppercase;
             }
+
             i {
                 font-size: .875rem;
             }
         }
+
         &:hover {
             background: #fbfbfb;
+
             .post-item-info {
                 a {
                     color: #000;
                 }
             }
         }
+
         @media screen and (max-width: 40rem) {
             padding-right: 6.5rem;
+
             .post-item-info {
                 a {
                     min-width: 2.75rem;
                     width: 2.75rem;
                     border-left: .0625rem solid $color-border;
                 }
+
                 a:nth-child(3),
                 a:nth-child(4) {
                     display: none !important;
