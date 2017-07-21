@@ -19,12 +19,12 @@ namespace Blogifier.Core.Controllers.Api.Public
         /// <summary>
         /// Get the disqus script
         /// </summary>
-        public string Disqus()
+        public string Post()
         {
-            var DisqusField = _db.CustomFields.Single(f => f.CustomKey == "disqus");
-            if(DisqusField != null)
+            var PostField = _db.CustomFields.Single(f => f.CustomKey == "Post");
+            if(PostField != null)
             {
-                return DisqusField.CustomValue;
+                return PostField.CustomValue;
             }
             return string.Empty;
         }

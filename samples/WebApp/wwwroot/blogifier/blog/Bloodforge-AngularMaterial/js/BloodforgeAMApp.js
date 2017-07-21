@@ -350,7 +350,6 @@
             restrict: 'E',
             link: function (scope, element) {
                 var template = '<script>var disqus_config = function() { this.page.url = window.location.protocol + "//" + window.location.host + "/' + $rootScope.blogSettings.blogRoute + $stateParams.slug + '"; };</script >';
-                template += '<div ng-include src="\'/blogifier/api/public/settings/disqus\'"></div>';
                 template += '<div id="disqus_thread" style="max-width: 800px; margin: 0 auto;" layout-padding></div>';
                 element.append($compile(template)(scope));
             }
