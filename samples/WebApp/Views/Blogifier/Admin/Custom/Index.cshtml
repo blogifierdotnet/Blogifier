@@ -8,7 +8,7 @@
     <ul class="list-group post-list">
         @foreach (var item in Model.BlogPosts)
         {
-            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
+            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
             <li class="list-group-item post-list-item">
                 <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                 <div class="post-item-info">
