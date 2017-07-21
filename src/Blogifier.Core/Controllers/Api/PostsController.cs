@@ -86,7 +86,7 @@ namespace Blogifier.Core.Controllers.Api
             }
             _db.Complete();
 
-            if(model.Categories != null && model.Categories.Count() > 0)
+            if(model.Categories != null)
             {
                 _db.BlogPosts.UpdatePostCategories(
                     bp.Id, model.Categories.Select(c => c.Value).ToList());

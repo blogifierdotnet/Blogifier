@@ -98,12 +98,16 @@ namespace Blogifier.Core.Controllers
             if (vm.BlogPost == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            if (string.IsNullOrEmpty(vm.BlogPost.Image))
-                vm.BlogPost.Image = ApplicationSettings.PostImage;
-
             vm.Profile = _db.Profiles.Single(b => b.Id == vm.BlogPost.ProfileId);
-            vm.BlogCategories = new List<SelectListItem>();
 
+            if (string.IsNullOrEmpty(vm.BlogPost.Image))
+            {
+                vm.BlogPost.Image = ApplicationSettings.ProfileImage;
+                if (!string.IsNullOrEmpty(ApplicationSettings.PostImage)) { vm.BlogPost.Image = ApplicationSettings.PostImage; }
+                if (!string.IsNullOrEmpty(vm.Profile.Image)) { vm.BlogPost.Image = vm.Profile.Image; }
+            }
+            
+            vm.BlogCategories = new List<SelectListItem>();
             if (vm.BlogPost.PostCategories != null && vm.BlogPost.PostCategories.Count > 0)
             {
                 foreach (var pc in vm.BlogPost.PostCategories)

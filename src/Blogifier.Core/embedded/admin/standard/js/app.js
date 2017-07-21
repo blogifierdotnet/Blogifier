@@ -1,16 +1,39 @@
-toastr.options.positionClass = 'toast-bottom-right';
+﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-$('li').removeClass('active');
+$(".admin-content-editor .admin-toolbar").delay(500).fadeIn();
+
+$(".admin-toolbar .dropdown-menu").click(function (event) {
+    event.stopPropagation();
+});
+
+//
+$('.admin-settings-sidebar li').removeClass('active');
 var activated = false;
-$("#side-menu li").each(function (idx, li) {
+$(".admin-settings-sidebar li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).addClass('active');
         activated = true;
     }
 });
-if (activated === false) { $('.posts').addClass('active'); }
+if (activated === false) { $('.admin-settings-sidebar .basic').addClass('active'); }
 
+
+//
+$('.admin-nav li').removeClass('active');
+var activatedAD = false;
+$(".admin-nav li").each(function (idx, li) {
+    if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
+        $(li).children().addClass('active');
+        activatedAD = true;
+    }
+});
+if (activatedAD === false) {
+    $('.admin-nav .admin').children().addClass('active');
+}
+
+
+//
 function profileLogOut() {
     $("#frmLogOut").submit();
 }

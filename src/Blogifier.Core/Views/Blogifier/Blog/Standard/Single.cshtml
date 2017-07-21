@@ -1,46 +1,37 @@
-﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
+@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
-@{ 
-    var bg = Model.BlogPost.Image == null ? ApplicationSettings.PostImage : Model.BlogPost.Image;
-}
-<header class="intro-header" style="background-image: url('@bg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <h1>@Model.BlogPost.Title</h1>
-                    <span class="meta">
-                        Posted on @string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)
-                        by <a href="~/author/@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a>
-                        @if (Model.Categories.Count > 0)
-                        {
-                            <span>in</span>
-                            foreach(var cat in Model.Categories)
-                            {
-                                <span> <a href="~/category/@cat.Value">@cat.Text</a></span>
-                            }
-                        }
-                    </span>
-                </div>
-            </div>
+<article class="post-single">
+    <header class="cover" style="background-image: url('@Model.CoverImg')">
+        <img class="cover-img" src="@Model.CoverImg" alt="@Model.BlogPost.Title" />
+        <div class="cover-title container">
+            <h1>@Model.BlogPost.Title</h1>
+            <p>
+            <span class="post-single-author">by <a href="~/@Constants.BlogRoute@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
+            /
+            <span class="post-single-date">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</span>
+            @if (Model.BlogCategories.Count > 0)
+            {
+                <span class="post-single-category">
+                    /
+                    @foreach (var cat in Model.BlogCategories)
+                    {
+                        <a href="~/@Constants.BlogRoute@Model.Profile.Slug/@cat.Value">@cat.Text</a>
+                    }
+                </span>
+            }
+            </p>
         </div>
-    </div>
-</header>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <article>
-                @Html.Raw(Model.BlogPost.Content)
-            </article>
-            <hr>
-            <form role="form">
+    </header>
+    <section class="blog-content container">
+        <div class="post-single-content">
+            @Html.Raw(Model.BlogPost.Content)
+        </div>
+        @if (Model.DisqusScript != null && !string.IsNullOrEmpty(Model.DisqusScript.CustomValue))
+        {
+            <footer class="post-single-comment">
                 <div id="disqus_thread"></div>
-                @if (Model.DisqusScript != null)
-                {
-                    @Html.Raw(Model.DisqusScript.CustomValue)
-                }
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-            </form>
-        </div>
-    </div>
-</div>
+                @Html.Raw(Model.DisqusScript.CustomValue)
+            </footer>
+        }
+    </section>
+</article>

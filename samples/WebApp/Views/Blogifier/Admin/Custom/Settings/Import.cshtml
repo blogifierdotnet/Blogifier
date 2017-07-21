@@ -1,24 +1,24 @@
 ﻿@model Blogifier.Core.Data.Models.AdminBaseModel
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
-    var themeFolder = "blogifier/admin/custom";
 }
+<h4 class="admin-content-title">Import RSS</h4>
 <form id="frmImport" name="frmImport">
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">RSS URL</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">RSS URL</label>
+        <div class="col-md-9">
             <input type="text" id="txtFeedUrl" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Domain URL</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Domain URL</label>
+        <div class="col-md-9">
             <input id="txtDomain" type="text" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Sub Folder</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Sub Folder</label>
+        <div class="col-md-9">
             <input id="txtSubDomain" type="text" class="form-control" />
         </div>
     </div>
@@ -52,5 +52,6 @@
     </div>
 </form>
 @section Scripts{
-    <script src="~/@themeFolder/js/toolsController.js"></script>
+    <script src="~/blogifier/admin/custom/js/toolsController.js"></script>
+    <script>document.getElementById('txtFeedUrl').focus()</script>
 }

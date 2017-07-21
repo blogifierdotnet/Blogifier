@@ -1,0 +1,11 @@
+.admin-toolbar {
+    margin-bottom: 1rem;
+    position: relative;
+    .btn-group {
+        .btn {
+            &:focus {
+                box-shadow: none !important;
+            }
+        }
+    }
+}

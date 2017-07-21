@@ -17,17 +17,7 @@ namespace Blogifier.Core.Data.Models
     public class BlogPostDetailModel : BlogBaseModel
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
-        public override string CoverImg
-        {
-            get
-            {
-                var img = ApplicationSettings.ProfileImage;
-                if (!string.IsNullOrEmpty(ApplicationSettings.PostImage)) { img = ApplicationSettings.PostImage; }
-                if (!string.IsNullOrEmpty(Profile.Image)) { img = Profile.Image; }
-                if (!string.IsNullOrEmpty(BlogPost.Image)) { img = BlogPost.Image; }
-                return img;
-            }
-        }
+        public override string CoverImg { get => BlogPost.Image; }
         public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => BlogPost.Title; }
 

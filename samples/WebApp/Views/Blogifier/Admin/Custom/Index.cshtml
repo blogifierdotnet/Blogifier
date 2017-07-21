@@ -1,57 +1,45 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Common;
-@{
-    var themeFolder = "blogifier/admin/custom";
-    var x = Model.Pager;
-}
-<div class="page-toolbar">
-    <a href="~/admin/editor/0" class="btn btn-black">New</a>
-</div>
-<div id="post-list">
-    <ul id="admin-posts" class="list-group post-list">
+<div class="admin-content admin-content-posts container">
+    <div class="admin-toolbar">
+        <a href="~/admin/editor/0" class="btn btn-black btn-main">New</a>
+    </div>
+    <ul class="list-group post-list">
         @foreach (var item in Model.BlogPosts)
         {
-            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToFriendlyDateString();
-            <li class="list-group-item post-item draft">
+            var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
+            <li class="list-group-item post-list-item">
                 <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                 <div class="post-item-info">
-                    <span>@published</span>
-                    <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank">
-                        <i class="fa fa-eye"></i>
-                    </a>
+                    <a data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)"><i class="fa fa-trash"></i></a>
                     @if (item.Published == DateTime.MinValue)
                     {
-                        <button data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)">
-                            <i class="fa fa-check"></i>
-                        </button>
+                    <a data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)"><i class="fa fa-check"></i></a>
                     }
                     else
                     {
-                        <button data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)">
-                            <i class="fa fa-archive"></i>
-                        </button>
+                    <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)"><i class="fa fa-archive"></i></a>
                     }
-                    <button data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)">
-                        <i class="fa fa-trash"></i>
-                    </button>
+                    <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank"><i class="fa fa-eye"></i></a>
+                    <a class="pr-2">@published</a>
                 </div>
             </li>
         }
     </ul>
-    @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
+   @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
         <ul class="pagination-custom">
             @if (Model.Pager.ShowNewer)
             {
-                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-arrow-right"></i></a></li>
+                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-long-arrow-right"></i></a></li>
             }
             @if (Model.Pager.ShowOlder)
             {
-                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-arrow-left"></i></a></li>
+                <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-long-arrow-left"></i></a></li>
             }
         </ul>
-    }
+    } 
 </div>
 @section Scripts{
-    <script src="~/@themeFolder/js/postsController.js"></script>
+    <script src="~/blogifier/admin/custom/js/postsController.js"></script>
 }

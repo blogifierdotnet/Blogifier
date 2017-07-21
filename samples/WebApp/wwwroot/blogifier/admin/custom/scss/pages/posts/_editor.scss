@@ -1,0 +1,122 @@
+﻿.admin-content-editor {
+    .form-control-title {
+        padding: .625rem .75rem;
+        font-size: 1.25rem;
+    }
+    .form-control-text {
+        height: 30.375rem;
+    }
+    .form-group {
+        position: relative;
+    }
+    .spin-icon {
+        position: absolute;
+        bottom: .75rem;
+        right: 1rem;
+        display: none;
+        i {
+            display: block;
+            font-size: 1.75rem;
+            color: #000;
+        }
+    }
+    /**/
+    .float-right {
+        .btn,
+        .dropdown-toggle {
+            letter-spacing: 0;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            width: 3rem;
+            &:after {
+                display: none;
+            }
+        }
+        .dropdown-menu-right {
+            width: 18.75rem;
+            max-height: 18.75rem;
+            padding: 0;
+        }
+    }
+    .post-image {
+        position: relative;
+        overflow: hidden;
+        max-height: 18.75rem;
+        &-actions {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            width: 100%;
+            .btn {
+                width: 100% !important;
+                border-radius: 0;
+            }
+            i {
+                color: #fff;
+                font-size: 1rem;
+            }
+        }
+    }
+    .post-category {
+        max-height: 18.75rem;
+        text-transform: none;
+        form {
+            padding: 1rem;
+            border-bottom: .0625rem solid #eee;
+            .btn {
+                width: auto;
+            }
+        }
+        ul {
+            @include unstyled();
+            height: 13.4375rem;
+            overflow-y: scroll;
+            li {
+                position: relative;
+                border-bottom: .0625rem solid #eee;
+                &:hover {
+                    background: #fafafa;
+                }
+                label {
+                    margin-bottom: 0;
+                    display: block;
+                    padding: .44rem 1rem .44rem 2.5rem;
+                }
+                .custom-control-indicator {
+                    top: .55rem;
+                    left: 1rem;
+                }
+            }
+            i {
+                display: block;
+                width: 2.25rem;
+                line-height: 2.125rem;
+                border-left: .0625rem solid #eee;
+                position: absolute;
+                right: .0625rem;
+                top: 0;
+                text-align: center;
+                color: #aaa;
+                cursor: pointer;
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+    }
+    .admin-toolbar {
+        margin-bottom: 0;
+    }
+    @media screen and (max-width:35.9375rem) {
+        .form-control-title {
+            padding: .5rem;
+        }
+        .admin-toolbar {
+            text-align: center;
+            .btn {
+                padding: .5rem;
+            }
+        }
+    }
+}

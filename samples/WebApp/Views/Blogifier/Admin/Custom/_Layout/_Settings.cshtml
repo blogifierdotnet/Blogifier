@@ -1,38 +1,34 @@
 ﻿@using Blogifier.Core.Common
-@{
-    var themeFolder = "blogifier/admin/custom";
-    var headView = string.Format("~/Views/{0}/_Shared/_Head.cshtml", themeFolder);
-    var headerView = string.Format("~/Views/{0}/_Shared/_Header.cshtml", themeFolder);
-    var footerView = string.Format("~/Views/{0}/_Shared/_Footer.cshtml", themeFolder);
-}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-@Html.Partial(headView)
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 </head>
 <body>
-    @Html.Partial(headerView)
-    <div class="admin-content container d-flex flex-column">
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Header.cshtml")
+
+    <div class="admin-content admin-content-settings container d-md-flex flex-md-column">
         <div class="admin-settings row no-gutters rounded">
-            <ul class="admin-settings-sidebar col-sm-3 pt-5">
-                <li class="profile"><a href="~/admin/settings/profile">Edit Profile</a></li>
+            <ul class="admin-settings-sidebar col-md-3">
+                <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span> <i class="fa fa-user"></i></a></li>
                 @if (!ApplicationSettings.SingleBlog)
                 {
-                    <li class="personal"><a href="~/admin/settings/personal">Personal Settings</a></li>
+                    <li class="personal"><a href="~/admin/settings/personal"><span>Personal Settings</span> <i class="fa fa-sliders"></i></a></li>
                 }
-                <li class="import"><a href="~/admin/settings/import">Import Rss</a></li>
-                <li class="custom"><a href="~/admin/settings/custom">Custom Fields</a></li>
+                <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span> <i class="fa fa-rss"></i></a></li>
+                <li class="custom"><a href="~/admin/settings/custom"><span>Custom Fields</span> <i class="fa fa-window-maximize"></i></a></li>
                 @if (Model.Profile != null && Model.Profile.IsAdmin)
                 {
-                    <li class="application"><a href="~/admin/settings/application">Application Settings</a></li>
+                    <li class="application"><a href="~/admin/settings/application"><span>Application Settings</span> <i class="fa fa-cog"></i></a></li>
                 }
             </ul>
-            <div class="admin-settings-content col-sm-9">
-               <div class="p-5">@RenderBody()</div>
+            <div class="admin-settings-content col-md-9">
+              @RenderBody()
             </div>
         </div>
     </div>
-    @Html.Partial(footerView)
+
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Footer.cshtml")
     @RenderSection("Scripts", false)
 </body>
 </html>

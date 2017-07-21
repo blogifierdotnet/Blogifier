@@ -1,12 +1,20 @@
 ﻿.admin-footer {
     height: 4rem - 0.0625rem;
     line-height: 4rem - 0.0625rem;
+    margin-top: -4rem;
+    border-top: 0.0625rem solid $color-border;
     color: rgba(0, 0, 0, 0.45);
     text-transform: uppercase;
     font-size: .75rem;
     font-weight: 400;
-    margin-top: -4rem;
-    border-top: 1px solid $color-border;
+    @media screen and (max-width: 767px) {
+        text-align: center;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        margin-top: -2.5rem;
+        background: #f1f1f1;
+        border-top: 0;
+    }
     a {
         color: rgba(0, 0, 0, 0.45);
         &:hover {
@@ -33,6 +41,9 @@
                 padding-left: 1rem;
                 border-left: 1px solid #ddd;
             }
+        }
+        @media screen and (max-width: 767px) {
+            display: none;
         }
     }
 }

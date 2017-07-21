@@ -69,7 +69,7 @@ namespace Blogifier.Core
 
 		static void AddDatabase(IServiceCollection services)
 		{
-			services.AddSingleton<IUnitOfWork, UnitOfWork>();
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             if (ApplicationSettings.UseInMemoryDatabase)
                 services.AddDbContext<BlogifierDbContext>(options => options.UseInMemoryDatabase());

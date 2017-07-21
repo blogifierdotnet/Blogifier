@@ -1,9 +1,6 @@
-﻿@model Blogifier.Core.Data.Models.AdminProfileModel
+﻿@model Blogifier.Core.Data.Models.SettingsPersonal
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
-    var themeFolder = "blogifier/admin/custom";
-    var isDisabled = Model.BlogExists ? "" : "disabled";
-    var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
 
 @if (!Model.BlogExists)
@@ -12,48 +9,50 @@
         You must save your profile before you can navigate to other pages.
     </div>
 }
+
+<h4 class="admin-content-title">Personal Settings</h4>
 <form method="post" asp-controller="Settings" asp-action="Personal" asp-antiforgery="true">
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Title</label>
-        <div class="col-sm-9">
-            <input type="text" asp-for="Profile.Title" class="form-control" />
-            <span asp-validation-for="Profile.Title" class="text-danger"></span>
+        <label class="col-md-3 col-form-label text-md-right">Blog Title</label>
+        <div class="col-md-9">
+            <input type="text" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Description</label>
-        <div class="col-sm-9">
-            <input asp-for="Profile.Description" type="text" class="form-control" />
-            <span asp-validation-for="Profile.Description" class="text-danger"></span>
+        <label class="col-md-3 col-form-label text-md-right">Blog Description</label>
+        <div class="col-md-9">
+            <input asp-for="Description" type="text" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Theme</label>
-        <div class="col-sm-9">
-            <select asp-for="Profile.BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
+        <label class="col-md-3 col-form-label text-md-right">Blog Theme</label>
+        <div class="col-md-9">
+            <select asp-for="BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Logo</label>
-        <div class="input-group col-sm-9">
-            <input type="text" asp-for="Profile.Logo" class="form-control" readonly />
+        <label class="col-md-3 col-form-label text-md-right">Blog Logo</label>
+        <div class="input-group col-md-9">
+            <input type="text" asp-for="Logo" class="form-control" readonly />
             <span class="input-group-btn" style="display:none;">
                 <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
             </span>
             <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
+                <button type="button" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
             </span>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Cover</label>
-        <div class="input-group col-sm-9">
-            <input type="text" asp-for="Profile.Image" class="form-control" readonly />
+        <label class="col-md-3 col-form-label text-md-right">Blog Cover</label>
+        <div class="input-group col-md-9">
+            <input type="text" asp-for="Image" class="form-control" readonly />
             <span class="input-group-btn" style="display:none;">
                 <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
             </span>
             <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
+                <button type="button" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
             </span>
         </div>
     </div>
@@ -62,20 +61,13 @@
             <button type="submit" class="btn btn-black">Save</button>
         </div>
     </div>
-    <!-- for model validation, do not remove -->
-    <input asp-for="Profile.Id" hidden="hidden" />
-    <input asp-for="Profile.IdentityName" hidden="hidden" />
-    <input asp-for="Profile.Slug" hidden="hidden" />
-    <input asp-for="Profile.BlogTheme" hidden="hidden" />
-    <input asp-for="Profile.AuthorName" hidden="hidden" />
-    <input asp-for="Profile.AuthorEmail" hidden="hidden" />
 </form>
-@Html.Partial(filePicker)
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {
         <script>toastr.success('@ViewBag.Message')</script>
     }
-    <script>document.getElementById('Profile_AuthorName').focus()</script>
-    <script src="~/@themeFolder/js/filePickerController.js"></script>
+    <script>document.getElementById('Title').focus()</script>
+    <script src="~/blogifier/admin/custom/js/filePickerController.js"></script>
 }

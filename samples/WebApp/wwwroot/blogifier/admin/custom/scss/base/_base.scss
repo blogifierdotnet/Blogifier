@@ -24,17 +24,11 @@ body {
     min-height: 100%;
     padding-top: 7rem;
     padding-bottom: 7rem;
-    
-}
-
-.page-toolbar {
-    margin-bottom: 1rem;
-    .btn {
-        margin-right: .5rem;
+    &-title {
+        padding-bottom: 2rem;
     }
-    .float-right {
-        .btn {
-            margin-right: 0;
-        }
+    @media screen and (max-width: 768px) {
+        padding-top: 4rem;
+        padding-bottom: 3.5rem;
     }
 }

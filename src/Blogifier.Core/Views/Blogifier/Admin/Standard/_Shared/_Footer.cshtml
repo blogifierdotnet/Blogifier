@@ -1,0 +1,43 @@
+@using Blogifier.Core.Common
+@{
+    var themeFolder = "embedded/admin/standard";
+}
+
+<div class="admin-footer">
+    <div class="container">
+        <div class="float-md-left item-copyright">
+        <a href="http://blogifier.net/" target="_blank"> <img src="~/embedded/admin/standard/img/logo-sm.png" alt="Blogifier" /></a>
+        Copyright &copy; @DateTime.Now.Year Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)
+        </div>
+        <ul class="float-md-right">
+            <li><a href="https://github.com/blogifierdotnet/Blogifier.Core" target="_blank">GitHub</a></li>
+            <li><a href="https://github.com/blogifierdotnet/Blogifier.Core/wiki" target="_blank">Documents</a></li>  
+            <li><a href="https://github.com/blogifierdotnet/Blogifier.Core/issues" target="_blank">Support</a></li>  
+        </ul>
+    </div>
+</div>
+
+<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+<script src="~/@themeFolder/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/@themeFolder/lib/tether/dist/js/tether.min.js"></script>
+<script src="~/@themeFolder/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
+<script src="~/@themeFolder/js/app.js"></script>
+<script src="~/@themeFolder/js/dataService.js"></script>
+<script src="~/@themeFolder/js/uploadController.js"></script>
+<script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) {
+            return webRoot + str;
+        };
+
+        $(document).ready(function () {
+            $('.post-list [data-toggle="tooltip"]').tooltip({
+                offset: '-15px 0',
+                animation: false
+            });
+            $('[data-toggle="tooltip"]').tooltip({
+                animation: false
+            });
+        });
+</script>

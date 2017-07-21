@@ -37,41 +37,17 @@ namespace Blogifier.Core.Controllers
         public IActionResult Custom()
         {
             var profile = GetProfile();
-            var fields = new Dictionary<string, string>();
-            foreach (var item in ApplicationSettings.SocialButtons)
-            {
-                fields.Add(item.Key, item.Value);
-            }
-
-            if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
-            if (!fields.ContainsKey("Google")) fields.Add("Google", "");
-            if (!fields.ContainsKey("Twitter")) fields.Add("Twitter", "");
-            if (!fields.ContainsKey("Github")) fields.Add("Github", "");
-            if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
-            if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
-
-            var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profile.Id);
-            if (dbFields != null && dbFields.Count() > 0)
-            {
-                foreach (var field in dbFields)
-                {
-                    if(fields.ContainsKey(field.CustomKey))
-                    {
-                        fields[field.CustomKey] = field.CustomValue;
-                    }
-                }
-            }
-            var model = new AdminToolsModel
+            var model = new SettingsCustom
             {
                 Profile = GetProfile(),
-                CustomFields = fields
+                CustomFields = GetProfileCustomFields(profile.Id)
             };
             return View(_theme + "Custom.cshtml", model);
         }
 
         [HttpPost]
         [Route("custom")]
-        public IActionResult Custom(AdminToolsModel model)
+        public IActionResult Custom(SettingsCustom model)
         {
             model.Profile = GetProfile();
 
@@ -122,56 +98,61 @@ namespace Blogifier.Core.Controllers
         [Route("profile")]
         public IActionResult Profile()
         {
-            var profile = GetProfile();
-            var storage = new BlogStorage("");
-
-            var model = new AdminProfileModel
+            var model = new SettingsProfile();
+            model.Profile = GetProfile();
+            
+            if(model.Profile != null)
             {
-                Profile = profile,
-                BlogThemes = storage.GetThemes(ThemeType.Blog)
-            };
+                model.AuthorName = model.Profile.AuthorName;
+                model.AuthorEmail = model.Profile.AuthorEmail;
+                model.Avatar = model.Profile.Avatar;
+                model.CustomFields = GetProfileCustomFields(model.Profile.Id);
+            }
             return View(_theme + "Profile.cshtml", model);
         }
 
         [HttpPost]
         [Route("profile")]
-        public IActionResult Profile(AdminProfileModel model)
+        public IActionResult Profile(SettingsProfile model)
         {
-            var profile = model.Profile;
-
-            if (_db.Profiles.All().ToList().Count == 0)
-            {
-                model.Profile.IsAdmin = true;
-            }
-
-            if (profile.Id == 0)
-            {
-                profile.IdentityName = User.Identity.Name;
-                profile.Slug = SlugFromTitle(profile.AuthorName);
-                profile.Title = ApplicationSettings.Title;
-                profile.Description = ApplicationSettings.Description;
-                profile.BlogTheme = ApplicationSettings.BlogTheme;
-
-                ModelState.Clear();
-                TryValidateModel(model);
-            }
-
+            var profile = GetProfile();
             if (ModelState.IsValid)
             {
-                if (profile.Id > 0)
+                if (profile == null)
                 {
-                    var existing = _db.Profiles.Single(b => b.Id == profile.Id);
-                    existing.AuthorName = profile.AuthorName;
-                    existing.AuthorEmail = profile.AuthorEmail;
+                    profile = new Profile();
+
+                    if (_db.Profiles.All().ToList().Count == 0)
+                    {
+                        profile.IsAdmin = true;
+                    }
+                    profile.AuthorName = model.AuthorName;
+                    profile.AuthorEmail = model.AuthorEmail;
+                    profile.Avatar = model.Avatar;
+
+                    profile.IdentityName = User.Identity.Name;
+                    profile.Slug = SlugFromTitle(profile.AuthorName);
+                    profile.Title = ApplicationSettings.Title;
+                    profile.Description = ApplicationSettings.Description;
+                    profile.BlogTheme = ApplicationSettings.BlogTheme;
+
+                    _db.Profiles.Add(profile);
                 }
                 else
                 {
-                    _db.Profiles.Add(profile);
+                    profile.AuthorName = model.AuthorName;
+                    profile.AuthorEmail = model.AuthorEmail;
+                    profile.Avatar = model.Avatar;
                 }
                 _db.Complete();
 
-                var updated = _db.Profiles.Single(b => b.IdentityName == profile.IdentityName);
-                model.Profile = updated;
+                model.Profile = GetProfile();
+
+                // save custom fields
+                if(profile.Id > 0)
+                {
+                    SaveCustomFields(model.CustomFields, profile.Id);
+                }
 
                 ViewBag.Message = "Profile updated";
             }
@@ -188,40 +169,41 @@ namespace Blogifier.Core.Controllers
             var profile = GetProfile();
             var storage = new BlogStorage("");
 
-            var model = new AdminProfileModel
+            var model = new SettingsPersonal
             {
                 Profile = profile,
                 BlogThemes = storage.GetThemes(ThemeType.Blog)
             };
+            if (profile != null)
+            {
+                model.Title = profile.Title;
+                model.Description = profile.Description;
+                model.BlogTheme = profile.BlogTheme;
+                model.Image = profile.Image;
+                model.Logo = profile.Logo;
+            }
             return View(_theme + "Personal.cshtml", model);
         }
 
         [HttpPost]
         [Route("personal")]
-        public IActionResult Personal(AdminProfileModel model)
+        public IActionResult Personal(SettingsPersonal model)
         {
-            var profile = model.Profile;
-
-            ModelState.Clear();
-            TryValidateModel(model);
+            var storage = new BlogStorage("");
+            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
+            model.Profile = GetProfile();
 
             if (ModelState.IsValid)
             {
-                var existing = _db.Profiles.Single(b => b.Id == profile.Id);
-                existing.Title = profile.Title;
-                existing.Description = profile.Description;
-                existing.BlogTheme = profile.BlogTheme;
+                model.Profile.Title = model.Title;
+                model.Profile.Description = model.Description;
+                model.Profile.BlogTheme = model.BlogTheme;
+                model.Profile.Logo = model.Logo;
+                model.Profile.Image = model.Image;
 
                 _db.Complete();
-
-                var updated = _db.Profiles.Single(b => b.IdentityName == profile.IdentityName);
-                model.Profile = updated;
                 ViewBag.Message = "Updated";
             }
-
-            var storage = new BlogStorage("");
-            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
-
             return View(_theme + "Personal.cshtml", model);
         }
 
@@ -235,6 +217,76 @@ namespace Blogifier.Core.Controllers
         Profile GetProfile()
         {
             return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+        }
+
+        Dictionary<string, string> GetProfileCustomFields(int profileId)
+        {
+            var fields = new Dictionary<string, string>();
+            foreach (var item in ApplicationSettings.SocialButtons)
+            {
+                fields.Add(item.Key, item.Value);
+            }
+
+            if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
+            if (!fields.ContainsKey("Google")) fields.Add("Google", "");
+            if (!fields.ContainsKey("Twitter")) fields.Add("Twitter", "");
+            if (!fields.ContainsKey("Github")) fields.Add("Github", "");
+            if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
+            if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
+
+            if (!fields.ContainsKey("Head")) fields.Add("Head", "");
+            if (!fields.ContainsKey("Footer")) fields.Add("Footer", "");
+            if (!fields.ContainsKey("Post")) fields.Add("Post", "");
+
+            var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profileId);
+            if (dbFields != null && dbFields.Count() > 0)
+            {
+                foreach (var field in dbFields)
+                {
+                    if (fields.ContainsKey(field.CustomKey))
+                    {
+                        fields[field.CustomKey] = field.CustomValue;
+                    }
+                }
+            }
+            return fields;
+        }
+
+        void SaveCustomFields(Dictionary<string, string> fields, int profileId)
+        {
+            var updated = new List<string>();
+            var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profileId);
+
+            // update existing DB fields
+            if (dbFields != null && dbFields.Count() > 0)
+            {
+                foreach (var field in dbFields)
+                {
+                    if (fields.ContainsKey(field.CustomKey))
+                    {
+                        field.CustomValue = fields[field.CustomKey];
+                        updated.Add(field.CustomKey);
+                    }
+                }
+            }
+            _db.Complete();
+
+            // add new DB entries
+            foreach (var item in fields)
+            {
+                if (!updated.Contains(item.Key))
+                {
+                    _db.CustomFields.Add(new CustomField
+                    {
+                        CustomKey = item.Key,
+                        CustomValue = item.Value,
+                        Title = item.Key,
+                        CustomType = CustomType.Profile,
+                        ParentId = profileId
+                    });
+                }
+            }
+            _db.Complete();
         }
 
         string SlugFromTitle(string title)

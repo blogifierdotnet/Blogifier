@@ -44,7 +44,7 @@
             }
             $("#assetList").append(tag);
         });
-        var btn = '<button class="btn btn-black" onclick="return assetController.clickUpload()">Upload</button>';
+        var btn = '<button class="btn btn-black btn-main" onclick="return assetController.clickUpload()">Upload</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
         pager(data.pager);
@@ -55,13 +55,13 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
-        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
+        var older = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
+        var newer = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
         if (pg.showOlder === true) {
-            older = '<li onclick="return assetController.loadFileManager(' + pg.older + ')"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+            older = '<li onclick="return assetController.loadFileManager(' + pg.older + ')"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li onclick="return assetController.loadFileManager(' + pg.newer + ')"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
+            newer = '<li onclick="return assetController.loadFileManager(' + pg.newer + ')"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
         }
         $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
@@ -82,7 +82,7 @@
         var url = data.assetType === 0 ? data.url : webRoot + data.image;
 
 
-        var tag = '<div class="col-sm-4"><div class="asset-edit-img"><img src="' + url + '"/></div></div>';
+        var tag = '<div class="col-sm-4"><div class="asset-list-item"><img src="' + url + '"/></div></div>';
         tag += '<div class="col-sm-8">';
         tag += '<h4>' + data.title + '</h4>';
         tag += '<hr>';
@@ -98,7 +98,7 @@
         
         $('#assetEdit').append(tag);
 
-        var btn = '<button class="btn btn-danger" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
+        var btn = '<button class="btn btn-danger btn-main mr-2" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
         btn += '<button class="btn btn-secondary" onclick="return assetController.loadFileManager()">Cancel</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
