@@ -9,6 +9,10 @@
             hide-print>
     <div layout="column">
         <header ng-click="sidenavNavigate('left-menu', 'home', { page: '1' })" tabindex="-1">
+            @if(!String.IsNullOrEmpty(Model.LogoImg))
+            {
+                <img src="@Model.LogoImg" ng-show="$mdMedia('gt-md')" />
+            }
             <h1>@ApplicationSettings.Title</h1>
         </header>
         <md-list>

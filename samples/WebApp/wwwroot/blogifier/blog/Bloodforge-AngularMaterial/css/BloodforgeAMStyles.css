@@ -27,13 +27,13 @@
 }
 
 [ui-view].ng-enter {
-    -webkit-animation-name: fadeInRight;
-    animation-name: fadeInRight;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
 }
 
 [ui-view].ng-leave {
-    -webkit-animation-name: fadeOutLeft;
-    animation-name: fadeOutLeft;
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
 }
 
 .menu-gradient {
@@ -65,11 +65,18 @@
         padding: 32px 16px;
     }
 
+        .nav-menu header img {
+            width: 100%;
+            border: none;
+        }
+
         .nav-menu header h1 {
             color: white;
             font-size: 1.5em;
             display: block;
             font-weight: bold;
+            text-align: center;
+            letter-spacing: 0.1em;
         }
 
     .nav-menu md-list menu-toggle .menu-toggle-header, .nav-menu md-list .md-subheader {
