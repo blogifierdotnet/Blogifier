@@ -1,8 +1,4 @@
 ﻿@model Blogifier.Core.Data.Models.AdminEditorModel
-@{
-    var themeFolder = "blogifier/admin/custom";
-    var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
-}
 <div id="post-edit" class="admin-content admin-content-editor container">
     <form id="frmEditor">
         <div class="form-group">
@@ -68,11 +64,11 @@
         </div>
     </div>
 </div>
-@Html.Partial(filePicker)
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
 @section Scripts{
-    <script src="~/@themeFolder/lib/tinymce/tinymce.min.js"></script>
-    <script src="~/@themeFolder/js/filePickerController.js"></script>
-    <script src="~/@themeFolder/js/editorController.js"></script>
+    <script src="~/blogifier/admin/custom/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/blogifier/admin/custom/js/filePickerController.js"></script>
+    <script src="~/blogifier/admin/custom/js/editorController.js"></script>
     <script>
         editorController.loadPostImage();
         editorController.loadActionButtons();

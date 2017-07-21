@@ -1,17 +1,11 @@
 ﻿@using Blogifier.Core.Common
-@{
-    var themeFolder = "blogifier/admin/custom";
-    var headView = string.Format("~/Views/{0}/_Shared/_Head.cshtml", themeFolder);
-    var headerView = string.Format("~/Views/{0}/_Shared/_Header.cshtml", themeFolder);
-    var footerView = string.Format("~/Views/{0}/_Shared/_Footer.cshtml", themeFolder);
-}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-@Html.Partial(headView)
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 </head>
 <body>
-    @Html.Partial(headerView)
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Header.cshtml")
     <div class="admin-content container d-flex flex-column">
         <div class="admin-settings row no-gutters rounded">
             <ul class="admin-settings-sidebar col-md-3">
@@ -32,7 +26,7 @@
             </div>
         </div>
     </div>
-    @Html.Partial(footerView)
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Footer.cshtml")
     @RenderSection("Scripts", false)
 </body>
 </html>

@@ -1,10 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Common;
-@{
-    var themeFolder = "blogifier/admin/custom";
-    var x = Model.Pager;
-}
 <div class="admin-content admin-content-posts container">
     <div class="admin-toolbar">
         <a href="~/admin/editor/0" class="btn btn-black btn-main">New</a>
@@ -45,5 +41,5 @@
     } 
 </div>
 @section Scripts{
-    <script src="~/@themeFolder/js/postsController.js"></script>
+    <script src="~/blogifier/admin/custom/js/postsController.js"></script>
 }

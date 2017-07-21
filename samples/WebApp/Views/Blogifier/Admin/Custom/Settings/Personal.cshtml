@@ -1,8 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.SettingsPersonal
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
-    var themeFolder = "blogifier/admin/custom";
-    var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
 
 @if (!Model.BlogExists)
@@ -62,12 +60,12 @@
         </div>
     </div>
 </form>
-@Html.Partial(filePicker)
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {
         <script>toastr.success('@ViewBag.Message')</script>
     }
     <script>document.getElementById('Title').focus()</script>
-    <script src="~/@themeFolder/js/filePickerController.js"></script>
+    <script src="~/blogifier/admin/custom/js/filePickerController.js"></script>
 }

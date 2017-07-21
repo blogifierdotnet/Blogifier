@@ -1,8 +1,4 @@
-﻿@using Blogifier.Core.Common
-@{
-    var themeFolder = "blogifier/admin/custom";
-}
-<div class="admin-content container">
+﻿<div class="admin-content container">
     <div id="asset-edit-actions" class="admin-toolbar"></div>
     <div class="asset-list row" id="assetEdit"></div>
     <div class="asset-list row" id="assetList"></div>
@@ -15,6 +11,6 @@
     </div>
 </div>
 @section Scripts{
-    <script src="~/@themeFolder/js/assetController.js"></script>
+    <script src="~/blogifier/admin/custom/js/assetController.js"></script>
     <script>assetController.loadFileManager()</script>
 }

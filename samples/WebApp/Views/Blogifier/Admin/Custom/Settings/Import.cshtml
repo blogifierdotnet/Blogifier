@@ -1,7 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminBaseModel
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Settings.cshtml";
-    var themeFolder = "blogifier/admin/custom";
 }
 <form id="frmImport" name="frmImport">
     <div class="form-group row">
@@ -52,5 +51,6 @@
     </div>
 </form>
 @section Scripts{
-    <script src="~/@themeFolder/js/toolsController.js"></script>
+    <script src="~/blogifier/admin/custom/js/toolsController.js"></script>
+    <script>document.getElementById('txtFeedUrl').focus()</script>
 }
