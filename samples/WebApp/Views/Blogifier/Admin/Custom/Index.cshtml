@@ -29,13 +29,13 @@
     </ul>
    @if (Model.Pager.ShowNewer || Model.Pager.ShowOlder) {
         <ul class="pagination-custom">
-            @if (Model.Pager.ShowNewer)
-            {
-                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-long-arrow-right"></i></a></li>
-            }
             @if (Model.Pager.ShowOlder)
             {
                 <li><a href="~/admin/@Model.Pager.Older"><i class="fa fa-long-arrow-left"></i></a></li>
+            }
+               @if (Model.Pager.ShowNewer)
+            {
+                <li><a href="~/admin/@Model.Pager.Newer"><i class="fa fa-long-arrow-right"></i></a></li>
             }
         </ul>
     } 
