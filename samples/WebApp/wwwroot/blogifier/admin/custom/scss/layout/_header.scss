@@ -10,6 +10,10 @@
         height: 100%;
         padding: 0;
     }
+    @media screen and (max-width: 767px) {
+        background: #f1f1f1;
+        height: 3rem;
+    }
 }
 
 .admin-nav {
@@ -88,6 +92,13 @@
             }
         }
     }
+    @media screen and (max-width: 767px) {
+        >li {
+            a {
+                line-height: 3rem;
+            }
+        }
+    }
     @media screen and (max-width:480px) {
         display: table;
         width: 100%;
@@ -96,6 +107,9 @@
             display: table-cell;
             vertical-align: top;
             text-align: center;
+            a {
+                line-height: 3rem;
+            }
         }
     }
 }

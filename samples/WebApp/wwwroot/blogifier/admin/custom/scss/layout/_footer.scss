@@ -7,6 +7,14 @@
     text-transform: uppercase;
     font-size: .75rem;
     font-weight: 400;
+    @media screen and (max-width: 767px) {
+        text-align: center;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        margin-top: -2.5rem;
+        background: #f1f1f1;
+        border-top: 0;
+    }
     a {
         color: rgba(0, 0, 0, 0.45);
         &:hover {
@@ -24,11 +32,6 @@
             opacity: 1;
         }
     }
-    .item-copyright {
-        @media screen and (max-width: 768px) {
-           text-align: center;
-        }
-    }
     ul {
         @include unstyled();
         li {
@@ -39,7 +42,7 @@
                 border-left: 1px solid #ddd;
             }
         }
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 767px) {
             display: none;
         }
     }
