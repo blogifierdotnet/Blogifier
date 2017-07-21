@@ -1,0 +1,10 @@
+@using Blogifier.Core.Common
+<footer class="blog-footer">
+    <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
+</footer>
+<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+<script src="~/embedded/blog/standard/js/jquery-3.2.1.min.js"></script>
+<script src="~/embedded/blog/standard/js/tether.min.js"></script>
+<script src="~/embedded/blog/standard/js/bootstrap.min.js"></script>
+<script src="~/embedded/blog/standard/js/jquery.dotdotdot.min.js"></script>
+<script src="~/embedded/blog/standard/js/blog.js" asp-append-version="true"></script>

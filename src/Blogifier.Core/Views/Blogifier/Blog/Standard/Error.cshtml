@@ -1,9 +1,8 @@
-﻿@using Blogifier.Core.Common
+@using Blogifier.Core.Common
 @model int
 @{
     var statusCode = Model;
     var statusmessage = "";
-    var bg = ApplicationSettings.ProfileImage;
 
     switch (statusCode)
     {
@@ -27,28 +26,10 @@
             break;
     }
 }
-<header class="intro-header" style="background-image: url('@bg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>@ApplicationSettings.Title</h1>
-                    <hr class="small">
-                    <span class="subheading">@ApplicationSettings.Description</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-            <div class="jumbotron">
-                <h1>Error @Model</h1>
-                <h3>@statusmessage</h3>
-            </div>
-
-        </div>
+<div class="page-error" style="background-image: url('@ApplicationSettings.ProfileImage')">
+    <div class="page-content container">
+        <h1>ERROR @Model</h1>
+        <p>@statusmessage</p>
     </div>
 </div>

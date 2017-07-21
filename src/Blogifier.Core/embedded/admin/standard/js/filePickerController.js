@@ -40,33 +40,53 @@
         else {
             $('.modal-list-empty').show();
         }
-        $('#modalFilePicker').modal();
+        if ($('#modalFilePicker').is(':visible') === false) {
+            $('#modalFilePicker').modal();
+        }
         pager(data.pager);
     }
 
     function pick(assetId) {
         if (uploadType === "postImage") {
-            toastr.success(assetId + ' ' + postId);
-            dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
+            if ($('#hdnPostId').val() === '0') {
+                dataService.get('blogifier/api/assets/asset/' + assetId , pickPostImgCallback, fail);
+            }
+            else {
+                dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
+            }
         }
         else {
             dataService.get('blogifier/api/assets/' + uploadType + '/' + assetId, pickCallback, fail);
         }
     }
 
+    function pickPostImgCallback(data) {
+        $('#hdnPostImg').val(data.url);
+        editorController.loadPostImage();
+        toastr.success('Updated');
+        close();
+    }
+
     function pickCallback(data) {
-        if (uploadType === "profileLogo") {
-            $('#Profile_Logo').val(data.url);
+        if (uploadType === "profilelogo") {
+            $('#Logo').val(data.url);
         }
-        if (uploadType === "profileAvatar") {
-            $('#Profile_Avatar').val(data.url);
-            $('#profile-img').attr("src", data.url);
+        if (uploadType === "profileavatar") {
+            $('#Avatar').val(data.url);
+
+            // TODO: can not access page element from modal
+            setTimeout(function () {
+                var zzz = $('img.profile-img');
+                $('img.profile-img').attr('src', data.url);
+            }, 3000);
         }
-        if (uploadType === "profileImage") {
-            $('#Profile_Image').val(data.url);
+        if (uploadType === "profileimage") {
+            $('#Image').val(data.url);
         }
         if (uploadType === "postImage") {
-            $('#txtPostImage').val(data.url);
+            setTimeout(function () {
+                window.location.href = webRoot + 'admin/editor/' + postId;
+            }, 1000); 
         }
         if (uploadType === "editor") {
             if (data.assetType === 0) {
@@ -86,19 +106,19 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="previous disabled"><a href="#">← Older</a></li>';
-        var newer = '<li class="next disabled"><a href="#">Newer →</a></li>';
+        var older = '<li class="disabled"><a href="#"><i class="fa fa-arrow-left"></i></a></li>';
+        var newer = '<li class="disabled"><a href="#"><i class="fa fa-arrow-right"></i></a></li>';
         if (pg.showOlder === true) {
-            older = '<li class="previous" onclick="return filePickerController.load(' + pg.older + ')"><a href="">← Older</a></li>';
+            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li class="next" onclick="return filePickerController.load(' + pg.newer + ')"><a href="#">Newer →</a></li>';
+            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href=""><i class="fa fa-arrow-right"></i></a></li>';
         }
-        $('.pager').empty();
+        $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
-            $('.pager').append(older);
-            $('.pager').append('<li class="counter">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</li>');
-            $('.pager').append(newer);
+            $('.pagination-custom').append(older);
+            $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
+            $('.pagination-custom').append(newer);
         }
     }
 
