@@ -21,7 +21,12 @@ namespace Blogifier.Core.Controllers.Api.Public
         /// </summary>
         public string Disqus()
         {
-            return _db.CustomFields.Single(f => f.CustomKey == "disqus").CustomValue;
+            var DisqusField = _db.CustomFields.Single(f => f.CustomKey == "disqus");
+            if(DisqusField != null)
+            {
+                return DisqusField.CustomValue;
+            }
+            return string.Empty;
         }
     }
 }

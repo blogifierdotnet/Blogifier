@@ -1,9 +1,7 @@
-﻿<md-list-item class="md-3-line md-long-text" ui-sref="post({ slug: postListItemCtrl.post.slug })">
-    <md-icon ng-show="!postListItemCtrl.post.image" class="md-avatar">create</md-icon>
-    <img ng-show="postListItemCtrl.post.image" src="{{postListItemCtrl.post.image}}" class="md-avatar" alt="{{postListItemCtrl.post.title}}" />
-    <div class="md-list-item-text">
-        <h3>{{postListItemCtrl.post.title}}</h3>
-        <p>{{postListItemCtrl.post.content}}</p>
-        <p>By {{postListItemCtrl.post.authorName}} &mdash; {{postListItemCtrl.post.published|date : 'shortDate'}}</p>
+﻿<div class="post-item" layout="row" layout-align="start stretch" ui-sref="post({ slug: postListItemCtrl.post.slug })">
+    <div class="post-item-image" style="background-image: url('{{postListItemCtrl.post.image}}')"></div>
+    <div class="post-item-text">
+        <h1>{{postListItemCtrl.post.title}}</h1>
+        <p ng-bind-html="postListItemCtrl.post.content | unsafe">{{postListItemCtrl.post.content}}</p>
     </div>
-</md-list-item>
+</div>

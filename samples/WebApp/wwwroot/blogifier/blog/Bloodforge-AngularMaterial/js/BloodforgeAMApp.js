@@ -254,8 +254,10 @@
             }
 
             this.showMore = function () {
-                ctrl.state = 'more';
-                loadPosts(ctrl.moreUrl);
+                if (ctrl.moreUrl) {
+                    ctrl.state = 'more';
+                    loadPosts(ctrl.moreUrl);
+                }
             }
 
             var $window = $(window);

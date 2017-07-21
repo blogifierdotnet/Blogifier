@@ -8,9 +8,9 @@
         <div class="featured-posts" layout="column" layout-gt-sm="row" layout-align="space-around stretch" ng-show="postsListCtrl.featuredPosts" style="margin-bottom: 1.5em;">
             <post-list-item-featured ng-repeat="post in postsListCtrl.featuredPosts" post="post" flex-gt-sm="40" />
         </div>
-        <md-list flex>
+        <div class="posts" layout="column" layout-align="space-around stretch">
             <post-list-item post="post" ng-repeat="post in postsListCtrl.posts" />
-        </md-list>
+        </div>
         <div id="show-more-posts-div" flex layout="row" layout-align="center center" ng-show="postsListCtrl.moreUrl">
             <div style="width: 400px" layout="row" layout-align="space-around center">
                 <md-button ng-click="postsListCtrl.showMore()" style="max-width: 150px;" ng-show="postsListCtrl.state != 'more'">
