@@ -2,38 +2,84 @@
     flex: 1;
     border: .0625rem solid $color-border;
     &-sidebar {
-        border-right: .0625rem solid $color-border;
         @include unstyled();
-        li {
-            margin-bottom: 1rem;
-            &.active {
-                position: relative;
-                font-weight: $font-weight-medium;
+        @media screen and (min-width: 768px) {
+            padding-top: 3rem;
+            border-right: .0625rem solid $color-border;
+            li {
+                margin-bottom: 1rem;
+                &.active {
+                    position: relative;
+                    font-weight: $font-weight-medium;
+                    a {
+                        color: #000;
+                    }
+                    &::after {
+                        top: 50%;
+                        right: -.0625rem;
+                        margin-top: -.5rem;
+                        @include triangle(left, .5rem, #fff);
+                    }
+                    &::before {
+                        top: 50%;
+                        right: -.0625rem;
+                        margin-top: -.5625rem;
+                        @include triangle(left, .5625rem, darken($color-border, 10%));
+                    }
+                }
                 a {
-                    color: #000;
+                    color: #666;
+                    display: block;
+                    padding-left: 3rem;
+                    line-height: 2.375;
                 }
-                &::after {
-                    top: 50%;
-                    right: -.0625rem;
-                    margin-top: -.5rem;
-                    @include triangle(left, .5rem, #fff);
-                }
-                &::before {
-                    top: 50%;
-                    right: -.0625rem;
-                    margin-top: -.5625rem;
-                    @include triangle(left, .5625rem, darken($color-border, 10%));
+                i {
+                    display: none;
                 }
             }
-            a {
-                color: #666;
-                display: block;
-                padding-left: 3rem;
-                line-height: 2.375;
+        }
+        @media screen and (max-width:768px) {
+            display: flex;
+            border-bottom: 1px solid $color-border;
+            height: 3rem;
+            li {
+                height: 3rem;
+                line-height: 3rem;
+                flex: 1;
+                text-align: center;
+                &.active {
+                    position: relative;
+                    font-weight: $font-weight-medium;
+                    a {
+                        color: #000;
+                    }
+                    &::after {
+                        left: 50%;
+                        bottom: 0rem;
+                        margin-left: -.5rem;
+                        @include triangle(up, .5rem, #fff);
+                    }
+                    &::before {
+                        left: 50%;
+                        bottom: 0;
+                        margin-left: -.5625rem;
+                        @include triangle(up, .5625rem, darken($color-border, 10%));
+                    }
+                }
+                a {
+                    font-size: 1rem;
+                    line-height: 3rem;
+                    display: block;
+                    color: #666;
+                }
+                span {
+                    display: none;
+                }
             }
         }
     }
     &-content {
+        padding: 3rem !important;
         table {
             margin-bottom: 2rem;
             &:last-child {
@@ -61,6 +107,9 @@
                     font-weight: $font-weight-medium;
                 }
             }
+        }
+        @media screen and (max-width:768px) {
+            padding: 1rem !important;
         }
     }
 }

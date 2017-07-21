@@ -13,28 +13,28 @@
 }
 <form method="post" asp-controller="Settings" asp-action="Personal" asp-antiforgery="true">
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Title</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Blog Title</label>
+        <div class="col-md-9">
             <input type="text" asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Description</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Blog Description</label>
+        <div class="col-md-9">
             <input asp-for="Description" type="text" class="form-control" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Theme</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Blog Theme</label>
+        <div class="col-md-9">
             <select asp-for="BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Logo</label>
-        <div class="input-group col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Blog Logo</label>
+        <div class="input-group col-md-9">
             <input type="text" asp-for="Logo" class="form-control" readonly />
             <span class="input-group-btn" style="display:none;">
                 <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
@@ -45,8 +45,8 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label text-right">Blog Cover</label>
-        <div class="input-group col-sm-9">
+        <label class="col-md-3 col-form-label text-md-right">Blog Cover</label>
+        <div class="input-group col-md-9">
             <input type="text" asp-for="Image" class="form-control" readonly />
             <span class="input-group-btn" style="display:none;">
                 <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
