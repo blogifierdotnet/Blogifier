@@ -1,5 +1,5 @@
 ﻿@using Blogifier.Core.Common
-<md-toolbar style="position: relative; background-color: transparent;" ng-show="!$mdMedia('gt-md') || blogsearch">
+<md-toolbar style="position: relative; background-color: transparent;" ng-show="!$mdMedia('gt-md')">
     <md-toolbar class="md-menu-toolbar menu-gradient header-toolbar">
         <div class="md-toolbar-tools">
             <md-button class="md-icon-button" aria-label="Menu" ng-click="openSidenav('left-menu')" ng-hide="$mdMedia('gt-md')">
@@ -7,17 +7,6 @@
                 <md-icon>menu</md-icon>
             </md-button>
             <h2 flex md-truncate ng-click="sidenavNavigate('left-menu', 'home', { page: '1' })" style="cursor: pointer; user-select: none;" tabindex="-1"><span class="header-toolbar-title" ng-hide="$mdMedia('gt-md')">@ApplicationSettings.Title</span></h2>
-            <input type="search" id="term" name="term" class="form-control" placeholder="Search..." ng-show="blogsearch" ng-blur="blogsearch = false" style="width: 10em;">
-            <md-button ng-click="showSearch()" ng-hide="blogsearch" class="md-fab md-primary">
-                <md-tooltip>Search</md-tooltip>
-                <md-icon>search</md-icon>
-            </md-button>
         </div>
     </md-toolbar>
 </md-toolbar>
-<div style="position: absolute; top: 0; right: 16px; z-index: 3" ng-show="$mdMedia('gt-md')">
-    <md-button ng-click="showSearch()" ng-hide="blogsearch" class="md-fab md-primary">
-        <md-tooltip>Search</md-tooltip>
-        <md-icon>search</md-icon>
-    </md-button>
-</div>

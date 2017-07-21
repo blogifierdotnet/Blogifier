@@ -16,23 +16,48 @@
                 <p>Home</p>
                 <md-icon>home</md-icon>
             </md-list-item>
+            <md-list-item ng-click="showSearch()">
+                <p>Search</p>
+                <md-icon ng-hide="blogsearch">search</md-icon>
+                <input type="search" id="term" name="term" class="form-control" ng-show="blogsearch" ng-blur="blogsearch=false" placeholder="Search..." style="width: 10em;">
+            </md-list-item>
             @if (User.Identity.IsAuthenticated)
             {
                 <md-divider></md-divider>
-                <md-subheader class="md-no-sticky">Administration</md-subheader>
-                <md-list-item href="/admin">Admin</md-list-item>
-                <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
+                <menu-toggle label="Administration" target="admin-list"></menu-toggle>
+                <div id="admin-list">
+                    <md-list-item href="/admin">Admin</md-list-item>
+                    <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
+                </div>
             }
-            <md-divider></md-divider>
-            <md-subheader class="md-no-sticky" ng-show="categories">Categories</md-subheader>
-            <md-list-item ng-repeat="cat in categories" ng-click="sidenavNavigate('left-menu', 'category', { slug: cat.slug })" data-categorySlug="{{cat.slug}}" data-categoryId="{{cat.id}}">{{cat.title}}</md-list-item>
-            <md-divider></md-divider>
-            <md-subheader class="md-no-sticky" ng-show="authors">Authors</md-subheader>
-            <md-list-item ng-repeat="author in authors" ng-click="sidenavNavigate('left-menu', 'author', { slug: author.slug })">{{author.authorName}}</md-list-item>
+            <md-divider ng-show="categories"></md-divider>
+            <menu-toggle label="Categories" target="categories-list" ng-show="categories"></menu-toggle>
+            <div id="categories-list">
+                <md-list-item ng-repeat="cat in categories" ng-click="sidenavNavigate('left-menu', 'category', { slug: cat.slug })" data-categorySlug="{{cat.slug}}" data-categoryId="{{cat.id}}">{{cat.title}}</md-list-item>
+            </div>
+            <md-divider ng-show="authors"></md-divider>
+            <menu-toggle label="Authors" target="authors-list" ng-show="authors"></menu-toggle>
+            <div id="authors-list">
+                <md-list-item ng-repeat="author in authors" ng-click="sidenavNavigate('left-menu', 'author', { slug: author.slug })">{{author.authorName}}</md-list-item>
+            </div>
+            
+            @if (Model.SocialButtons != null && Model.SocialButtons.Count > 0)
+            {
+                <md-divider></md-divider>
+                <menu-toggle label="Share" target="share-list"></menu-toggle>
+                <div id="share-list">
+                    @foreach (var key in Model.SocialButtons.Keys)
+                    {
+                        <md-list-item href="@Model.SocialButtons[key]" target="_blank">
+                            <p>@key</p>
+                            <md-icon md-svg-src="@key" aria-label="@key"></md-icon>
+                        </md-list-item>
+                    }
+                </div>
+            }
             @if (!User.Identity.IsAuthenticated)
             {
                 <md-divider></md-divider>
-                <md-subheader class="md-no-sticky">Account</md-subheader>
                 <md-list-item href="/account/login?ReturnUrl=%2Fadmin">
                     <p>Login</p>
                     <md-icon>account_circle</md-icon>

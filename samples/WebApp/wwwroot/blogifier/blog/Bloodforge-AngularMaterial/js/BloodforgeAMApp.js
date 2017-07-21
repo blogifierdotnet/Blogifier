@@ -117,11 +117,6 @@
 
         $scope.blogsearch = false;
         $scope.showSearch = function () {
-            if (!$('.header-toolbar-title').is(':visible')) {
-                var $toolbar = $(".header-toolbar");
-                $toolbar.width('0%');
-                $toolbar.animate({ width: '100%' }, "slow");
-            }
             $scope.blogsearch = true;
             setTimeout(function () {
                 $('#term').val('').focus();
@@ -129,9 +124,12 @@
         }
         $('#term').keydown(function (evt) {
             if (evt.which == 13) {
-                var query = $(this).val();
+                var query = $(this).val();                
                 $state.go("search", { page: '1', slug: query });
                 $scope.blogsearch = false;
+                evt.preventDefault();
+                evt.stopPropagation();
+                $mdSidenav('left-menu').close();
             }
         });
 
@@ -355,4 +353,35 @@
                 element.append($compile(template)(scope));
             }
         }
-    }]);
+    }])
+
+    //.directive('menuToggle', ['$mdUtil', '$animateCss', '$$rAF', function ($mdUtil, $animateCss, $$rAF) {
+    .directive('menuToggle', ['$rootScope', function ($rootScope) {
+        return {
+            scope: {
+                label: "@",
+                target: "@"
+            },
+            templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/menu-toggle.tpl.html',
+            link: function ($scope, $element) {
+                $scope.isOpen = false;
+                $scope.toggle = function () {
+                    $scope.isOpen = !$scope.isOpen;
+
+                    var $div = $('#' + $scope.target);
+                    $div.css('visibility', $scope.isOpen ? 'visible' : 'hidden');
+                    $div.attr('aria-hidden', $scope.isOpen ? 'false' : 'true');
+
+                    var targetHeight = $scope.isOpen ? $div[0].scrollHeight : 0;
+                    $div.animate({ 'height': targetHeight + 'px' }, 'slow');
+                };     
+
+                $scope.$watch('target', function (newValue, oldValue) {
+                    if (oldValue) {
+                        $('#' + oldValue).removeClass('menu-toggle-list');
+                        $('#' + newValue).addClass('menu-toggle-list');
+                    }
+                });
+            }
+        };
+    }])
