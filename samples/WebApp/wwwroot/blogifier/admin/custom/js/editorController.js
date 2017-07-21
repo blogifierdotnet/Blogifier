@@ -2,7 +2,7 @@
 
     function savePost(publish) {
         $('.spin-icon').fadeIn();
-        $('#action-buttons').fadeOut();
+        $('.admin-toolbar').fadeOut();
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
@@ -37,7 +37,7 @@
         toastr.success('Saved');
         loadActionButtons();
         $('.spin-icon').fadeOut();
-        $('#action-buttons').fadeIn();
+        $('.admin-toolbar').fadeIn();
     }
 
     function deletePost() {
@@ -85,7 +85,7 @@
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
-        li += '<button type="button" tabindex="-1" onclick="editorController.removeCategory(\'' + obj.id + '\')"><i class="fa fa-times"></i></button>';
+        li += '<i class="fa fa-times" onclick="editorController.removeCategory(\'' + obj.id + '\')"></i>';
         li += '</li>';
         $("#edit-categories").prepend(li);
         $("#txtCategory").val('');
@@ -149,30 +149,33 @@
         var btn = '';
         if (postId === '0') {
             // new
+            btn += '<div class="btn-group">';
             btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>';
             btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
             btn += '<div class="dropdown-menu">';
             btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
-            btn += '</div>';
+            btn += '</div></div>';
         }
         else {
             if (published.indexOf("0001") >= 0) {
                 // draft
+                btn += '<div class="btn-group">';
                 btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-black">Publish</button>';
                 btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
                 btn += '<div class="dropdown-menu">';
                 btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
-                btn += '</div>';
+                btn += '</div></div>';
             }
             else {
                 // published
+                btn += '<div class="btn-group">';
                 btn += '<button type="button" onclick="editorController.savePost(); return false;" class="btn btn-black btn-block">Save</button>';
                 btn += '<button type="button" class="btn btn-black dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
                 btn += '<div class="dropdown-menu">';
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
-                btn += '</div>';
+                btn += '</div></div> ';
                 btn += '<a href="' + webRoot + 'blog/' + postSlug + '" target="_blank" class="btn btn-secondary">View</a>';
             }
         }
@@ -212,9 +215,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code textcolor imagetools",
-            "insertdatetime media table contextmenu paste fullscreen fileupload"
+            "insertdatetime media table contextmenu paste fullscreen fileupload codesample"
         ],
-        toolbar: "styleselect | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media fileupload | code fullscreen",
+        toolbar: "styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media fileupload | codesample code fullscreen",
         autosave_ask_before_unload: false,
         height: "400",
         menubar: false,

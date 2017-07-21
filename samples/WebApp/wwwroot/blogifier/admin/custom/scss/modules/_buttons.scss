@@ -10,6 +10,9 @@
     [class*="fa-angle-"] {
         font-size: 1rem;
     }
+    @media screen and (max-width:768px) {
+         padding: 0.65625rem 1.5rem;
+    }
 }
 
 .btn-lg {

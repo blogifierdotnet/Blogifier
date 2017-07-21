@@ -1,11 +1,11 @@
 .admin-toolbar {
     margin-bottom: 1rem;
-    .btn {
-        margin-right: .5rem;
-    }
-    .float-right {
+    position: relative;
+    .btn-group {
         .btn {
-            margin-right: 0;
+            &:focus {
+                box-shadow: none !important;
+            }
         }
     }
 }

@@ -3,13 +3,16 @@
     var themeFolder = "blogifier/admin/custom";
     var filePicker = string.Format("~/Views/{0}/_Shared/_FilePicker.cshtml", themeFolder);
 }
-<div id="post-edit" class="admin-content container post-edit">
-    <form id="frmEditor" style="height:100%;">
+<div id="post-edit" class="admin-content admin-content-editor container">
+    <form id="frmEditor">
         <div class="form-group">
-            <input id="txtPostTitle" class="form-control" value="@Model.BlogPost.Title" placeholder="Post title..." />
+            <input id="txtPostTitle" class="form-control form-control-title" value="@Model.BlogPost.Title" placeholder="Post title..." />
         </div>
         <div class="form-group">
-            <textarea id="txtContent" name="txtContent" class="form-control form-control-textcontent">@Model.BlogPost.Content</textarea>
+            <textarea id="txtContent" name="txtContent" class="form-control form-control-text">@Model.BlogPost.Content</textarea>
+            <div class="spin-icon">
+                <i class="fa fa-spin fa-cog"></i>
+            </div>
         </div>
         <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
         <input type="hidden" id="hdnPostSlug" name="hdnPostSlug" value="@Model.BlogPost.Slug" />
@@ -18,12 +21,8 @@
     </form>
     <div class="admin-toolbar clearfix">
         <div class="float-left">
-            <div id="action-buttons" class="btn-group"></div>
+            <span id="action-buttons"></span>
             <a href="~/admin" class="btn btn-secondary">Cancel</a>
-            <span class="spin-icon" style="text-align: center; display:none">
-                <i class="fa fa-spin fa-cog fa-2x fa-fw"></i>
-                <span class="sr-only">Loading...</span>
-            </span>
         </div>
         <div class="float-right">
             <div class="btn-group">
@@ -58,7 +57,7 @@
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">@category.Text</span>
                                         </label>
-                                        <button type="button" tabindex="-1" onclick="editorController.removeCategory('@category.Value')"><i class="fa fa-times"></i></button>
+                                        <i class="fa fa-times" onclick="editorController.removeCategory('@category.Value')"></i>
                                     </li>
                                 }
                             </ul>
