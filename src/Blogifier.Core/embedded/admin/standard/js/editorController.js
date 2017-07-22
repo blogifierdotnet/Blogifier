@@ -2,7 +2,7 @@
 
     function savePost(publish) {
         $('.spin-icon').fadeIn();
-        $('.admin-toolbar').fadeOut();
+        $('.admin-editor-toolbar').fadeOut();
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
@@ -37,7 +37,7 @@
         toastr.success('Saved');
         loadActionButtons();
         $('.spin-icon').fadeOut();
-        $('.admin-toolbar').fadeIn();
+        $('.admin-editor-toolbar').fadeIn();
     }
 
     function deletePost() {
@@ -125,19 +125,19 @@
         var postImg = $('#hdnPostImg').val();
         $('#post-image').empty();
 
-        var btn = '<button type="button" class="btn btn-secondary" onclick="return editorController.openFilePicker(' + postId + ');">';
+        var btn = '<button type="button" title="Add Cover" class="btn btn-secondary" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">';
         btn += '<i class="fa fa-image" ></i></button >';
 
         if (postImg.length > 0) {
-            btn = '<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+            btn = '<button type="button" title="Edit Cover" data-placement="bottom" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
             btn += '<i class="fa fa-image"></i></button>';
         }
         $('#post-image').append(btn);
 
         var dd = '<div id="ddPostImg" class="dropdown-menu dropdown-menu-right" aria-labelledby="btnPostImgToggle">';
-        dd += '<div class="post-image"><img src="' + postImg + '" /><div class="post-image-actions btn-group">';
-        dd += '<button type="button" class="btn btn-danger" onclick="return editorController.resetPostImage();">';
-        dd += '<i class="fa fa-trash"></i></button></div></div></div>';
+        dd += '<div class="admin-editor-cover"><img src="' + postImg + '" /><div class="admin-editor-cover-actions btn-group">';
+        dd += '<button type="button" onclick="return editorController.resetPostImage();">';
+        dd += 'Remove</button></div></div></div>';
         $('#post-image').append(dd);
     }
 

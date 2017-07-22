@@ -1,6 +1,6 @@
 @model Blogifier.Core.Data.Models.AdminEditorModel
 <div id="post-edit" class="admin-content admin-content-editor container">
-    <form id="frmEditor">
+    <form id="frmEditor" class="admin-editor-form">
         <div class="form-group">
             <input id="txtPostTitle" class="form-control form-control-title" value="@Model.BlogPost.Title" placeholder="Post title..." />
         </div>
@@ -15,27 +15,22 @@
         <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
         <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
     </form>
-    <div class="admin-toolbar clearfix">
-        <div class="float-left">
+    <div class="admin-editor-toolbar clearfix">
+        <div class="admin-editor-toolbar-left float-left">
             <span id="action-buttons"></span>
             <a href="~/admin" class="btn btn-secondary">Cancel</a>
         </div>
-        <div class="float-right">
+        <div class="admin-editor-toolbar-right float-right">
             <div class="btn-group">
                 <div class="btn-group dropup" id="post-image"></div>
                 <div class="btn-group dropup">
-                    <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-bookmark"></i>
+                    <button id="categoriesDropdown" type="button" title="Add Category" class="btn btn-secondary dropdown-toggle" data-placement="bottom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-tags"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop2">
-                        <div class="post-category">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="categoriesDropdown">
+                        <div class="admin-editor-category">
                             <form id="frmCategory">
-                                <div class="input-group">
-                                    <input type="text" id="txtCategory" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="category..." />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-secondary" onclick="editorController.saveCategory()">Add</button>
-                                    </span>
-                                </div>
+                                <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
                             </form>
                             <ul id="edit-categories">
                                 @foreach (var category in Model.CategoryList)
