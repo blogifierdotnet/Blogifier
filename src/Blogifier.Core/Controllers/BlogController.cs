@@ -115,10 +115,6 @@ namespace Blogifier.Core.Controllers
                 }
             }
             vm.CustomFields = _custom.GetProfileCustomFields(vm.Profile).Result;
-            vm.DisqusScript = _db.CustomFields.Single(f => 
-                f.ParentId == vm.Profile.Id && 
-                f.CustomKey == "disqus" && 
-                f.CustomType == Data.Domain.CustomType.Profile);
 
             return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
         }

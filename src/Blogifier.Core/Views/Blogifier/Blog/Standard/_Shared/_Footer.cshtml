@@ -1,7 +1,12 @@
 @using Blogifier.Core.Common
 @{
-    var cf = Model.CustomFields;
-    var customFooter = (cf.ContainsKey("Footer") && !string.IsNullOrEmpty(cf["Footer"])) ? cf["Footer"] : "";
+    var customFooter = "";
+    try
+    {
+        var cf = Model.CustomFields;
+        customFooter = (cf.ContainsKey("Footer") && !string.IsNullOrEmpty(cf["Footer"])) ? cf["Footer"] : "";
+    }
+    catch { }
 }
 <footer class="blog-footer">
     <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>

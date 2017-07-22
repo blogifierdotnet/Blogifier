@@ -7,11 +7,11 @@ namespace Blogifier.Core.Data.Models
 {
     public class BlogBaseModel
     {
-        public virtual string LogoImg { get; set; }
-        public virtual string LogoUrl { get; set; }
-        public virtual string CoverImg { get; set; }
-        public virtual string PageTitle { get; set; }
-        public Dictionary<string, string> CustomFields { get; set; }
+        public virtual string LogoImg { get; set; } = ApplicationSettings.ProfileLogo;
+        public virtual string LogoUrl { get; set; } = "";
+        public virtual string CoverImg { get; set; } = ApplicationSettings.ProfileImage;
+        public virtual string PageTitle { get; set; } = "Blogifier";
+        public Dictionary<string, string> CustomFields { get; set; } = new Dictionary<string, string>();
     }
 
     public class BlogPostDetailModel : BlogBaseModel
@@ -24,7 +24,6 @@ namespace Blogifier.Core.Data.Models
         public Profile Profile { get; set; }
         public BlogPost BlogPost { get; set; }
         public List<SelectListItem> BlogCategories { get; set; }
-        public CustomField DisqusScript { get; set; }
     }
 
     public class BlogPostsModel : BlogBaseModel
