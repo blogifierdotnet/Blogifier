@@ -353,20 +353,15 @@
                 template += '<script>';
                 template += 'var disqus_identifier = "' + $stateParams.slug + '";';
                 template += 'var disqus_url = window.location.protocol + "//" + window.location.host + "/' + $rootScope.blogSettings.blogRoute + $stateParams.slug + '";';
-                template += '</script>';
-                if (typeof (DISQUS) == "undefined") {
-                    template += '<div ng-include src="\'/blogifier/api/public/settings/post\'"></div>'
-                }
-                else {
-                    template += '<script>';
+                if (typeof (DISQUS) != "undefined") {
                     template += 'DISQUS.reset({';
                     template += 'reload: true,';
                     template += 'config: function () {';
                     template += 'this.page.identifier = disqus_identifier;';
                     template += 'this.page.url = disqus_url;';
                     template += '}});';
-                    template += '</script>';
                 }
+                template += '</script>';
                 
                 element.append($compile(template)(scope));
             }
