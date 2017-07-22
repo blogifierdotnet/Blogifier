@@ -349,8 +349,25 @@
         return {
             restrict: 'E',
             link: function (scope, element) {
-                var template = '<script>var disqus_config = function() { this.page.url = window.location.protocol + "//" + window.location.host + "/' + $rootScope.blogSettings.blogRoute + $stateParams.slug + '"; };</script >';
-                template += '<div id="disqus_thread" style="max-width: 800px; margin: 0 auto;" layout-padding></div>';
+                var template = '<div id="disqus_thread"></div>';
+                template += '<script>';
+                template += 'var disqus_identifier = "' + $stateParams.slug + '";';
+                template += 'var disqus_url = window.location.protocol + "//" + window.location.host + "/' + $rootScope.blogSettings.blogRoute + $stateParams.slug + '";';
+                template += '</script>';
+                if (typeof (DISQUS) == "undefined") {
+                    template += '<div ng-include src="\'/blogifier/api/public/settings/post\'"></div>'
+                }
+                else {
+                    template += '<script>';
+                    template += 'DISQUS.reset({';
+                    template += 'reload: true,';
+                    template += 'config: function () {';
+                    template += 'this.page.identifier = disqus_identifier;';
+                    template += 'this.page.url = disqus_url;';
+                    template += '}});';
+                    template += '</script>';
+                }
+                
                 element.append($compile(template)(scope));
             }
         }

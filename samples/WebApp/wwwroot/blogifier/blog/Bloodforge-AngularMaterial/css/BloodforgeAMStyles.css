@@ -184,3 +184,8 @@
     /* Prevent the hidden License link from causing a double bottom-border */
     border-bottom: none;
 }
+
+#disqus_thread {
+    max-width: 800px;
+    margin: 0 auto;
+}
