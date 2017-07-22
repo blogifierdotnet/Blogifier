@@ -61,8 +61,8 @@ namespace Blogifier.Core.Controllers
 
             var social = _social.GetSocialButtons(profile).Result;
 
-            return View(_theme + "Author.cshtml", new BlogAuthorModel {
-                SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "/Author.cshtml", 
+                new BlogAuthorModel { SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
         }
 
         [Route("{slug:author}/{cat}/{page:int?}")]
@@ -78,7 +78,7 @@ namespace Blogifier.Core.Controllers
             var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
             var social = _social.GetSocialButtons(null).Result;
 
-            return View(_theme + "Category.cshtml", 
+            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "Category.cshtml", 
                 new BlogCategoryModel
                 {
                     Profile = profile,
