@@ -5,25 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Services.Social
+namespace Blogifier.Core.Services.Custom
 {
-    public class SocialService : ISocialService
+    public class CustomService : ICustomService
     {
         IUnitOfWork _db;
 
-        public SocialService(IUnitOfWork db)
+        public CustomService(IUnitOfWork db)
         {
             _db = db;
         }
 
-        public Task<Dictionary<string, string>> GetSocialButtons(Profile profile)
+        public Task<Dictionary<string, string>> GetProfileCustomFields(Profile profile)
         {
-            var buttons = new Dictionary<string, string>();
-            foreach (var item in ApplicationSettings.SocialButtons)
-            {
-                buttons.Add(item.Key, item.Value);
-            }
-
+            var fields = new Dictionary<string, string>();
             if(profile != null)
             {
                 // override with profile customizations
@@ -32,18 +27,18 @@ namespace Blogifier.Core.Services.Social
                 {
                     foreach (var field in dbFields)
                     {
-                        if (buttons.ContainsKey(field.CustomKey))
+                        if (fields.ContainsKey(field.CustomKey))
                         {
-                            buttons[field.CustomKey] = field.CustomValue;
+                            fields[field.CustomKey] = field.CustomValue;
                         }
                         else
                         {
-                            buttons.Add(field.CustomKey, field.CustomValue);
+                            fields.Add(field.CustomKey, field.CustomValue);
                         }
                     }
                 }
             }
-            return Task.Run(()=> buttons);
+            return Task.Run(()=> fields);
         }
     }
 }

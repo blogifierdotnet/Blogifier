@@ -6,7 +6,7 @@
 @model BlogCategoryModel
 @{
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
-    var social = Model.SocialButtons;
+    var social = Model.CustomFields;
 }
 <main class="page-category">
     <header class="cover" style="background-image: url('@Model.CoverImg')">

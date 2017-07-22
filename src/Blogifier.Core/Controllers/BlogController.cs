@@ -1,15 +1,14 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.Custom;
 using Blogifier.Core.Services.Search;
-using Blogifier.Core.Services.Social;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -20,17 +19,17 @@ namespace Blogifier.Core.Controllers
 		IUnitOfWork _db;
         IRssService _rss;
         ISearchService _search;
-        ISocialService _social;
+        ICustomService _custom;
         private readonly ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ISocialService social, ILogger<BlogController> logger)
+		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ICustomService social, ILogger<BlogController> logger)
 		{
 			_db = db;
             _search = search;
             _rss = rss;
-            _social = social;
+            _custom = social;
             _logger = logger;
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
@@ -40,13 +39,12 @@ namespace Blogifier.Core.Controllers
         {
             var pager = new Pager(page);
             var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-            var social = _social.GetSocialButtons(null).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
             return View(_theme + "Index.cshtml", new BlogPostsModel {
-                SocialButtons = social, Posts = posts, Pager = pager });
+                CustomFields = new Dictionary<string, string>(), Posts = posts, Pager = pager });
         }
 
         [Route("{slug:author}/{page:int?}")]
@@ -59,10 +57,10 @@ namespace Blogifier.Core.Controllers
             if (page < 1 || page > pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
 
-            var social = _social.GetSocialButtons(profile).Result;
+            var cf = _custom.GetProfileCustomFields(profile).Result;
 
             return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "/Author.cshtml", 
-                new BlogAuthorModel { SocialButtons = social, Profile = profile, Posts = posts, Pager = pager });
+                new BlogAuthorModel { CustomFields = cf, Profile = profile, Posts = posts, Pager = pager });
         }
 
         [Route("{slug:author}/{cat}/{page:int?}")]
@@ -76,13 +74,13 @@ namespace Blogifier.Core.Controllers
                 return View(_theme + "Error.cshtml", 404);
 
             var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
-            var social = _social.GetSocialButtons(null).Result;
+            var custom = _custom.GetProfileCustomFields(profile).Result;
 
-            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "Category.cshtml", 
+            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "/Category.cshtml", 
                 new BlogCategoryModel
                 {
                     Profile = profile,
-                    SocialButtons = social,
+                    CustomFields = custom,
                     Category = category,
                     Posts = posts,
                     Pager = pager
@@ -116,7 +114,7 @@ namespace Blogifier.Core.Controllers
                     vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
-            vm.SocialButtons = _social.GetSocialButtons(vm.Profile).Result;
+            vm.CustomFields = _custom.GetProfileCustomFields(vm.Profile).Result;
             vm.DisqusScript = _db.CustomFields.Single(f => 
                 f.ParentId == vm.Profile.Id && 
                 f.CustomKey == "disqus" && 
@@ -133,7 +131,7 @@ namespace Blogifier.Core.Controllers
             var model = new BlogPostsModel();
             model.Pager = new Pager(page);
             model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.SocialButtons = _social.GetSocialButtons(null).Result;
+            model.CustomFields = _custom.GetProfileCustomFields(null).Result;
 
             if (page < 1 || page > model.Pager.LastPage)
                 return View(_theme + "Error.cshtml", 404);
@@ -149,7 +147,7 @@ namespace Blogifier.Core.Controllers
             var model = new BlogPostsModel();
             model.Pager = new Pager(1);
             model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.SocialButtons = _social.GetSocialButtons(null).Result;
+            model.CustomFields = _custom.GetProfileCustomFields(null).Result;
 
             return View(_theme + "Search.cshtml", model);
         }

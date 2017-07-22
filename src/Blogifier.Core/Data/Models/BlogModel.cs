@@ -11,7 +11,7 @@ namespace Blogifier.Core.Data.Models
         public virtual string LogoUrl { get; set; }
         public virtual string CoverImg { get; set; }
         public virtual string PageTitle { get; set; }
-        public Dictionary<string, string> SocialButtons { get; set; }
+        public Dictionary<string, string> CustomFields { get; set; }
     }
 
     public class BlogPostDetailModel : BlogBaseModel
