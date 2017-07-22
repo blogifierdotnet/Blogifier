@@ -1,5 +1,4 @@
-﻿using Blogifier.Core.Common;
-using Blogifier.Core.Data.Domain;
+﻿using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +20,12 @@ namespace Blogifier.Core.Services.Custom
             var fields = new Dictionary<string, string>();
             if(profile != null)
             {
-                // override with profile customizations
                 var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profile.Id);
                 if (dbFields != null && dbFields.Count() > 0)
                 {
                     foreach (var field in dbFields)
                     {
-                        if (fields.ContainsKey(field.CustomKey))
-                        {
-                            fields[field.CustomKey] = field.CustomValue;
-                        }
-                        else
-                        {
-                            fields.Add(field.CustomKey, field.CustomValue);
-                        }
+                        fields.Add(field.CustomKey, field.CustomValue);
                     }
                 }
             }

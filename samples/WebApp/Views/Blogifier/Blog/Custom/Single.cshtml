@@ -1,5 +1,9 @@
 ﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
+@{
+    var cf = Model.CustomFields;
+    var customCode = (cf.ContainsKey("Post") && !string.IsNullOrEmpty(cf["Post"])) ? cf["Post"] : "";
+}
 <article class="post-single">
     <header class="cover" style="background-image: url('@Model.CoverImg')">
         <img class="cover-img" src="@Model.CoverImg" alt="@Model.BlogPost.Title" />
@@ -25,13 +29,7 @@
     <section class="blog-content container">
         <div class="post-single-content">
             @Html.Raw(Model.BlogPost.Content)
+            @Html.Raw(customCode)
         </div>
-        @if (Model.DisqusScript != null && !string.IsNullOrEmpty(Model.DisqusScript.CustomValue))
-        {
-            <footer class="post-single-comment">
-                <div id="disqus_thread"></div>
-                @Html.Raw(Model.DisqusScript.CustomValue)
-            </footer>
-        }
     </section>
 </article>

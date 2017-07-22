@@ -24,12 +24,12 @@ namespace Blogifier.Core.Controllers
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ICustomService social, ILogger<BlogController> logger)
+		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ICustomService custom, ILogger<BlogController> logger)
 		{
 			_db = db;
             _search = search;
             _rss = rss;
-            _custom = social;
+            _custom = custom;
             _logger = logger;
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }

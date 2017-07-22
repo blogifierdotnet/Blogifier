@@ -1,4 +1,8 @@
 ﻿@using Blogifier.Core.Common
+@{
+    var cf = Model.CustomFields;
+    var customFooter = (cf.ContainsKey("Footer") && !string.IsNullOrEmpty(cf["Footer"])) ? cf["Footer"] : "";
+}
 <footer class="blog-footer">
     <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
 </footer>
@@ -9,3 +13,4 @@
 <script src="~/blogifier/blog/custom/js/jquery.dotdotdot.min.js"></script>
 <script src="~/blogifier/blog/custom/js/prism.js"></script>
 <script src="~/blogifier/blog/custom/js/blog.js" asp-append-version="true"></script>
+@Html.Raw(customFooter)
