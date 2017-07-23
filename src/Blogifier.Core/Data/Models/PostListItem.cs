@@ -19,6 +19,6 @@ namespace Blogifier.Core.Data.Models
 
         public int PostViews { get; set; }
 
-        public ICollection<SelectListItem> Categories { get; set; }
+        public Lazy<ICollection<SelectListItem>> Categories { get; set; }
     }
 }

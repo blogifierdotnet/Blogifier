@@ -127,9 +127,9 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     Author = new Author() { Name = post.AuthorName, Email = post.AuthorEmail }
                 };
 
-                if (post.Categories != null && post.Categories.Count > 0)
+                if (post.Categories != null && post.Categories.Value.Count > 0)
                 {
-                    foreach (var cat in post.Categories)
+                    foreach (var cat in post.Categories.Value)
                     {
                         item.Categories.Add(cat.Value);
                     }

@@ -79,9 +79,8 @@ namespace Blogifier.Core.Services.Search
                 AuthorEmail = post.Profile.AuthorEmail,
                 BlogSlug = post.Profile.Slug,
                 PostViews = post.PostViews,
-                Categories = new List<SelectListItem>()
             };
-            item.Categories = GetCategories(post);
+            item.Categories = new Lazy<ICollection<SelectListItem>>(() => GetCategories(post));
             return item;
         }
         private List<SelectListItem> GetCategories(BlogPost post)
