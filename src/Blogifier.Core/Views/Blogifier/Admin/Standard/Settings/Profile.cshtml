@@ -75,6 +75,10 @@
         </div>
     </div>
 </form>
+<form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+    <input type="file" name="files" id="files" multiple onchange="filePickerController.uploadAssets(); return false;" />
+    <input type="submit" value="Upload Multiple" />
+</form>
 @Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FilePicker.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
@@ -83,4 +87,5 @@
     }
     <script>document.getElementById('AuthorName').focus()</script>
     <script src="~/embedded/admin/standard/js/filePickerController.js"></script>
+    <script src="~/embedded/admin/standard/js/assetController.js"></script>
 }
