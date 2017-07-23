@@ -24,11 +24,9 @@
         }
     }
 
-
-
-    @media screen and (max-width:35.9375rem) {
+    @media screen and (max-width:480px) {
         .form-control-title {
-            padding: .5rem;
+            font-size: 1rem;
         }
     }
 }
@@ -52,6 +50,21 @@
         width: 18.75rem;
         max-height: 18.75rem;
         padding: 0;
+    }
+
+    @media screen and (max-width:480px) {
+        .btn-group > .btn {
+            width: 2.25rem;
+            padding: 0.5rem 0 0.4375rem;
+        }
+    }
+}
+
+.admin-editor-toolbar-left {
+    @media screen and (max-width:480px) {
+        .btn {
+            padding: 0.5rem .5rem 0.4375rem;
+        }
     }
 }
 
@@ -97,7 +110,7 @@
 
     form {
         .form-control {
-            background:none;
+            background: none;
             padding: 1rem 1.25rem;
             border: none;
             border-bottom: 1px solid #eee;

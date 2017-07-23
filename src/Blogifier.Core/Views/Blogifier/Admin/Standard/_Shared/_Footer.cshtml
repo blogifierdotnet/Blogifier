@@ -18,9 +18,9 @@
 </div>
 
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-<script src="~/@themeFolder/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/@themeFolder/lib/tether/dist/js/tether.min.js"></script>
-<script src="~/@themeFolder/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
+<script src="~/@themeFolder/lib/tether/tether.min.js"></script>
+<script src="~/@themeFolder/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
 <script src="~/@themeFolder/js/app.js"></script>
 <script src="~/@themeFolder/js/dataService.js"></script>
@@ -36,7 +36,7 @@
                 offset: '-15px 0',
                 animation: false
             });
-            $('[data-toggle="tooltip"]').tooltip({
+            $('[data-toggle="tooltip"], .admin-editor-toolbar-right .btn-group .btn-group > .btn').tooltip({
                 animation: false
             });
         });

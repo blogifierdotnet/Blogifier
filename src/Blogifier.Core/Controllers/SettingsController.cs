@@ -222,21 +222,16 @@ namespace Blogifier.Core.Controllers
         Dictionary<string, string> GetProfileCustomFields(int profileId)
         {
             var fields = new Dictionary<string, string>();
-            foreach (var item in ApplicationSettings.SocialButtons)
-            {
-                fields.Add(item.Key, item.Value);
-            }
 
-            if (!fields.ContainsKey("disqus")) fields.Add("disqus", "");
-            if (!fields.ContainsKey("Google")) fields.Add("Google", "");
-            if (!fields.ContainsKey("Twitter")) fields.Add("Twitter", "");
-            if (!fields.ContainsKey("Github")) fields.Add("Github", "");
-            if (!fields.ContainsKey("Facebook")) fields.Add("Facebook", "");
-            if (!fields.ContainsKey("Instagram")) fields.Add("Instagram", "");
+            fields.Add("Google", "");
+            fields.Add("Twitter", "");
+            fields.Add("Github", "");
+            fields.Add("Facebook", "");
+            fields.Add("Instagram", "");
 
-            if (!fields.ContainsKey("Head")) fields.Add("Head", "");
-            if (!fields.ContainsKey("Footer")) fields.Add("Footer", "");
-            if (!fields.ContainsKey("Post")) fields.Add("Post", "");
+            fields.Add("Head", "");
+            fields.Add("Footer", "");
+            fields.Add("Post", "");
 
             var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profileId);
             if (dbFields != null && dbFields.Count() > 0)

@@ -6,7 +6,7 @@
 @model BlogAuthorModel
 @{
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
-    var social = Model.SocialButtons;
+    var cf = Model.CustomFields;
 }
 <main class="page-author">
     <header class="cover" style="background-image: url('@Model.CoverImg')">
@@ -15,25 +15,25 @@
             <h2>@Model.Profile.Title</h2>
             <p>@Model.Profile.Description</p>
             <ul>
-                @if (social.ContainsKey("Google") && !string.IsNullOrEmpty(social["Google"]))
+                @if (cf.ContainsKey("Google") && !string.IsNullOrEmpty(cf["Google"]))
                 {
-                    <li><a href='@social["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
+                    <li><a href='@cf["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
                 }
-                @if (social.ContainsKey("Twitter") && !string.IsNullOrEmpty(social["Twitter"]))
+                @if (cf.ContainsKey("Twitter") && !string.IsNullOrEmpty(cf["Twitter"]))
                 {
-                    <li><a href='@social["Twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href='@cf["Twitter"]' target="_blank" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                 }
-                @if (social.ContainsKey("Github") && !string.IsNullOrEmpty(social["Github"]))
+                @if (cf.ContainsKey("Github") && !string.IsNullOrEmpty(cf["Github"]))
                 {
-                    <li><a href='@social["Github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
+                    <li><a href='@cf["Github"]' target="_blank" data-toggle="tooltip" title="GitHub"><i class="fa fa-github"></i></a></li>
                 }
-                @if (social.ContainsKey("Instagram") && !string.IsNullOrEmpty(social["Instagram"]))
+                @if (cf.ContainsKey("Instagram") && !string.IsNullOrEmpty(cf["Instagram"]))
                 {
-                    <li><a href='@social["Instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href='@cf["Instagram"]' target="_blank" data-toggle="tooltip" title="Instagram"><i class="fa fa-instagram"></i></a></li>
                 }
-                @if (social.ContainsKey("Facebook") && !string.IsNullOrEmpty(social["Facebook"]))
+                @if (cf.ContainsKey("Facebook") && !string.IsNullOrEmpty(cf["Facebook"]))
                 {
-                    <li><a href='@social["Facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href='@cf["Facebook"]' target="_blank" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                 }
             </ul>
         </div>

@@ -1,5 +1,6 @@
 ﻿var assetController = function (dataService) {
     var currentPage = 1;
+
     function clickUpload() {
         $('#files').trigger('click');
         return false;
@@ -32,13 +33,12 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<div class="col-sm-6 col-md-4 col-lg-4"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-4 col-md-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\'); return false;"><img src="' +
                     asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
-            }
-            else {
+            } else {
                 // attachement
-                tag = '<div class="col-sm-6 col-md-4 col-lg-4"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-4 col-md-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
                     webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><div>';
             }
@@ -53,7 +53,9 @@
     function pager(pg) {
         var lastPost = pg.currentPage * pg.itemsPerPage;
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
-        if (lastPost > pg.total) { lastPost = pg.total; }
+        if (lastPost > pg.total) {
+            lastPost = pg.total;
+        }
 
         var older = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
         var newer = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
@@ -82,20 +84,17 @@
         var url = data.assetType === 0 ? data.url : webRoot + data.image;
 
 
-        var tag = '<div class="col-sm-4"><div class="asset-list-item"><img src="' + url + '"/></div></div>';
-        tag += '<div class="col-sm-8">';
-        tag += '<h4>' + data.title + '</h4>';
-        tag += '<hr>';
-        tag += '<p>URL: <a href="' + data.url + '" target="_blank">' + data.url + '</a></p>';
-        tag += '<p>Size: ' + bytesToSize(data.length) + '</p>';
+        var tag = '<div class="asset-edit-item"><img class="asset-edit-item-img" src="' + url + '"/></div>';
+        tag += '<div class="asset-edit-item-info">';
+        tag += '<div class="row"><div class="col-sm-3 col-md-2">Name:</div><div class="col-sm-9 col-md-10">' + data.title + '</div></div>';
+        tag += '<div class="row"><div class="col-sm-3 col-md-2">URL:</div><div class="col-sm-9 col-md-10"><a href="' + data.url + '" target="_blank">' + data.url + '</a></div></div>';
+        tag += '<div class="row"><div class="col-sm-3 col-md-2">Size:</div><div class="col-sm-9 col-md-10">' + bytesToSize(data.length) + '</div></div>';
         if (data.assetType === 1) {
-            tag += '<p>Download count: ' + data.downloadCount + '</p>';
+            tag += '<div class="row"><div class="col-sm-3 col-md-2">Download count:</div><div class="col-sm-9 col-md-10">' + data.downloadCount + '</div></div>';
         }
-        tag += '<p>Last updated: ' + getDate(data.lastUpdated) + '</p>';
+        tag += '<div class="row"><div class="col-sm-3 col-md-2">Last updated:</div><div class="col-sm-9 col-md-10">' + getDate(data.lastUpdated) + '</div></div>';
         tag += '</div>';
 
-
-        
         $('#assetEdit').append(tag);
 
         var btn = '<button class="btn btn-danger btn-main mr-2" onclick="return assetController.remove(' + data.id + ')">Delete</button>';

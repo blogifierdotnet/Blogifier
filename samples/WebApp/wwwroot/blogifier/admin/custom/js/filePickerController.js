@@ -122,6 +122,16 @@
         }
     }
 
+    function uploadAssets() {
+        var data = new FormData($('#frmUploadAssets')[0]);
+        dataService.upload('blogifier/api/assets/multiple', data, uploadCallback, fail);
+    }
+
+    function uploadCallback() {
+        toastr.success('Files uploaded');
+        loadPage(1);
+    }
+
     function humanFileSize(size) {
         var i = Math.floor(Math.log(size) / Math.log(1024));
         return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
@@ -138,6 +148,7 @@
     return {
         open: open,
         load: loadPage,
-        pick: pick
+        pick: pick,
+        uploadAssets: uploadAssets
     }
 }(DataService);

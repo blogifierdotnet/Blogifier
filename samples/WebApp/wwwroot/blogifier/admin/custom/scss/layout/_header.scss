@@ -6,10 +6,12 @@
     left: 0;
     z-index: 2;
     border-bottom: 1px solid $color-border;
+
     .container {
         height: 100%;
         padding: 0;
     }
+
     @media screen and (max-width: 767px) {
         background: #f1f1f1;
         height: 3rem;
@@ -18,9 +20,11 @@
 
 .admin-nav {
     @include unstyled();
-    >li {
+
+    > li {
         float: left;
-        >a {
+
+        > a {
             display: block;
             line-height: 4rem;
             padding: 0 1rem;
@@ -29,8 +33,10 @@
             position: relative;
             text-transform: uppercase;
             font-size: .875rem;
+
             &.active {
                 color: #000;
+
                 &::after,
                 {
                     bottom: 0;
@@ -38,6 +44,7 @@
                     margin-left: -.5rem;
                     @include triangle(up, .5rem, #fff);
                 }
+
                 &::before {
                     bottom: 0;
                     left: 50%;
@@ -47,11 +54,14 @@
             }
         }
     }
+
     .dropdown-toggle {
         cursor: pointer;
+
         &::after {
             display: none;
         }
+
         img {
             display: inline-block;
             width: 1.75rem;
@@ -59,32 +69,38 @@
             border-radius: 100%;
             margin-right: .25rem;
         }
+
         span {
             position: relative;
             top: .0625rem;
             color: #888;
         }
     }
+
     .dropdown-menu {
         margin-top: -.25rem;
         margin-right: 1rem;
+
         &::after {
             top: -.5rem;
             right: 1.5rem;
             margin-right: -.5rem;
             @include triangle(up, .5rem, #fff);
         }
+
         &::before {
             top: -.5625rem;
             right: 1.5rem;
             margin-right: -.5625rem;
             @include triangle(up, .5625rem, darken($color-border, 10%));
         }
+
         .dropdown-item {
             text-transform: uppercase;
             font-size: .875rem;
         }
     }
+
     @media screen and (max-width:480px) {
         .dropdown-toggle {
             span {
@@ -92,24 +108,24 @@
             }
         }
     }
+
     @media screen and (max-width: 767px) {
-        >li {
-            a {
+        > li {
+            > a {
                 line-height: 3rem;
             }
         }
     }
+
     @media screen and (max-width:480px) {
         display: table;
         width: 100%;
-        >li {
+
+        > li {
             float: none !important;
             display: table-cell;
             vertical-align: top;
             text-align: center;
-            a {
-                line-height: 3rem;
-            }
         }
     }
 }

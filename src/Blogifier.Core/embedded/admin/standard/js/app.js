@@ -1,9 +1,9 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-$(".admin-content-editor .admin-toolbar").delay(500).fadeIn();
+$(".admin-editor-toolbar").delay(500).fadeIn();
 
-$(".admin-toolbar .dropdown-menu").click(function (event) {
+$(".admin-editor-toolbar .dropdown-menu").click(function (event) {
     event.stopPropagation();
 });
 
