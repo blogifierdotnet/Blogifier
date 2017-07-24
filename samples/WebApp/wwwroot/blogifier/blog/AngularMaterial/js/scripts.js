@@ -1,4 +1,4 @@
-﻿angular.module('bloodforgeAMApp', ['ngMaterial', 'ui.router', 'ngAnimate'])
+﻿angular.module('angularMaterialApp', ['ngMaterial', 'ui.router', 'ngAnimate'])
 
     .filter('unsafe', ['$sce', function ($sce) {
         return $sce.trustAsHtml;
@@ -6,7 +6,7 @@
 
     .config(['$mdIconProvider', '$stateProvider', function ($mdIconProvider, $stateProvider) {
 
-        var shareIconPath = '/blogifier/blog/Bloodforge-AngularMaterial/images/share/';
+        var shareIconPath = '/blogifier/blog/AngularMaterial/images/share/';
 
         $mdIconProvider
             .icon('Facebook', shareIconPath + 'facebook.svg', 24)
@@ -101,7 +101,7 @@
         });
     }])
 
-    .controller('bloodforgeAMController', ['$log', '$scope', '$rootScope', '$mdSidenav', '$state', '$transitions', '$http', '$mdMedia', function ($log, $scope, $rootScope, $mdSidenav, $state, $transitions, $http, $mdMedia) {
+    .controller('angularMaterialAppController', ['$log', '$scope', '$rootScope', '$mdSidenav', '$state', '$transitions', '$http', '$mdMedia', function ($log, $scope, $rootScope, $mdSidenav, $state, $transitions, $http, $mdMedia) {
 
         $rootScope.blogSettings = {};
         $scope.$mdMedia = $mdMedia;
@@ -182,7 +182,7 @@
         bindings: {
             config: '<'
         },
-        templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/posts-list.tpl.html',
+        templateUrl: '/blogifier/blog/AngularMaterial/templates/posts-list.tpl.html',
         controller: ['$http', '$element', '$scope', function ($http, $element, $scope) {
             this.state = 'init';
             var ctrl = this;
@@ -280,7 +280,7 @@
         bindings: {
             post: '<'
         },
-        templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/post-list-item-featured.tpl.html',
+        templateUrl: '/blogifier/blog/AngularMaterial/templates/post-list-item-featured.tpl.html',
         controller: function () {
 
         },
@@ -291,7 +291,7 @@
         bindings: {
             post: '<'
         },
-        templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/post-list-item.tpl.html',
+        templateUrl: '/blogifier/blog/AngularMaterial/templates/post-list-item.tpl.html',
         controller: function () {
 
         },
@@ -302,7 +302,7 @@
         bindings: {
             config: '<'
         },
-        templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/post.tpl.html',
+        templateUrl: '/blogifier/blog/AngularMaterial/templates/post.tpl.html',
         controller: ['$http', '$sce', '$scope', function ($http, $sce, $scope) {
             this.state = 'init';
             var ctrl = this;
@@ -375,7 +375,7 @@
                 label: "@",
                 target: "@"
             },
-            templateUrl: '/blogifier/blog/Bloodforge-AngularMaterial/templates/menu-toggle.tpl.html',
+            templateUrl: '/blogifier/blog/AngularMaterial/templates/menu-toggle.tpl.html',
             link: function ($scope, $element) {
                 $scope.isOpen = false;
                 $scope.toggle = function () {

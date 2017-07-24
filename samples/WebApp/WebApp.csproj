@@ -13,6 +13,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\css\styles.css" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\facebook.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\github.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\google.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\instagram.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\linkedin.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\images\share\twitter.svg" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\js\scripts.js" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\templates\menu-toggle.tpl.html" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\templates\post-list-item-featured.tpl.html" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\templates\post-list-item.tpl.html" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\templates\post.tpl.html" />
+    <Content Include="wwwroot\blogifier\blog\AngularMaterial\templates\posts-list.tpl.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
@@ -39,6 +55,7 @@
     <ProjectReference Include="..\..\src\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Logs\" />
     <Folder Include="wwwroot\blogifier\blog\custom\scss\" />
     <Folder Include="wwwroot\sample\" />
