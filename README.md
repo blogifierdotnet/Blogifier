@@ -16,10 +16,10 @@ The goal of this project is to "blogify" new and existing ASP.NET applications; 
 * ASP.NET Core 1.1
 * .NET Framework 4.5.2
 * Visual Studio 2017 or VS Code
-* ASP.NET Authentication
+* Authentication enabled
 * SQL Server (Windows) or PostgreSql (Linux)
 
-Designed for cross-platform development, every build pushed to Windows and Linux servers. For Linux use `Blogifier.Core.PostgreSql` package.
+Designed for cross-platform development, every build pushed to Windows and Linux servers.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ Install-Package Blogifier.Core -Source https://www.myget.org/F/rtur/api/v3/index
 public void ConfigureServices(IServiceCollection services)
 {
   ...
-  Blogifier.Core.Configuration.InitServices(services);
+  Blogifier.Core.Configuration.InitServices(services, Configuration);
 }
 public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 {
@@ -67,26 +67,11 @@ Default application settings can be overwritten in application `appsettings.json
 }
 ```
 
-| Name | Description | Default Value
-| --------- | ----------- | ------------ |
-| UseInMemoryDatabase | If in-memory or SQL database should be used | `true` |
-| ConnectionString | Database connection string | `Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;` |
-| EnableLogging | To enable application logging | `false` |
-| BlogStorageFolder | Folder for uploaded files/images | `blogifier/data` |
-| SupportedStorageFiles | File types allowed for upload | `zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml` |
-| AdminTheme | Administration theme | `Standard` |
-| Title | Appliation title | `Blog Name` |
-| Description | Application description | `Short description of the blog` |
-| ItemsPerPage | Number of items per page in the lists | `10` |
-| AddContentTypeHeaders | Set content type for embedded resources | `true` |
-| AddContentLengthHeaders | Set content length for embedded resources | `false` |
-| PrependFileProvider | Prepend file provider for embedded resources | `false` |
-
-The last three items are to adjust resource embedding for different environments. For example IIS on Azure runs with default values, nginx + Kestrel on Linux requires all three set to `true`
+[More on application settings](https://github.com/blogifierdotnet/Blogifier.Core/wiki/Application-Settings)
 
 ## Database Providers
 
-Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider out of the box and PostgreSql as secondary provider.
+Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider for Blogigier.Core package and PostgreSql provider for Blogifier.Core.PostgreSql
 
 Connection string cascades based on conditions:
 * Use default built-in Blogifier connection string
@@ -100,5 +85,3 @@ Connection string cascades based on conditions:
   }
 }
 ```
-
-For Linux, use [Blogifier.Core.PosgreSql](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core.PostgreSql) package built specifically for PostgreSql database.

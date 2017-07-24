@@ -80,7 +80,7 @@
     function loadAsset(data) {
         $('#assetEdit').empty();
         $('#assetList').empty();
-        $('.pager').empty();
+        $('.pagination-custom').empty();
         var url = data.assetType === 0 ? data.url : webRoot + data.image;
 
 
