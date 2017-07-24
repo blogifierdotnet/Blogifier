@@ -19,6 +19,9 @@ namespace Blogifier.Core.Common
                     {
                         // system settings
 
+                        if (section["BlogRoute"] != null)
+                            ApplicationSettings.BlogRoute = section.GetValue<string>("BlogRoute");
+
                         if (section["SingleBlog"] != null)
                             ApplicationSettings.SingleBlog = section.GetValue<bool>("SingleBlog");
 

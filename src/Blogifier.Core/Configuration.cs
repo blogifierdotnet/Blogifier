@@ -6,6 +6,7 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Custom;
+using Blogifier.Core.Services.Routing;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,10 +33,13 @@ namespace Blogifier.Core
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ICustomService, CustomService>();
 
+            // add blog route from ApplicationSettings
+            services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>
+                opt.UseBlogRoutePrefix(new Microsoft.AspNetCore.Mvc.RouteAttribute(ApplicationSettings.BlogRoute)));
+
             // add route constraint
             services.Configure<RouteOptions>(options =>
                 options.ConstraintMap.Add("author", typeof(Services.Routing.AuthorRouteConstraint)));
-
 
             AddDatabase(services);
 

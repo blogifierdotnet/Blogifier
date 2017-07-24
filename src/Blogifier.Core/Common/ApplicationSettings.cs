@@ -6,6 +6,7 @@ namespace Blogifier.Core.Common
     {
         #region Application settings
 
+        public static string BlogRoute { get; set; } = "blog/";
         public static bool SingleBlog { get; set; } = false;
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }
