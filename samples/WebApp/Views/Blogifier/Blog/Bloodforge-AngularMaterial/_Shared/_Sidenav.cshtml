@@ -1,6 +1,18 @@
 @using Blogifier.Core.Common
 @using Blogifier.Core.Data.Models
 
+@{
+    Dictionary<string, string> SocialButtons = new Dictionary<string, string>();
+    var cf = Model.CustomFields;
+    foreach(string key in new string[] {  "Google", "Twitter", "Github", "Instagram", "Facebook" })
+    {
+        if (cf.ContainsKey(key) && !string.IsNullOrEmpty(cf[key]))
+        {
+            SocialButtons.Add(key, cf[key]);
+        }
+    }
+}
+
 <md-sidenav
             class="nav-menu menu-gradient"
             md-component-id="left-menu"
@@ -45,14 +57,14 @@
                 <md-list-item ng-repeat="author in authors" ng-click="sidenavNavigate('left-menu', 'author', { slug: author.slug })">{{author.authorName}}</md-list-item>
             </div>
             
-            @if (Model.SocialButtons != null && Model.SocialButtons.Count > 0)
+            @if (SocialButtons.Count > 0)
             {
                 <md-divider></md-divider>
                 <menu-toggle label="Share" target="share-list"></menu-toggle>
                 <div id="share-list">
-                    @foreach (var key in Model.SocialButtons.Keys)
+                    @foreach (var key in SocialButtons.Keys)
                     {
-                        <md-list-item href="@Model.SocialButtons[key]" target="_blank">
+                        <md-list-item href="@SocialButtons[key]" target="_blank">
                             <p>@key</p>
                             <md-icon md-svg-src="@key" aria-label="@key"></md-icon>
                         </md-list-item>
