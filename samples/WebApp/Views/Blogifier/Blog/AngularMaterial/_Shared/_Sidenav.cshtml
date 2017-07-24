@@ -42,8 +42,9 @@
                 <md-divider></md-divider>
                 <menu-toggle label="Administration" target="admin-list"></menu-toggle>
                 <div id="admin-list">
-                    <md-list-item href="/admin">Admin</md-list-item>
-                    <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
+                    <md-list-item href="/admin">Posts</md-list-item>
+                    <md-list-item href="/admin/files">Files</md-list-item>
+                    <md-list-item href="/admin/settings/profile">Settings</md-list-item>
                 </div>
             }
             <md-divider ng-show="categories"></md-divider>
@@ -71,9 +72,13 @@
                     }
                 </div>
             }
-            @if (!User.Identity.IsAuthenticated)
+            <md-divider></md-divider>
+            @if (User.Identity.IsAuthenticated)
             {
-                <md-divider></md-divider>
+                <md-list-item ng-click="profileLogOut()">Logoff</md-list-item>
+            }
+            else
+            {
                 <md-list-item href="/account/login?ReturnUrl=%2Fadmin">
                     <p>Login</p>
                     <md-icon>account_circle</md-icon>
