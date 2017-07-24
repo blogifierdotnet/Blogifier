@@ -18,7 +18,7 @@ namespace Blogifier.Core.Data.Models
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
         public override string CoverImg { get => BlogPost.Image; }
-        public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
+        public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => BlogPost.Title; }
 
         public Profile Profile { get; set; }
@@ -30,7 +30,7 @@ namespace Blogifier.Core.Data.Models
     {
         public override string LogoImg { get => ApplicationSettings.ProfileLogo; }
         public override string CoverImg { get => ApplicationSettings.ProfileImage; }
-        public override string LogoUrl { get => Constants.BlogRoute; }
+        public override string LogoUrl { get => ApplicationSettings.BlogRoute; }
         public override string PageTitle { get => ApplicationSettings.Title; }
 
         public IEnumerable<PostListItem> Posts { get; set; }
@@ -41,7 +41,7 @@ namespace Blogifier.Core.Data.Models
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
         public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
-        public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
+        public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => "Category: " + Category.Title; }
 
         public Profile Profile { get; set; }
@@ -54,7 +54,7 @@ namespace Blogifier.Core.Data.Models
     {
         public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
         public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
-        public override string LogoUrl { get => Constants.BlogRoute + Profile.Slug; }
+        public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => Profile.Title; }
 
         public Profile Profile { get; set; }

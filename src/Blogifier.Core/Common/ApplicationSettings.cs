@@ -6,6 +6,11 @@ namespace Blogifier.Core.Common
     {
         #region Application settings
 
+        // default value is "blog/" for blogifier to use "site.com/blog"
+        // if empty string, blog takes over the application
+        // so instead of "site.com/blog" blogifier will be using "site.com" 
+        public static string BlogRoute { get; set; } = "blog/";
+
         public static bool SingleBlog { get; set; } = false;
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }

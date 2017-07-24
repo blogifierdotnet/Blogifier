@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace Blogifier.Core.Common
 {
@@ -18,6 +17,9 @@ namespace Blogifier.Core.Common
                     if (section != null)
                     {
                         // system settings
+
+                        if (section["BlogRoute"] != null)
+                            ApplicationSettings.BlogRoute = section.GetValue<string>("BlogRoute");
 
                         if (section["SingleBlog"] != null)
                             ApplicationSettings.SingleBlog = section.GetValue<bool>("SingleBlog");

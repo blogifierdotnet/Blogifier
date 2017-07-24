@@ -27,13 +27,13 @@
                         <div class="post-item-cover">
                             <img class="post-item-img" src="@item.Image" alt="@item.Title" />
                             <div class="post-item-head">
-                                <p class="post-item-info">By <a href="~/@Constants.BlogRoute@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
-                                <h2 class="post-item-title"><a href="~/@Constants.BlogRoute@item.Slug">@item.Title</a></h2>
+                                <p class="post-item-info">By <a href="~/@ApplicationSettings.BlogRoute@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
+                                <h2 class="post-item-title"><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h2>
                             </div>
                         </div>
                         <div class="post-item-content">
                             <p class="post-item-text dot-resize-update">@Html.Raw(item.Content) </p>
-                            <a class="post-item-more" href="~/@Constants.BlogRoute@item.Slug">Read More...</a>
+                            <a class="post-item-more" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read More...</a>
                         </div>
                     </article>
                 </div>
@@ -45,11 +45,11 @@
         <ul class="pagination justify-content-center">
             @if (Model.Pager.ShowOlder)
                 {
-                <li class="page-item prev"><a href="~/@Constants.BlogRoute@search/@term/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
+                <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@search/@term/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
             }
             @if (Model.Pager.ShowNewer)
                 {
-                <li class="page-item next"><a href="~/@Constants.BlogRoute@search/@term/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
+                <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@search/@term/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
             }
         </ul>
     }

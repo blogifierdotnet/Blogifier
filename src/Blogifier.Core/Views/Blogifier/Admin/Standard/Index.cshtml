@@ -21,7 +21,7 @@
                     {
                         <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)"><i class="fa fa-archive"></i></a>
                     }
-                    <a href="/@Constants.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank"><i class="fa fa-eye"></i></a>
+                    <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank"><i class="fa fa-eye"></i></a>
                     <a class="pr-2">@published</a>
                 </div>
             </li>
