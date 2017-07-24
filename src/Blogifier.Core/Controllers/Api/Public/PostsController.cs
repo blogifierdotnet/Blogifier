@@ -33,6 +33,7 @@ namespace Blogifier.Core.Controllers.Api.Public
             foreach(PostListItem post in posts)
             {
                 post.AuthorEmail = "";
+                post.Categories = null;
             }
             return posts;
         }
