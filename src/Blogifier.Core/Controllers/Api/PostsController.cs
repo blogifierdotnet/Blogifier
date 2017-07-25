@@ -65,7 +65,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Title = model.Title;
                 bp.Slug = GetSlug(model.Title, model.Id);
                 bp.Content = model.Content;
-                bp.Description = model.Content.ToDescription();
+                bp.Description = string.IsNullOrEmpty(model.Description) ? model.Content.ToDescription() : model.Description;
                 bp.Image = model.Image;
                 bp.LastUpdated = SystemClock.Now();
                 bp.Published = model.IsPublished ? SystemClock.Now() : DateTime.MinValue;
@@ -77,7 +77,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Title = model.Title;
                 bp.Slug = GetSlug(model.Title, model.Id);
                 bp.Content = model.Content;
-                bp.Description = model.Content.ToDescription();
+                bp.Description = string.IsNullOrEmpty(model.Description) ? model.Content.ToDescription() : model.Description;
                 bp.Image = model.Image;
                 bp.LastUpdated = SystemClock.Now();
                 // when publish button clicked, save and publish

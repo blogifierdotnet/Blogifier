@@ -106,8 +106,8 @@
         var firstPost = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (lastPost > pg.total) { lastPost = pg.total; }
 
-        var older = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
-        var newer = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
+        var older = '';
+        var newer = '';
         if (pg.showOlder === true) {
             older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-long-arrow-left"></i></a></li>';
         }

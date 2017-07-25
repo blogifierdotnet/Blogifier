@@ -8,6 +8,7 @@
             Title: $("#txtPostTitle").val(),
             Image: $('#hdnPostImg').val(),
             Content: tinyMCE.activeEditor.getContent(),
+            Description: $('#txtDescription').val(),
             IsPublished: publish ? true : false,
             Categories: []
         }

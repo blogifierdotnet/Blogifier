@@ -57,8 +57,8 @@
             lastPost = pg.total;
         }
 
-        var older = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
-        var newer = '<li class="disabled"><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>';
+        var older = '';
+        var newer = '';
         if (pg.showOlder === true) {
             older = '<li onclick="return assetController.loadFileManager(' + pg.older + ')"><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>';
         }
