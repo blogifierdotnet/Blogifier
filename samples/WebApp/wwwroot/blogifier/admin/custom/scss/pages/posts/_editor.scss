@@ -30,3 +30,70 @@
         }
     }
 }
+
+.admin-editor-meta {
+    padding:1rem;
+    hr {
+        margin:2rem 0;
+    }
+    h4{
+        margin-bottom:1rem;
+    }
+}
+
+.admin-editor-category {
+    text-transform: none;
+    overflow: hidden;
+
+    form {
+        .form-control {
+            margin-bottom:.5rem;
+        }
+    }
+
+    ul {
+        @include unstyled();
+        height: 12.25rem;
+        overflow-x: hidden;
+        border: .0625rem solid #eee;
+
+        li {
+            position: relative;
+            border-bottom: .0625rem solid #eee;
+
+            &:hover {
+                background: #fafafa;
+            }
+
+            label {
+                margin-bottom: 0;
+                display: block;
+                padding: .44rem 1rem .44rem 2.5rem;
+            }
+
+            .custom-control-indicator {
+                top: .55rem;
+                left: 1rem;
+            }
+        }
+
+        i {
+            display: block;
+            width: 2.25rem;
+            height: 100%;
+            line-height: 2.25rem;
+            border-left: .0625rem solid #eee;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            color: #aaa;
+            cursor: pointer;
+            background: #fff;
+
+            &:hover {
+                color: red;
+            }
+        }
+    }
+}
