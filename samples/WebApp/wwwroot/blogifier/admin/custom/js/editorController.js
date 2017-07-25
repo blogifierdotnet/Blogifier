@@ -130,7 +130,7 @@
         $('#post-image').append(btn);
         var dd = '<img src="' + postImg + '" />';
         if (postImg.length > 0) {
-            dd += '<button type="button" onclick="return editorController.resetPostImage();">Remove</button>';
+            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove</button>';
         }
         $('#post-image').append(dd);
     }
