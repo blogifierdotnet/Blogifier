@@ -10,14 +10,14 @@
             ImportAttachements: $('#chkImportAttachements').is(':checked')
         };
         $('.spin-icon').fadeIn();
-        $('#btnImport').fadeOut();
+        $('#btnImport .btn').attr('disabled', 'disabled');
         dataService.put('blogifier/api/tools/rssimport', data, importRssCallback, fail);
     }
 
     function importRssCallback(data) {
         var msg = JSON.parse(data);
         $('.spin-icon').fadeOut();
-        $('#btnImport').fadeIn();
+        $('#btnImport .btn').removeAttr('disabled');
         if (msg.isSuccessStatusCode) {
             toastr.success(msg.reasonPhrase);
         }

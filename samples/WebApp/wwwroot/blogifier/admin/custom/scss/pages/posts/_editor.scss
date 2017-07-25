@@ -13,15 +13,8 @@
 
     .spin-icon {
         position: absolute;
-        bottom: .75rem;
-        right: 1rem;
-        display: none;
-
-        i {
-            display: block;
-            font-size: 1.75rem;
-            color: #000;
-        }
+        right:1rem;
+        bottom:.75rem;
     }
 
     @media screen and (max-width:480px) {
