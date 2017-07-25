@@ -49,12 +49,12 @@
         toastr.success('Deleted');
         setTimeout(function () {
             window.location.href = webRoot + 'admin';
-        }, 1000); 
+        }, 1000);
     }
 
     function unpublishPost() {
         var postId = $('#hdnPostId').val();
-        var obj = { };
+        var obj = {};
         dataService.put("blogifier/api/posts/unpublish/" + postId, obj, unpublishPostCallback, fail);
     }
 
@@ -124,20 +124,14 @@
         var postId = $('#hdnPostId').val();
         var postImg = $('#hdnPostImg').val();
         $('#post-image').empty();
-
-        var btn = '<button type="button" title="Add Cover" class="btn btn-secondary" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">';
-        btn += '<i class="fa fa-image" ></i></button >';
-
-        if (postImg.length > 0) {
-            btn = '<button type="button" title="Edit Cover" data-placement="bottom" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-            btn += '<i class="fa fa-image"></i></button>';
+        if (!postImg.length > 0) {
+            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');"><i class="fa fa-image"></i> Upload Post Cover</button >';
         }
         $('#post-image').append(btn);
-
-        var dd = '<div id="ddPostImg" class="dropdown-menu dropdown-menu-right" aria-labelledby="btnPostImgToggle">';
-        dd += '<div class="admin-editor-cover"><img src="' + postImg + '" /><div class="admin-editor-cover-actions btn-group">';
-        dd += '<button type="button" onclick="return editorController.resetPostImage();">';
-        dd += 'Remove</button></div></div></div>';
+        var dd = '<img src="' + postImg + '" />';
+        if (postImg.length > 0) {
+            dd += '<button type="button" onclick="return editorController.resetPostImage();">Remove</button>';
+        }
         $('#post-image').append(dd);
     }
 
