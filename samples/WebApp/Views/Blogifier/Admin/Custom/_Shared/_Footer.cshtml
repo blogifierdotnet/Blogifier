@@ -26,18 +26,18 @@
 <script src="~/@themeFolder/js/dataService.js"></script>
 <script src="~/@themeFolder/js/uploadController.js"></script>
 <script>
-        var webRoot = '@Url.Content("~/")';
-        function getUrl(str) {
-            return webRoot + str;
-        };
-
-        $(document).ready(function () {
-            $('.post-list [data-toggle="tooltip"]').tooltip({
-                offset: '-15px 0',
-                animation: false
-            });
-            $('[data-toggle="tooltip"], .admin-editor-toolbar-right .btn-group .btn-group > .btn').tooltip({
-                animation: false
-            });
+    var webRoot = '@Url.Content("~/")';
+    var blogRoute = '@ApplicationSettings.BlogRoute';
+    function getUrl(str) {
+        return webRoot + str;
+    };
+    $(document).ready(function () {
+        $('.post-list [data-toggle="tooltip"]').tooltip({
+            offset: '-15px 0',
+            animation: false
         });
+        $('[data-toggle="tooltip"], .admin-editor-toolbar-right .btn-group .btn-group > .btn').tooltip({
+            animation: false
+        });
+    });
 </script>

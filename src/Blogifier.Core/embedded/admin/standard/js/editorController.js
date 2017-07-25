@@ -176,7 +176,7 @@
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
                 btn += '</div></div> ';
-                btn += '<a href="' + webRoot + 'blog/' + postSlug + '" target="_blank" class="btn btn-secondary">View</a>';
+                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-secondary">View</a>';
             }
         }
         $('#action-buttons').append(btn);
