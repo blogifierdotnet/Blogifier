@@ -127,14 +127,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     Author = new Author() { Name = post.AuthorName, Email = post.AuthorEmail }
                 };
 
-                if (post.Categories != null && post.Categories.Count > 0)
-                {
-                    foreach (var cat in post.Categories)
-                    {
-                        item.Categories.Add(cat.Value);
-                    }
-                }
-
+                item.Categories = _db.Categories.PostCategories(post.BlogPostId).Select(c => c.Text).ToList();
                 item.Comments = new Uri(absoluteUri + "/blog/" + post.Slug);
                 feed.Items.Add(item);
             }

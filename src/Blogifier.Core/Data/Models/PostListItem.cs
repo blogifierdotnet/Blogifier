@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Blogifier.Core.Data.Models
 {
@@ -18,7 +16,5 @@ namespace Blogifier.Core.Data.Models
         public string BlogSlug { get; set; }
 
         public int PostViews { get; set; }
-
-        public ICollection<SelectListItem> Categories { get; set; }
     }
 }

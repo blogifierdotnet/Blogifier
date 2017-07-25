@@ -78,24 +78,9 @@ namespace Blogifier.Core.Services.Search
                 AuthorName = post.Profile.AuthorName,
                 AuthorEmail = post.Profile.AuthorEmail,
                 BlogSlug = post.Profile.Slug,
-                PostViews = post.PostViews,
-                Categories = new List<SelectListItem>()
+                PostViews = post.PostViews
             };
-            item.Categories = GetCategories(post);
             return item;
-        }
-        private List<SelectListItem> GetCategories(BlogPost post)
-        {
-            var catList = new List<SelectListItem>();
-            if (post.PostCategories != null && post.PostCategories.Count > 0)
-            {
-                foreach (var pc in post.PostCategories)
-                {
-                    var cat = _db.Categories.Single(c => c.Id == pc.CategoryId);
-                    catList.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
-                }
-            }
-            return catList;
         }
 
         #endregion
