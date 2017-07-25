@@ -24,65 +24,50 @@
 
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postMeta">
-                Tools
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#postMeta">
+                Meta
             </button>
 
             <!-- Modal -->
             <div class="modal fade" id="postMeta" tabindex="-1">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Post Meta</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="modal-content admin-editor-meta">
                         <div class="modal-body">
-                            <div class="admin-editor-meta">
-                                <!-- Cover -->
-                                <h4>Cover</h4>
-                                <div id="post-image"></div>
-                                <hr />
-                                <!-- Category -->
-                                <div class="admin-editor-category">
-                                    <h4>Category</h4>
-                                    <form id="frmCategory">
-                                        <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
-                                    </form>
-                                    <ul id="edit-categories">
-                                        @foreach (var category in Model.CategoryList)
-                                        {
-                                            <li id="cat-@category.Value">
-                                                <label class="custom-control custom-checkbox">
-                                                    @if (category.Selected)
-                                                    {
-                                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                                                    }
-                                                    <span class="custom-control-indicator"></span>
-                                                    <span class="custom-control-description">@category.Text</span>
-                                                </label>
-                                                <i class="fa fa-times" onclick="editorController.removeCategory('@category.Value')"></i>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                                <hr />
-                                <!--  -->
-                                <div class="admin-editor-desciption">
-                                    <h4>Description</h4>
-                                    <textarea rows="6" class="form-control"></textarea>
-                                </div>
+                            <!-- Cover -->
+                            <div id="post-image" class="admin-editor-cover"></div>
+                            <!-- Category -->
+                            <div class="admin-editor-category">
+                                <h5>Category</h5>
+                                <form id="frmCategory">
+                                    <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
+                                </form>
+                                <ul id="edit-categories">
+                                    @foreach (var category in Model.CategoryList)
+                                    {
+                                        <li id="cat-@category.Value">
+                                            <label class="custom-control custom-checkbox">
+                                                @if (category.Selected)
+                                                {
+                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                                }
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">@category.Text</span>
+                                            </label>
+                                            <i class="fa fa-times" onclick="editorController.removeCategory('@category.Value')"></i>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <!-- Description -->
+                            <div class="admin-editor-description">
+                                <h5>Description</h5>
+                                <textarea rows="6" class="form-control"></textarea>
                             </div>
                         </div>
-                        @*<div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>*@
                     </div>
                 </div>
             </div>

@@ -32,13 +32,23 @@
 }
 
 .admin-editor-meta {
-    padding:1rem;
-    hr {
-        margin:2rem 0;
+    background: none;
+    border: none;
+
+    .modal-body {
+        padding: 0 !important;
     }
-    h4{
-        margin-bottom:1rem;
+
+    h5 {
+        margin-bottom: 1rem;
+        text-transform:uppercase;
     }
+}
+
+.admin-editor-cover, .admin-editor-category, .admin-editor-description {
+    background: #fff;
+    padding: 2rem;
+    margin-bottom: 1rem;
 }
 
 .admin-editor-category {
@@ -47,7 +57,7 @@
 
     form {
         .form-control {
-            margin-bottom:.5rem;
+            margin-bottom: .5rem;
         }
     }
 
