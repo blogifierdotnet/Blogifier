@@ -1,0 +1,16 @@
+@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.BlogAuthorModel
+@{
+    Layout = null;
+    var RedirectUrl = String.Format("/{0}#!/author/{1}", Constants.BlogRoute, Model.Profile.Slug);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=@RedirectUrl">
+</head>
+<body>
+</body>
+</html>

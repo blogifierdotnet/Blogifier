@@ -155,23 +155,21 @@
             $("html, body").animate({ scrollTop: 0 }, "slow");
         };
 
-        $http({
-            method: 'GET',
-            url: '/blogifier/api/public/categories'
-        }).then(function successCallback(response) {
-            $scope.categories = response.data;
-        }, function errorCallback(response) {
+        $scope.loadCategories = function (author) {
 
-        });
+            var url = author ? '/blogifier/api/public/' + author + '/categories' : '/blogifier/api/public/categories';
 
-        $http({
-            method: 'GET',
-            url: '/blogifier/api/public/authors'
-        }).then(function successCallback(response) {
-            $scope.authors = response.data;
-        }, function errorCallback(response) {
+            $http({
+                method: 'GET',
+                url: url
+            }).then(function successCallback(response) {
+                $scope.categories = response.data;
+            }, function errorCallback(response) {
 
-        });
+            });
+        };
+
+        loadCategories();
 
         if (!window.location.hash) {
             $state.go('home', { page: 1 });
@@ -202,26 +200,21 @@
                     }
                     else {
                         // new posts
-                        if (ctrl.config.type == 'home') {
-                            // set up featured posts
-                            ctrl.featuredPosts = response.data.posts.slice(0, 3);
-                            ctrl.posts = response.data.posts.slice(3);
-                        }
-                        else {
-                            ctrl.posts = response.data.posts;
+                        switch (ctrl.config.type) {
+                            case 'home':
+                            case 'author':
+                                // set up featured posts
+                                ctrl.featuredPosts = response.data.posts.slice(0, 3);
+                                ctrl.posts = response.data.posts.slice(3);
+                                break;
+                            default:
+                                ctrl.posts = response.data.posts;
+                                break;
                         }
 
                         switch (ctrl.config.type) {
                             case 'category':
                                 ctrl.header = 'Posts in category: ' + $('[data-categorySlug="' + ctrl.config.slug + '"]').text();
-                                break;
-                            case 'author':
-                                if (ctrl.posts && ctrl.posts.length > 0) {
-                                    ctrl.header = 'Posts by: ' + ctrl.posts[0].authorName;
-                                }
-                                else {
-                                    ctrl.header = 'No posts found by this author.';
-                                }
                                 break;
                             case 'search':
                                 ctrl.header = 'Search results for: ' + ctrl.config.slug;

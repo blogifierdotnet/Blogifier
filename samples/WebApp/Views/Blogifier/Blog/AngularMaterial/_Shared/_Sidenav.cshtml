@@ -52,11 +52,6 @@
             <div id="categories-list">
                 <md-list-item ng-repeat="cat in categories" ng-click="sidenavNavigate('left-menu', 'category', { slug: cat.slug })" data-categorySlug="{{cat.slug}}" data-categoryId="{{cat.id}}">{{cat.title}}</md-list-item>
             </div>
-            <md-divider ng-show="authors"></md-divider>
-            <menu-toggle label="Authors" target="authors-list" ng-show="authors"></menu-toggle>
-            <div id="authors-list">
-                <md-list-item ng-repeat="author in authors" ng-click="sidenavNavigate('left-menu', 'author', { slug: author.slug })">{{author.authorName}}</md-list-item>
-            </div>
             
             @if (SocialButtons.Count > 0)
             {
