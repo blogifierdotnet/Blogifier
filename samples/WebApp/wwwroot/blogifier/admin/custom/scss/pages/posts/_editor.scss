@@ -51,6 +51,19 @@
     border-radius: 3px;
 }
 
+.admin-editor-cover {
+    &-image {
+        max-height: 10rem;
+        overflow: hidden;
+        margin-bottom: .5rem;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+img{
+    min-width:100%;
+}
+    }
+}
+
 .admin-editor-category {
     text-transform: none;
     overflow: hidden;

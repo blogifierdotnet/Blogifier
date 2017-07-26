@@ -129,9 +129,9 @@
             var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">Upload Post Cover</button >';
         }
         $('#post-image').append(btn);
-        var dd = '<img src="' + postImg + '" />';
         if (postImg.length > 0) {
-            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove</button>';
+        var dd = '<div class="admin-editor-cover-image"><img src="' + postImg + '" /></div>';
+            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove Cover</button>';
         }
         $('#post-image').append(dd);
     }
