@@ -60,3 +60,15 @@ pre {
     background: #000;
     color: #fff;
 }
+
+blockquote {
+    background: #eee;
+    padding: 2rem;
+    border-radius: 3px;
+
+    p {
+        &:last-child {
+            margin-bottom: 0 !important;
+        }
+    }
+}
