@@ -1,8 +1,6 @@
 ﻿var editorController = function (dataService, filePickerController) {
 
     function savePost(publish) {
-        $('.spin-icon').fadeIn();
-        $('.admin-editor-toolbar').fadeOut();
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
@@ -11,6 +9,10 @@
             Description: $('#txtDescription').val(),
             IsPublished: publish ? true : false,
             Categories: []
+        }
+        if (obj.Title.length > 0 || obj.Content.length > 0) {
+            $('.spin-icon').fadeIn('fast');
+            $('.admin-editor-toolbar').fadeOut('fast');
         }
         if (obj.Title.length === 0) {
             toastr.error("Title is required");
@@ -37,8 +39,8 @@
         $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
         loadActionButtons();
-        $('.spin-icon').fadeOut();
-        $('.admin-editor-toolbar').fadeIn();
+        $('.spin-icon').fadeOut('fast');
+        $('.admin-editor-toolbar').fadeIn('fast');
     }
 
     function deletePost() {
@@ -126,12 +128,12 @@
         var postImg = $('#hdnPostImg').val();
         $('#post-image').empty();
         if (!postImg.length > 0) {
-            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');"><i class="fa fa-image"></i> Upload Post Cover</button >';
+            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">Upload Post Cover</button >';
         }
         $('#post-image').append(btn);
-        var dd = '<img src="' + postImg + '" />';
         if (postImg.length > 0) {
-            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove</button>';
+        var dd = '<div class="admin-editor-cover-image"><img src="' + postImg + '" /></div>';
+            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove Cover</button>';
         }
         $('#post-image').append(dd);
     }
@@ -171,7 +173,7 @@
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
                 btn += '</div></div> ';
-                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-secondary">View</a>';
+                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-secondary btn-icon mr-1 float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
             }
         }
         $('#action-buttons').append(btn);

@@ -77,20 +77,6 @@ namespace WebApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    OnPrepareResponse =
-            //    r =>
-            //    {
-            //        string path = r.File.PhysicalPath.ToLower();
-            //        if (path.EndsWith(".css") || path.EndsWith(".js") || path.EndsWith(".gif") || path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".svg"))
-            //        {
-            //            TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
-            //            r.Context.Response.Headers.Append("Cache-Control", "max-age=" + maxAge.TotalSeconds.ToString("0"));
-            //        }
-            //    }
-            //});
-
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>

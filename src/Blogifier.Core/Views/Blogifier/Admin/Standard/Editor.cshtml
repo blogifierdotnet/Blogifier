@@ -16,63 +16,53 @@
         <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
     </form>
     <div class="admin-editor-toolbar clearfix">
-        <div class="admin-editor-toolbar-left float-left">
-            <span id="action-buttons"></span>
-            <a href="~/admin" class="btn btn-secondary">Cancel</a>
-        </div>
-        <div class="admin-editor-toolbar-right float-right">
-
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#postMeta">
-                Meta
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="postMeta" tabindex="-1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content admin-editor-meta">
-                        <div class="modal-body">
-                            <!-- Cover -->
-                            <div id="post-image" class="admin-editor-cover"></div>
-                            <!-- Category -->
-                            <div class="admin-editor-category">
-                                <h5>Category</h5>
-                                <form id="frmCategory">
-                                    <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
-                                </form>
-                                <ul id="edit-categories">
-                                    @foreach (var category in Model.CategoryList)
-                                    {
-                                        <li id="cat-@category.Value">
-                                            <label class="custom-control custom-checkbox">
-                                                @if (category.Selected)
-                                                {
-                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                                                }
-                                                else
-                                                {
-                                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                                                }
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">@category.Text</span>
-                                            </label>
-                                            <i class="fa fa-times" onclick="editorController.removeCategory('@category.Value')"></i>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                            <!-- Description -->
-                            <div class="admin-editor-description">
-                                <h5>Description</h5>
-                                <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
-                            </div>
-                        </div>
+        <button type="button" class="btn btn-secondary btn-icon float-right" data-toggle="modal" data-target="#postMeta" data-placement="bottom" aria-label="Settings" title="Settings"><i class="fa fa-cog"></i></button> 
+        <span id="action-buttons"></span>
+        <a href="~/admin" class="btn btn-secondary">Cancel</a>
+    </div>
+    <div class="modal fade" id="postMeta" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content admin-editor-meta">
+                <div class="float-right">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div id="post-image" class="admin-editor-cover"></div>
+                    <div class="admin-editor-category">
+                        <h5>Category</h5>
+                        <form id="frmCategory">
+                            <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
+                        </form>
+                        <ul id="edit-categories">
+                            @foreach (var category in Model.CategoryList)
+                            {
+                                <li id="cat-@category.Value">
+                                    <label class="custom-control custom-checkbox">
+                                        @if (category.Selected)
+                                        {
+                                            <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                        }
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">@category.Text</span>
+                                    </label>
+                                    <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="admin-editor-description">
+                        <h5>Description</h5>
+                        <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <div style="display:none;">
     <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">

@@ -6,7 +6,7 @@
 <div class="admin-footer">
     <div class="container">
         <div class="float-md-left item-copyright">
-        <a href="http://blogifier.net/" target="_blank"> <img src="~/embedded/admin/standard/img/logo-sm.png" alt="Blogifier" /></a>
+        <a href="http://blogifier.net/" target="_blank"><img src="~/embedded/admin/standard/img/logo-sm.png" alt="Blogifier" /></a>
         Copyright &copy; @DateTime.Now.Year Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)
         </div>
         <ul class="float-md-right">
@@ -31,13 +31,4 @@
     function getUrl(str) {
         return webRoot + str;
     };
-    $(document).ready(function () {
-        $('.post-list [data-toggle="tooltip"]').tooltip({
-            offset: '-15px 0',
-            animation: false
-        });
-        $('[data-toggle="tooltip"], .admin-editor-toolbar-right .btn-group .btn-group > .btn').tooltip({
-            animation: false
-        });
-    });
 </script>

@@ -120,6 +120,9 @@
             $('.pagination-custom').append('<li><a class="item-count">' + firstPost + '-' + lastPost + ' out of ' + pg.total + '</a></li>');
             $('.pagination-custom').append(newer);
         }
+        else {
+            $('.modal-footer').hide();
+        }
     }
 
     function uploadAssets() {

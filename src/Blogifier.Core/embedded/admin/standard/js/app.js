@@ -1,11 +1,19 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-$(".admin-editor-toolbar").delay(500).fadeIn();
-
-$(".admin-editor-toolbar .dropdown-menu").click(function (event) {
-    event.stopPropagation();
+//
+$(document).ready(function () {
+    $('.post-list [data-toggle="tooltip"]').tooltip({
+        offset: '-15px 0',
+        animation: false
+    });
+    $('[data-toggle="tooltip"], .btn-icon').tooltip({
+        animation: false
+    });
 });
+
+//
+$(".admin-editor-toolbar").delay(500).fadeIn();
 
 //
 $('.admin-settings-sidebar li').removeClass('active');
@@ -17,7 +25,6 @@ $(".admin-settings-sidebar li").each(function (idx, li) {
     }
 });
 if (activated === false) { $('.admin-settings-sidebar .basic').addClass('active'); }
-
 
 //
 $('.admin-nav li').removeClass('active');
