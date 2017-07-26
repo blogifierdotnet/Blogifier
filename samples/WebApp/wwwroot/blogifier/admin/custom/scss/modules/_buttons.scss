@@ -7,11 +7,13 @@
     border-radius: 3px;
     padding: 0.65625rem 2rem;
     font-weight: $font-weight-medium;
+
     [class*="fa-angle-"] {
         font-size: 1rem;
     }
+
     @media screen and (max-width:768px) {
-         padding: 0.65625rem 1.5rem;
+        padding: 0.65625rem 1.5rem;
     }
 }
 
@@ -22,11 +24,13 @@
 .btn-black {
     color: #fff;
     background-color: #222;
+
     &:hover {
         color: #fff;
         background-color: #000;
         border-color: #000;
     }
+
     &.focus,
     &:focus {
         color: #fff !important;
@@ -37,4 +41,8 @@
 
 .btn-main {
     min-width: 8rem;
+}
+
+.btn-icon {
+    padding: 0.65625rem 1rem;
 }
