@@ -21,14 +21,12 @@
             <a href="~/admin" class="btn btn-secondary">Cancel</a>
         </div>
         <div class="admin-editor-toolbar-right float-right">
-            <button type="button" class="btn btn-secondary btn-icon" data-toggle="modal" data-target="#postMeta"><i class="fa fa-cog"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" data-toggle="modal" data-target="#postMeta" aria-label="Post meta"><i class="fa fa-cog"></i></button>
             <div class="modal fade" id="postMeta" tabindex="-1">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content admin-editor-meta">
                         <div class="float-right">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
                             <div id="post-image" class="admin-editor-cover"></div>
@@ -53,7 +51,7 @@
                                                 <span class="custom-control-indicator"></span>
                                                 <span class="custom-control-description">@category.Text</span>
                                             </label>
-                                            <i class="fa fa-times" onclick="editorController.removeCategory('@category.Value')"></i>
+                                            <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
                                         </li>
                                     }
                                 </ul>

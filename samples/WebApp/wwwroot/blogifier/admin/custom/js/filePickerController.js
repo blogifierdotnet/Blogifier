@@ -109,10 +109,10 @@
         var older = '';
         var newer = '';
         if (pg.showOlder === true) {
-            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href=""><i class="fa fa-long-arrow-left"></i></a></li>';
+            older = '<li onclick="return filePickerController.load(' + pg.older + ')"><a href="#" role="button" aria-label="Older posts"><i class="fa fa-long-arrow-left"></i></a></li>';
         }
         if (pg.showNewer === true) {
-            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href=""><i class="fa fa-long-arrow-right"></i></a></li>';
+            newer = '<li onclick="return filePickerController.load(' + pg.newer + ')"><a href="#" role="button" aria-label="Newer posts"><i class="fa fa-long-arrow-right"></i></a></li>';
         }
         $('.pagination-custom').empty();
         if (pg.showNewer === true || pg.showOlder === true) {
