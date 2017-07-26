@@ -61,7 +61,7 @@ namespace WebApp
         {
             if (env.IsDevelopment())
             {
-                loggerFactory.AddFile("Logs/blogifier-{Date}.txt");
+                loggerFactory.AddFile("Logs/blogifier-{Date}.txt", LogLevel.Warning);
 
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();

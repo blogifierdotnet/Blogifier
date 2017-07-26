@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Data.Interfaces;
+﻿using Blogifier.Core.Data.Domain;
+using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,24 @@ namespace Blogifier.Core.Controllers.Api
         [Route("rssimport")]
         public async Task<HttpResponseMessage> RssImport([FromBody]RssImportModel rss)
         {
-            return await _rss.Import(rss, Url.Content("~/"));
+            var profile = GetProfile();
+            rss.ProfileId = profile.Id;
+            rss.Root = Url.Content("~/");
+            
+            return await _rss.Import(rss);
+        }
+
+        Profile GetProfile()
+        {
+            try
+            {
+                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            }
+            catch
+            {
+                RedirectToAction("Login", "Account");
+            }
+            return null;
         }
     }
 }

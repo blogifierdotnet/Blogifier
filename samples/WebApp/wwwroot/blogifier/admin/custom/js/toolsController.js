@@ -2,10 +2,8 @@
 
     function importRss() {
         var data = {
-            ProfileId: $('#hdnProfileId').val(),
             FeedUrl: $('#txtFeedUrl').val(),
             Domain: $('#txtDomain').val(),
-            SubDomain: $('#txtSubDomain').val(),
             ImportImages: $('#chkImportImages').is(':checked'),
             ImportAttachements: $('#chkImportAttachements').is(':checked')
         };
@@ -28,6 +26,8 @@
 
     function fail(data) {
         toastr.error('Failed');
+        $('.spin-icon').fadeOut();
+        $('#btnImport .btn').removeAttr('disabled');
     }
 
     return {

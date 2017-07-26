@@ -38,14 +38,12 @@ namespace Blogifier.Core.Data.Models
     public class RssImportModel
     {
         public int ProfileId { get; set; }
+        public string Root { get; set; }
         [Required]
         [StringLength(450)]
         public string FeedUrl { get; set; }
-        [StringLength(150)]
+        [StringLength(250)]
         public string Domain { get; set; }
-        [StringLength(150)]
-        public string SubDomain { get; set; }
-
         public bool ImportImages { get; set; }
         public bool ImportAttachements { get; set; }
     }
