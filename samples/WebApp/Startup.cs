@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using System;
 using WebApp.Data;
 using WebApp.Models;
@@ -76,17 +77,27 @@ namespace WebApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles(new StaticFileOptions()
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    OnPrepareResponse =
+            //    r =>
+            //    {
+            //        string path = r.File.PhysicalPath.ToLower();
+            //        if (path.EndsWith(".css") || path.EndsWith(".js") || path.EndsWith(".gif") || path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".svg"))
+            //        {
+            //            TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
+            //            r.Context.Response.Headers.Append("Cache-Control", "max-age=" + maxAge.TotalSeconds.ToString("0"));
+            //        }
+            //    }
+            //});
+
+            app.UseStaticFiles(new StaticFileOptions
             {
-                OnPrepareResponse =
-                r =>
+                OnPrepareResponse = ctx =>
                 {
-                    string path = r.File.PhysicalPath.ToLower();
-                    if (path.EndsWith(".css") || path.EndsWith(".js") || path.EndsWith(".gif") || path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".svg"))
-                    {
-                        TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
-                        r.Context.Response.Headers.Append("Cache-Control", "max-age=" + maxAge.TotalSeconds.ToString("0"));
-                    }
+                    const int durationInSeconds = 60 * 60 * 24;
+                    ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                        "public,max-age=" + durationInSeconds;
                 }
             });
 
