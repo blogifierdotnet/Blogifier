@@ -5,7 +5,7 @@
     letter-spacing: 1px;
     cursor: pointer;
     border-radius: 3px;
-    padding: 0.65625rem 2rem;
+    padding: 0.65625rem 1.5rem;
     font-weight: $font-weight-medium;
 
     [class*="fa-angle-"] {
@@ -13,7 +13,7 @@
     }
 
     @media screen and (max-width:768px) {
-        padding: 0.65625rem 1.5rem;
+        padding: 0.65625rem 1rem;
     }
 }
 
