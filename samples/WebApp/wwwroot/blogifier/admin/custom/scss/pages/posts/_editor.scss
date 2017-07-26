@@ -125,3 +125,17 @@
         }
     }
 }
+
+.admin-editor-toolbar {
+    @media (max-width:480px) {
+        .btn {
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        .dropdown-toggle-split {
+            padding-right: .5rem;
+            padding-left: .5rem;
+        }
+    }
+}
