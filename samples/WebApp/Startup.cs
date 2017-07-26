@@ -81,7 +81,7 @@ namespace WebApp
                 OnPrepareResponse =
                 r =>
                 {
-                    string path = r.File.PhysicalPath;
+                    string path = r.File.PhysicalPath.ToLower();
                     if (path.EndsWith(".css") || path.EndsWith(".js") || path.EndsWith(".gif") || path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".svg"))
                     {
                         TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
