@@ -1,8 +1,6 @@
 ﻿var editorController = function (dataService, filePickerController) {
 
     function savePost(publish) {
-        $('.spin-icon').fadeIn();
-        $('.admin-editor-toolbar').fadeOut();
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
@@ -11,6 +9,10 @@
             Description: $('#txtDescription').val(),
             IsPublished: publish ? true : false,
             Categories: []
+        }
+        if (obj.Title.length > 0 || obj.Content.length > 0) {
+            $('.spin-icon').fadeIn('fast');
+            $('.admin-editor-toolbar').fadeOut('fast');
         }
         if (obj.Title.length === 0) {
             toastr.error("Title is required");
@@ -37,8 +39,8 @@
         $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
         loadActionButtons();
-        $('.spin-icon').fadeOut();
-        $('.admin-editor-toolbar').fadeIn();
+        $('.spin-icon').fadeOut('fast');
+        $('.admin-editor-toolbar').fadeIn('fast');
     }
 
     function deletePost() {

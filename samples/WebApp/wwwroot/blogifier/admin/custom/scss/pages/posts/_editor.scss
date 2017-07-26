@@ -127,6 +127,14 @@
 }
 
 .admin-editor-toolbar {
+    .btn-group {
+        .btn {
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+
     @media (max-width:480px) {
         .btn {
             padding-right: 1rem;
