@@ -21,21 +21,19 @@
             <a href="~/admin" class="btn btn-secondary">Cancel</a>
         </div>
         <div class="admin-editor-toolbar-right float-right">
-
-
-            <!-- Button trigger modal -->
             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#postMeta">
                 Meta
             </button>
-
-            <!-- Modal -->
             <div class="modal fade" id="postMeta" tabindex="-1">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content admin-editor-meta">
+                        <div class="float-right">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div class="modal-body">
-                            <!-- Cover -->
                             <div id="post-image" class="admin-editor-cover"></div>
-                            <!-- Category -->
                             <div class="admin-editor-category">
                                 <h5>Category</h5>
                                 <form id="frmCategory">
@@ -62,7 +60,6 @@
                                     }
                                 </ul>
                             </div>
-                            <!-- Description -->
                             <div class="admin-editor-description">
                                 <h5>Description</h5>
                                 <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>

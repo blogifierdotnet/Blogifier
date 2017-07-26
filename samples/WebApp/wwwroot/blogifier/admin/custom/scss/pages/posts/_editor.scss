@@ -13,8 +13,8 @@
 
     .spin-icon {
         position: absolute;
-        right:1rem;
-        bottom:.75rem;
+        right: 1rem;
+        bottom: .75rem;
     }
 
     @media screen and (max-width:480px) {
@@ -27,21 +27,28 @@
 .admin-editor-meta {
     background: none;
     border: none;
+    padding: 1rem;
 
     .modal-body {
         padding: 0 !important;
     }
 
     h5 {
-        margin-bottom: 1rem;
-        text-transform:uppercase;
+        margin-bottom: .5rem;
+        text-transform: uppercase;
+        font-size: 1rem;
+    }
+
+    .close {
+        margin-bottom: .5rem;
     }
 }
 
 .admin-editor-cover, .admin-editor-category, .admin-editor-description {
     background: #fff;
-    padding: 2rem;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: .25rem;
+    border-radius: 3px;
 }
 
 .admin-editor-category {
@@ -56,9 +63,10 @@
 
     ul {
         @include unstyled();
-        height: 12.25rem;
+        max-height: 10.3125rem;
         overflow-x: hidden;
-        border: .0625rem solid #eee;
+        border: .0625rem solid #ddd;
+        border-radius: 3px;
 
         li {
             position: relative;
@@ -71,20 +79,23 @@
             label {
                 margin-bottom: 0;
                 display: block;
-                padding: .44rem 1rem .44rem 2.5rem;
+                padding: 0 2rem;
+                height: 2rem;
+                font-size: .875rem;
+                line-height: 2rem;
             }
 
             .custom-control-indicator {
-                top: .55rem;
-                left: 1rem;
+                top: .5rem;
+                left: .5rem;
             }
         }
 
         i {
             display: block;
-            width: 2.25rem;
+            width: 2rem;
             height: 100%;
-            line-height: 2.25rem;
+            line-height: 2rem;
             border-left: .0625rem solid #eee;
             position: absolute;
             right: 0;

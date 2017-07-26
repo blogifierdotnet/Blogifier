@@ -126,7 +126,7 @@
         var postImg = $('#hdnPostImg').val();
         $('#post-image').empty();
         if (!postImg.length > 0) {
-            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');"><i class="fa fa-image"></i> Upload Post Cover</button >';
+            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">Upload Post Cover</button >';
         }
         $('#post-image').append(btn);
         var dd = '<img src="' + postImg + '" />';
