@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
@@ -61,7 +63,7 @@ namespace WebApp
         {
             if (env.IsDevelopment())
             {
-                loggerFactory.AddFile("Logs/blogifier-{Date}.txt");
+                loggerFactory.AddFile("Logs/blogifier-{Date}.txt", LogLevel.Warning);
 
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -74,7 +76,20 @@ namespace WebApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse =
+                r =>
+                {
+                    string path = r.File.PhysicalPath.ToLower();
+                    if (path.EndsWith(".css") || path.EndsWith(".js") || path.EndsWith(".gif") || path.EndsWith(".jpg") || path.EndsWith(".png") || path.EndsWith(".svg"))
+                    {
+                        TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
+                        r.Context.Response.Headers.Append("Cache-Control", "max-age=" + maxAge.TotalSeconds.ToString("0"));
+                    }
+                }
+            });
+
             app.UseIdentity();
 
             app.UseMvc(routes =>

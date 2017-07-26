@@ -67,7 +67,7 @@ namespace Blogifier.Test.Services.Syndication
                 model.FeedUrl = path;
                 model.ProfileId = profile.Id;
 
-                var result = service.Import(model, "");
+                var result = service.Import(model);
 
                 Assert.True(context.BlogPosts.ToList().Count > 1);
             }

@@ -242,6 +242,10 @@ namespace Blogifier.Core.Services.FileSystem
             {
                 title = title.Substring(title.IndexOf("image.axd?picture=") + 18);
             }
+            if (title.Contains("file.axd?file="))
+            {
+                title = title.Substring(title.IndexOf("file.axd?file=") + 14);
+            }
             if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
             {
                 Random rnd = new Random();

@@ -20,7 +20,6 @@ namespace Blogifier.Core.Services.Syndication.Rss
     {
         IUnitOfWork _db;
         RssImportModel _model;
-        string _root;
         private readonly AppLogger _logger;
 
         public RssService(IUnitOfWork db, ILogger<RssService> logger)
@@ -29,11 +28,10 @@ namespace Blogifier.Core.Services.Syndication.Rss
             _logger = new AppLogger(logger);
         }
 
-        public async Task<HttpResponseMessage> Import(RssImportModel model, string root)
+        public async Task<HttpResponseMessage> Import(RssImportModel model)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             _model = model;
-            _root = root;
 
             if(model == null || string.IsNullOrEmpty(model.FeedUrl))
             {
@@ -234,12 +232,14 @@ namespace Blogifier.Core.Services.Syndication.Rss
             {
                 foreach (var item in assets)
                 {
+                    var uri = "";
                     try
                     {
-                        var uri = GetUri(item, _model.Domain, _model.SubDomain);
+                        uri = ValidateUrl(item);
+                        
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
-                        var asset = await storage.UploadFromWeb(uri, _root, path);
+                        var asset = await storage.UploadFromWeb(new Uri(uri), _model.Root, path);
                         asset.ProfileId = post.ProfileId;
                         asset.LastUpdated = SystemClock.Now();
 
@@ -253,25 +253,24 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogWarning(string.Format("Error importing {0} : {1}", item, ex.Message));
+                        _logger.LogError(string.Format("Error importing [{0}] : {1}", item, ex.Message));
                     }
                 }
             }
         }
 
-        Uri GetUri(string link, string domain, string subdomain)
+        string ValidateUrl(string link)
         {
             var url = link;
             if (url.StartsWith("~"))
             {
-                url = url.Replace("~", subdomain);
-                url = string.Concat(domain, "/", url);
+                url = url.Replace("~", _model.Domain);
             }
-            if (url.StartsWith("/") && !string.IsNullOrEmpty(domain))
+            if (url.StartsWith("/"))
             {
-                url = string.Concat(domain, url);
+                url = string.Concat(_model.Domain, url);
             }
-            return new Uri(url);
+            return url;
         }
 
         async Task AddCategories(FeedItem item, int blogId)
