@@ -95,9 +95,9 @@ namespace WebApp
             {
                 OnPrepareResponse = ctx =>
                 {
-                    const int durationInSeconds = 60 * 60 * 24;
+                    TimeSpan maxAge = new TimeSpan(7, 0, 0, 0);
                     ctx.Context.Response.Headers[HeaderNames.CacheControl] =
-                        "public,max-age=" + durationInSeconds;
+                        "public,max-age=" + maxAge.TotalSeconds.ToString("0");
                 }
             });
 
