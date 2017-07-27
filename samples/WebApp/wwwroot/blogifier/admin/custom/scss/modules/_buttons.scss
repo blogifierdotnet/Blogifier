@@ -2,17 +2,13 @@
     text-transform: uppercase;
     outline: none !important;
     font-size: .875rem;
-    letter-spacing: 1px;
+    letter-spacing: .0625rem;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: .1875rem;
     padding: 0.65625rem 1.5rem;
     font-weight: $font-weight-medium;
 
-    [class*="fa-angle-"] {
-        font-size: 1rem;
-    }
-
-    @media screen and (max-width:768px) {
+    @media screen and (max-width:48rem) {
         padding: 0.65625rem 1rem;
     }
 }
@@ -34,15 +30,14 @@
     &.focus,
     &:focus {
         color: #fff !important;
-        -webkit-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.50);
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.50);
+        box-shadow: 0 0 0 .125rem rgba(0, 0, 0, 0.50);
     }
 }
 
 .btn-main {
     min-width: 8rem;
 
-    @media screen and (max-width:399px) {
+    @media screen and (max-width:24.9375rem) {
         width: 100%;
     }
 }

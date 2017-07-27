@@ -4,14 +4,14 @@
         height: 10rem;
         display: block;
         overflow: hidden;
-        border-radius: 2px;
+        border-radius: .125rem;
         margin-bottom: 2rem;
         border: .25rem solid #fff;
         background: #fff;
-        box-shadow: 0 0 0 1px #ddd;
+        box-shadow: 0 0 0 .0625rem #ddd;
 
         &:hover {
-            box-shadow: 0 0 0 1px #000;
+            box-shadow: 0 0 0 .0625rem #000;
         }
 
         img {
@@ -53,11 +53,11 @@
 
 .asset-edit {
     &-item {
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
+        border-top-left-radius: .1875rem;
+        border-top-right-radius: .1875rem;
         max-height: 30rem;
         overflow: hidden;
-        border: 1px solid #ddd;
+        border: .0625rem solid #ddd;
         border-bottom: 0;
         background: #fafafa;
 
@@ -69,14 +69,14 @@
         &-info {
             font-size: .875rem;
             background: #fafafa;
-            border: 1px solid #ddd;
+            border: .0625rem solid #ddd;
             padding: 1rem;
-            border-bottom-right-radius: 3px;
-            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: .1875rem;
+            border-bottom-left-radius: .1875rem;
         }
     }
 
-    @media screen and (max-width:575px) {
+    @media screen and (max-width:57.3125rem) {
         .row {
             margin-bottom: .5rem;
 

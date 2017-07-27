@@ -5,9 +5,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .form-control {
-    border-radius: 3px;
+    border-radius: .1875rem;
     font-family: inherit;
-    border-color:#ddd;
+    border-color: #ddd;
+
     &:focus {
         border-color: #666;
     }

@@ -5,10 +5,10 @@
     top: 0;
     left: 0;
     z-index: 2;
-    border-bottom: 1px solid $color-border;
+    border-bottom: .0625rem solid $color-border;
 
     .modal-open & {
-        padding-right: 17px;
+        padding-right: 1.0625rem;
     }
 
     .container {
@@ -16,7 +16,7 @@
         padding: 0;
     }
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 47.9375rem) {
         background: #f1f1f1;
         height: 3rem;
     }
@@ -105,7 +105,7 @@
         }
     }
 
-    @media screen and (max-width:480px) {
+    @media screen and (max-width:30rem) {
         .dropdown-toggle {
             span {
                 display: none;
@@ -113,7 +113,7 @@
         }
     }
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 47.9375rem) {
         > li {
             > a {
                 line-height: 3rem;
@@ -121,7 +121,7 @@
         }
     }
 
-    @media screen and (max-width:480px) {
+    @media screen and (max-width:30rem) {
         display: table;
         width: 100%;
 

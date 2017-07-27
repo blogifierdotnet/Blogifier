@@ -61,6 +61,7 @@
     height: 0;
     position: absolute;
     display: block;
+
     @if $direction=='up' {
         border-right: $size solid transparent;
         border-bottom: $size solid $color;
@@ -87,6 +88,7 @@
     content: "";
     width: 0;
     height: 0;
+
     @if $corner=='top-left' {
         border-top: $size solid $color;
         border-right: $size solid transparent;
@@ -116,5 +118,5 @@
 @mixin button-unstyled() {
     background: none;
     border: 0;
-    padding:0;
+    padding: 0;
 }

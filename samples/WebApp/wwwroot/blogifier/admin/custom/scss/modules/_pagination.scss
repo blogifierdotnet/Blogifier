@@ -2,9 +2,11 @@
     @include unstyled();
     margin-top: 3rem;
     text-align: center;
+
     li {
         display: inline-block;
         vertical-align: top;
+
         a {
             height: 2.5rem;
             line-height: 2.5rem;
@@ -12,18 +14,22 @@
             display: block;
             color: #888;
             border: .0625rem solid transparent;
+
             &:hover {
                 border-color: #000;
                 color: #000;
             }
+
             border-radius: .1875rem;
         }
+
         .item-count {
             color: #888;
             padding: 0 1rem;
             font-size: 1rem;
             border-color: transparent !important;
         }
+
         i {
             display: block;
             font-size: 1.5rem;
@@ -33,6 +39,7 @@
             top: -.0625rem;
         }
     }
+
     &.pagination-custom-sm {
         li {
             a {
@@ -40,27 +47,33 @@
                 line-height: 2rem;
                 height: 2rem;
             }
+
             .item-count {
                 font-size: .875rem;
             }
+
             i {
                 font-size: 1.25rem;
             }
         }
     }
-    @media screen and (max-width:767px) {
+
+    @media screen and (max-width:76.4375rem) {
         margin-top: 1rem;
     }
-    @media screen and (max-width:575px) {
+
+    @media screen and (max-width:57.3125rem) {
         li {
             a {
                 padding: 0 1rem;
                 line-height: 2rem;
                 height: 2rem;
             }
+
             .item-count {
                 font-size: .875rem;
             }
+
             i {
                 font-size: 1.25rem;
             }

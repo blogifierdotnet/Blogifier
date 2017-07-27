@@ -8,7 +8,7 @@ body {
     font-size: $font-size-base;
     line-height: $line-height-base;
     background-color: #fff;
-    color: #666;
+    color: #444;
     cursor: default;
     overflow-y: scroll;
 }
@@ -24,9 +24,11 @@ body {
     min-height: 100%;
     padding-top: 7rem;
     padding-bottom: 7rem;
+
     &-title {
         padding-bottom: 2rem;
     }
+
     @media screen and (max-width: 768px) {
         padding-top: 4rem;
         padding-bottom: 3.5rem;

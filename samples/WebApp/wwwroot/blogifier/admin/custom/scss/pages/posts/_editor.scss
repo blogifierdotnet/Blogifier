@@ -17,7 +17,7 @@
         bottom: .75rem;
     }
 
-    @media screen and (max-width:480px) {
+    @media screen and (max-width:30rem) {
         .form-control-title {
             font-size: 1rem;
         }
@@ -48,7 +48,7 @@
     background: #fff;
     padding: 1rem;
     margin-bottom: .25rem;
-    border-radius: 3px;
+    border-radius: .1875rem;
 }
 
 .admin-editor-cover {
@@ -56,8 +56,8 @@
         max-height: 10rem;
         overflow: hidden;
         margin-bottom: .5rem;
-        border-radius: 3px;
-        border: 1px solid #ddd;
+        border-radius: .1875rem;
+        border: .0625rem solid #ddd;
 
         img {
             min-width: 100%;
@@ -80,7 +80,7 @@
         max-height: 10.3125rem;
         overflow-x: hidden;
         border: .0625rem solid #ddd;
-        border-radius: 3px;
+        border-radius: .1875rem;
 
         li {
             position: relative;
@@ -135,7 +135,7 @@
         }
     }
 
-    @media (max-width:480px) {
+    @media (max-width:30rem) {
         .btn {
             padding-right: 1rem;
             padding-left: 1rem;

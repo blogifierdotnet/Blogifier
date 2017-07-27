@@ -9,7 +9,7 @@
     font-weight: 400;
     overflow: hidden;
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 47.9375rem) {
         text-align: center;
         height: 2.5rem;
         line-height: 2.5rem;
@@ -32,7 +32,7 @@
         vertical-align: middle;
         display: inline-block;
         position: relative;
-        top: -2px;
+        top: -.125rem;
 
         &:hover {
             opacity: 1;
@@ -48,11 +48,11 @@
             a {
                 margin-left: 1rem;
                 padding-left: 1rem;
-                border-left: 1px solid #ddd;
+                border-left: .0625rem solid #ddd;
             }
         }
 
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 47.9375rem) {
             display: none;
         }
     }

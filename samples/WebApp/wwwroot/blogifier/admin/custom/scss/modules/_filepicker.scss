@@ -1,11 +1,13 @@
 ﻿.file-picker {
     margin-left: -.5rem;
     margin-right: -.5rem;
-    >.col,
-    >[class*=col-] {
+
+    > .col,
+    > [class*=col-] {
         padding-right: .5rem;
         padding-left: .5rem;
     }
+
     a {
         position: relative;
         height: 7rem;
@@ -14,10 +16,12 @@
         margin-bottom: 1rem;
         border: .25rem solid #fff;
         background: #fff;
-        box-shadow: 0 0 0 1px #ddd;
+        box-shadow: 0 0 0 .0625rem #ddd;
+
         &:hover {
-            box-shadow: 0 0 0 1px #000;
+            box-shadow: 0 0 0 .0625rem #000;
         }
+
         img {
             min-height: 100%;
             max-width: 150%;
