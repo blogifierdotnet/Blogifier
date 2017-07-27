@@ -97,7 +97,7 @@
 
         $('#assetEdit').append(tag);
 
-        var btn = '<button class="btn btn-danger btn-main mr-2" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
+        var btn = '<button class="btn btn-danger mr-2" onclick="return assetController.remove(' + data.id + ')">Delete</button>';
         btn += '<button class="btn btn-secondary" onclick="return assetController.loadFileManager()">Cancel</button>';
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
