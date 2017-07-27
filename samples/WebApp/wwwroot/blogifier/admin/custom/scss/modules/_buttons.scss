@@ -41,6 +41,10 @@
 
 .btn-main {
     min-width: 8rem;
+
+    @media screen and (max-width:399px) {
+        width: 100%;
+    }
 }
 
 .btn-icon {

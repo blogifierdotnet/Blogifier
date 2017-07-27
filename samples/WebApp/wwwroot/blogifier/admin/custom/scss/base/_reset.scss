@@ -37,6 +37,7 @@ iframe {
 
 button {
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
     &:focus {
         outline: none !important;
     }
@@ -48,4 +49,14 @@ p {
 
 [onclick] {
     cursor: pointer;
+}
+
+::selection {
+    background: #000;
+    color: #fff;
+}
+
+::-moz-selection {
+    background: #000;
+    color: #fff;
 }
