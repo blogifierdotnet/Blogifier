@@ -1,8 +1,7 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-//
-$(document).ready(function () {
+$(function () {
     $('.post-list [data-toggle="tooltip"]').tooltip({
         offset: '-15px 0',
         animation: false
@@ -12,35 +11,30 @@ $(document).ready(function () {
     });
 });
 
-//
-$(".admin-editor-toolbar").delay(500).fadeIn();
-
-//
 $('.admin-settings-sidebar li').removeClass('active');
-var activated = false;
+var navSidebarActivated = false;
 $(".admin-settings-sidebar li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).addClass('active');
-        activated = true;
+        navSidebarActivated = true;
     }
 });
-if (activated === false) { $('.admin-settings-sidebar .basic').addClass('active'); }
+if (navSidebarActivated === false) {
+    $('.admin-settings-sidebar .basic').addClass('active');
+}
 
-//
 $('.admin-nav li').removeClass('active');
-var activatedAD = false;
+var navAdminActivated = false;
 $(".admin-nav li").each(function (idx, li) {
     if (window.location.pathname.indexOf("/" + $(li).attr("class")) > 0) {
         $(li).children().addClass('active');
-        activatedAD = true;
+        navAdminActivated = true;
     }
 });
-if (activatedAD === false) {
+if (navAdminActivated === false) {
     $('.admin-nav .admin').children().addClass('active');
 }
 
-
-//
 function profileLogOut() {
     $("#frmLogOut").submit();
 }

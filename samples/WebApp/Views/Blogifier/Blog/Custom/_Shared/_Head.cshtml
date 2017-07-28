@@ -1,10 +1,12 @@
 ﻿@using Blogifier.Core.Common
 @{ 
-    var pageTitle = "Blogifier";
+    var pageTitle = ApplicationSettings.Title;
+    var pageDescription = ApplicationSettings.Description;
     var customHead = "";
     try
     {
         pageTitle = Model.PageTitle;
+        pageDescription = Model.PageDescription;
         var cf = Model.CustomFields;
         customHead = (cf.ContainsKey("Head") && !string.IsNullOrEmpty(cf["Head"])) ? cf["Head"] : "";
     }
@@ -14,7 +16,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>@pageTitle</title>
 @Html.Raw(customHead)
-<meta name="description" content="@ApplicationSettings.Description">
+<meta name="description" content="@pageDescription">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet">
 <link href="~/blogifier/blog/custom/css/bootstrap.min.css" rel="stylesheet">

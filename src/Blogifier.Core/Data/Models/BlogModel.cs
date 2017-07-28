@@ -11,6 +11,7 @@ namespace Blogifier.Core.Data.Models
         public virtual string LogoUrl { get; set; } = "";
         public virtual string CoverImg { get; set; } = ApplicationSettings.ProfileImage;
         public virtual string PageTitle { get; set; } = "Blogifier";
+        public virtual string PageDescription { get; set; } = ApplicationSettings.Description;
         public Dictionary<string, string> CustomFields { get; set; } = new Dictionary<string, string>();
     }
 
@@ -20,6 +21,7 @@ namespace Blogifier.Core.Data.Models
         public override string CoverImg { get => BlogPost.Image; }
         public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => BlogPost.Title; }
+        public override string PageDescription { get => Profile == null ? PageTitle : Profile.Description + " - " + PageTitle; }
 
         public Profile Profile { get; set; }
         public BlogPost BlogPost { get; set; }
@@ -43,6 +45,7 @@ namespace Blogifier.Core.Data.Models
         public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
         public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => "Category: " + Category.Title; }
+        public override string PageDescription { get => Profile == null ? PageTitle : Profile.Description + " - " + PageTitle; }
 
         public Profile Profile { get; set; }
         public Category Category { get; set; }
@@ -56,6 +59,7 @@ namespace Blogifier.Core.Data.Models
         public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
         public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => Profile.Title; }
+        public override string PageDescription { get => Profile.Title + " - " + Profile.Description; }
 
         public Profile Profile { get; set; }
         public IEnumerable<PostListItem> Posts { get; set; }
