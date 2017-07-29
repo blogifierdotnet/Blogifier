@@ -7,7 +7,6 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +19,11 @@ namespace Blogifier.Core.Controllers
 	{
 		IUnitOfWork _db;
         ILogger _logger;
-        private readonly IConfiguration _config;
         string _theme;
 
-		public SettingsController(IUnitOfWork db, IConfiguration config, ILogger<SettingsController> logger)
+		public SettingsController(IUnitOfWork db, ILogger<SettingsController> logger)
 		{
 			_db = db;
-            _config = config;
             _logger = logger;
             _theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
                 ApplicationSettings.AdminTheme);

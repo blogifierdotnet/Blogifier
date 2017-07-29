@@ -23,11 +23,14 @@ namespace Blogifier.Core
 {
     public class Configuration
     {
-		public static void InitServices(IServiceCollection services, IConfiguration config)
+		public static void InitServices(IServiceCollection services, IConfiguration config = null)
 		{
-            var loader = new AppSettingsLoader();
-            loader.LoadFromConfigFile(config);
-
+            if(config != null)
+            {
+                var loader = new AppSettingsLoader();
+                loader.LoadFromConfigFile(config);
+            }
+                
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
