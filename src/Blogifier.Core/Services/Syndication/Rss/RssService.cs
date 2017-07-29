@@ -99,9 +99,9 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        public string Display(string absoluteUri)
+        public string Display(string absoluteUri, string author)
         {
-            var pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
+            IEnumerable<PostListItem> pubs;
 
             var feed = new Feed()
             {
@@ -110,6 +110,24 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 Link = new Uri(absoluteUri + "/rss"),
                 Copyright = "(c) " + DateTime.Now.Year
             };
+
+            if (string.IsNullOrEmpty(author))
+            {
+                pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
+            }
+            else
+            {
+                var profile = _db.Profiles.Single(p => p.Slug == author);
+                feed = new Feed()
+                {
+                    Title = profile.Title,
+                    Description = profile.Description,
+                    Link = new Uri(absoluteUri + "/rss/" + author),
+                    Copyright = "(c) " + DateTime.Now.Year
+                };
+
+                pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow && p.Profile.Slug == author, new Pager(1));
+            }
 
             foreach (var post in pubs)
             {

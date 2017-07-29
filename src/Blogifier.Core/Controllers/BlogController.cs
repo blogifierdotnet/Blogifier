@@ -147,15 +147,17 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Search.cshtml", model);
         }
 
-        [Route("rss")]
-        public IActionResult Rss()
+        [Route("rss/{slug:author?}")]
+        public IActionResult Rss(string slug)
         {
             var absoluteUri = string.Concat(
                 Request.Scheme, "://",
                 Request.Host.ToUriComponent(),
                 Request.PathBase.ToUriComponent());
 
-            var rss = _rss.Display(absoluteUri);
+            var x = slug;
+
+            var rss = _rss.Display(absoluteUri, slug);
             return Content(rss, "text/xml");
         }
 

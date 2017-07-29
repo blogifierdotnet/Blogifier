@@ -2,11 +2,7 @@
 
 ## Blogifier.Core.PostgreSql [![MyGet](https://buildstats.info/myget/rtur/Blogifier.Core.PostgreSql)](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core.PostgreSql)
 
-This project currently in the pre-release and not completely ready for production use.
-
-## What is Blogifier.Core
-
-The goal of this project is to "blogify" new and existing ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality.
+The goal of this project is to "blogify" ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality.
 
 [![Introductory Youtube video](https://img.youtube.com/vi/vb0lYJKGHSw/0.jpg)](https://www.youtube.com/watch?v=vb0lYJKGHSw)
 
