@@ -5,8 +5,8 @@
     var customCode = (cf.ContainsKey("Post") && !string.IsNullOrEmpty(cf["Post"])) ? cf["Post"] : "";
 }
 <article class="post-single">
-    <header class="cover" style="background-image: url('@Model.CoverImg')">
-        <img class="cover-img" src="@Model.CoverImg" alt="@Model.BlogPost.Title" />
+    <header class="cover" style="background-image: url('@Url.Content("~/")@Model.CoverImg')">
+        <img class="cover-img" src="~/@Model.CoverImg" alt="@Model.BlogPost.Title" />
         <div class="cover-title container">
             <h1>@Model.BlogPost.Title</h1>
             <p>

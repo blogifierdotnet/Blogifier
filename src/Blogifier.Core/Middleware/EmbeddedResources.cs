@@ -52,13 +52,20 @@ namespace Blogifier.Core.Middleware
 
                 if (requestedETag == responseETag)
                     context.Response.StatusCode = (int)HttpStatusCode.NotModified;
-                
-                var resource = _resources[path];
-                Stream stream = new MemoryStream(resource.Content);
 
-                SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
+                try
+                {
+                    var resource = _resources[path];
+                    Stream stream = new MemoryStream(resource.Content);
 
-                await stream.CopyToAsync(context.Response.Body);
+                    SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
+
+                    await stream.CopyToAsync(context.Response.Body);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
             }
             else
             {
