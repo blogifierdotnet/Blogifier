@@ -24,10 +24,10 @@ namespace Blogifier.Core.Common
 
         public static string AdminTheme { get; set; } = "Standard";
         public static string BlogTheme { get; set; } = "Standard";
-        public static string ProfileAvatar { get; set; } = "embedded/lib/img/avatar.jpg";
-        public static string ProfileLogo { get; set; } = "embedded/lib/img/logo.png";
-        public static string ProfileImage { get; set; } = "embedded/lib/img/cover.png";
-        public static string PostImage { get; set; } = "embedded/lib/img/cover.png";
+        public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
+        public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";
+        public static string ProfileImage { get; set; } = "/embedded/lib/img/cover.png";
+        public static string PostImage { get; set; } = "/embedded/lib/img/cover.png";
 
         #endregion
 
