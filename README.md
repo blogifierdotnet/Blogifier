@@ -4,7 +4,9 @@
 
 The goal of this project is to "blogify" ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.myget.org/feed/rtur/package/nuget/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality.
 
-[![Introductory Youtube video](https://img.youtube.com/vi/vb0lYJKGHSw/0.jpg)](https://www.youtube.com/watch?v=vb0lYJKGHSw)
+## Demo site
+
+The [demo site](http://blogifier.azurewebsites.net) is a playground you can use to check out Blogifier features. You can register new user and write post to test admin panel.
 
 ## System Requirements
 
