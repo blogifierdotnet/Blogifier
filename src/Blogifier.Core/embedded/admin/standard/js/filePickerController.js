@@ -52,7 +52,7 @@
                 dataService.get('blogifier/api/assets/asset/' + assetId , pickPostImgCallback, fail);
             }
             else {
-                dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + postId, pickCallback, fail);
+                dataService.get('blogifier/api/assets/postimage/' + assetId + '/' + $('#hdnPostId').val(), pickPostImgCallback, fail);
             }
         }
         else {

@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyVersion>0.9.3.0</AssemblyVersion>
-    <FileVersion>0.9.3.0</FileVersion>
-    <Version>0.9.3.0</Version>
-    <Authors>Blogifier</Authors>
+    <AssemblyVersion>0.9.5.0</AssemblyVersion>
+    <FileVersion>0.9.5.0</FileVersion>
+    <Version>0.9.5.0</Version>
+    <Authors>blogifierdotnet</Authors>
     <Company>Blogifier.NET</Company>
-    <Description>Blogifier.Core is designed to blogify ASP.NET Core applications</Description>
+    <Description>Blogifier.Core will add full-featured blog to your ASP.NET Core application.</Description>
+    <PackageIconUrl>https://avatars0.githubusercontent.com/u/19671571?v=4&amp;s=100</PackageIconUrl>
+    <RepositoryUrl>https://github.com/blogifierdotnet/Blogifier.Core</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/blogifierdotnet</PackageProjectUrl>
+    <Copyright>Copyright (c) 2017 Blogifier.NET</Copyright>
+    <PackageLicenseUrl>https://github.com/blogifierdotnet/Blogifier.Core/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>blog blogging blogifier blogifier.net blogifierdotnet</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
