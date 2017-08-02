@@ -3,8 +3,27 @@
         position: relative;
         height: 3rem;
         line-height: 3rem;
-        padding: 0 18rem 0 0;
+        padding: 0 9rem 0 3rem;
         border-color: $color-border;
+
+
+        .post-item-checkbox {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            display: block;
+            width: 3rem;
+
+            .custom-control-indicator {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%)
+            }
+        }
 
         .post-item-link {
             display: block;
@@ -14,7 +33,6 @@
             font-weight: $font-weight-medium;
             font-size: .9375rem;
             @include text-overflow(ellipsis);
-            padding-left: 1rem;
         }
 
         .post-item-info {
@@ -47,7 +65,7 @@
         }
 
         @media screen and (max-width: 40rem) {
-            padding-right: 6.5rem;
+            padding-right: 3rem;
 
             .post-item-info {
                 a {
@@ -56,8 +74,7 @@
                     border-left: .0625rem solid $color-border;
                 }
 
-                a:nth-child(3),
-                a:nth-child(4) {
+                a:nth-child(2) {
                     display: none !important;
                 }
             }

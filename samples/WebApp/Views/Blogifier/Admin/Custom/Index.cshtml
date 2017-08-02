@@ -8,8 +8,15 @@
 }
 <div class="admin-content admin-content-posts container">
     <div class="admin-toolbar clearfix">
-        <a href="~/admin/editor/0" class="btn btn-black btn-main float-left">New</a>
-        <div class="dropdown admin-toolbar-filter float-right">
+        <!-- left side-->
+        <a href="~/admin/editor/0" class="btn btn-black btn-main float-left mr-2">New</a>
+        <div class="btn-group float-left" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-archive"></i></button>
+        </div>
+        <!-- right side -->
+        <div class="dropdown admin-toolbar-filter float-right ml-2">
             <button class="btn btn-secondary dropdown-toggle btn-icon" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-filter"></i>
             </button>
@@ -69,17 +76,19 @@
         {
             var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
             <li class="list-group-item post-list-item">
+                <label class="post-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span></label>
                 <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                 <div class="post-item-info">
-                    <a data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)" aria-label="Delete" role="button"><i class="fa fa-trash"></i></a>
-                    @if (item.Published == DateTime.MinValue)
-                    {
-                        <a data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)" aria-label="Publish" role="button"><i class="fa fa-check"></i></a>
-                    }
-                    else
-                    {
-                        <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)" aria-label="Unpublish" role="button"><i class="fa fa-archive"></i></a>
-                    }
+                    <!-- we don't need these since we are going to have multiple actions -->
+                    @*<a data-toggle="tooltip" title="Delete" onclick="return postsController.removePost(@item.BlogPostId)" aria-label="Delete" role="button"><i class="fa fa-trash"></i></a>
+                        @if (item.Published == DateTime.MinValue)
+                        {
+                            <a data-toggle="tooltip" title="Publish" onclick="return postsController.publish(@item.BlogPostId)" aria-label="Publish" role="button"><i class="fa fa-check"></i></a>
+                        }
+                        else
+                        {
+                            <a data-toggle="tooltip" title="Unpublish" onclick="return postsController.unpublish(@item.BlogPostId)" aria-label="Unpublish" role="button"><i class="fa fa-archive"></i></a>
+                        }*@
                     <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
                     <a class="pr-2" aria-label="Publish date">@published</a>
                 </div>
