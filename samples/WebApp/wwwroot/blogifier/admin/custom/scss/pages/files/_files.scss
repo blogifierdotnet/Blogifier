@@ -1,17 +1,46 @@
 ﻿.asset-list {
-    &-item {
-        position: relative;
-        height: 10rem;
+    .asset-item {
         display: block;
-        overflow: hidden;
         border-radius: .125rem;
         margin-bottom: 2rem;
-        border: .25rem solid #fff;
         background: #fff;
         box-shadow: 0 0 0 .0625rem #ddd;
+        overflow: hidden;
+
+        .asset-item-checkbox {
+            margin: 0;
+            height: 2rem;
+            padding-left: 2rem;
+            border-top: 1px solid #eee;
+            display: block;
+            position: relative;
+            border-radius: .125rem;
+            background: #fafafa;
+
+            .custom-control-indicator {
+                top: .5rem - 0.0625rem;
+                left: .5rem;
+            }
+
+            .custom-control-description {
+                font-size: .875rem;
+                display: block;
+                line-height: 2rem - .0625rem;
+                @include text-overflow(ellipsis);
+            }
+        }
+
+        a {
+            display: block;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            height: 10rem;
+            border: .5rem solid #fff;
+        }
 
         &:hover {
-            box-shadow: 0 0 0 .0625rem #000;
+            box-shadow: 0 0 0 .0625rem #999;
         }
 
         img {
@@ -33,7 +62,7 @@
             &[src*="/doctypes/zip.png"] {
                 position: relative;
                 top: 50%;
-                transform: translate(-50%,-50%)
+                transform: translate(-50%,-50%) scale(.75);
             }
         }
 

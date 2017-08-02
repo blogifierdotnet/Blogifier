@@ -33,14 +33,14 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<div class="col-sm-4 col-md-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-4 col-md-3"><div class="asset-item"><a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\'); return false;"><img src="' +
-                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
+                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div></div>';
             } else {
                 // attachement
-                tag = '<div class="col-sm-4 col-md-3"><a class="asset-list-item" href="#" onclick="assetController.getAsset(\'' +
+                tag = '<div class="col-sm-4 col-md-3"><div class="asset-item"><a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
-                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><div>';
+                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div><div>';
             }
             $("#assetList").append(tag);
         });
