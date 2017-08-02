@@ -7,8 +7,58 @@
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
 <div class="admin-content admin-content-posts container">
-    <div class="admin-toolbar">
-        <a href="~/admin/editor/0" class="btn btn-black btn-main">New</a>
+    <div class="admin-toolbar clearfix">
+        <a href="~/admin/editor/0" class="btn btn-black btn-main float-left">New</a>
+        <div class="dropdown admin-toolbar-filter float-right">
+            <button class="btn btn-secondary dropdown-toggle btn-icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-filter"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <h5>Filter by status:</h5>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">All</span>
+                </label>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterDraft" name="filter" type="radio" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Drafts</span>
+                </label>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterPublished" name="filter" type="radio" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Published</span>
+                </label>
+                <hr />
+                <h5>Filter by categories:</h5>
+                <label class="custom-control custom-checkbox d-block">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Sample Category 1</span>
+                </label>
+                <label class="custom-control custom-checkbox d-block">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Sample Category 2</span>
+                </label>
+                <label class="custom-control custom-checkbox d-block">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Sample Category 3</span>
+                </label>
+                <label class="custom-control custom-checkbox d-block">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Sample Category 4</span>
+                </label>
+                <label class="custom-control custom-checkbox d-block mb-0">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Sample Category 5</span>
+                </label>
+            </div>
+        </div>
     </div>
     <ul class="list-group post-list" aria-label="posts">
         @foreach (var item in Model.BlogPosts)

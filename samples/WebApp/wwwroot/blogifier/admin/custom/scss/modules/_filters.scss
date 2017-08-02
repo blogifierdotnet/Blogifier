@@ -1,0 +1,28 @@
+﻿.admin-toolbar-filter {
+    margin-left: .5rem;
+
+    .dropdown-toggle {
+        &::after {
+            display: none;
+        }
+    }
+
+    .dropdown-menu {
+        padding: 1rem;
+        min-width: 15rem;
+        line-height: 1.8;
+    }
+
+    hr {
+        margin: 1rem -1rem 1.25rem;
+    }
+
+    h5 {
+        font-weight: $font-weight-normal;
+        font-size: .875rem;
+        text-transform: uppercase;
+        color: #aaa;
+        margin-bottom: 1rem;
+        margin-top: .25rem;
+    }
+}

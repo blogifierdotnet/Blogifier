@@ -1,6 +1,11 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
+$('.dropdown-menu').on({"click": function (e) {
+        e.stopPropagation();
+    }
+});
+
 $(function () {
     $('.post-list [data-toggle="tooltip"]').tooltip({
         offset: '-15px 0',
