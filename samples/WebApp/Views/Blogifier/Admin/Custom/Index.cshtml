@@ -1,7 +1,7 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
 @using Blogifier.Core.Extensions
 @using Blogifier.Core.Common;
-@{ 
+@{
     var pgr = Model.Pager;
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
@@ -59,6 +59,10 @@
                 </label>
             </div>
         </div>
+        <!-- if we don't need the form tag, just turn it to div tag -->
+        <form class="admin-toolbar-search float-right">
+            <input type="search" name="search" class="form-control" placeholder="Search..." />
+        </form>
     </div>
     <ul class="list-group post-list" aria-label="posts">
         @foreach (var item in Model.BlogPosts)
