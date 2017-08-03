@@ -4,7 +4,7 @@ toastr.options.backgroundpositionClass = 'toast-bottom-right';
 $(".admin-setup-form #authorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
-    $(".admin-setup-url").text('http://exmaple.com/' + authorUrl);
+    $(".admin-setup-url").text('http://exmaple.com/blog/' + authorUrl);
 
     if ($(this).val() == '') {
         $(".admin-setup-url").text('');
