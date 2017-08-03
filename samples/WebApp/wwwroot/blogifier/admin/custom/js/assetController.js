@@ -20,7 +20,8 @@
         if (page) {
             currentPage = page;
         }
-        dataService.get('blogifier/api/assets/' + currentPage + '?type=editor', loadAssetList, fail);
+        var search = fromQueryString('search');
+        dataService.get('blogifier/api/assets/' + currentPage + '?type=editor&search=' + search, loadAssetList, fail);
         return false;
     }
 

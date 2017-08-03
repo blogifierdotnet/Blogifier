@@ -88,7 +88,7 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("files")]
-        public IActionResult Files()
+        public IActionResult Files(string search = "")
         {
             return View(_theme + "Files.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }

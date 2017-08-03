@@ -29,17 +29,21 @@ namespace Blogifier.Core.Controllers.Api
 
         // GET: api/assets/2?type=editor
         [HttpGet("{page:int?}")]
-        public AdminAssetList Get(int page)
+        public AdminAssetList Get(int page, string search)
         {
             var profile = GetProfile();
             var pager = new Pager(page);
             IEnumerable<Asset> assets;
+            var term = search == null || search == "null" ? "" : search;
 
             if (Request.Query.ContainsKey("type") && Request.Query["type"] == "editor")
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id, pager);
+            {
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
+            }
             else
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0, pager);                  
-            
+            {
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0 && a.Title.Contains(term), pager);
+            }
             return new AdminAssetList { Assets = assets, Pager = pager };
         }
 

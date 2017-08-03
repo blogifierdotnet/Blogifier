@@ -1,0 +1,26 @@
+@{
+    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Basic.cshtml";
+}
+<div class="admin-setup">
+    <!-- if we don't need the form tag, we have to rename it to div tag -->
+    <form class="admin-setup-form">
+        <h2 class="admin-setup-title">Setup Your Blog</h2>
+        <div class="form-group">
+            <label>Author Name</label>
+            <input type="text" name="authorName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Author Email</label>
+            <input type="email" name="authorEmail" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Blog Title</label>
+            <input type="text" name="blogTitle" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Blog Description</label>
+            <input type="text" name="blogDescription" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-black btn-lg btn-block">Continue</button>
+    </form>
+</div>
