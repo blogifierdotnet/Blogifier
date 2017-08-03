@@ -97,5 +97,12 @@ namespace Blogifier.Core.Controllers
 		{
 			return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
-	}
+
+        [Route("setup")]
+        public IActionResult Setup()
+        {
+            return View(_theme + "Setup.cshtml", new AdminBaseModel { Profile = GetProfile() });
+        }
+
+    }
 }
