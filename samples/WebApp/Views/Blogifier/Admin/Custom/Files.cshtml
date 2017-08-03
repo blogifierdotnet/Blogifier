@@ -1,4 +1,11 @@
-﻿<div class="admin-content container">
+﻿@{ 
+    string filter = Url.ActionContext.HttpContext.Request.Query["filter"];
+    if(filter == null) { filter = ""; }
+    var checkImg = filter.Contains("filterImages") ? "checked" : "";
+    var checkAtt = filter.Contains("filterAttachments") ? "checked" : "";
+    var checkAll = checkImg == "" && checkAtt == "" ? "checked" : "";
+}
+<div class="admin-content container">
     <div class="admin-toolbar clearfix">
         <!-- left side -->
         <div id="asset-edit-actions" class="float-left mr-2"></div>
@@ -10,21 +17,23 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filtersDropdown">
                 <h5>Filter by type:</h5>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">All</span>
-                </label>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterImages" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Images</span>
-                </label>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterAttachments" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Attachments</span>
-                </label>
+                <form action="~/admin/files" method="get" class="admin-toolbar-search float-right">
+                    <label class="custom-control custom-radio d-block">
+                        <input id="filterAll" name="filter" type="radio" @checkAll class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">All</span>
+                    </label>
+                    <label class="custom-control custom-radio d-block">
+                        <input id="filterImages" name="filter" type="radio" @checkImg class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Images</span>
+                    </label>
+                    <label class="custom-control custom-radio d-block">
+                        <input id="filterAttachments" name="filter" type="radio" @checkAtt class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Attachments</span>
+                    </label>
+                </form>
             </div>
         </div>
         <!-- if we don't need the form tag, just turn it to div tag -->

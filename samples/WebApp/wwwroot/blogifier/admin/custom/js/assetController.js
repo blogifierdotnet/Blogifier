@@ -21,7 +21,9 @@
             currentPage = page;
         }
         var search = fromQueryString('search');
-        dataService.get('blogifier/api/assets/' + currentPage + '?type=editor&search=' + search, loadAssetList, fail);
+        var filter = fromQueryString('filter');
+
+        dataService.get('blogifier/api/assets/' + currentPage + '?type=editor&search=' + search + '&filter=' + filter, loadAssetList, fail);
         return false;
     }
 
@@ -125,3 +127,10 @@
         remove: remove
     }
 }(DataService);
+
+$('input[type=radio]').on('change', function () {
+    if ($(this.id)) {
+        window.location.href = getUrl("admin/files?filter=" + this.id);
+    }
+    //$(this).closest("form").submit();
+});
