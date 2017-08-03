@@ -4,7 +4,7 @@
             dist: {
                 options: {
                     style: 'compressed',
-                    noCache: true
+                    sourcemap: 'none'
                 },
                 files: {
                     'css/styles.min.css': 'scss/styles.scss',

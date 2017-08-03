@@ -2,6 +2,14 @@
     Author: Francis - http://francis.bio/blogifier/
 */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+// Vendor
+@import "vendor/bootstrap";
+@import "vendor/fontawesome";
+@import "vendor/toastr";
+
+
 // Base 
 @import "base/variables";
 @import "base/mixins";
@@ -32,5 +40,5 @@
 @import "pages/posts/editor";
 @import "pages/files/files";
 @import "pages/settings/settings";
-@import "pages/setup/setup"; 
+@import "pages/setup/setup";
    
