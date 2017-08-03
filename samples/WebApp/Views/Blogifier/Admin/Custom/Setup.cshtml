@@ -1,4 +1,6 @@
+@using Blogifier.Core.Common
 @{
+    var themeFolder = "blogifier/admin/custom";
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Basic.cshtml";
 }
 <div class="admin-setup">
@@ -7,7 +9,8 @@
         <h2 class="admin-setup-title">Setup Your Blog</h2>
         <div class="form-group">
             <label>Author Name</label>
-            <input type="text" name="authorName" class="form-control" />
+            <input type="text" id="authorName" name="authorName" autocomplete="off" class="form-control" />
+            <span class="admin-setup-url"></span>
         </div>
         <div class="form-group">
             <label>Author Email</label>
@@ -24,3 +27,20 @@
         <button type="submit" class="btn btn-black btn-lg btn-block">Continue</button>
     </form>
 </div>
+
+@section Scripts{
+   <script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
+<script src="~/@themeFolder/lib/tether/tether.min.js"></script>
+<script src="~/@themeFolder/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
+<script src="~/@themeFolder/js/app.js"></script>
+<script src="~/@themeFolder/js/dataService.js"></script>
+<script src="~/@themeFolder/js/uploadController.js"></script>
+<script>
+    var webRoot = '@Url.Content("~/")';
+    var blogRoute = '@ApplicationSettings.BlogRoute';
+    function getUrl(str) {
+        return webRoot + str;
+    };
+</script>
+}
