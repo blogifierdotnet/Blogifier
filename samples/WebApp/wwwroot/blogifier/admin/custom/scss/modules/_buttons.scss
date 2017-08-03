@@ -13,6 +13,12 @@
     }
 }
 
+.btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: .2rem;
+}
+
 .btn-lg {
     padding: 1rem 2rem;
 }
@@ -31,6 +37,19 @@
     &:focus {
         color: #fff !important;
         box-shadow: 0 0 0 .125rem rgba(0, 0, 0, 0.50);
+    }
+}
+
+.btn-outline-black {
+    color: #000;
+    background-image: none;
+    background-color: transparent;
+    border-color: #000;
+
+    &:hover {
+        color: #fff;
+        background-color: #000;
+        border-color: #000;
     }
 }
 

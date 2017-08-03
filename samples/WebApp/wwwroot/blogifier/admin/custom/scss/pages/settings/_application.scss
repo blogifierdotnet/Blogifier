@@ -1,0 +1,71 @@
+.admin-settings-application {
+    .item-blog {
+        border: 2px solid #00bf7e;
+        border-radius: 4px;
+        background: #fbfff9;
+        margin-bottom: 1rem;
+    }
+
+    .item-blog-head {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+
+        h4 {
+            font-size: 1rem;
+            line-height: 27px;
+
+            a {
+                color: #008b5c;
+            }
+        }
+
+        .btn {
+            margin-left: .25rem;
+        }
+    }
+
+    .item-blog-body {
+        padding: 1rem;
+        font-size: .75rem;
+        text-transform: uppercase;
+    }
+
+    .item-blog-info {
+        @include unstyled;
+        line-height: 1rem;
+
+        span {
+            display: inline-block;
+            color: #888;
+
+            &:first-child {
+                min-width: 80px;
+                color: #000;
+            }
+        }
+    }
+
+    .item-blog-space {
+        .progress {
+            border-radius: 0;
+        }
+
+        .progress-bar {
+            background: #00bf7e;
+        }
+    }
+
+    .item-blog-disabled {
+        border-color: #bf0000;
+        background-color: #fff9f9;
+
+        .item-blog-head {
+            h4 {
+
+                a {
+                    color: #bf0000;
+                }
+            }
+        }
+    }
+}
