@@ -1,6 +1,16 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
+$(".admin-setup-form #authorName").keyup(function () {
+    var authorUrl = $(this).val();
+    authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
+    $(".admin-setup-url").text(window.location.host + '/blog/' + authorUrl);
+
+    if ($(this).val() == '') {
+        $(".admin-setup-url").text('');
+    }
+});
+
 $('.dropdown-menu').on({"click": function (e) {
         e.stopPropagation();
     }
