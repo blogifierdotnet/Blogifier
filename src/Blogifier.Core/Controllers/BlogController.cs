@@ -2,6 +2,7 @@
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.Custom;
+using Blogifier.Core.Services.Data;
 using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
@@ -15,20 +16,16 @@ namespace Blogifier.Core.Controllers
 {
 	public class BlogController : Controller
 	{
-		IUnitOfWork _db;
         IRssService _rss;
-        ISearchService _search;
-        ICustomService _custom;
+        IDataService _ds;
         private readonly ILogger _logger;
         private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
-		public BlogController(IUnitOfWork db, ISearchService search, IRssService rss, ICustomService custom, ILogger<BlogController> logger)
+		public BlogController(IRssService rss, IDataService ds, ILogger<BlogController> logger)
 		{
-			_db = db;
-            _search = search;
             _rss = rss;
-            _custom = custom;
+            _ds = ds;
             _logger = logger;
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
@@ -36,113 +33,60 @@ namespace Blogifier.Core.Controllers
         [Route("{page:int?}")]
         public IActionResult Index(int page = 1)
         {
-            var pager = new Pager(page);
-            var posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
-
-            if (page < 1 || page > pager.LastPage)
+            var model = _ds.GetPosts(page);
+            if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View(_theme + "Index.cshtml", new BlogPostsModel {
-                CustomFields = new Dictionary<string, string>(), Posts = posts, Pager = pager });
+            return View(_theme + "Index.cshtml", model);
         }
 
         [Route("{slug:author}/{page:int?}")]
-        public IActionResult Author(string slug, int page = 1)
+        public IActionResult PostsByAuthor(string slug, int page = 1)
         {
-            var pager = new Pager(page);
-            var profile = _db.Profiles.Single(p => p.Slug == slug);
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > DateTime.MinValue, pager);
-
-            if (page < 1 || page > pager.LastPage)
+            var model = _ds.GetPostsByAuthor(slug, page);
+            if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            var cf = _custom.GetProfileCustomFields(profile).Result;
-
-            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "/Author.cshtml", 
-                new BlogAuthorModel { CustomFields = cf, Profile = profile, Posts = posts, Pager = pager });
+            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Author.cshtml", model);
         }
 
         [Route("{slug:author}/{cat}/{page:int?}")]
-        public async Task<IActionResult> AuthorCategory(string slug, string cat, int page = 1)
+        public IActionResult PostsByCategory(string slug, string cat, int page = 1)
         {
-            var pager = new Pager(page);
-            var profile = _db.Profiles.Single(p => p.Slug == slug);
-            var posts = await _db.BlogPosts.ByCategory(cat, pager);
-
-            if (page < 1 || page > pager.LastPage)
+            var model = _ds.GetPostsByCategory(slug, cat, page);
+            if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            var category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id);
-            var custom = _custom.GetProfileCustomFields(profile).Result;
-
-            return View("~/Views/Blogifier/Blog/" + profile.BlogTheme + "/Category.cshtml", 
-                new BlogCategoryModel
-                {
-                    Profile = profile,
-                    CustomFields = custom,
-                    Category = category,
-                    Posts = posts,
-                    Pager = pager
-                });
+            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Category.cshtml", model);
         }
 
         [Route("{slug}")]
-        public async Task<IActionResult> SinglePublication(string slug)
+        public IActionResult SinglePublication(string slug)
         {
-            var vm = new BlogPostDetailModel();
-            vm.BlogPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug && p.Published > DateTime.MinValue);
-
-            if (vm.BlogPost == null)
+            var model = _ds.GetPostBySlug(slug);
+            if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            vm.Profile = _db.Profiles.Single(b => b.Id == vm.BlogPost.ProfileId);
-
-            if (string.IsNullOrEmpty(vm.BlogPost.Image))
-            {
-                vm.BlogPost.Image = ApplicationSettings.ProfileImage;
-                if (!string.IsNullOrEmpty(ApplicationSettings.PostImage)) { vm.BlogPost.Image = ApplicationSettings.PostImage; }
-                if (!string.IsNullOrEmpty(vm.Profile.Image)) { vm.BlogPost.Image = vm.Profile.Image; }
-            }
-            
-            vm.BlogCategories = new List<SelectListItem>();
-            if (vm.BlogPost.PostCategories != null && vm.BlogPost.PostCategories.Count > 0)
-            {
-                foreach (var pc in vm.BlogPost.PostCategories)
-                {
-                    var cat = _db.Categories.Single(c => c.Id == pc.CategoryId);
-                    vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
-                }
-            }
-            vm.CustomFields = _custom.GetProfileCustomFields(vm.Profile).Result;
-
-            return View("~/Views/Blogifier/Blog/" + vm.Profile.BlogTheme + "/Single.cshtml", vm);
+            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Single.cshtml", model);
         }
 
         [Route("search/{term}/{page:int?}")]
-        public async Task<IActionResult> PagedSearch(string term, int page = 1)
+        public IActionResult PagedSearch(string term, int page = 1)
         {
             ViewBag.Term = term;
+            var model = _ds.SearchPosts(term, page);
 
-            var model = new BlogPostsModel();
-            model.Pager = new Pager(page);
-            model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.CustomFields = _custom.GetProfileCustomFields(null).Result;
-
-            if (page < 1 || page > model.Pager.LastPage)
+            if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
             return View(_theme + "Search.cshtml", model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search()
+        public IActionResult Search()
         {
             ViewBag.Term = HttpContext.Request.Form["term"];
-
-            var model = new BlogPostsModel();
-            model.Pager = new Pager(1);
-            model.Posts = await _search.Find(model.Pager, ViewBag.Term);
-            model.CustomFields = _custom.GetProfileCustomFields(null).Result;
+            var model = _ds.SearchPosts(ViewBag.Term, 1);
 
             return View(_theme + "Search.cshtml", model);
         }
