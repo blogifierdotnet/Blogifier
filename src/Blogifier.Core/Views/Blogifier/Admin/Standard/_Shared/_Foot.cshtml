@@ -1,0 +1,20 @@
+@using Blogifier.Core.Common
+
+@{
+    var themeFolder = "embedded/admin/standard";
+}
+<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+<script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
+<script src="~/@themeFolder/lib/tether/tether.min.js"></script>
+<script src="~/@themeFolder/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
+<script src="~/@themeFolder/js/app.js" asp-append-version="true"></script>
+<script src="~/@themeFolder/js/dataService.js"></script>
+<script src="~/@themeFolder/js/uploadController.js"></script>
+<script>
+    var webRoot = '@Url.Content("~/")';
+    var blogRoute = '@ApplicationSettings.BlogRoute';
+    function getUrl(str) {
+        return webRoot + str;
+    };
+</script>

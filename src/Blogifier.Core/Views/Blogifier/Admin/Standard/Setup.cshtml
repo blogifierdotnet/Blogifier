@@ -1,3 +1,4 @@
+@using Blogifier.Core.Common
 @{
     Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Basic.cshtml";
 }
@@ -7,7 +8,8 @@
         <h2 class="admin-setup-title">Setup Your Blog</h2>
         <div class="form-group">
             <label>Author Name</label>
-            <input type="text" name="authorName" class="form-control" />
+            <input type="text" id="authorName" name="authorName" autocomplete="off" class="form-control" />
+            <span class="admin-setup-url"></span>
         </div>
         <div class="form-group">
             <label>Author Email</label>
