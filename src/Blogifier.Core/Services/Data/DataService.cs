@@ -92,7 +92,7 @@ namespace Blogifier.Core.Services.Data
             if (vm.BlogPost == null)
                 return null;
 
-            vm.Profile = _db.Profiles.Single(b => b.Id == vm.BlogPost.ProfileId);
+            vm.Profile = vm.BlogPost.Profile;
 
             if (string.IsNullOrEmpty(vm.BlogPost.Image))
             {

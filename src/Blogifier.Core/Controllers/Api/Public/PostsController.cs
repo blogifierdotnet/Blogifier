@@ -1,11 +1,6 @@
-﻿using Blogifier.Core.Common;
-using Blogifier.Core.Data.Domain;
-using Blogifier.Core.Data.Interfaces;
-using Blogifier.Core.Data.Models;
+﻿using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.Data;
-using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace Blogifier.Core.Controllers.Api.Public
@@ -18,16 +13,6 @@ namespace Blogifier.Core.Controllers.Api.Public
         public PostsController(IDataService ds)
         {
             _ds = ds;
-        }
-
-        // Remove potentially private information from the PostListItem for the public API
-        IEnumerable<PostListItem> SantizePostListItems(IEnumerable<PostListItem> posts)
-        {
-            foreach (PostListItem post in posts)
-            {
-                post.AuthorEmail = "";
-            }
-            return posts;
         }
 
         // GET blogifier/api/public/posts

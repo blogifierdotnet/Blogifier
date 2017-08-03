@@ -3,6 +3,7 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
+using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,23 +23,32 @@ namespace Blogifier.Core.Controllers
         private readonly ILogger _logger;
         IUnitOfWork _db;
 		IRssService _rss;
+        ISearchService _search;
 
-		public AdminController(IUnitOfWork db, IRssService rss, ILogger<AdminController> logger)
+		public AdminController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger)
 		{
 			_db = db;
 			_rss = rss;
+            _search = search;
             _logger = logger;
 			_theme = "~/Views/Blogifier/Admin/" + ApplicationSettings.AdminTheme + "/";
 		}
 
         [HttpGet("{page:int?}")]
-        public IActionResult Index(int page)
+        public IActionResult Index(int page = 1, string search = "")
 		{
             if (page == 0) page = 1;
             var pager = new Pager(page);
             var model = new AdminPostsModel { Profile = GetProfile() };
 
-            model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+            if (string.IsNullOrEmpty(search))
+            {
+                model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+            }
+            else
+            {
+                model.BlogPosts = _search.Find(pager, search, model.Profile.Slug).Result;
+            }
             model.Pager = pager;
 
             return View(_theme + "Index.cshtml", model);
