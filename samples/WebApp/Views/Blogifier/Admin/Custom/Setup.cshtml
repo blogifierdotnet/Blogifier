@@ -1,6 +1,5 @@
 @using Blogifier.Core.Common
 @{
-    var themeFolder = "blogifier/admin/custom";
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Basic.cshtml";
 }
 <div class="admin-setup">
@@ -27,20 +26,3 @@
         <button type="submit" class="btn btn-black btn-lg btn-block">Continue</button>
     </form>
 </div>
-
-@section Scripts{
-   <script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
-<script src="~/@themeFolder/lib/tether/tether.min.js"></script>
-<script src="~/@themeFolder/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
-<script src="~/@themeFolder/js/app.js"></script>
-<script src="~/@themeFolder/js/dataService.js"></script>
-<script src="~/@themeFolder/js/uploadController.js"></script>
-<script>
-    var webRoot = '@Url.Content("~/")';
-    var blogRoute = '@ApplicationSettings.BlogRoute';
-    function getUrl(str) {
-        return webRoot + str;
-    };
-</script>
-}
