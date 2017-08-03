@@ -128,17 +128,20 @@ namespace Blogifier.Core.Services.Data
 
         public BlogPostsModel SearchPosts(string term, int page, bool pub = false)
         {
-            var vm = new BlogPostsModel();
-            vm.Pager = new Pager(page);
-            vm.Posts = _search.Find(vm.Pager, term).Result;
+            var pager = new Pager(page);
+            IEnumerable<PostListItem> posts = _search.Find(pager, term).Result;
 
-            if (page < 1 || page > vm.Pager.LastPage)
+            if (page < 1 || page > pager.LastPage)
                 return null;
 
-            if (pub) vm.Posts = SantizePostListItems(vm.Posts);
-            vm.CustomFields = _custom.GetProfileCustomFields(null).Result;
+            if (pub) posts = SantizePostListItems(posts);
 
-            return vm;
+            return new BlogPostsModel
+            {
+                Posts = posts,
+                Pager = pager,
+                CustomFields = _custom.GetProfileCustomFields(null).Result
+            };
         }
 
         // Remove potentially private information from the PostListItem for the public API
