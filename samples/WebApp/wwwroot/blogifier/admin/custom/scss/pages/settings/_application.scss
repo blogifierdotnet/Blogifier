@@ -1,17 +1,17 @@
 .admin-settings-application {
     .item-blog {
-        border: 2px solid #00bf7e;
-        border-radius: 4px;
+        border: .125rem solid #00bf7e;
+        border-radius: .25rem;
         background: #fbfff9;
         margin-bottom: 1rem;
     }
 
     .item-blog-head {
         padding: 1rem;
-        border-bottom: 1px solid #ddd;
+        border-bottom: .0625rem solid #ddd;
         h4 {
             font-size: 1rem;
-            line-height: 32px;
+            line-height: 2rem;
             a {
                 color: #008b5c;
             }
@@ -33,12 +33,12 @@
             color: #888;
 
             &:first-child {
-                min-width: 80px;
+                min-width: 5rem;
                 color: #000;
             }
         }
 
-        @media screen and (max-width:768px) {
+        @media screen and (max-width:48rem) {
             margin-bottom: 1rem;
         }
     }
