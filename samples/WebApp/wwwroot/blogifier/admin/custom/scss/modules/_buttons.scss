@@ -12,7 +12,7 @@
     text-align: center;
 
     @media screen and (max-width:48rem) {
-        padding: 0.65625rem 1rem;
+        padding: 0 1rem;
     }
 }
 
@@ -61,8 +61,8 @@
 .btn-main {
     min-width: 7rem;
 
-    @media screen and (max-width:24.9375rem) {
-        width: 100%;
+    @media screen and (max-width:30rem) {
+        min-width: 6rem;
     }
 }
 

@@ -1,3 +1,6 @@
 ﻿.admin-toolbar-search {
     width: 10rem;
+    @media screen and (max-width:35rem) {
+     display:none;
+    }
 }
