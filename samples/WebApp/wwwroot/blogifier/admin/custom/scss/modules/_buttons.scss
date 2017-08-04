@@ -1,12 +1,15 @@
 ﻿.btn {
-    text-transform: uppercase;
-    outline: none !important;
     font-size: .875rem;
+    font-weight: $font-weight-medium;
     letter-spacing: .0625rem;
+    text-transform: uppercase;
+    line-height: 2.5rem;
+    height: 2.5rem;
+    padding: 0 1.5rem;
+    outline: none !important;
     cursor: pointer;
     border-radius: .1875rem;
-    padding: 0.65625rem 1.5rem;
-    font-weight: $font-weight-medium;
+    text-align: center;
 
     @media screen and (max-width:48rem) {
         padding: 0.65625rem 1rem;
@@ -14,13 +17,15 @@
 }
 
 .btn-sm {
-    padding: .25rem .5rem;
+    height:2rem;
+    padding:0 1rem;
+    line-height:2rem;
     font-size: .875rem;
     border-radius: .2rem;
 }
 
 .btn-lg {
-    padding: 1rem 2rem;
+    padding: 0 2rem;
 }
 
 .btn-black {
@@ -54,7 +59,7 @@
 }
 
 .btn-main {
-    min-width: 8rem;
+    min-width: 7rem;
 
     @media screen and (max-width:24.9375rem) {
         width: 100%;
@@ -62,5 +67,6 @@
 }
 
 .btn-icon {
-    padding: 0.65625rem 1rem;
+    padding:0;
+    width:3rem;
 }
