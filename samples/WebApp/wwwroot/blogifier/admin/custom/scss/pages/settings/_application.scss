@@ -9,31 +9,11 @@
     .item-blog-head {
         padding: 1rem;
         border-bottom: 1px solid #ddd;
-
         h4 {
             font-size: 1rem;
-            line-height: 27px;
-
+            line-height: 32px;
             a {
                 color: #008b5c;
-            }
-        }
-
-        .btn {
-            margin-left: .25rem;
-        }
-
-        @media screen and (max-width:575px) {
-            text-align: center;
-
-            h4 {
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media screen and (max-width:380px) {
-            .btn {
-                padding: 0 .75rem;
             }
         }
     }
