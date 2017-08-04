@@ -4,7 +4,7 @@
         border: .0625rem solid $color-border;
     }
 
-    @media screen and (max-width: 48rem) {
+    @media screen and (max-width: 47.9375rem) {
         padding: 3rem 0;
 
         .admin-settings {
@@ -16,7 +16,7 @@
 .admin-settings-sidebar {
     @include unstyled();
 
-    @media screen and (min-width: 48rem) {
+    @media screen and (min-width: 47.9375rem) {
         padding-top: 3rem;
         border-right: .0625rem solid $color-border;
 
@@ -49,7 +49,7 @@
             a {
                 color: #666;
                 display: block;
-                padding-left: 3rem;
+                padding-left: 2.5rem;
                 line-height: 2.375;
             }
 
@@ -59,7 +59,7 @@
         }
     }
 
-    @media screen and (max-width:48rem) {
+    @media screen and (max-width:47.9375rem) {
         display: flex;
         border-bottom: .0625rem solid $color-border;
         height: 3rem;
@@ -154,7 +154,7 @@
         top: .25rem;
     }
 
-    @media screen and (max-width:48rem) {
+    @media screen and (max-width:47.9375rem) {
         padding: 1rem !important;
 
         table {
