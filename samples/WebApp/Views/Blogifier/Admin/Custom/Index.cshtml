@@ -5,6 +5,13 @@
     var pgr = Model.Pager;
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
+
+    string filter = Url.ActionContext.HttpContext.Request.Query["filter"];
+    if (filter == null) { filter = ""; }
+
+    var checkDft = filter.Contains("filterDraft") ? "checked" : "";
+    var checkPub = filter.Contains("filterPublished") ? "checked" : "";
+    var checkAll = checkDft == "" && checkPub == "" ? "checked" : "";
 }
 <div class="admin-content admin-content-posts container">
     <div class="admin-toolbar clearfix">
@@ -23,47 +30,32 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filtersDropdown">
                 <h5>Filter by status:</h5>
                 <label class="custom-control custom-radio d-block">
-                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
+                    <input id="filterAll" name="filter" type="radio" @checkAll class="custom-control-input">
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">All</span>
                 </label>
                 <label class="custom-control custom-radio d-block">
-                    <input id="filterDraft" name="filter" type="radio" class="custom-control-input">
+                    <input id="filterDraft" name="filter" type="radio" @checkDft class="custom-control-input">
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">Drafts</span>
                 </label>
                 <label class="custom-control custom-radio d-block">
-                    <input id="filterPublished" name="filter" type="radio" class="custom-control-input">
+                    <input id="filterPublished" name="filter" type="radio" @checkPub class="custom-control-input">
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">Published</span>
                 </label>
                 <hr />
                 <h5>Filter by categories:</h5>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 1</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 2</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 3</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 4</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block mb-0">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 5</span>
-                </label>
+                @{
+                    foreach (var item in Model.CategoryList)
+                    {
+                        <label class="custom-control custom-checkbox d-block">
+                            <input type="checkbox" id="@item.Value" onclick="filterOnCategories()" class="custom-control-input chk">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">@item.Text</span>
+                        </label>
+                    }
+                }
             </div>
         </div>
         <!-- if we don't need the form tag, just turn it to div tag -->
@@ -112,4 +104,17 @@
 </div>
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/postsController.js"></script>
+    <script>
+        $('input[type=radio]').on('change', function () {
+            if ($(this.id)) {
+                window.location.href = getUrl("admin?filter=" + this.id);
+            }
+        });
+        var filterOnCategories = function () {
+            var boxes = $('.chk:checkbox:checked');
+            $('input:checkbox.chk').each(function () {
+                var sThisVal = (this.checked ? $(this).val() : "");
+            });
+        }
+    </script>
 }

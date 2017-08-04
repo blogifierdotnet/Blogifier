@@ -17,6 +17,7 @@ namespace Blogifier.Core.Data.Models
     {
         public Pager Pager { get; set; }
         public IEnumerable<PostListItem> BlogPosts { get; set; }
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 
     public class AdminEditorModel : AdminBaseModel

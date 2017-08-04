@@ -132,5 +132,4 @@ $('input[type=radio]').on('change', function () {
     if ($(this.id)) {
         window.location.href = getUrl("admin/files?filter=" + this.id);
     }
-    //$(this).closest("form").submit();
 });

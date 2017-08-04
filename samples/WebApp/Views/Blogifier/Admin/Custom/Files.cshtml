@@ -17,23 +17,21 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filtersDropdown">
                 <h5>Filter by type:</h5>
-                <form action="~/admin/files" method="get" class="admin-toolbar-search float-right">
-                    <label class="custom-control custom-radio d-block">
-                        <input id="filterAll" name="filter" type="radio" @checkAll class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">All</span>
-                    </label>
-                    <label class="custom-control custom-radio d-block">
-                        <input id="filterImages" name="filter" type="radio" @checkImg class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Images</span>
-                    </label>
-                    <label class="custom-control custom-radio d-block">
-                        <input id="filterAttachments" name="filter" type="radio" @checkAtt class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Attachments</span>
-                    </label>
-                </form>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterAll" name="filter" type="radio" @checkAll class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">All</span>
+                </label>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterImages" name="filter" type="radio" @checkImg class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Images</span>
+                </label>
+                <label class="custom-control custom-radio d-block">
+                    <input id="filterAttachments" name="filter" type="radio" @checkAtt class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Attachments</span>
+                </label>
             </div>
         </div>
         <!-- if we don't need the form tag, just turn it to div tag -->

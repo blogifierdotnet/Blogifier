@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,15 +36,27 @@ namespace Blogifier.Core.Controllers
 		}
 
         [HttpGet("{page:int?}")]
-        public IActionResult Index(int page = 1, string search = "")
+        public IActionResult Index(int page = 1, string search = "", string filter = "")
 		{
             if (page == 0) page = 1;
             var pager = new Pager(page);
             var model = new AdminPostsModel { Profile = GetProfile() };
+            model.CategoryList = _db.Categories.CategoryList(c => c.ProfileId == model.Profile.Id).ToList();
 
             if (string.IsNullOrEmpty(search))
             {
-                model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+                if(filter == "filterDraft")
+                {
+                    model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name && p.Published == DateTime.MinValue, pager);
+                }
+                else if(filter == "filterPublished")
+                {
+                    model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name && p.Published > DateTime.MinValue, pager);
+                }
+                else
+                {
+                    model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
+                }
             }
             else
             {
