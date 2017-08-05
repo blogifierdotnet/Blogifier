@@ -13,6 +13,7 @@ namespace Blogifier.Core.Data.Interfaces
         IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         IEnumerable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate);
         Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "");
+        Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager);
         Task<BlogPost> SingleIncluded(Expression<Func<BlogPost, bool>> predicate);
         Task UpdatePostCategories(int postId, IEnumerable<string> catIds);
     }

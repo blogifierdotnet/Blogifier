@@ -62,6 +62,41 @@ namespace Blogifier.Core.Data.Repositories
             return Task.Run(() => posts.Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
+        // posts filtered on status (all, draft or published) and categories
+        public Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager)
+        {
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+
+            var posts = _db.PostCategories.Include(pc => pc.BlogPost).Include(pc => pc.Category)
+                .Where(pc => pc.BlogPost.Profile.Slug == blog);
+
+            if(status == "P")
+                posts = posts.Where(p => p.BlogPost.Published > DateTime.MinValue);
+
+            if(status == "D")
+                posts = posts.Where(p => p.BlogPost.Published == DateTime.MinValue);
+
+            if(categories.Count > 0)
+                posts = posts.Where(p => categories.Contains(p.CategoryId.ToString()));
+
+            var postItems = posts.Select(pc => new PostListItem
+                {
+                    BlogPostId = pc.BlogPostId,
+                    Slug = pc.BlogPost.Slug,
+                    Title = pc.BlogPost.Title,
+                    Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? ApplicationSettings.PostImage : pc.BlogPost.Image,
+                    Content = pc.BlogPost.Description,
+                    Published = pc.BlogPost.Published,
+                    AuthorName = pc.BlogPost.Profile.AuthorName,
+                    AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
+                    BlogSlug = pc.BlogPost.Profile.Slug,
+                    PostViews = pc.BlogPost.PostViews
+                }).ToList();
+
+            pager.Configure(postItems.Count);
+            return Task.Run(() => postItems.Skip(skip).Take(pager.ItemsPerPage).ToList());
+        }
+
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
         {
             _db.PostCategories.RemoveRange(_db.PostCategories.Where(c => c.BlogPostId == postId));

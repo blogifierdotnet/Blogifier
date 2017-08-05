@@ -8,65 +8,45 @@
 }
 <div class="admin-content admin-content-posts container">
     <div class="admin-toolbar clearfix">
-        <!-- left side-->
         <a href="~/admin/editor/0" class="btn btn-black btn-main float-left mr-2">New</a>
         <div class="btn-group float-left" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-check"></i></button>
-            <button type="button" class="btn btn-secondary btn-icon"><i class="fa fa-archive"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" title="Publish"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" title="Unpublish"><i class="fa fa-archive"></i></button>
         </div>
-        <!-- right side -->
         <div class="dropdown admin-toolbar-filter float-right ml-2">
-            <button class="btn btn-secondary dropdown-toggle btn-icon" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle btn-icon" title="Filter" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-filter"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filtersDropdown">
-                <h5>Filter by status:</h5>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">All</span>
-                </label>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterDraft" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Drafts</span>
-                </label>
-                <label class="custom-control custom-radio d-block">
-                    <input id="filterPublished" name="filter" type="radio" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Published</span>
-                </label>
-                <hr />
-                <h5>Filter by categories:</h5>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 1</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 2</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 3</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 4</span>
-                </label>
-                <label class="custom-control custom-checkbox d-block mb-0">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Sample Category 5</span>
-                </label>
+                
+                <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+                    @{
+                    <h5>Filter by status:</h5>
+                        foreach (var ftr in Model.StatusFilter)
+                        {
+                            var ftrChecked = ftr.Selected ? "checked" : "";
+                            <label class="custom-control custom-radio d-block">
+                                <input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">@ftr.Text</span>
+                            </label>
+                        }
+                    <hr />
+                    <h5>Filter by categories:</h5>
+                        foreach (var cat in Model.CategoryFilter)
+                        {
+                            var isChecked = cat.Selected ? "checked" : "";
+                            <label class="custom-control custom-checkbox d-block">
+                                <input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">@cat.Text</span>
+                            </label>
+                        }
+                    }
+                </form>
             </div>
         </div>
-        <!-- if we don't need the form tag, just turn it to div tag -->
         <form action="~/admin" method="get" class="admin-toolbar-search float-right">
             <input type="search" name="search" class="form-control" placeholder="Search..." />
         </form>
@@ -112,4 +92,9 @@
 </div>
 @section Scripts{
     <script src="~/embedded/admin/standard/js/postsController.js"></script>
+    <script>
+        var submitFilter = function () {
+            $('#frmFilter').submit();
+        }
+    </script>
 }
