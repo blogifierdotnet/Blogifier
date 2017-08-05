@@ -10,9 +10,9 @@
     <div class="admin-toolbar clearfix">
         <a href="~/admin/editor/0" class="btn btn-black btn-main float-left mr-2">New</a>
         <div class="btn-group float-left" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-secondary btn-icon" title="Publish"><i class="fa fa-check"></i></button>
-            <button type="button" class="btn btn-secondary btn-icon" title="Unpublish"><i class="fa fa-archive"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
         </div>
         <div class="dropdown admin-toolbar-filter float-right ml-2">
             <button class="btn btn-secondary dropdown-toggle btn-icon" title="Filter" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +56,9 @@
         {
             var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
             <li class="list-group-item post-list-item">
-                <label class="post-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span></label>
+                <label class="post-item-checkbox custom-control custom-checkbox">
+                    <input type="checkbox" id="@item.BlogPostId" class="custom-control-input"><span class="custom-control-indicator"></span>
+                </label>
                 <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                 <div class="post-item-info">
                     <!-- we don't need these since we are going to have multiple actions -->

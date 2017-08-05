@@ -1,25 +1,31 @@
 ﻿var postsController = function (dataService) {
-    function publish(id) {
-        dataService.put("blogifier/api/posts/publish/" + id, null, publishCallback, fail);
-    }
-
-    function unpublish(id) {
-        dataService.put("blogifier/api/posts/unpublish/" + id, null, publishCallback, fail);
-    }
-
-    function publishCallback() {
+    function publish() {
+        $('.post-list input:checked').each(function () {
+            dataService.put("blogifier/api/posts/publish/" + $(this).attr('id'), null, publishCallback, fail);
+        });
         toastr.success('Updated');
         reload();
     }
 
-    function removePost(id) {
-        dataService.remove('blogifier/api/posts/' + id, removeCallback, fail);
-    }
-
-    function removeCallback() {
-        toastr.success('Removed');
+    function unpublish() {
+        $('.post-list input:checked').each(function () {
+            dataService.put("blogifier/api/posts/unpublish/" + $(this).attr('id'), null, publishCallback, fail);
+        });
+        toastr.success('Updated');
         reload();
     }
+
+    function publishCallback() { }
+
+    function removePost() {
+        $('.post-list input:checked').each(function () {
+            dataService.remove('blogifier/api/posts/' + $(this).attr('id'), removeCallback, fail);
+        });
+        toastr.success('Updated');
+        reload();
+    }
+
+    function removeCallback() { }
 
     function reload() {
         setTimeout(function () {
