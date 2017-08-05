@@ -38,12 +38,12 @@
                 // image
                 tag = '<div class="col-sm-4 col-md-3"><div class="asset-item"><a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\'); return false;"><img src="' +
-                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div></div>';
+                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" id="' + asset.id + '" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div></div>';
             } else {
                 // attachement
                 tag = '<div class="col-sm-4 col-md-3"><div class="asset-item"><a href="#" onclick="assetController.getAsset(\'' +
                     asset.id + '\',\'' + asset.title + '\',' + asset.length + '); return false;"><img src="' +
-                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div><div>';
+                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a><label class="asset-item-checkbox custom-control custom-checkbox"><input type="checkbox" id="' + asset.id + '" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">' + asset.title + '</span></label></div><div>';
             }
             $("#assetList").append(tag);
         });
@@ -106,10 +106,19 @@
         $('#asset-edit-actions').append(btn);
     }
 
-    function remove(id) {
-        dataService.remove('blogifier/api/assets/' + id, removeCallback, fail);
+    function remove() {
+        var items = $('.asset-list input:checked');
+        for (i = 0; i < items.length; i++) {
+            if (i + 1 < items.length) {
+                dataService.remove('blogifier/api/assets/' + items[i].id, emptyCallback, fail);
+            }
+            else {
+                dataService.remove('blogifier/api/assets/' + items[i].id, removeCallback, fail);
+            }
+        }
     }
 
+    function emptyCallback(data) { }
     function removeCallback(data) {
         toastr.success('Deleted');
         loadFileManager();
