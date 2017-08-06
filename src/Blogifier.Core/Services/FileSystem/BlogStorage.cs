@@ -204,6 +204,13 @@ namespace Blogifier.Core.Services.FileSystem
                 fileName = fileName.Substring(fileName.LastIndexOf(_separator));
                 fileName = fileName.Replace(_separator, "");
             }
+            // when drag-and-drop or copy image to TinyMce editor
+            // it uses "mceclip0" as file name; randomize it for multiple uploads
+            if (fileName.StartsWith("mceclip0"))
+            {
+                Random rnd = new Random();
+                fileName = fileName.Replace("mceclip0", rnd.Next(100000, 999999).ToString());
+            }
             return fileName;
         }
 

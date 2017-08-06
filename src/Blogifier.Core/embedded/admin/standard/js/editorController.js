@@ -220,6 +220,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,
-        paste_data_images: true
+        paste_data_images: true,
+        images_upload_url: '/blogifier/api/assets/upload'
     });
 });

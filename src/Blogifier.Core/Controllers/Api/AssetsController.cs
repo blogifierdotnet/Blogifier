@@ -109,6 +109,16 @@ namespace Blogifier.Core.Controllers.Api
             return asset;
         }
 
+        // POST: api/assets/upload
+        [HttpPost]
+        [Route("upload")]
+        public async Task<ActionResult> TinyMceUpload(IFormFile file)
+        {
+            var asset = await SaveFile(file);
+            var location = asset.Url;
+            return Json(new { location });
+        }
+
         // POST api/assets/multiple
         [HttpPost]
         [Route("multiple")]
