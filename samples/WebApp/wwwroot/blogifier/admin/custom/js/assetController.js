@@ -30,6 +30,7 @@
     function loadAssetList(data) {
         $('#assetEdit').empty();
         $('#assetList').empty();
+        $('#multy-remove').show();
         var assets = data.assets;
         $.each(assets, function (index) {
             var asset = assets[index];
@@ -83,6 +84,7 @@
     function loadAsset(data) {
         $('#assetEdit').empty();
         $('#assetList').empty();
+        $('#multy-remove').hide();
         $('.pagination-custom').empty();
         var url = data.assetType === 0 ? data.url : webRoot + data.image;
 
@@ -106,14 +108,19 @@
         $('#asset-edit-actions').append(btn);
     }
 
-    function remove() {
-        var items = $('.asset-list input:checked');
-        for (i = 0; i < items.length; i++) {
-            if (i + 1 < items.length) {
-                dataService.remove('blogifier/api/assets/' + items[i].id, emptyCallback, fail);
-            }
-            else {
-                dataService.remove('blogifier/api/assets/' + items[i].id, removeCallback, fail);
+    function remove(id) {
+        if(id){
+            dataService.remove('blogifier/api/assets/' + id, removeCallback, fail);
+        }
+        else{
+            var items = $('.asset-list input:checked');
+            for (i = 0; i < items.length; i++) {
+                if (i + 1 < items.length) {
+                    dataService.remove('blogifier/api/assets/' + items[i].id, emptyCallback, fail);
+                }
+                else {
+                    dataService.remove('blogifier/api/assets/' + items[i].id, removeCallback, fail);
+                }
             }
         }
     }

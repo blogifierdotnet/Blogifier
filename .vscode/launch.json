@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}\\tests\\Blogifier.Test\\bin\\Debug\\netcoreapp1.1\\Blogifier.Test.dll",
+            "program": "${workspaceRoot}\\samples\\WebApp\\bin\\Debug\\netcoreapp1.1\\WebApp.dll",
             "args": [],
-            "cwd": "${workspaceRoot}\\tests\\Blogifier.Test",
+            "cwd": "${workspaceRoot}\\samples\\WebApp",
             "console": "internalConsole",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
