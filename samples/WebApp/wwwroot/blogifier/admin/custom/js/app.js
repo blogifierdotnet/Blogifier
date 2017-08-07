@@ -1,6 +1,19 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
+$(function hellomyname() {
+    var toolbarMutli = $(".admin-toolbar-mutlicheck");
+    var checkMulti = $(".admin-list-multicheck input[type='checkbox']");
+    $(checkMulti).on('change', function() {
+        if (checkMulti.is(':checked')) {
+            $(toolbarMutli).addClass("visible");
+        }
+        else {
+            $(toolbarMutli).removeClass("visible");
+        }
+    });
+});
+
 $(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();

@@ -9,4 +9,15 @@
             }
         }
     }
+
+    .admin-toolbar-mutlicheck {
+        transition: opacity ease .4s;
+        opacity:0;
+        visibility:hidden;
+
+        &.visible{
+            opacity:1;
+            visibility:visible;
+        }
+    }
 }

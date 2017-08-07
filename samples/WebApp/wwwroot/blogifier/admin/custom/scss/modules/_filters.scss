@@ -23,4 +23,10 @@
         margin-bottom: 1rem;
         margin-top: .25rem;
     }
+
+    .admin-filter-category {
+        max-height: 300px;
+        overflow-y: auto;
+        min-width: 15rem;
+    }
 }
