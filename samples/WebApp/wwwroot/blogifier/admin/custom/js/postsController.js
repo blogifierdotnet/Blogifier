@@ -1,31 +1,47 @@
 ﻿var postsController = function (dataService) {
     function publish() {
-        $('.post-list input:checked').each(function () {
-            dataService.put("blogifier/api/posts/publish/" + $(this).attr('id'), null, publishCallback, fail);
-        });
-        toastr.success('Updated');
-        reload();
+        var items = $('.post-list input:checked');
+        for (i = 0; i < items.length; i++) {
+            if (i + 1 < items.length) {
+                dataService.put("blogifier/api/posts/publish/" + items[i].id, null, emptyCallback, fail);
+            }
+            else {
+                dataService.put("blogifier/api/posts/publish/" + items[i].id, null, updateCallback, fail);
+            }
+        }
     }
 
     function unpublish() {
-        $('.post-list input:checked').each(function () {
-            dataService.put("blogifier/api/posts/unpublish/" + $(this).attr('id'), null, publishCallback, fail);
-        });
-        toastr.success('Updated');
-        reload();
+        var items = $('.post-list input:checked');
+        for (i = 0; i < items.length; i++) {
+            if (i + 1 < items.length) {
+                dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, emptyCallback, fail);
+            }
+            else {
+                dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, updateCallback, fail);
+            }
+        }
     }
 
     function publishCallback() { }
 
     function removePost() {
-        $('.post-list input:checked').each(function () {
-            dataService.remove('blogifier/api/posts/' + $(this).attr('id'), removeCallback, fail);
-        });
+        var items = $('.post-list input:checked');
+        for (i = 0; i < items.length; i++) {
+            if (i + 1 < items.length) {
+                dataService.remove('blogifier/api/posts/' + items[i].id, emptyCallback, fail);
+            }
+            else {
+                dataService.remove('blogifier/api/posts/' + items[i].id, updateCallback, fail);
+            }
+        }
+    }
+
+    function emptyCallback() { }
+    function updateCallback() {
         toastr.success('Updated');
         reload();
     }
-
-    function removeCallback() { }
 
     function reload() {
         setTimeout(function () {

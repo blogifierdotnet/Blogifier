@@ -58,7 +58,22 @@ namespace Blogifier.Core.Middleware
 
                 SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
 
-                await stream.CopyToAsync(context.Response.Body);
+                try
+                {
+                    await stream.CopyToAsync(context.Response.Body);
+                }
+                catch (Exception ex)
+                {
+                    if(ex.Message == "Write to non-body 304 response.")
+                    {
+                        context.Response.StatusCode = 304;
+                        return;
+                    }
+                    else
+                    {
+                        _logger.LogError(ex.Message);
+                    }
+                }
             }
             else
             {
@@ -113,6 +128,10 @@ namespace Blogifier.Core.Middleware
             if (url.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
             {
                 return "image/png";
+            }
+            if (url.EndsWith(".woff2", StringComparison.OrdinalIgnoreCase))
+            {
+                return "font/woff2";
             }
             return "";
         }

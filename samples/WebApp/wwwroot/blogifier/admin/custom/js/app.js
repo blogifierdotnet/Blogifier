@@ -1,7 +1,7 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-$(".admin-setup-form #authorName").keyup(function () {
+$(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
     $(".admin-setup-url").text(window.location.host + '/blog/' + authorUrl);

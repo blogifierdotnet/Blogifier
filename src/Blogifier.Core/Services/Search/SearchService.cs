@@ -26,7 +26,11 @@ namespace Blogifier.Core.Services.Search
             var results = new List<Result>();
             var list = new List<PostListItem>();
 
-            var posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue).ToList();
+            IEnumerable<BlogPost> posts;
+            if(string.IsNullOrEmpty(blogSlug))
+                posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue).ToList();
+            else
+                posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue && p.Profile.Slug == blogSlug).ToList();
 
             foreach (var item in posts)
             {

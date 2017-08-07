@@ -11,7 +11,7 @@ namespace Blogifier.Core.Middleware
     /// 1. [Authorize] - Verify that user is authenticated
     /// 2. [VerifyProfile] - Verify that user has profile
     /// If user does not have profile - any admin actions
-    /// redirected to profile page that must be completed
+    /// redirected to setup page that must be completed
     /// </summary>
     public class VerifyProfile : ActionFilterAttribute
     {
@@ -36,7 +36,7 @@ namespace Blogifier.Core.Middleware
                 var user = filterContext.HttpContext.User.Identity.Name;
                 if (context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == user).Result == null)
                 {
-                    filterContext.Result = new RedirectResult("/admin/settings/profile");
+                    filterContext.Result = new RedirectResult("~/admin/setup");
                 }
             }
         }

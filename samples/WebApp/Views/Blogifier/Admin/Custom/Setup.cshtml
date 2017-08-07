@@ -1,28 +1,36 @@
+@model Blogifier.Core.Data.Models.AdminSetupModel
 @using Blogifier.Core.Common
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Basic.cshtml";
 }
 <div class="admin-setup">
     <!-- if we don't need the form tag, we have to rename it to div tag -->
-    <form class="admin-setup-form">
+    <form method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true" class="admin-setup-form">
         <h2 class="admin-setup-title">Setup Your Blog</h2>
         <div class="form-group">
             <label>Author Name</label>
-            <input type="text" id="authorName" name="authorName" autocomplete="off" class="form-control" />
+            <input type="text" asp-for="AuthorName" autocomplete="off" class="form-control" />
             <span class="admin-setup-url"></span>
+            <span asp-validation-for="AuthorName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Author Email</label>
-            <input type="email" name="authorEmail" class="form-control" />
+            <input type="email" asp-for="AuthorEmail" class="form-control" />
+            <span asp-validation-for="AuthorEmail" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Blog Title</label>
-            <input type="text" name="blogTitle" class="form-control" />
+            <input type="text" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Blog Description</label>
-            <input type="text" name="blogDescription" class="form-control" />
+            <input type="text" asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-black btn-lg btn-block">Continue</button>
     </form>
 </div>
+@section Scripts{
+    <script>document.getElementById('AuthorName').focus()</script>
+}

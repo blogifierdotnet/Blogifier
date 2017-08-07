@@ -32,6 +32,23 @@ namespace Blogifier.Core.Data.Models
 		public IList<SelectListItem> BlogThemes { get; set; }
     }
 
+    public class AdminSetupModel
+    {
+        [Required]
+        [StringLength(100)]
+        public string AuthorName { get; set; }
+        [Required]
+        [EmailAddress]
+        [StringLength(160)]
+        public string AuthorEmail { get; set; }
+        [Required]
+        [StringLength(160)]
+        public string Title { get; set; }
+        [Required]
+        [StringLength(450)]
+        public string Description { get; set; }
+    }
+
 	public class AdminToolsModel : AdminBaseModel
 	{
         public Dictionary<string, string> CustomFields { get; set; }

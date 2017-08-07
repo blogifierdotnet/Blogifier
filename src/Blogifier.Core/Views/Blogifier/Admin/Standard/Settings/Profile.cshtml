@@ -1,16 +1,7 @@
 @model Blogifier.Core.Data.Models.SettingsProfile
 @{
     Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Settings.cshtml";
-    var isDisabled = Model.BlogExists ? "" : "disabled";
 }
-
-@if (!Model.BlogExists)
-{
-    <div class="alert alert-warning" role="alert">
-        You must save your profile before you can navigate to other pages.
-    </div>
-}
-
 <h4 class="admin-content-title">Edit Profile</h4>
 <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
     <div class="form-group row">
@@ -35,7 +26,7 @@
                 <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');">remove</button>
             </span>*@
             <span class="input-group-btn">
-                <button type="button" @isDisabled class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');">upload</button>
+                <button type="button" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');">upload</button>
             </span>
         </div>
     </div>
