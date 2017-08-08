@@ -87,9 +87,15 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("application")]
-        public IActionResult Application()
+        public IActionResult Application(int page = 1)
         {
-            return View(_theme + "Application.cshtml", new AdminBaseModel { Profile = GetProfile() });
+            var pager = new Pager(page);
+            var model = new AdminApplicationModel
+            {
+                Profile = GetProfile(),
+                Blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager)
+            };
+            return View(_theme + "Application.cshtml", model);
         }
 
         [Route("profile")]

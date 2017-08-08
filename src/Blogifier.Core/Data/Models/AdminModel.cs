@@ -49,9 +49,9 @@ namespace Blogifier.Core.Data.Models
         public string Description { get; set; }
     }
 
-	public class AdminToolsModel : AdminBaseModel
+	public class AdminApplicationModel : AdminBaseModel
 	{
-        public Dictionary<string, string> CustomFields { get; set; }
+        public IEnumerable<ProfileListItem> Blogs { get; set; }
 	}
 
     public class RssImportModel
