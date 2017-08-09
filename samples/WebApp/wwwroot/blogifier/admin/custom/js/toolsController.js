@@ -24,6 +24,14 @@
         }
     }
 
+    function deleteBlog(id) {
+        dataService.remove("blogifier/api/tools/deleteblog/" + id, callbackDeleteBlog, fail);
+    }
+
+    function callbackDeleteBlog(data) {
+
+    }
+
     function fail(data) {
         toastr.error('Failed');
         $('.spin-icon').fadeOut();
@@ -31,6 +39,7 @@
     }
 
     return {
-        importRss: importRss
+        importRss: importRss,
+        deleteBlog: deleteBlog
     }
 }(DataService);

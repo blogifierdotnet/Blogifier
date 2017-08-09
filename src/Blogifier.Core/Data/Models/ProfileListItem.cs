@@ -5,6 +5,10 @@ namespace Blogifier.Core.Data.Models
     public class ProfileListItem
     {
         public int ProfileId { get; set; }
+        public string IdentityName { get; set; }
+        public string AuthorName { get; set; }
+        public bool IsAdmin { get; set; }
+
         public string Title { get; set; }
         public string Email { get; set; }
         public string Url { get; set; }

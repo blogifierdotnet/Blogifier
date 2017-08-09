@@ -31,6 +31,7 @@
         $('#assetEdit').empty();
         $('#assetList').empty();
         $('#multy-remove').show();
+
         var assets = data.assets;
         $.each(assets, function (index) {
             var asset = assets[index];
@@ -52,6 +53,7 @@
         $('#asset-edit-actions').empty();
         $('#asset-edit-actions').append(btn);
         pager(data.pager);
+
     }
 
     function pager(pg) {

@@ -35,8 +35,13 @@ namespace Blogifier.Core.Data.Repositories
                 Email = p.AuthorEmail,
                 Url = ApplicationSettings.BlogRoute + "/" + p.Slug,
 
+                IdentityName = p.IdentityName,
+                AuthorName = p.AuthorName,
+                IsAdmin = p.IsAdmin,
+
                 PostCount = p.BlogPosts.Count,
                 PostViews = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.PostViews),
+                DbUsage = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => (System.Int64)bp.Content.Length),
 
                 AssetCount = p.Assets.Count,
                 DownloadCount = _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.DownloadCount),
@@ -44,9 +49,7 @@ namespace Blogifier.Core.Data.Repositories
 
                 LastUpdated = p.LastUpdated
             }).ToList();
-
-            var xxx = p2;
-            
+           
             return p2.Select(p => new ProfileListItem
             {
                 ProfileId = p.ProfileId,
@@ -54,8 +57,13 @@ namespace Blogifier.Core.Data.Repositories
                 Email = p.Email,
                 Url = p.Url,
 
+                IdentityName = p.IdentityName,
+                AuthorName = p.AuthorName,
+                IsAdmin = p.IsAdmin,
+
                 PostCount = p.PostCount,
                 PostViews = p.PostViews,
+                DbUsage = p.DbUsage,
 
                 AssetCount = p.AssetCount,
                 DownloadCount = p.DownloadCount,
