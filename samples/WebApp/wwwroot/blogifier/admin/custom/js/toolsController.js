@@ -29,7 +29,10 @@
     }
 
     function callbackDeleteBlog(data) {
-
+        toastr.success('Blog removed');
+        setTimeout(function() {
+            location.reload();
+        }, 2000);
     }
 
     function fail(data) {

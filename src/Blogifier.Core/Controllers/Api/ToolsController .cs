@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -68,8 +69,13 @@ namespace Blogifier.Core.Controllers.Api
             _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
-            var profiles = _db.Profiles.Find(b => b.Id == id);
-            _db.Profiles.RemoveRange(profiles);
+            var profileToDelete = _db.Profiles.Single(b => b.Id == id);
+
+            var storage = new BlogStorage(profileToDelete.Slug);
+            storage.DeleteFolder("");
+            _logger.LogInformation("Storage deleted");
+
+            _db.Profiles.Remove(profileToDelete);
             _db.Complete();
             _logger.LogInformation("Profile deleted");
 

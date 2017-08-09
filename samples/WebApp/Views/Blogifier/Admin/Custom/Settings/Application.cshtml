@@ -18,7 +18,10 @@
                     @*<button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Limit"><i class="fa fa-sliders"></i></button>
                     <button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Disable"><i class="fa fa-stop"></i></button>
                     <button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Enable"><i class="fa fa-play"></i></button>*@
-                    <button type="button" onclick="return toolsController.deleteBlog('@blog.ProfileId')" class="btn btn-outline-black btn-sm btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
+                    @if (!blog.IsAdmin)
+                    {
+                        <button type="button" onclick="return toolsController.deleteBlog('@blog.ProfileId')" class="btn btn-outline-black btn-sm btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
+                    }
                 </div>
             </div>
             <div class="item-blog-body">

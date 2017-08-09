@@ -157,6 +157,8 @@ namespace Blogifier.Core.Controllers
                 profile.Avatar = ApplicationSettings.ProfileAvatar;
                 profile.BlogTheme = ApplicationSettings.BlogTheme;
 
+                profile.LastUpdated = SystemClock.Now();
+
                 _db.Profiles.Add(profile);
                 _db.Complete();
 
