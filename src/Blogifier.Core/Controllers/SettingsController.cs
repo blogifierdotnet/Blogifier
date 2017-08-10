@@ -217,6 +217,13 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Import.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
+        [VerifyProfile]
+        [Route("about")]
+        public IActionResult About()
+        {
+            return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
+        }
+
         Profile GetProfile()
         {
             return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
