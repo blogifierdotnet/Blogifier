@@ -22,8 +22,10 @@ namespace Blogifier.Core.Data.Repositories
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var posts = _db.Profiles.Include(p => p.Assets).Include(p => p.BlogPosts)
-                .Where(predicate).Skip(skip);
+            var all = _db.Profiles.Include(p => p.Assets).Include(p => p.BlogPosts);
+            pager.Configure(all.Count());
+
+            var posts = all.Where(predicate).Skip(skip).Take(pager.ItemsPerPage).ToList();
 
             // this is work around EF 1.1 not handling "count" fields
             // and can be simplified when moved to EF 2

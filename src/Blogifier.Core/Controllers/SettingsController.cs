@@ -90,10 +90,13 @@ namespace Blogifier.Core.Controllers
         public IActionResult Application(int page = 1)
         {
             var pager = new Pager(page);
+            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
+
             var model = new AdminApplicationModel
             {
                 Profile = GetProfile(),
-                Blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager)
+                Blogs = blogs,
+                Pager = pager
             };
             return View(_theme + "Application.cshtml", model);
         }

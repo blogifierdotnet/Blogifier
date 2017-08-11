@@ -52,7 +52,8 @@ namespace Blogifier.Core.Data.Models
 	public class AdminApplicationModel : AdminBaseModel
 	{
         public IEnumerable<ProfileListItem> Blogs { get; set; }
-	}
+        public Pager Pager { get; set; }
+    }
 
     public class RssImportModel
     {
