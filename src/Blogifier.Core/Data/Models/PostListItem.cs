@@ -2,7 +2,7 @@
 
 namespace Blogifier.Core.Data.Models
 {
-    public class PostListItem
+    public class PostListItem : IEquatable<PostListItem>
     {
         public int BlogPostId { get; set; }
         public string Slug { get; set; }
@@ -16,5 +16,18 @@ namespace Blogifier.Core.Data.Models
         public string BlogSlug { get; set; }
 
         public int PostViews { get; set; }
+
+        public bool Equals(PostListItem other)
+        {
+            if (BlogPostId == other.BlogPostId)
+                return true;
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return BlogPostId.GetHashCode();
+        }
     }
 }

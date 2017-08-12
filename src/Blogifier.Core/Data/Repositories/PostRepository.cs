@@ -91,10 +91,10 @@ namespace Blogifier.Core.Data.Repositories
                     AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
                     BlogSlug = pc.BlogPost.Profile.Slug,
                     PostViews = pc.BlogPost.PostViews
-                }).ToList();
+                }).Distinct().ToList();
 
             pager.Configure(postItems.Count);
-            return Task.Run(() => postItems.Skip(skip).Take(pager.ItemsPerPage).ToList());
+            return Task.Run(() => postItems.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
