@@ -9,14 +9,20 @@
 <div class="bf">
     <div class="bf-sidebar">
         <div class="bf-posts-sidebar-head">
-            <input type="checkbox" />
-            <a href="~/admin/editor/0" class="btn">New Post</a>
-            <i class="fa fa-filter"></i>
+
+            <!-- default -->
+            <label class="head-tools head-tools-left"><input class="icon-checkbox" type="checkbox" /></label>
+            <a href="~/admin/editor/0" class="btn btn-block">New Post</a>
+            <label class="head-tools head-tools-right"><i class="icon-filter fa fa-filter"></i></label>
+            
+            <!-- actions -->
             <div class="btn-group admin-toolbar-mutlicheck hide" role="group">
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
+
+            <!-- filters -->
             <div class="bf-posts-sidebar-filters">
                 <form action="~/admin" method="get" class="admin-toolbar-search">
                     <input type="search" name="search" class="form-control" placeholder="Search..." />

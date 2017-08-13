@@ -1,7 +1,27 @@
 .bf-posts-sidebar-head {
     border-bottom: 1px solid $color-black-20;
     position: relative;
-    padding: 1rem 4rem;
+    padding: 1rem 4.25rem;
+
+    .head-tools {
+        position: absolute;
+        top: 0;
+        display: flex;
+        width: 4.5rem;
+        height: 4.5rem;
+
+        input, i {
+            margin: auto;
+        }
+
+        &.head-tools-left {
+            left: 0;
+        }
+
+        &.head-tools-right {
+            right: 0;
+        }
+    }
 }
 
 .bf-posts-sidebar-filters {
