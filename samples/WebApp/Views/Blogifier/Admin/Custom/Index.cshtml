@@ -8,80 +8,63 @@
 }
 <div class="bf">
     <div class="bf-sidebar">
-        <div class="admin-toolbar hide">
-            <a href="~/admin/editor/0" class="btn btn-black btn-main mr-2">New</a>
-            <div class="btn-group admin-toolbar-mutlicheck" role="group" aria-label="Multiple Action">
+        <div class="bf-posts-sidebar-head">
+            <input type="checkbox" />
+            <a href="~/admin/editor/0" class="btn">New Post</a>
+            <i class="fa fa-filter"></i>
+            <div class="btn-group admin-toolbar-mutlicheck hide" role="group">
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
-            <div class="dropdown admin-toolbar-filter">
-                <button class="btn btn-secondary dropdown-toggle btn-icon" title="Filter" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filtersDropdown">
-                    <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
-                        <h5>Filter by status:</h5>
-                        <div class="admin-filter-status">
-                            @foreach (var ftr in Model.StatusFilter)
-                            {
-                                var ftrChecked = ftr.Selected ? "checked" : "";
-                            <label class="custom-control custom-radio d-block">
-                                <input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">@ftr.Text</span>
-                            </label>
-                            }
-                        </div>
-                        <hr />
-                        <h5>Filter by categories:</h5>
-                        <div class="admin-filter-category">
-                            @foreach (var cat in Model.CategoryFilter)
-                            {
-                                var isChecked = cat.Selected ? "checked" : "";
-                            <label class="custom-control custom-checkbox d-block">
-                                <input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">@cat.Text</span>
-                            </label>
-                            }
-                        </div>
-                    </form>
-                </div>
+            <div class="bf-posts-sidebar-filters">
+                <form action="~/admin" method="get" class="admin-toolbar-search">
+                    <input type="search" name="search" class="form-control" placeholder="Search..." />
+                </form>
+                <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+                    <h5>Filter by status:</h5>
+                    @foreach (var ftr in Model.StatusFilter)
+                    {
+                        var ftrChecked = ftr.Selected ? "checked" : "";
+                        <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">@ftr.Text</label>
+                    }
+                    <hr />
+                    <h5>Filter by categories:</h5>
+                    @foreach (var cat in Model.CategoryFilter)
+                    {
+                        var isChecked = cat.Selected ? "checked" : "";
+                        <label><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">@cat.Text</label>
+                    }
+                </form>
             </div>
-            <form action="~/admin" method="get" class="admin-toolbar-search">
-                <input type="search" name="search" class="form-control" placeholder="Search..." />
-            </form>
         </div>
         <ul class="list-group post-list admin-list-multicheck" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
-            <li class="list-group-item post-list-item">
-                <label class="post-item-checkbox custom-control custom-checkbox">
-                    <input type="checkbox" id="@item.BlogPostId" class="custom-control-input"><span class="custom-control-indicator"></span>
-                </label>
-                <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
-                <div class="post-item-info">
-                    <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
-                    <a class="pr-2" aria-label="Publish date">@published</a>
-                </div>
-            </li>
+                <li class="list-group-item post-list-item">
+                    <label class="post-item-checkbox custom-control custom-checkbox">
+                        <input type="checkbox" id="@item.BlogPostId" class="custom-control-input">
+                    </label>
+                    <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
+                    @*<a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>*@
+                    @*<a aria-label="Publish date">@published</a>*@
+                </li>
             }
         </ul>
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
-        <ul class="pagination-custom" aria-label="Post navigation">
-            @if (pgr.ShowOlder)
+            <ul class="pagination-custom" aria-label="Post navigation">
+                @if (pgr.ShowOlder)
                 {
-                <li><a href="~/admin/@pgr.Older" aria-label="Older posts"><i class="fa fa-long-arrow-left"></i></a></li>
+                    <li><a href="~/admin/@pgr.Older" aria-label="Older posts"><i class="fa fa-long-arrow-left"></i></a></li>
                 }
-            <li><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
-            @if (pgr.ShowNewer)
+                <li><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
+                @if (pgr.ShowNewer)
                 {
-                <li><a href="~/admin/@pgr.Newer" aria-label="Newer posts"><i class="fa fa-long-arrow-right"></i></a></li>
+                    <li><a href="~/admin/@pgr.Newer" aria-label="Newer posts"><i class="fa fa-long-arrow-right"></i></a></li>
                 }
-        </ul>
+            </ul>
         }
     </div>
     <div class="bf-content">content</div>

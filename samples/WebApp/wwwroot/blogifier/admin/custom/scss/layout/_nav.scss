@@ -1,12 +1,12 @@
 .admin-nav {
     position: absolute;
-    right: 2rem;
-    top: 2rem;
+    right: 1rem;
+    top: 1rem;
 
     .admin-nav-toggle {
         @include unstyled(button);
-        width: 3rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
 
         img {
             display: block;

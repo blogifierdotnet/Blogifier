@@ -1,5 +1,9 @@
-.bf-posts {
+.bf-posts-sidebar-head {
+    border-bottom: 1px solid $color-black-20;
+    position: relative;
+    padding: 1rem 4rem;
 }
 
-.bf-posts-sidebar {
+.bf-posts-sidebar-filters {
+    display: none;
 }
