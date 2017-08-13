@@ -4,6 +4,10 @@
     @include box-sizing(border-box);
 }
 
+html, body {
+    height: 100%;
+}
+
 html {
     font-size: 1em;
 }
@@ -13,4 +17,24 @@ body {
     font-family: $font-family-base;
     font-weight: 400;
     font-size: 1rem;
+}
+
+//
+.bf {
+    height: 100%;
+    display: table;
+
+    .bf-sidebar,
+    .bf-content {
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .bf-sidebar {
+        background: $color-brand-primary;
+        width:420px;
+    }
+
+    .bf-content {
+    }
 }

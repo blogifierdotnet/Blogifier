@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 </head>
 <body>
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")
 
-    <div class="admin-content admin-content-settings container d-md-flex flex-md-column">
-        <div class="admin-settings row no-gutters rounded">
+    <div class="bf">
+        <div class="bf-sidebar">
             <ul class="admin-settings-sidebar col-md-3">
                 <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span><i class="fa fa-user"></i></a></li>
                 @if (!ApplicationSettings.SingleBlog)
@@ -23,9 +23,9 @@
                     <li class="about"><a href="~/admin/settings/about"><span>About</span><i class="fa fa-question"></i></a></li>
                 }
             </ul>
-            <div class="admin-settings-content col-md-9">
-              @RenderBody()
-            </div>
+        </div>
+        <div class="bf-content">
+            @RenderBody()
         </div>
     </div>
 
