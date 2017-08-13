@@ -73,5 +73,10 @@
 .bf-posts-list {
     li {
         border-bottom: 1px solid $color-black-20;
+        padding: 1rem 2rem;
+    }
+
+    a {
+        color: #fff;
     }
 }

@@ -9,22 +9,22 @@
 
     <div class="bf">
         <div class="bf-sidebar">
-            <ul class="admin-settings-sidebar col-md-3">
-                <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span><i class="fa fa-user"></i></a></li>
+            <ul class="bf-sidebar-settings">
+                <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
                 @if (!ApplicationSettings.SingleBlog)
                 {
-                    <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span><i class="fa fa-sliders"></i></a></li>
+                    <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
                 }
-                <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span><i class="fa fa-window-maximize"></i></a></li>
-                <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span><i class="fa fa-rss"></i></a></li>
+                <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span></a></li>
+                <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span></a></li>
                 @if (Model.Profile != null && Model.Profile.IsAdmin)
                 {
-                    <li class="application"><a href="~/admin/settings/application"><span>Administration</span><i class="fa fa-cog"></i></a></li>
-                    <li class="about"><a href="~/admin/settings/about"><span>About</span><i class="fa fa-question"></i></a></li>
+                    <li class="application"><a href="~/admin/settings/application"><span>Administration</span></a></li>
+                    <li class="about"><a href="~/admin/settings/about"><span>About</span></a></li>
                 }
             </ul>
         </div>
-        <div class="bf-content">
+        <div class="bf-content bf-content-settings">
             @RenderBody()
         </div>
     </div>
