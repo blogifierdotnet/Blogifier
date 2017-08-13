@@ -2,11 +2,7 @@
     Author: Francis - http://francis.bio/blogifier/
 */
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-
-// Vendor
-@import "vendor/fontawesome";
-@import "vendor/toastr";
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
 
 // Helpers
 @import "helpers/variables";
@@ -16,7 +12,18 @@
 @import "base/reset";
 @import "base/normalize";
 
+// Vendor
+@import "vendor/fontawesome";
+@import "vendor/toastr";
+
 // Layout
 @import "layout/main";
 @import "layout/nav";
+
+// Pages
+@import "pages/setup/setup";
+@import "pages/posts/posts";
+@import "pages/posts/new";
+@import "pages/posts/edit";
+@import "pages/settings/settings";
  
