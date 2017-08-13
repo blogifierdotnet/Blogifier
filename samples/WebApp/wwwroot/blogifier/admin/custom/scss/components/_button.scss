@@ -3,12 +3,15 @@
     background: #fff;
     display: inline-block;
     @include border-radius(2.5rem);
-    height: 2.5rem;
-    line-height: 2.5rem;
+    height: 3rem;
+    line-height: 3rem; 
     padding: 0 1rem;
     vertical-align: top;
     text-align:center;
-    font-weight:$font-weight-medium;
+    font-weight:$font-weight-bold;
+    color:$color-brand-primary;
+    text-transform:uppercase;
+    font-size:1rem;
 }
 
 .btn-block {

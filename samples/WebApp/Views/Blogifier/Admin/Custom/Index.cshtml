@@ -8,7 +8,7 @@
 }
 <div class="bf">
     <div class="bf-sidebar">
-        <div class="bf-posts-sidebar-head">
+        <div class="bf-sidebar-posts-head">
             <!-- default -->
             <label class="head-tools head-tools-left"><input class="icon-checkbox" type="checkbox" /></label>
             <a href="~/admin/editor/0" class="btn btn-block">New Post</a>
@@ -21,11 +21,11 @@
             </div>
         </div>
         <!-- filters -->
-        <div class="bf-posts-sidebar-tools">
-            <form class="bf-posts-sidebar-search" action="~/admin" method="get" class="admin-toolbar-search">
+        <div class="bf-sidebar-posts-tools">
+            <form class="bf-sidebar-posts-search" action="~/admin" method="get" class="admin-toolbar-search">
                 <input type="search" name="search" class="form-control" placeholder="Search..." />
             </form>
-            <form class="bf-posts-sidebar-filters" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+            <form class="bf-sidebar-posts-filters" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
                 <h5>Filter by status:</h5>
                 @foreach (var ftr in Model.StatusFilter)
                 {

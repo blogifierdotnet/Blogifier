@@ -1,14 +1,14 @@
-.bf-posts-sidebar-head {
+.bf-sidebar-posts-head {
     border-bottom: 1px solid $color-black-20;
     position: relative;
-    padding: 1rem 4.25rem;
+    padding: 1.5rem 6rem;
 
     .head-tools {
         position: absolute;
         top: 0;
         display: flex;
-        width: 4.5rem;
-        height: 4.5rem;
+        width: 6rem;
+        height: 6rem;
 
         input, i {
             margin: auto;
@@ -24,14 +24,14 @@
     }
 }
 
-.bf-posts-sidebar-tools {
+.bf-sidebar-posts-tools {
     background: $color-black-20;
 
     label {
         display: block;
     }
 
-    .bf-posts-sidebar-search {
+    .bf-sidebar-posts-search {
         .form-control {
             background: none;
             border: none;
@@ -46,7 +46,7 @@
         }
     }
 
-    .bf-posts-sidebar-filters {
+    .bf-sidebar-posts-filters {
         padding: 0 2rem 2rem;
 
         h5 {
@@ -79,4 +79,9 @@
     a {
         color: #fff;
     }
+}
+
+
+.bf-posts-content {
+        
 }
