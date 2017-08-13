@@ -25,5 +25,16 @@
 }
 
 .bf-posts-sidebar-filters {
-    display: none;
+    padding: 3rem;
+    background: $color-black-20;
+
+    label {
+        display: block;
+    }
+}
+
+.bf-posts-list {
+    li {
+        border-bottom: 1px solid $color-black-20;
+    }
 }

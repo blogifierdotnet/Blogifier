@@ -9,42 +9,40 @@
 <div class="bf">
     <div class="bf-sidebar">
         <div class="bf-posts-sidebar-head">
-
             <!-- default -->
             <label class="head-tools head-tools-left"><input class="icon-checkbox" type="checkbox" /></label>
             <a href="~/admin/editor/0" class="btn btn-block">New Post</a>
             <label class="head-tools head-tools-right"><i class="icon-filter fa fa-filter"></i></label>
-            
             <!-- actions -->
-            <div class="btn-group admin-toolbar-mutlicheck hide" role="group">
+            <div class="btn-group hide" role="group">
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
-
-            <!-- filters -->
-            <div class="bf-posts-sidebar-filters">
-                <form action="~/admin" method="get" class="admin-toolbar-search">
-                    <input type="search" name="search" class="form-control" placeholder="Search..." />
-                </form>
-                <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
-                    <h5>Filter by status:</h5>
-                    @foreach (var ftr in Model.StatusFilter)
-                    {
-                        var ftrChecked = ftr.Selected ? "checked" : "";
-                        <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">@ftr.Text</label>
-                    }
-                    <hr />
-                    <h5>Filter by categories:</h5>
-                    @foreach (var cat in Model.CategoryFilter)
-                    {
-                        var isChecked = cat.Selected ? "checked" : "";
-                        <label><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">@cat.Text</label>
-                    }
-                </form>
-            </div>
         </div>
-        <ul class="list-group post-list admin-list-multicheck" aria-label="posts">
+        <!-- filters -->
+        <div class="bf-posts-sidebar-filters">
+            <form action="~/admin" method="get" class="admin-toolbar-search">
+                <input type="search" name="search" class="form-control" placeholder="Search..." />
+            </form>
+            <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+                <h5>Filter by status:</h5>
+                @foreach (var ftr in Model.StatusFilter)
+                {
+                    var ftrChecked = ftr.Selected ? "checked" : "";
+                    <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">@ftr.Text</label>
+                }
+                <hr />
+                <h5>Filter by categories:</h5>
+                @foreach (var cat in Model.CategoryFilter)
+                {
+                    var isChecked = cat.Selected ? "checked" : "";
+                    <label><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">@cat.Text</label>
+                }
+            </form>
+        </div>
+        <!-- posts -->
+        <ul class="bf-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
