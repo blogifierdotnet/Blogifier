@@ -1,0 +1,27 @@
+﻿@using Blogifier.Core.Common
+@{
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    var blogTitle = ApplicationSettings.Title;
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        blogTitle = Model.Profile.Title;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+}
+
+<div class="admin-nav">
+    <button><img alt="@userName" src="@avatar"></button>
+    <ul>
+        <li><a href="~/admin">Posts</a></li>
+        <li><a href="~/admin/settings/profile">Settings</a></li>
+        <li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank">View Blog</a></li>
+        <li><a onclick="profileLogOut(); return false;">Logoff</a></li>
+    </ul>
+    Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)
+</div>
+

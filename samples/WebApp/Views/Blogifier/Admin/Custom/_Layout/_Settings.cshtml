@@ -5,7 +5,7 @@
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 </head>
 <body>
-    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Header.cshtml")
+    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")
 
     <div class="admin-content admin-content-settings container d-md-flex flex-md-column">
         <div class="admin-settings row no-gutters rounded">
@@ -29,7 +29,6 @@
         </div>
     </div>
 
-    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Footer.cshtml")
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Foot.cshtml")
     @RenderSection("Scripts", false)
 </body>

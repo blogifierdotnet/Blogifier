@@ -6,15 +6,15 @@
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
-<div class="admin-content admin-content-posts container">
-    <div class="admin-toolbar clearfix">
-        <a href="~/admin/editor/0" class="btn btn-black btn-main float-left mr-2">New</a>
-        <div class="btn-group admin-toolbar-mutlicheck float-left" role="group" aria-label="Multiple Action">
+<div class="admin-content">
+    <div class="admin-toolbar">
+        <a href="~/admin/editor/0" class="btn btn-black btn-main mr-2">New</a>
+        <div class="btn-group admin-toolbar-mutlicheck" role="group" aria-label="Multiple Action">
             <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
             <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
             <button type="button" class="btn btn-secondary btn-icon" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
         </div>
-        <div class="dropdown admin-toolbar-filter float-right ml-2">
+        <div class="dropdown admin-toolbar-filter">
             <button class="btn btn-secondary dropdown-toggle btn-icon" title="Filter" type="button" id="filtersDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-filter"></i>
             </button>
@@ -48,7 +48,7 @@
                 </form>
             </div>
         </div>
-        <form action="~/admin" method="get" class="admin-toolbar-search float-right">
+        <form action="~/admin" method="get" class="admin-toolbar-search">
             <input type="search" name="search" class="form-control" placeholder="Search..." />
         </form>
     </div>

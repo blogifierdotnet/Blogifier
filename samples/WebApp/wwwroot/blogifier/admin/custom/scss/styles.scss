@@ -2,44 +2,29 @@
     Author: Francis - http://francis.bio/blogifier/
 */
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+
+// Helpers
+@import "helpers/variables";
+@import "helpers/mixins";
+
+// Base
+@import "base/reset";
+@import "base/normalize";
+@import "base/utilities";
 
 // Vendor
-@import "vendor/bootstrap";
 @import "vendor/fontawesome";
 @import "vendor/toastr";
 
-
-// Base 
-@import "base/variables";
-@import "base/mixins";
-@import "base/reset";
-@import "base/base";
-
-// Modules
-@import "modules/editors";
-@import "modules/filepicker";
-@import "modules/dropdown";
-@import "modules/buttons";
-@import "modules/forms";
-@import "modules/modals";
-@import "modules/pagination";
-@import "modules/tooltip";
-@import "modules/alerts";
-@import "modules/toolbar";
-@import "modules/loading";
-@import "modules/filters";
-@import "modules/search";
-
 // Layout
-@import "layout/header";
-@import "layout/footer";
- 
+@import "layout/main";
+@import "layout/nav";
+
 // Pages
-@import "pages/posts/index";
-@import "pages/posts/editor";
-@import "pages/files/files";
-@import "pages/settings/settings";
-@import "pages/settings/application";
 @import "pages/setup/setup";
-   
+@import "pages/posts/posts";
+@import "pages/posts/new";
+@import "pages/posts/edit";
+@import "pages/settings/settings";
+ 
