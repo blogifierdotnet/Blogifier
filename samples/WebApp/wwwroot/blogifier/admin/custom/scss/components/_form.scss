@@ -1,2 +1,16 @@
-.form-group {}
-.form-control {}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border: 2px solid $color-brand-default;
+    @include border-radius($radius-sm);
+    height: 2.5rem;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+textarea.form-control {
+    height: auto;
+    max-width: 100%;
+}

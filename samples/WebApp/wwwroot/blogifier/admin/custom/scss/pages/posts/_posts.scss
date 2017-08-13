@@ -24,12 +24,49 @@
     }
 }
 
-.bf-posts-sidebar-filters {
-    padding: 3rem;
+.bf-posts-sidebar-tools {
     background: $color-black-20;
 
     label {
         display: block;
+    }
+
+    .bf-posts-sidebar-search {
+        .form-control {
+            background: none;
+            border: none;
+            border-bottom: 1px solid $color-black-20;
+            color: #fff;
+            padding: 0 2rem;
+            height: 3rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .bf-posts-sidebar-filters {
+        padding: 0 2rem 2rem;
+
+        h5 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            opacity: .75;
+        }
+
+        label {
+            display: block;
+            font-size: .875rem;
+            margin-bottom: .25rem;
+        }
+
+        input {
+            margin-right: 1rem;
+            position: relative;
+            top: 2px;
+        }
     }
 }
 

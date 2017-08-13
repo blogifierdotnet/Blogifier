@@ -21,18 +21,17 @@
             </div>
         </div>
         <!-- filters -->
-        <div class="bf-posts-sidebar-filters">
-            <form action="~/admin" method="get" class="admin-toolbar-search">
+        <div class="bf-posts-sidebar-tools">
+            <form class="bf-posts-sidebar-search" action="~/admin" method="get" class="admin-toolbar-search">
                 <input type="search" name="search" class="form-control" placeholder="Search..." />
             </form>
-            <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+            <form class="bf-posts-sidebar-filters" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
                 <h5>Filter by status:</h5>
                 @foreach (var ftr in Model.StatusFilter)
                 {
                     var ftrChecked = ftr.Selected ? "checked" : "";
                     <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">@ftr.Text</label>
                 }
-                <hr />
                 <h5>Filter by categories:</h5>
                 @foreach (var cat in Model.CategoryFilter)
                 {
