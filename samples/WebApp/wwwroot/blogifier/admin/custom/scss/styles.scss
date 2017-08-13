@@ -11,11 +11,19 @@
 // Base
 @import "base/reset";
 @import "base/normalize";
-@import "base/utilities";
 
 // Vendor
 @import "vendor/fontawesome";
 @import "vendor/toastr";
+
+// Components
+@import "components/utilities";
+@import "components/button";
+@import "components/dropdown";
+@import "components/form";
+@import "components/alert";
+@import "components/loading";
+@import "components/pagination";
 
 // Layout
 @import "layout/main";

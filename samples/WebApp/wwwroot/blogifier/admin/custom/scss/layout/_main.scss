@@ -1,3 +1,10 @@
-body, html {}
+html {
+    font-size: 1em;
+}
 
-.body {}
+body {
+    background: #fff;
+    font-family: $font-family-base;
+    font-weight: 400;
+    font-size: 1rem;
+}

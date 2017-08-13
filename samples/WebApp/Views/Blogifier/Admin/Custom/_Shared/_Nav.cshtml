@@ -15,13 +15,15 @@
 }
 
 <div class="admin-nav">
-    <button><img alt="@userName" src="@avatar"></button>
-    <ul>
-        <li><a href="~/admin">Posts</a></li>
-        <li><a href="~/admin/settings/profile">Settings</a></li>
-        <li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank">View Blog</a></li>
-        <li><a onclick="profileLogOut(); return false;">Logoff</a></li>
-    </ul>
-    Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)
+    <button class="admin-nav-toggle"><img alt="@userName" src="@avatar"></button>
+    <div class="admin-nav-content">
+        <ul>
+            <li><a href="~/admin">Posts</a></li>
+            <li><a href="~/admin/settings/profile">Settings</a></li>
+            <li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank">View Blog</a></li>
+            <li><a onclick="profileLogOut(); return false;">Logoff</a></li>
+        </ul>
+    </div>
+    @*Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)*@
 </div>
 

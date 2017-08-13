@@ -2,4 +2,33 @@
     position: absolute;
     right: 2rem;
     top: 2rem;
+
+    .admin-nav-toggle {
+        @include unstyled;
+        width: 3rem;
+        height: 3rem;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+        }
+    }
+
+    .admin-nav-content {
+        background: $color-brand-primary;
+        width: 15rem;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        border-radius:5px;
+        ul {
+            padding:2rem;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
 }
