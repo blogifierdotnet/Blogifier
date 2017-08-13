@@ -1,3 +1,7 @@
+a {
+    text-decoration: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: $font-weight-normal;
     line-height: 1.1;
@@ -9,7 +13,5 @@ p {
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    @include unstyled(ul);
 }

@@ -36,6 +36,7 @@
 
 .button {
     &-unstyled {
-        @include unstyled;
+        @include unstyled(button);
     }
 }
+ 

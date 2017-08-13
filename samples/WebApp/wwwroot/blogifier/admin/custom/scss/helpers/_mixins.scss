@@ -1,5 +1,63 @@
-@mixin unstyled() {
-    background: none;
-    border: none;
-    padding: 0;
+// unstyled
+@mixin unstyled($type) {
+    @if $type == button {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    @if $type == ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+}
+
+// clearfix
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+// box-sizing
+@mixin box-sizing($box-sizing) {
+    -webkit-box-sizing: $box-sizing;
+    -moz-box-sizing: $box-sizing;
+    box-sizing: $box-sizing;
+}
+
+// border-radius
+@mixin border-radius($size...) {
+    @if length($size) == 1 {
+        border-radius: $size;
+    }
+    @else {
+        @include custom-border-radius($size...);
+    }
+}
+
+// custom-border-radius
+@mixin custom-border-radius($topLeft: 0, $topRight: 0, $bottomRight: 0, $bottomLeft: 0) {
+    @if $topLeft != 0 {
+        border-top-left-radius: $topLeft;
+    }
+
+    @if $topRight != 0 {
+        border-top-right-radius: $topRight;
+    }
+
+    @if $bottomRight != 0 {
+        border-bottom-right-radius: $bottomRight;
+    }
+
+    @if $bottomLeft != 0 {
+        border-bottom-left-radius: $bottomLeft;
+    }
 }
