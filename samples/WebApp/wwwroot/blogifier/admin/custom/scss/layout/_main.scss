@@ -32,11 +32,12 @@ body {
 
     .bf-sidebar {
         background: $color-brand-primary;
-        width:420px;
-        color:rgba(255, 255, 255, 0.75);
+        width: 420px;
+        min-width:420px;
+        color: rgba(255, 255, 255, 0.75);
     }
 
     .bf-content {
-
+        width: 100%;
     }
 }
