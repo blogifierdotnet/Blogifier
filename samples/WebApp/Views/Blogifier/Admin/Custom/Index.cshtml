@@ -50,17 +50,23 @@
         
 
         <!-- POST LIST -->
-        <ul class="bf-posts-list" aria-label="posts">
+        <ul class="bf-sidebar-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
-                <li class="list-group-item post-list-item">
-                    <label class="post-item-checkbox custom-control custom-checkbox">
-                        <input type="checkbox" id="@item.BlogPostId" class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
+                <li class="item">
+                    <label class="item-select"><input type="checkbox" id="@item.BlogPostId" class="custom-control-input"></label>
 
-                    </label>
-                    <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
+                    <!--
+                        What we need here:
+                        1. One button for showing the content at the right side. and the same button with double click should edit the post.
+                        2. One link to edit page. (which we already have it)
+
+                        more info: https://trello.com/c/5y3PDp8h/11-post-list
+                    -->
+                    <a onclick="">@item.Title</a>
+                    <a href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+
                     <div class="hide">
                         <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
                         <a aria-label="Publish date">@published</a>

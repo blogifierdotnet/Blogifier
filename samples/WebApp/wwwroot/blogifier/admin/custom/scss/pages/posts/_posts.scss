@@ -32,6 +32,7 @@
 .bf-sidebar-posts-tools {
     background: $color-black-10;
     position: relative;
+    display: none;
 
     &::before {
         @include triangle(1.5rem, $color-black-10, up);
@@ -71,6 +72,7 @@
             font-size: .875rem;
             font-weight: 300;
             margin-bottom: .25rem;
+            width: 50%;
 
             &:last-child {
                 margin-bottom: 0;
@@ -84,7 +86,9 @@
     }
 }
 
-.bf-posts-list {
+
+
+.bf-sidebar-posts-list {
     li {
         border-bottom: 1px solid $color-black-10;
         padding: 1rem 2rem;
