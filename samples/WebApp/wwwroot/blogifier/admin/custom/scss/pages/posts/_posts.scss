@@ -14,8 +14,6 @@
         }
     }
 
-
-
     @media (min-width:1280px) {
         .bf-sidebar {
             width: 420px;
@@ -24,13 +22,14 @@
     }
 }
 
-
 //
 .bf-sidebar-posts-header {
     padding: 1.5rem 6rem;
     border-bottom: 1px solid $color-black-10;
     position: relative;
-
+    .btn-light {
+        padding:0;
+    }
     .list-select,
     .list-filter {
         position: absolute;
@@ -51,6 +50,15 @@
 
     .list-filter {
         right: 0;
+    }
+
+    @media (max-width:1023px) {
+        padding-right: 12rem;
+
+        .list-filter {
+            right: 6rem;
+            border-right: 1px solid $color-black-20;
+        }
     }
 }
 
