@@ -11,7 +11,7 @@
         display: block;
         width: 1.125rem;
         height: 1.125rem;
-
+        cursor:pointer;
         &.head-tools-left {
             left: 2.5rem;
             transform: translate(-50%,-50%);
@@ -25,6 +25,7 @@
 }
 
 .bf-sidebar-posts-tools {
+    display:none;
     background: $color-black-10;
 
     label {

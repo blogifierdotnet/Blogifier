@@ -8,6 +8,13 @@ $(function () {
     });
 });
 
+
+$(function () {
+    $(".head-tools-right").click(function () {
+        $(".bf-sidebar-posts-tools").slideToggle();
+    });
+});
+
 $(function () {
     var toolbarMutli = $(".admin-toolbar-mutlicheck");
     var checkMulti = $(".admin-list-multicheck input[type='checkbox']");
