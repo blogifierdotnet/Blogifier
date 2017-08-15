@@ -43,8 +43,8 @@
         color: $color-brand-purple-dark;
 
         &:hover {
-            border-color: $color-brand-purple-light;
-            background: $color-brand-purple-light;
+            border-color: $color-brand-purple-dark;
+            background: $color-brand-purple-dark;
         }
     }
 }
@@ -62,8 +62,8 @@
         color: $color-brand-gray-dark;
 
         &:hover {
-            border-color: $color-brand-gray-light;
-            background: $color-brand-gray-light;
+            border-color: $color-brand-gray-dark;
+            background: $color-brand-gray-dark;
         }
     }
 }
@@ -87,6 +87,7 @@
         }
     }
 }
+
 .btn-dark {
     color: #fff;
     background: $color-black-20;
@@ -101,7 +102,7 @@
         color: #fff;
 
         &:hover {
-            border-color:transparent;
+            border-color: transparent;
             color: #fff;
             background: $color-black-20;
         }
@@ -109,13 +110,57 @@
 }
 
 
-
-
-
-
-
 // options
 .btn-block {
     display: block;
     width: 100%;
 }
+
+
+.btn-group {
+    @include clearfix;
+    display:inline-block;
+    .btn {
+        border-radius: 0;
+        float: left;
+
+        &:first-child {
+            @include border-radius(3rem, 0, 0, 3rem);
+        }
+
+        &:last-child {
+            @include border-radius(0, 3rem, 3rem, 0);
+        }
+    }
+
+    .btn-outline {
+
+        &:first-child {
+            @include border-radius(3rem, 0, 0, 3rem);
+        }
+
+        &:last-child {
+            @include border-radius(0, 3rem, 3rem, 0);
+        }
+    }
+
+
+    &.btn-group-block {
+        display:flex;
+        width:100%;
+        .btn {
+            flex:1;
+            padding:0;
+        }
+    }
+}
+
+
+// snip from bootstrap
+.btn-group .btn-outline + .btn-outline,
+.btn-group .btn-outline + .btn-group,
+.btn-group .btn-group + .btn-outline,
+.btn-group .btn-group + .btn-group {
+    margin-left: -2px;
+}
+
