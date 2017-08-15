@@ -22,28 +22,33 @@ body {
 //
 .bf {
     height: 100%;
-    display: table;
-
-    .bf-sidebar,
-    .bf-content {
-        display: table-cell;
-        vertical-align: top;
-    }
 
     .bf-sidebar {
         background: $color-brand-purple-dark;
-        width: 420px;
-        min-width: 420px;
         color: #fff;
         background: rgb(106,60,188);
         background: -moz-linear-gradient(top, rgba(106,60,188,1) 0%, rgba(83,47,172,1) 100%);
         background: -webkit-linear-gradient(top, rgba(106,60,188,1) 0%,rgba(83,47,172,1) 100%);
         background: linear-gradient(to bottom, rgba(106,60,188,1) 0%,rgba(83,47,172,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6a3cbc', endColorstr='#532fac',GradientType=0 );
     }
 
-    .bf-content {
-        width: 100%;
+    @media (min-width:1024px) {
+        display: table;
+
+        .bf-sidebar,
+        .bf-content {
+            display: table-cell;
+            vertical-align: top;
+        }
+
+        .bf-content {
+            width: 100%;
+        }
+
+        .bf-sidebar {
+            width: 360px;
+            min-width: 360px;
+        }
     }
 }
 

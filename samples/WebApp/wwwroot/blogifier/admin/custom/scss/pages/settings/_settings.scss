@@ -1,9 +1,4 @@
 .bf-sidebar-settings {
-    text-align: right;
-    padding-top: 4rem;
-
-    li {
-    }
 
     a {
         line-height: 2rem;
@@ -11,6 +6,12 @@
         color: #fff;
         padding-right: 2rem;
     }
+
+    @media (min-width:1024px) {
+        text-align: right;
+        padding-top: 4rem;
+    }
+
 }
 
 .bf-content-settings {
