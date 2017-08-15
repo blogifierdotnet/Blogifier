@@ -59,13 +59,7 @@
         label {
             display: block;
             font-size: .875rem;
-            margin-bottom: .25rem;
-        }
-
-        input {
-            margin-right: 1rem;
-            position: relative;
-            top: 2px;
+            margin:0;
         }
     }
 }
@@ -125,8 +119,8 @@
         h1 {
             margin: 1rem 0 2.5rem;
             font-size: 2.5rem;
-            font-weight:300;
-            width:70%;
+            font-weight: 300;
+            width: 70%;
         }
 
         .btn-group {

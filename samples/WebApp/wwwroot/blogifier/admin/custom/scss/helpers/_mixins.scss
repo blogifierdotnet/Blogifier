@@ -1,3 +1,14 @@
+// font-awesome
+@mixin icon($code) {
+    content: $code;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 // unstyled
 @mixin unstyled($type) {
     @if $type == button {

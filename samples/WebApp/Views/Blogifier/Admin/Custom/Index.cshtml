@@ -10,7 +10,7 @@
     <div class="bf-sidebar">
         <div class="bf-sidebar-posts-head">
             <!-- default -->
-            <label class="head-tools head-tools-left"><input class="icon-checkbox" type="checkbox" /></label>
+            <label class="head-tools head-tools-left custom-control custom-checkbox"><input type="checkbox" name="category-filter" class="custom-control-input"><span class="custom-control-indicator icon-checkbox"></span></label>
             <a href="~/admin/editor/0" class="btn btn-light  btn-block">New Post</a>
             <label class="head-tools head-tools-right"><i class="icon-filter fa fa-filter"></i></label>
             <!-- actions -->
@@ -30,13 +30,13 @@
                 @foreach (var ftr in Model.StatusFilter)
                 {
                     var ftrChecked = ftr.Selected ? "checked" : "";
-                    <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input">@ftr.Text</label>
+                    <label class="custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
                 }
                 <h5>Filter by categories:</h5>
                 @foreach (var cat in Model.CategoryFilter)
                 {
                     var isChecked = cat.Selected ? "checked" : "";
-                    <label><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk">@cat.Text</label>
+                    <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
                 }
             </form>
         </div>
@@ -48,6 +48,8 @@
                 <li class="list-group-item post-list-item">
                     <label class="post-item-checkbox custom-control custom-checkbox">
                         <input type="checkbox" id="@item.BlogPostId" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+
                     </label>
                     <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
                     @*<a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>*@
@@ -87,9 +89,7 @@
                 <button class="btn btn-primary btn-outline btn-sm btn-icon float-right"><i class="fa fa-photo"></i></button>
             </div>
         </div>
-        <div class="bf-content-post-text">
-            content ...
-        </div>
+
     </div>
 </div>
 @section Scripts{
