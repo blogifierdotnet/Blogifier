@@ -7,25 +7,31 @@
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
 <div class="bf">
+
+
     <div class="bf-sidebar">
 
+
+        <!-- SIDEBAR HEADER -->
         <div class="bf-sidebar-posts-header">
             <label class="list-select"><input class="item-control" type="checkbox" name="selectAll"></label>
             <label class="list-filter"><i class="fa fa-filter item-control"></i></label>
-            <a href="~/admin/editor/0" class="btn btn-light  btn-block">New Post</a>
+            <a href="~/admin/editor/0" class="btn btn-light btn-block">New Post</a>
             <div class="btn-group btn-group-block hide" role="group">
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
         </div>
+        <!--/SIDEBAR HEADER -->
 
-        <!-- filters -->
+
+        <!-- SEARCH & FILTERS -->
         <div class="bf-sidebar-posts-tools">
-            <form class="bf-sidebar-posts-search" action="~/admin" method="get" class="admin-toolbar-search">
-                <input type="search" name="search" class="form-control" placeholder="Search..." />
+            <form class="bf-sidebar-posts-search" action="~/admin" method="get">
+                <input type="search" name="search" placeholder="search..." autocomplete="off" />
             </form>
-            <form class="bf-sidebar-posts-filters" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+            <form class="bf-sidebar-posts-filter" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
                 <h5>Filter by status:</h5>
                 @foreach (var ftr in Model.StatusFilter)
                 {
@@ -40,7 +46,10 @@
                 }
             </form>
         </div>
-        <!-- posts -->
+        <!--/SEARCH & FILTERS -->
+        
+
+        <!-- POST LIST -->
         <ul class="bf-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
@@ -52,11 +61,17 @@
 
                     </label>
                     <a href="~/admin/editor/@item.BlogPostId" class="post-item-link">@item.Title</a>
-                    @*<a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>*@
-                    @*<a aria-label="Publish date">@published</a>*@
+                    <div class="hide">
+                        <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
+                        <a aria-label="Publish date">@published</a>
+                    </div>
                 </li>
             }
         </ul>
+        <!--/POST LIST -->
+
+
+        <!-- PAGINATION -->
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
             <ul class="pagination-custom" aria-label="Post navigation">
@@ -71,7 +86,12 @@
                 }
             </ul>
         }
+        <!--/PAGINATION -->
+
+
     </div>
+
+
     <div class="bf-content bf-content-posts">
         <div class="bf-content-post-cover" style="background-image:url(http://blogifier.azurewebsites.net/blogifier/data/francis/2017/7/a.jpg);">
             <div class="bf-content-post-cover-body">
@@ -89,8 +109,15 @@
                 <button class="btn btn-primary btn-outline btn-sm btn-icon float-right"><i class="fa fa-photo"></i></button>
             </div>
         </div>
-
+        <div class="bf-content-post-text">
+            <h2>Example Title</h2>
+            <p>Velit mollis odio sollicitudin lacinia aliquam posuere, sapien elementum lobortis tincidunt, turpis dui ornare nisl, sollicitudin interdum turpis nunc eget sem nulla eu ultricies orci praesent id augue nec lorem pretium congue sit amet ac nunc fusce iaculis lorem eu diam hendrerit at mattis purus dignissim vivamus mauris tellus, fringilla vel dapibus a, blandit quis erat vivamus elementum aliquam luctus etiam fringilla pretium sem vitae sodales mauris id nulla est praesent laoreet, metus vel auctor aliquam, eros purus vulputate leo, eget consequat neque quam id tellus duis ultricies tempor tortor, vitae dignissim ligula mattis nec in hac habitasse platea dictumst.</p>
+            <h2>Example Title</h2>
+            <p>Vel dapibus a, blandit quis erat vivamus elementum aliquam luctus etiam fringilla pretium sem vitae sodales mauris id nulla est praesent laoreet, metus vel auctor aliquam, eros purus vulputate leo, eget consequat neque quam id tellus duis ultricies tempor tortor, vitae dignissim ligula mattis nec in hac habitasse platea dictumst ut arcu enim, dictum quis ultrices id, sagittis eget nulla sed nunc mi, congue ut ultricies ac, varius a eros donec porttitor, libero fermentum fringilla laoreet, eros arcu sodales ante, ut dictum risus lectus vel quam integer ultricies, nunc eget elementum euismod, orci enim vestibulum orci, nec suscipit urna odio et tellus suspendisse suscipit orci sit amet sem venenatis nec lobortis sem suscipit nullam nec imperdiet velit mauris eu nisi a felis imperdiet porta at ac nulla vivamus faucibus felis nec dolor pretium eget pellentesque dolor suscipit maecenas vitae enim arcu, at tincidunt nunc pellentesque eleifend vulputate lacus, vel semper.</p>
+        </div>
     </div>
+
+
 </div>
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/postsController.js"></script>

@@ -11,14 +11,14 @@ $(function () {
 
 $(function () {
     $(".bf-sidebar-posts-header .list-filter").click(function () {
-        $(".bf-sidebar-posts-tools").slideToggle();
+        $(".bf-sidebar-posts-tools").toggle();
     });
 });
 
 $(function () {
     var toolbarMutli = $(".admin-toolbar-mutlicheck");
     var checkMulti = $(".admin-list-multicheck input[type='checkbox']");
-    $(checkMulti).on('change', function() {
+    $(checkMulti).on('change', function () {
         if (checkMulti.is(':checked')) {
             $(toolbarMutli).addClass("visible");
         }
@@ -38,7 +38,8 @@ $(".admin-setup-form #AuthorName").keyup(function () {
     }
 });
 
-$('.dropdown-menu').on({"click": function (e) {
+$('.dropdown-menu').on({
+    "click": function (e) {
         e.stopPropagation();
     }
 });

@@ -1,3 +1,4 @@
+//
 .bf-sidebar-posts-header {
     padding: 1.5rem 6rem;
     border-bottom: 1px solid $color-black-10;
@@ -27,71 +28,58 @@
 }
 
 
-
-.bf-sidebar-posts-head {
-    border-bottom: 1px solid $color-black-10;
-    position: relative;
-    padding: 1.5rem 6rem;
-
-    .head-tools {
-        padding: 0;
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        display: block;
-        width: 1.125rem;
-        height: 1.125rem;
-        cursor: pointer;
-
-        &.head-tools-left {
-            left: 2.5rem;
-            transform: translate(-50%,-50%);
-        }
-
-        &.head-tools-right {
-            right: 2.5rem;
-            transform: translate(50%,-50%);
-        }
-    }
-}
-
+//
 .bf-sidebar-posts-tools {
-    display: none;
     background: $color-black-10;
+    position: relative;
 
-    label {
-        display: block;
+    &::before {
+        @include triangle(1.5rem, $color-black-10, up);
+        position: absolute;
+        top: -1.5625rem;
+        right: 2.25rem;
     }
 
     .bf-sidebar-posts-search {
-        .form-control {
+        input {
             background: none;
             border: none;
             border-bottom: 1px solid $color-black-10;
             color: #fff;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
             height: 3rem;
 
-            &:focus {
-                outline: none;
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.25);
             }
         }
     }
 
-    .bf-sidebar-posts-filters {
-        padding: 0 2rem 2rem;
+    .bf-sidebar-posts-filter {
+        padding: 1.25rem 2.5rem 2rem;
 
         h5 {
-            margin-top: 2rem;
+            margin-top: 1rem;
             margin-bottom: 1rem;
             text-transform: uppercase;
-            opacity: .75;
+            opacity: .3;
+            font-size: .75rem;
         }
 
         label {
             display: block;
             font-size: .875rem;
-            margin: 0;
+            font-weight: 300;
+            margin-bottom: .25rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        input {
+            margin-right: 1rem;
+            vertical-align: top;
         }
     }
 }
@@ -166,4 +154,8 @@
 
 .bf-content-post-text {
     padding: 3rem;
+
+    h2, p {
+        margin-bottom: 1rem;
+    }
 }

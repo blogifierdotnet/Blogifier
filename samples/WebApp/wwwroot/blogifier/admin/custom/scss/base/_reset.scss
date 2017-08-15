@@ -15,3 +15,16 @@ p {
 ul {
     @include unstyled(ul);
 }
+
+input {
+    &[type=text],
+    &[type=search],
+    textarea,
+    select {
+        width: 100%;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
