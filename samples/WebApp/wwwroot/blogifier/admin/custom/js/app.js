@@ -10,7 +10,7 @@ $(function () {
 
 
 $(function () {
-    $(".head-tools-right").click(function () {
+    $(".bf-sidebar-posts-header .list-filter").click(function () {
         $(".bf-sidebar-posts-tools").slideToggle();
     });
 });

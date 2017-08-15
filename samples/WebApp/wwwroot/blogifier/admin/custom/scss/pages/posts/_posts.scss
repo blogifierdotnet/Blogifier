@@ -1,3 +1,33 @@
+.bf-sidebar-posts-header {
+    padding: 1.5rem 6rem;
+    border-bottom: 1px solid $color-black-10;
+    position: relative;
+
+    .list-select,
+    .list-filter {
+        position: absolute;
+        top: 0;
+        width: 6rem;
+        height: 100%;
+        display: flex;
+
+        .item-control {
+            margin: auto;
+            cursor: pointer;
+        }
+    }
+
+    .list-select {
+        left: 0;
+    }
+
+    .list-filter {
+        right: 0;
+    }
+}
+
+
+
 .bf-sidebar-posts-head {
     border-bottom: 1px solid $color-black-10;
     position: relative;
@@ -11,7 +41,8 @@
         display: block;
         width: 1.125rem;
         height: 1.125rem;
-        cursor:pointer;
+        cursor: pointer;
+
         &.head-tools-left {
             left: 2.5rem;
             transform: translate(-50%,-50%);
@@ -25,7 +56,7 @@
 }
 
 .bf-sidebar-posts-tools {
-    display:none;
+    display: none;
     background: $color-black-10;
 
     label {
