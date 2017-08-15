@@ -91,11 +91,37 @@
 .bf-sidebar-posts-list {
     li {
         border-bottom: 1px solid $color-black-10;
-        padding: 1rem 2rem;
-    }
+        position: relative;
 
-    a {
-        color: #fff;
+
+        .item-select {
+            position: absolute;
+            width: 6rem;
+            height: 100%;
+            display: flex;
+
+            .item-control {
+                margin: auto;
+                cursor: pointer;
+            }
+        }
+
+        .item-link {
+            color: rgba(255, 255, 255, 0.50);
+            display: block;
+            padding: 1.5rem 2rem 1.5rem 6rem;
+            cursor: pointer;
+        }
+
+        .item-link-mobile {
+            display: none;
+        }
+
+        &:hover {
+            .item-link {
+                color: #fff;
+            }
+        }
     }
 }
 
