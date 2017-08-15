@@ -1,19 +1,120 @@
 .btn {
-    border: none;
-    background: #fff;
-    display: inline-block;
-    @include border-radius(2.5rem);
     height: 3rem;
-    line-height: 3rem; 
-    padding: 0 1rem;
+    line-height: 3rem;
+    color: $color-brand-gray-dark;
+    background: none;
+    padding: 0 2rem;
+    cursor: pointer;
+    border: none;
+    @include border-radius(3rem);
+    display: inline-block;
     vertical-align: top;
-    text-align:center;
-    font-weight:$font-weight-bold;
-    color:$color-brand-primary;
-    text-transform:uppercase;
-    font-size:1rem;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    font-size: 1rem;
+
+    &:hover {
+        color: #fff;
+        background: $color-brand-gray-light;
+    }
+
+    &.btn-outline {
+        border: 2px solid transparent;
+        background: none;
+
+        &:hover {
+            color: #fff;
+        }
+    }
 }
 
+// styles
+.btn-primary {
+    color: #fff;
+    background: $color-brand-purple-dark;
+
+    &:hover {
+        background: $color-brand-purple-light;
+    }
+
+    &.btn-outline {
+        border-color: $color-brand-purple-dark;
+        color: $color-brand-purple-dark;
+
+        &:hover {
+            border-color: $color-brand-purple-light;
+            background: $color-brand-purple-light;
+        }
+    }
+}
+
+.btn-default {
+    color: #fff;
+    background: $color-brand-gray-dark;
+
+    &:hover {
+        background: $color-brand-gray-light;
+    }
+
+    &.btn-outline {
+        border-color: $color-brand-gray-dark;
+        color: $color-brand-gray-dark;
+
+        &:hover {
+            border-color: $color-brand-gray-light;
+            background: $color-brand-gray-light;
+        }
+    }
+}
+
+// for uses on colored background
+.btn-light {
+    color: $color-brand-purple-dark;
+    background: #fff;
+
+    &:hover {
+        background: $color-black-20;
+    }
+
+    &.btn-outline {
+        border-color: #fff;
+        color: #fff;
+
+        &:hover {
+            color: $color-brand-purple-dark;
+            background: #fff;
+        }
+    }
+}
+.btn-dark {
+    color: #fff;
+    background: $color-black-20;
+
+    &:hover {
+        color: $color-brand-purple-dark;
+        background: #fff;
+    }
+
+    &.btn-outline {
+        border-color: $color-black-20;
+        color: #fff;
+
+        &:hover {
+            border-color:transparent;
+            color: #fff;
+            background: $color-black-20;
+        }
+    }
+}
+
+
+
+
+
+
+
+// options
 .btn-block {
     display: block;
     width: 100%;
