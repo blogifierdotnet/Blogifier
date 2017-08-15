@@ -19,6 +19,10 @@
         background: $color-brand-gray-light;
     }
 
+    &:focus {
+        outline: none !important;
+    }
+
     &.btn-outline {
         border: 2px solid transparent;
         background: none;
@@ -119,11 +123,12 @@
 
 .btn-group {
     @include clearfix;
-    display:inline-block;
+    display: inline-block;
+
     .btn {
         border-radius: 0;
         float: left;
-        
+
         &:first-child {
             @include border-radius(3rem, 0, 0, 3rem);
         }
@@ -146,11 +151,12 @@
 
 
     &.btn-group-block {
-        display:flex;
-        width:100%;
+        display: flex;
+        width: 100%;
+
         .btn {
-            flex:1;
-            padding:0;
+            flex: 1;
+            padding: 0;
         }
     }
 }
@@ -159,6 +165,7 @@
     padding: 0;
     min-width: 2.5rem;
 }
+
 .btn-group-icon {
     .btn {
         padding: 0;
@@ -196,4 +203,3 @@
 .btn-group .btn-group + .btn-group {
     margin-left: -2px;
 }
-
