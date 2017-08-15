@@ -1,6 +1,13 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
+
+$(function () {
+    $(".bf-nav-toggle").click(function () {
+        $(this).parent().toggleClass("active");
+    });
+});
+
 $(function () {
     var toolbarMutli = $(".admin-toolbar-mutlicheck");
     var checkMulti = $(".admin-list-multicheck input[type='checkbox']");

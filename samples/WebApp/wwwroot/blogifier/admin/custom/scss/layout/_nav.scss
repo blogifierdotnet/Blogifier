@@ -1,13 +1,14 @@
-.admin-nav {
+.bf-nav {
     position: absolute;
     right: 1.5rem;
     top: 1.5rem;
+    z-index: 10000;
 
-    .admin-nav-toggle {
+    .bf-nav-toggle {
         @include unstyled(button);
         width: 2.5rem;
         height: 2.5rem;
-
+        cursor:pointer;
         img {
             display: block;
             width: 100%;
@@ -16,22 +17,66 @@
         }
     }
 
-    .admin-nav-content {
+    .bf-nav-content {
         background: $color-brand-purple-dark;
-        width: 15rem;
+        width: 17rem;
         position: absolute;
         right: 0;
         top: 100%;
-        @include border-radius($radius-sm);
+        @include border-radius($radius-md);
+        overflow: hidden;
+        display:none;
+        .bf-nav-cover {
+            min-height: 130px;
+            padding: 7rem 1rem 1rem;
+            color: #fff;
+            background-color: #111;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
 
+            h2 {
+                font-size: 1rem;
+                margin-bottom: .5rem;
+            }
+
+            p {
+                font-size: .75rem;
+                opacity: .75;
+            }
+
+            h2, p {
+                position: relative;
+                z-index: 2;
+            }
+
+            &::after {
+                display: block;
+                content: "";
+                background: -moz-linear-gradient(top, transparent 0%, #000 100%);
+                background: -webkit-linear-gradient(top, transparent 0%, #000 100%);
+                background: linear-gradient(to bottom, transparent 0%, #000 100%);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
 
         ul {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         a {
             color: #fff;
         }
     }
+
+    &.active {
+        .bf-nav-content {
+            display: block;
+        }
+    }
 }
- 
