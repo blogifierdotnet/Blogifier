@@ -1,0 +1,23 @@
+.bf-editor {
+    &-container {
+        width: 1024px;
+        margin: 0 auto;
+    }
+}
+
+.bf-editor-header {
+    background: $color-brand-purple-dark;
+    padding: 3rem;
+    margin-bottom:2rem;
+    .item-title {
+        height: 3rem;
+        background: none;
+        border: 0;
+        color: #fff;
+        font-size: 2rem;
+        width: 1024px;
+        max-width:100%;
+        margin: 0 auto;
+        display: block;
+    }
+}

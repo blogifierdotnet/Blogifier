@@ -207,7 +207,7 @@
 
 document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({
-        skin: "blogifier",
+        skin: "lightgray",
         selector: '#txtContent',
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
