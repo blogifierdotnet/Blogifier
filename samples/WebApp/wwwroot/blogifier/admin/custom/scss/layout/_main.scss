@@ -27,10 +27,7 @@ body {
     .bf-sidebar {
         background: $color-brand-purple-dark;
         color: #fff;
-        background: rgb(106,60,188);
-        background: -moz-linear-gradient(top, rgba(106,60,188,1) 0%, rgba(83,47,172,1) 100%);
-        background: -webkit-linear-gradient(top, rgba(106,60,188,1) 0%,rgba(83,47,172,1) 100%);
-        background: linear-gradient(to bottom, rgba(106,60,188,1) 0%,rgba(83,47,172,1) 100%);
+        @include linear-gradient($color-brand-purple-light, $color-brand-purple-dark, 1);
     }
 
     @media (min-width:1024px) {

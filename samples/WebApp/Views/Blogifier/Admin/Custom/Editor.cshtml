@@ -9,12 +9,12 @@
         -->
         <div class="bf-editor-header bf-editor-cover" style="background-image:url(/embedded/lib/img/cover.png);">
             <textarea class="item-title bf-editor-container" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
-        </div>
-        <div class="bf-editor-toolbar">
-            <div class="bf-editor-container">
-                <div class="btn-group btn-group-icon btn-group-sm float-right">
-                    <button class="btn btn-light btn-outline"><i class="fa fa-cog"></i></button>
-                    <button class="btn btn-light btn-outline"><i class="fa fa-photo"></i></button>
+            <div class="bf-editor-toolbar">
+                <div class="bf-editor-container">
+                    <div class="btn-group btn-group-icon btn-group-sm float-right">
+                        <button class="btn btn-light btn-outline"><i class="fa fa-cog"></i></button>
+                        <button class="btn btn-light btn-outline"><i class="fa fa-photo"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,47 +26,47 @@
         <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
         <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
     </form>
-
     <div class="bf-editor-container">
-        @*<div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>*@
         <div class="admin-editor-toolbar clearfix">
             <span id="action-buttons"></span>
             <a href="~/admin" class="btn btn-default">Cancel</a>
         </div>
-
-        <div id="post-image" class="admin-editor-cover"></div>
-        <div class="admin-editor-category">
-            <h5>Category</h5>
-            <form id="frmCategory">
-                <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
-            </form>
-            <ul id="edit-categories">
-                @foreach (var category in Model.CategoryList)
-                {
-                    <li id="cat-@category.Value">
-                        <label>
-                            @if (category.Selected)
-                            {
-                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                            }
-                            else
-                            {
-                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                            }
-                            @category.Text
-                        </label>
-                        <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
-                    </li>
-                }
-            </ul>
-        </div>
-        <div class="admin-editor-description">
-            <h5>Description</h5>
-            <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
+        @*<div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>*@
+        @*<div id="post-image" class="admin-editor-cover"></div>*@
+        <div class="modal">
+            <div class="admin-editor-category">
+                <h5>Category</h5>
+                <form id="frmCategory">
+                    <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
+                </form>
+                <ul id="edit-categories">
+                    @foreach (var category in Model.CategoryList)
+                    {
+                        <li id="cat-@category.Value">
+                            <label>
+                                @if (category.Selected)
+                                {
+                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                }
+                                @category.Text
+                            </label>
+                            <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="admin-editor-description">
+                <h5>Description</h5>
+                <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
+            </div>
         </div>
     </div>
 </div>
-<div style="display:none;">
+<div class="hide">
     <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
         <input type="file" name="files" id="files" multiple onchange="filePickerController.uploadAssets(); return false;" />
         <input type="submit" value="Upload Multiple" />
