@@ -1,13 +1,18 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
+// scrollbar width
+var scrollDiv = document.createElement("div");
+scrollDiv.className = "scrollbar-measure";
+document.body.appendChild(scrollDiv);
+var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+document.body.removeChild(scrollDiv); 
 
 $(function () {
     $(".bf-nav-toggle").click(function () {
         $(this).parent().toggleClass("active");
     });
 });
-
 
 $(function () {
     $(".bf-sidebar-posts-header .list-filter").click(function () {
@@ -77,3 +82,18 @@ function loading() {
 function loaded() {
     $('#app-spinner').hide();
 }
+
+
+$(function () {
+    $("[data-modal-target]").on('click', function () {
+        $("body").addClass("modal-open");
+        $($(this).data("modal-target")).show();
+       $("body").css("padding-right", scrollbarWidth);
+    });
+    $(".modal-close").on('click', function () {
+        $("body").removeClass("modal-open");
+        $(this).parents().find(".modal").hide();
+        $("body").css("padding-right", "");
+    });
+});
+

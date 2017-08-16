@@ -12,8 +12,8 @@
             <div class="bf-editor-toolbar">
                 <div class="bf-editor-container">
                     <div class="btn-group btn-group-icon btn-group-sm float-right">
-                        <button class="btn btn-light btn-outline"><i class="fa fa-cog"></i></button>
-                        <button class="btn btn-light btn-outline"><i class="fa fa-photo"></i></button>
+                        <button type="button" data-modal-target="#postSettings" class="btn btn-light btn-outline"><i class="fa fa-cog"></i></button>
+                        <button type="button" class="btn btn-light btn-outline"><i class="fa fa-photo"></i></button>
                     </div>
                 </div>
             </div>
@@ -33,35 +33,44 @@
         </div>
         @*<div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>*@
         @*<div id="post-image" class="admin-editor-cover"></div>*@
-        <div class="modal">
-            <div class="admin-editor-category">
-                <h5>Category</h5>
-                <form id="frmCategory">
-                    <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
-                </form>
-                <ul id="edit-categories">
-                    @foreach (var category in Model.CategoryList)
-                    {
-                        <li id="cat-@category.Value">
-                            <label>
-                                @if (category.Selected)
-                                {
-                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                                }
-                                else
-                                {
-                                    <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                                }
-                                @category.Text
-                            </label>
-                            <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="admin-editor-description">
-                <h5>Description</h5>
-                <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
+        <div class="modal modal-sm" id="postSettings">
+            <div class="modal-overlay modal-close"></div>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h2>Modal Title</h2>
+                    <a href="#" class="modal-close"><i class="fa fa-times"></i></a>
+                </div>
+                <div class="modal-content">
+                    <div class="admin-editor-category">
+                        <h5>Category</h5>
+                        <form id="frmCategory">
+                            <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
+                        </form>
+                        <ul id="edit-categories">
+                            @foreach (var category in Model.CategoryList)
+                            {
+                                <li id="cat-@category.Value">
+                                    <label>
+                                        @if (category.Selected)
+                                        {
+                                            <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                        }
+                                        @category.Text
+                                    </label>
+                                    <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="admin-editor-description">
+                        <h5>Description</h5>
+                        <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

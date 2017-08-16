@@ -1,19 +1,15 @@
-﻿<div class="modal fade inmodal" id="modalFilePicker" tabindex="-1" role="dialog" aria-labelledby="filePickerModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+﻿<div class="modal inmodal" id="modalFilePicker">
+    <div class="modal-overlay modal-close"></div>
+    <div class="modal-body">
+        <div class="modal-header">
+            <h2>Modal Title</h2>
+            <a href="#" class="modal-close"><i class="fa fa-times"></i></a>
+        </div>
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filePickerModal">File picker</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="btn-group pb-3">
-                    <button class="btn btn-black btn-main" onclick="return assetController.clickUpload()">Upload</button>
-                </div>
-                <div class="file-picker row" id="filePickerList"></div>
-            </div>
-            <div class="modal-footer">
-                <ul class="pagination-custom pagination-custom-sm mt-0"></ul>
-            </div>
+            <button class="btn btn-black btn-main" onclick="return assetController.clickUpload()">Upload</button>
+            <hr />
+            <div class="file-picker row" id="filePickerList"></div>
+            <ul class="pagination-custom pagination-custom-sm mt-0"></ul>
         </div>
     </div>
 </div>
