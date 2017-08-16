@@ -9,7 +9,7 @@
 .bf-editor-header {
     background-color: $color-brand-purple-dark;
     position: relative;
-    padding: 2.5rem 0 6.5rem;
+    padding: 2.5rem 0;
 
     .item-title {
         overflow: hidden;
@@ -29,24 +29,13 @@
         }
     }
 
-    &::after, &::before {
+    &::before {
         content: "";
         display: block;
         height: 100%;
         width: 100%;
         position: absolute;
         bottom: 0;
-    }
-
-    &::after {
-        height: 4rem;
-        left: 50%;
-        transform: translate(-50%);
-        background: $color-brand-purple-dark;
-        border-top: 1px solid $color-black-10;
-    }
-
-    &::before {
         left: 0;
         background: #000;
         opacity: .5;
@@ -60,5 +49,15 @@
 
     &.bf-editor-cover {
         padding-top: 14rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
+}
+
+.bf-editor-toolbar {
+    background-color: $color-brand-purple-dark;
+    height: 4rem;
+    position: relative;
+    padding: 0.75rem 0;
 }

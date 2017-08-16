@@ -10,6 +10,14 @@
         <div class="bf-editor-header bf-editor-cover" style="background-image:url(/embedded/lib/img/cover.png);">
             <textarea class="item-title bf-editor-container" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
         </div>
+        <div class="bf-editor-toolbar">
+            <div class="bf-editor-container">
+                <div class="btn-group btn-group-icon btn-group-sm float-right">
+                    <button class="btn btn-light btn-outline"><i class="fa fa-cog"></i></button>
+                    <button class="btn btn-light btn-outline"><i class="fa fa-photo"></i></button>
+                </div>
+            </div>
+        </div>
         <div class="bf-editor-container">
             <textarea id="txtContent" name="txtContent" class="form-control form-control-text">@Model.BlogPost.Content</textarea>
         </div>
