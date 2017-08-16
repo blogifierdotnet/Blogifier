@@ -210,13 +210,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
         skin: "lightgray",
         selector: '#txtContent',
         plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code textcolor imagetools",
-            "insertdatetime media table contextmenu paste fullscreen fileupload codesample"
+            "autoresize autolink lists link image code textcolor imagetools hr media table contextmenu fileupload codesample"
         ],
-        toolbar: "styleselect | bold italic underline | alignleft aligncenter alignright | bullist numlist | forecolor backcolor | link media fileupload | codesample code fullscreen",
+        toolbar: "formatselect bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | link media fileupload | codesample code",
+        contextmenu: "link bold italic underline | inserttable hr | subscript superscript | removeformat",
+        contextmenu_never_use_native: true,
         autosave_ask_before_unload: false,
         height: "400",
+        autoresize_bottom_margin: 0,
+        autoresize_min_height: 100,
+        autoresize_overflow_padding: 0,
+        statusbar: false,
+        block_formats: 'H=""; H1=h1;H2=h2;H3=h3;H4=h4;H5=h5;H6=h6',
+        branding: false,
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,
