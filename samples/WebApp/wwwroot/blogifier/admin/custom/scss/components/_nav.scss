@@ -3,6 +3,7 @@
     right: 1.5rem;
     top: 1.5rem;
     z-index: 10000;
+    @include noselect;
 
     .bf-nav-toggle {
         @include unstyled(button);
@@ -20,11 +21,10 @@
 
     .bf-nav-content {
         background-color: $color-brand-purple-dark;
-        width: 17rem;
+        width: 15rem;
 
         .bf-nav-cover {
-            min-height: 130px;
-            padding: 7rem 1rem 1rem;
+            padding: 6rem 1rem 1rem;
             color: #fff;
             background-color: #111;
             background-size: cover;
@@ -34,7 +34,7 @@
 
             h2 {
                 font-size: 1rem;
-                margin-bottom: .5rem;
+                margin-bottom: .25rem;
             }
 
             p {
@@ -62,10 +62,12 @@
         }
 
         ul {
+            display: flex;
         }
 
         li {
-            border-bottom: 1px solid $color-black-10;
+            flex: 1;
+            border-right: 1px solid $color-black-10;
 
             &:last-child {
                 border: 0;
@@ -73,15 +75,21 @@
         }
 
         a {
-            padding: .5rem 1rem;
+            text-align: center;
             display: block;
-            color: #fff !important;
+            color: rgba(255, 255, 255, 0.75);
             cursor: pointer;
-            font-size:.875rem;
+            font-size: .875rem;
 
             &:hover {
                 background-color: $color-black-10;
+                color: #fff;
             }
+        }
+
+        i {
+            display: block;
+            line-height: 3rem;
         }
     }
 
