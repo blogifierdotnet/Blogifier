@@ -102,3 +102,34 @@ function loaded() {
     $('#app-spinner').hide();
 }
 
+
+$('.tooltip').on({
+    mouseenter: function () {
+
+        var tooltip = $(this);
+        var tooltipAttr = tooltip.attr('title');
+
+        var tooltipOffset = tooltip.offset();
+        var tooltipHeight = tooltip.outerHeight();
+        var tooltipWidth = tooltip.outerWidth() / 2;
+        $(tooltip).attr("data-tooltip-title", tooltipAttr);
+        $(tooltip).removeAttr("title");
+
+        var tooltipDataAttr = tooltip.data("tooltip-title");
+
+        $("body").append('<div class="tooltip-box">' + tooltipDataAttr + '</div>').find(".tooltip-box").css({
+            top: tooltipOffset.top + tooltipHeight,
+            left: tooltipOffset.left + tooltipWidth
+        });
+
+    },
+    mouseleave: function () {
+        var tooltip = $(this);
+        var tooltipDataAttr = tooltip.data("tooltip-title");
+        $(".tooltip-box").remove();
+        $(tooltip).attr("title", tooltipDataAttr);
+        $(tooltip).removeAttr("data-tooltip-title");
+
+    }
+
+});
