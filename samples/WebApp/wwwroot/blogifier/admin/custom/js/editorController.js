@@ -146,33 +146,33 @@
         var btn = '';
         if (postId === '0') {
             // new
-            btn += '<div class="btn-group">';
+            btn += '<div class="btn-group dropdown">';
             btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-primary">Publish</button>';
-            btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
-            btn += '<div class="dropdown-menu">';
-            btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
-            btn += '</div></div>';
+            btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-icon"><i class="fa fa-caret-down"></i></button>';
+            btn += '<ul class="dropdown-menu dropdown-menu-list">';
+            btn += '<li><a onclick="editorController.savePost(); return false;">Save</a></li>';
+            btn += '</ul></div>';
         }
         else {
             if (published.indexOf("0001") >= 0) {
                 // draft
-                btn += '<div class="btn-group">';
+                btn += '<div class="btn-group dropdown">';
                 btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-primary">Publish</button>';
-                btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
-                btn += '<div class="dropdown-menu">';
+                btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-icon"><i class="fa fa-caret-down"></i></button>';
+                btn += '<ul class="dropdown-menu dropdown-menu-list">';
                 btn += '<a class="dropdown-item" onclick="editorController.savePost(); return false;">Save</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
-                btn += '</div></div>';
+                btn += '</ul></div>';
             }
             else {
                 // published
-                btn += '<div class="btn-group">';
-                btn += '<button type="button" onclick="editorController.savePost(); return false;" class="btn btn-primary btn-block">Save</button>';
-                btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
-                btn += '<div class="dropdown-menu">';
+                btn += '<div class="btn-group dropdown">';
+                btn += '<button type="button" onclick="editorController.savePost(); return false;" class="btn btn-primary">Save</button>';
+                btn += '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split btn-icon"><i class="fa fa-caret-down"></i></button>';
+                btn += '<ul class="dropdown-menu dropdown-menu-list">';
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
-                btn += '</div></div> ';
+                btn += '</ul></div>';
                 btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-secondary btn-icon mr-1 float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
             }
         }

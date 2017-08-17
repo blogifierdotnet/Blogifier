@@ -11,6 +11,15 @@
     position: relative;
     padding: 2.5rem 0 0;
 
+    .btn-back {
+        position: absolute;
+        left: 2.5rem;
+        top: 1.5rem;
+        line-height: 3rem;
+        color:rgba(255, 255, 255, 0.46);
+        text-transform:uppercase;
+    }
+
     .item-title {
         overflow: hidden;
         display: block;
@@ -63,7 +72,7 @@
         }
 
         .bf-editor-toolbar {
-            background-color:$color-brand-purple-dark;
+            background-color: $color-brand-purple-dark;
         }
     }
 }
