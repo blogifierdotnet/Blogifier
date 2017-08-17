@@ -19,6 +19,7 @@
             <a href="~/admin/editor/0" class="btn btn-light btn-block btn-new">New Post</a>
             <div class="btn-group btn-group-block btn-group-actions" role="group">
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+                <!-- TODO: we need an if statment to show one these two button, if its published or not -->
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>

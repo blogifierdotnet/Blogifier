@@ -8,7 +8,8 @@
         @include unstyled(button);
         width: 3rem;
         height: 3rem;
-        cursor:pointer;
+        cursor: pointer;
+
         img {
             display: block;
             width: 100%;
@@ -18,8 +19,9 @@
     }
 
     .bf-nav-content {
-        background: $color-brand-purple-dark;
+        background-color: $color-brand-purple-dark;
         width: 17rem;
+
         .bf-nav-cover {
             min-height: 130px;
             padding: 7rem 1rem 1rem;
@@ -60,11 +62,26 @@
         }
 
         ul {
-            padding: 1.5rem;
+        }
+
+        li {
+            border-bottom: 1px solid $color-black-10;
+
+            &:last-child {
+                border: 0;
+            }
         }
 
         a {
-            color: #fff;
+            padding: .5rem 1rem;
+            display: block;
+            color: #fff !important;
+            cursor: pointer;
+            font-size:.875rem;
+
+            &:hover {
+                background-color: $color-black-10;
+            }
         }
     }
 

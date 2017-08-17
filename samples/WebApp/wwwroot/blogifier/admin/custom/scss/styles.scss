@@ -9,8 +9,8 @@
 @import "helpers/mixins";
 
 // Base
-@import "base/normalize";
 @import "base/reset";
+@import "base/main";
 
 // Vendor
 @import "vendor/fontawesome";
@@ -25,10 +25,7 @@
 @import "components/loading";
 @import "components/pagination";
 @import "components/modal";
-
-// Layout
-@import "layout/main";
-@import "layout/nav";
+@import "components/nav";
 
 // Pages
 @import "pages/setup/setup";

@@ -2,9 +2,9 @@
     position: relative;
 
     .dropdown-menu {
+        background-color: #fff;
         position: absolute;
         top: 125%;
-        background: #fff;
         opacity: 0;
         visibility: hidden;
         transition: all ease .15s;
