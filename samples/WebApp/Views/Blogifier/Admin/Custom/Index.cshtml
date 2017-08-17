@@ -14,10 +14,10 @@
 
         <!-- SIDEBAR HEADER -->
         <div class="bf-sidebar-posts-header">
-            <label class="list-select"><input class="item-control" type="checkbox" name="selectAll"></label>
+            <label class="list-select"><input class="item-control item-control-multi" type="checkbox" name="selectAll"></label>
             <label class="list-filter"><i class="fa fa-filter item-control"></i></label>
-            <a href="~/admin/editor/0" class="btn btn-light btn-block">New Post</a>
-            <div class="btn-group btn-group-block hide" role="group">
+            <a href="~/admin/editor/0" class="btn btn-light btn-block btn-new">New Post</a>
+            <div class="btn-group btn-group-block btn-group-actions" role="group">
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-light btn-outline" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
@@ -55,7 +55,7 @@
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
                 <li class="item">
-                    <label class="item-select"><input type="checkbox" id="@item.BlogPostId" class="item-control"></label>
+                    <label class="item-select"><input type="checkbox" id="@item.BlogPostId" class="item-control item-control-multi"></label>
                     <!--
                         What we need here:
                         1. One button for showing the content at the right side. and the same button with double click should edit the post.

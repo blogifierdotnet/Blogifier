@@ -129,11 +129,11 @@
         border-radius: 0;
         float: left;
 
-        &:first-child {
+        &:first-of-type {
             @include border-radius(3rem, 0, 0, 3rem);
         }
 
-        &:last-child {
+        &:last-of-type {
             @include border-radius(0, 3rem, 3rem, 0);
         }
     }

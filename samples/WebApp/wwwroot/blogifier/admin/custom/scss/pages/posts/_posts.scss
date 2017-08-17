@@ -27,9 +27,11 @@
     padding: 1.5rem 6rem;
     border-bottom: 1px solid $color-black-10;
     position: relative;
+
     .btn-light {
-        padding:0;
+        padding: 0;
     }
+
     .list-select,
     .list-filter {
         position: absolute;
@@ -58,6 +60,20 @@
         .list-filter {
             right: 6rem;
             border-right: 1px solid $color-black-20;
+        }
+    }
+
+    .btn-group-actions {
+        display: none;
+    }
+
+    &.active {
+        .btn-group-actions {
+            display: flex;
+        }
+
+        .btn-new {
+            display: none;
         }
     }
 }
