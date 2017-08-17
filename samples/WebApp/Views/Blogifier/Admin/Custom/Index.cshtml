@@ -18,12 +18,11 @@
             <label class="list-filter"><i class="fa fa-filter item-control"></i></label>
             <a href="~/admin/editor/0" class="btn btn-light btn-block btn-new">New Post</a>
             <div class="btn-group btn-group-block btn-group-actions" role="group">
-                <button type="button" class="btn btn-light btn-outline" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-                <!-- TODO: we need an if statment to show one these two button, if its published or not -->
-                <button type="button" class="btn btn-light btn-outline" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
-                <button type="button" class="btn btn-light btn-outline" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+                <button type="button" class="btn btn-light btn-outline tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-light btn-outline tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+                <button type="button" class="btn btn-light btn-outline tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
-        </div>
+        </div> 
         <!--/SIDEBAR HEADER -->
 
 
@@ -111,6 +110,7 @@
                 </div>
                 <div class="btn-group btn-group-icon btn-group-sm float-left" role="group">
                     <button type="button" class="btn btn-primary btn-outline" onclick="" title="Delete"><i class="fa fa-trash"></i></button>
+                    <!-- TODO: we need an if statment to show one these two button, if its published or not -->
                     <button type="button" class="btn btn-primary btn-outline" onclick="" title="Publish"><i class="fa fa-check"></i></button>
                     <button type="button" class="btn btn-primary btn-outline" onclick="" title="Unpublish"><i class="fa fa-archive"></i></button>
                 </div>
