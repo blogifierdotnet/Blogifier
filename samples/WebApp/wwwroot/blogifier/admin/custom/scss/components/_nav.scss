@@ -4,7 +4,6 @@
     top: 1.5rem;
     z-index: 10000;
     @include noselect;
-
     .bf-nav-toggle {
         @include unstyled(button);
         width: 3rem;

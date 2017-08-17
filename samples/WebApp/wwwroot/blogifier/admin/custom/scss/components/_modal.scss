@@ -6,6 +6,7 @@
     position: absolute;
     top: -9999px;
 }
+
 .modal-open {
     overflow: hidden;
 
@@ -43,6 +44,7 @@
         width: 1024px;
         border-radius: $radius-md;
         margin: 3rem auto;
+        overflow:hidden;
     }
 
     .modal-header {
@@ -72,6 +74,18 @@
 
     .modal-content {
         padding: 1rem;
+    }
+
+    &.modal-sm {
+        .modal-body {
+            width: 460px;
+        }
+    }
+
+    &.modal-md {
+        .modal-body {
+            width: 640px;
+        }
     }
 }
 

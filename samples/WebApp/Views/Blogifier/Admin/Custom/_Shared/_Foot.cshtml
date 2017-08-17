@@ -3,6 +3,7 @@
 @{
     var themeFolder = "blogifier/admin/custom";
 }
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_about.cshtml")
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
 <script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
