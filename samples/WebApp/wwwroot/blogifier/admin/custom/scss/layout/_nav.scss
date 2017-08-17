@@ -20,12 +20,6 @@
     .bf-nav-content {
         background: $color-brand-purple-dark;
         width: 17rem;
-        position: absolute;
-        right: 0;
-        top: 100%;
-        @include border-radius($radius-md);
-        overflow: hidden;
-        display:none;
         .bf-nav-cover {
             min-height: 130px;
             padding: 7rem 1rem 1rem;
