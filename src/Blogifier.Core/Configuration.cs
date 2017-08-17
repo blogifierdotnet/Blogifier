@@ -81,7 +81,7 @@ namespace Blogifier.Core
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             if (ApplicationSettings.UseInMemoryDatabase)
-                services.AddDbContext<BlogifierDbContext>(options => options.UseInMemoryDatabase());
+                services.AddDbContext<BlogifierDbContext>(options => options.UseInMemoryDatabase(Constants.Blogifier));
             else
                 services.AddDbContext<BlogifierDbContext>(options => options.UseSqlServer(ApplicationSettings.ConnectionString));
         }

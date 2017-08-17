@@ -56,9 +56,23 @@ namespace Blogifier.Core.Data.Repositories
 
         public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
         {
-            return _db.Categories.Include(c => c.PostCategories).Where(predicate)
-                .OrderBy(c => c.Title).GroupBy(c => c.Title).Select(group => group.First())
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
+            //return _db.Categories.Include(c => c.PostCategories).Where(predicate)
+            //    .OrderBy(c => c.Title).GroupBy(c => c.Title).Select(group => group.First())
+            //    .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
+
+            var items = new List<SelectListItem>();
+            var categories = _db.Categories.Include(c => c.PostCategories).OrderBy(c => c.Title).Where(predicate).ToList();
+
+            foreach (var item in categories)
+            {
+                var newItem = new SelectListItem { Text = item.Title, Value = item.Id.ToString() };
+
+                if (!items.Contains(newItem))
+                {
+                    items.Add(newItem);
+                }
+            }
+            return items;
         }
 
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)

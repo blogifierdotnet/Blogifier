@@ -42,11 +42,13 @@ namespace Blogifier.Core.Data.Repositories
                 IsAdmin = p.IsAdmin,
 
                 PostCount = p.BlogPosts.Count,
-                PostViews = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.PostViews),
-                DbUsage = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => (System.Int64)bp.Content.Length),
+                PostViews = 0, //_db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.PostViews),
+                DbUsage = 0, //_db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.Content.Length),
+
+                // DbUsage = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => (System.Int64)bp.Content.Length),
 
                 AssetCount = p.Assets.Count,
-                DownloadCount = _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.DownloadCount),
+                DownloadCount = 0, // _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.DownloadCount),
                 DiskUsage = _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.Length),
 
                 LastUpdated = p.LastUpdated

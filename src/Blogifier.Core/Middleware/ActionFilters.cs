@@ -22,7 +22,7 @@ namespace Blogifier.Core.Middleware
             var builder = new DbContextOptionsBuilder<BlogifierDbContext>();
 
             if (ApplicationSettings.UseInMemoryDatabase)
-                builder.UseInMemoryDatabase();
+                builder.UseInMemoryDatabase(Constants.Blogifier);
             else
                 builder.UseSqlServer(ApplicationSettings.ConnectionString);
 
