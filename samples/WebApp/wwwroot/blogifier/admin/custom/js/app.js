@@ -9,12 +9,6 @@ var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
 document.body.removeChild(scrollDiv); 
 
 $(function () {
-    $(".bf-nav-toggle").click(function () {
-        $(this).parent().toggleClass("active");
-    });
-});
-
-$(function () {
     $(".bf-sidebar-posts-header .list-filter").click(function () {
         $(".bf-sidebar-posts-tools").toggle();
     });
@@ -97,3 +91,15 @@ $(function () {
     });
 });
 
+
+$(function () {
+    $('.dropdown .dropdown-toggle').click(function () {
+        $(this).parent(".dropdown").toggleClass("active");
+    });
+    $(document).click(function (e) {
+        var target = e.target;
+        if (!$(target).is('.dropdown .dropdown-toggle') && !$(target).parents().is('.dropdown .dropdown-toggle')) {
+            $('.dropdown').removeClass("active");
+        }
+    });
+});
