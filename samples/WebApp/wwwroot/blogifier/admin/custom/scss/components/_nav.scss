@@ -20,10 +20,10 @@
 
     .bf-nav-content {
         background-color: $color-brand-purple-dark;
-        width: 15rem;
+        width: 16rem;
 
         .bf-nav-cover {
-            padding: 6rem 1rem 1rem;
+            padding: 7rem 1rem 1rem;
             color: #fff;
             background-color: #111;
             background-size: cover;
@@ -79,13 +79,19 @@
             color: rgba(255, 255, 255, 0.75);
             cursor: pointer;
             font-size: .875rem;
-
+            line-height:3rem;
             &:hover {
                 background-color: $color-black-10;
                 color: #fff;
+                img {
+                    opacity:1;
+                }
             }
         }
-
+        img {
+            width:.75rem;
+            opacity:.75;
+        }
         i {
             display: block;
             line-height: 3rem;
