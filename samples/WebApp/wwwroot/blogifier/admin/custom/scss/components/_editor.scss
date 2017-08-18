@@ -15,7 +15,7 @@
 }
 
 #mceu_21 {
-    padding-right: 120px;
+    padding-right: 105px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -44,6 +44,12 @@
                 background-color: $color-black-20;
             }
         }
+
+        &.mce-active {
+            button {
+                background-color: $color-black-20;
+            }
+        }
     }
 
     .mce-colorbutton {
@@ -53,16 +59,35 @@
             .mce-preview {
                 display: none !important;
             }
+
+            i.mce-i-backcolor {
+                background: $color-black-20;
+                border-radius: 100%;
+                width: 1.5rem;
+                height: 1.5rem;
+                text-align: center;
+                line-height: 1.5rem;
+            }
         }
 
         .mce-open {
             border: none !important;
             position: absolute;
 
+
+
             .mce-caret {
                 display: none !important;
             }
         }
+    }
+}
+
+.mce-floatpanel {
+    margin-top: 0;
+
+    .mce-menu-item.mce-first {
+        display: none;
     }
 }
 
@@ -114,7 +139,7 @@
 }
 
 .mce-menu {
-    background-color: $color-brand-gray-dark;
+    background-color: #111;
     padding: 0;
 
     .mce-menu-item {
@@ -124,17 +149,18 @@
 
 
         &:hover, &.mce-selected {
-            background-color: $color-brand-gray-light;
+            background-color: #222;
         }
 
         .mce-text {
-            color: #fff;
+            color: #aaa;
             display: inline-block;
         }
 
         i {
-            color: #fff;
+            color: #aaa;
         }
+
 
         span {
             padding: 0;
@@ -145,10 +171,21 @@
     .mce-container-body.mce-stack-layout[role="menu"] {
         width: 100% !important;
     }
+
+    .mce-menu-item-sep {
+        border-color: #333 !important;
+    }
 }
 
+.mce-grid-border a {
+    border-color: #666;
+}
 
 .mce-grid-border a:hover, .mce-grid-border a.mce-active {
-    border-color: $color-brand-gray-light;
-    background: $color-brand-gray-light;
+    border-color: #eee;
+    background: #eee;
+}
+
+.mce-menu-sub .mce-text-center {
+    color: #fff;
 }

@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         block_formats: 'H=""; H1=h1;H2=h2;H3=h3;H4=h4;H5=h5;H6=h6',
         autosave_ask_before_unload: false,
         contextmenu_never_use_native: true,
-        contextmenu: "link bold italic underline | inserttable hr | subscript superscript | removeformat",
+        contextmenu: "removeformat link bold italic underline | inserttable hr | subscript superscript | removeformat",
         autoresize_min_height: 100,
         statusbar: false,
         branding: false,
