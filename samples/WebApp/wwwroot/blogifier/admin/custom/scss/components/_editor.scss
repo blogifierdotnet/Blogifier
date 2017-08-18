@@ -4,37 +4,81 @@
     background: none !important;
 }
 
+.mce-flow-layout {
+    white-space: nowrap;
+}
+
+#mceu_21, #mceu_21-body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#mceu_21 {
+    padding-right: 120px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#mceu_21-body {
+    display: flex;
+
+    > .mce-btn {
+        flex: 1;
+        padding: 0;
+        background: none;
+        text-align: center;
+        border: 0;
+        margin: 0;
+
+        button {
+            height: 4rem;
+            padding: 0;
+            display: block;
+            width: 100%;
+            text-align: center;
+
+
+            &:hover {
+                background-color: $color-black-20;
+            }
+        }
+    }
+
+    .mce-colorbutton {
+        button {
+            float: left;
+
+            .mce-preview {
+                display: none !important;
+            }
+        }
+
+        .mce-open {
+            border: none !important;
+            position: absolute;
+
+            .mce-caret {
+                display: none !important;
+            }
+        }
+    }
+}
+
+
 .mce-panel {
     border: 0;
 }
-.mce-caret {border-top-color:#fff}
+
+.mce-caret {
+    border-top-color: #fff
+}
 
 .mce-ico, .mce-txt {
     color: #fff;
 }
 
-.mce-btn-group {
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-
-    .mce-btn {
-        margin: 0;
-        border: none !important;
-        background: none;
-        color: #fff;
-
-        button {
-            height: 4rem;
-            line-height: 4rem;
-            padding: 0 10px;
-        }
-
-        &:hover {
-            background: $color-brand-purple-light;
-        }
-    }
-}
 
 .mce-toolbar-grp {
     height: 4rem;
@@ -59,7 +103,7 @@
     color: #fff;
 
     .mce-txt {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
         display: inline;
     }
@@ -98,12 +142,7 @@
         }
     }
 
-
-    #mceu_29 {
-        display: none !important;
-    }
-
-    #mceu_28-body, #mceu_37-body {
+    .mce-container-body.mce-stack-layout[role="menu"] {
         width: 100% !important;
     }
 }

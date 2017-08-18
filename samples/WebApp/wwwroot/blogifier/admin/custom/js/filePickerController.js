@@ -41,7 +41,11 @@
             $('.modal-list-empty').show();
         }
         if ($('#modalFilePicker').is(':visible') === false) {
-            $('#modalFilePicker').modal();
+
+            // TODO: refactor modal
+            $("body").addClass("modal-open");
+            $("#modalFilePicker").show();
+            $("body").css("padding-right", "17px"); 
         }
         pager(data.pager);
     }
