@@ -81,3 +81,25 @@
         }
     }
 }
+
+.bf-editor-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background:#fff;
+    padding:1rem 0;
+
+
+    .dropdown-menu {
+        bottom: auto;
+        top: -110%;
+    }
+
+    .active {
+        .dropdown-menu {
+            bottom: auto;
+            top: -200%;
+        }
+    }
+}

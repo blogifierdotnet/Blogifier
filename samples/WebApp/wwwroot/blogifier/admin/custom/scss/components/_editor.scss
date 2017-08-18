@@ -1,8 +1,24 @@
 
+.mce-edit-area {
+    background: #fff !important;
+    padding: 0;
+    margin: 2rem 0;
+    overflow: hidden !important;
+
+
+    .tinymce-placeholder {
+        position: absolute;
+        top: .5rem;
+        font-size: 1rem;
+    }
+}
+
+//
 .mce-tinymce {
     margin-top: -4rem;
     background: none !important;
 }
+
 
 .mce-flow-layout {
     white-space: nowrap;

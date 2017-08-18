@@ -173,7 +173,7 @@
                 btn += '<a class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</a>';
                 btn += '<a class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</a>';
                 btn += '</ul></div>';
-                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-secondary btn-icon mr-1 float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
+                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-default  mr-1 float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
             }
         }
         $('#action-buttons').append(btn);
@@ -210,20 +210,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
         skin: "lightgray",
         selector: '#txtContent',
         plugins: [
-            "autoresize autolink lists link image code textcolor imagetools hr media table contextmenu fileupload codesample"
+            "autoresize autolink lists link image code textcolor imagetools hr media table contextmenu fileupload codesample placeholder"
         ],
         toolbar: "formatselect bold italic underline strikethrough alignleft aligncenter alignright alignjustify bullist numlist forecolor backcolor link media fileupload codesample code",
         block_formats: 'H=""; H1=h1;H2=h2;H3=h3;H4=h4;H5=h5;H6=h6',
         autosave_ask_before_unload: false,
         contextmenu_never_use_native: true,
         contextmenu: "removeformat link bold italic underline | inserttable hr | subscript superscript | removeformat",
-        autoresize_min_height: 100,
+        height: 360,
+        autoresize_min_height: 160,
+        autoresize_overflow_padding: 0,
+        content_style: " html {overflow:hidden !important; opacity:0;}",
         statusbar: false,
         branding: false,
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,
         paste_data_images: true,
-        images_upload_url: '/blogifier/api/assets/upload'
+        images_upload_url: '/blogifier/api/assets/upload',
+        placeholder_attrs: {
+            class: "tinymce-placeholder",
+            style: ""
+        }
     });
 });
