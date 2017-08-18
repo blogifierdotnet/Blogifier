@@ -3,10 +3,14 @@
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
     var blogTitle = ApplicationSettings.Title;
+    var blogDesc = ApplicationSettings.Description;
+    var blogImg = ApplicationSettings.ProfileImage;
     if (Model.Profile != null)
     {
         userName = Model.Profile.AuthorName;
         blogTitle = Model.Profile.Title;
+        blogDesc = Model.Profile.Description;
+        blogImg = string.IsNullOrEmpty(Model.Profile.Image) ? blogImg : Model.Profile.Image;
         if (!string.IsNullOrEmpty(Model.Profile.Avatar))
         {
             avatar = Model.Profile.Avatar;
@@ -17,9 +21,9 @@
 <div class="bf-nav dropdown">
     <button class="bf-nav-toggle dropdown-toggle"><img alt="@userName" src="@avatar"></button>
     <div class="bf-nav-content dropdown-menu dropdown-menu-right">
-        <div class="bf-nav-cover" style="background-image:url(/embedded/lib/img/cover.png);">
-            <h2>Blog Title</h2>
-            <p>Blog Description here ...</p>
+        <div class="bf-nav-cover" style="background-image:url(@blogImg);">
+            <h2>@blogTitle</h2>
+            <p>@blogDesc</p>
         </div>
         <ul>
             <li><a href="~/admin" title="Posts"><i class="fa fa-align-left"></i></a></li>

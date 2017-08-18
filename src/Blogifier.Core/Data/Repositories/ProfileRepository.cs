@@ -29,6 +29,7 @@ namespace Blogifier.Core.Data.Repositories
 
             // this is work around EF 1.1 not handling "count" fields
             // and can be simplified when moved to EF 2
+            // update: instead of fixing count, EF 2.0 also broke workaround... searching for solution.
 
             var p2 = posts.Select(p => new
             {
@@ -42,13 +43,13 @@ namespace Blogifier.Core.Data.Repositories
                 IsAdmin = p.IsAdmin,
 
                 PostCount = p.BlogPosts.Count,
-                PostViews = 0, //_db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.PostViews),
-                DbUsage = 0, //_db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.Content.Length),
+                PostViews = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => bp.PostViews),
+                DbUsage = 0,
 
                 // DbUsage = _db.BlogPosts.Where(bp => bp.Profile.Id == p.Id).Sum(bp => (System.Int64)bp.Content.Length),
 
                 AssetCount = p.Assets.Count,
-                DownloadCount = 0, // _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.DownloadCount),
+                DownloadCount = _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.DownloadCount),
                 DiskUsage = _db.Assets.Where(a => a.ProfileId == p.Id).Sum(a => a.Length),
 
                 LastUpdated = p.LastUpdated

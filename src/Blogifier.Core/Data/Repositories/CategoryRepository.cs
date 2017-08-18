@@ -49,30 +49,19 @@ namespace Blogifier.Core.Data.Repositories
             var postCategories = _db.PostCategories.Include(pc => pc.Category).Where(c => c.BlogPostId == postId);
             foreach (var item in postCategories)
             {
-                items.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Category.Title });
-            }
-            return items;
-        }
-
-        public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
-        {
-            //return _db.Categories.Include(c => c.PostCategories).Where(predicate)
-            //    .OrderBy(c => c.Title).GroupBy(c => c.Title).Select(group => group.First())
-            //    .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
-
-            var items = new List<SelectListItem>();
-            var categories = _db.Categories.Include(c => c.PostCategories).OrderBy(c => c.Title).Where(predicate).ToList();
-
-            foreach (var item in categories)
-            {
-                var newItem = new SelectListItem { Text = item.Title, Value = item.Id.ToString() };
-
+                var newItem = new SelectListItem { Value = item.Id.ToString(), Text = item.Category.Title };
                 if (!items.Contains(newItem))
                 {
                     items.Add(newItem);
                 }
             }
-            return items;
+            return items.OrderBy(c => c.Text);
+        }
+
+        public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
+        {
+            return _db.Categories.Where(predicate).OrderBy(c => c.Title)
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
         }
 
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)
