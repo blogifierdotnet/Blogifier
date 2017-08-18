@@ -16,8 +16,8 @@
         left: 2.5rem;
         top: 1.5rem;
         line-height: 3rem;
-        color:rgba(255, 255, 255, 0.46);
-        text-transform:uppercase;
+        color: rgba(255, 255, 255, 0.46);
+        text-transform: uppercase;
     }
 
     .item-title {
@@ -51,6 +51,11 @@
         height: 4rem;
         position: relative;
         padding: 0.6875rem 0;
+
+        .btn-group {
+            position: relative;
+            z-index: 400;
+        }
     }
 
     &.bf-editor-cover {

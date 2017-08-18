@@ -1,5 +1,5 @@
 .tooltip-box {
-    background: #fff;
+    background: rgba(0, 0, 0, 0.75);
     border-radius: 2px;
     padding: .35rem .5rem .25rem;
     position: absolute;
@@ -8,10 +8,10 @@
     margin-top: 1rem;
     font-size: .75rem;
     text-transform: uppercase;
-    white-space:nowrap;
-
+    white-space: nowrap;
+    color:#fff;
     &::before {
-        @include triangle(.75rem, #fff, up);
+        @include triangle(.75rem, rgba(0, 0, 0, 0.75), up);
         position: absolute;
         top: -.75rem;
         left: 50%;
