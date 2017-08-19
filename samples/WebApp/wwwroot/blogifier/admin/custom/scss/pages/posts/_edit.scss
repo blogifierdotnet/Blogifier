@@ -1,4 +1,6 @@
 .bf-editor {
+    padding-top: 6rem;
+
     &-container {
         max-width: 1024px;
         width: 100%;
@@ -7,99 +9,76 @@
 }
 
 .bf-editor-header {
-    @include linear-gradient($color-brand-purple-light, $color-brand-purple-dark, 1);
+    background: #333;
+    height: 300px;
     position: relative;
-    padding: 2.5rem 0 0;
+    margin-bottom: 4rem;
 
-    .btn-back {
-        position: absolute;
-        left: 2.5rem;
-        top: 1.5rem;
-        line-height: 3rem;
-        color: rgba(255, 255, 255, 0.46);
-        text-transform: uppercase;
-    }
-
-    .item-title {
-        overflow: hidden;
+    &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
         display: block;
-        padding: 0;
-        border: 1px dashed transparent;
-        background: none;
-        color: #fff;
-        font-size: 2.5rem;
-        font-weight: 100 !important;
-        outline: none !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #000;
+        opacity: .75;
+        z-index: 49;
+    }
+
+    .bf-editor-container {
         position: relative;
-        z-index: 1;
-
-        &:focus {
-            border-color: rgba(255, 255, 255, 0.34);
-        }
+        z-index: 50;
+        height: 100%;
     }
 
-
-    &:hover {
-        .item-title {
-            border-color: rgba(255, 255, 255, 0.34);
-        }
-    }
-
-    .bf-editor-toolbar {
-        margin-top: 2.5rem;
-        border-top: 1px solid $color-black-10;
-        height: 4rem;
-        position: relative;
-        padding: 0.6875rem 0;
-
-        .btn-group {
-            position: relative;
-            z-index: 400;
-        }
-    }
-
-    &.bf-editor-cover {
-        padding-top: 14rem;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-
-        &::before {
-            content: "";
-            display: block;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: #000;
-            opacity: .5;
-        }
-
-        .bf-editor-toolbar {
-            background-color: $color-brand-purple-dark;
-        }
+    .btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        transform: translateY(50%);
     }
 }
 
-.bf-editor-footer {
-    position: fixed;
-    bottom: 0;
+.bf-editor-title {
+    position: absolute;
+    bottom: 4rem;
     width: 100%;
-    left: 0;
-    background:#fff;
-    padding:1rem 0;
+    border: none;
+    padding: 0;
+    display: block;
+    height: auto;
+    font-size: 2rem;
+    background: none;
+    color: #fff;
+    padding: 1rem 0;
+    font-weight: 300;
 
-
-    .dropdown-menu {
-        bottom: auto;
-        top: -110%;
+    &:focus {
+        outline: none;
     }
+}
+.bf-editor-footer {
+    .btn-group.float-right {
+        margin-left:.25rem;
+    }
+}
 
-    .active {
-        .dropdown-menu {
-            bottom: auto;
-            top: -200%;
+.mce-tinymce {
+    .mce-toolbar-grp {
+        position: fixed;
+        top: 0;
+        background: $color-brand-purple-dark;
+        width: 100%;
+        left: 0;
+        height: 6rem;
+        z-index: 1000;
+
+        > div {
+            width: 100%;
+            max-width: 1024px;
+            margin: 1.25rem auto;
         }
     }
 }

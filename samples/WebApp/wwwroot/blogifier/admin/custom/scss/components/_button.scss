@@ -163,7 +163,11 @@
 
 .btn-icon {
     padding: 0;
-    min-width: 2.5rem;
+    min-width: 3rem;
+
+    &.btn-sm {
+        min-width:2.5rem;
+    }
 }
 
 .btn-group-icon {

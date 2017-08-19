@@ -1,6 +1,6 @@
 
 .mce-edit-area {
-    background: #fff !important;
+    /*background: #fff !important;*/
     padding: 0;
     margin: 2rem 0;
     overflow: hidden !important;
@@ -15,8 +15,8 @@
 
 //
 .mce-tinymce {
-    margin-top: -4rem;
-    background: none !important;
+   
+    /*background: none !important;*/
 }
 
 
@@ -30,12 +30,12 @@
     margin: 0;
 }
 
-#mceu_21 {
+/*#mceu_21 {
     padding-right: 105px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-}
+}*/
 
 #mceu_21-body {
     display: flex;
@@ -49,12 +49,12 @@
         margin: 0;
 
         button {
-            height: 4rem;
+            height: 3.5rem;
             padding: 0;
             display: block;
             width: 100%;
             text-align: center;
-
+            border-radius:3px;
 
             &:hover {
                 background-color: $color-black-20;
@@ -122,11 +122,10 @@
 
 
 .mce-toolbar-grp {
-    height: 4rem;
     padding: 0;
 
     &.mce-panel {
-        background: none !important;
+        /*background: none !important;*/
     }
 
     .mce-btn {

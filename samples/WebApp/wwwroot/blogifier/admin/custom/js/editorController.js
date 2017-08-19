@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         height: 360,
         autoresize_min_height: 160,
         autoresize_overflow_padding: 0,
-        content_style: " html {overflow:hidden !important; opacity:0;}",
+        content_style: "html {overflow:hidden !important; opacity:0;}",
         statusbar: false,
         branding: false,
         menubar: false,
