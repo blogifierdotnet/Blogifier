@@ -9,7 +9,7 @@
         visibility: hidden;
         transition: all ease .15s;
         min-width: 12rem;
-        border-radius: 5px;
+        border-radius: $radius-sm;
         box-shadow: 0 0 2rem rgba(0, 0, 0, 0.37);
         margin-top: .5rem;
         overflow: hidden;
@@ -34,7 +34,7 @@
         }
 
         a {
-            cursor:pointer;
+            cursor: pointer;
             display: block;
             padding: 0.75rem 1rem;
             color: $color-brand-purple-dark;

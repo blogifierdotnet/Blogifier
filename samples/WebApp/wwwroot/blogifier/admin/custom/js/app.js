@@ -10,6 +10,7 @@ document.body.removeChild(scrollDiv);
 
 $(function () {
     $(document).on('click', '.bf-sidebar-posts-header .list-filter', function () {
+        $(this).toggleClass("active");
         $(".bf-sidebar-posts-tools").toggle();
     });
 });
@@ -134,18 +135,3 @@ $('.tooltip').on({
 
 });
 
-//$(function () {
-//    var editorWrap = $(".bf-editor");
-//    var editorHeader = $(".bf-editor-header");
-//    var editorToolbarHeight = $(".bf-editor-header .bf-editor-toolbar").outerHeight();
-//    var editorHeaderHeight = editorHeader.outerHeight();
-//    $(window).scroll(function () {
-//        if ($(this).scrollTop() >= (editorHeaderHeight - editorToolbarHeight)) {
-//            $(editorWrap).addClass("bf-editor-fixed");
-//        }
-//        else {
-//            $(editorWrap).removeClass("bf-editor-fixed");
-
-//        }
-//    });
-//});
