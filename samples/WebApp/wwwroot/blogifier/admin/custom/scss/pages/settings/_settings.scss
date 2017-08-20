@@ -1,19 +1,29 @@
 .bf-sidebar-settings {
-
     a {
-        line-height: 2rem;
+        line-height: 3rem;
         display: inline-block;
         color: #fff;
         padding-right: 2rem;
+        display: block;
+        text-transform: uppercase;
+        opacity: .5;
     }
 
     @media (min-width:1024px) {
         text-align: right;
-        padding-top: 4rem;
+        padding-top: 3rem;
     }
-
 }
 
 .bf-content-settings {
     padding: 4rem;
+
+    form {
+        max-width: 768px;
+        width: 100%;
+    }
+
+    @media (max-width:768px) {
+        padding: 1rem;
+    }
 }
