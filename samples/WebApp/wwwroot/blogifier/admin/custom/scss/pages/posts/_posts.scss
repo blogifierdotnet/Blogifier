@@ -28,9 +28,11 @@
     border-bottom: 1px solid $color-black-10;
     position: relative;
 
-    .btn-light {
+    .btn-new {
+        border-radius: 3rem;
         padding: 0;
     }
+
 
     .list-select,
     .list-filter {
@@ -52,6 +54,10 @@
 
     .list-filter {
         right: 0;
+        opacity:.75;
+        &.active {
+            opacity:1;
+        }
     }
 
     @media (max-width:1023px) {
