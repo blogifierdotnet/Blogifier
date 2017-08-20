@@ -1,7 +1,9 @@
 ﻿var postsController = function (dataService) {
     var curPost = 0;
+    var curSlug = '';
 
     function publish() {
+        /*
         var items = $('.post-list input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -11,23 +13,27 @@
                 dataService.put("blogifier/api/posts/publish/" + items[i].id, null, updateCallback, fail);
             }
         }
+        */
+        dataService.put("blogifier/api/posts/publish/" + curPost, null, updateCallback, fail);
     }
 
     function unpublish() {
-        var items = $('.post-list input:checked');
-        for (i = 0; i < items.length; i++) {
-            if (i + 1 < items.length) {
-                dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, emptyCallback, fail);
-            }
-            else {
-                dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, updateCallback, fail);
-            }
-        }
+        //var items = $('.post-list input:checked');
+        //for (i = 0; i < items.length; i++) {
+        //    if (i + 1 < items.length) {
+        //        dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, emptyCallback, fail);
+        //    }
+        //    else {
+        //        dataService.put("blogifier/api/posts/unpublish/" + items[i].id, null, updateCallback, fail);
+        //    }
+        //}
+        dataService.put("blogifier/api/posts/unpublish/" + curPost, null, updateCallback, fail);
     }
 
     function publishCallback() { }
 
     function removePost() {
+        /*
         var items = $('.post-list input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -37,6 +43,8 @@
                 dataService.remove('blogifier/api/posts/' + items[i].id, updateCallback, fail);
             }
         }
+        */
+        dataService.remove("blogifier/api/posts/" + curPost, updateCallback, fail);
     }
 
     function emptyCallback() { }
@@ -48,11 +56,16 @@
     function showPost(id) {
         if (id) {
             curPost = id;
+            dataService.get("blogifier/api/posts/post/" + curPost, showPostCallback, fail);
         }
-        dataService.get("blogifier/api/posts/post/" + curPost, showPostCallback, fail);
+        else {
+            window.open('blog/' + curSlug);
+        }
+        
         return false;
     }
     function showPostCallback(data) {
+        curSlug = data.slug;
         var cats = '';
         if (data.categories.length > 0) {
             for (i = 0; i < data.categories.length; i++) {
@@ -63,7 +76,14 @@
         $('#post-tagline').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
         $('#post-title').html(data.title);
         $('.bf-content-post-text').html(data.content);
-        
+        if (data.isPublished) {
+            $('#btnUnpublish').show();
+            $('#btnPublish').hide();
+        }
+        else {
+            $('#btnUnpublish').hide();
+            $('#btnPublish').show();
+        }
     }
 
     function editPost(id) {

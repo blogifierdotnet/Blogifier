@@ -89,9 +89,9 @@ namespace Blogifier.Core.Data.Models
         public string Content { get; set; }
         public string Image { get; set; }
         public int PostViews { get; set; }
-        public IEnumerable<SelectListItem> Categories { get; set; }
-        public bool IsPublished { get; set; }
         public DateTime Published { get; set; }
+        public bool IsPublished { get { return Published > DateTime.MinValue ? true : false; } }
+        public IEnumerable<SelectListItem> Categories { get; set; }
     }
 
     public class CategoryItem

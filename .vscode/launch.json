@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}\\samples\\WebApp\\bin\\Debug\\netcoreapp1.1\\WebApp.dll",
+            "program": "${workspaceRoot}\\samples\\WebApp\\bin\\Debug\\netcoreapp2.0\\WebApp.dll",
             "args": [],
             "cwd": "${workspaceRoot}\\samples\\WebApp",
             "console": "internalConsole",
