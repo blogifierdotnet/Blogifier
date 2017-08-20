@@ -53,7 +53,17 @@
         return false;
     }
     function showPostCallback(data) {
+        var cats = '';
+        if (data.categories.length > 0) {
+            for (i = 0; i < data.categories.length; i++) {
+                cats = cats + data.categories[i].text + ', ';
+            }
+            cats = cats.substring(0, cats.length - 2);
+        }
+        $('#post-tagline').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
+        $('#post-title').html(data.title);
         $('.bf-content-post-text').html(data.content);
+        
     }
 
     function editPost(id) {

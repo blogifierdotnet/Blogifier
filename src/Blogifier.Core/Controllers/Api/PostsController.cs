@@ -48,6 +48,7 @@ namespace Blogifier.Core.Controllers.Api
                 Content = post.Content,
                 Published = post.Published,
                 Image = post.Image,
+                PostViews = post.PostViews,
                 Categories = _db.Categories.PostCategories(post.Id)
             };
             return model;
