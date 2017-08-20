@@ -6,7 +6,7 @@
     padding: 0 2rem;
     cursor: pointer;
     border: none;
-    @include border-radius(.125rem);
+    @include border-radius($radius-sm);
     display: inline-block;
     vertical-align: top;
     text-transform: uppercase;
@@ -130,22 +130,22 @@
         float: left;
 
         &:first-of-type {
-            @include border-radius(.125rem, 0, 0, .125rem);
+            @include border-radius($radius-sm, 0, 0, $radius-sm);
         }
 
         &:last-of-type {
-            @include border-radius(0, .125rem, .125rem, 0);
+            @include border-radius(0, $radius-sm, $radius-sm, 0);
         }
     }
 
     .btn-outline {
 
         &:first-child {
-            @include border-radius(.125rem, 0, 0, .125rem);
+            @include border-radius($radius-sm, 0, 0, $radius-sm);
         }
 
         &:last-child {
-            @include border-radius(0, .125rem, .125rem, 0);
+            @include border-radius(0, $radius-sm, $radius-sm, 0);
         }
     }
 

@@ -1,13 +1,21 @@
 ﻿.form-group {
     margin-bottom: 1.5rem;
+    .col-form-label{
+        margin-bottom:1px;
+    }
 }
 
 .form-control {
-    border: 2px solid $color-brand-gray-light;
+    border: 2px solid $color-brand-gray-lighter;
     @include border-radius($radius-sm);
     height: 2.5rem;
     padding: 0 1rem;
     width: 100%;
+
+    &:focus {
+        border-color: $color-brand-gray-light;
+        outline: none;
+    }
 }
 
 textarea.form-control {
