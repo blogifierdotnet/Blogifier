@@ -1,15 +1,18 @@
 .mce-tinymce {
-    border:none !important;
+    border: none !important;
+
     .mce-toolbar-grp {
         position: fixed;
         top: 0;
-        /*background: $color-brand-purple-dark;*/
         @include linear-gradient($color-brand-purple-light, $color-brand-purple-dark, 1);
         width: 100%;
         left: 0;
         height: 6rem;
         z-index: 1000;
         padding: 0;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
 
         > div {
             width: 100%;
@@ -22,11 +25,16 @@
             margin: 0;
             border: none;
         }
-    }
 
-    .mce-fixed-width {
-        span {
-            width: auto;
+        @media (max-width:1024px) {
+            padding-right: 6rem;
+        }
+
+        @media (max-width: 800px) {
+            > div {
+                margin: 0;
+                border-right: 1px solid rgba(0,0,0,0.1) !important;
+            }
         }
     }
 }
@@ -46,12 +54,6 @@
             width: 50%;
             display: block;
             font-size: 0;
-
-            .mce-btn {
-                button {
-                    height: 3rem;
-                }
-            }
         }
     }
 
@@ -63,14 +65,14 @@
         background: none;
 
         &.mce-active, &.mce-active:hover {
-            background:rgba(0,0,0,.1); 
+            background: rgba(0,0,0,.1);
         }
-        
-        
+
+
         button {
             display: block;
             width: 100%;
-            height: 2rem;
+            height: 3rem;
             position: relative;
             color: #fff;
         }
@@ -117,7 +119,7 @@
 .mce-heading-6 {
     .mce-text {
         font-weight: bold;
-        text-transform:uppercase;
+        text-transform: uppercase;
     }
 }
 
@@ -157,9 +159,9 @@
     }
 }
 
-.tinymce-placeholder{ 
-    position:absolute;
-    top:.25rem;
-    font-size:1rem;
-    color:#aaa;
+.tinymce-placeholder {
+    position: absolute;
+    top: .25rem;
+    font-size: 1rem;
+    color: #aaa;
 }
