@@ -1,4 +1,6 @@
 ﻿var postsController = function (dataService) {
+    var curPost = 0;
+
     function publish() {
         var items = $('.post-list input:checked');
         for (i = 0; i < items.length; i++) {
@@ -43,6 +45,24 @@
         reload();
     }
 
+    function showPost(id) {
+        if (id) {
+            curPost = id;
+        }
+        dataService.get("blogifier/api/posts/post/" + curPost, showPostCallback, fail);
+        return false;
+    }
+    function showPostCallback(data) {
+        $('.bf-content-post-text').html(data.content);
+    }
+
+    function editPost(id) {
+        if (id) {
+            curPost = id;
+        }
+        location.href = getUrl("admin/editor/" + curPost);
+    }
+
     function reload() {
         setTimeout(function () {
             window.location.href = webRoot + 'admin';
@@ -64,6 +84,8 @@
     return {
         publish: publish,
         unpublish: unpublish,
-        removePost: removePost
+        removePost: removePost,
+        showPost: showPost,
+        editPost: editPost
     }
 }(DataService);
