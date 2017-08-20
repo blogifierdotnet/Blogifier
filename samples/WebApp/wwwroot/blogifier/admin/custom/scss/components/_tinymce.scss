@@ -85,7 +85,8 @@ div.mce-fullscreen {
 
 div.mce-edit-area {
     background: #FFF;
-    filter: none
+    filter: none;
+    border:none !important;
 }
 
 .mce-statusbar {
@@ -124,15 +125,15 @@ div.mce-edit-area {
 }
 
 .mce-grid td.mce-grid-cell div {
-    border: 1px solid #d6d6d6;
     width: 15px;
     height: 15px;
     margin: 0;
-    cursor: pointer
+    cursor: pointer;
+    border-radius: 100%;
 }
 
 .mce-grid td.mce-grid-cell div:focus {
-    border-color: #3498db
+    border-color: $color-brand-purple-dark
 }
 
 .mce-grid td.mce-grid-cell div[disabled] {
@@ -150,7 +151,7 @@ div.mce-edit-area {
 }
 
 .mce-grid a:hover, .mce-grid a:focus {
-    border-color: #3498db
+    border-color: $color-brand-purple-dark
 }
 
 .mce-grid-border {
@@ -164,8 +165,8 @@ div.mce-edit-area {
 }
 
 .mce-grid-border a:hover, .mce-grid-border a.mce-active {
-    border-color: #3498db;
-    background: #3498db
+    border-color: $color-brand-purple-dark;
+    background: $color-brand-purple-dark
 }
 
 .mce-text-center {
@@ -327,11 +328,11 @@ div.mce-tinymce-inline {
 }
 
 .mce-croprect-handle:focus {
-    border-color: #3498db
+    border-color: $color-brand-purple-dark
 }
 
 .mce-croprect-handle-move:focus {
-    outline: 1px solid #3498db
+    outline: 1px solid $color-brand-purple-dark
 }
 
 .mce-imagepanel {
@@ -698,7 +699,10 @@ div.mce-fullscreen {
     left: 0;
     opacity: 0;
     transform: scale(.1);
-    transition: transform 100ms ease-in,opacity 150ms ease-in
+    transition: transform 100ms ease-in,opacity 150ms ease-in;
+    border-radius:5px;
+    border:none;
+    overflow:hidden;
 }
 
 .mce-window.mce-in {
@@ -1160,11 +1164,11 @@ body .mce-abs-layout-item, .mce-abs-end {
     color: #fff;
     border: 1px solid transparent;
     border-color: transparent;
-    background-color: #2d8ac7
+    background-color: $color-brand-purple-dark;
 }
 
 .mce-primary:hover, .mce-primary:focus {
-    background-color: #257cb6;
+    background-color: $color-brand-purple-light;
     border-color: transparent
 }
 
@@ -1176,7 +1180,7 @@ body .mce-abs-layout-item, .mce-abs-end {
 }
 
 .mce-primary.mce-active, .mce-primary.mce-active:hover, .mce-primary:not(.mce-disabled):active {
-    background-color: #206ea1
+    background-color: $color-brand-purple-light;
 }
 
 .mce-primary button, .mce-primary button i {
@@ -1446,7 +1450,7 @@ i.mce-i-checkbox {
 }
 
 .mce-colorbutton-grid {
-    margin: 4px
+    margin: 4px;
 }
 
 .mce-colorbutton button {
@@ -1863,16 +1867,16 @@ i.mce-i-checkbox {
 
 .mce-menu-item {
     display: block;
-    padding: 6px 15px 6px 12px;
+    padding: 6px;
     clear: both;
     font-weight: normal;
-    line-height: 20px;
+    line-height: 1;
     color: #333;
     white-space: nowrap;
     cursor: pointer;
     line-height: normal;
-    border-left: 4px solid transparent;
-    margin-bottom: 1px
+    border-left: 0 solid transparent;
+    margin-bottom: 0;
 }
 
 .mce-menu-item .mce-ico, .mce-menu-item .mce-text {
@@ -1938,7 +1942,7 @@ i.mce-i-checkbox {
 }
 
 .mce-menu-item-normal.mce-active {
-    background-color: #3498db
+    background-color: $color-brand-purple-light
 }
 
 .mce-menu-item-preview.mce-active {
@@ -1960,7 +1964,7 @@ i.mce-i-checkbox {
 .mce-menu-item:hover, .mce-menu-item.mce-selected, .mce-menu-item:focus {
     text-decoration: none;
     color: white;
-    background-color: #2d8ac7
+    background-color: $color-brand-purple-dark;
 }
 
 .mce-menu-item-link {
@@ -2085,16 +2089,20 @@ div.mce-menu .mce-menu-item b {
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
     background: transparent;
     z-index: 1000;
-    padding: 5px 0 5px 0;
-    margin: -1px 0 0;
+    padding: 0;
+    margin: 0;
     min-width: 160px;
     background: #fff;
-    border: 1px solid #989898;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 0;
     z-index: 1002;
     max-height: 400px;
     overflow: auto;
-    overflow-x: hidden
+    overflow-x: hidden;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,0.25);
+
+    > div {
+        width: 100% !important;
+    }
 }
 
 .mce-menu i {
@@ -2302,11 +2310,11 @@ i.mce-i-resize {
     padding: 0 4px 0 4px;
     white-space: pre-wrap;
     *white-space: pre;
-    color: #333
+    color: #333;
 }
 
 .mce-textbox:focus, .mce-textbox.mce-focus {
-    border-color: #3498db
+    border-color: #aaa;
 }
 
 .mce-placeholder .mce-textbox {
@@ -2381,25 +2389,18 @@ i.mce-i-resize {
 
 @font-face {
     font-family: 'tinymce';
-    src: url('../lib/tinymce/skins/lightgray/fonts/tinymce.eot');
-    src: url('fonts/tinymce.eot?#iefix') format('embedded-opentype'),url('../lib/tinymce/skins/lightgray/fonts/tinymce.woff') format('woff'),url('../lib/tinymce/skins/lightgray/fonts/tinymce.ttf') format('truetype'),url('../lib/tinymce/skins/lightgray/fonts/tinymce.svg#tinymce') format('svg');
+    src: url('../lib/tinymce/skins/blogifier/fonts/tinymce.eot?hknzmf');
+    src: url('../lib/tinymce/skins/blogifier/fonts/tinymce.eot?hknzmf#iefix') format('embedded-opentype'), url('../lib/tinymce/skins/blogifier/fonts/tinymce.ttf?hknzmf') format('truetype'), url('../lib/tinymce/skins/blogifier/fonts/tinymce.woff?hknzmf') format('woff'), url('../lib/tinymce/skins/blogifier/fonts/tinymce.svg?hknzmf#tinymce') format('svg');
     font-weight: normal;
-    font-style: normal
-}
-
-@font-face {
-    font-family: 'tinymce-small';
-    src: url('../lib/tinymce/skins/lightgray/fonts/tinymce-small.eot');
-    src: url('../lib/tinymce/skins/lightgray/fonts/tinymce-small.eot?#iefix') format('embedded-opentype'),url('../lib/tinymce/skins/lightgray/fonts/tinymce-small.woff') format('woff'),url('../lib/tinymce/skins/lightgray/fonts/tinymce-small.ttf') format('truetype'),url('../lib/tinymce/skins/lightgray/fonts/tinymce-small.svg#tinymce') format('svg');
-    font-weight: normal;
-    font-style: normal
+    font-style: normal;
 }
 
 .mce-ico {
-    font-family: 'tinymce',Arial;
+    font-family: 'tinymce' !important;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
+    text-transform: none;
     font-size: 16px;
     line-height: 16px;
     speak: none;
@@ -2414,513 +2415,502 @@ i.mce-i-resize {
     color: #333
 }
 
-.mce-btn-small .mce-ico {
-    font-family: 'tinymce-small',Arial
+.mce-i-header:before {
+    content: "\e900";
 }
 
 .mce-i-save:before {
-    content: "\e000"
+    content: "\e000";
 }
 
 .mce-i-newdocument:before {
-    content: "\e001"
+    content: "\e001";
 }
 
 .mce-i-fullpage:before {
-    content: "\e002"
+    content: "\e002";
 }
 
 .mce-i-alignleft:before {
-    content: "\e003"
+    content: "\e003";
 }
 
 .mce-i-aligncenter:before {
-    content: "\e004"
+    content: "\e004";
 }
 
 .mce-i-alignright:before {
-    content: "\e005"
+    content: "\e005";
 }
 
 .mce-i-alignjustify:before {
-    content: "\e006"
-}
-
-.mce-i-alignnone:before {
-    content: "\e003"
+    content: "\e006";
 }
 
 .mce-i-cut:before {
-    content: "\e007"
+    content: "\e007";
 }
 
 .mce-i-paste:before {
-    content: "\e008"
+    content: "\e008";
 }
 
 .mce-i-searchreplace:before {
-    content: "\e009"
+    content: "\e009";
 }
 
 .mce-i-bullist:before {
-    content: "\e00a"
+    content: "\e00a";
 }
 
 .mce-i-numlist:before {
-    content: "\e00b"
+    content: "\e00b";
 }
 
 .mce-i-indent:before {
-    content: "\e00c"
+    content: "\e00c";
 }
 
 .mce-i-outdent:before {
-    content: "\e00d"
+    content: "\e00d";
 }
 
 .mce-i-blockquote:before {
-    content: "\e00e"
+    content: "\e00e";
 }
 
 .mce-i-undo:before {
-    content: "\e00f"
+    content: "\e00f";
 }
 
 .mce-i-redo:before {
-    content: "\e010"
+    content: "\e010";
 }
 
 .mce-i-link:before {
-    content: "\e011"
+    content: "\e011";
 }
 
 .mce-i-unlink:before {
-    content: "\e012"
+    content: "\e012";
 }
 
 .mce-i-anchor:before {
-    content: "\e013"
+    content: "\e013";
 }
 
 .mce-i-image:before {
-    content: "\e014"
+    content: "\e014";
 }
 
 .mce-i-media:before {
-    content: "\e015"
+    content: "\e015";
 }
 
 .mce-i-help:before {
-    content: "\e016"
+    content: "\e016";
 }
 
 .mce-i-code:before {
-    content: "\e017"
+    content: "\e017";
 }
 
-.mce-i-insertdatetime:before {
-    content: "\e018"
+.mce-i-inserttime:before {
+    content: "\e018";
 }
 
 .mce-i-preview:before {
-    content: "\e019"
+    content: "\e019";
 }
 
 .mce-i-forecolor:before {
-    content: "\e01a"
+    content: "\e01a";
 }
 
 .mce-i-backcolor:before {
-    content: "\e01a"
+    content: "\e01a";
 }
 
 .mce-i-table:before {
-    content: "\e01b"
+    content: "\e01b";
 }
 
 .mce-i-hr:before {
-    content: "\e01c"
-}
-
-.mce-i-removeformat:before {
-    content: "\e01d"
-}
-
-.mce-i-subscript:before {
-    content: "\e01e"
-}
-
-.mce-i-superscript:before {
-    content: "\e01f"
-}
-
-.mce-i-charmap:before {
-    content: "\e020"
-}
-
-.mce-i-emoticons:before {
-    content: "\e021"
-}
-
-.mce-i-print:before {
-    content: "\e022"
-}
-
-.mce-i-fullscreen:before {
-    content: "\e023"
-}
-
-.mce-i-spellchecker:before {
-    content: "\e024"
-}
-
-.mce-i-nonbreaking:before {
-    content: "\e025"
-}
-
-.mce-i-template:before {
-    content: "\e026"
-}
-
-.mce-i-pagebreak:before {
-    content: "\e027"
-}
-
-.mce-i-restoredraft:before {
-    content: "\e028"
-}
-
-.mce-i-bold:before {
-    content: "\e02a"
-}
-
-.mce-i-italic:before {
-    content: "\e02b"
-}
-
-.mce-i-underline:before {
-    content: "\e02c"
-}
-
-.mce-i-strikethrough:before {
-    content: "\e02d"
-}
-
-.mce-i-visualchars:before {
-    content: "\e02e"
-}
-
-.mce-i-visualblocks:before {
-    content: "\e02e"
-}
-
-.mce-i-ltr:before {
-    content: "\e02f"
-}
-
-.mce-i-rtl:before {
-    content: "\e030"
-}
-
-.mce-i-copy:before {
-    content: "\e031"
-}
-
-.mce-i-resize:before {
-    content: "\e032"
-}
-
-.mce-i-browse:before {
-    content: "\e034"
-}
-
-.mce-i-pastetext:before {
-    content: "\e035"
-}
-
-.mce-i-rotateleft:before {
-    content: "\eaa8"
-}
-
-.mce-i-rotateright:before {
-    content: "\eaa9"
-}
-
-.mce-i-crop:before {
-    content: "\ee78"
-}
-
-.mce-i-editimage:before {
-    content: "\e915"
-}
-
-.mce-i-options:before {
-    content: "\ec6a"
-}
-
-.mce-i-flipv:before {
-    content: "\eaaa"
-}
-
-.mce-i-fliph:before {
-    content: "\eaac"
-}
-
-.mce-i-zoomin:before {
-    content: "\eb35"
-}
-
-.mce-i-zoomout:before {
-    content: "\eb36"
-}
-
-.mce-i-sun:before {
-    content: "\eccc"
-}
-
-.mce-i-moon:before {
-    content: "\eccd"
-}
-
-.mce-i-arrowleft:before {
-    content: "\edc0"
-}
-
-.mce-i-arrowright:before {
-    content: "\e93c"
-}
-
-.mce-i-drop:before {
-    content: "\e935"
-}
-
-.mce-i-contrast:before {
-    content: "\ecd4"
-}
-
-.mce-i-sharpen:before {
-    content: "\eba7"
-}
-
-.mce-i-resize2:before {
-    content: "\edf9"
-}
-
-.mce-i-orientation:before {
-    content: "\e601"
-}
-
-.mce-i-invert:before {
-    content: "\e602"
-}
-
-.mce-i-gamma:before {
-    content: "\e600"
+    content: "\e01c";
 }
 
 .mce-i-remove:before {
     content: "\ed6a"
 }
 
-.mce-i-tablerowprops:before {
-    content: "\e604"
+.mce-i-removeformat:before {
+    content: "\e01d";
 }
 
-.mce-i-tablecellprops:before {
-    content: "\e605"
+.mce-i-sub:before {
+    content: "\e01e";
 }
 
-.mce-i-table2:before {
-    content: "\e606"
+.mce-i-sup:before {
+    content: "\e01f";
 }
 
-.mce-i-tablemergecells:before {
-    content: "\e607"
+.mce-i-charmap:before {
+    content: "\e020";
 }
 
-.mce-i-tableinsertcolbefore:before {
-    content: "\e608"
+.mce-i-emoticons:before {
+    content: "\e021";
 }
 
-.mce-i-tableinsertcolafter:before {
-    content: "\e609"
+.mce-i-print:before {
+    content: "\e022";
 }
 
-.mce-i-tableinsertrowbefore:before {
-    content: "\e60a"
+.mce-i-fullscreen:before {
+    content: "\e023";
 }
 
-.mce-i-tableinsertrowafter:before {
-    content: "\e60b"
+.mce-i-spellchecker:before {
+    content: "\e024";
 }
 
-.mce-i-tablesplitcells:before {
-    content: "\e60d"
+.mce-i-nonbreaking:before {
+    content: "\e025";
 }
 
-.mce-i-tabledelete:before {
-    content: "\e60e"
+.mce-i-template:before {
+    content: "\e026";
 }
 
-.mce-i-tableleftheader:before {
-    content: "\e62a"
+.mce-i-pagebreak:before {
+    content: "\e027";
 }
 
-.mce-i-tabletopheader:before {
-    content: "\e62b"
+.mce-i-restoredraft:before {
+    content: "\e028";
 }
 
-.mce-i-tabledeleterow:before {
-    content: "\e800"
+.mce-i-bold:before {
+    content: "\e02a";
 }
 
-.mce-i-tabledeletecol:before {
-    content: "\e801"
+.mce-i-italic:before {
+    content: "\e02b";
 }
 
-.mce-i-codesample:before {
-    content: "\e603"
+.mce-i-underline:before {
+    content: "\e02c";
 }
 
-.mce-i-fill:before {
-    content: "\e902"
+.mce-i-strikethrough:before {
+    content: "\e02d";
 }
 
-.mce-i-borderwidth:before {
-    content: "\e903"
+.mce-i-visualchars:before {
+    content: "\e02e";
 }
 
-.mce-i-line:before {
-    content: "\e904"
+.mce-i-ltr:before {
+    content: "\e02f";
 }
 
-.mce-i-count:before {
-    content: "\e905"
+.mce-i-rtl:before {
+    content: "\e030";
 }
 
-.mce-i-translate:before {
-    content: "\e907"
+.mce-i-copy:before {
+    content: "\e031";
 }
 
-.mce-i-drag:before {
-    content: "\e908"
-}
-
-.mce-i-home:before {
-    content: "\e90b"
-}
-
-.mce-i-upload:before {
-    content: "\e914"
-}
-
-.mce-i-bubble:before {
-    content: "\e91c"
-}
-
-.mce-i-user:before {
-    content: "\e91d"
-}
-
-.mce-i-lock:before {
-    content: "\e926"
-}
-
-.mce-i-unlock:before {
-    content: "\e927"
-}
-
-.mce-i-settings:before {
-    content: "\e928"
-}
-
-.mce-i-remove2:before {
-    content: "\e92a"
-}
-
-.mce-i-menu:before {
-    content: "\e92d"
-}
-
-.mce-i-warning:before {
-    content: "\e930"
-}
-
-.mce-i-question:before {
-    content: "\e931"
-}
-
-.mce-i-pluscircle:before {
-    content: "\e932"
-}
-
-.mce-i-info:before {
-    content: "\e933"
-}
-
-.mce-i-notice:before {
-    content: "\e934"
-}
-
-.mce-i-arrowup:before {
-    content: "\e93b"
-}
-
-.mce-i-arrowdown:before {
-    content: "\e93d"
-}
-
-.mce-i-arrowup2:before {
-    content: "\e93f"
-}
-
-.mce-i-arrowdown2:before {
-    content: "\e940"
-}
-
-.mce-i-menu2:before {
-    content: "\e941"
-}
-
-.mce-i-newtab:before {
-    content: "\e961"
-}
-
-.mce-i-a11y:before {
-    content: "\e900"
-}
-
-.mce-i-plus:before {
-    content: "\e93a"
-}
-
-.mce-i-insert:before {
-    content: "\e93a"
-}
-
-.mce-i-minus:before {
-    content: "\e939"
-}
-
-.mce-i-books:before {
-    content: "\e911"
-}
-
-.mce-i-reload:before {
-    content: "\e906"
-}
-
-.mce-i-toc:before {
-    content: "\e901"
-}
-
-.mce-i-checkmark:before {
-    content: "\e033"
+.mce-i-resize:before {
+    content: "\e032";
 }
 
 .mce-i-checkbox:before, .mce-i-selected:before {
-    content: "\e033"
+    content: "\e033";
 }
+
+.mce-i-browse:before {
+    content: "\e034";
+}
+
+.mce-i-pastetext:before {
+    content: "\e035";
+}
+
+.mce-i-gamma:before {
+    content: "\e600";
+}
+
+.mce-i-orientation:before {
+    content: "\e601";
+}
+
+.mce-i-invert:before {
+    content: "\e602";
+}
+
+.mce-i-codesample:before {
+    content: "\e603";
+}
+
+.mce-i-tablerowprops:before {
+    content: "\e604";
+}
+
+.mce-i-tablecellprops:before {
+    content: "\e605";
+}
+
+.mce-i-table2:before {
+    content: "\e606";
+}
+
+.mce-i-tablemergecells:before {
+    content: "\e607";
+}
+
+.mce-i-tableinsertcolbefore:before {
+    content: "\e608";
+}
+
+.mce-i-tableinsertcolafter:before {
+    content: "\e609";
+}
+
+.mce-i-tableinsertrowbefore:before {
+    content: "\e60a";
+}
+
+.mce-i-tableinsertrowafter:before {
+    content: "\e60b";
+}
+
+.mce-i-tablesplitcells:before {
+    content: "\e60d";
+}
+
+.mce-i-tabledelete:before {
+    content: "\e60e";
+}
+
+.mce-i-tableleftheader:before {
+    content: "\e62a";
+}
+
+.mce-i-tabletopheader:before {
+    content: "\e62b";
+}
+
+.mce-i-tabledeleterow:before {
+    content: "\e800";
+}
+
+.mce-i-tabledeletecol:before {
+    content: "\e801";
+}
+
+.mce-i-a11y:before {
+    content: "\e901";
+}
+
+.mce-i-toc:before {
+    content: "\e902";
+}
+
+.mce-i-fill:before {
+    content: "\e903";
+}
+
+.mce-i-borderwidth:before {
+    content: "\e904";
+}
+
+.mce-i-line:before {
+    content: "\e905";
+}
+
+.mce-i-count:before {
+    content: "\e906";
+}
+
+.mce-i-reload:before {
+    content: "\e907";
+}
+
+.mce-i-translate:before {
+    content: "\e908";
+}
+
+.mce-i-drag:before {
+    content: "\e909";
+}
+
+.mce-i-home:before {
+    content: "\e90b";
+}
+
+.mce-i-books:before {
+    content: "\e911";
+}
+
+.mce-i-upload:before {
+    content: "\e914";
+}
+
+.mce-i-editimage:before {
+    content: "\e915";
+}
+
+.mce-i-bubble:before {
+    content: "\e91c";
+}
+
+.mce-i-user:before {
+    content: "\e91d";
+}
+
+.mce-i-lock:before {
+    content: "\e926";
+}
+
+.mce-i-unlock:before {
+    content: "\e927";
+}
+
+.mce-i-settings:before {
+    content: "\e928";
+}
+
+.mce-i-remove2:before {
+    content: "\e92a";
+}
+
+.mce-i-menu:before {
+    content: "\e92d";
+}
+
+.mce-i-warning:before {
+    content: "\e930";
+}
+
+.mce-i-question:before {
+    content: "\e931";
+}
+
+.mce-i-pluscircle:before {
+    content: "\e932";
+}
+
+.mce-i-info:before {
+    content: "\e933";
+}
+
+.mce-i-notice:before {
+    content: "\e934";
+}
+
+.mce-i-drop:before {
+    content: "\e935";
+}
+
+.mce-i-minus:before {
+    content: "\e939";
+}
+
+.mce-i-plus:before {
+    content: "\e93a";
+}
+
+.mce-i-arrowup:before {
+    content: "\e93b";
+}
+
+.mce-i-arrowright:before {
+    content: "\e93c";
+}
+
+.mce-i-arrowdown:before {
+    content: "\e93d";
+}
+
+.mce-i-arrowup2:before {
+    content: "\e93f";
+}
+
+.mce-i-arrowdown2:before {
+    content: "\e940";
+}
+
+.mce-i-menu2:before {
+    content: "\e941";
+}
+
+.mce-i-newtab:before {
+    content: "\e961";
+}
+
+.mce-i-rotateleft:before {
+    content: "\eaa8";
+}
+
+.mce-i-rotateright:before {
+    content: "\eaa9";
+}
+
+.mce-i-flipv:before {
+    content: "\eaaa";
+}
+
+.mce-i-fliph:before {
+    content: "\eaac";
+}
+
+.mce-i-zoomin:before {
+    content: "\eb35";
+}
+
+.mce-i-zoomout:before {
+    content: "\eb36";
+}
+
+.mce-i-sharpen:before {
+    content: "\eba7";
+}
+
+.mce-i-options:before {
+    content: "\ec6a";
+}
+
+.mce-i-sun:before {
+    content: "\eccc";
+}
+
+.mce-i-moon:before {
+    content: "\eccd";
+}
+
+.mce-i-contrast:before {
+    content: "\ecd4";
+}
+
+.mce-i-remove22:before {
+    content: "\ed6a";
+}
+
+.mce-i-arrowleft:before {
+    content: "\edc0";
+}
+
+.mce-i-resize2:before {
+    content: "\edf9";
+}
+
+.mce-i-crop:before {
+    content: "\ee78";
+}
+
 
 .mce-i-insert {
     font-size: 14px
@@ -2932,5 +2922,5 @@ i.mce-i-resize {
 
 i.mce-i-backcolor {
     text-shadow: none;
-    background: #BBB
+    background: rgba(0,0,0,.25);
 }

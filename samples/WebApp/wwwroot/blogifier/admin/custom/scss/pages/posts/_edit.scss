@@ -65,20 +65,3 @@
     }
 }
 
-.mce-tinymce {
-    .mce-toolbar-grp {
-        position: fixed;
-        top: 0;
-        background: $color-brand-purple-dark;
-        width: 100%;
-        left: 0;
-        height: 6rem;
-        z-index: 1000;
-
-        > div {
-            width: 100%;
-            max-width: 1024px;
-            margin: 1.25rem auto;
-        }
-    }
-}
