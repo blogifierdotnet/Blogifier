@@ -15,20 +15,21 @@
 
         <!-- SIDEBAR HEADER -->
         <div class="bf-sidebar-posts-header">
-            <label class="list-select"><input class="item-control item-control-multi" type="checkbox" name="selectAll"></label>
-            <label class="list-filter"><i class="fa fa-filter item-control"></i></label>
-            <a href="~/admin/editor/0" class="btn btn-light btn-block">New Post</a>
+            <label class="list-select custom-control custom-checkbox">
+                <input class="custom-control-input item-control-multi" type="checkbox" name="selectAll">
+                <span class="item-control custom-control-indicator"></span>
+            </label>
+            <label class="list-filter" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-control"></i></label>
+            <a href="~/admin/editor/0" class="btn btn-light btn-block btn-new">New Post</a>
             <div class="btn-group btn-group-block btn-group-actions" role="group">
                 <button type="button" class="btn btn-dark" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-dark" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn btn-dark" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
-        </div> 
+        </div>
         <!--/SIDEBAR HEADER -->
-
-
         <!-- SEARCH & FILTERS -->
-        <div class="bf-sidebar-posts-tools">
+        <div class="bf-sidebar-posts-tools collapse" id="sidebarTools">
             <form class="bf-sidebar-posts-search" action="~/admin" method="get">
                 <input type="search" name="search" placeholder="search..." autocomplete="off" />
             </form>
@@ -37,27 +38,32 @@
                 @foreach (var ftr in Model.StatusFilter)
                 {
                     var ftrChecked = ftr.Selected ? "checked" : "";
-                    <label class="custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
+                        <label class="custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
                 }
+
                 <h5>Filter by categories:</h5>
-                @foreach (var cat in Model.CategoryFilter)
-                {
-                    var isChecked = cat.Selected ? "checked" : "";
-                    <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                }
+                <div class="row">
+                    @foreach (var cat in Model.CategoryFilter)
+                    {
+                        var isChecked = cat.Selected ? "checked" : "";
+                        <div class="col-6">
+                            <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                        </div>
+                    }
+                </div>
             </form>
         </div>
         <!--/SEARCH & FILTERS -->
-        
-
         <!-- POST LIST -->
         <ul class="bf-sidebar-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
-                if(curPost == 0) { curPost = item.BlogPostId; }
+                if (curPost == 0) { curPost = item.BlogPostId; }
                 <li class="item">
-                    <label class="item-select"><input type="checkbox" id="@item.BlogPostId" class="item-control item-control-multi"></label>
+
+                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="custom-control-input item-control-multi"><span class="item-control custom-control-indicator"></span></label>
+
 
                     <a class="item-link item-link-desktop" href="" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
                     <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
@@ -70,8 +76,6 @@
             }
         </ul>
         <!--/POST LIST -->
-
-
         <!-- PAGINATION -->
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {

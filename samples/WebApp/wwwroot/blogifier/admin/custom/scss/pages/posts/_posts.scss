@@ -28,12 +28,6 @@
     border-bottom: 1px solid $color-black-10;
     position: relative;
 
-    .btn-new {
-        border-radius: 3rem;
-        padding: 0;
-    }
-
-
     .list-select,
     .list-filter {
         position: absolute;
@@ -41,10 +35,15 @@
         width: 6rem;
         height: 100%;
         display: flex;
+        margin: 0;
+        padding: 0;
 
         .item-control {
             margin: auto;
             cursor: pointer;
+            position: relative;
+            top: 0;
+            left: 0;
         }
     }
 
@@ -90,7 +89,6 @@
 .bf-sidebar-posts-tools {
     background: $color-black-10;
     position: relative;
-    display: none;
 
     &::before {
         @include triangle(1.5rem, $color-black-10, up);
@@ -138,9 +136,8 @@
             }
         }
 
-        input {
-            margin-right: 1rem;
-            vertical-align: top;
+        .custom-control-indicator {
+            top: .125rem;
         }
     }
 }
@@ -156,10 +153,15 @@
             width: 6rem;
             height: 100%;
             display: flex;
+            margin: 0;
+            padding: 0;
 
             .item-control {
                 margin: auto;
                 cursor: pointer;
+                position: relative;
+                top: 0;
+                left: 0;
             }
         }
 

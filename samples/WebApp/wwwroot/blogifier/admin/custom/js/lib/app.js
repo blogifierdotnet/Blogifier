@@ -1,25 +1,13 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-$(function () {
-    $(document).on('click', '.bf-sidebar-posts-header .list-filter', function () {
-        $(this).toggleClass("active");
-        $(".bf-sidebar-posts-tools").toggle();
-    });
-});
+//$(function () {
+//    $(document).on('click', '.bf-sidebar-posts-header .list-filter', function () {
+//        $(this).toggleClass("active");
+//        $(".bf-sidebar-posts-tools").toggle();
+//    });
+//});
 
-$(function () {
-    var sidebarHeader = $(".bf-sidebar-posts-header");
-    var checkMulti = $(".bf-sidebar .item-control-multi");
-    $(document).on('change', checkMulti, function () {
-        if (checkMulti.is(':checked')) {
-            $(sidebarHeader).addClass("active");
-        }
-        else {
-            $(sidebarHeader).removeClass("active");
-        }
-    });
-});
 
 $(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
