@@ -7,7 +7,7 @@
         @include linear-gradient($color-brand-purple-light, $color-brand-purple-dark, 1);
         width: 100%;
         left: 0;
-        height: 6rem;
+        height: 4.75rem;
         z-index: 1000;
         padding: 0;
         -moz-box-sizing: border-box;
@@ -17,7 +17,7 @@
         > div {
             width: 100%;
             max-width: 1024px;
-            margin: 1.5rem auto;
+            margin: 1rem auto;
         }
 
         * {
@@ -27,7 +27,7 @@
         }
 
         @media (max-width:1024px) {
-            padding-right: 6rem;
+            padding-right: 4.75rem;
         }
 
         @media (max-width: 800px) {
@@ -72,7 +72,7 @@
         button {
             display: block;
             width: 100%;
-            height: 3rem;
+            height: 2.75rem;
             position: relative;
             color: #fff;
         }
