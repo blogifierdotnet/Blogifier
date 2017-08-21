@@ -1,13 +1,6 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-// scrollbar width
-var scrollDiv = document.createElement("div");
-scrollDiv.className = "scrollbar-measure";
-document.body.appendChild(scrollDiv);
-var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-document.body.removeChild(scrollDiv);
-
 $(function () {
     $(document).on('click', '.bf-sidebar-posts-header .list-filter', function () {
         $(this).toggleClass("active");
@@ -38,36 +31,6 @@ $(".admin-setup-form #AuthorName").keyup(function () {
     }
 });
 
-$(function () {
-    $(document).on('click', '[data-modal-target]', function () {
-        $("body").addClass("modal-open");
-        $($(this).data("modal-target")).show();
-        $("body").css("padding-right", scrollbarWidth);
-        $(".bf-nav").css("margin-right", scrollbarWidth);
-    });
-    $(document).on('click', '.modal-close', function () {
-        $("body").removeClass("modal-open");
-        $(this).parents().find(".modal").hide();
-        $("body").css("padding-right", "");
-        $(".bf-nav").css("margin-right", "0");
-    });
-});
-
-
-$(function () {
-    $(document).on('click', '.dropdown .dropdown-toggle', function () {
-        $(this).parent(".dropdown").toggleClass("active");
-    });
-    $(document).click(function (e) {
-        var target = e.target;
-        if (!$(target).is('.dropdown .dropdown-toggle') && !$(target).parents().is('.dropdown .dropdown-toggle')) {
-            $('.dropdown').removeClass("active");
-        }
-    });
-    //$(document).on('click', '.dropdown-menu', function (e) {
-    //    e.stopPropagation();
-    //});
-});
 
 function profileLogOut() {
     $("#frmLogOut").submit();
@@ -102,36 +65,3 @@ function loading() {
 function loaded() {
     $('#app-spinner').hide();
 }
-
-
-$('.tooltip').on({
-    mouseenter: function () {
-
-        var tooltip = $(this);
-        var tooltipAttr = tooltip.attr('title');
-
-        var tooltipOffset = tooltip.offset();
-        var tooltipHeight = tooltip.outerHeight();
-        var tooltipWidth = tooltip.outerWidth() / 2;
-        $(tooltip).attr("data-tooltip-title", tooltipAttr);
-        $(tooltip).removeAttr("title");
-
-        var tooltipDataAttr = tooltip.data("tooltip-title");
-
-        $("body").append('<div class="tooltip-box">' + tooltipDataAttr + '</div>').find(".tooltip-box").css({
-            top: tooltipOffset.top + tooltipHeight,
-            left: tooltipOffset.left + tooltipWidth
-        });
-
-    },
-    mouseleave: function () {
-        var tooltip = $(this);
-        var tooltipDataAttr = tooltip.data("tooltip-title");
-        $(".tooltip-box").remove();
-        $(tooltip).attr("title", tooltipDataAttr);
-        $(tooltip).removeAttr("data-tooltip-title");
-
-    }
-
-});
-

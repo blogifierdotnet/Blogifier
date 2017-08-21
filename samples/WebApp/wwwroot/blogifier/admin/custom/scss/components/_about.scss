@@ -24,6 +24,7 @@
     }
 
     .item-social {
+        @include unstyled(ul);
         margin-top: 3rem;
 
         li {

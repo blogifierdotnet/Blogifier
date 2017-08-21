@@ -8,13 +8,14 @@
 @import "helpers/variables";
 @import "helpers/mixins";
 
+// Vendor
+@import "vendor/bootstrap";
+@import "vendor/fontawesome";
+@import "vendor/toastr";
+
 // Base
 @import "base/reset";
 @import "base/main";
-
-// Vendor
-@import "vendor/fontawesome";
-@import "vendor/toastr";
 
 // Components
 @import "components/utilities";
@@ -29,7 +30,6 @@
 @import "components/about";
 @import "components/tinymce";
 @import "components/editor";
-@import "components/grid";
 @import "components/nav";
 
 // Pages

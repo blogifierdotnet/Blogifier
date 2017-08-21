@@ -149,9 +149,7 @@
     }
 
     function close() {
-        $("body").removeClass("modal-open");
-        $("#modalFilePicker").hide();
-        $("body").css("padding-right", ""); 
+        $('#modalFilePicker').modal('hide')
     }
 
     return {

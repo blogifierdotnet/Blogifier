@@ -22,7 +22,7 @@
         <div class="input-group col-md-9">
             <input type="text" asp-for="Avatar" class="form-control" readonly />
             <span class="input-group-btn">
-                <button type="button" data-modal-target="#modalFilePicker" class="btn btn-default btn-sm btn-outline btn-upload" onclick="return filePickerController.open('profileavatar');">upload</button>
+                <button type="button" data-toggle="modal" data-target="#modalFilePicker" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');">upload</button>
             </span>
         </div>
     </div>

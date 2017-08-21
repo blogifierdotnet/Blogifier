@@ -19,18 +19,18 @@
 }
 
 <div class="bf-nav dropdown">
-    <button class="bf-nav-toggle dropdown-toggle"><img alt="@userName" src="@avatar"></button>
+    <button class="bf-nav-toggle dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img alt="@userName" src="@avatar"></button>
     <div class="bf-nav-content dropdown-menu dropdown-menu-right">
         <div class="bf-nav-cover" style="background-image:url(@blogImg);">
             <h2>@blogTitle</h2>
             <p>@blogDesc</p>
         </div>
         <ul>
-            <li><a class="tooltip" href="~/admin" title="Posts"><i class="fa fa-align-left"></i></a></li>
-            <li><a class="tooltip" href="~/admin/settings/profile" title="Settings"><i class="fa fa-cog"></i></a></li>
-            <li><a class="tooltip" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank" title="View Blog"><i class="fa fa-external-link-square"></i></a></li>
-            <li><a class="tooltip" data-modal-target="#aboutBlogifier" title="About"><img src="/embedded/lib/img/logo-sm.png" alt="BF" /></a></li>
-            <li><a class="tooltip" onclick="profileLogOut(); return false;" title="Logoff"><i class="fa fa-power-off"></i></a></li>
+            <li><a data-toggle="tooltip" href="~/admin" title="Posts"><i class="fa fa-align-left"></i></a></li>
+            <li><a data-toggle="tooltip" href="~/admin/settings/profile" title="Settings"><i class="fa fa-cog"></i></a></li>
+            <li><a data-toggle="tooltip" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank" title="View Blog"><i class="fa fa-external-link-square"></i></a></li>
+            <li><a data-toggle="modal" data-target="#aboutBlogifier" title="About"><img src="/embedded/lib/img/logo-sm.png" alt="BF" /></a></li>
+            <li><a data-toggle="tooltip" onclick="profileLogOut(); return false;" title="Logoff"><i class="fa fa-power-off"></i></a></li>
         </ul>
     </div>
     @*Blogifier (Version @Blogifier.Core.Common.ApplicationSettings.Version)*@

@@ -4,6 +4,7 @@
     top: 1.5rem;
     z-index: 10000;
     @include noselect;
+
     .bf-nav-toggle {
         @include unstyled(button);
         width: 3rem;
@@ -30,6 +31,7 @@
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
+
 
             h2 {
                 font-size: 1rem;
@@ -79,28 +81,26 @@
             color: rgba(255, 255, 255, 0.75);
             cursor: pointer;
             font-size: .875rem;
-            line-height:3rem;
+            line-height: 3rem;
+
             &:hover {
                 background-color: $color-black-10;
                 color: #fff;
+
                 img {
-                    opacity:1;
+                    opacity: 1;
                 }
             }
         }
+
         img {
-            width:.75rem;
-            opacity:.75;
+            width: .75rem;
+            opacity: .75;
         }
+
         i {
             display: block;
             line-height: 3rem;
-        }
-    }
-
-    &.active {
-        .bf-nav-content {
-            display: block;
         }
     }
 }

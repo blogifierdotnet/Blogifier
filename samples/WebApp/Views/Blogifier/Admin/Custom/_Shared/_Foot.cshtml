@@ -1,4 +1,4 @@
-@using Blogifier.Core.Common
+    @using Blogifier.Core.Common
 
 @{
     var themeFolder = "blogifier/admin/custom";
@@ -7,6 +7,8 @@
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/js/lib/jquery.min.js"></script>
 <script src="~/@themeFolder/js/lib/toastr.min.js"></script>
+<script src="~/@themeFolder/js/lib/popper.min.js"></script>
+<script src="~/@themeFolder/js/lib/bootstrap.min.js"></script>
 <script src="~/@themeFolder/js/lib/app.js" asp-append-version="true"></script>
 <script src="~/@themeFolder/js/app/dataService.js"></script>
 <script src="~/@themeFolder/js/app/uploadController.js"></script>
