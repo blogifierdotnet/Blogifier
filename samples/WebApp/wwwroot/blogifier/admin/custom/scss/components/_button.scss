@@ -1,5 +1,15 @@
-.btn{
-    cursor:pointer;
-    &-single-icon {
+.btn {
+    cursor: pointer;
+    padding: 0 1rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-weight: $font-weight-medium;
+    font-size: 1rem;
+    text-transform: uppercase;
+
+    &-icon-rounded {
+        width: 2.5rem;
+        padding: 0;
+        border-radius: 100%;
     }
 }

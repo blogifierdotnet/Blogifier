@@ -24,7 +24,7 @@
 
 //
 .bf-sidebar-posts-header {
-    padding: 1.5rem 6rem;
+    padding: 1rem 5rem;
     border-bottom: 1px solid $color-black-10;
     position: relative;
 
@@ -32,7 +32,7 @@
     .list-filter {
         position: absolute;
         top: 0;
-        width: 6rem;
+        width: 5rem;
         height: 100%;
         display: flex;
         margin: 0;
@@ -67,6 +67,16 @@
             right: 6rem;
             border-right: 1px solid $color-black-20;
         }
+    }
+
+    .btn-new {
+        border-radius: 2.75rem;
+        height: 2.75rem;
+        line-height: 2.75rem;
+        background: #fff;
+        border-color: #fff;
+        color: $color-brand-purple-dark;
+        font-weight: $font-weight-bold;
     }
 
     .btn-group-actions {
@@ -150,7 +160,7 @@
 
         .item-select {
             position: absolute;
-            width: 6rem;
+            width: 5rem;
             height: 100%;
             display: flex;
             margin: 0;
@@ -168,8 +178,9 @@
         .item-link {
             color: rgba(255, 255, 255, 0.50);
             display: block;
-            padding: 1.5rem 2rem 1.5rem 6rem;
+            padding: 1rem 1rem 1rem 5rem;
             cursor: pointer;
+            line-height:1.5;
         }
 
         &:hover {

@@ -20,6 +20,9 @@ $(".admin-setup-form #AuthorName").keyup(function () {
 });
 
 
+$("[data-toggle=tooltip]").tooltip();
+
+
 function profileLogOut() {
     $("#frmLogOut").submit();
 }
