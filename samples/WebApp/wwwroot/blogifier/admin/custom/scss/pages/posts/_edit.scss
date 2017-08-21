@@ -11,59 +11,49 @@
 
 .bf-editor-header {
     background: #333;
-    height: 300px;
     position: relative;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+    padding: 3rem 0 3.25rem;
 
-    &::after {
-        content: "";
+    &.bf-editor-cover {
         width: 100%;
-        height: 100%;
+        z-index: 100;
+        padding: 10rem 0 3.25rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &:after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.52);
+            z-index: 0;
+        }
+    }
+
+    .bf-editor-title {
         display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: #000;
-        opacity: .75;
-        z-index: 49;
-    }
-
-    .bf-editor-container {
-        position: relative;
-        z-index: 50;
-        height: 100%;
-    }
-
-    .btn {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        transform: translateY(50%);
-    }
-}
-
-.bf-editor-title {
-    position: absolute;
-    bottom: 4rem;
-    width: 100%;
-    border: none;
-    padding: 0;
-    display: block;
-    height: auto;
-    font-size: 2rem;
-    background: none;
-    color: #fff;
-    padding: 1rem 0;
-    font-weight: 300;
-
-    &:focus {
+        border: none;
+        background: none;
+        font-size: 2rem;
+        padding: 0;
         outline: none;
-    }
-}
-.bf-editor-footer {
-    margin-top:3rem;
-    .btn-group.float-right {
-        margin-left:.25rem;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        font-weight: $font-weight-normal;
     }
 }
 
+.bf-editor-footer {
+    margin-top: 3rem;
+
+    .btn-group.float-right {
+        margin-left: .25rem;
+    }
+}

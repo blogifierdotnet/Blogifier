@@ -162,6 +162,7 @@
 .tinymce-placeholder {
     position: absolute;
     top: .25rem;
-    font-size: 1rem;
+    font-size: 1.25rem;
     color: #aaa;
+    font-weight: $font-weight-light; 
 }

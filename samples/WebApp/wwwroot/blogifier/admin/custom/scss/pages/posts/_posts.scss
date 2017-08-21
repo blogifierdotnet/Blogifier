@@ -184,6 +184,10 @@
             padding: 1rem 1rem 1rem 5rem;
             cursor: pointer;
             line-height: 1.5;
+
+            &.active {
+                background: rgba(0,0,0,0.1);
+            }
         }
 
         &:hover {
