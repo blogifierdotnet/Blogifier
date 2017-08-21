@@ -1,14 +1,6 @@
 ﻿toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
-//$(function () {
-//    $(document).on('click', '.bf-sidebar-posts-header .list-filter', function () {
-//        $(this).toggleClass("active");
-//        $(".bf-sidebar-posts-tools").toggle();
-//    });
-//});
-
-
 $(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
@@ -19,9 +11,7 @@ $(".admin-setup-form #AuthorName").keyup(function () {
     }
 });
 
-
 $("[data-toggle=tooltip]").tooltip();
-
 
 function profileLogOut() {
     $("#frmLogOut").submit();

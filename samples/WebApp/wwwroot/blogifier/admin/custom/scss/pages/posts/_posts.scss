@@ -77,6 +77,7 @@
         border-color: #fff;
         color: $color-brand-purple-dark;
         font-weight: $font-weight-bold;
+        font-size: 1rem;
     }
 
     .btn-group-actions {
@@ -180,7 +181,7 @@
             display: block;
             padding: 1rem 1rem 1rem 5rem;
             cursor: pointer;
-            line-height:1.5;
+            line-height: 1.5;
         }
 
         &:hover {

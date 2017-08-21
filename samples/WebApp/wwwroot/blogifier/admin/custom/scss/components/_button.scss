@@ -1,15 +1,23 @@
 .btn {
     cursor: pointer;
-    padding: 0 1rem;
+    padding: 0 2rem;
     height: 2.5rem;
     line-height: 2.5rem;
     font-weight: $font-weight-medium;
-    font-size: 1rem;
+    font-size: .875rem;
     text-transform: uppercase;
 
     &-icon-rounded {
         width: 2.5rem;
         padding: 0;
         border-radius: 100%;
+    }
+}
+
+
+.btn-group-icon {
+    .btn {
+        padding:0;
+        width:3rem;
     }
 }

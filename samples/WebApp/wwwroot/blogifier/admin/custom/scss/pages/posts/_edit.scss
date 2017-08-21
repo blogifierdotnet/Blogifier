@@ -1,5 +1,6 @@
 .bf-editor {
     padding-top: 4.75rem;
+    padding-bottom: 4.75rem;
 
     &-container {
         max-width: 1024px;
@@ -60,6 +61,7 @@
     }
 }
 .bf-editor-footer {
+    margin-top:3rem;
     .btn-group.float-right {
         margin-left:.25rem;
     }
