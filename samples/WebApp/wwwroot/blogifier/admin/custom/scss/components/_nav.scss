@@ -1,14 +1,15 @@
 .bf-nav {
     position: fixed;
-    right: 1.5rem;
-    top: 1.5rem;
+    right: 1rem;
+    top: 1rem;
     z-index: 10000;
     @include noselect;
+    height: 2.75rem;
 
     .bf-nav-toggle {
         @include unstyled(button);
-        width: 3rem;
-        height: 3rem;
+        width: 2.75rem;
+        height: 2.75rem;
         cursor: pointer;
 
         img {
