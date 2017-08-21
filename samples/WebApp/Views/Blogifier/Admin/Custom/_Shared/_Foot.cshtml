@@ -5,11 +5,11 @@
 }
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_about.cshtml")
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-<script src="~/@themeFolder/lib/jquery/jquery.min.js"></script>
-<script src="~/@themeFolder/lib/toastr/toastr.min.js"></script>
-<script src="~/@themeFolder/js/app.js" asp-append-version="true"></script>
-<script src="~/@themeFolder/js/dataService.js"></script>
-<script src="~/@themeFolder/js/uploadController.js"></script>
+<script src="~/@themeFolder/js/lib/jquery.min.js"></script>
+<script src="~/@themeFolder/js/lib/toastr.min.js"></script>
+<script src="~/@themeFolder/js/lib/app.js" asp-append-version="true"></script>
+<script src="~/@themeFolder/js/app/dataService.js"></script>
+<script src="~/@themeFolder/js/app/uploadController.js"></script>
 <script>
     var webRoot = '@Url.Content("~/")';
     var blogRoute = '@ApplicationSettings.BlogRoute';
