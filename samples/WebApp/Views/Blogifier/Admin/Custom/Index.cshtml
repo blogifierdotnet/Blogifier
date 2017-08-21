@@ -96,26 +96,23 @@
     <div class="bf-content bf-content-posts">
 
         <!-- PREVIEW POST (This section will change for each post) -->
-        <div class="bf-content-post-cover" style="background-image:url(http://blogifier.azurewebsites.net/blogifier/data/francis/2017/7/a.jpg);">
+        <div class="bf-content-post-cover" style="background-image:url(/embedded/lib/img/cover.png);">
             <div class="bf-content-post-cover-body">
-                <p id="post-tagline">March 24, 2017 / News, Security / 472 Views</p>
-                <h1 id="post-title">Post Title...</h1>
+                <p id="post-tagline"></p>
+                <h1 id="post-title"></h1>
                 <div class="btn-group btn-group-sm float-left">
-                    <button class="btn btn-primary btn-outline" onclick="postsController.editPost()">Edit</button>
-                    <button class="btn btn-primary btn-outline" onclick="postsController.showPost()">View</button>
+                    <button class="btn btn-default btn-outline" onclick="postsController.editPost()">Edit</button>
+                    <button class="btn btn-default btn-outline" onclick="postsController.showPost()">View</button>
                 </div>
                 <div class="btn-group btn-group-icon btn-group-sm float-left" role="group">
-                    <button type="button" class="btn btn-primary btn-outline tooltip" onclick="postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-                    
-                    <button type="button" id="btnPublish" class="btn btn-primary btn-outline tooltip" onclick="postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
-                    <button type="button" id="btnUnpublish" class="btn btn-primary btn-outline tooltip" onclick="postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+                    <button type="button" class="btn btn-default btn-outline tooltip" onclick="postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+                    <button type="button" id="btnPublish" class="btn btn-default btn-outline tooltip" onclick="postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+                    <button type="button" id="btnUnpublish" class="btn btn-default btn-outline tooltip" onclick="postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
                 </div>
-                <button class="btn btn-primary btn-outline btn-sm btn-icon float-right tooltip" data-modal-target="#modalFilePicker" onclick="" title="Change the cover"><i class="fa fa-photo"></i></button>
+                <button class="btn btn-default btn-outline btn-sm btn-icon float-right tooltip" data-modal-target="#modalFilePicker" onclick="" title="Change the cover"><i class="fa fa-photo"></i></button>
             </div>
         </div>
-        <div class="bf-content-post-text">
-            Content...
-        </div>
+        <div class="bf-content-post-text"></div>
         <!--/PREVIEW POST-->
 
     </div>

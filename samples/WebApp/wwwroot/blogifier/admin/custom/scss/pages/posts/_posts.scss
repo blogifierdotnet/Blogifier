@@ -54,9 +54,10 @@
 
     .list-filter {
         right: 0;
-        opacity:.75;
+        opacity: .75;
+
         &.active {
-            opacity:1;
+            opacity: 1;
         }
     }
 
@@ -106,7 +107,8 @@
             color: #fff;
             padding: 0 2.5rem;
             height: 3rem;
-            width:100%;
+            width: 100%;
+
             &::placeholder {
                 color: rgba(255, 255, 255, 0.25);
             }
@@ -251,8 +253,30 @@
 
 .bf-content-post-text {
     padding: 3rem;
+    font-size: 1.125rem;
+    color: #000;
+    font-weight: $font-weight-normal;
+    line-height: 1.6;
 
-    h2, p {
-        margin-bottom: 1rem;
+    ul, ol {
+        margin: 2rem;
+        list-style-position: inside;
+    }
+
+    ul {
+        list-style-type: circle;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    p {
+        margin-bottom: 1.5rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 2rem 0 .5rem;
+        font-weight: $font-weight-bold;
     }
 }
