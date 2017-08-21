@@ -105,7 +105,7 @@
         @include triangle(1.5rem, $color-black-10, up);
         position: absolute;
         top: -1.5625rem;
-        right: 2.25rem;
+        right: 1.75rem;
     }
 
     .bf-sidebar-posts-search {
@@ -117,10 +117,12 @@
             padding: 0 2.5rem;
             height: 3rem;
             width: 100%;
+            outline: none;
 
             &::placeholder {
                 color: rgba(255, 255, 255, 0.25);
             }
+
         }
     }
 
