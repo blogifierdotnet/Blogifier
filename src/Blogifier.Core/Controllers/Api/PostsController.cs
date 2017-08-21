@@ -35,11 +35,17 @@ namespace Blogifier.Core.Controllers.Api
         [HttpGet("post/{id:int}")]
         public PostEditModel GetById(int id)
         {
+            var profile = GetProfile();
+
             var post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
             if (id < 1)
             {
                 post = _db.BlogPosts.SingleIncluded(p => p.Profile.IdentityName == User.Identity.Name).Result;
             }
+
+            var postImg = post.Image == null ? profile.Image : post.Image;
+            if (string.IsNullOrEmpty(postImg)) postImg = ApplicationSettings.PostImage;
+
             var model = new PostEditModel
             {
                 Id = post.Id,
@@ -47,7 +53,7 @@ namespace Blogifier.Core.Controllers.Api
                 Title = post.Title,
                 Content = post.Content,
                 Published = post.Published,
-                Image = post.Image,
+                Image = postImg,
                 PostViews = post.PostViews,
                 Categories = _db.Categories.PostCategories(post.Id)
             };
@@ -131,6 +137,19 @@ namespace Blogifier.Core.Controllers.Api
             _db.BlogPosts.Remove(post);
             _db.Complete();
             return new NoContentResult();
+        }
+
+        Profile GetProfile()
+        {
+            try
+            {
+                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            }
+            catch
+            {
+                RedirectToAction("Login", "Account");
+            }
+            return null;
         }
 
         string GetSlug(string title, int id)
