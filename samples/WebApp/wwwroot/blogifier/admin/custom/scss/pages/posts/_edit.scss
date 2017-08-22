@@ -58,8 +58,14 @@
     }
 
     .dropdown-menu {
-        width: 100%; 
+        width: 100%;
         max-width: 100%;
         min-width: 100%;
+
+        .dropdown-item {
+            font-weight: $font-weight-medium;
+            font-size: .75rem;
+            text-transform: uppercase;
+        }
     }
 }

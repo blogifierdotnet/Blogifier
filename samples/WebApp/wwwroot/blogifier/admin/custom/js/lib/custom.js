@@ -3,7 +3,6 @@ var scrollDiv = document.createElement("div");
 scrollDiv.className = "scrollbar-measure";
 document.body.appendChild(scrollDiv);
 var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-console.warn(scrollbarWidth);
 document.body.removeChild(scrollDiv);
 
 

@@ -14,7 +14,7 @@
     }
 }
 
-
+// btn-group-icon
 .btn-group-icon {
     .btn {
         padding: 0;
@@ -22,7 +22,16 @@
     }
 }
 
+// btn-group
+.btn-group {
+    .btn {
+        &:focus, &.focus {
+            box-shadow: none;
+        }
+    }
+}
 
+// btn-primary
 .btn-primary {
     color: #fff;
     background-color: $color-brand-purple-dark;
@@ -44,19 +53,18 @@
     }
 }
 
-
 .show > .btn-primary.dropdown-toggle {
     background-color: $color-brand-purple-light;
     border-color: $color-brand-purple-light;
 }
 
-
+// btn-link
 .btn-link {
     color: $color-brand-purple-dark;
 
 
     &:focus, &:hover {
         color: $color-brand-purple-light;
-        text-decoration:none;
+        text-decoration: none;
     }
 }
