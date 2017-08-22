@@ -1,17 +1,30 @@
 .dropdown {
-    .dropdown-menu {
-        padding: 0;
-        border:0;
-        overflow:hidden;
-        ul{
-            @include unstyled(ul);
-        }
-    }
-
-
     .dropdown-toggle {
         &::after {
             display: none;
+        }
+    }
+}
+
+.dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+
+    ul {
+        @include unstyled(ul);
+    }
+
+    .dropdown-item {
+        outline: none !important;
+        padding: .5rem 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ededee;
+        }
+
+        &.active, &:active {
+            background-color: $color-brand-purple-dark;
         }
     }
 }
