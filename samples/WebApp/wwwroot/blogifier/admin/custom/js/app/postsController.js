@@ -119,3 +119,8 @@
         editPost: editPost
     }
 }(DataService);
+
+$('.bf-sidebar-posts-list li a').click(function () {
+    $('.bf-sidebar-posts-list a').removeClass('active');
+    $(this).addClass('active');
+});
