@@ -1,23 +1,10 @@
 .bf-posts {
-    .bf-sidebar {
-        min-height: 100%;
-    }
-
     @media (max-width:1023px) {
-        .bf-sidebar {
-            width: 100%;
-            min-width: 100%;
+        .bf-sidebar{ 
+            min-height:100%;
         }
-
         .bf-content {
             display: none;
-        }
-    }
-
-    @media (min-width:1280px) {
-        .bf-sidebar {
-            width: 420px;
-            min-width: 420px;
         }
     }
 }
