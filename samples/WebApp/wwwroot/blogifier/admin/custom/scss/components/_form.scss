@@ -1,1 +1,26 @@
-﻿
+﻿.custom-control-indicator {
+    border: 2px solid rgba(0,0,0,.25);
+    background-color: transparent;
+    width: 1.125rem;
+    height: 1.125rem;
+    top: .125rem;
+}
+
+.bf-sidebar {
+    .custom-control-input:checked ~ .custom-control-indicator {
+        background-color: transparent;
+    }
+
+    .custom-control-input:focus ~ .custom-control-indicator {
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+}
+
+.custom-control-input:checked ~ .custom-control-indicator {
+    background-color: $color-brand-purple-dark;
+    border-color: $color-brand-purple-dark;
+}
+
+.custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $color-brand-purple-dark;
+}
