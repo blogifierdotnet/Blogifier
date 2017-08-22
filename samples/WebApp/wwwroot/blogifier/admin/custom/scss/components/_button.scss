@@ -12,6 +12,12 @@
         padding: 0;
         border-radius: 100%;
     }
+
+    &-outline-light {
+        &:hover, &:active {
+            color: #000;
+        }
+    }
 }
 
 // btn-group-icon
