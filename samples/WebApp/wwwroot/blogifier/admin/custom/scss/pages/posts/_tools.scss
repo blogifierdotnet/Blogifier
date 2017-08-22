@@ -6,13 +6,15 @@
     color: rgba(255, 255, 255, 0.50);
 
     &::before {
-        @include triangle(1.5rem, $color-black-20, up);
+        @include triangle(1.25rem, $color-black-20, up);
         position: absolute;
-        top: -1.5rem;
-        right: 1.75rem;
+        top: -1.25rem;
+        right: 1.875rem;
     }
 
     .bf-sidebar-posts-search {
+        position: relative;
+
         input {
             background: none;
             border: none;
