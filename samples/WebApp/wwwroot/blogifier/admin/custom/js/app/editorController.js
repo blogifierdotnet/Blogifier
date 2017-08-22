@@ -173,7 +173,7 @@
                 btn += '<button class="dropdown-item" onclick="editorController.unpublishPost(); return false;">Unpublish</button>';
                 btn += '<button class="dropdown-item" onclick="editorController.deletePost(); return false;">Delete</button>';
                 btn += '</div></div>';
-                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-default  mr-1 float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
+                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-outline-secondary btn-icon float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
             }
         }
         $('#action-buttons').append(btn);

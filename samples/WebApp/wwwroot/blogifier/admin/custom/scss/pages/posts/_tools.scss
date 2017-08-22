@@ -1,0 +1,56 @@
+.bf-sidebar-posts-tools {
+    background: $color-black-10;
+    position: relative;
+
+    &::before {
+        @include triangle(1.5rem, $color-black-10, up);
+        position: absolute;
+        top: -1.5625rem;
+        right: 1.75rem;
+    }
+
+    .bf-sidebar-posts-search {
+        input {
+            background: none;
+            border: none;
+            border-bottom: 1px solid $color-black-10;
+            color: #fff;
+            padding: 0 2.5rem;
+            height: 3rem;
+            width: 100%;
+            outline: none;
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.25);
+            }
+        }
+    }
+
+    .bf-sidebar-posts-filter {
+        padding: 1.25rem 2.5rem 2rem;
+
+        h5 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            opacity: .3;
+            font-size: .75rem;
+        }
+
+        label {
+            display: block;
+            font-size: .875rem;
+            font-weight: 300;
+            margin-bottom: .25rem;
+            width: 50%;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .custom-control-indicator {
+            top: .125rem;
+        }
+    }
+}

@@ -1,10 +1,6 @@
 body {
-    background: #fff;
     font-family: $font-family-base;
-    font-weight: 400;
-    font-size: 1rem;
     overflow-y: scroll;
-    color: #333;
     cursor: default;
 }
 
@@ -36,14 +32,15 @@ body {
         }
 
         .bf-sidebar {
-            width: 360px;
-            min-width: 360px;
+            width: 420px;
+            min-width: 420px;
         }
     }
 }
 
 //
 .container {
-    width: 1024px;
+    width: 100%;
+    max-width: 64rem;
     margin: 0 auto;
 }
