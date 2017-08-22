@@ -1,3 +1,12 @@
+// Create the measurement node
+var scrollDiv = document.createElement("div");
+scrollDiv.className = "scrollbar-measure";
+document.body.appendChild(scrollDiv);
+var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+console.warn(scrollbarWidth);
+document.body.removeChild(scrollDiv);
+
+
 $(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
@@ -18,4 +27,18 @@ $(function () {
         container: 'body'
     });
 
+});
+
+
+// fixed elements on modal
+$('.modal').on('show.bs.modal', function () {
+    $(".bf-nav").css("padding-right", scrollbarWidth);
+    $(".mce-toolbar-grp").css({
+        "left": -scrollbarWidth,
+        "padding-left": scrollbarWidth
+    });
+});
+
+$('.modal').on('hidden.bs.modal', function () {
+    $(".bf-nav, .mce-toolbar-grp").attr("style", "");
 });
