@@ -31,26 +31,28 @@
         <!-- SEARCH & FILTERS -->
         <div class="bf-sidebar-posts-tools collapse" id="sidebarTools">
             <form class="bf-sidebar-posts-search" action="~/admin" method="get">
-                <input type="search" name="search" placeholder="search..." autocomplete="off" />
+                <input type="search" name="search" placeholder="Search..." autocomplete="off" />
+                <i class="fa fa-search"></i>
             </form>
             <form class="bf-sidebar-posts-filter" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
-                <h5>Filter by status:</h5>
-                @foreach (var ftr in Model.StatusFilter)
-                {
-                    var ftrChecked = ftr.Selected ? "checked" : "";
-                        <label class="custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
-                }
-
-                <h5>Filter by categories:</h5>
-                <div class="row">
-                    @foreach (var cat in Model.CategoryFilter)
+                <div class="posts-filter-category">
+                    <button class="btn-unstyled" type="button" data-toggle="collapse" href="#postsFilterCategory" aria-expanded="false" aria-controls="postsFilterCategory">Categories <i class="fa fa-angle-down"></i></button>
+                    <div class="collapse" id="postsFilterCategory">
+                        @foreach (var cat in Model.CategoryFilter)
+                        {
+                            var isChecked = cat.Selected ? "checked" : "";
+                                <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                        }
+                    </div>
+                </div>
+                <div class="posts-filter-status d-flex flex-row">
+                    @foreach (var ftr in Model.StatusFilter)
                     {
-                        var isChecked = cat.Selected ? "checked" : "";
-                        <div class="col-6">
-                            <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                        </div>
+                        var ftrChecked = ftr.Selected ? "checked" : "";
+                        <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span>@ftr.Text</span></label>
                     }
                 </div>
+
             </form>
         </div>
         <!--/SEARCH & FILTERS -->

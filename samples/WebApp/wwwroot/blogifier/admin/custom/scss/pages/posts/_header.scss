@@ -1,12 +1,11 @@
 .bf-sidebar-posts-header {
     padding: 1rem 5rem;
-    border-bottom: 1px solid $color-black-10;
     position: relative;
 
     .list-select,
     .list-filter {
         position: absolute;
-        top: 0;
+        top: 0; 
         width: 5rem;
         height: 100%;
         display: flex;

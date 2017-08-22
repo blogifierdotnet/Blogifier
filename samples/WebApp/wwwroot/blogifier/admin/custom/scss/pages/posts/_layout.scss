@@ -1,10 +1,12 @@
 .bf-posts {
     @media (max-width:1023px) {
-        .bf-sidebar{ 
-            min-height:100%;
+        .bf-sidebar {
+            min-height: 100%;
         }
+
         .bf-content {
             display: none;
         }
     }
 }
+ 
