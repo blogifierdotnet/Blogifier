@@ -14,14 +14,14 @@
 
     .bf-sidebar-posts-search {
         position: relative;
+        border-bottom: 1px solid $color-black-5;
 
         input {
             background: none;
             border: none;
-            border-bottom: 1px solid $color-black-5;
             color: #fff;
             padding: 0 2rem;
-            height: 3rem;
+            height: 2.75rem;
             width: 100%;
             outline: none;
 
@@ -33,7 +33,7 @@
         .fa {
             position: absolute;
             right: 2.25rem;
-            top: 1.125rem;
+            top: 1rem;
             font-size: .75rem;
         }
     }
@@ -93,6 +93,11 @@
 
         label {
             display: block;
+            margin-bottom: .125rem;
+        }
+
+        .custom-control-indicator {
+            top: .125rem;
         }
     }
 }
