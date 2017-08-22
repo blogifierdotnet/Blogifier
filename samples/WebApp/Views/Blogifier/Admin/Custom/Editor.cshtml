@@ -20,7 +20,7 @@
             <div class="bf-editor-container">
                 <div class="btn-group btn-group-icon float-right">
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalFilePicker" title="Change The Cover"><i class="fa fa-photo"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#fileManager" title="Change The Cover"><i class="fa fa-photo"></i></button>
                     @*<div id="post-image" class="admin-editor-cover"></div>*@
                 </div>
                 <span id="action-buttons"></span>
@@ -80,7 +80,7 @@
         <input type="submit" value="Upload Multiple" />
     </form>
 </div>
-@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script>
         var textarea = document.getElementById("txtPostTitle");

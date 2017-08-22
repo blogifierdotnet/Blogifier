@@ -8,11 +8,7 @@
     var curPost = 0;
 }
 <div class="bf bf-posts">
-
-
     <div class="bf-sidebar">
-
-
         <!-- SIDEBAR HEADER -->
         <div class="bf-sidebar-posts-header">
             <label class="list-select custom-control custom-checkbox">
@@ -41,7 +37,7 @@
                         @foreach (var cat in Model.CategoryFilter)
                         {
                             var isChecked = cat.Selected ? "checked" : "";
-                                <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                            <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
                         }
                     </div>
                 </div>
@@ -89,13 +85,8 @@
             </ul>
         }
         <!--/PAGINATION -->
-
-
     </div>
-
-
     <div class="bf-content bf-content-posts">
-
         <!-- PREVIEW POST (This section will change for each post) -->
         <div class="bf-content-post-cover" style="background-image:url(/embedded/lib/img/cover.png);">
             <div class="bf-content-post-cover-body">
@@ -110,18 +101,14 @@
                     <button type="button" id="btnPublish" class="btn btn-outline-secondary" onclick="postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                     <button type="button" id="btnUnpublish" class="btn btn-outline-secondary" onclick="postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
                 </div>
-                <button class="btn btn-outline-secondary btn-icon-rounded float-right" data-toggle="modal" data-target="#modalFilePicker" onclick="" title="Change the cover"><i class="fa fa-photo"></i></button>
+                <button class="btn btn-outline-secondary btn-icon-rounded float-right" data-toggle="modal" data-target="#fileManager" onclick="" title="Change the cover"><i class="fa fa-photo"></i></button>
             </div>
         </div>
         <div class="bf-content-post-text"></div>
         <!--/PREVIEW POST-->
-
     </div>
-
-
 </div>
-
-@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>
     <script>

@@ -1,0 +1,12 @@
+.modal {
+    .modal-content {
+        border: 0;
+        overflow: hidden;
+    }
+}
+
+.modal-backdrop {
+    &.show {
+        opacity: .75;
+    }
+}

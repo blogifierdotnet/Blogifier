@@ -36,7 +36,7 @@
         <div class="input-group col-md-9">
             <input type="text" asp-for="Image" class="form-control" readonly />
             <span class="input-group-btn">
-                <button type="button" data-toggle="modal" data-target="#modalFilePicker"  class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
+                <button type="button" data-toggle="modal" data-target="#fileManager" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
             </span>
         </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="input-group col-md-9">
             <input type="text" asp-for="Logo" class="form-control" readonly />
             <span class="input-group-btn">
-                <button type="button" data-toggle="modal" data-target="#modalFilePicker"  class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
+                <button type="button" data-toggle="modal" data-target="#fileManager" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
             </span>
         </div>
     </div>
@@ -62,7 +62,7 @@
         <input type="submit" value="Upload Multiple" />
     </form>
 </div>
-@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FilePicker.cshtml")
+@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {

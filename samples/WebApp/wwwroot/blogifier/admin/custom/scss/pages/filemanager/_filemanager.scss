@@ -1,0 +1,118 @@
+.bf-modal-filemanager {
+    .modal-dialog {
+        width: 100%;
+        max-width: 1024px;
+    }
+}
+
+// filemanager header
+.bf-filemanager-header {
+    background: $color-brand-purple-dark;
+    padding: 2rem;
+    padding-left: 0;
+
+    > .custom-control {
+        width: 5rem;
+        height: 2.5rem;
+        margin: 0;
+        padding: 0;
+
+        .custom-control-indicator {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%)
+        }
+    }
+
+    .dropdown-menu {
+        width: 12rem;
+
+        .form-control {
+            border-width: 0;
+            border-bottom-width: 1px;
+            height: 2.5rem;
+            border-radius: 0;
+        }
+
+        .custom-control {
+            margin: 0;
+            padding-left: 2rem;
+        }
+
+        .custom-control-indicator {
+            top: .6875rem;
+            left: .5rem;
+        }
+    }
+}
+
+// filemanager body
+
+.bf-filemanager-body {
+    padding: 1rem;
+
+    .col-sm-6 {
+        padding: 1rem;
+    }
+
+    .item {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 3px;
+        display: block;
+        cursor: pointer;
+
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.39);
+            z-index: 1;
+        }
+    }
+
+    .item-img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        min-height: 100%;
+        min-width: 100%;
+        max-width: 200%;
+        max-height: 100%;
+    }
+
+    .item-name {
+        position: absolute;
+        bottom: 0;
+        color: #fff;
+        z-index: 2;
+        margin: 0;
+        display: block;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.37);
+        padding: .5625rem 1rem .5rem 2.5rem;
+
+        .custom-control-indicator {
+            top: .75rem;
+            left: 1rem;
+        }
+    }
+}
+
+// filemanager footer
+.bf-filemanager-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #eee;
+
+    .fa {
+        font-size: 1.375rem;
+        display: block;
+        line-height: 2.375rem;
+    }
+}

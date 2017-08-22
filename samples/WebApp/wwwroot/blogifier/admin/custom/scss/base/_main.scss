@@ -18,7 +18,7 @@ body {
         @include unstyled(ul);
     }
 
-    @media (min-width:1024px) {
+    @media (min-width:768px) {
         display: table;
 
         .bf-sidebar,
