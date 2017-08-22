@@ -18,7 +18,7 @@ body {
         @include unstyled(ul);
     }
 
-    @media (min-width:768px) {
+    @media (min-width:800px) {
         display: table;
 
         .bf-sidebar,
@@ -33,8 +33,16 @@ body {
         }
 
         .bf-sidebar {
-            width: 420px;
-            min-width: 420px;
+            width: 360px;
+            min-width: 360px;
+        }
+    }
+
+
+    @media (min-width:1280px) {
+        .bf-sidebar {
+            width: 400px;
+            min-width: 400px;
         }
     }
 }
