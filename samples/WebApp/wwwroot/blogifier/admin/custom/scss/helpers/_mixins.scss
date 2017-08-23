@@ -113,3 +113,11 @@
         border-right-color: $color;
     }
 }
+
+
+//
+@mixin ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

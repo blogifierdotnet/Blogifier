@@ -5,7 +5,7 @@
         flex: 1;
         background: $color-black-20;
         color: #fff;
-        line-height: 2.75rem;
+        line-height: 3rem;
         border-right: 1px solid $color-black-10;
         cursor: pointer;
 
@@ -49,9 +49,12 @@
         .item-link {
             color: rgba(255, 255, 255, 0.50);
             display: block;
-            padding: 1rem 1rem 1rem 5rem;
+            padding: 1.25rem 2rem 1.25rem 5rem;
             cursor: pointer;
             line-height: 1.25;
+            font-size: 0.9375rem;
+            max-width: 25rem;
+            @include ellipsis;
 
             &.active {
                 background: $color-black-5;
@@ -61,7 +64,7 @@
 
         &:hover {
             .item-link {
-                color: #fff;
+                color: rgba(255, 255, 255, 0.75);
             }
         }
     }
