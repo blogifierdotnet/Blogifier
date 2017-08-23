@@ -1,5 +1,26 @@
+.btn-group-actions {
+    display: none;
+
+    button {
+        flex: 1;
+        background: $color-black-20;
+        color: #fff;
+        line-height: 2.75rem;
+        border-right: 1px solid $color-black-10;
+        cursor: pointer;
+
+        &:last-child {
+            border-right: 0;
+        }
+
+        &:hover {
+            background: $color-black-25;
+        }
+    }
+}
 
 .bf-sidebar-posts-list {
+
     li {
         border-bottom: 1px solid $color-black-5;
         position: relative;

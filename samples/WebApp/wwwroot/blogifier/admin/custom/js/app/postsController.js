@@ -61,7 +61,7 @@
         else {
             window.open('blog/' + curSlug);
         }
-        
+
         return false;
     }
     function showPostCallback(data) {
@@ -124,3 +124,37 @@ $('.bf-sidebar-posts-list li a').click(function () {
     $('.bf-sidebar-posts-list a').removeClass('active');
     $(this).addClass('active');
 });
+
+
+var itemCheck = $('.item-checkbox');
+var firstItemCheck = itemCheck.first();
+var btnAction = '.btn-group-actions';
+var sidebarTools = '#sidebarTools';
+
+// check all
+$(firstItemCheck).on('change', function () {
+    $(itemCheck).prop('checked', this.checked);
+});
+
+// uncheck "check all" when one item is unchecked
+$(itemCheck).not(firstItemCheck).on('change', function () {
+    if ($(this).not(':checked')) {
+        $(firstItemCheck).prop('checked', false);
+    }
+});
+
+$(document).on('change', itemCheck, function () {
+    if ($(itemCheck).is(':checked')) {
+        $(btnAction).slideDown();
+        // hide filters
+        $(sidebarTools).collapse('hide');
+    } else {
+        $(btnAction).slideUp();
+    }
+});
+
+// uncheck all when filters is active
+$(sidebarTools).on('show.bs.collapse', function () {
+    $(itemCheck).prop('checked', false);
+    $(btnAction).slideUp();
+})

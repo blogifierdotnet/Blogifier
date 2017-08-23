@@ -5,7 +5,6 @@ document.body.appendChild(scrollDiv);
 var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
 document.body.removeChild(scrollDiv);
 
-
 $(".admin-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
@@ -26,8 +25,11 @@ $(function () {
         container: 'body'
     });
 
+    $(".btn-group-actions button").tooltip({
+        placement: 'bottom',
+        container: 'body'
+    });
 });
-
 
 // fixed elements on modal
 $('.modal').on('show.bs.modal', function () {
