@@ -59,6 +59,15 @@
             &.active {
                 background: $color-black-5;
                 color: #fff;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+
+            &:focus {
+                outline: none;
+                color: #fff;
             }
         }
 
@@ -83,6 +92,60 @@
             .item-link-desktop {
                 display: none;
             }
+        }
+    }
+}
+
+
+.bf-sidebar-pagination {
+    border-bottom: 1px solid $color-black-5;
+    position: relative;
+
+    a {
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.50);
+        display: block;
+        padding: 1.25rem 2rem 1.25rem 5rem;
+        cursor: pointer;
+        line-height: 1.25;
+        font-size: 0.875rem;
+
+        &:focus {
+            outline: none;
+            color: #fff;
+        }
+
+        span {
+            font-size: .75rem;
+            position: relative;
+            top: -1px;
+        }
+
+        &:hover {
+            color: #fff;
+
+            i {
+                color: #fff;
+            }
+        }
+    }
+
+    i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4.75rem;
+        height: 100%;
+        display: block;
+        color: $color-black-35;
+
+        &:before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 1.5rem;
+            margin-top: -.0625rem;
         }
     }
 }

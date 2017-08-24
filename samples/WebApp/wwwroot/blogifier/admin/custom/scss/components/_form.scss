@@ -8,11 +8,13 @@
 
 .bf-sidebar {
     .custom-control-input:checked ~ .custom-control-indicator {
-        background-color: transparent;
+        border-color: $color-black-5;
+        background-color: $color-black-20;
     }
 
     .custom-control-input:focus ~ .custom-control-indicator {
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        box-shadow: none;
+        border-color: $color-white-10;
     }
 }
 
