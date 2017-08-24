@@ -27,10 +27,11 @@
 
     .list-filter {
         right: 0;
-        opacity: .75;
+        color: $cl-black-40;
+        font-size: 1.25rem;
 
         &[aria-expanded="true"] {
-            opacity: 1;
+            color: #fff;
         }
     }
 
@@ -39,7 +40,7 @@
 
         .list-filter {
             right: 4.75rem;
-            border-right: 1px solid $color-black-20;
+            border-right: 1px solid $cl-black-20;
         }
     }
 
@@ -49,8 +50,8 @@
         line-height: 2.75rem;
         background: #fff;
         border-color: #fff;
-        color: $color-brand-purple-dark;
-        font-weight: $font-weight-bold;
+        color: $cl-bf;
+        font-weight: $fw-bold;
         font-size: 1rem;
     }
 

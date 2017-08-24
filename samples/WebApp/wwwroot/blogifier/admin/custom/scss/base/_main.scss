@@ -9,9 +9,9 @@ body {
     height: 100%;
 
     .bf-sidebar {
-        background: $color-brand-purple-dark;
+        background: $cl-bf;
         color: #fff;
-        /*@include linear-gradient($color-brand-purple-light, $color-brand-purple-dark, 1);*/
+        /*@include linear-gradient($cl-bf-light, $cl-bf, 1);*/
     }
 
     ul {

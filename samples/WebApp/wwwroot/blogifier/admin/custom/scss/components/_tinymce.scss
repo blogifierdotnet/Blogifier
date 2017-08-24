@@ -133,7 +133,7 @@ div.mce-edit-area {
 }
 
 .mce-grid td.mce-grid-cell div:focus {
-    border-color: $color-brand-purple-dark
+    border-color: $cl-bf
 }
 
 .mce-grid td.mce-grid-cell div[disabled] {
@@ -151,7 +151,7 @@ div.mce-edit-area {
 }
 
 .mce-grid a:hover, .mce-grid a:focus {
-    border-color: $color-brand-purple-dark
+    border-color: $cl-bf
 }
 
 .mce-grid-border {
@@ -165,8 +165,8 @@ div.mce-edit-area {
 }
 
 .mce-grid-border a:hover, .mce-grid-border a.mce-active {
-    border-color: $color-brand-purple-dark;
-    background: $color-brand-purple-dark
+    border-color: $cl-bf;
+    background: $cl-bf
 }
 
 .mce-text-center {
@@ -328,11 +328,11 @@ div.mce-tinymce-inline {
 }
 
 .mce-croprect-handle:focus {
-    border-color: $color-brand-purple-dark
+    border-color: $cl-bf
 }
 
 .mce-croprect-handle-move:focus {
-    outline: 1px solid $color-brand-purple-dark
+    outline: 1px solid $cl-bf
 }
 
 .mce-imagepanel {
@@ -1164,11 +1164,11 @@ body .mce-abs-layout-item, .mce-abs-end {
     color: #fff;
     border: 1px solid transparent;
     border-color: transparent;
-    background-color: $color-brand-purple-dark;
+    background-color: $cl-bf;
 }
 
 .mce-primary:hover, .mce-primary:focus {
-    background-color: $color-brand-purple-light;
+    background-color: $cl-bf-light;
     border-color: transparent
 }
 
@@ -1180,7 +1180,7 @@ body .mce-abs-layout-item, .mce-abs-end {
 }
 
 .mce-primary.mce-active, .mce-primary.mce-active:hover, .mce-primary:not(.mce-disabled):active {
-    background-color: $color-brand-purple-light;
+    background-color: $cl-bf-light;
 }
 
 .mce-primary button, .mce-primary button i {
@@ -1942,7 +1942,7 @@ i.mce-i-checkbox {
 }
 
 .mce-menu-item-normal.mce-active {
-    background-color: $color-brand-purple-light
+    background-color: $cl-bf-light
 }
 
 .mce-menu-item-preview.mce-active {
@@ -1964,7 +1964,7 @@ i.mce-i-checkbox {
 .mce-menu-item:hover, .mce-menu-item.mce-selected, .mce-menu-item:focus {
     text-decoration: none;
     color: white;
-    background-color: $color-brand-purple-dark;
+    background-color: $cl-bf;
 }
 
 .mce-menu-item-link {

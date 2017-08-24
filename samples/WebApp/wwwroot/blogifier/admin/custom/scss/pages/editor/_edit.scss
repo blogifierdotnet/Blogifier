@@ -46,7 +46,7 @@
         color: #fff;
         position: relative;
         z-index: 1;
-        font-weight: $font-weight-normal;
+        font-weight: $fw-normal;
     }
 }
 
@@ -63,7 +63,7 @@
         min-width: 100%;
 
         .dropdown-item {
-            font-weight: $font-weight-medium;
+            font-weight: $fw-medium;
             font-size: .75rem;
             text-transform: uppercase;
         }

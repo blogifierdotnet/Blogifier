@@ -1,42 +1,36 @@
-// color
-$color-brand-purple-dark: #532FAC;
-$color-brand-purple-light: #6A3CBC;
+// color = cl
+$cl-bf: #5731b3;
+$cl-bf-light: #6A3CBC;
 
-$color-brand-gray-dark: #8190af;
-$color-brand-gray-light: #95a3bf;
-$color-brand-gray-lighter: #d0dcee;
+$cl-black-5: rgba(0, 0, 0, 0.05);
+$cl-black-10: rgba(0, 0, 0, 0.10);
+$cl-black-15: rgba(0, 0, 0, 0.15);
+$cl-black-20: rgba(0, 0, 0, 0.20);
+$cl-black-25: rgba(0, 0, 0, 0.25);
+$cl-black-30: rgba(0, 0, 0, 0.30);
+$cl-black-35: rgba(0, 0, 0, 0.30);
+$cl-black-40: rgba(0, 0, 0, 0.30);
 
-$color-brand-white: #fff;
-
-$color-black-5: rgba(0, 0, 0, 0.05);
-$color-black-10: rgba(0, 0, 0, 0.10);
-$color-black-15: rgba(0, 0, 0, 0.15);
-$color-black-20: rgba(0, 0, 0, 0.20);
-$color-black-25: rgba(0, 0, 0, 0.25);
-$color-black-30: rgba(0, 0, 0, 0.30);
-$color-black-35: rgba(0, 0, 0, 0.30);
-$color-black-40: rgba(0, 0, 0, 0.30);
-
-$color-white-5: rgba(255, 255, 255, 0.05);
-$color-white-10: rgba(255, 255, 255, 0.10);
-$color-white-15: rgba(255, 255, 255, 0.15);
-$color-white-20: rgba(255, 255, 255, 0.20);
-$color-white-25: rgba(255, 255, 255, 0.25);
-$color-white-30: rgba(255, 255, 255, 0.30);
-$color-white-35: rgba(255, 255, 255, 0.30);
-$color-white-40: rgba(255, 255, 255, 0.30);
+$cl-white-5: rgba(255, 255, 255, 0.05);
+$cl-white-10: rgba(255, 255, 255, 0.10);
+$cl-white-15: rgba(255, 255, 255, 0.15);
+$cl-white-20: rgba(255, 255, 255, 0.20);
+$cl-white-25: rgba(255, 255, 255, 0.25);
+$cl-white-30: rgba(255, 255, 255, 0.30);
+$cl-white-35: rgba(255, 255, 255, 0.30);
+$cl-white-40: rgba(255, 255, 255, 0.30);
 
 // font-family
 $font-family: "Roboto";
 $font-family-base: $font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
 // font-weight
-$font-weight-thin: 100;
-$font-weight-light: 300;
-$font-weight-normal: 400;
-$font-weight-medium: 500;
-$font-weight-bold: 700;
-$font-weight-black: 900;
+$fw-thin: 100;
+$fw-light: 300;
+$fw-normal: 400;
+$fw-medium: 500;
+$fw-bold: 700;
+$fw-black: 900;
 
 // border-radius
 $radius: 100%;

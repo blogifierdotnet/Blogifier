@@ -3,10 +3,10 @@
 
     button {
         flex: 1;
-        background: $color-black-20;
+        background: $cl-black-20;
         color: #fff;
         line-height: 3rem;
-        border-right: 1px solid $color-black-10;
+        border-right: 1px solid $cl-black-10;
         cursor: pointer;
 
         &:last-child {
@@ -14,7 +14,7 @@
         }
 
         &:hover {
-            background: $color-black-25;
+            background: $cl-black-25;
         }
     }
 }
@@ -22,11 +22,11 @@
 .bf-sidebar-posts-list {
 
     li {
-        border-bottom: 1px solid $color-black-5;
+        border-bottom: 1px solid $cl-black-5;
         position: relative;
 
         &:first-child {
-            border-top: 1px solid $color-black-5;
+            border-top: 1px solid $cl-black-5;
         }
 
         .item-select {
@@ -57,7 +57,7 @@
             @include ellipsis;
 
             &.active {
-                background: $color-black-5;
+                background: $cl-black-5;
                 color: #fff;
 
                 &:hover {
@@ -98,7 +98,7 @@
 
 
 .bf-sidebar-pagination {
-    border-bottom: 1px solid $color-black-5;
+    border-bottom: 1px solid $cl-black-5;
     position: relative;
 
     a {
@@ -137,7 +137,7 @@
         width: 4.75rem;
         height: 100%;
         display: block;
-        color: $color-black-35;
+        color: $cl-black-40;
 
         &:before {
             position: absolute;

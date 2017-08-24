@@ -60,7 +60,7 @@
     padding: 3rem;
     font-size: 1.125rem;
     color: #000;
-    font-weight: $font-weight-normal;
+    font-weight: $fw-normal;
     line-height: 1.6;
 
     ul, ol {
@@ -82,6 +82,6 @@
 
     h1, h2, h3, h4, h5, h6 {
         margin: 2rem 0 .5rem;
-        font-weight: $font-weight-bold;
+        font-weight: $fw-bold;
     }
 }

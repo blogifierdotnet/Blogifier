@@ -1,5 +1,5 @@
 ﻿.custom-control-indicator {
-    border: 2px solid $color-black-20;
+    border: 2px solid $cl-black-30;
     background-color: transparent;
     width: 1.125rem;
     height: 1.125rem;
@@ -8,21 +8,21 @@
 
 .bf-sidebar {
     .custom-control-input:checked ~ .custom-control-indicator {
-        border-color: $color-black-5;
-        background-color: $color-black-20;
+        border-color: transparent;
+        background-color: $cl-black-25;
     }
 
     .custom-control-input:focus ~ .custom-control-indicator {
         box-shadow: none;
-        border-color: $color-white-10;
+        border-color: $cl-white-25;
     }
 }
 
 .custom-control-input:checked ~ .custom-control-indicator {
-    background-color: $color-brand-purple-dark;
-    border-color: $color-brand-purple-dark;
+    background-color: $cl-bf;
+    border-color: $cl-bf;
 }
 
 .custom-control-input:focus ~ .custom-control-indicator {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $color-brand-purple-dark;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $cl-bf;
 }

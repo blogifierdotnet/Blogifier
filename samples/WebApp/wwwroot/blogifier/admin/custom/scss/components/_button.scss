@@ -3,7 +3,7 @@
     padding: 0 2rem;
     height: 2.5rem;
     line-height: 2.5rem;
-    font-weight: $font-weight-medium;
+    font-weight: $fw-medium;
     font-size: .875rem;
     text-transform: uppercase;
 
@@ -46,37 +46,37 @@
 // btn-primary
 .btn-primary {
     color: #fff;
-    background-color: $color-brand-purple-dark;
-    border-color: $color-brand-purple-dark;
+    background-color: $cl-bf;
+    border-color: $cl-bf;
 
     &:hover, &:active, &.active {
         color: #fff;
-        background-color: $color-brand-purple-light;
-        border-color: $color-brand-purple-light;
+        background-color: $cl-bf-light;
+        border-color: $cl-bf-light;
     }
 
     &:focus, &.focus {
-        box-shadow: 0 0 0 3px rgba($color-brand-purple-dark, .25);
+        box-shadow: 0 0 0 3px rgba($cl-bf, .25);
     }
 
     &.disabled, &:disabled {
-        background-color: $color-brand-purple-dark;
-        border-color: $color-brand-purple-dark;
+        background-color: $cl-bf;
+        border-color: $cl-bf;
     }
 }
 
 .show > .btn-primary.dropdown-toggle {
-    background-color: $color-brand-purple-light;
-    border-color: $color-brand-purple-light;
+    background-color: $cl-bf-light;
+    border-color: $cl-bf-light;
 }
 
 // btn-link
 .btn-link {
-    color: $color-brand-purple-dark;
+    color: $cl-bf;
 
 
     &:focus, &:hover {
-        color: $color-brand-purple-light;
+        color: $cl-bf-light;
         text-decoration: none;
     }
 }

@@ -21,7 +21,7 @@
     }
 
     .bf-nav-content {
-        background-color: $color-brand-purple-dark;
+        background-color: $cl-bf;
         width: 16rem;
 
         .bf-nav-cover {
@@ -69,7 +69,7 @@
 
         li {
             flex: 1;
-            border-right: 1px solid $color-black-10;
+            border-right: 1px solid $cl-black-10;
 
             &:last-child {
                 border: 0;
@@ -85,7 +85,7 @@
             line-height: 3rem;
 
             &:hover {
-                background-color: $color-black-10;
+                background-color: $cl-black-10;
                 color: #fff;
 
                 img {

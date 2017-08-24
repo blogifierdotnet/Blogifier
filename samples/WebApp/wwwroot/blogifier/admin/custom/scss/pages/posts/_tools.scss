@@ -1,12 +1,12 @@
 .bf-sidebar-posts-tools {
     margin-top: -1px;
-    background: $color-black-20;
+    background: $cl-black-20;
     position: relative;
     font-size: .875rem;
     color: rgba(255, 255, 255, 0.50);
 
     &::before {
-        @include triangle(1.25rem, $color-black-20, up);
+        @include triangle(1.25rem, $cl-black-20, up);
         position: absolute;
         top: -1.25rem;
         right: 1.875rem;
@@ -14,7 +14,7 @@
 
     .bf-sidebar-posts-search {
         position: relative;
-        border-bottom: 1px solid $color-black-5;
+        border-bottom: 1px solid $cl-black-5;
 
         input {
             background: none;
@@ -61,13 +61,13 @@
 
         input {
             &:checked + span {
-                background: $color-black-5;
+                background: $cl-black-5;
             }
         }
     }
 
     .posts-filter-category {
-        border-bottom: 1px solid $color-black-5;
+        border-bottom: 1px solid $cl-black-5;
 
         .btn-unstyled {
             width: 100%;
