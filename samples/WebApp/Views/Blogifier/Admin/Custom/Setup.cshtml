@@ -1,36 +1,34 @@
 @model Blogifier.Core.Data.Models.AdminSetupModel
 @using Blogifier.Core.Common
 @{
-    Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Basic.cshtml";
+    Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Setup.cshtml";
 }
-<div class="admin-setup">
-    <!-- if we don't need the form tag, we have to rename it to div tag -->
-    <form method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true" class="admin-setup-form">
-        <h2 class="admin-setup-title">Setup Your Blog</h2>
+<form class="bf-setup-form" method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true">
+    <div class="bf-setup-header">
+        <h2 class="bf-setup-title">Setup Your Blog!</h2>
+        <p class="bf-setup-info">You can edit this information anytime from settings</p>
+    </div>
+    <div class="bf-setup-body">
         <div class="form-group">
-            <label>Author Name</label>
-            <input type="text" asp-for="AuthorName" autocomplete="off" class="form-control" />
+            <input type="text" asp-for="AuthorName" placeholder="Author Name" autocomplete="off" class="form-control form-control-lg" />
             <span class="admin-setup-url"></span>
             <span asp-validation-for="AuthorName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label>Author Email</label>
-            <input type="email" asp-for="AuthorEmail" class="form-control" />
+            <input type="email" asp-for="AuthorEmail" placeholder="Author Email" class="form-control form-control-lg" />
             <span asp-validation-for="AuthorEmail" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label>Blog Title</label>
-            <input type="text" asp-for="Title" class="form-control" />
+            <input type="text" asp-for="Title" placeholder="Blog Title" class="form-control form-control-lg" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label>Blog Description</label>
-            <input type="text" asp-for="Description" class="form-control" />
+            <input type="text" asp-for="Description" placeholder="Blog Description" class="form-control form-control-lg" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-black btn-lg btn-block">Continue</button>
-    </form>
-</div>
+        <button type="submit" class="btn btn-light btn-lg btn-block btn-rounded">Continue</button>
+    </div>
+</form>
 @section Scripts{
     <script>document.getElementById('AuthorName').focus()</script>
 }

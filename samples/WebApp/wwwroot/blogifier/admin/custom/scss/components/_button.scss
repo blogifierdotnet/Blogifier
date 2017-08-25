@@ -29,10 +29,11 @@
         height: 3.5rem;
         line-height: 3.5rem;
         padding: 0 3rem;
-        font-size:1.25rem;
+        font-size: 1.25rem;
     }
+
     &-rounded {
-        border-radius:3.5rem;
+        border-radius: 3.5rem;
     }
 }
 
@@ -118,6 +119,12 @@
     color: #fff;
     background-color: $cl-bf;
     border-color: $cl-bf
+}
+
+
+// btn-light
+.btn-light {
+    background: #fff;
 }
 
 // btn-link

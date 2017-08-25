@@ -1,9 +1,31 @@
-﻿.custom-control-indicator {
+﻿// form-control
+.form-control {
+    border: 2px solid $cl-black-10;
+    background: none;
+
+    &:focus {
+        border-color: $cl-black-25;
+        background: none;
+    }
+}
+
+
+// custom control
+.custom-control-indicator {
     border: 2px solid $cl-black-30;
     background-color: transparent;
     width: 1.125rem;
     height: 1.125rem;
     top: .125rem;
+}
+
+.custom-control-input:checked ~ .custom-control-indicator {
+    background-color: $cl-bf;
+    border-color: $cl-bf;
+}
+
+.custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $cl-bf;
 }
 
 .bf-sidebar {
@@ -16,13 +38,4 @@
         box-shadow: none;
         border-color: $cl-white-25;
     }
-}
-
-.custom-control-input:checked ~ .custom-control-indicator {
-    background-color: $cl-bf;
-    border-color: $cl-bf;
-}
-
-.custom-control-input:focus ~ .custom-control-indicator {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 3px $cl-bf;
 }
