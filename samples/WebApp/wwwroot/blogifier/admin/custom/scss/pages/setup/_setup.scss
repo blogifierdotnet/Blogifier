@@ -4,7 +4,8 @@
     display: flex;
     height: 100%;
     padding: 4rem 2rem;
-
+    overflow-y: auto;
+    // form
     &-header {
         font-weight: $fw-thin;
         text-align: center;
@@ -49,5 +50,32 @@
         &::placeholder {
             color: $cl-white-30;
         }
+    }
+    // logo
+    &-logo {
+        background-color: $cl-bf;
+        background-image: url('/embedded/lib/img/logo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        animation: ease-in setup-logo forwards .5s 1s;
+    }
+}
+
+
+@keyframes setup-logo {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(.75);
+        visibility: hidden;
     }
 }
