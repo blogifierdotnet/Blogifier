@@ -107,6 +107,13 @@
         <!--/PREVIEW POST-->
     </div>
 </div>
+<div class="bf-posts-empty">
+    <div class="bf-posts-empty-body">
+        <h2>Nothing here,</h2>
+        <h1>Let's write a new post!</h1>
+        <a href="/admin/editor/0" class="btn btn-lg btn-light btn-rounded">New Post</a>
+    </div>
+</div>
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>
@@ -118,3 +125,4 @@
         $('.bf-sidebar-posts-list a:first').addClass('active');
     </script>
 }
+
