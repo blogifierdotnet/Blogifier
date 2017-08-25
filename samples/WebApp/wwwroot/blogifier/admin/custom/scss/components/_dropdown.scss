@@ -9,7 +9,7 @@
 .dropdown-menu {
     padding: 0;
     overflow: hidden;
-    box-shadow: 0 0 1rem $cl-black-20;
+    box-shadow: 0 0 1rem $cl-black-25;
     border: 0;
 
     ul {
@@ -17,7 +17,7 @@
     }
 
     li {
-        border-bottom: 1px solid #ededee;
+        border-bottom: 1px solid #f5f5f5;
 
         &:last-child {
             border-bottom: 0;
@@ -25,16 +25,29 @@
     }
 
     .dropdown-item {
+        padding: .75rem 1rem;
+        text-transform: uppercase;
+        font-size: .75rem;
+        font-weight: 700;
         outline: none !important;
-        padding: .5rem 1.5rem;
         cursor: pointer;
 
         &:hover {
-            background-color: #ededee;
+            background-color: #f5f5f5;
         }
 
         &.active, &:active {
             background-color: $cl-bf;
+        }
+
+        .fa {
+            font-size: .875rem;
+            margin-right: 1rem;
+        }
+
+        img {
+            width: .75rem;
+            margin-right: 1rem;
         }
     }
 }
