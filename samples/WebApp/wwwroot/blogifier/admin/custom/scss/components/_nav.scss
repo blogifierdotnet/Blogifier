@@ -11,6 +11,8 @@
         width: 2.75rem;
         height: 2.75rem;
         cursor: pointer;
+        background: $cl-bf;
+        @include border-radius($radius);
 
         img {
             display: block;
