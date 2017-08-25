@@ -46,13 +46,10 @@
             font-weight: 300;
             width: 70%;
         }
-
-        .btn-group {
-            margin-right: 1rem;
+        .btn-edit,
+            .btn-view {
+            min-width:100px;
         }
-    }
-
-    .btn-conten-post-action {
     }
 }
 

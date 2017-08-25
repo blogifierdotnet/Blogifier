@@ -93,16 +93,14 @@
             <div class="bf-content-post-cover-body">
                 <p id="post-tagline"></p>
                 <h1 id="post-title"></h1>
-                <div class="btn-group float-left">
-                    <button type="button" class="btn btn-outline-secondary" onclick="postsController.editPost()">Edit</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="postsController.showPost()">View</button>
+                <button type="button" class="btn btn-primary btn-sm btn-edit mr-2" onclick="postsController.editPost()">Edit</button>
+                <button type="button" class="btn btn-outline-primary btn-view btn-sm mr-2" onclick="postsController.showPost()">View</button>
+                <div class="btn-group btn-group-icon" role="group">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnPublish" onclick="postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnUnpublish" onclick="postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="" data-toggle="modal" data-target="#fileManager" title="Change the cover"><i class="fa fa-photo"></i></button>
                 </div>
-                <div class="btn-group btn-group-icon float-left" role="group">
-                    <button type="button" class="btn btn-outline-secondary" onclick="postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-                    <button type="button" id="btnPublish" class="btn btn-outline-secondary" onclick="postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
-                    <button type="button" id="btnUnpublish" class="btn btn-outline-secondary" onclick="postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
-                </div>
-                <button class="btn btn-outline-secondary btn-icon-rounded float-right" data-toggle="modal" data-target="#fileManager" onclick="" title="Change the cover"><i class="fa fa-photo"></i></button>
             </div>
         </div>
         <div class="bf-content-post-text"></div>

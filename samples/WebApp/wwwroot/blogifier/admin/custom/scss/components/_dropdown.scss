@@ -9,20 +9,25 @@
 .dropdown-menu {
     padding: 0;
     overflow: hidden;
+    box-shadow: 0 0 1rem $cl-black-20;
+    border: 0;
 
     ul {
         @include unstyled(ul);
+    }
+
+    li {
+        border-bottom: 1px solid #ededee;
+
+        &:last-child {
+            border-bottom: 0;
+        }
     }
 
     .dropdown-item {
         outline: none !important;
         padding: .5rem 1.5rem;
         cursor: pointer;
-        border-bottom: 1px solid #ededee;
-
-        &:last-child {
-            border-bottom: 0;
-        }
 
         &:hover {
             background-color: #ededee;
