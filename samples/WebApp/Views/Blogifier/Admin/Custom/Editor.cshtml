@@ -38,8 +38,8 @@
                         <h4>Post Settings</h4>
                         <button class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="admin-editor-category">
+                    <div class="modal-body bf-editor-settings">
+                        <div class="bf-editor-category">
                             <h5>Category</h5>
                             <form id="frmCategory">
                                 <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
@@ -48,7 +48,7 @@
                                 @foreach (var category in Model.CategoryList)
                                 {
                                     <li id="cat-@category.Value">
-                                        <label>
+                                        <label class="custom-control custom-checkbox">
                                             @if (category.Selected)
                                             {
                                                 <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
@@ -57,14 +57,15 @@
                                             {
                                                 <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
                                             }
-                                            @category.Text
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">@category.Text</span>
                                         </label>
                                         <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
                                     </li>
                                 }
                             </ul>
                         </div>
-                        <div class="admin-editor-description">
+                        <div class="bf-editor-description">
                             <h5>Description</h5>
                             <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
                         </div>

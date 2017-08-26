@@ -69,3 +69,59 @@
         }
     }
 }
+
+.bf-editor-settings {
+    padding: 0;
+
+    h5 {
+        font-size: .875rem;
+        text-transform: uppercase;
+    }
+
+    > div {
+        padding: 1rem;
+    }
+}
+
+.bf-editor-category {
+    border-bottom: 1px solid #eee;
+
+    form {
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        @include unstyled(ul);
+        max-height: 360px;
+        overflow-y: auto;
+    }
+
+    li {
+        position: relative;
+
+        &:hover {
+            i {
+                display: block;
+            }
+        }
+
+        label {
+            display: block;
+            padding-left: 2rem;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .custom-control-indicator {
+            left: .25rem;
+        }
+
+        i {
+            position: absolute;
+            right: 0;
+            top: .125rem;
+            display: none;
+            cursor: pointer;
+        }
+    }
+}
