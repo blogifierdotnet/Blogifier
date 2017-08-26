@@ -1,67 +1,42 @@
-.bf-sidebar-posts-header {
+.bf-posts-sidebar-head {
     padding: 1rem 5rem;
     position: relative;
 
-    .list-select,
-    .list-filter {
+    .item-head {
         position: absolute;
         top: 0;
         width: 5rem;
         height: 100%;
-        display: flex;
         margin: 0;
         padding: 0;
-
-        .item-control {
-            margin: auto;
-            cursor: pointer;
-            position: relative;
-            top: 0;
-            left: 0;
-        }
     }
 
-    .list-select {
+    .item-head-select {
         left: 0;
     }
 
-    .list-filter {
+    .item-head-tools {
         right: 0;
         color: $cl-black-40;
         font-size: 1.25rem;
 
+        &:focus {
+            color: $cl-white-40;
+        }
+
         &[aria-expanded="true"] {
-            color: #fff;
+            color: #fff !important;
         }
     }
 
-    @media (max-width:800px) {
-        padding-right: 9.75rem;
-
-        .list-filter {
-            right: 4.75rem;
-            border-right: 1px solid $cl-black-20;
-        }
+    .item-control, .fa {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
     }
 
-    .btn-new {
-        border-radius: 2.75rem;
-        height: 2.75rem;
-        line-height: 2.75rem;
-        background: #fff;
-        border-color: #fff;
-        color: $cl-bf;
+    .btn-light {
         font-weight: $fw-bold;
-        font-size: 1rem;
-    }
-
-    &.active {
-        .btn-group-actions {
-            display: flex;
-        }
-
-        .btn-new {
-            display: none;
-        }
     }
 }

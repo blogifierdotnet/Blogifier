@@ -9,16 +9,13 @@
 }
 <div class="bf bf-posts">
     <div class="bf-sidebar">
-        <!-- SIDEBAR HEADER -->
-        <div class="bf-sidebar-posts-header">
-            <label class="list-select custom-control custom-checkbox">
-                <input class="custom-control-input item-checkbox" type="checkbox" name="selectAll">
-                <span class="item-control custom-control-indicator"></span>
-            </label>
-            <label class="list-filter" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-control"></i></label>
-            <a href="~/admin/editor/0" class="btn btn-light btn-block btn-new">New Post</a>
+
+        <div class="bf-posts-sidebar-head">
+            <label class="item-head item-head-select custom-control custom-checkbox"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+            <a href="~/admin/editor/0" class="btn btn-light btn-rounded btn-block">New Post</a>
+            <button class="item-head item-head-tools btn-unstyled" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-control"></i></button>
         </div>
-        <!--/SIDEBAR HEADER -->
+
         <!-- SEARCH & FILTERS -->
         <div class="bf-sidebar-posts-tools collapse" id="sidebarTools">
             <form class="bf-sidebar-posts-search" action="~/admin" method="get">
@@ -109,7 +106,6 @@
 </div>
 <div class="bf-posts-empty">
     <div class="bf-posts-empty-body">
-        <h2>Nothing here,</h2>
         <h1>Let's write a new post!</h1>
         <a href="/admin/editor/0" class="btn btn-lg btn-light btn-rounded">New Post</a>
     </div>

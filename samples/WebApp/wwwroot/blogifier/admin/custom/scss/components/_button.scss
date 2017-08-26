@@ -1,10 +1,10 @@
 .btn {
     cursor: pointer;
     padding: 0 2rem;
-    height: 2.5rem;
-    line-height: 2.5rem;
+    height: 3rem;
+    line-height: 3rem;
     font-weight: $fw-medium;
-    font-size: .875rem;
+    font-size: 1rem;
     text-transform: uppercase;
 
     &-icon-rounded {
@@ -23,6 +23,7 @@
         height: 2.25rem;
         line-height: 2.25rem;
         padding: 0 1.5rem;
+        font-size: .875rem;
     }
 
     &-lg {
@@ -125,6 +126,8 @@
 // btn-light
 .btn-light {
     background: #fff;
+    border-color: #fff;
+    color: $cl-bf;
 }
 
 // btn-link
