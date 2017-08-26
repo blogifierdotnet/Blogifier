@@ -145,16 +145,16 @@ $(itemCheck).not(firstItemCheck).on('change', function () {
 
 $(document).on('change', itemCheck, function () {
     if ($(itemCheck).is(':checked')) {
-        $(btnAction).slideDown();
+        $(btnAction).stop(true, true).slideDown();
         // hide filters
         $(sidebarTools).collapse('hide');
     } else {
-        $(btnAction).slideUp();
+        $(btnAction).stop(true, true).slideUp();
     }
 });
 
 // uncheck all when filters is active
 $(sidebarTools).on('show.bs.collapse', function () {
     $(itemCheck).prop('checked', false);
-    $(btnAction).slideUp();
+    $(btnAction).stop(true, true).slideUp();
 })
