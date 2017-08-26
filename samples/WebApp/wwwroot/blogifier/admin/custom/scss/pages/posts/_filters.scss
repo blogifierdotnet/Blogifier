@@ -1,0 +1,137 @@
+.bf-posts-sidebar-filters {
+    background: $cl-black-20;
+    color: $cl-white-50;
+    position: relative;
+    font-size: .875rem;
+
+    &::before {
+        @include triangle(1.25rem, $cl-black-20, up);
+        position: absolute;
+        top: -1.25rem;
+        right: 1.875rem;
+    }
+    // filter by search
+    .item-search {
+        position: relative;
+        border-bottom: 1px solid $cl-black-10;
+
+        &-input {
+            background: none;
+            color: #fff;
+            height: $ht-filters;
+            width: 100%;
+            border: none;
+            padding: 0 5rem 0 2rem;
+            outline: none;
+
+            &::placeholder {
+                color: $cl-white-50;
+            }
+        }
+
+        &-icon {
+            display: block;
+            width: 5rem;
+            height: 100%;
+            line-height: $ht-filters;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: .75rem;
+            text-align: center;
+        }
+    }
+    // filter by category
+    .item-category {
+        border-bottom: 1px solid $cl-black-10;
+
+        &-toggle {
+            @include unstyled(button);
+            position: relative;
+            width: 100%;
+            line-height: $ht-filters;
+            padding: 0 5rem 0 2rem;
+            text-align: left;
+            font-size: .875rem;
+            cursor: pointer;
+            color: $cl-white-50;
+
+            &:focus {
+                color: #fff;
+            }
+        }
+
+
+        &-icon {
+            display: block;
+            width: 5rem;
+            height: 100%;
+            line-height: $ht-filters;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        &-list {
+            padding: 0 2rem;
+        }
+
+        &-label {
+            display: block;
+            margin-bottom: .125rem;
+
+            &:last-child {
+                margin-bottom: 1rem;
+            }
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        .custom-control-indicator {
+            top: .125rem;
+        }
+    }
+    // filter by status
+    .item-status {
+        &-label {
+            display: block;
+            margin: 0;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            text-align: center;
+            line-height: $ht-filters;
+            cursor: pointer;
+            border-right: 1px solid $cl-black-10;
+
+            &:hover {
+                color: #fff;
+            }
+
+            &:last-child {
+                border-right: 0;
+            }
+
+            &-name {
+                padding: .375rem 1rem;
+                border-radius: 3rem;
+                text-transform: uppercase;
+                font-size: .75rem;
+            }
+        }
+
+        input {
+            &:checked + .item-status-label-name {
+                background: $cl-black-10;
+            }
+
+            &:focus + .item-status-label-name {
+                color: #fff;
+            }
+        }
+    }
+}

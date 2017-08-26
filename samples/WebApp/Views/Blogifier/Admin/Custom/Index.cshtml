@@ -9,40 +9,37 @@
 }
 <div class="bf bf-posts">
     <div class="bf-sidebar">
-
         <div class="bf-posts-sidebar-head">
             <label class="item-head item-head-select custom-control custom-checkbox"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-head-control custom-control-indicator"></span></label>
             <a href="~/admin/editor/0" class="btn btn-light btn-rounded btn-block">New Post</a>
             <button class="item-head item-head-tools btn-unstyled" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-head-control"></i></button>
         </div>
-
-        <!-- SEARCH & FILTERS -->
-        <div class="bf-sidebar-posts-tools collapse" id="sidebarTools">
-            <form class="bf-sidebar-posts-search" action="~/admin" method="get">
-                <input type="search" name="search" placeholder="Search..." autocomplete="off" />
-                <i class="fa fa-search"></i>
+        <div class="bf-posts-sidebar-filters collapse" id="sidebarTools">
+            <form class="item-search" action="~/admin" method="get">
+                <input class="item-search-input" type="search" name="search" placeholder="Search..." autocomplete="off" />
+                <i class="item-search-icon fa fa-search"></i>
             </form>
-            <form class="bf-sidebar-posts-filter" id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
-                <div class="posts-filter-category">
-                    <button class="btn-unstyled" type="button" data-toggle="collapse" href="#postsFilterCategory" aria-expanded="false" aria-controls="postsFilterCategory">Categories <i class="fa fa-angle-down"></i></button>
-                    <div class="collapse" id="postsFilterCategory">
+            <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+                <div class="item-category">
+                    <button class="item-category-toggle" type="button" data-toggle="collapse" href="#postsFilterCategory" aria-expanded="false" aria-controls="postsFilterCategory">Categories <i class="item-category-icon fa fa-angle-down"></i></button>
+                    <div class="item-category-list collapse" id="postsFilterCategory">
                         @foreach (var cat in Model.CategoryFilter)
                         {
                             var isChecked = cat.Selected ? "checked" : "";
-                            <label class="custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                            <label class="item-category-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
                         }
                     </div>
                 </div>
-                <div class="posts-filter-status d-flex flex-row">
+                <div class="item-status d-flex">
                     @foreach (var ftr in Model.StatusFilter)
                     {
                         var ftrChecked = ftr.Selected ? "checked" : "";
-                        <label><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span>@ftr.Text</span></label>
+                        <label class="item-status-label"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="item-status-label-name">@ftr.Text</span></label>
                     }
                 </div>
             </form>
         </div>
-        <!--/SEARCH & FILTERS -->
+
         <!-- POST LIST -->
         <div class="btn-group-actions">
             <div class="d-flex">
