@@ -1,27 +1,6 @@
-.btn-group-actions {
-    display: none;
+.bf-posts-sidebar-list {
 
-    button {
-        flex: 1;
-        background: $cl-black-20;
-        color: #fff;
-        line-height: 3rem;
-        border-right: 1px solid $cl-black-10;
-        cursor: pointer;
-
-        &:last-child {
-            border-right: 0;
-        }
-
-        &:hover {
-            background: $cl-black-25;
-        }
-    }
-}
-
-.bf-sidebar-posts-list {
-
-    li {
+    .item-list {
         border-bottom: 1px solid $cl-black-5;
         position: relative;
 
@@ -29,40 +8,36 @@
             border-top: 1px solid $cl-black-5;
         }
 
-        .item-select {
+        &-select {
             position: absolute;
+            top: 0;
             width: 5rem;
             height: 100%;
-            display: flex;
             margin: 0;
             padding: 0;
 
             .item-control {
-                margin: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
                 cursor: pointer;
-                position: relative;
-                top: 0;
-                left: 0;
             }
         }
 
-        .item-link {
-            color: rgba(255, 255, 255, 0.50);
+        &-link {
+            color: $cl-white-50;
             display: block;
-            padding: 1.25rem 2rem 1.25rem 5rem;
-            cursor: pointer;
             line-height: 1.25;
-            font-size: 0.9375rem;
             max-width: 25rem;
+            padding: 1.25rem 1.75rem 1.25rem 5rem;
+            font-size: .9375rem;
+            cursor: pointer;
             @include ellipsis;
 
             &.active {
                 background: $cl-black-5;
-                color: #fff;
-
-                &:hover {
-                    color: #fff;
-                }
+                color: #fff !important;
             }
 
             &:focus {
@@ -71,81 +46,30 @@
             }
         }
 
+        &-info {
+            display: none;
+        }
+
         &:hover {
-            .item-link {
+            .item-list-link {
                 color: rgba(255, 255, 255, 0.75);
             }
         }
     }
 
     @media (min-width:1024px) {
-
-        li {
-            .item-link-mobile {
+        .item-list {
+            &-link-mobile {
                 display: none;
             }
         }
     }
 
     @media (max-width:1023px) {
-        li {
-            .item-link-desktop {
+        .item-list {
+            &-link-desktop {
                 display: none;
             }
-        }
-    }
-}
-
-
-.bf-sidebar-pagination {
-    border-bottom: 1px solid $cl-black-5;
-    position: relative;
-
-    a {
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.50);
-        display: block;
-        padding: 1.25rem 2rem 1.25rem 5rem;
-        cursor: pointer;
-        line-height: 1.25;
-        font-size: 0.875rem;
-
-        &:focus {
-            outline: none;
-            color: #fff;
-        }
-
-        span {
-            font-size: .75rem;
-            position: relative;
-            top: -1px;
-        }
-
-        &:hover {
-            color: #fff;
-
-            i {
-                color: #fff;
-            }
-        }
-    }
-
-    i {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 4.75rem;
-        height: 100%;
-        display: block;
-        color: $cl-black-40;
-
-        &:before {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            font-size: 1.5rem;
-            margin-top: -.0625rem;
         }
     }
 }

@@ -32,14 +32,23 @@
 @import "components/editor";
 @import "components/nav";
 
-// Pages
+// pages > posts
 @import "pages/posts/layout";
 @import "pages/posts/head";
 @import "pages/posts/filters";
+@import "pages/posts/multiactions";
 @import "pages/posts/list";
+@import "pages/posts/pagination";
 @import "pages/posts/preview";
+
+// pages > editor
 @import "pages/editor/edit";
+
+// pages > filemanager
 @import "pages/filemanager/filemanager";
+
+// pages > settings
 @import "pages/settings/settings";
+
+// pages > setup
 @import "pages/setup/setup";
- 

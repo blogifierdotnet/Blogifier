@@ -120,15 +120,14 @@
     }
 }(DataService);
 
-$('.bf-sidebar-posts-list li a').click(function () {
-    $('.bf-sidebar-posts-list a').removeClass('active');
+$('.bf-posts-sidebar-list .item-list-link-desktop').click(function () {
+    $('.bf-posts-sidebar-list .item-list-link-desktop').removeClass('active');
     $(this).addClass('active');
 });
 
-
 var itemCheck = $('.item-checkbox');
 var firstItemCheck = itemCheck.first();
-var btnAction = '.btn-group-actions';
+var btnAction = '#postsMultiactions';
 var sidebarTools = '#sidebarTools';
 
 // check all

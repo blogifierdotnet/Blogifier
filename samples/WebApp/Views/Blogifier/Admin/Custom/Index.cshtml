@@ -39,32 +39,29 @@
                 </div>
             </form>
         </div>
-
-        <!-- POST LIST -->
-        <div class="btn-group-actions">
+        <div class="bf-posts-sidebar-multiactions" id="postsMultiactions">
             <div class="d-flex">
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
         </div>
-        <ul class="bf-sidebar-posts-list" aria-label="posts">
+        <ul class="bf-posts-sidebar-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
                 if (curPost == 0) { curPost = item.BlogPostId; }
-                <li class="item">
-                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <a class="item-link item-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
-                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
-                    <div class="hide">
+                <li class="item-list">
+                    <label class="item-list-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-list-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                    <a class="item-list-link item-list-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
+                    <a class="item-list-link item-list-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+                    <div class="item-list-info">
                         <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
                         <a aria-label="Publish date">@published</a>
                     </div>
                 </li>
             }
         </ul>
-        <!--/POST LIST -->
         <!-- PAGINATION -->
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
@@ -115,7 +112,7 @@
             $('#frmFilter').submit();
         }
         postsController.showPost('@curPost');
-        $('.bf-sidebar-posts-list a:first').addClass('active');
+        $('.bf-posts-sidebar-list .item-list-link-desktop:first').addClass('active');
     </script>
 }
 
