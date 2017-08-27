@@ -1,5 +1,5 @@
 .bf-sidebar-pagination {
-    color: $cl-white-50;
+    color: $cl-black-50;
     text-align: center;
     padding: 1.5rem 0 !important;
 
@@ -9,7 +9,7 @@
         height: 2rem;
 
         &-link {
-            color: $cl-white-50;
+            color: $cl-black-50;
 
             &:hover {
                 color: #fff;
@@ -24,8 +24,8 @@
 
         .fa {
             font-size: 1.5rem;
-            display: block;
             line-height: 2rem;
+            display: block;
         }
     }
 }
