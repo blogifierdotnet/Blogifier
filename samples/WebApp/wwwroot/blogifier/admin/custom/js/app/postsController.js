@@ -84,6 +84,12 @@
             $('#btnUnpublish').hide();
             $('#btnPublish').show();
         }
+
+        // highlight codes on the posts
+        var prismClass = $('.item-preview-body pre[class*="language-"]');
+        if (prismClass.length) {
+            Prism.highlightAll();
+        }
     }
 
     function editPost(id) {

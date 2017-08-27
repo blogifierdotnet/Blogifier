@@ -54,5 +54,31 @@
 
     .item-preview-body {
         padding: 3rem;
+
+        p, ul, ol, form, iframe, table {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: #007bff;
+
+            &:hover {
+                color: #0056b3;
+            }
+        }
+
+        table {
+            width: 100%;
+        }
+
+        iframe {
+            max-width: 100%;
+            border: 0;
+        }
+
+        video, img {
+            max-width: 100%;
+            height: auto;
+        }
     }
 }
