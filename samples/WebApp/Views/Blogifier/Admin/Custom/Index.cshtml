@@ -10,7 +10,7 @@
 <div class="bf bf-posts">
     <div class="bf-sidebar">
         <div class="bf-posts-sidebar-head">
-            <label class="item-head item-head-select custom-control custom-checkbox"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-head-control custom-control-indicator"></span></label>
+            <label class="item-head item-head-select custom-control custom-checkbox"><input class="custom-control-input item-sidebar-checkbox" type="checkbox" name="selectAll"><span class="item-head-control custom-control-indicator"></span></label>
             <a href="~/admin/editor/0" class="btn btn-light btn-rounded btn-block">New Post</a>
             <button class="item-head item-head-tools btn-unstyled" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-head-control"></i></button>
         </div>
@@ -52,7 +52,7 @@
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
                 if (curPost == 0) { curPost = item.BlogPostId; }
                 <li class="item-list">
-                    <label class="item-list-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-list-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                    <label class="item-list-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-sidebar-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
                     <a class="item-list-link item-list-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
                     <a class="item-list-link item-list-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
                     <div class="item-list-info">
@@ -65,16 +65,11 @@
         <!-- PAGINATION -->
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
-            <div class="bf-sidebar-pagination">
-                @if (pgr.ShowOlder)
-                {
-                    <a href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i> Older Posts <span>(@cntFrom-@cntTo out of @pgr.Total)</span></a>
-                }
-                @if (pgr.ShowNewer)
-                {
-                    <a href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i>Newer post <span>(@cntFrom-@cntTo out of @pgr.Total)</span></a>
-                }
-            </div>
+            <ul class="bf-sidebar-pagination">
+                <li class="item-pagination"><a class="item-pagination-link" href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i></a></li>
+                <li class="item-pagination"><span class="item-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+                <li class="item-pagination"><a class="item-pagination-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
         }
         <!--/PAGINATION -->
     </div>

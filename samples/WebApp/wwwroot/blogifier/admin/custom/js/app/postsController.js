@@ -125,7 +125,7 @@ $('.bf-posts-sidebar-list .item-list-link-desktop').click(function () {
     $(this).addClass('active');
 });
 
-var itemCheck = $('.item-checkbox');
+var itemCheck = $('.item-sidebar-checkbox');
 var firstItemCheck = itemCheck.first();
 var btnAction = '#postsMultiactions';
 var sidebarTools = '#sidebarTools';

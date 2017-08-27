@@ -1,52 +1,31 @@
 .bf-sidebar-pagination {
-    border-bottom: 1px solid $cl-black-5;
-    position: relative;
+    color: $cl-white-50;
+    text-align: center;
+    padding: 1.5rem 0 !important;
 
-    a {
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.50);
-        display: block;
-        padding: 1.25rem 2rem 1.25rem 5rem;
-        cursor: pointer;
-        line-height: 1.25;
-        font-size: 0.875rem;
+    .item-pagination {
+        display: inline-block;
+        line-height: 2rem;
+        height: 2rem;
 
-        &:focus {
-            outline: none;
-            color: #fff;
-        }
+        &-link {
+            color: $cl-white-50;
 
-        span {
-            font-size: .75rem;
-            position: relative;
-            top: -1px;
-        }
-
-        &:hover {
-            color: #fff;
-
-            i {
+            &:hover {
                 color: #fff;
             }
         }
-    }
 
-    i {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 4.75rem;
-        height: 100%;
-        display: block;
-        color: $cl-black-40;
+        &-count {
+            margin: 0 1.5rem;
+            position: relative;
+            top: -2px;
+        }
 
-        &:before {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
+        .fa {
             font-size: 1.5rem;
-            margin-top: -.0625rem;
+            display: block;
+            line-height: 2rem;
         }
     }
 }
