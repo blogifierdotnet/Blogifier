@@ -11,12 +11,12 @@ body {
     .bf-sidebar {
         background: $cl-bf;
         color: #fff;
-        /*@include linear-gradient($cl-bf-light, $cl-bf, 1);*/
+
+        ul {
+            @include unstyled(ul);
+        }
     }
 
-    ul {
-        @include unstyled(ul);
-    }
 
     @media (min-width:800px) {
         display: table;

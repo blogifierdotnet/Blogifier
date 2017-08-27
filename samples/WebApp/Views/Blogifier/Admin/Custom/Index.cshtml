@@ -62,7 +62,6 @@
                 </li>
             }
         </ul>
-        <!-- PAGINATION -->
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
             <ul class="bf-sidebar-pagination">
@@ -71,14 +70,12 @@
                 <li class="item-pagination"><a class="item-pagination-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
             </ul>
         }
-        <!--/PAGINATION -->
     </div>
-    <div class="bf-content bf-content-posts">
-        <!-- PREVIEW POST (This section will change for each post) -->
-        <div class="bf-content-post-cover" style="background-image:url(/embedded/lib/img/cover.png);">
-            <div class="bf-content-post-cover-body">
-                <p id="post-tagline"></p>
-                <h1 id="post-title"></h1>
+    <div class="bf-content bf-posts-preview">
+        <div class="item-preview-header" style="background-image:url(/embedded/lib/img/cover.png);">
+            <div class="item-preview-info">
+                <p class="item-preview-meta"></p>
+                <h1 class="item-preview-title" id="post-title"></h1>
                 <button type="button" class="btn btn-primary btn-sm btn-edit mr-2" onclick="postsController.editPost()">Edit</button>
                 <button type="button" class="btn btn-outline-primary btn-view btn-sm mr-2" onclick="postsController.showPost()">View</button>
                 <div class="btn-group btn-group-icon" role="group">
@@ -89,8 +86,7 @@
                 </div>
             </div>
         </div>
-        <div class="bf-content-post-text"></div>
-        <!--/PREVIEW POST-->
+        <div class="item-preview-body"></div>
     </div>
 </div>
 <div class="bf-posts-empty">

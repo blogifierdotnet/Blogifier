@@ -73,9 +73,9 @@
             }
             cats = cats.substring(0, cats.length - 2);
         }
-        $('#post-tagline').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
-        $('#post-title').html(data.title);
-        $('.bf-content-post-text').html(data.content);
+        $('.item-preview-meta').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
+        $('.item-preview-title').html(data.title);
+        $('.item-preview-body').html(data.content);
         if (data.isPublished) {
             $('#btnUnpublish').show();
             $('#btnPublish').hide();
@@ -142,6 +142,7 @@ $(itemCheck).not(firstItemCheck).on('change', function () {
     }
 });
 
+// show multi action buttons when any item checked
 $(document).on('change', itemCheck, function () {
     if ($(itemCheck).is(':checked')) {
         $(btnAction).stop(true, true).slideDown();

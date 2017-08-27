@@ -1,85 +1,58 @@
+.bf-posts-preview {
 
-//
-.bf-content-posts {
-}
+    .item-preview-header {
+        position: relative;
+        background-color: #222;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 20rem;
 
-.bf-content-post-cover {
-    min-height: 400px;
-    background-color: #111;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-
-    &::after {
-        display: block;
-        content: "";
-        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 24;
+            background: $cl-black-50;
+            background: -moz-linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.85) 100%);
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.85) 80%,rgba(0,0,0,0.85) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.85) 80%,rgba(0,0,0,0.85) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#d9000000',GradientType=0 );
+        }
     }
 
-    &-body {
-        padding: 3rem;
-        padding-top: 0;
+    .item-preview-info {
         position: absolute;
         bottom: 0;
         left: 0;
+        z-index: 25;
         width: 100%;
+        padding: 0 3rem 3rem;
+    }
+
+    .item-preview-meta {
+        color: $cl-white-50;
+        text-transform: uppercase;
+        font-size: .75rem;
+    }
+
+    .item-preview-title {
         color: #fff;
-        z-index: 1;
+        margin: 1rem 0 1.5rem;
+        font-size: 2rem;
+        line-height: 1.2;
+        font-weight: $fw-normal;
 
-        p {
-            margin: 0;
-            font-size: .75rem;
-            opacity: .5;
-        }
-
-        h1 {
-            margin: 1rem 0 2.5rem;
-            font-size: 2.5rem;
-            font-weight: 300;
-            width: 70%;
-        }
-
-        .btn-edit,
-        .btn-view {
-            min-width: 100px;
+        @media (min-width:1200px) {
+            max-width: 75%;
+            width: 100%;
         }
     }
-}
 
-.bf-content-post-text {
-    padding: 3rem;
-    font-size: 1.125rem;
-    color: #000;
-    font-weight: $fw-normal;
-    line-height: 1.6;
-
-    ul, ol {
-        margin: 2rem;
-        list-style-position: inside;
-    }
-
-    ul {
-        list-style-type: circle;
-    }
-
-    ol {
-        list-style-type: decimal;
-    }
-
-    p {
-        margin-bottom: 1.5rem;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        margin: 2rem 0 .5rem;
-        font-weight: $fw-bold;
+    .item-preview-body {
+        padding: 3rem;
     }
 }
