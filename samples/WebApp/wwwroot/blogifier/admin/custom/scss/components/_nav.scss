@@ -1,17 +1,17 @@
 .bf-nav {
+    @include noselect;
     position: fixed;
     right: 1rem;
     top: 1rem;
     z-index: 1001;
-    @include noselect;
-    height: 2.75rem;
+    height: 3rem;
 
     .dropdown-toggle {
-        @include unstyled(button);
-        width: 2.75rem;
-        height: 2.75rem;
-        cursor: pointer;
         background: $cl-bf;
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+        @include unstyled(button);
         @include border-radius($radius);
 
         img {
@@ -24,6 +24,6 @@
 
     .dropdown-menu {
         width: 12rem;
-        margin-top:.25rem;
+        margin-top: .25rem;
     }
 }
