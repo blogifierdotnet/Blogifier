@@ -52,12 +52,12 @@ $(function () {
         placement: 'bottom'
     });
 
-    $(".item-preview-info .btn-group .btn").tooltip({
+    $(".bf-posts-preview .item-info .btn-group .btn").tooltip({
         placement: 'bottom',
         container: 'body'
     });
 
-    $(".bf-posts-sidebar-multiactions button").tooltip({
+    $(".bf-posts-multiactions button").tooltip({
         placement: 'bottom',
         container: 'body'
     });
