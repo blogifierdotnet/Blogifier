@@ -65,7 +65,7 @@
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
             <ul class="bf-posts-pagination">
-                <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i></a></li>
+                <li class="item"><a class="item-link" href="~/admin/@pgr.Older" disabled><i class="fa fa-angle-left"></i></a></li>
                 <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
                 <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
             </ul>

@@ -84,3 +84,8 @@ $('.modal').on('show.bs.modal', function () {
 $('.modal').on('hidden.bs.modal', function () {
     $(".bf-nav, .mce-toolbar-grp").attr("style", "");
 });
+
+
+$("a[disabled]").on("click", function (event) {
+    event.preventDefault();
+});
