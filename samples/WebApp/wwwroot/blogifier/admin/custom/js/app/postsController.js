@@ -73,9 +73,9 @@
             }
             cats = cats.substring(0, cats.length - 2);
         }
-        $('.item-preview-meta').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
-        $('.item-preview-title').html(data.title);
-        $('.item-preview-body').html(data.content);
+        $('.bf-posts-preview .item-meta').html(getDate(data.published) + " / " + cats + " / " + data.postViews + " views");
+        $('.bf-posts-preview .item-title').html(data.title);
+        $('.bf-posts-preview .item-body').html(data.content);
         if (data.isPublished) {
             $('#btnUnpublish').show();
             $('#btnPublish').hide();
@@ -86,7 +86,7 @@
         }
 
         // highlight codes on the posts
-        var prismClass = $('.item-preview-body pre[class*="language-"]');
+        var prismClass = $('.bf-posts-preview .item-body [class*="language-"]');
         if (prismClass.length) {
             Prism.highlightAll();
         }
@@ -126,12 +126,12 @@
     }
 }(DataService);
 
-$('.bf-posts-sidebar-list .item-list-link-desktop').click(function () {
-    $('.bf-posts-sidebar-list .item-list-link-desktop').removeClass('active');
+$('.bf-posts-list .item-link-desktop').click(function () {
+    $('.bf-posts-list .item-link-desktop').removeClass('active');
     $(this).addClass('active');
 });
 
-var itemCheck = $('.item-sidebar-checkbox');
+var itemCheck = $('.item-checkbox');
 var firstItemCheck = itemCheck.first();
 var btnAction = '#postsMultiactions';
 var sidebarTools = '#sidebarTools';

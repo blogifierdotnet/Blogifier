@@ -1,6 +1,6 @@
-.bf-posts-sidebar-list {
+.bf-posts-list {
 
-    .item-list {
+    .item {
         border-bottom: 1px solid $cl-black-5;
         position: relative;
 
@@ -51,22 +51,18 @@
         }
 
         &:hover {
-            .item-list-link {
+            .item-link {
                 color: rgba(255, 255, 255, 0.75);
             }
         }
-    }
 
-    @media (min-width:1024px) {
-        .item-list {
+        @media (min-width:1024px) {
             &-link-mobile {
                 display: none;
             }
         }
-    }
 
-    @media (max-width:1023px) {
-        .item-list {
+        @media (max-width:1023px) {
             &-link-desktop {
                 display: none;
             }

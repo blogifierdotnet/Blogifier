@@ -1,6 +1,6 @@
 .bf-posts-preview {
 
-    .item-preview-header {
+    .item-header {
         position: relative;
         background-color: #222;
         background-repeat: no-repeat;
@@ -24,7 +24,7 @@
         }
     }
 
-    .item-preview-info {
+    .item-info {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -33,13 +33,13 @@
         padding: 0 3rem 3rem;
     }
 
-    .item-preview-meta {
+    .item-meta {
         color: $cl-white-50;
         text-transform: uppercase;
         font-size: .75rem;
     }
 
-    .item-preview-title {
+    .item-title {
         color: #fff;
         margin: 1rem 0 1.5rem;
         font-size: 2rem;
@@ -52,7 +52,7 @@
         }
     }
 
-    .item-preview-body {
+    .item-body {
         padding: 3rem;
 
         p, ul, ol, form, iframe, table {

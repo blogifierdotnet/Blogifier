@@ -9,12 +9,12 @@
 }
 <div class="bf bf-posts">
     <div class="bf-sidebar">
-        <div class="bf-posts-sidebar-head">
-            <label class="item-head item-head-select custom-control custom-checkbox"><input class="custom-control-input item-sidebar-checkbox" type="checkbox" name="selectAll"><span class="item-head-control custom-control-indicator"></span></label>
+        <div class="bf-posts-toolbar">
+            <label class="item item-select custom-control custom-checkbox"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
             <a href="~/admin/editor/0" class="btn btn-light btn-rounded btn-block">New Post</a>
-            <button class="item-head item-head-tools btn-unstyled" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-head-control"></i></button>
+            <button class="item item-tools btn-unstyled" data-toggle="collapse" href="#sidebarTools" aria-expanded="false" aria-controls="sidebarTools"><i class="fa fa-filter item-control"></i></button>
         </div>
-        <div class="bf-posts-sidebar-filters collapse" id="sidebarTools">
+        <div class="bf-posts-filters collapse" id="sidebarTools">
             <form class="item-search" action="~/admin" method="get">
                 <input class="item-search-input" type="search" name="search" placeholder="Search..." autocomplete="off" />
                 <i class="item-search-icon fa fa-search"></i>
@@ -39,23 +39,23 @@
                 </div>
             </form>
         </div>
-        <div class="bf-posts-sidebar-multiactions" id="postsMultiactions">
+        <div class="bf-posts-multiactions" id="postsMultiactions">
             <div class="d-flex">
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
                 <button type="button" class="btn-unstyled" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
             </div>
         </div>
-        <ul class="bf-posts-sidebar-list" aria-label="posts">
+        <ul class="bf-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
                 if (curPost == 0) { curPost = item.BlogPostId; }
-                <li class="item-list">
-                    <label class="item-list-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-sidebar-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <a class="item-list-link item-list-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
-                    <a class="item-list-link item-list-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
-                    <div class="item-list-info">
+                <li class="item">
+                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                    <a class="item-link item-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
+                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+                    <div class="item-info">
                         <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
                         <a aria-label="Publish date">@published</a>
                     </div>
@@ -64,18 +64,18 @@
         </ul>
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
-            <ul class="bf-sidebar-pagination">
-                <li class="item-pagination"><a class="item-pagination-link" href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i></a></li>
-                <li class="item-pagination"><span class="item-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
-                <li class="item-pagination"><a class="item-pagination-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
+            <ul class="bf-posts-pagination">
+                <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i></a></li>
+                <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+                <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
             </ul>
         }
     </div>
     <div class="bf-content bf-posts-preview">
-        <div class="item-preview-header" style="background-image:url(/embedded/lib/img/cover.png);">
-            <div class="item-preview-info">
-                <p class="item-preview-meta"></p>
-                <h1 class="item-preview-title" id="post-title"></h1>
+        <div class="item-header" style="background-image:url(/embedded/lib/img/cover.png);">
+            <div class="item-info">
+                <p class="item-meta"></p>
+                <h1 class="item-title" id="post-title"></h1>
                 <button type="button" class="btn btn-primary btn-sm btn-edit mr-2" onclick="postsController.editPost()">Edit</button>
                 <button type="button" class="btn btn-outline-primary btn-view btn-sm mr-2" onclick="postsController.showPost()">View</button>
                 <div class="btn-group btn-group-icon" role="group">
@@ -86,15 +86,15 @@
                 </div>
             </div>
         </div>
-        <div class="item-preview-body"></div>
+        <div class="item-body"></div>
     </div>
 </div>
 @if (Model.BlogPosts == null || Model.BlogPosts.Count() == 0)
 {
     <div class="bf-posts-empty">
-        <div class="bf-posts-empty-body">
-            <h1>Let's write a new post!</h1>
-            <a href="/admin/editor/0" class="btn btn-lg btn-light btn-rounded">New Post</a>
+        <div class="item-body">
+            <h1 class="item-title">Let's write a new post!</h1>
+            <a href="/admin/editor/0" class="btn btn-light btn-lg btn-rounded">New Post</a>
         </div>
     </div>
 }
@@ -107,6 +107,6 @@
             $('#frmFilter').submit();
         }
         postsController.showPost('@curPost');
-        $('.bf-posts-sidebar-list .item-list-link-desktop:first').addClass('active');
+        $('.bf-posts-list .item-link-desktop:first').addClass('active');
     </script>
 }

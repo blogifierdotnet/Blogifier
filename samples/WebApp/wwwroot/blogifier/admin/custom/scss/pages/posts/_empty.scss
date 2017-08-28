@@ -6,8 +6,8 @@
     right: 0;
     bottom: 0;
     background: $cl-bf;
-     
-    &-body {
+
+    .item-body {
         position: absolute;
         top: 50%;
         left: 0;
@@ -18,18 +18,10 @@
         width: 100%;
     }
 
-    h1, h2 {
-        font-weight: $fw-thin;
-    }
-
-    h2 {
-        margin-bottom: 1rem;
-        font-size: 2.5rem;
-    }
-
-    h1 {
+    .item-title {
         font-size: 4rem;
         margin-bottom: 3rem;
+        font-weight: $fw-thin;
     }
 
     .btn {
