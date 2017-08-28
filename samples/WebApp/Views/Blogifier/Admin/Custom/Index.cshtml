@@ -89,12 +89,16 @@
         <div class="item-preview-body"></div>
     </div>
 </div>
-<div class="bf-posts-empty">
-    <div class="bf-posts-empty-body">
-        <h1>Let's write a new post!</h1>
-        <a href="/admin/editor/0" class="btn btn-lg btn-light btn-rounded">New Post</a>
+@if (Model.BlogPosts == null || Model.BlogPosts.Count() == 0)
+{
+    <div class="bf-posts-empty" style="display: block">
+        <div class="bf-posts-empty-body">
+            <h1>Let's write a new post!</h1>
+            <a href="/admin/editor/0" class="btn btn-lg btn-light btn-rounded">New Post</a>
+        </div>
     </div>
-</div>
+}
+
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>

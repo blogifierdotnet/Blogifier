@@ -35,13 +35,12 @@ namespace Blogifier.Core.Controllers.Api
         [HttpGet("post/{id:int}")]
         public PostEditModel GetById(int id)
         {
+            if (id < 1)
+                return new PostEditModel();
+
             var profile = GetProfile();
 
             var post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
-            if (id < 1)
-            {
-                post = _db.BlogPosts.SingleIncluded(p => p.Profile.IdentityName == User.Identity.Name).Result;
-            }
 
             var postImg = post.Image == null ? profile.Image : post.Image;
             if (string.IsNullOrEmpty(postImg)) postImg = ApplicationSettings.PostImage;

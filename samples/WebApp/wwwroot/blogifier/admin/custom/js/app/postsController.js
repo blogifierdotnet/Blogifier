@@ -67,7 +67,7 @@
     function showPostCallback(data) {
         curSlug = data.slug;
         var cats = '';
-        if (data.categories.length > 0) {
+        if (data.categories && data.categories.length > 0) {
             for (i = 0; i < data.categories.length; i++) {
                 cats = cats + data.categories[i].text + ', ';
             }
