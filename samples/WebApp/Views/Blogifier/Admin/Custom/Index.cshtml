@@ -26,7 +26,7 @@
                         @foreach (var cat in Model.CategoryFilter)
                         {
                             var isChecked = cat.Selected ? "checked" : "";
-                            <label class="item-category-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                        <label class="item-category-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
                         }
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                     @foreach (var ftr in Model.StatusFilter)
                     {
                         var ftrChecked = ftr.Selected ? "checked" : "";
-                        <label class="item-status-label"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="item-status-label-name">@ftr.Text</span></label>
+                    <label class="item-status-label"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="item-status-label-name">@ftr.Text</span></label>
                     }
                 </div>
             </form>
@@ -51,24 +51,24 @@
             {
                 var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
                 if (curPost == 0) { curPost = item.BlogPostId; }
-                <li class="item">
-                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <a class="item-link item-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
-                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
-                    <div class="item-info">
-                        <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
-                        <a aria-label="Publish date">@published</a>
-                    </div>
-                </li>
+            <li class="item">
+                <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                <a class="item-link item-link-desktop" href="#" onclick="return postsController.showPost('@item.BlogPostId')">@item.Title</a>
+                <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+                <div class="item-info">
+                    <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
+                    <a aria-label="Publish date">@published</a>
+                </div>
+            </li>
             }
         </ul>
         @if (pgr.ShowNewer || pgr.ShowOlder)
         {
-            <ul class="bf-posts-pagination">
-                <li class="item"><a class="item-link" href="~/admin/@pgr.Older" disabled><i class="fa fa-angle-left"></i></a></li>
-                <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
-                <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
-            </ul>
+        <ul class="bf-posts-pagination">
+            <li class="item"><a class="item-link" href="~/admin/@pgr.Older" disabled><i class="fa fa-angle-left"></i></a></li>
+            <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+            <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
+        </ul>
         }
     </div>
     <div class="bf-content bf-posts-preview">

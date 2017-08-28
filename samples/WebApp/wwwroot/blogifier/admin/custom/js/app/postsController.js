@@ -90,6 +90,7 @@
         if (prismClass.length) {
             Prism.highlightAll();
         }
+        $('html,body').animate({ scrollTop: 0 }, 0);
     }
 
     function editPost(id) {

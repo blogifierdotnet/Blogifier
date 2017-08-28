@@ -6,9 +6,16 @@ body {
 
 //
 .bf {
-    height: 100%;
+    position: relative;
+    padding-left: $width-sidebar;
 
     .bf-sidebar {
+        width: $width-sidebar;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
         background: $cl-bf;
         color: #fff;
 
@@ -17,33 +24,7 @@ body {
         }
     }
 
-
-    @media (min-width:800px) {
-        display: table;
-
-        .bf-sidebar,
-        .bf-content {
-            display: table-cell;
-            vertical-align: top;
-            min-height: 100%;
-        }
-
-        .bf-content {
-            width: 100%;
-        }
-
-        .bf-sidebar {
-            width: 360px;
-            min-width: 360px;
-        }
-    }
-
-
-    @media (min-width:1280px) {
-        .bf-sidebar {
-            width: 400px;
-            min-width: 400px;
-        }
+    .bf-content {
     }
 }
 
