@@ -4,99 +4,117 @@
             <div class="bf-filemanager">
                 <div class="bf-filemanager-header clearfix">
                     <label class="custom-control custom-checkbox float-left">
-                        <input type="checkbox" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input item-check">
                         <span class="custom-control-indicator"></span>
                     </label>
-                    <button class="btn btn-light float-left mr-2" type="button">upload</button>
-                    <button class="btn btn-outline-light btn-icon float-left" type="button"><i class="fa fa-trash"></i></button>
-                    <div class="dropdown float-right">
-                        <button class="btn btn-outline-light btn-icon dropdown-toggle" type="button" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filterFileManager">
-                            <form class="filemanager-search" action="" method="get">
-                                <input type="search" name="search" class="form-control" placeholder="Search..." />
-                            </form>
-                            <label class="dropdown-item custom-control custom-radio d-block">
-                                <input id="filterAll" name="filter" type="radio" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">All</span>
-                            </label>
-                            <label class="dropdown-item custom-control custom-radio d-block">
-                                <input id="filterImages" name="filter" type="radio" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Images</span>
-                            </label>
-                            <label class="dropdown-item custom-control custom-radio d-block">
-                                <input id="filterAttachments" name="filter" type="radio" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Attachments</span>
-                            </label>
-                        </div>
+                    <button class="btn btn-light btn-sm float-left mr-2" type="button">upload</button>
+                    <button class="btn btn-outline-light btn-icon btn-sm float-left" type="button"><i class="fa fa-trash"></i></button>
+                    <div class="dropdown float-right ml-2">
+                        <button class="btn btn-outline-secondary btn-icon btn-sm dropdown-toggle" type="button" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="filterFileManager">
+                            <li>
+                                <form class="filemanager-search" action="" method="get">
+                                    <input type="search" name="search" class="form-control" placeholder="Search..." />
+                                </form>
+                            </li>
+                            <li>
+                                <label class="dropdown-item custom-control custom-radio d-block">
+                                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">All</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item custom-control custom-radio d-block">
+                                    <input id="filterImages" name="filter" type="radio" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Images</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item custom-control custom-radio d-block">
+                                    <input id="filterAttachments" name="filter" type="radio" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Attachments</span>
+                                </label>
+                            </li>
+                        </ul>
                     </div>
+                    <div class="btn-group btn-group-icon float-right ml-2" role="group">
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></button>
+                    </div>
+                    <span class="item-pagination float-right">1-10 out of 50</span>
+                    
                 </div>
                 <div class="bf-filemanager-body">
                     <div class="row no-gutters">
                         <div class="col-sm-6 col-md-4 col-lg-3">
                             <div class="item">
-                                <img class="item-img" src="/embedded/lib/img/cover.png" alt="filename" />
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
                                 <label class="item-name custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input item-check">
                                     <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">FileName.jpg</span>
+                                    <span class="custom-control-description">filename.jpg</span>
                                 </label>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4 col-lg-3">
                             <div class="item">
-                                <img class="item-img" src="/embedded/lib/img/cover.png" alt="filename" />
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
                                 <label class="item-name custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input item-check">
                                     <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">FileName.jpg</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-4 col-lg-3">
-                            <div class="item">
-                                <img class="item-img" src="/embedded/lib/img/cover.png" alt="filename" />
-                                <label class="item-name custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">FileName.jpg</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-4 col-lg-3">
-                            <div class="item">
-                                <img class="item-img" src="/embedded/lib/img/cover.png" alt="filename" />
-                                <label class="item-name custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">FileName.jpg</span>
+                                    <span class="custom-control-description">filename.jpg</span>
                                 </label>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4 col-lg-3">
                             <div class="item">
-                                <img class="item-img" src="/embedded/lib/img/cover.png" alt="filename" />
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
                                 <label class="item-name custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input">
+                                    <input type="checkbox" class="custom-control-input item-check">
                                     <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">FileName.jpg</span>
+                                    <span class="custom-control-description">filename.jpg</span>
                                 </label>
                             </div>
                         </div>
-
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="item">
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
+                                <label class="item-name custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input item-check">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">filename.jpg</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="item">
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
+                                <label class="item-name custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input item-check">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">filename.jpg</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <div class="item">
+                                <div class="item-img"><img src="/embedded/lib/img/cover.png" alt="filename" /></div>
+                                <label class="item-name custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input item-check">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">filename.jpg</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="bf-filemanager-footer clearfix">
-                    <div class="btn-group float-left" role="group">
-                        <button type="button" class="btn btn-icon btn-outline-secondary"><i class="fa fa-angle-left"></i></button>
-                        <button type="button" class="btn btn-icon btn-outline-secondary"><i class="fa fa-angle-right"></i></button>
-                    </div>
-                    <button class="btn btn-primary float-right ml-2" type="button">select</button>
-                    <button class="btn btn-link float-right" type="button" data-dismiss="modal">cancel</button>
+                   
+                    <button class="btn btn-primary float-right btn-sm ml-2" type="button">select</button>
+                    <button class="btn btn-link float-right btn-sm" type="button" data-dismiss="modal">cancel</button>
                 </div>
             </div>
         </div>

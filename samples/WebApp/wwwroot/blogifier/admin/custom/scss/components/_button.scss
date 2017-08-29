@@ -54,6 +54,10 @@
 .btn-icon {
     padding: 0;
     width: 3rem;
+
+    &.btn-sm {
+        width: 2.5rem;
+    }
 }
 
 // btn-group
@@ -129,6 +133,11 @@
     border-color: #fff;
     color: $cl-bf;
 }
+
+.btn-outline-light.active, .btn-outline-light:active, .show > .btn-outline-light.dropdown-toggle {
+    color: $cl-bf;
+}
+
 
 // btn-link
 .btn-link {

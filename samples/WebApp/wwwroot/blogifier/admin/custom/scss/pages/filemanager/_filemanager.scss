@@ -1,118 +1,131 @@
 .bf-modal-filemanager {
     .modal-dialog {
         width: 100%;
-        max-width: 1024px;
+        max-width: 800px;
+    }
+
+    .modal-content {
+        background: none;
     }
 }
 
-// filemanager header
-.bf-filemanager-header {
-    background: $cl-bf;
-    padding: 2rem;
-    padding-left: 0;
 
-    > .custom-control {
-        width: 5rem;
-        height: 2.5rem;
-        margin: 0;
-        padding: 0;
+.bf-filemanager {
 
-        .custom-control-indicator {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%)
-        }
-    }
+    &-header {
+        background: $cl-bf;
+        padding: 1rem 1rem 1rem 0;
 
-    .dropdown-menu {
-        width: 12rem;
-
-        .form-control {
-            border-width: 0;
-            border-bottom-width: 1px;
-            height: 2.5rem;
-            border-radius: 0;
-        }
-
-        .custom-control {
+        > .custom-control {
+            width: 4rem;
+            height: 2.25rem;
             margin: 0;
-            padding-left: 2rem;
+            padding: 0;
+
+            .custom-control-indicator {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%)
+            }
         }
 
-        .custom-control-indicator {
-            top: .6875rem;
-            left: .5rem;
+        .dropdown-menu {
+            width: 12rem;
+
+            .form-control {
+                border: 0;
+                border-radius: 0;
+                height: 2.5rem;
+            }
+
+            .custom-control {
+                margin: 0;
+                padding-left: 2rem;
+            }
+
+            .custom-control-indicator {
+                top: .6875rem;
+                left: .5rem;
+            }
+        }
+
+        .item-pagination {
+            line-height: 2.5rem;
+            font-size: .75rem;
+            height: 2.25rem;
+            text-transform: uppercase;
+            color: #868e96;
         }
     }
-}
 
-// filemanager body
+    &-body {
+        padding: .5rem;
+        background-color: #fff;
 
-.bf-filemanager-body {
-    padding: 1rem;
+        .col-sm-6 {
+            padding: .5rem;
+        }
 
-    .col-sm-6 {
-        padding: 1rem;
-    }
+        .item {
+            display: block;
+            box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.25);
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .item {
-        position: relative;
-        height: 180px;
-        overflow: hidden;
-        border-radius: 3px;
-        display: block;
-        cursor: pointer;
+        .item-img {
+            height: 9rem;
+            overflow: hidden;
+            position: relative;
 
-        &::after {
-            content: "";
+            &::after {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+
+            img {
+                min-width: 100%;
+                max-width: none;
+                height: 100%;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .item-name {
+            margin: 0;
+            padding: .5rem 2.25rem;
             display: block;
             width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.39);
-            z-index: 1;
+            background: #fff;
+            font-size: .875rem;
+            @include ellipsis;
+
+            .custom-control-indicator {
+                top: .578125rem;
+                left: .625rem;
+            }
         }
     }
 
-    .item-img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        min-height: 100%;
-        min-width: 100%;
-        max-width: 200%;
-        max-height: 100%;
-    }
+    &-footer {
+        background-color: #fff;
+        padding: 1rem;
+        border-top: 1px solid #eee;
 
-    .item-name {
-        position: absolute;
-        bottom: 0;
-        color: #fff;
-        z-index: 2;
-        margin: 0;
-        display: block;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.37);
-        padding: .5625rem 1rem .5rem 2.5rem;
-
-        .custom-control-indicator {
-            top: .75rem;
-            left: 1rem;
+        .fa {
+            font-size: 1.375rem;
+            display: block;
+            line-height: 1.875rem;
         }
-    }
-}
-
-// filemanager footer
-.bf-filemanager-footer {
-    padding: 1.5rem 2rem;
-    border-top: 1px solid #eee;
-
-    .fa {
-        font-size: 1.375rem;
-        display: block;
-        line-height: 2.375rem;
     }
 }

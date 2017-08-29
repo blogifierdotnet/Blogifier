@@ -151,3 +151,20 @@ $('input[type=radio]').on('change', function () {
         window.location.href = getUrl("admin/files?filter=" + this.id);
     }
 });
+
+
+
+var itemCheckfm = $('.bf-filemanager .item-check');
+var firstItemCheckfm = itemCheckfm.first();
+
+// check all
+$(firstItemCheckfm).on('change', function () {
+    $(itemCheckfm).prop('checked', this.checked);
+});
+
+// uncheck "check all" when one item is unchecked
+$(itemCheckfm).not(firstItemCheckfm).on('change', function () {
+    if ($(this).not(':checked')) {
+        $(firstItemCheckfm).prop('checked', false);
+    }
+});
