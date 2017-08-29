@@ -1,11 +1,3 @@
-
-.btn {
-    &-unstyled {
-        @include unstyled(button);
-    }
-}
-
-
 .hide {
     display: none !important;
 }
