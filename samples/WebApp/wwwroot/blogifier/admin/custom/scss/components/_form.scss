@@ -1,14 +1,22 @@
 ﻿// form-control
 .form-control {
     border: 2px solid $cl-black-10;
-    background: none;
+    background-color: transparent;
+    padding: .75rem 1rem;
 
     &:focus {
         border-color: $cl-black-25;
-        background: none;
+        background-color: transparent;
+    }
+
+    &[readonly], &:disabled {
+        background-color: #e9ecef;
     }
 }
 
+select.form-control:not([size]):not([multiple]) {
+    height: 3rem;
+}
 
 // custom control
 .custom-control-indicator {
