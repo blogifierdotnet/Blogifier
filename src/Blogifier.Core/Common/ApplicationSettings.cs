@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Blogifier.Core.Common
 {
@@ -28,6 +29,13 @@ namespace Blogifier.Core.Common
         public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";
         public static string ProfileImage { get; set; } = "/embedded/lib/img/cover.png";
         public static string PostImage { get; set; } = "/embedded/lib/img/cover.png";
+
+        #endregion
+
+        #region database
+
+        // this is not set directly from the appsettings.json file. Instead, this is passed from the host appplication to configure the appropriate database
+        public static System.Action<DbContextOptionsBuilder> DatabaseOptions { get; set; } = options => options.UseInMemoryDatabase(Constants.Blogifier);
 
         #endregion
 

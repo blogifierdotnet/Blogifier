@@ -24,7 +24,7 @@ namespace Blogifier.Core
 {
     public class Configuration
     {
-		public static void InitServices(IServiceCollection services, IConfiguration config = null)
+		public static void InitServices(IServiceCollection services, System.Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
 		{
             if(config != null)
             {
@@ -45,6 +45,11 @@ namespace Blogifier.Core
             // add route constraint
             services.Configure<RouteOptions>(options =>
                 options.ConstraintMap.Add("author", typeof(AuthorRouteConstraint)));
+
+            if (databaseOptions != null)
+            {
+                ApplicationSettings.DatabaseOptions = databaseOptions;
+            }
 
             AddDatabase(services);
 
@@ -79,11 +84,7 @@ namespace Blogifier.Core
 		static void AddDatabase(IServiceCollection services)
 		{
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            if (ApplicationSettings.UseInMemoryDatabase)
-                services.AddDbContext<BlogifierDbContext>(options => options.UseInMemoryDatabase(Constants.Blogifier));
-            else
-                services.AddDbContext<BlogifierDbContext>(options => options.UseSqlServer(ApplicationSettings.ConnectionString));
+            services.AddDbContext<BlogifierDbContext>(ApplicationSettings.DatabaseOptions);
         }
 
 		static void AddFileProviders(IServiceCollection services)

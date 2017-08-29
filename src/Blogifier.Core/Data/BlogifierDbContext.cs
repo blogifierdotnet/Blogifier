@@ -21,10 +21,7 @@ namespace Blogifier.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(ApplicationSettings.UseInMemoryDatabase)
-                optionsBuilder.UseInMemoryDatabase(Constants.Blogifier);
-            else
-                optionsBuilder.UseSqlServer(ApplicationSettings.ConnectionString);
+            ApplicationSettings.DatabaseOptions(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
@@ -23,11 +22,11 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
+            System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseSqlServer(connectionString);
+
+            services.AddDbContext<ApplicationDbContext>(databaseOptions);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -38,7 +37,7 @@ namespace WebApp
 
             services.AddMvc();
 
-            Blogifier.Core.Configuration.InitServices(services, Configuration);
+            Blogifier.Core.Configuration.InitServices(services, databaseOptions, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
