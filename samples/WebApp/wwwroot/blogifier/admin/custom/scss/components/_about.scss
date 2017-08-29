@@ -1,8 +1,9 @@
 .bf-about {
-    @include linear-gradient($cl-bf-light, $cl-bf, 1);
+    background: $cl-bf;
     color: #fff;
     text-align: center;
     padding: 4rem 1rem 3rem;
+    @include noselect;
 
     .item-logo {
         width: 7rem;
@@ -43,18 +44,6 @@
 
         i {
             font-size: 1.25rem;
-        }
-    }
-
-    .item-notify {
-        border: 2px solid #fff;
-        margin-top: 3rem;
-        border-radius: $radius-md;
-        padding: 1rem;
-        margin-bottom: -2rem;
-
-        a {
-            color: #fff;
         }
     }
 }
