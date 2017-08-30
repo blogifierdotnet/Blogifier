@@ -1,11 +1,15 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPostsModel
-@using Blogifier.Core.Extensions
 @using Blogifier.Core.Common;
 @{
     var pgr = Model.Pager;
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
     var curPost = 0;
+
+    bool showEmptyListCover = Model.BlogPosts == null || Model.BlogPosts.Count() == 0;
+    if (!string.IsNullOrEmpty(Context.Request.Query["search"])){
+        showEmptyListCover = false;
+    }
 }
 <div class="bf bf-posts">
     <div class="bf-sidebar">
@@ -19,7 +23,7 @@
                 <input class="item-search-input" type="search" name="search" placeholder="Search..." autocomplete="off" />
                 <i class="item-search-icon fa fa-search"></i>
             </form>
-            <form id="frmFilter" asp-controller="Admin" asp-action="Index" method="post">
+            <form id="frmPostFilter" asp-controller="Admin" asp-action="Index" method="post">
                 <div class="item-category">
                     <button class="item-category-toggle" type="button" data-toggle="collapse" href="#postsFilterCategory" aria-expanded="false" aria-controls="postsFilterCategory">Categories <i class="item-category-icon fa fa-angle-down"></i></button>
                     <div class="item-category-list collapse" id="postsFilterCategory">
@@ -89,7 +93,7 @@
         <div class="item-body"></div>
     </div>
 </div>
-@if (Model.BlogPosts == null || Model.BlogPosts.Count() == 0)
+@if (showEmptyListCover)
 {
     <div class="bf-posts-empty">
         <div class="item-body">
@@ -105,7 +109,7 @@
     <script src="~/blogifier/admin/custom/js/lib/prism.js"></script>
     <script>
         var submitFilter = function () {
-            $('#frmFilter').submit();
+            $('#frmPostFilter').submit();
         }
         postsController.showPost('@curPost');
         $('.bf-posts-list .item-link-desktop:first').addClass('active');
