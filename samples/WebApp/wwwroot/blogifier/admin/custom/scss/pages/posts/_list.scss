@@ -95,3 +95,34 @@
         }
     }
 }
+
+.bf-posts-pagination {
+    @include unstyled(ul);
+    padding: 1.5rem;
+
+    .item {
+        display: inline-block;
+        vertical-align: top;
+
+        &:first-child {
+            margin-right: 1rem;
+        }
+
+        &:last-child {
+            margin-left: 1rem;
+        }
+
+        &-count {
+            position: relative;
+            top: 1px;
+        }
+
+        &-link {
+            font-size: 1.5rem;
+        }
+
+        i, span {
+            display: block;
+        }
+    }
+}
