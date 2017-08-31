@@ -1,43 +1,27 @@
 .bf-posts-filters {
-    .item-group {
-        position: relative;
+    .filters-label {
+        margin: 0;
+        display: block;
+        color: $cl-white-50;
+        font-size: .875rem;
+    }
+
+    .filters-group {
+        padding-left: 1rem;
 
         &-title {
+            display: block;
+            font-size: 1rem;
             text-transform: uppercase;
+            margin-top: 1rem;
             font-size: .875rem;
-            margin-bottom: .25rem;
-            color: #fff;
-            font-weight: $fw-medium;
+            color: $cl-white-20;
+            margin-bottom: .5rem;
         }
 
         &-category {
-            margin-top: 1rem;
+            max-height: 20.75rem;
+            overflow: hidden;
         }
-    }
-
-    .item-label {
-        display: block;
-        margin: 0;
-        font-size: .875rem;
-        color: $cl-white-50;
-        padding-left: 2rem;
-
-        &:hover {
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .custom-control-indicator {
-        }
-    }
-
-    .item-category-list {
-        max-height: 240px;
-        overflow: hidden;
-        padding-left: 1rem;
-    }
-
-    .item-status-list {
-        padding-left: 1rem;
     }
 }
