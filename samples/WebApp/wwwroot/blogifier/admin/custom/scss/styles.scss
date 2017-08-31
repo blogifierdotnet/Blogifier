@@ -33,12 +33,8 @@
 
 // pages > posts
 @import "pages/posts/layout";
-@import "pages/posts/toolbar";
-@import "pages/posts/filters";
-@import "pages/posts/multiactions";
+@import "pages/posts/sidebar";
 @import "pages/posts/list";
-@import "pages/posts/pagination";
-@import "pages/posts/preview";
 @import "pages/posts/empty";
 
 // pages > editor
