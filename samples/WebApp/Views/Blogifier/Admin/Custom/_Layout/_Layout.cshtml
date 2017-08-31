@@ -16,6 +16,7 @@
             avatar = Model.Profile.Avatar;
         }
     }
+    var showSettings = Context.Request.Path.ToString().Contains("/admin/settings");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -29,28 +30,31 @@
                 <li>
                     <a href="~/admin" class="active"><i class="fa fa-info-circle"></i>Posts</a>
                     <!-- show it when its on the /admin -->
-                    <div class="bf-posts-tools">
-                        <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
-                            <div class="item-group item-group-status">
-                                <div class="item-group-title">Status</div>
-                                @foreach (var ftr in Model.StatusFilter)
-                                {
-                                    var ftrChecked = ftr.Selected ? "checked" : "";
-                                    <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
-                                }
-                            </div>
-                            <div class="item-group item-group-category">
-                                <div class="item-group-title">Category</div>
-                                <div class="item-category-list">
-                                    @foreach (var cat in Model.CategoryFilter)
+                    @if (!showSettings)
+                    {
+                        <div class="bf-posts-tools">
+                            <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+                                <div class="item-group item-group-status">
+                                    <div class="item-group-title">Status</div>
+                                    @foreach (var ftr in Model.StatusFilter)
                                     {
-                                        var isChecked = cat.Selected ? "checked" : "";
-                                        <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                                        var ftrChecked = ftr.Selected ? "checked" : "";
+                                        <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
                                     }
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                                <div class="item-group item-group-category">
+                                    <div class="item-group-title">Category</div>
+                                    <div class="item-category-list">
+                                        @foreach (var cat in Model.CategoryFilter)
+                                        {
+                                            var isChecked = cat.Selected ? "checked" : "";
+                                            <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                                        }
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    }
                     <!-- / -->
 
                 </li>
@@ -58,17 +62,20 @@
                     <a href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a>
 
                     <!-- show it when its on the /admin/settings/* -->
-                    <ul class="bf-sidebar-settings">
-                        <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
-                        <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
-                        <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span></a></li>
-                        <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span></a></li>
-                        @if (Model.Profile != null && Model.Profile.IsAdmin)
-                        {
-                            <li class="application"><a href="~/admin/settings/application"><span>Administration</span></a></li>
-                            <li class="about"><a href="~/admin/settings/about"><span>About</span></a></li>
-                        }
-                    </ul>
+                    @if (showSettings)
+                    {
+                        <ul class="bf-sidebar-settings">
+                            <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
+                            <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
+                            <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span></a></li>
+                            <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span></a></li>
+                            @if (Model.Profile != null && Model.Profile.IsAdmin)
+                            {
+                                <li class="application"><a href="~/admin/settings/application"><span>Administration</span></a></li>
+                                <li class="about"><a href="~/admin/settings/about"><span>About</span></a></li>
+                            }
+                        </ul>
+                    }
                     <!-- / -->
 
                 </li>
