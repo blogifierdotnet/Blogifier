@@ -83,4 +83,9 @@
         margin: 0;
         font-size: .875rem;
     }
+
+    .item-category-list {
+        max-height: 410px;
+        overflow: hidden;
+    }
 }

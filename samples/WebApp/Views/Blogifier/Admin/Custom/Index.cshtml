@@ -56,11 +56,12 @@
                 if (curPost == 0) { curPost = item.BlogPostId; }
                 <li class="item">
                     <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
                     <div class="item-info">
-                        <a href="/@ApplicationSettings.BlogRoute@item.Slug" data-toggle="tooltip" title="@item.PostViews views" target="_blank" aria-label="View" role="button"><i class="fa fa-eye"></i></a>
+                        <span> @item.PostViews</span>
                         <a aria-label="Publish date">@published</a>
                     </div>
+                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+                    <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
                 </li>
             }
         </ul>

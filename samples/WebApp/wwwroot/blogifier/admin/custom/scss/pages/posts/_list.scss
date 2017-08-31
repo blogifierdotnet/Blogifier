@@ -6,11 +6,59 @@
 
 
 .bf-posts-list {
-    padding: 1.5rem;
     @include unstyled(ul);
 
     .item {
-        padding: 1.5rem;
+        background: #fff;
         border-bottom: 1px solid $cl-black-5;
+        position: relative;
+    }
+
+
+    .item-select {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        display: block;
+        padding: 0;
+        width: 4rem;
+        height: 4rem;
+
+        .custom-control-indicator {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+
+    .item-link {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: #000;
+        height: 4rem;
+        line-height: 4rem;
+        padding-left: 4rem;
+        display: block;
+    }
+
+    .item-show {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .item-info {
+        display: none;
+        font-size: .875rem;
+        position: absolute;
+        left: 3rem;
+        top: 1rem;
+
+        label {
+            margin: 0;
+            vertical-align: top;
+        }
     }
 }
