@@ -21,39 +21,34 @@
             <button class="search-submit" tabindex="4" type="submit"><i class="fa fa-search"></i></button>
             <input class="search-input" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
         </form>
-        <div class="bf-posts-filters">
-            <form id="frmPostFilter" asp-controller="Admin" asp-action="Index" method="post">
-                <div class="item-status d-flex">
-                    @foreach (var ftr in Model.StatusFilter)
+        <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+            <div class="item-group item-group-status">
+                @foreach (var ftr in Model.StatusFilter)
+                {
+                    var ftrChecked = ftr.Selected ? "checked" : "";
+                    <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
+                }
+            </div>
+            <div class="item-group item-group-category">
+                <div class="item-category-list">
+                    @foreach (var cat in Model.CategoryFilter)
                     {
-                        var ftrChecked = ftr.Selected ? "checked" : "";
-                        <label class="custom-control custom-checkbox">
-                            <input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span>
-                        </label>
+                        var isChecked = cat.Selected ? "checked" : "";
+                        <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
                     }
                 </div>
-                <div class="item-category">
-                    <div class="item-category-list">
-                        @foreach (var cat in Model.CategoryFilter)
-                        {
-                            var isChecked = cat.Selected ? "checked" : "";
-                            <label class="item-category-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                        }
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="bf-content">
-        <label class="custom-control custom-checkbox"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-        <div class="bf-posts-multiactions" id="postsMultiactions">
-            <div class="btn-group btn-group-sm btn-group-icon">
+        <div class="bf-posts-tools">
+            <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+            <div class="btn-group btn-group-sm btn-group-icon float-left" id="postsMultiactions">
                 <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
                 <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
                 <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
             </div>
         </div>
-        <hr />
         <ul class="bf-posts-list" aria-label="posts">
             @foreach (var item in Model.BlogPosts)
             {

@@ -1,10 +1,21 @@
 .bf-posts-add {
     padding: 1.5rem;
-    border-bottom: 1px solid $cl-black-10;
+    border-bottom: 1px solid $cl-black-5;
 }
 
 .bf-posts-search {
     position: relative;
+
+    &::after {
+        content: "";
+        display: block;
+        height: 1px;
+        position: absolute;
+        bottom: 0;
+        left: 1.5rem;
+        right: 1.5rem;
+        background: $cl-black-5;
+    }
 
     .search-input {
         border: 0;
@@ -46,5 +57,30 @@
 
     .search-submit:focus ~ .search-input {
         background: $cl-black-10;
+    }
+}
+
+.bf-posts-filters {
+
+    .item-group {
+        padding: 1.5rem;
+        position: relative;
+
+        &::after {
+            content: "";
+            display: block;
+            height: 1px;
+            position: absolute;
+            bottom: 0px;
+            left: 1.5rem;
+            right: 1.5rem;
+            background: $cl-black-5;
+        }
+    }
+
+    .item-label {
+        display: block;
+        margin: 0;
+        font-size: .875rem;
     }
 }

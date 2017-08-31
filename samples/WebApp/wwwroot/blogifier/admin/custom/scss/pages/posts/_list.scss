@@ -1,0 +1,16 @@
+.bf-posts-tools {
+    @include clearfix;
+    padding: 1.5rem;
+    border-bottom: 1px solid $cl-black-5;
+}
+
+
+.bf-posts-list {
+    padding: 1.5rem;
+    @include unstyled(ul);
+
+    .item {
+        padding: 1.5rem;
+        border-bottom: 1px solid $cl-black-5;
+    }
+}
