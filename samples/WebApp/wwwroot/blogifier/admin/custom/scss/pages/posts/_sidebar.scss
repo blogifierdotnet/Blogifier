@@ -1,21 +1,22 @@
 .bf-sidebar-nav {
-    li {
-        border-bottom: 1px solid $cl-black-10;
-    }
+    > li {
+        border-bottom: 1px solid $cl-black-5;
 
-    a {
-        color: $cl-white-50;
-        padding: 0 1.5rem;
-        display: block;
-        line-height: 3rem;
+        > a {
+            color: $cl-white-50;
+            padding: 0 1.5rem;
+            display: block;
+            line-height: 3rem;
+            text-transform: uppercase;
 
-        &:hover {
-            color: #fff;
-            cursor: pointer;
-        }
-        &.active {
-    background:$cl-black-5;
+            &:hover {
+                color: #fff;
+                cursor: pointer;
+            }
 
+            &.active {
+                background: $cl-black-5;
+            }
         }
     }
 
@@ -26,32 +27,22 @@
 
 .bf-posts-tools {
     padding: 1.5rem;
-    border-bottom: 1px solid $cl-black-5;
-    background:$cl-black-5;
+    background: $cl-black-5;
 }
 
 .bf-posts-search {
     position: relative;
     padding: 0;
-    margin-bottom: 1rem;
 
     .search-input {
         border: 0;
         padding: 0 1rem;
-        background: $cl-black-10;
+        background: #eee;
         outline: none;
         width: 100%;
         height: 2.5rem;
-        color: #fff;
+        color: #000;
         border-radius: 3px;
-
-        &:focus {
-            background: $cl-black-10;
-        }
-
-        &::placeholder {
-            color: $cl-white-50;
-        }
     }
 }
 
@@ -66,8 +57,9 @@
             font-weight: $fw-medium;
             margin-bottom: 1rem;
         }
-            &-category {
-            margin-top:1rem;
+
+        &-category {
+            margin-top: 1rem;
         }
     }
 

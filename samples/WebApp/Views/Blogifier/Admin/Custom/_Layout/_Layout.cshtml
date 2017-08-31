@@ -22,16 +22,18 @@
 <html lang="en">
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 <body>
-    @*@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")*@
     <div class="bf bf-posts">
         <div class="bf-sidebar">
-            <div class="bf-nav"><img src="@avatar">@userName</div>
+            <div class="bf-nav"><img class="item-img" src="@avatar"><span class="item-name">@userName</span></div>
             <ul class="bf-sidebar-nav">
                 <li>
-                    <a href="~/admin" class="active"><i class="fa fa-info-circle"></i>Posts</a>
-                    <!-- show it when its on the /admin -->
+                    @if (showSettings)
+                    {
+                    <a href="~/admin">Posts</a>
+                    }
                     @if (!showSettings)
                     {
+                        <a href="~/admin" class="active">Posts</a>
                         <div class="bf-posts-tools">
                             <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
                                 <div class="item-group item-group-status">
@@ -55,15 +57,16 @@
                             </form>
                         </div>
                     }
-                    <!-- / -->
-
                 </li>
                 <li>
-                    <a href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a>
+                    @if (!showSettings)
+                    {
+                        <a href="~/admin/settings/profile">Settings</a>
 
-                    <!-- show it when its on the /admin/settings/* -->
+                    }
                     @if (showSettings)
                     {
+                    <a href="~/admin/settings/profile" class="active">Settings</a>
                         <ul class="bf-sidebar-settings">
                             <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
                             <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
@@ -76,12 +79,10 @@
                             }
                         </ul>
                     }
-                    <!-- / -->
-
                 </li>
                 @*<li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>*@
-                <li><a href="#" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logoff</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#aboutBlogifier"><i class="fa fa-info-circle"></i>About</a></li>
+                <li><a href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#aboutBlogifier">About</a></li>
             </ul>
         </div>
         <div class="bf-content">
