@@ -1,25 +1,22 @@
-
 .bf-posts-toolbar {
     @include clearfix;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.5rem 0;
     border-bottom: 1px solid $cl-black-5;
-}
-.bf-posts-search {
-    position: relative;
-    padding: 0;
 
-    .search-input {
-        border: 0;
-        padding: 0 1rem;
-        background: #eee;
-        outline: none;
-        width: 100%;
+    .custom-control {
+        margin: 0;
+        display: block;
+        padding: 0;
+        width: 4rem;
         height: 2.5rem;
-        color: #000;
-        border-radius: 3px;
+
+        &-indicator {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 }
-
 
 .bf-posts-list {
     @include unstyled(ul);
@@ -56,6 +53,10 @@
         line-height: 4rem;
         padding-left: 4rem;
         display: block;
+
+        &:hover {
+            background: #fafafa;
+        }
     }
 
     .item-show {
@@ -63,14 +64,30 @@
         right: 0;
         top: 50%;
         transform: translateY(-50%);
+        width: 4rem;
+        height: 4rem;
+
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        &:hover {
+            background: $cl-bf;
+            color: #fff;
+        }
     }
 
     .item-info {
-        display: none;
-        font-size: .875rem;
         position: absolute;
-        left: 3rem;
-        top: 1rem;
+        right: 5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: .5;
+        font-size: .75rem;
+        text-transform: uppercase;
 
         label {
             margin: 0;

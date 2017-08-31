@@ -51,8 +51,6 @@
     }
 
     .nav-item-body {
-        @include unstyled(ul);
         background: $cl-black-5;
-        padding: 0 0 2rem 1.5rem;
     }
 }

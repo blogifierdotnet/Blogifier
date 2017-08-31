@@ -15,14 +15,14 @@
 
 <div class="bf-posts-toolbar">
     <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-    <a href="~/admin/editor/0" tabindex="2" class="btn btn-primary float-left mr-2">New Post</a>
-    <div class="btn-group btn-group-sm btn-group-icon float-left" id="postsMultiactions">
-        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
-        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+    <a href="~/admin/editor/0" tabindex="2" class="btn btn-primary btn-sm float-left mr-2">New Post</a>
+    <div class="btn-group float-left" id="postsMultiactions">
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
     </div>
     <form class="bf-posts-search float-right" action="~/admin" method="get">
-        <input class="search-input" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <input class="form-control form-control-sm" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
     </form>
 </div>
 <ul class="bf-posts-list" aria-label="posts">
@@ -32,11 +32,11 @@
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="item">
             <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
             <div class="item-info">
-                <span> @item.PostViews</span>
+                <span>@item.PostViews Views /</span>
                 <a aria-label="Publish date">@published</a>
             </div>
-            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
             <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
         </li>
     }
@@ -59,6 +59,7 @@
         </div>
     </div>
 }
+
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>

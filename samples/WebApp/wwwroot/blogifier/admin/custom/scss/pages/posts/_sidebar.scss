@@ -1,4 +1,7 @@
 .bf-posts-filters {
+    @include unstyled(ul);
+    padding: 0 0 2rem 1.5rem;
+
     .filters-label {
         margin: 0;
         display: block;

@@ -12,6 +12,10 @@
     &[readonly], &:disabled {
         background-color: #e9ecef;
     }
+
+    &-sm {
+           padding: .5rem 1rem;
+    }
 }
 
 select.form-control:not([size]):not([multiple]) {

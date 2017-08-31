@@ -149,19 +149,11 @@ $(itemCheck).not(firstItemCheck).on('change', function () {
     }
 });
 
-// show multi action buttons when any item checked
-$(document).on('change', itemCheck, function () {
-    if ($(itemCheck).is(':checked')) {
-        $(btnAction).stop(true, true).slideDown();
-        // hide filters
-        $(sidebarTools).collapse('hide');
-    } else {
-        $(btnAction).stop(true, true).slideUp();
-    }
-});
-
-// uncheck all when filters is active
-$(sidebarTools).on('show.bs.collapse', function () {
-    $(itemCheck).prop('checked', false);
-    $(btnAction).stop(true, true).slideUp();
-})
+//// show multi action buttons when any item checked
+//$(document).on('change', itemCheck, function () {
+//    if ($(itemCheck).is(':checked')) {
+//        $(btnAction).stop(true, true).fadeIn();
+//    } else {
+//        $(btnAction).stop(true, true).fadeOut();
+//    }
+//});

@@ -1,0 +1,21 @@
+.bf-sidebar-settings {
+    @include unstyled(ul);
+    padding: 0 0 2rem 2.5rem;
+
+    li {
+        margin-bottom: .25rem;
+
+        &:last-child {
+            margin: 0;
+        }
+
+        a {
+            font-size: .9875rem;
+            color: $cl-white-50;
+
+            &.active, &:focus, &:hover {
+                color: #fff;
+            }
+        }
+    }
+}
