@@ -22,15 +22,24 @@
             var tag = "";
             if (asset.assetType === 0) {
                 // image
-                tag = '<div class="col-sm-4"><a href="#" onclick="filePickerController.pick(\'' +
-                    asset.id + '\'); return false;"><img src="' +
-                    asset.url + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
+                tag = '<div class="col-sm-6 col-md-4 col-lg-3">' +
+                    '	<a href="" onclick="fileManagerController.pick(' + asset.id + '); return false">' +
+                    '		<div class="item">' +
+                    '			<div class="item-img"><img src="' + asset.url + '" alt="filename" /></div>' +
+                    '			<label class="item-name custom-control custom-checkbox">' +
+                    '				<input type="checkbox" class="custom-control-input item-check">' +
+                    '				<span class="custom-control-indicator"></span>' +
+                    '				<span class="custom-control-description">' + asset.title + '</span>' +
+                    '			</label>' +
+                    '		</div>' +
+                    '	</a>' +
+                    '</div>';
             }
             else {
                 // attachement
-                tag = '<div class="col-sm-4"><a href="#" onclick="filePickerController.pick(\'' +
-                    asset.id + '\'); return false;"><img src="' +
-                    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
+                //tag = '<div class="col-sm-4"><a href="#" onclick="filePickerController.pick(\'' +
+                //    asset.id + '\'); return false;"><img src="' +
+                //    webRoot + asset.image + '" alt="' + asset.title + '" title="' + asset.title + '" /></a></div>';
             }
             $("#filePickerList").append(tag);
         });

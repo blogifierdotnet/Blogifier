@@ -22,7 +22,7 @@
         <div class="input-group col-md-9">
             <input type="text" asp-for="Avatar" class="form-control" readonly />
             <span class="input-group-btn">
-                <button type="button" data-toggle="modal" data-target="#fileManager" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileavatar');">upload</button>
+                <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);">upload</button>
             </span>
         </div>
     </div>
@@ -75,7 +75,11 @@
     {
         <script>toastr.success('@ViewBag.Message')</script>
     }
+    <script>
+        var updateAvatarCallback = function (data) {
+            toastr.success('Avatar: ' + data);
+        }
+    </script>
     <script>document.getElementById('AuthorName').focus()</script>
-    <script src="~/blogifier/admin/custom/js/app/filePickerController.js"></script>
-    <script src="~/blogifier/admin/custom/js/app/assetController.js"></script>
+    <script src="~/blogifier/admin/custom/js/app/fileManagerController.js"></script>
 }

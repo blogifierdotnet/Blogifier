@@ -1,4 +1,4 @@
-﻿var editorController = function (dataService, filePickerController) {
+﻿var editorController = function (dataService) {
 
     function savePost(publish) {
         var obj = {
@@ -104,10 +104,6 @@
         $("#txtCategory").focus();
     }
 
-    function openFilePicker(postId) {
-        filePickerController.open('postImage', postId);
-    }
-
     function resetPostImage() {
         var postId = $('#hdnPostId').val();
         if (postId == "0") {
@@ -198,12 +194,11 @@
         saveCategory: saveCategory,
         removeCategory: removeCategory,
         categoryKeyPress: categoryKeyPress,
-        openFilePicker: openFilePicker,
         loadPostImage: loadPostImage,
         resetPostImage: resetPostImage,
         loadActionButtons: loadActionButtons
     }
-}(DataService, filePickerController);
+}(DataService);
 
 document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({

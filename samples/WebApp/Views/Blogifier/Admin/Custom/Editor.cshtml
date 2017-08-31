@@ -20,7 +20,7 @@
             <div class="bf-editor-container">
                 <div class="btn-group btn-group-icon float-right">
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#fileManager" title="Change The Cover"><i class="fa fa-photo"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="return fileManagerController.open(updatePostCoverCallback);"  title="Change The Cover"><i class="fa fa-photo"></i></button>
                     @*<div id="post-image" class="admin-editor-cover"></div>*@
                 </div>
                 <span id="action-buttons"></span>
@@ -94,9 +94,8 @@
     </script>
     <script src="~/blogifier/admin/custom/js/lib/autosize.min.js"></script>
     <script src="~/blogifier/admin/custom/js/lib/tinymce/tinymce.min.js"></script>
-    <script src="~/blogifier/admin/custom/js/app/filePickerController.js"></script>
+    <script src="~/blogifier/admin/custom/js/app/fileManagerController.js"></script>
     <script src="~/blogifier/admin/custom/js/app/editorController.js"></script>
-    <script src="~/blogifier/admin/custom/js/app/assetController.js"></script>
 
     <script>
         autosize($('#txtPostTitle'));
@@ -104,6 +103,11 @@
         editorController.loadPostImage();
         editorController.loadActionButtons();
 
-
+        var insertImageCallback = function (data) {
+            toastr.success('Editor image: ' + data);
+        }
+        var updatePostCoverCallback = function (data) {
+            toastr.success('Post cover: ' + data);
+        }
     </script>
 }
