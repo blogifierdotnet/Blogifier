@@ -16,6 +16,7 @@
 // Base
 @import "base/reset";
 @import "base/main";
+@import "base/sidebar";
 
 // Components
 @import "components/utilities";
@@ -29,7 +30,6 @@
 @import "components/prism";
 @import "components/tinymce";
 @import "components/editor";
-@import "components/nav";
 
 // pages > posts
 @import "pages/posts/layout";

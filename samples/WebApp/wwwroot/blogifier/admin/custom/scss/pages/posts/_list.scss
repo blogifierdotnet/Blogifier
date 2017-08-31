@@ -1,7 +1,23 @@
+
 .bf-posts-toolbar {
     @include clearfix;
     padding: 1.5rem;
     border-bottom: 1px solid $cl-black-5;
+}
+.bf-posts-search {
+    position: relative;
+    padding: 0;
+
+    .search-input {
+        border: 0;
+        padding: 0 1rem;
+        background: #eee;
+        outline: none;
+        width: 100%;
+        height: 2.5rem;
+        color: #000;
+        border-radius: 3px;
+    }
 }
 
 

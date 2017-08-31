@@ -24,50 +24,49 @@
 <body>
     <div class="bf bf-posts">
         <div class="bf-sidebar">
-            <div class="bf-nav"><img class="item-img" src="@avatar"><span class="item-name">@userName</span></div>
+            <a class="bf-sidebar-header" href="~/blog" target="_blank"><img class="item-img" src="@avatar"><span class="item-name">@userName</span></a>
             <ul class="bf-sidebar-nav">
-                <li>
+                <li class="nav-item">
                     @if (showSettings)
                     {
-                    <a href="~/admin">Posts</a>
+                        <a class="nav-item-link" href="~/admin">Posts</a>
                     }
                     @if (!showSettings)
                     {
-                        <a href="~/admin" class="active">Posts</a>
-                        <div class="bf-posts-tools">
-                            <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
-                                <div class="item-group item-group-status">
-                                    <div class="item-group-title">Status</div>
+                        <a class="nav-item-link active" href="~/admin">Posts</a>
+                        <form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+                            <div class="item-group item-group-status">
+                                <div class="item-category-list">
                                     @foreach (var ftr in Model.StatusFilter)
                                     {
                                         var ftrChecked = ftr.Selected ? "checked" : "";
                                         <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
                                     }
                                 </div>
-                                <div class="item-group item-group-category">
-                                    <div class="item-group-title">Category</div>
-                                    <div class="item-category-list">
-                                        @foreach (var cat in Model.CategoryFilter)
-                                        {
-                                            var isChecked = cat.Selected ? "checked" : "";
-                                            <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                                        }
-                                    </div>
+                            </div>
+                            <div class="item-group item-group-category">
+                                <div class="item-group-title">Category</div>
+                                <div class="item-category-list">
+                                    @foreach (var cat in Model.CategoryFilter)
+                                    {
+                                        var isChecked = cat.Selected ? "checked" : "";
+                                        <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                                    }
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     }
                 </li>
-                <li>
+                <li class="nav-item">
                     @if (!showSettings)
                     {
-                        <a href="~/admin/settings/profile">Settings</a>
+                        <a class="nav-item-link" href="~/admin/settings/profile">Settings</a>
 
                     }
                     @if (showSettings)
                     {
-                    <a href="~/admin/settings/profile" class="active">Settings</a>
-                        <ul class="bf-sidebar-settings">
+                        <a class="nav-item-link active" href="~/admin/settings/profile">Settings</a>
+                        <ul class="nav-item-body bf-sidebar-settings">
                             <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
                             <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
                             <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span></a></li>
@@ -80,9 +79,9 @@
                         </ul>
                     }
                 </li>
-                @*<li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>*@
-                <li><a href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#aboutBlogifier">About</a></li>
+                @*<li class="nav-item"><a class="nav-item-link" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>*@
+                <li class="nav-item"><a class="nav-item-link" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
+                <li class="nav-item"><a class="nav-item-link" href="#" data-toggle="modal" data-target="#aboutBlogifier">About</a></li>
             </ul>
         </div>
         <div class="bf-content">

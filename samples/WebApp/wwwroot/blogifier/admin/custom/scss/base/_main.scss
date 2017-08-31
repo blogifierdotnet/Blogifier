@@ -19,9 +19,6 @@ body {
         background: $cl-bf;
         color: #fff;
 
-        ul {
-            @include unstyled(ul);
-        }
     }
 
     .bf-content {

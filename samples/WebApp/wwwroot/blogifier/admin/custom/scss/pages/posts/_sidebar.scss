@@ -1,68 +1,19 @@
-.bf-sidebar-nav {
-    > li {
-        border-bottom: 1px solid $cl-black-5;
-
-        > a {
-            color: $cl-white-50;
-            padding: 0 1.5rem;
-            display: block;
-            line-height: 3rem;
-            text-transform: uppercase;
-
-            &:hover {
-                color: #fff;
-                cursor: pointer;
-            }
-
-            &.active {
-                background: $cl-black-5;
-            }
-        }
-    }
-
-    i {
-        margin-right: 1rem;
-    }
-}
-
-.bf-posts-tools {
-    padding: 1.5rem;
-    background: $cl-black-5;
-}
-
-.bf-posts-search {
-    position: relative;
-    padding: 0;
-
-    .search-input {
-        border: 0;
-        padding: 0 1rem;
-        background: #eee;
-        outline: none;
-        width: 100%;
-        height: 2.5rem;
-        color: #000;
-        border-radius: 3px;
-    }
-}
-
 .bf-posts-filters {
-
     .item-group {
         position: relative;
 
         &-title {
             text-transform: uppercase;
             font-size: .875rem;
+            margin-bottom: .25rem;
+            color: #fff;
             font-weight: $fw-medium;
-            margin-bottom: 1rem;
         }
 
         &-category {
             margin-top: 1rem;
         }
     }
-
 
     .item-label {
         display: block;
@@ -75,10 +26,18 @@
             color: #fff;
             cursor: pointer;
         }
+
+        .custom-control-indicator {
+        }
     }
 
     .item-category-list {
         max-height: 240px;
         overflow: hidden;
+        padding-left: 1rem;
+    }
+
+    .item-status-list {
+        padding-left: 1rem;
     }
 }
