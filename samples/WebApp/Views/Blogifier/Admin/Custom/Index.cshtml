@@ -12,69 +12,44 @@
         showEmptyListCover = false;
     }
 }
-<div class="bf bf-posts">
-    <div class="bf-sidebar">
-        <div class="bf-posts-add">
-            <a href="~/admin/editor/0" tabindex="2" class="btn btn-light btn-rounded btn-block">New Post</a>
-        </div>
-        <form class="bf-posts-search" action="~/admin" method="get">
-            <button class="search-submit" tabindex="4" type="submit"><i class="fa fa-search"></i></button>
-            <input class="search-input" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
-        </form>
-        <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
-            <div class="item-group item-group-status">
-                @foreach (var ftr in Model.StatusFilter)
-                {
-                    var ftrChecked = ftr.Selected ? "checked" : "";
-                    <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
-                }
-            </div>
-            <div class="item-group item-group-category">
-                <div class="item-category-list">
-                    @foreach (var cat in Model.CategoryFilter)
-                    {
-                        var isChecked = cat.Selected ? "checked" : "";
-                        <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                    }
-                </div>
-            </div>
-        </form>
+
+<div class="bf-posts-toolbar">
+    <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+    <a href="~/admin/editor/0" tabindex="2" class="btn btn-primary float-left mr-2">New Post</a>
+    <div class="btn-group btn-group-sm btn-group-icon float-left" id="postsMultiactions">
+        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
     </div>
-    <div class="bf-content">
-        <div class="bf-posts-tools">
-            <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-            <div class="btn-group btn-group-sm btn-group-icon float-left" id="postsMultiactions">
-                <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
-            </div>
-        </div>
-        <ul class="bf-posts-list" aria-label="posts">
-            @foreach (var item in Model.BlogPosts)
-            {
-                var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
-                if (curPost == 0) { curPost = item.BlogPostId; }
-                <li class="item">
-                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <div class="item-info">
-                        <span> @item.PostViews</span>
-                        <a aria-label="Publish date">@published</a>
-                    </div>
-                    <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
-                    <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
-                </li>
-            }
-        </ul>
-        @if (pgr.ShowNewer || pgr.ShowOlder)
-        {
-            <ul class="bf-posts-pagination">
-                <li class="item"><a class="item-link" href="~/admin/@pgr.Older" disabled><i class="fa fa-angle-left"></i></a></li>
-                <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
-                <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
-            </ul>
-        }
-    </div>
+    <form class="bf-posts-search float-right" action="~/admin" method="get">
+        <input class="search-input" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
+    </form>
 </div>
+<ul class="bf-posts-list" aria-label="posts">
+    @foreach (var item in Model.BlogPosts)
+    {
+        var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
+        if (curPost == 0) { curPost = item.BlogPostId; }
+        <li class="item">
+            <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+            <div class="item-info">
+                <span> @item.PostViews</span>
+                <a aria-label="Publish date">@published</a>
+            </div>
+            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+            <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+        </li>
+    }
+</ul>
+@if (pgr.ShowNewer || pgr.ShowOlder)
+{
+    <ul class="bf-posts-pagination">
+        <li class="item"><a class="item-link" href="~/admin/@pgr.Older" disabled><i class="fa fa-angle-left"></i></a></li>
+        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+        <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
+    </ul>
+}
+
 @if (showEmptyListCover)
 {
     <div class="bf-posts-empty">

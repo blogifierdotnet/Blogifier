@@ -1,30 +1,49 @@
-.bf-posts-add {
+.bf-sidebar-nav {
+    li {
+        border-bottom: 1px solid $cl-black-10;
+    }
+
+    a {
+        color: $cl-white-50;
+        padding: 0 1.5rem;
+        display: block;
+        line-height: 3rem;
+
+        &:hover {
+            color: #fff;
+            cursor: pointer;
+        }
+        &.active {
+    background:$cl-black-5;
+
+        }
+    }
+
+    i {
+        margin-right: 1rem;
+    }
+}
+
+.bf-posts-tools {
     padding: 1.5rem;
     border-bottom: 1px solid $cl-black-5;
+    background:$cl-black-5;
 }
 
 .bf-posts-search {
     position: relative;
-
-    &::after {
-        content: "";
-        display: block;
-        height: 1px;
-        position: absolute;
-        bottom: 0;
-        left: 1.5rem;
-        right: 1.5rem;
-        background: $cl-black-5;
-    }
+    padding: 0;
+    margin-bottom: 1rem;
 
     .search-input {
         border: 0;
-        padding: 0 1.5rem;
-        background: none;
+        padding: 0 1rem;
+        background: $cl-black-10;
         outline: none;
         width: 100%;
-        height: 3.5rem;
+        height: 2.5rem;
         color: #fff;
+        border-radius: 3px;
 
         &:focus {
             background: $cl-black-10;
@@ -34,58 +53,40 @@
             color: $cl-white-50;
         }
     }
-
-    .search-submit {
-        @include unstyled(button);
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0 1.5rem;
-        height: 100%;
-        color: $cl-white-40;
-        cursor: pointer;
-
-        &:focus {
-            color: #fff;
-        }
-
-
-        i {
-            font-size: 14px;
-        }
-    }
-
-    .search-submit:focus ~ .search-input {
-        background: $cl-black-10;
-    }
 }
 
 .bf-posts-filters {
 
     .item-group {
-        padding: 1.5rem;
         position: relative;
 
-        &::after {
-            content: "";
-            display: block;
-            height: 1px;
-            position: absolute;
-            bottom: 0px;
-            left: 1.5rem;
-            right: 1.5rem;
-            background: $cl-black-5;
+        &-title {
+            text-transform: uppercase;
+            font-size: .875rem;
+            font-weight: $fw-medium;
+            margin-bottom: 1rem;
+        }
+            &-category {
+            margin-top:1rem;
         }
     }
+
 
     .item-label {
         display: block;
         margin: 0;
         font-size: .875rem;
+        color: $cl-white-50;
+        padding-left: 2rem;
+
+        &:hover {
+            color: #fff;
+            cursor: pointer;
+        }
     }
 
     .item-category-list {
-        max-height: 410px;
+        max-height: 240px;
         overflow: hidden;
     }
 }

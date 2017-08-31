@@ -1,9 +1,89 @@
-﻿<!DOCTYPE html>
+﻿@using Blogifier.Core.Common
+@{
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    var blogTitle = ApplicationSettings.Title;
+    var blogDesc = ApplicationSettings.Description;
+    var blogImg = ApplicationSettings.ProfileImage;
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        blogTitle = Model.Profile.Title;
+        blogDesc = Model.Profile.Description;
+        blogImg = string.IsNullOrEmpty(Model.Profile.Image) ? blogImg : Model.Profile.Image;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 <body>
-    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")
-    @RenderBody()
+    @*@Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")*@
+    <div class="bf bf-posts">
+        <div class="bf-sidebar">
+            <div class="bf-nav"><img src="@avatar">@userName</div>
+            <ul class="bf-sidebar-nav">
+                <li>
+                    <a href="~/admin" class="active"><i class="fa fa-info-circle"></i>Posts</a>
+                    <!-- show it when its on the /admin -->
+                    <div class="bf-posts-tools">
+                        <form id="frmPostFilter" class="bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+                            <div class="item-group item-group-status">
+                                <div class="item-group-title">Status</div>
+                                @foreach (var ftr in Model.StatusFilter)
+                                {
+                                    var ftrChecked = ftr.Selected ? "checked" : "";
+                                    <label class="item-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
+                                }
+                            </div>
+                            <div class="item-group item-group-category">
+                                <div class="item-group-title">Category</div>
+                                <div class="item-category-list">
+                                    @foreach (var cat in Model.CategoryFilter)
+                                    {
+                                        var isChecked = cat.Selected ? "checked" : "";
+                                        <label class="item-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- / -->
+
+                </li>
+                <li>
+                    <a href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a>
+
+                    <!-- show it when its on the /admin/settings/* -->
+                    <ul class="bf-sidebar-settings">
+                        <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
+                        <li class="personal"><a href="~/admin/settings/personal"><span>Blog Settings</span></a></li>
+                        <li class="custom"><a href="~/admin/settings/custom"><span>Custom Code</span></a></li>
+                        <li class="import"><a href="~/admin/settings/import"><span>Import Rss</span></a></li>
+                        @if (Model.Profile != null && Model.Profile.IsAdmin)
+                        {
+                            <li class="application"><a href="~/admin/settings/application"><span>Administration</span></a></li>
+                            <li class="about"><a href="~/admin/settings/about"><span>About</span></a></li>
+                        }
+                    </ul>
+                    <!-- / -->
+
+                </li>
+                @*<li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>*@
+                <li><a href="#" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logoff</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#aboutBlogifier"><i class="fa fa-info-circle"></i>About</a></li>
+            </ul>
+        </div>
+        <div class="bf-content">
+            @RenderBody()
+        </div>
+    </div>
+
+
+
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Foot.cshtml")
     @RenderSection("Scripts", false)
 </body>

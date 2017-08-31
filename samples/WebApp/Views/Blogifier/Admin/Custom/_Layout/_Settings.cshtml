@@ -5,10 +5,12 @@
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 </head>
 <body>
-    @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")
-
-    <div class="bf">
+    <div class="bf bf-posts">
         <div class="bf-sidebar">
+            <ul class="bf-sidebar-nav">
+                <li><a href="~/admin"><i class="fa fa-info-circle"></i>Posts</a></li>
+                <li><a href="~/admin/settings/profile" class="active"><i class="fa fa-cog"></i>Settings</a></li>
+            </ul>
             <ul class="bf-sidebar-settings">
                 <li class="profile"><a href="~/admin/settings/profile"><span>Edit Profile</span></a></li>
                 @if (!ApplicationSettings.SingleBlog)
@@ -23,12 +25,16 @@
                     <li class="about"><a href="~/admin/settings/about"><span>About</span></a></li>
                 }
             </ul>
+            <ul class="bf-sidebar-nav">
+                @*<li><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>*@
+                <li><a href="#" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logoff</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#aboutBlogifier"><i class="fa fa-info-circle"></i>About</a></li>
+            </ul>
         </div>
-        <div class="bf-content bf-content-settings">
+        <div class="bf-content  bf-content-settings">
             @RenderBody()
         </div>
     </div>
-
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Foot.cshtml")
     @RenderSection("Scripts", false)
 </body>

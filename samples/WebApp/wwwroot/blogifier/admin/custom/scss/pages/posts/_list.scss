@@ -1,4 +1,4 @@
-.bf-posts-tools {
+.bf-posts-toolbar {
     @include clearfix;
     padding: 1.5rem;
     border-bottom: 1px solid $cl-black-5;
@@ -34,7 +34,7 @@
 
     .item-link {
         font-size: 1.25rem;
-        font-weight: 400;
+        font-weight: 500;
         color: #000;
         height: 4rem;
         line-height: 4rem;

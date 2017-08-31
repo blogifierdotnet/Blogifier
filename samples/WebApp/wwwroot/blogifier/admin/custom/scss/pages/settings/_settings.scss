@@ -1,18 +1,11 @@
 .bf-sidebar-settings {
     a {
-        line-height: 3rem;
-        display: inline-block;
-        color: #fff;
-        padding-right: 2rem;
         display: block;
-        text-transform: uppercase;
-        opacity: .5;
+        color: #fff;
+        padding: 0 3.5rem;
+        display: block;
     }
 
-    @media (min-width:1024px) {
-        text-align: right;
-        padding-top: 3rem !important;
-    }
 }
 
 .bf-content-settings {
