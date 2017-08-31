@@ -14,12 +14,12 @@
 }
 <div class="bf bf-posts">
     <div class="bf-sidebar">
-        <div class="bf-posts-new">
-            <a href="~/admin/editor/0" class="btn btn-light btn-rounded btn-block">New Post</a>
+        <div class="bf-posts-add">
+            <a href="~/admin/editor/0" tabindex="2" class="btn btn-light btn-rounded btn-block">New Post</a>
         </div>
         <form class="bf-posts-search" action="~/admin" method="get">
-            <input class="item-search-input" type="search" name="search" placeholder="Search..." autocomplete="off" />
-            <i class="item-search-icon fa fa-search"></i>
+            <button class="search-submit" tabindex="4" type="submit"><i class="fa fa-search"></i></button>
+            <input class="search-input" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
         </form>
         <div class="bf-posts-filters">
             <form id="frmPostFilter" asp-controller="Admin" asp-action="Index" method="post">
