@@ -12,18 +12,12 @@
     @foreach (var blog in Model.Blogs)
     {
         <div class="item-blog">
-            <!-- item-blog-disabled -->
             <div class="item-blog-head clearfix">
-                <div class="float-left">
-                    <h4><a href="~/@blog.Url" target="_blank">@blog.Title</a></h4>
-                </div>
+                <h4 class="float-left"><a href="~/@blog.Url" target="_blank">@blog.Title</a></h4>
                 <div class="btn-group float-right">
-                    @*<button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Limit"><i class="fa fa-sliders"></i></button>
-                        <button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Disable"><i class="fa fa-stop"></i></button>
-                        <button type="button" class="btn btn-outline-black btn-sm btn-icon" title="Enable"><i class="fa fa-play"></i></button>*@
                     @if (!blog.IsAdmin)
                     {
-                        <button type="button" onclick="return toolsController.deleteBlog('@blog.ProfileId')" class="btn btn-outline-black btn-sm btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
+                        <button type="button" onclick="return toolsController.deleteBlog('@blog.ProfileId')" class="btn btn-outline-secondary btn-sm btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
                     }
                 </div>
             </div>
@@ -31,7 +25,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="item-blog-info">
-
                             <li><span>Identity</span><span>@blog.IdentityName</span></li>
                             <li><span>Author</span><span>@blog.AuthorName</span></li>
                             <li><span>Is admin</span><span>@blog.IsAdmin</span></li>
@@ -47,24 +40,6 @@
                             <li><span>Assets</span><span>@blog.AssetCount</span></li>
                             <li><span>Disk usage</span><span>@blog.DiskUsage.ToPrettySize(1)</span></li>
                         </ul>
-                        @*<div class="item-blog-space mb-2">
-                                <div class="item-blog-space-head clearfix">
-                                    <span class="float-left">Disk Space</span>
-                                    <span class="float-right">25MB of 100MB</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                                </div>
-                            </div>*@
-                        @*<div class="item-blog-space">
-                                <div class="item-blog-space-head clearfix">
-                                    <span class="float-left">DB Usage</span>
-                                    <span class="float-right">80MB of 100MB</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                                </div>
-                            </div>*@
                     </div>
                 </div>
             </div>

@@ -10,3 +10,39 @@
         padding: 1rem;
     }
 }
+
+
+.bf-settings-application {
+    .item-blog {
+        background: #fafafa;
+        border-radius: 3px;
+        border: 1px solid #eee;
+
+        &-head {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+
+            h4 {
+                margin: 0;
+                line-height: 2.5rem;
+            }
+        }
+
+        &-body {
+            padding: 1rem;
+        }
+
+        &-info {
+            @include unstyled(ul);
+
+            span {
+                min-width: 7.5rem;
+                display: inline-block;
+
+                &:first-child {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
