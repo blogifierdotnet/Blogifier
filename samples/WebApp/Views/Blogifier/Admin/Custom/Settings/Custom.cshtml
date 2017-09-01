@@ -2,28 +2,30 @@
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Layout.cshtml";
 }
-<form method="post" asp-controller="Settings" asp-action="Custom" asp-antiforgery="true">
-    <div class="form-group">
-        <strong>&lt;head&gt;</strong>
-        <p><small>Example: Meta tags, Scripts, and Styles or any other custom codes.</small></p>
-        <textarea asp-for='CustomFields["Head"]' class="form-control" rows="7"></textarea>
-    </div>
-    <div class="form-group">
-        <strong>Blog Footer</strong>
-        <p><small>Example: Analytics, Scripts, and Styles or any other custom codes.</small></p>
-        <textarea asp-for='CustomFields["Footer"]' class="form-control" rows="7"></textarea>
-    </div>
-    <div class="form-group">
-        <strong>Post Footer</strong>
-        <p><small>Example: Comment systems, Share buttons or any other custom codes.</small></p>
-        <textarea asp-for='CustomFields["Post"]' class="form-control" rows="7"></textarea>
-    </div>
-    <div id="disqusForm">
-        <div id="btnDisqus">
-            <button type="submit" class="btn btn-primary btn-main">Save</button>
+<div class="bf-settings bf-settings-custom">
+    <form method="post" asp-controller="Settings" asp-action="Custom" asp-antiforgery="true">
+        <div class="form-group">
+            <strong>&lt;head&gt;</strong>
+            <p><small>Example: Meta tags, Scripts, and Styles or any other custom codes.</small></p>
+            <textarea asp-for='CustomFields["Head"]' class="form-control" rows="7"></textarea>
         </div>
-    </div>
-</form>
+        <div class="form-group">
+            <strong>Blog Footer</strong>
+            <p><small>Example: Analytics, Scripts, and Styles or any other custom codes.</small></p>
+            <textarea asp-for='CustomFields["Footer"]' class="form-control" rows="7"></textarea>
+        </div>
+        <div class="form-group">
+            <strong>Post Footer</strong>
+            <p><small>Example: Comment systems, Share buttons or any other custom codes.</small></p>
+            <textarea asp-for='CustomFields["Post"]' class="form-control" rows="7"></textarea>
+        </div>
+        <div id="disqusForm">
+            <div id="btnDisqus">
+                <button type="submit" class="btn btn-primary btn-main">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {

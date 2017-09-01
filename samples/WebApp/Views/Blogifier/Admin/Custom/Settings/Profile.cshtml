@@ -2,72 +2,74 @@
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Layout.cshtml";
 }
-<form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Author Name</label>
-        <div class="col-md-9">
-            <input type="text" asp-for="AuthorName" class="form-control" />
-            <span asp-validation-for="AuthorName" class="text-danger"></span>
+<div class="bf-settings bf-settings-profile">
+    <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Author Name</label>
+            <div class="col-md-9">
+                <input type="text" asp-for="AuthorName" class="form-control" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Email Address</label>
-        <div class="col-md-9">
-            <input type="text" asp-for="AuthorEmail" class="form-control" />
-            <span asp-validation-for="AuthorEmail" class="text-danger"></span>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Email Address</label>
+            <div class="col-md-9">
+                <input type="text" asp-for="AuthorEmail" class="form-control" />
+                <span asp-validation-for="AuthorEmail" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Profile Photo</label>
-        <div class="input-group col-md-9">
-            <input type="text" asp-for="Avatar" class="form-control" readonly />
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);">upload</button>
-            </span>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Profile Photo</label>
+            <div class="input-group col-md-9">
+                <input type="text" asp-for="Avatar" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);">upload</button>
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Facebook Link</label>
-        <div class="col-md-9">
-            <input type="text" asp-for='CustomFields["Facebook"]' class="form-control" />
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Facebook Link</label>
+            <div class="col-md-9">
+                <input type="text" asp-for='CustomFields["Facebook"]' class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Twitter Link</label>
-        <div class="col-md-9">
-            <input type="text" asp-for='CustomFields["Twitter"]' class="form-control" />
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Twitter Link</label>
+            <div class="col-md-9">
+                <input type="text" asp-for='CustomFields["Twitter"]' class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Google Link</label>
-        <div class="col-md-9">
-            <input type="text" asp-for='CustomFields["Google"]' class="form-control" />
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Google Link</label>
+            <div class="col-md-9">
+                <input type="text" asp-for='CustomFields["Google"]' class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Instagram Link</label>
-        <div class="col-md-9">
-            <input type="text" asp-for='CustomFields["Instagram"]' class="form-control" />
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Instagram Link</label>
+            <div class="col-md-9">
+                <input type="text" asp-for='CustomFields["Instagram"]' class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Github Link</label>
-        <div class="col-md-9">
-            <input type="text" asp-for='CustomFields["Github"]' class="form-control" />
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">Github Link</label>
+            <div class="col-md-9">
+                <input type="text" asp-for='CustomFields["Github"]' class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            <button type="submit" class="btn btn-primary btn-main">Save</button>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-primary btn-main">Save</button>
+            </div>
         </div>
-    </div>
-</form>
-<div style="display:none;">
-    <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
-        <input type="file" name="files" id="files" multiple onchange="filePickerController.uploadAssets(); return false;" />
-        <input type="submit" value="Upload Multiple" />
     </form>
+    <div style="display:none;">
+        <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
+            <input type="file" name="files" id="files" multiple onchange="filePickerController.uploadAssets(); return false;" />
+            <input type="submit" value="Upload Multiple" />
+        </form>
+    </div>
 </div>
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
