@@ -74,3 +74,6 @@ $('.modal').on('show.bs.modal', function () {
 $('.modal').on('hidden.bs.modal', function () {
     $(".mce-toolbar-grp").attr("style", "");
 });
+
+// sidebar settings active style
+$('.bf-sidebar-settings li a[href*="' + location.pathname + '"]').addClass('active');
