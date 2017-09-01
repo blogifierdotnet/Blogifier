@@ -17,13 +17,7 @@
         }
     }
 }
-<div class="bf-nav dropdown">
-    <button class="dropdown-toggle" type="button" tabindex="1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="@avatar" alt="@userName"></button>
-    <ul class="dropdown-menu dropdown-menu-right">
-        <li><a class="dropdown-item" href="~/admin"><i class="fa fa-align-left"></i>Posts</a></li>
-        <li><a class="dropdown-item" href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a></li>
-        <li><a class="dropdown-item" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><i class="fa fa-external-link-square"></i>View Blog</a></li>
-        <li><a class="dropdown-item" href="#" onclick="profileLogOut(); return false;"><i class="fa fa-power-off"></i>Logoff</a></li>
-        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#aboutBlogifier"><img src="/embedded/lib/img/logo-sm.png" alt="BF" />About</a></li>
-    </ul>
-</div>
+<a class="bf-sidebar-header" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank">
+    <img class="item-img" src="@avatar">
+    <span class="item-name">@userName</span>
+</a>

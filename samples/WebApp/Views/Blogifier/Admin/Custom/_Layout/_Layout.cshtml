@@ -1,88 +1,20 @@
 ﻿@using Blogifier.Core.Common
 @{
-    var avatar = ApplicationSettings.ProfileAvatar;
-    var userName = "";
-    var blogTitle = ApplicationSettings.Title;
-    var blogDesc = ApplicationSettings.Description;
-    var blogImg = ApplicationSettings.ProfileImage;
-    if (Model.Profile != null)
-    {
-        userName = Model.Profile.AuthorName;
-        blogTitle = Model.Profile.Title;
-        blogDesc = Model.Profile.Description;
-        blogImg = string.IsNullOrEmpty(Model.Profile.Image) ? blogImg : Model.Profile.Image;
-        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
-        {
-            avatar = Model.Profile.Avatar;
-        }
-    }
     var settingsView = Context.Request.Path.ToString().Contains("/admin/settings");
 }
 <!DOCTYPE html>
 <html lang="en">
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Head.cshtml")
 <body>
-    <div class="bf bf-posts">
+    <div class="bf">
         <div class="bf-sidebar">
-            <a class="bf-sidebar-header" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank"><img class="item-img" src="@avatar"><span class="item-name">@userName</span></a>
-            <ul class="bf-sidebar-nav">
-                <li class="nav-item">
-                    @if (settingsView)
-                    {
-                        <a class="nav-item-link" href="~/admin">Posts</a>
-                    }
-                    @if (!settingsView)
-                    {
-                        <a class="nav-item-link active" href="~/admin">Posts</a>
-                        <form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
-                            <div class="filters-group filters-group-status">
-                                @foreach (var ftr in Model.StatusFilter)
-                                {
-                                    var ftrChecked = ftr.Selected ? "checked" : "";
-                                    <label class="filters-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
-                                }
-                            </div>
-                            <div class="filters-group filters-group-category">
-                                <div class="filters-group-title">Categories</div>
-                                @foreach (var cat in Model.CategoryFilter)
-                                {
-                                    var isChecked = cat.Selected ? "checked" : "";
-                                    <label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                                }
-                            </div>
-                        </form>
-                    }
-                </li>
-                <li class="nav-item">
-                    @if (!settingsView)
-                    {
-                        <a class="nav-item-link" href="~/admin/settings/profile">Settings</a>
-                    }
-                    @if (settingsView)
-                    {
-                        <a class="nav-item-link active" href="~/admin/settings/profile">Settings</a>
-                        <ul class="nav-item-body bf-sidebar-settings">
-                            <li><a href="~/admin/settings/profile">Edit Profile</a></li>
-                            <li><a href="~/admin/settings/personal">Blog Settings</a></li>
-                            <li><a href="~/admin/settings/custom">Custom Code</a></li>
-                            <li><a href="~/admin/settings/import">Import Rss</a></li>
-                            @if (Model.Profile != null && Model.Profile.IsAdmin)
-                            {
-                                <li><a href="~/admin/settings/application">Administration</a></li>
-                                    <li><a href="~/admin/settings/about">About</a></li>
-                            }
-                        </ul>
-                    }
-                </li>
-                <li class="nav-item"><a class="nav-item-link" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
-                <li class="nav-item"><a class="nav-item-link" href="#" data-toggle="modal" data-target="#aboutBlogifier">About</a></li>
-            </ul>
+            @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Nav.cshtml")
+            @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Sidebar.cshtml")
         </div>
         <div class="bf-content">
             @RenderBody()
         </div>
     </div>
-
     @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_Foot.cshtml")
     @RenderSection("Scripts", false)
 </body>
