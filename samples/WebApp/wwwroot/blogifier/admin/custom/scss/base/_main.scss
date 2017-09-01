@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: $font-family-base;
     overflow-y: scroll;
@@ -18,16 +22,5 @@ body {
         overflow-y: auto;
         background: $cl-bf;
         color: #fff;
-
     }
-
-    .bf-content {
-    }
-}
-
-//
-.container {
-    width: 100%;
-    max-width: 64rem;
-    margin: 0 auto;
 }
