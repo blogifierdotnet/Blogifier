@@ -38,25 +38,40 @@ namespace Blogifier.Core.Controllers.Api
             var term = search == null || search == "null" ? "" : search;
             var fltr = filter == null || filter == "null" ? "" : filter;
 
-            if (Request.Query.ContainsKey("type") && Request.Query["type"] == "editor")
+            //if (Request.Query.ContainsKey("type") && Request.Query["type"] == "editor")
+            //{
+            //    if(filter == "filterImages")
+            //    {
+            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
+            //    }
+            //    else if (filter == "filterAttachments")
+            //    {
+            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
+            //    }
+            //    else
+            //    {
+            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
+            //    }
+            //}
+            //else
+            //{
+            //    assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0 && a.Title.Contains(term), pager);
+            //}
+
+
+            if (filter == "filterImages")
             {
-                if(filter == "filterImages")
-                {
-                    assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
-                }
-                else if (filter == "filterAttachments")
-                {
-                    assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
-                }
-                else
-                {
-                    assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
-                }
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
+            }
+            else if (filter == "filterAttachments")
+            {
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
             }
             else
             {
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0 && a.Title.Contains(term), pager);
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
             }
+
             return new AdminAssetList { Assets = assets, Pager = pager };
         }
 
