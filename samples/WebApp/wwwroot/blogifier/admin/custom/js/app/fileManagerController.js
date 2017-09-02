@@ -46,8 +46,9 @@
     }
 
     function load(page) {
-        uploadType = 'A';
-        dataService.get('blogifier/api/assets/' + page + '?type=' + uploadType, loadCallback, fail);
+        var filter = $('input[name=filter]:checked').val();
+
+        dataService.get('blogifier/api/assets/' + page + '?filter=' + filter, loadCallback, fail);
         return false;
     }
     function loadCallback(data) {

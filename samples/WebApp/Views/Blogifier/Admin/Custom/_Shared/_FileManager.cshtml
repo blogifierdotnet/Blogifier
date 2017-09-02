@@ -19,34 +19,28 @@
                             </li>
                             <li>
                                 <label class="dropdown-item custom-control custom-radio d-block">
-                                    <input id="filterAll" name="filter" type="radio" class="custom-control-input">
+                                    <input id="filterAll" value="filterAll" name="filter" type="radio" checked class="custom-control-input" onchange="return fileManagerController.load(1)">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">All</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="dropdown-item custom-control custom-radio d-block">
-                                    <input id="filterImages" name="filter" type="radio" class="custom-control-input">
+                                    <input id="filterImages" value="filterImages" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">Images</span>
                                 </label>
                             </li>
                             <li>
                                 <label class="dropdown-item custom-control custom-radio d-block">
-                                    <input id="filterAttachments" name="filter" type="radio" class="custom-control-input">
+                                    <input id="filterAttachments" value="filterAttachments" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">Attachments</span>
                                 </label>
                             </li>
                         </ul>
                     </div>
-
-                    <div id="file-pagination" class="btn-group btn-group-icon float-right ml-2" role="group">
-                        <span class="item-pagination" style="margin-right: 10px">1-10 out of 50</span>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></button>
-                    </div>
-
+                    <div id="file-pagination" class="btn-group btn-group-icon float-right ml-2" role="group"></div>
                 </div>
                 <div class="bf-filemanager-body">
                     <div id="fileManagerList" class="row no-gutters"></div>
