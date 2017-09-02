@@ -64,7 +64,7 @@ namespace Blogifier.Core.Middleware
                 }
                 catch (Exception ex)
                 {
-                    if(ex.Message == "Write to non-body 304 response.")
+                    if(ex.Message == "Write to non-body 304 response." || ex.Message == "Writing to the response body is invalid for responses with status code 304.")
                     {
                         context.Response.StatusCode = 304;
                         return;
