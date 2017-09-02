@@ -36,28 +36,18 @@ function loaded() {
 }
 
 // setup page
-$(".admin-setup-form #AuthorName").keyup(function () {
+$(".bf-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
     authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
-    $(".admin-setup-url").text(window.location.host + '/blog/' + authorUrl);
-
+    $(".bf-setup-url").text(window.location.host + '/blog/' + authorUrl);
     if ($(this).val() == '') {
-        $(".admin-setup-url").text('');
+        $(".bf-setup-url").text('');
     }
 });
 
 // tooltips
 $(function () {
-    $(".bf-nav-list a").tooltip({
-        placement: 'bottom'
-    });
-
-    $(".bf-posts-preview .item-info .btn-group .btn").tooltip({
-        placement: 'bottom',
-        container: 'body'
-    });
-
-    $(".bf-posts-multiactions button").tooltip({
+    $("#postsMultiactions button").tooltip({
         placement: 'bottom',
         container: 'body'
     });
@@ -82,10 +72,8 @@ $('.modal').on('show.bs.modal', function () {
 });
 
 $('.modal').on('hidden.bs.modal', function () {
-    $(".bf-nav, .mce-toolbar-grp").attr("style", "");
+    $(".mce-toolbar-grp").attr("style", "");
 });
 
-
-$("a[disabled]").on("click", function (event) {
-    event.preventDefault();
-});
+// sidebar settings active style
+$('.bf-sidebar-settings li a[href*="' + location.pathname + '"]').addClass('active');

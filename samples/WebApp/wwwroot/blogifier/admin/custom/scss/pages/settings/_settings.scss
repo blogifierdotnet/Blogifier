@@ -1,13 +1,25 @@
 .bf-settings {
     padding: 5.5rem 3rem 2rem;
+    max-width: 48rem;
+    width: 100%;
 
-    form {
-        max-width: 768px;
-        width: 100%;
+    @media (max-width:90rem) {
+        margin: auto;
     }
 
-    @media (max-width:768px) {
+    @media (max-width:48rem) {
         padding: 1rem;
+    }
+
+    .form-group {
+        > label {
+            margin-bottom: .25rem;
+            font-weight: $fw-medium;
+        }
+    }
+
+    .btn-main {
+        width: 10rem;
     }
 }
 

@@ -4,44 +4,30 @@
 }
 <div class="bf-settings bf-settings-import">
     <form id="frmImport" name="frmImport">
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">RSS URL</label>
-            <div class="col-md-9">
+        <div class="form-group">
+            <label>RSS URL</label>
                 <input type="text" id="txtFeedUrl" class="form-control" />
-            </div>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Domain URL</label>
-            <div class="col-md-9">
+        <div class="form-group">
+            <label>Domain URL</label>
                 <input id="txtDomain" type="text" class="form-control" />
-            </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-3"></div>
-            <div class="col-md-9 offset-md-3">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" id="chkImportImages" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Import Images</span>
-                </label>
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-9 offset-md-3">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" id="chkImportAttachements" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Import Attachements</span>
-                </label>
-            </div>
+        <div class="form-group">
+
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" id="chkImportImages" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Import Images</span>
+            </label>
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" id="chkImportAttachements" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Import Attachements</span>
+            </label>
         </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-9 offset-md-3">
-                <div id="btnImport">
-                    <button type="button" class="btn btn-primary btn-main" onclick="toolsController.importRss()">Import</button>
-                    <i class="spin-icon fa fa-cog fa-spin ml-3" aria-label="Loading"></i>
-                </div>
-            </div>
+        <div id="btnImport">
+            <button type="button" class="btn btn-primary btn-main" onclick="toolsController.importRss()">Import</button>
+            <i class="spin-icon fa fa-cog fa-spin ml-3" aria-label="Loading"></i>
         </div>
     </form>
 </div>
