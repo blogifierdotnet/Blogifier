@@ -47,8 +47,16 @@
 
     function load(page) {
         var filter = $('input[name=filter]:checked').val();
-
-        dataService.get('blogifier/api/assets/' + page + '?filter=' + filter, loadCallback, fail);
+        if (!filter) {
+            filter = 'filterAll';
+        }
+        var search = $('#search').val();
+        if (search.length > 0) {
+            dataService.get('blogifier/api/assets/' + page + '?filter=' + filter + '&search=' + search, loadCallback, fail);
+        }
+        else {
+            dataService.get('blogifier/api/assets/' + page + '?filter=' + filter, loadCallback, fail);
+        }
         return false;
     }
     function loadCallback(data) {
@@ -111,3 +119,13 @@
         remove: remove
     }
 }(DataService);
+
+$('#search').keypress(function (event) {
+
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
+        fileManagerController.load(1);
+        //toastr.success('aaa');
+        return false;
+    }
+});
