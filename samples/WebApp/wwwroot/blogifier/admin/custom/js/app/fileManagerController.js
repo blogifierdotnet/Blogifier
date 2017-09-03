@@ -12,6 +12,15 @@
     }
 
     function pick(id) {
+        if (id === 0) {
+            var items = $('.bf-filemanager .item-check:checked');
+            if (items.length === 0) {
+                toastr.error('Please select an item');
+            }
+            else {
+                id = items[0].id;
+            }
+        }
         if (callBack.name === 'updateAvatarCallback') {
             dataService.get('blogifier/api/assets/profileavatar/' + id, callBack, fail);
         }
