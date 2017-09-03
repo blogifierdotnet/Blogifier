@@ -54,10 +54,12 @@
     }
     <script>
         var updateCoverCallback = function (data) {
-            toastr.success('Cover: ' + data);
+            $('#Image').val(data.url);
+            toastr.success('Updated');
         }
         var updateLogoCallback = function (data) {
-            toastr.success('Logo: ' + data);
+            $('#Logo').val(data.url);
+            toastr.success('Updated');
         }
     </script>
     <script>document.getElementById('Title').focus()</script>

@@ -8,12 +8,24 @@
     }
 
     function close() {
-        $('#fileManager').modal('hide')
+        $('#fileManager').modal('hide');
     }
 
     function pick(id) {
-        callBack(id);
+        if (callBack.name === 'updateAvatarCallback') {
+            dataService.get('blogifier/api/assets/profileavatar/' + id, callBack, fail);
+        }
+        else if (callBack.name === 'updateCoverCallback') {
+            dataService.get('blogifier/api/assets/profileimage/' + id, callBack, fail);
+        }
+        else if (callBack.name === 'updateLogoCallback') {
+            dataService.get('blogifier/api/assets/profilelogo/' + id, callBack, fail);
+        }
         close();
+    }
+
+    function uploadSelected(uploadType, id, pickCallback) {
+        dataService.get('blogifier/api/assets/' + uploadType + '/' + id, pickCallback, fail);
     }
 
     function uploadClick() {
@@ -47,7 +59,6 @@
 
     function load(page) {
         $(firstItemCheckfm).prop('checked', false);
-        showBtns();
         var filter = $('input[name=filter]:checked').val();
         if (!filter) {
             filter = 'filterAll';
@@ -99,6 +110,7 @@
             pager += '<button type="button" class="btn btn-outline-secondary btn-sm" onclick="return fileManagerController.load(' + pg.newer + ')"><i class="fa fa-angle-right"></i></button>';
         }
         $('#file-pagination').append(pager);
+        showBtns();
     }
 
     function humanFileSize(size) {

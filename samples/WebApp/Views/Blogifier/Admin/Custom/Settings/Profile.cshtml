@@ -55,7 +55,8 @@
     }
     <script>
         var updateAvatarCallback = function (data) {
-            toastr.success('Avatar: ' + data);
+            $('#Avatar').val(data.url);
+            toastr.success('Updated');
         }
     </script>
     <script>document.getElementById('AuthorName').focus()</script>
