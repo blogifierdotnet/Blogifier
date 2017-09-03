@@ -13,7 +13,7 @@
 
     function pick(id) {
         var items = $('.bf-filemanager .item-check:checked');
-        if (location.pathname.indexOf('/editor/') > 0) {
+        if (callBack.name === 'insertImageCallback') {
             if (id === 0) {
                 for (i = 0; i < items.length; i++) {
                     dataService.get('blogifier/api/assets/asset/' + items[i].id, callBack, fail);

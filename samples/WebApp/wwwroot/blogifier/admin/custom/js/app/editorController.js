@@ -7,7 +7,7 @@
             Image: $('#hdnPostImg').val(),
             Content: tinyMCE.activeEditor.getContent(),
             Description: $('#txtDescription').val(),
-            IsPublished: publish ? true : false,
+            Publish: publish ? true : false,
             Categories: []
         }
         if (obj.Title.length > 0 || obj.Content.length > 0) {

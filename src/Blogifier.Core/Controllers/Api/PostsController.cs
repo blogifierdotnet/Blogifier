@@ -74,7 +74,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Description = string.IsNullOrEmpty(model.Description) ? model.Content.ToDescription() : model.Description;
                 bp.Image = model.Image;
                 bp.LastUpdated = SystemClock.Now();
-                bp.Published = model.IsPublished ? SystemClock.Now() : DateTime.MinValue;
+                bp.Published = model.Publish ? SystemClock.Now() : DateTime.MinValue;
                 _db.BlogPosts.Add(bp);
             }
             else
@@ -88,7 +88,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.LastUpdated = SystemClock.Now();
                 // when publish button clicked, save and publish
                 // but do not unpublish - use unpublish/{id} for this
-                if (model.IsPublished) { bp.Published = SystemClock.Now(); }
+                if (model.Publish) { bp.Published = SystemClock.Now(); }
             }
             _db.Complete();
 
