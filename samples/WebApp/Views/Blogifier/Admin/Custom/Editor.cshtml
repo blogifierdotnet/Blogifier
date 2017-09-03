@@ -1,13 +1,13 @@
 ﻿@model Blogifier.Core.Data.Models.AdminEditorModel
+@using Blogifier.Core.Common
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Editor.cshtml";
+    var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
+    if(string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
 }
 <div id="post-edit" class="bf-editor">
     <form id="frmEditor">
-        <!--
-            if there is no cover post, we have to remove "bf-editor-cover" class and style attribute.    
-        -->
-        <div class="bf-editor-header bf-editor-cover" style="background-image:url(/embedded/lib/img/cover.png);">
+        <div class="bf-editor-header bf-editor-cover" style="background-image:url(@postCover);">
             <textarea class="bf-editor-title bf-editor-container" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
         </div>
         <div class="bf-editor-container">
@@ -101,10 +101,17 @@
         editorController.loadActionButtons();
 
         var insertImageCallback = function (data) {
-            toastr.success('Editor image: ' + data);
+            if (data.assetType === 0) {
+                tinymce.activeEditor.execCommand('mceInsertContent', false, '<img src="' + data.url + '" />');
+            }
+            else {
+                var tag = '<a class="download" href="' + data.url + '">' + data.title + ' (' + humanFileSize(data.length) + ')</a>';
+                tinymce.activeEditor.execCommand('mceInsertContent', false, tag);
+            }
         }
         var updatePostCoverCallback = function (data) {
-            toastr.success('Post cover: ' + data);
+            $('.bf-editor-cover').css('background-image', 'url(' + data.url + ')');  
+            toastr.success('Updated');
         }
     </script>
 }

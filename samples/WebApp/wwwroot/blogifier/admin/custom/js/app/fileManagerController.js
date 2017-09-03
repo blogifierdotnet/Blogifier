@@ -12,29 +12,42 @@
     }
 
     function pick(id) {
-        if (id === 0) {
-            var items = $('.bf-filemanager .item-check:checked');
-            if (items.length === 0) {
-                toastr.error('Please select an item');
+        var items = $('.bf-filemanager .item-check:checked');
+        if (location.pathname.indexOf('/editor/') > 0) {
+            if (id === 0) {
+                for (i = 0; i < items.length; i++) {
+                    dataService.get('blogifier/api/assets/asset/' + items[i].id, callBack, fail);
+                }
             }
             else {
-                id = items[0].id;
+                dataService.get('blogifier/api/assets/asset/' + id, callBack, fail);
             }
         }
-        if (callBack.name === 'updateAvatarCallback') {
-            dataService.get('blogifier/api/assets/profileavatar/' + id, callBack, fail);
-        }
-        else if (callBack.name === 'updateCoverCallback') {
-            dataService.get('blogifier/api/assets/profileimage/' + id, callBack, fail);
-        }
-        else if (callBack.name === 'updateLogoCallback') {
-            dataService.get('blogifier/api/assets/profilelogo/' + id, callBack, fail);
+        else {
+            if (id === 0) {
+                if (items.length === 0) {
+                    toastr.error('Please select an item');
+                }
+                else {
+                    id = items[0].id;
+                }
+            }
+            var url = 'blogifier/api/assets/asset/' + id;
+            if (callBack.name === 'updateAvatarCallback') {
+                url = 'blogifier/api/assets/profileavatar/' + id;
+            }
+            else if (callBack.name === 'updateCoverCallback') {
+                url = 'blogifier/api/assets/profileimage/' + id;
+            }
+            else if (callBack.name === 'updateLogoCallback') {
+                url = 'blogifier/api/assets/profilelogo/' + id;
+            }
+            else if (callBack.name === 'updatePostCoverCallback') {
+                url = 'blogifier/api/assets/postimage/' + id + '/' + $('#hdnPostId').val();
+            }
+            dataService.get(url, callBack, fail);
         }
         close();
-    }
-
-    function uploadSelected(uploadType, id, pickCallback) {
-        dataService.get('blogifier/api/assets/' + uploadType + '/' + id, pickCallback, fail);
     }
 
     function uploadClick() {
