@@ -46,6 +46,8 @@
     }
 
     function load(page) {
+        $(firstItemCheckfm).prop('checked', false);
+        showBtns();
         var filter = $('input[name=filter]:checked').val();
         if (!filter) {
             filter = 'filterAll';
@@ -71,7 +73,7 @@
                 '		    <div class="item-img"><img src="' + src + '" alt="' + asset.title + '" /></div>' +
                 '	    </a>' +
                 '		<label class="item-name custom-control custom-checkbox">' +
-                '			<input type="checkbox" id="' + asset.id + '" class="custom-control-input item-check">' +
+                '			<input type="checkbox" id="' + asset.id + '" class="custom-control-input item-check" onchange="fileManagerController.check(this)">' +
                 '			<span class="custom-control-indicator"></span>' +
                 '			<span class="custom-control-description">' + asset.title + '</span>' +
                 '		</label>' +
@@ -109,6 +111,24 @@
         toastr.error('Failed');
     }
 
+    function check(cbx) {
+        if (!cbx.checked) {
+            $(firstItemCheckfm).prop('checked', false);
+        }
+        showBtns();
+    }
+    function showBtns() {
+        var items = $('.bf-filemanager .item-check:checked');
+        if (items.length > 0) {
+            $('#btnDelete').show();
+            $('#btnSelect').show();
+        }
+        else {
+            $('#btnDelete').hide();
+            $('#btnSelect').hide();
+        }
+    }
+
     return {
         open: open,
         load: load,
@@ -116,16 +136,31 @@
         pick: pick,
         uploadClick: uploadClick,
         uploadSubmit: uploadSubmit,
-        remove: remove
+        remove: remove,
+        check: check,
+        showBtns: showBtns
     }
 }(DataService);
 
 $('#search').keypress(function (event) {
-
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') {
         fileManagerController.load(1);
-        //toastr.success('aaa');
         return false;
     }
+});
+
+$('.bf-posts-list .item-link-desktop').click(function () {
+    $('.bf-posts-list .item-link-desktop').removeClass('active');
+    $(this).addClass('active');
+});
+
+// check all
+var itemCheckfm = $('.bf-filemanager .item-check');
+var firstItemCheckfm = itemCheckfm.first();
+
+$(firstItemCheckfm).on('change', function () {
+    var itemCheckfm = $('.bf-filemanager .item-check');
+    $(itemCheckfm).prop('checked', this.checked);
+    fileManagerController.showBtns();
 });
