@@ -41,9 +41,12 @@
             <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
         </li>
     }
-    <li class="item item-empty">
-       I'ts Empty!
-    </li>
+    @if (Model.BlogPosts.Count() == 0)
+    {
+        <li class="item item-empty">
+            I'ts Empty!
+        </li>
+    }
 </ul>
 @if (pgr.ShowNewer || pgr.ShowOlder)
 {
@@ -60,7 +63,7 @@
     </ul>
 }
 
-@if (showEmptyListCover)
+@if (ViewBag.IsFirstPost)
 {
     <div class="bf-posts-empty">
         <div class="item-body">

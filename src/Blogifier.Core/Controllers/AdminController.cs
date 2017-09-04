@@ -54,6 +54,9 @@ namespace Blogifier.Core.Controllers
 
             model.Pager = pager;
 
+            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == model.Profile.Id).FirstOrDefault();
+            ViewBag.IsFirstPost = anyPost == null;
+
             return View(_theme + "Index.cshtml", model);
         }
 
@@ -83,6 +86,9 @@ namespace Blogifier.Core.Controllers
             }
             model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, profile.Slug, pager).Result;
             model.Pager = pager;
+
+            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == model.Profile.Id).FirstOrDefault();
+            ViewBag.IsFirstPost = anyPost == null;
 
             return View(_theme + "Index.cshtml", model);
         }
