@@ -10,13 +10,10 @@
 <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
 
     <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Hello, @UserManager.GetUserName(User)! <span class="caret"></span>
+        <button type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Hello, @UserManager.GetUserName(User)!
         </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="ChangePassword" title="Change Password">Change Password</a></li>
-            <li><button type="submit" class="btn btn-danger btn-block">Log out</button></li>
-        </ul>
+           <button type="submit" class="btn btn-danger btn-block">Log out</button>
     </div>
 
 </form>
