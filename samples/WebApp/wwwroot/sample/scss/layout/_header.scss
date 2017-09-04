@@ -1,0 +1,38 @@
+﻿&-header {
+    text-align: center;
+    padding-top: 5rem;
+
+    h1 {
+        margin: 0 0 1rem;
+    }
+
+    img {
+        width: 11.87500rem;
+    }
+
+    p {
+        opacity: .7;
+        margin: 0;
+    }
+
+    .dropdown-menu {
+        padding: 0;
+        width: 100%;
+        text-align: center;
+
+        a, .btn {
+            padding: .5rem;
+            border-radius: 0;
+        }
+        overflow: hidden;
+    }
+
+    .dropdown-toggle {
+        margin-top: 1rem;
+    }
+
+    @media screen and (max-width:460px) {
+        background: #292929;
+        padding: 2rem 0;
+    }
+}
