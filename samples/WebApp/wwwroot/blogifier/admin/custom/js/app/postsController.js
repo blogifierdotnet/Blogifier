@@ -1,5 +1,6 @@
 ﻿var postsController = function (dataService) {
     function publish() {
+        loading();
         var items = $('.bf-posts-list input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -11,6 +12,7 @@
         }
     }
     function unpublish() {
+        loading();
         var items = $('.bf-posts-list input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -22,6 +24,7 @@
         }
     }
     function removePost() {
+        loading();
         var items = $('.bf-posts-list input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -37,6 +40,11 @@
     function updateCallback() {
         toastr.success('Updated');
         reload();
+    }
+
+    function loading() {
+        $(btnAction).hide();
+        $('.spin-icon').fadeIn();
     }
 
     function reload() {

@@ -64,6 +64,7 @@
     }
 
     function remove() {
+        loading();
         var items = $('#fileManagerList input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
@@ -75,6 +76,7 @@
         }
     }
     function removeCallback(data) {
+        loaded();
         toastr.success('Deleted');
         load(1);
     }
@@ -133,6 +135,14 @@
         }
         $('#file-pagination').append(pager);
         showBtns();
+    }
+
+    function loading() {
+        $('#btnDelete').hide();
+        $('.spin-icon').fadeIn();
+    }
+    function loaded() {
+        $('.spin-icon').hide();
     }
 
     function humanFileSize(size) {
