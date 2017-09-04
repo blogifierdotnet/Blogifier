@@ -11,16 +11,16 @@
 
     <h2>@ViewData["Title"]</h2>
     <hr />
-    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" autocomplete="off" class="form-container">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control form-control-lg" />
+            <input asp-for="Email" class="form-control" autofocus /> 
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control form-control-lg" />
+            <input asp-for="Password" class="form-control"  />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -32,11 +32,11 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-block btn-lg mb-4">Log in</button>
+            <button type="submit" class="btn btn-success btn-block mb-4">Log in</button>
         </div>
         <div class="form-group">
             <hr />
-            <a asp-action="Register" class="btn btn-primary btn-block btn-lg" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+            <a asp-action="Register" class="btn btn-primary btn-block" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
         </div>
     </form>
 

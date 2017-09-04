@@ -1,14 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
+@using Microsoft.AspNetCore.Identity
+@using WebApp.Models
 
-    <section class="sample-page-home">
-        <div class="row">
-            <div class="col-sm-6">
-                <a class="item" href="/blog"><img src="/sample/img/sample-blog.png" alt="Blog Demo" /><span>Blog Demo</span></a>
-            </div>
-            <div class="col-sm-6">
-                <a class="item" href="/admin"><img src="/sample/img/sample-admin.png" alt="Admin Demo" /><span>Admin Demo</span></a>
-            </div>
-        </div>
-    </section>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<section class="sample-page-home row">
+    <div class="col-sm-6">
+        <a href="/blog"><span>Blog Demo</span></a>
+    </div>
+    <div class="col-sm-6">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a href="/admin"><span>Admin Demo</span></a>
+        }
+        else
+        {
+            <a href="/Account/Register?returnurl=%2Fadmin"><span>Admin Demo</span></a>
+        }
+    </div>
+</section>

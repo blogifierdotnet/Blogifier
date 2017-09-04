@@ -1,7 +1,8 @@
-﻿a{
-    color:#fff;
-    &:hover{
-        color:#fff;
+﻿a {
+    color: #fff;
+
+    &:hover {
+        color: #fff;
     }
 }
 
@@ -15,7 +16,7 @@ label {
 }
 
 hr {
-    border-color: #555;
+    border-color: #333;
     margin: 2rem 0;
 }
 
@@ -26,7 +27,7 @@ form {
 h1, h2, h3, h4 {
     font-weight: $font-weight-medium;
     letter-spacing: -1px;
-    margin:0;
+    margin: 0;
 }
 
 iframe {
@@ -62,8 +63,13 @@ pre {
 }
 
 .form-control {
-    background:rgba(0, 0, 0, 0.50);
-    border-width:2px;
-    border-color:#666;
-    color:#fff;
+    background: none !important;
+    border-color: #444;
+    color: #fff;
+
+    &:focus, &[disabled] {
+        background: none !important;
+    }
 }
+
+

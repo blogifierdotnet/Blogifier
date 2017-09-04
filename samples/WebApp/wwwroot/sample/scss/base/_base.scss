@@ -1,28 +1,29 @@
 ﻿html, body {
     min-height: 100%;
 }
-html {font-size:1em;}
+
+html {
+    font-size: 1em;
+}
+
 body {
     background-color: $color;
-    background-image: url(/sample/img/cover.png);
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: cover;
-    color: #fff;
+    color: #aaa;
     font-family: $font-family-base;
     font-size: $font-size-base;
     cursor: default;
     overflow-y: scroll;
 
     @media screen and (max-width:460px) {
-        background:#333;
+        background: #333;
     }
 }
 
 .container {
     width: 100%;
-    max-width: 40rem;
+    max-width: 32rem;
 }
+
 .sample-wrapper {
     min-height: 100%;
     margin-bottom: -$footer-height;
@@ -35,8 +36,12 @@ body {
 }
 
 .sample-content {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+
+    h2 {
+        text-align: center;
+    }
 
     @media screen and (max-width:460px) {
         padding: 2rem;
