@@ -1,0 +1,74 @@
+﻿html, body {
+    height: 100%;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+label {
+    font-weight: $font-weight-normal;
+    white-space: nowrap;
+}
+
+hr {
+    border-color: #ddd;
+    margin: 2rem 0;
+}
+
+form {
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+    font-weight: $font-weight-medium;
+    letter-spacing: -1px;
+}
+
+iframe {
+    width: 100%;
+    border: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+
+    &:focus {
+        outline: none !important;
+    }
+}
+
+pre {
+    font-size: 1rem;
+}
+
+.progress {
+    margin-bottom: 1rem;
+}
+
+::selection {
+    background: #000;
+    color: #fff;
+}
+
+::-moz-selection {
+    background: #000;
+    color: #fff;
+}
+
+blockquote {
+    background: #eee;
+    padding: 2rem;
+    border-radius: 3px;
+
+    p {
+        &:last-child {
+            margin-bottom: 0 !important;
+        }
+    }
+}

@@ -1,0 +1,105 @@
+﻿.blog-header {
+    background-color: #fff;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+
+    button {
+        border: none;
+        background: none;
+        padding: 0;
+        display: block;
+        height: 2rem;
+        width: 2rem;
+        cursor: pointer;
+        color: #888;
+
+        &:hover {
+            color: #000;
+        }
+
+        i {
+            font-size: 1.3rem;
+            width: 100%;
+            height: 100%;
+            line-height: 2rem;
+            display: block;
+        }
+
+        &:after {
+            display: none;
+        }
+    }
+    // --
+    .blog-nav {
+        float: left;
+
+        &.show {
+            button {
+                color: #000;
+            }
+        }
+
+        .dropdown-menu {
+            overflow: hidden;
+            box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, 0.50);
+            border-radius: .1875rem;
+            border: 0;
+            padding: 0;
+            left: 1rem;
+
+            .dropdown-item {
+                padding: .5rem 1.25rem;
+
+                &:hover {
+                    background: #eceeef;
+                }
+            }
+        }
+    }
+    // --
+    .blog-logo {
+        transform: translate(-50%,-50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        text-align: center;
+        font-size: 0;
+
+        img {
+            display: block;
+            margin: auto;
+            height: 2rem;
+            border: none;
+        }
+    }
+    // --
+    .blog-search {
+        float: right;
+        position: relative;
+
+        i {
+            font-size: 1.0625rem;
+        }
+
+        input {
+            display: none;
+            transform: translateY(-50%);
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 12rem;
+            border-color: #ddd !important;
+        }
+
+        &.active {
+            input {
+                display: block;
+            }
+        }
+    }
+
+    @media screen and (max-height:48rem) and (max-width:48rem) {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
+}

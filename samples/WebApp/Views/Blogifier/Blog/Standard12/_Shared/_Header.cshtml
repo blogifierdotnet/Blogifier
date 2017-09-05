@@ -1,0 +1,37 @@
+﻿@using Blogifier.Core.Common
+@{ 
+    var logoImg = ApplicationSettings.ProfileLogo;
+    var logoUrl = "http://blogifier.net";
+    try
+    {
+        logoImg = Model.LogoImg;
+        logoUrl = Model.LogoUrl;
+    }
+    catch { }
+}
+<header class="blog-header">
+    <section class="container clearfix">
+        <nav class="blog-nav">
+            <button class="dropdown-toggle" type="button" id="blogNav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-navicon"></i></button>
+            <ul class="dropdown-menu" aria-labelledby="blogNav">
+                <li><a class="dropdown-item" href="~/">Home</a></li>
+                <li class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="~/@ApplicationSettings.BlogRoute">Blogs</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a class="dropdown-item" href="~/admin">Admin</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
+                }
+                else
+                {
+                    <li><a class="dropdown-item" href="~/account/login?ReturnUrl=%2Fadmin">Login</a></li>
+                }
+            </ul>
+        </nav>
+        <h1 class="blog-logo"><a href="~/@logoUrl"><img src="@logoImg" alt="@ApplicationSettings.Title" /></a></h1>
+        <form class="blog-search" role="search" asp-controller="Blog" asp-action="Search" method="post">
+            <button type="button"><i class="fa fa-search"></i></button>
+            <input type="search" id="term" name="term" class="form-control" placeholder="Search...">
+        </form>
+    </section>
+</header>
