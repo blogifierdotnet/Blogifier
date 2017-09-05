@@ -67,30 +67,29 @@ namespace Blogifier.Core.Data.Repositories
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var posts = _db.PostCategories.Include(pc => pc.BlogPost).Include(pc => pc.Category)
-                .Where(pc => pc.BlogPost.Profile.Slug == blog);
+            var posts = _db.BlogPosts.Include(p => p.PostCategories).Where(p => p.Profile.Slug == blog);
 
             if(status == "P")
-                posts = posts.Where(p => p.BlogPost.Published > DateTime.MinValue);
+                posts = posts.Where(p => p.Published > DateTime.MinValue);
 
             if(status == "D")
-                posts = posts.Where(p => p.BlogPost.Published == DateTime.MinValue);
+                posts = posts.Where(p => p.Published == DateTime.MinValue);
 
             if(categories.Count > 0)
-                posts = posts.Where(p => categories.Contains(p.CategoryId.ToString()));
+                posts = posts.Where(p => p.PostCategories.Any(pc => pc.BlogPostId == p.Id && categories.Contains(pc.CategoryId.ToString())));
 
-            var postItems = posts.Select(pc => new PostListItem
+            var postItems = posts.Select(p => new PostListItem
                 {
-                    BlogPostId = pc.BlogPostId,
-                    Slug = pc.BlogPost.Slug,
-                    Title = pc.BlogPost.Title,
-                    Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? ApplicationSettings.PostImage : pc.BlogPost.Image,
-                    Content = pc.BlogPost.Description,
-                    Published = pc.BlogPost.Published,
-                    AuthorName = pc.BlogPost.Profile.AuthorName,
-                    AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
-                    BlogSlug = pc.BlogPost.Profile.Slug,
-                    PostViews = pc.BlogPost.PostViews
+                    BlogPostId = p.Id,
+                    Slug = p.Slug,
+                    Title = p.Title,
+                    Image = string.IsNullOrEmpty(p.Image) ? ApplicationSettings.PostImage : p.Image,
+                    Content = p.Description,
+                    Published = p.Published,
+                    AuthorName = p.Profile.AuthorName,
+                    AuthorEmail = p.Profile.AuthorEmail,
+                    BlogSlug = p.Profile.Slug,
+                    PostViews = p.PostViews
                 }).Distinct().ToList();
 
             pager.Configure(postItems.Count);
