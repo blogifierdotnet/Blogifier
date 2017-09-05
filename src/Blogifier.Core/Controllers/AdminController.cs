@@ -60,7 +60,7 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Index.cshtml", model);
         }
 
-        [HttpPost]
+        [HttpPost("{page:int?}")]
         public IActionResult Index(IFormCollection fc)
         {
             var pager = new Pager(1);

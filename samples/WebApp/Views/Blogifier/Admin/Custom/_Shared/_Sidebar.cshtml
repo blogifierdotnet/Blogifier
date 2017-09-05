@@ -1,6 +1,6 @@
-@using Blogifier.Core.Common
+@using Blogifier.Core.Extensions
 @{
-    var settingsView = Context.Request.Path.ToString().Contains("/admin/settings");
+    var settingsView = Context.Request.Path.ToString().Contains("/admin/settings", StringComparison.InvariantCultureIgnoreCase);
 }
 <ul class="bf-sidebar-nav">
 	<li class="nav-item">

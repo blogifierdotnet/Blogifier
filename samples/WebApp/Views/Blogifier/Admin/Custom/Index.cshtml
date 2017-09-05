@@ -5,12 +5,6 @@
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
     var curPost = 0;
-
-    bool showEmptyListCover = Model.BlogPosts == null || Model.BlogPosts.Count() == 0;
-    if (!string.IsNullOrEmpty(Context.Request.Query["search"]))
-    {
-        showEmptyListCover = false;
-    }
 }
 
 <div class="bf-posts-toolbar">
@@ -63,7 +57,7 @@
     </ul>
 }
 
-@if (ViewBag.IsFirstPost)
+@*@if (ViewBag.IsFirstPost)
 {
     <div class="bf-posts-empty">
         <div class="item-body">
@@ -71,7 +65,7 @@
             <a href="/admin/editor/0" class="btn btn-light btn-lg btn-rounded">New Post</a>
         </div>
     </div>
-}
+}*@
 
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
