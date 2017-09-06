@@ -1,6 +1,5 @@
 ﻿body {
-    background-color: #fafafa;
-    color: #333;
+    background-color: #fff;
     font-family: $font-family-base;
     font-size: $font-size-base;
     cursor: default;
@@ -24,7 +23,7 @@
 }
 
 .blog-content {
-    padding-top: 4rem;
+    /*padding-top: 4rem;
     padding-bottom: 4rem;
 
     @media screen and (max-width:48rem) {
@@ -35,5 +34,5 @@
             margin: 0rem;
             padding: 0;
         }
-    }
+    }*/
 }
