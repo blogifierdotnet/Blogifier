@@ -8,50 +8,41 @@
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
 }
 <main class="page-category">
-    <header class="cover" style="background-image: url('@Model.CoverImg')">
-        <div class="cover-title container">
-            <h2>@Model.Category.Title</h2>
-            <p class="text-uppercase">Category</p>
-        </div>
+    <header class="category-header">
+        <h2 class="category-title">@Model.Category.Title</h2>
+        <p class="category-desc">Category</p>
     </header>
-
-    <div class="blog-content container">
-        <section class="row">
-            @if (Model != null)
-            {
-                foreach (var item in Model.Posts)
-                {
-                    <div class="col-md-6 post">
-                        <article class="post-item">
-                            <div class="post-item-cover">
-                                <img class="post-item-img" src="@item.Image" alt="@item.Title" />
-                                <div class="post-item-head">
-                                    <p class="post-item-info">By <a href="~/@ApplicationSettings.BlogRoute@item.BlogSlug">@item.AuthorName</a> &mdash; @item.Published.ToFriendlyDateString()</p>
-                                    <h2 class="post-item-title"><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h2>
-                                </div>
-                            </div>
-                            <div class="post-item-content">
-                                <p class="post-item-text dot-resize-update">@Html.Raw(item.Content) </p>
-                                <a class="post-item-more" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read More...</a>
-                            </div>
-                        </article>
-                    </div>
-                }
-            }
-        </section>
-        @if (Model != null)
+    @if (Model != null)
+    {
+        foreach (var item in Model.Posts)
         {
-            <ul class="pagination justify-content-center">
-                @if (Model.Pager.ShowOlder)
-                {
-                    <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
-                }
-                @if (Model.Pager.ShowNewer)
-                {
-                    <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
-                }
-            </ul>
+            <article class="post">
+                <section class="container">
+                    <header class="post-header">
+                        <h2 class="post-title"><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h2>
+                        <div class="post-meta">
+                            <a href="~/@ApplicationSettings.BlogRoute@item.BlogSlug">
+                                <img class="post-meta-img" src="/embedded/lib/img/avatar.jpg" alt="@item.AuthorName" />
+                                <span class="post-meta-author">@item.AuthorName</span>
+                            </a>
+                            <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
+                            <span class="post-meta-category">in <a href="#">News</a></span>
+                        </div>
+                    </header>
+                    <p class="post-excerpt">@Html.Raw(item.Content)</p>
+                    <a class="post-more" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read More</a>
+                </section>
+            </article>
         }
-
-    </div>
+        <ul class="pagination justify-content-center">
+            @if (Model.Pager.ShowOlder)
+            {
+                <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
+            }
+            @if (Model.Pager.ShowNewer)
+            {
+                <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
+            }
+        </ul>
+    }
 </main>

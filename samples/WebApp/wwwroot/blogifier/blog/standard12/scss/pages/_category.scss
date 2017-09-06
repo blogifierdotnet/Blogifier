@@ -1,4 +1,16 @@
 ﻿.page-category {
-    .cover {
+    .category-header {
+        padding: 5rem 0;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+
+        .category-title {
+            font-size: 3rem;
+            color: $color-blogifier;
+        }
+
+        .category-desc {
+            color: #aaa;
+        }
     }
 }
