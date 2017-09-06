@@ -18,6 +18,7 @@
         font-size: 1rem;
         margin: 2rem 0 1.875rem;
         color: #888;
+        line-height: 1.125;
 
         a {
             color: #888;
@@ -37,13 +38,16 @@
         border-radius: 50%;
     }
 
-    .post-meta-author {
-        display: block;
-        line-height: 1.1;
-    }
-
     .post-meta-time {
         font-size: .875rem;
+
+        &::before {
+            content: "";
+            display: block;
+            height: 0;
+            line-height: 0;
+            font-size: 0;
+        }
     }
 
     .post-meta-category {
