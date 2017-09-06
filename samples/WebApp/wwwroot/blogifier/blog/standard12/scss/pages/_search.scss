@@ -1,3 +1,16 @@
-﻿.page-search{
+﻿.page-search {
+    .search-header {
+        padding: 5rem 0;
+        text-align: center;
+        border-bottom: 1px solid #eee;
 
+        .search-title {
+            font-size: 3rem;
+            color: $color-blogifier;
+        }
+
+        .search-desc {
+            color: #aaa;
+        }
+    }
 }
