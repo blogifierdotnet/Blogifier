@@ -63,11 +63,11 @@
             <ul class="pagination justify-content-center">
                 @if (Model.Pager.ShowOlder)
                 {
-                    <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
+                    <li class="item item-prev"><a class="item-link" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Pager.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
                 }
                 @if (Model.Pager.ShowNewer)
                 {
-                    <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
+                    <li class="item item-next"><a class="item-link" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Pager.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
                 }
             </ul>
         }
