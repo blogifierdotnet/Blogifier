@@ -1,33 +1,67 @@
 ﻿.page-author {
-    .cover {
-        .cover-title {
-            img {
-                border-radius: 100%;
-                margin-bottom: 1rem;
-                width:6rem;
-                height:6rem;
-            }
+    .author-cover {
+        padding: 10rem 0 3rem;
+        position: relative;
+        color: #fff;
+        text-align: center;
 
-            p {
-                opacity: .75;
-                font-size: .875rem;
-                text-transform: capitalize;
-                margin-bottom: 0;
-            }
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.60);
+        }
 
-            a {
-                color: #fff;
-            }
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+    }
 
-            ul {
-                @include unstyled();
-                margin-top: 1rem;
+    .author-avatar {
+        border-radius: 50%;
+        width: 6rem;
+        margin-bottom: 1rem;
+    }
 
-                li {
-                    display: inline-block;
-                    margin: 0 .5rem;
-                }
+    .author-title {
+        font-size: 3rem;
+    }
+
+    .author-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        color: #aaa;
+    }
+
+    .author-social {
+        @include unstyled;
+
+        li {
+            display: inline-block;
+            margin: 0 .125rem;
+        }
+
+        a {
+            display: block;
+            background: $color-blogifier;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            color: #fff;
+
+            &:hover {
+                background: #fff;
+                color: $color-blogifier;
             }
+        }
+
+        i {
+            display: block;
+            line-height: 2.125rem;
         }
     }
 }

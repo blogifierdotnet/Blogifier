@@ -2,9 +2,15 @@
     height: 100%;
 }
 
-a:hover, a:focus {
-    text-decoration: none;
+a {
+    color: $color-blogifier;
+
+    &:hover, &:focus {
+        color: lighten($color-blogifier, 10%);
+        text-decoration: none;
+    }
 }
+
 
 img {
     max-width: 100%;
@@ -25,8 +31,7 @@ form {
 }
 
 h1, h2, h3, h4 {
-    font-weight: $font-weight-medium;
-    letter-spacing: -1px;
+    font-weight: $font-weight-bold;
 }
 
 iframe {

@@ -12,10 +12,9 @@
     <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-<script src="~/blogifier/blog/standard12/js/jquery-3.2.1.min.js"></script>
-<script src="~/blogifier/blog/standard12/js/tether.min.js"></script>
+<script src="~/blogifier/blog/standard12/js/jquery.min.js"></script>
+<script src="~/blogifier/blog/standard12/js/popper.min.js"></script>
 <script src="~/blogifier/blog/standard12/js/bootstrap.min.js"></script>
-<script src="~/blogifier/blog/standard12/js/jquery.dotdotdot.min.js"></script>
 <script src="~/blogifier/blog/standard12/js/prism.js"></script>
 <script src="~/blogifier/blog/standard12/js/blog.js" asp-append-version="true"></script>
 @Html.Raw(customFooter)

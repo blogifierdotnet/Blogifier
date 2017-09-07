@@ -2,64 +2,34 @@
     margin-bottom: 0;
     border-radius: 0;
 
+    .item {
+        margin: 4rem 0;
 
-
-    li {
-        margin-top: 4rem;
-
-        a {
-            display: block;
-            border: 1px solid #ddd;
-            padding: 1rem 2rem;
-            border-radius: .1875rem;
-            font-weight: 500;
+        &-link {
+            border: 2px solid #9c9c9c;
+            border-radius: 50%;
+            display: inline-block;
+            width: 2.75rem;
+            height: 2.75rem;
+            text-align: center;
             text-transform: uppercase;
-            color: #444;
-            font-size: .875rem;
-            letter-spacing: .0625rem;
-
-            &:hover, &:focus {
-                background-color: #f1f1f1;
-            }
-
-            &:active {
-                box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+            color: #888;
+            font-weight: 700;
+            &:hover{
+                border-color:$color-blogifier;
+                color:$color-blogifier;
             }
         }
 
-        span {
-            display: inline-block;
-            line-height: 1rem;
-            height: 1rem;
-        }
-
-        i {
+        &-icon {
+            display: block;
+            height: 100%;
+            line-height: 2.5rem;
             font-size: 1.5rem;
-            display: inline-block;
-            line-height: 1rem;
-            height: 1rem;
-            position: relative;
-            top: .125rem;
-
-            &:before {
-                display: block;
-            }
         }
 
-        &.prev {
-            i {
-                margin-right: 1rem;
-            }
-        }
-
-        &.next {
-            i {
-                margin-left: 1rem;
-            }
-        }
-
-        @media screen and (max-width:48rem) {
-            margin:2rem 0;
+        &-prev {
+            margin-right: .5rem;
         }
     }
 }
