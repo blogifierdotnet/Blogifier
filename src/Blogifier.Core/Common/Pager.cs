@@ -40,6 +40,7 @@
         public int Older { get; set; }
         public bool ShowOlder { get; set; }
 
+        public string RouteValue { get; set; }
         public int LastPage { get; set; } = 1;
     }
 }

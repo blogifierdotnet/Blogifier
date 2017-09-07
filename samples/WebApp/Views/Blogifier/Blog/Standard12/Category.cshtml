@@ -1,11 +1,9 @@
 ﻿@using Blogifier.Core.Common
-@using Blogifier.Core.Data.Domain
-@using System.Collections.Generic
-@using Blogifier.Core.Extensions
 @using Blogifier.Core.Data.Models
 @model BlogCategoryModel
 @{
     var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
+    Model.Pager.RouteValue = Model.Profile.Slug + "/" + Model.Category.Slug + "/";
 }
 <main class="page-category">
     <header class="cover" style="background-image: url('@Model.CoverImg')">
@@ -17,19 +15,6 @@
 
     <div class="blog-content container">
         @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Loop.cshtml", Model.Posts)
-        @if (Model != null)
-        {
-            <ul class="pagination justify-content-center">
-                @if (Model.Pager.ShowOlder)
-                {
-                    <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
-                }
-                @if (Model.Pager.ShowNewer)
-                {
-                    <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@Model.Category.Slug/@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
-                }
-            </ul>
-        }
-
+        @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Pager.cshtml", Model.Pager)
     </div>
 </main>
