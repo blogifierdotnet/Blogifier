@@ -7,12 +7,12 @@
     Model.Pager.RouteValue = Model.Profile.Slug + "/";
 }
 <main class="page-author">
-    <header class="cover" style="background-image: url('@Model.CoverImg')">
-        <div class="cover-title container">
-            <img src="@avatar" width="100" alt="@Model.Profile.Title" />
-            <h2>@Model.Profile.Title</h2>
-            <p>@Model.Profile.Description</p>
-            <ul>
+    <header class="author-cover" style="background-image: url('@Model.CoverImg')">
+        <div class="container">
+            <img class="author-avatar" src="@avatar" width="100" alt="@Model.Profile.Title" />
+            <h2 class="author-title">@Model.Profile.Title</h2>
+            <p class="author-description">@Model.Profile.Description</p>
+            <ul class="author-social">
                 @if (cf.ContainsKey("Google") && !string.IsNullOrEmpty(cf["Google"]))
                 {
                     <li><a href='@cf["Google"]' target="_blank" data-toggle="tooltip" title="Google Plus"><i class="fa fa-google"></i></a></li>
@@ -36,9 +36,6 @@
             </ul>
         </div>
     </header>
-
-    <div class="blog-content container">
-        @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Loop.cshtml", Model.Posts)
-        @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Pager.cshtml", Model.Pager)
-    </div>
+    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Post.cshtml", Model.Posts)
+    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Pager.cshtml", Model.Pager)
 </main>

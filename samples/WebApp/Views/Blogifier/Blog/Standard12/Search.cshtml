@@ -5,15 +5,11 @@
     var search = "search";
     Model.Pager.RouteValue = search + "/" + term + "/";
 }
-
-<header class="cover" style="background-image: url('@Model.CoverImg')">
-    <div class="cover-title container">
-        <h2>@term</h2>
-        <p class="text-uppercase">Search Results:</p>
-    </div>
-</header>
-
-<main class="blog-content container">
-    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Loop.cshtml", Model.Posts)
+<main class="page-search">
+    <header class="search-header">
+        <h2 class="search-title">@term</h2>
+        <p class="search-desc">Search Results:</p>
+    </header>
+    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Post.cshtml", Model.Posts)
     @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Pager.cshtml", Model.Pager)
 </main>

@@ -1,15 +1,13 @@
 ﻿@using Blogifier.Core.Common
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
-
-<section class="cover" style="background-image: url('@Model.CoverImg')">
-    <div class="cover-title container">
-        <h1>@ApplicationSettings.Title</h1>
-        <p>@ApplicationSettings.Description</p>
-    </div>
-</section>
-
-<main class="blog-content container">
-    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Loop.cshtml", Model.Posts)
+<main class="page-index">
+    <section class="cover" style="background-image: url('@Model.CoverImg')">
+        <div class="cover-title container">
+            <h1>@ApplicationSettings.Title</h1>
+            <p>@ApplicationSettings.Description</p>
+        </div>
+    </section>
+    @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Post.cshtml", Model.Posts)
     @Html.Partial("~/Views/Blogifier/Blog/Standard12/_Shared/_Pager.cshtml", Model.Pager)
 </main>
