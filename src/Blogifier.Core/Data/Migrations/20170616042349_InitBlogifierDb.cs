@@ -15,6 +15,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 450, nullable: true),
                     ImgSrc = table.Column<string>(maxLength: 160, nullable: true),
@@ -36,6 +37,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CustomKey = table.Column<string>(maxLength: 140, nullable: false),
                     CustomType = table.Column<int>(nullable: false),
@@ -55,6 +57,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AuthorEmail = table.Column<string>(maxLength: 160, nullable: false),
                     AuthorName = table.Column<string>(maxLength: 100, nullable: false),
@@ -80,6 +83,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AssetType = table.Column<int>(nullable: false),
                     DownloadCount = table.Column<int>(nullable: false),
@@ -107,6 +111,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Content = table.Column<string>(nullable: false),
                     Description = table.Column<string>(maxLength: 450, nullable: false),
@@ -135,6 +140,7 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BlogPostId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),

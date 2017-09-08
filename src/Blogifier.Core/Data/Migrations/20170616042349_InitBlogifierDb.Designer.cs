@@ -17,6 +17,7 @@ namespace Blogifier.Core.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("Npgsql:ValueGeneratedOnAdd", true)
+                .HasAnnotation("MySql:ValueGeneratedOnAdd", true)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Blogifier.Core.Data.Domain.Asset", b =>
