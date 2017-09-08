@@ -16,13 +16,9 @@ function profileLogOut() {
     $("#frmLogOut").submit();
 }
 
-// blog-search
-$(".blog-search button").click(function () {
-    $(".blog-search").addClass("active");
-    $(".blog-search input").focus();
-});
-$(".blog-search input").blur(function () {
-    $(".blog-search").removeClass("active");
+// blog-header
+$(".blog-header-toggle").click(function () {
+    $(".blog-header-modal").fadeToggle();
 });
 
 
