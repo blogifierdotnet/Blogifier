@@ -2,9 +2,9 @@
     height: 100%;
     position: relative;
     color: #fff;
-    background-position:center;
-    background-size:cover;
-    background-repeat:no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     &::after {
         content: "";
@@ -36,5 +36,40 @@
         font-size: 1.25rem;
         font-weight: 300;
         opacity: .8;
+    }
+}
+
+
+.page-cover {
+    padding: 10rem 0 3rem;
+    position: relative;
+    color: #fff;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.60);
+        z-index: 1;
+    }
+
+    .container {
+        position: relative;
+        z-index: 20;
+    }
+
+
+
+    .page-cover-title {
+        font-size: 3rem;
+        color: #fff;
+    }
+
+    .page-cover-desc {
+        color: #fff;
+        opacity: .5;
     }
 }

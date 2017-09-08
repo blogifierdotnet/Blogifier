@@ -1,26 +1,4 @@
 ﻿.page-author {
-    .author-cover {
-        padding: 10rem 0 3rem;
-        position: relative;
-        color: #fff;
-        text-align: center;
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.60);
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-        }
-    }
-
     .author-avatar {
         border-radius: 50%;
         width: 6rem;
@@ -33,7 +11,6 @@
 
     .author-description {
         font-size: 1rem;
-        margin-bottom: 2rem;
         color: #aaa;
     }
 
@@ -42,19 +19,17 @@
 
         li {
             display: inline-block;
-            margin: 0 .125rem;
+            margin-right: 1rem;
         }
 
         a {
             display: block;
-            background: $color-blogifier;
-            width: 2rem;
-            height: 2rem;
+            background: none;
             border-radius: 50%;
             color: #fff;
+            text-align: center;
 
             &:hover {
-                background: #fff;
                 color: $color-blogifier;
             }
         }
