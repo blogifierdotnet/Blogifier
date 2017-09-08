@@ -2,19 +2,18 @@
 
     Author:     Francis - http://francis.bio/
     Version:    1.0
-     
+
 */
 
-// Base 
+// Base
 @import "base/variables";
-@import "base/mixins";
 @import "base/reset";
 @import "base/base";
 
 // Layout
 @import "layout/header";
 @import "layout/footer";
- 
+
 // Components
 @import "components/cover";
 @import "components/post";

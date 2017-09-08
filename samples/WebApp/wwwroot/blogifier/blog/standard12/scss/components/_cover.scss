@@ -44,6 +44,9 @@
     padding: 10rem 0 3rem;
     position: relative;
     color: #fff;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     &::after {
         content: "";

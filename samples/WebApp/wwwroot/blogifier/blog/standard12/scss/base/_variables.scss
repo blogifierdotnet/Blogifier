@@ -1,17 +1,9 @@
-﻿// Fonts
-$font-family-roboto: "Roboto";
-$font-family-base: $font-family-roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+﻿$font: "Roboto";
+$font-family-base: $font, sans-serif;
 
-$font-size-base: 1.125rem;
-$line-height-base: 1.5;
+$fw-light: 300;
+$fw-normal: 400;
+$fw-medium: 500;
+$fw-bold: 700;
 
-$font-weight-light: 300;
-$font-weight-normal: 400;
-$font-weight-medium: 500;
-$font-weight-bold: 700;
-
-// Footer
-$footer-height: 5rem;
-
-// Color
 $color-blogifier: #5731b3;

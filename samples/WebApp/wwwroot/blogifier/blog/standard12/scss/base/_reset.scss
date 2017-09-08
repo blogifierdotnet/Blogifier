@@ -11,18 +11,17 @@ a {
     }
 }
 
-
 img {
     max-width: 100%;
 }
 
 label {
-    font-weight: $font-weight-normal;
+    font-weight: $fw-normal;
     white-space: nowrap;
 }
 
 hr {
-    border-color: #ddd;
+    border-color: #eee;
     margin: 2rem 0;
 }
 
@@ -31,7 +30,7 @@ form {
 }
 
 h1, h2, h3, h4 {
-    font-weight: $font-weight-bold;
+    font-weight: $fw-bold;
 }
 
 iframe {

@@ -3,9 +3,8 @@
 }
 
 body {
-    background-color: #fff;
     font-family: $font-family-base;
-    font-size: $font-size-base;
+    font-size: 1.125rem;
     cursor: default;
     overflow-y: scroll;
 }
@@ -13,30 +12,4 @@ body {
 .container {
     width: 100%;
     max-width: 55rem;
-}
-
-.blog-wrapper {
-    min-height: 100%;
-    margin-bottom: -$footer-height;
-
-    &::after {
-        content: "";
-        display: block;
-        height: $footer-height;
-    }
-}
-
-.blog-content {
-    /*padding-top: 4rem;
-    padding-bottom: 4rem;
-
-    @media screen and (max-width:48rem) {
-        padding: 0rem;
-
-        > .row,
-        > .row > .col-md-6 {
-            margin: 0rem;
-            padding: 0;
-        }
-    }*/
 }

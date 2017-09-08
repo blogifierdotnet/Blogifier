@@ -1,4 +1,9 @@
 ﻿.page-author {
+}
+
+.author-info {
+    text-align: center;
+
     .author-avatar {
         border-radius: 50%;
         width: 6rem;
@@ -6,16 +11,20 @@
     }
 
     .author-title {
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
     .author-description {
-        font-size: 1rem;
-        color: #aaa;
+        font-size: 1.25rem;
+        color: #fff;
+        opacity: .5;
+        font-weight: 300;
     }
 
     .author-social {
-        @include unstyled;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
         li {
             display: inline-block;

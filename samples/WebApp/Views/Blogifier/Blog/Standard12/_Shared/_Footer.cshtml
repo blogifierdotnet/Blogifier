@@ -9,7 +9,10 @@
     catch { }
 }
 <footer class="blog-footer">
-    <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
+    <div class="container">
+        <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title.</p>
+        <p>Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
+    </div>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/blogifier/blog/standard12/js/jquery.min.js"></script>
