@@ -1,3 +1,40 @@
-.blog-cover{
+.blog-cover {
+    height: 100%;
+    position: relative;
+    color: #fff;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
 
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: block;
+        background: #000;
+        z-index: 700;
+        opacity: .5;
+    }
+
+    .container {
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 701;
+    }
+
+    .cover-title {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .cover-desc {
+        font-size: 1.25rem;
+        font-weight: 300;
+        opacity: .8;
+    }
 }

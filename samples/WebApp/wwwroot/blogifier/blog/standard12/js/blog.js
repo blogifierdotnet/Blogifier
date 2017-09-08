@@ -18,7 +18,7 @@ function profileLogOut() {
 
 // blog-header
 $(".blog-header-toggle").click(function () {
-    $(".blog-header-modal").fadeToggle();
+    $(".blog-header-modal").toggleClass("active");
 });
 
 
@@ -26,3 +26,5 @@ $(".blog-header-toggle").click(function () {
 $('[data-toggle="tooltip"]').tooltip({
     animation: false
 });
+
+

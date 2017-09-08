@@ -1,4 +1,8 @@
-﻿body {
+﻿html, body {
+    height: 100%;
+}
+
+body {
     background-color: #fff;
     font-family: $font-family-base;
     font-size: $font-size-base;

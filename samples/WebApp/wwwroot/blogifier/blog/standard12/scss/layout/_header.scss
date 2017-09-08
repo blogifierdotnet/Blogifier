@@ -1,5 +1,5 @@
 ﻿.blog-header {
-    position: fixed;
+    position: absolute;
     top: 4rem;
     left: 4rem;
     right: 4rem;
@@ -15,27 +15,39 @@
     width: 3rem;
     padding: 0;
     border: 0;
-    background: #000;
+    background: none;
     color: #fff;
+    border: 2px solid #fff;
+    border-radius: 3rem;
+
+    i {
+        display: block;
+        line-height: 2.875rem;
+    }
 }
 
 .blog-header-modal {
-    display: none;
+    visibility:hidden;
+    opacity:0;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width:100%;
+    height:100%;
     z-index: 10000;
     background: #000;
     padding-top: 10rem;
     padding-bottom: 10rem;
+    transition:all ease .5s;
 
     .blog-header-toggle {
         top: 4rem;
         right: 4rem;
-        border: 2px solid #fff;
-        border-radius: 3rem;
+    }
+
+    &.active {
+        opacity:1;
+        visibility:visible;
     }
 }
 
@@ -63,6 +75,11 @@
 
     a {
         font-size: 2.5rem;
+        color: #fff;
+
+        &:hover {
+            color: $color-blogifier;
+        }
     }
 }
 
@@ -70,8 +87,9 @@
     width: 100%;
     max-width: 40rem;
     text-align: center;
-    margin: 0 auto;
+    margin: 2rem auto 0;
     display: block;
+
 
     input {
         background: none;
@@ -80,23 +98,5 @@
         color: #fff;
         outline: none !important;
         font-size: 2.5rem;
-        color: $color-blogifier;
-
-
-        &::-webkit-input-placeholder {
-            color: $color-blogifier;
-        }
-
-        &::-moz-placeholder {
-            color: $color-blogifier;
-        }
-
-        &:-ms-input-placeholder {
-            color: $color-blogifier;
-        }
-
-        &:-moz-placeholder {
-            color: $color-blogifier;
-        }
     }
 }
