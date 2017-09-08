@@ -2,7 +2,7 @@
     color: #999;
     font-size: .875rem;
     padding: 4rem 0;
-     
+
     p {
         margin: 0;
 
@@ -13,5 +13,10 @@
                 color: $color-blogifier;
             }
         }
+    }
+
+    @media screen and (max-width:57rem) {
+        text-align: center;
+        padding: 2rem 0;
     }
 }

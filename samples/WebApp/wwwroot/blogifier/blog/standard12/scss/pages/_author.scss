@@ -48,4 +48,15 @@
             line-height: 2.125rem;
         }
     }
+
+    @media screen and (max-width:57rem) {
+        .author-title {
+            font-size: 2rem;
+        }
+
+        .author-description {
+            font-size:.875rem;
+            font-weight: 400;
+        }
+    }
 }

@@ -88,4 +88,26 @@
             color: $color-blogifier;
         }
     }
+
+    @media screen and (max-width:57rem) {
+        padding: 2.5rem 0;
+
+        .post-title {
+            font-size: 2rem;
+        }
+
+        .post-meta {
+            margin: 1rem 0;
+        }
+
+        .post-excerpt {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .post-more {
+            padding: .375rem 1rem;
+        }
+    }
 }

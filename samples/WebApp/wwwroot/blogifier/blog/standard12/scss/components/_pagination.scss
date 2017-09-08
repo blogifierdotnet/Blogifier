@@ -16,9 +16,10 @@
             text-transform: uppercase;
             color: #888;
             font-weight: 700;
-            &:hover{
-                border-color:$color-blogifier;
-                color:$color-blogifier;
+
+            &:hover {
+                border-color: $color-blogifier;
+                color: $color-blogifier;
             }
         }
 
@@ -31,6 +32,12 @@
 
         &-prev {
             margin-right: .5rem;
+        }
+    }
+
+    @media screen and (max-width:57rem) {
+        .item {
+            margin: 1.5rem .25rem;
         }
     }
 }

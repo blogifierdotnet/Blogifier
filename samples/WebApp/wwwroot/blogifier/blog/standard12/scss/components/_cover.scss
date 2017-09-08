@@ -5,6 +5,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    text-align: center;
 
     &::after {
         content: "";
@@ -36,6 +37,17 @@
         font-size: 1.25rem;
         font-weight: 300;
         opacity: .8;
+    }
+
+    @media screen and (max-width:57rem) {
+        .cover-title {
+            font-size: 2rem;
+        }
+
+        .cover-desc {
+            font-size: 1rem;
+            font-weight: 400;
+        }
     }
 }
 
@@ -74,5 +86,18 @@
     .page-cover-desc {
         color: #fff;
         opacity: .5;
+    }
+
+    @media screen and (max-width:57rem) {
+        padding: 3rem 0;
+        text-align: center;
+
+        .page-cover-title {
+            font-size: 2rem;
+        }
+
+        .page-cover-desc {
+            margin: 0;
+        }
     }
 }

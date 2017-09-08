@@ -90,4 +90,34 @@
             }
         }
     }
+
+
+
+    @media screen and (max-width:57rem) {
+        .post-header {
+            padding: 3rem 5rem;
+        }
+
+        .post-title {
+            font-size: 2rem;
+        }
+
+        .post-meta {
+            padding: 0;
+        }
+
+        .post-meta-img {
+            display: none;
+        }
+
+        .post-content {
+            padding: 1rem;
+        }
+    }
+
+    @media screen and (max-width:48rem) {
+        .post-header {
+            padding: 2rem;
+        }
+    }
 }
