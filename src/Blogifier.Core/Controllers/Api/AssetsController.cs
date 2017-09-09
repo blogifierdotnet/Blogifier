@@ -27,7 +27,7 @@ namespace Blogifier.Core.Controllers.Api
             _logger = logger;
         }
 
-        // GET: api/assets/2?type=editor
+        // GET: api/assets/2?search=foo&filter=filterImages
         [HttpGet("{page:int?}")]
         public AdminAssetList Get(int page, string search, string filter)
         {
@@ -37,27 +37,6 @@ namespace Blogifier.Core.Controllers.Api
 
             var term = search == null || search == "null" ? "" : search;
             var fltr = filter == null || filter == "null" ? "" : filter;
-
-            //if (Request.Query.ContainsKey("type") && Request.Query["type"] == "editor")
-            //{
-            //    if(filter == "filterImages")
-            //    {
-            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
-            //    }
-            //    else if (filter == "filterAttachments")
-            //    {
-            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
-            //    }
-            //    else
-            //    {
-            //        assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
-            //    }
-            //}
-            //else
-            //{
-            //    assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.AssetType == 0 && a.Title.Contains(term), pager);
-            //}
-
 
             if (filter == "filterImages")
             {
@@ -220,21 +199,30 @@ namespace Blogifier.Core.Controllers.Api
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);
 
             var asset = await storage.UploadFormFile(file, Url.Content("~/"), path);
-            asset.ProfileId = profile.Id;
-            asset.LastUpdated = SystemClock.Now();
 
-            if (IsImageFile(asset.Url))
+            // sometimes we just want to override uploaded file
+            // only add DB record if asset does not exist yet
+            var existingAsset = _db.Assets.Find(a => a.Path == asset.Path).FirstOrDefault();
+            if (existingAsset == null)
             {
-                asset.AssetType = AssetType.Image;
+                asset.ProfileId = profile.Id;
+                asset.LastUpdated = SystemClock.Now();
+
+                if (IsImageFile(asset.Url))
+                {
+                    asset.AssetType = AssetType.Image;
+                }
+                else
+                {
+                    asset.AssetType = AssetType.Attachment;
+                }
+                _db.Assets.Add(asset);
             }
             else
             {
-                asset.AssetType = AssetType.Attachment;
+                existingAsset.LastUpdated = SystemClock.Now();
             }
-
-            _db.Assets.Add(asset);
             _db.Complete();
-
             return asset;
         }
 
