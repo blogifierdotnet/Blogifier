@@ -18,6 +18,27 @@
     }
 }
 
+.bf-posts-search {
+    position: relative;
+
+    .item-submit {
+        @include unstyled(button);
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: block;
+        width: 3rem;
+        height: 100%;
+        color: #aaa;
+
+        &:hover, &:focus {
+            cursor: pointer;
+            color: #000;
+        }
+    }
+}
+
 .bf-posts-list {
     @include unstyled(ul);
 
@@ -30,7 +51,33 @@
     .item-empty {
         padding: 1rem 4rem;
         font-size: 1.125rem;
+        color: #aaa;
     }
+
+    .item-search {
+        font-size: 1.125rem;
+
+        a {
+            display: block;
+            padding: 0 4rem;
+            height: 4rem;
+            line-height: 4rem;
+        }
+
+        i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            display: block;
+            padding: 0;
+            width: 4rem;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+        }
+    }
+
 
 
     .item-select {
@@ -103,31 +150,26 @@
 
 .bf-posts-pagination {
     @include unstyled(ul);
-    padding: 1.5rem;
+    @include clearfix();
+    font-size: 1.125rem;
 
     .item {
-        display: inline-block;
-        vertical-align: top;
-
-        &:first-child {
-            margin-right: 1rem;
-        }
-
-        &:last-child {
-            margin-left: 1rem;
-        }
-
-        &-count {
-            position: relative;
-            top: -2px;
-        }
+        float: left;
+        line-height: 4rem;
+        height: 4rem;
 
         &-link {
-            font-size: 1.25rem;
-        }
-
-        i, span {
+            font-size: 1.125rem;
+            width: 4rem;
+            height: 4rem;
+            line-height: 4rem;
             display: block;
+            text-align: center;
+
+            i {
+                line-height: 4rem;
+                display: block;
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
 
 <div class="bf-posts-toolbar">
     <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-    <a href="~/admin/editor/0" tabindex="2" class="btn btn-primary btn-sm float-left mr-2">New Post</a>
+    <a href="~/admin/editor/0" class="btn btn-primary btn-sm float-left mr-2">New Post</a>
     <div class="spin-icon float-left"><i class="fa fa-spin fa-cog"></i></div>
     <div class="btn-group float-left" id="postsMultiactions">
         <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
@@ -17,10 +17,14 @@
         <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
     </div>
     <form class="bf-posts-search float-right" action="~/admin" method="get">
-        <input class="form-control form-control-sm" tabindex="3" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
     </form>
 </div>
 <ul class="bf-posts-list" aria-label="posts">
+    <li class="item item-search">
+        <a href="/admin"><i class="fa fa-chevron-left"></i><span>Search Resault:</span></a>
+    </li>
     @foreach (var item in Model.BlogPosts)
     {
         var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
@@ -49,18 +53,18 @@
         {
             <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
         }
-        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
         @if (pgr.ShowNewer)
         {
             <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
         }
+        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
     </ul>
 }
 
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/blogifier/admin/custom/js/lib/scrollbar.min.js"></script>
-   
+
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>
     <script>
         var submitFilter = function () {
