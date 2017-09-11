@@ -47,33 +47,24 @@
     <ul class="bf-posts-pagination">
         @if (pgr.ShowOlder)
         {
-            <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-angle-left"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
         }
         <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
         @if (pgr.ShowNewer)
         {
-            <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-angle-right"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
         }
     </ul>
 }
 
-@*@if (ViewBag.IsFirstPost)
-{
-    <div class="bf-posts-empty">
-        <div class="item-body">
-            <h1 class="item-title">Let's write a new post!</h1>
-            <a href="/admin/editor/0" class="btn btn-light btn-lg btn-rounded">New Post</a>
-        </div>
-    </div>
-}*@
-
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
+    <script src="~/blogifier/admin/custom/js/lib/scrollbar.min.js"></script>
+   
     <script src="~/blogifier/admin/custom/js/app/postsController.js"></script>
     <script>
         var submitFilter = function () {
             $('#frmPostFilter').submit();
         }
-        $('.bf-posts-list .item-link-desktop:first').addClass('active');
     </script>
 }

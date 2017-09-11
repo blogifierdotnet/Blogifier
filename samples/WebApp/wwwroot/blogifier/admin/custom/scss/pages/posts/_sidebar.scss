@@ -1,6 +1,6 @@
 .bf-posts-filters {
     @include unstyled(ul);
-    padding: 0 0 2rem 1.5rem;
+    padding: 0 1.5rem 2rem;
 
     .filters-label {
         margin: 0;
@@ -22,8 +22,10 @@
         }
 
         &-category {
-            max-height: 20.75rem;
-            overflow: hidden;
+            &-list {
+                max-height: 13.5rem;
+                overflow-x:hidden !important;
+            }
         }
     }
 }

@@ -21,11 +21,13 @@
 			</div>
 			<div class="filters-group filters-group-category">
 				<div class="filters-group-title">Categories</div>
-				@foreach (var cat in Model.CategoryFilter)
-				{
-				var isChecked = cat.Selected ? "checked" : "";
-				<label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-				}
+                <div class="filters-group-category-list" data-simplebar>
+                    @foreach (var cat in Model.CategoryFilter)
+                    {
+                        var isChecked = cat.Selected ? "checked" : "";
+                        <label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                    }
+                </div>
 			</div>
 		</form>
 		}
