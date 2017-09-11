@@ -55,3 +55,19 @@
         background: $cl-black-5;
     }
 }
+
+
+.bf-sidebar-logo {
+    padding: 1rem;
+    text-align: center;
+    opacity: .2;
+    outline:none;
+
+    &:hover, &:focus {
+        opacity: 1;
+    }
+
+    img {
+        width: 1.25rem;
+    }
+}

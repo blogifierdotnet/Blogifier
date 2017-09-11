@@ -53,6 +53,14 @@ $(function () {
     });
 });
 
+// tooltips
+$(function () {
+    $(".bf-sidebar-logo").tooltip({
+        placement: 'top',
+        container: 'body'
+    });
+});
+
 // fixed elements on modal
 
 // Create the measurement node for scrollbar

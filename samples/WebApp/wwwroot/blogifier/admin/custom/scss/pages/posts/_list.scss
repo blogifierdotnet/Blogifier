@@ -43,9 +43,11 @@
     @include unstyled(ul);
 
     .item {
-        background: #fff;
         border-bottom: 1px solid $cl-black-5;
         position: relative;
+          &:hover {
+            background-color: #fafafa;
+        }
     }
 
     .item-empty {
@@ -105,10 +107,9 @@
         line-height: 4rem;
         padding-left: 4rem;
         display: block;
-
-        &:hover {
-            background: #fafafa;
-        }
+        @include ellipsis;
+        padding-right:15rem;
+      
     }
 
     .item-show {
@@ -134,12 +135,12 @@
 
     .item-info {
         position: absolute;
-        right: 5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        opacity: .5;
+        right: 4rem;
+        top: 0;
         font-size: .75rem;
         text-transform: uppercase;
+        line-height: 4rem;
+        padding-right:1rem;
 
         label {
             margin: 0;
