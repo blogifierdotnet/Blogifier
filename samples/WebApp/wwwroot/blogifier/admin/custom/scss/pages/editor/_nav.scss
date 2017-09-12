@@ -1,0 +1,42 @@
+﻿.bf-editor-nav {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10001;
+
+    .dropdown-toggle {
+        @include unstyled(button);
+        cursor: pointer;
+
+        border-radius: 50%;
+        width: 2.5rem;
+        height:  2.5rem;
+        &:hover, &[aria-expanded="true"]{
+            box-shadow:0 0 .5rem 0px rgba(0, 0, 0, 0.27);
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: block;
+        }
+     
+    }
+
+    .dropdown-menu {
+        background: $cl-bf;
+
+        li {
+            border-bottom-color: $cl-black-10;
+        }
+    }
+
+    .dropdown-item {
+        color: $cl-white-50;
+
+        &:hover {
+            color: #fff;
+            background: $cl-black-10;
+        }
+    }
+}
