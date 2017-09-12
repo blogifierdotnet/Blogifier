@@ -1,11 +1,19 @@
 .bf-editor {
-    padding-top: 4.75rem;
+    padding-top: 5.5rem;
     padding-bottom: 4.75rem;
 
     &-container {
         max-width: 1024px;
         width: 100%;
         margin: 0 auto;
+    }
+
+    @media (max-width: 800px) {
+        padding-top: 5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding-top: 4rem;
     }
 }
 

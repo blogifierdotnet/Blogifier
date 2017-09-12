@@ -7,36 +7,53 @@
     .dropdown-toggle {
         @include unstyled(button);
         cursor: pointer;
-
         border-radius: 50%;
         width: 2.5rem;
-        height:  2.5rem;
-        &:hover, &[aria-expanded="true"]{
-            box-shadow:0 0 .5rem 0px rgba(0, 0, 0, 0.27);
+        height: 2.5rem;
+        overflow: hidden;
+
+        &:hover, &[aria-expanded="true"] {
+            box-shadow: 0 0 .5rem 0 rgba(0, 0, 0, 0.27);
         }
+
         img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
             display: block;
         }
-     
     }
 
     .dropdown-menu {
-        background: $cl-bf;
+        margin-top: 1rem;
 
-        li {
-            border-bottom-color: $cl-black-10;
+        &::before {
+            @include triangle(.875rem, #fff, up);
+            position: absolute;
+            top: -.8125rem;
+            left: .8125rem;
         }
     }
 
     .dropdown-item {
-        color: $cl-white-50;
+        font-size: .875rem;
+    }
 
-        &:hover {
-            color: #fff;
-            background: $cl-black-10;
+    @media (max-width: 800px) {
+        top: 0;
+        left: 0;
+
+        .dropdown-toggle {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .dropdown-toggle {
+            width: 4rem;
+            height: 4rem;
         }
     }
 }
