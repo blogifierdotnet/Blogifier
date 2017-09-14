@@ -12,6 +12,11 @@ body {
 .bf {
     position: relative;
     padding-left: $width-sidebar;
+    height: 100%;
+
+    .bf-sidebar, .bf-content {
+        height: 100%;
+    }
 
     .bf-sidebar {
         width: $width-sidebar;

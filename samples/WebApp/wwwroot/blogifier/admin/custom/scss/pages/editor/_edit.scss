@@ -1,47 +1,34 @@
 .bf-editor {
     padding-top: 5.5rem;
-    padding-bottom: 4.75rem;
+    min-height: 100%;
 
-    &-container {
-        max-width: 1024px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    @media (max-width: 800px) {
-        padding-top: 5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding-top: 4rem;
+    &-form {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
     }
 }
 
 .bf-editor-header {
     background: #333;
     position: relative;
-    margin-bottom: 3rem;
-    padding: 3rem 0 3.25rem;
+    width: 100%;
+    z-index: 100;
+    padding: 8rem 3rem 3rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-    &.bf-editor-cover {
+    &:after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        z-index: 100;
-        padding: 10rem 0 3.25rem;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-
-        &:after {
-            display: block;
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.52);
-            z-index: 0;
-        }
+        height: 100%;
+        background: rgba(0, 0, 0, 0.52);
+        z-index: 0;
     }
 
     .bf-editor-title {
@@ -55,11 +42,13 @@
         position: relative;
         z-index: 1;
         font-weight: $fw-normal;
+        width: 100%;
     }
 }
 
 .bf-editor-footer {
-    margin-top: 3rem;
+    background: #f7f7f7;
+    padding: 3rem;
 
     .btn-group.float-right {
         margin-left: .25rem;

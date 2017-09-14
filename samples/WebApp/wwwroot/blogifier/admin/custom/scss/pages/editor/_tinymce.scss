@@ -1,5 +1,6 @@
 .mce-tinymce {
     border: none !important;
+    flex: 1;
 
     .mce-toolbar-grp {
         position: fixed;
@@ -156,7 +157,8 @@
 
 .tinymce-placeholder {
     position: absolute;
-    top: .25rem;
+    top: 3.25rem;
+    left: 3rem;
     font-size: 1.25rem;
     color: #aaa;
     font-weight: $fw-light;

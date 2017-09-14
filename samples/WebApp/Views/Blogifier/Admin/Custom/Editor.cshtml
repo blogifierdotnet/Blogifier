@@ -4,78 +4,74 @@
     var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
     if(string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
 }
-<div id="post-edit" class="bf-editor">
-    <form id="frmEditor">
+<div id="post-edit" class="bf-editor d-flex flex-column">
+    <form id="frmEditor" class="bf-editor-form">
         <div class="bf-editor-header bf-editor-cover" style="background-image:url(@postCover);">
-            <textarea class="bf-editor-title bf-editor-container" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
+            <textarea class="bf-editor-title" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
         </div>
-        <div class="bf-editor-container">
-            <textarea id="txtContent" name="txtContent" class="form-control form-control-text" placeholder="Post Content...">@Model.BlogPost.Content</textarea>
-        </div>
+         <textarea id="txtContent" name="txtContent" class="form-control form-control-text" placeholder="Post Content...">@Model.BlogPost.Content</textarea>
         <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
         <input type="hidden" id="hdnPostSlug" name="hdnPostSlug" value="@Model.BlogPost.Slug" />
         <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
         <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
     </form>
-    <div class="bf-editor-container">
-        <div class="bf-editor-footer">
-            <div class="bf-editor-container">
-                <div class="btn-group btn-group-icon float-right">
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
-                    <button type="button" class="btn btn-outline-primary" onclick="return fileManagerController.open(updatePostCoverCallback);" title="Change The Cover"><i class="fa fa-photo"></i></button>
-                </div>
-                <span id="action-buttons"></span>
-                <a href="~/admin" class="btn btn-link">Cancel</a>
-            </div>
+    <div class="bf-editor-footer">
+        <div class="btn-group btn-group-icon float-right">
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
+            <button type="button" class="btn btn-outline-primary" onclick="return fileManagerController.open(updatePostCoverCallback);" title="Change The Cover"><i class="fa fa-photo"></i></button>
         </div>
-        <!--
-        TODO: Add Loading Style!s
-        <div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>
-        -->
-        <div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Post Settings</h4>
-                        <button class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
-                    </div>
-                    <div class="modal-body bf-editor-settings">
-                        <div class="bf-editor-category">
-                            <h5>Category</h5>
-                            <form id="frmCategory">
-                                <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
-                            </form>
-                            <ul id="edit-categories">
-                                @foreach (var category in Model.CategoryList)
-                                {
-                                    <li id="cat-@category.Value">
-                                        <label class="custom-control custom-checkbox">
-                                            @if (category.Selected)
-                                            {
-                                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
-                                            }
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description">@category.Text</span>
-                                        </label>
-                                        <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="bf-editor-description">
-                            <h5>Description</h5>
-                            <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
-                        </div>
-                    </div>
+        <span id="action-buttons"></span>
+        <a href="~/admin" class="btn btn-link">Cancel</a>
+    </div>
+    <!--
+    TODO: Add Loading Style!s
+    <div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>
+    -->
+</div>
+
+<div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Post Settings</h4>
+                <button class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body bf-editor-settings">
+                <div class="bf-editor-category">
+                    <h5>Category</h5>
+                    <form id="frmCategory">
+                        <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." />
+                    </form>
+                    <ul id="edit-categories">
+                        @foreach (var category in Model.CategoryList)
+                        {
+                            <li id="cat-@category.Value">
+                                <label class="custom-control custom-checkbox">
+                                    @if (category.Selected)
+                                    {
+                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                                    }
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">@category.Text</span>
+                                </label>
+                                <i class="fa fa-times" aria-label="Delete" onclick="editorController.removeCategory('@category.Value')"></i>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="bf-editor-description">
+                    <h5>Description</h5>
+                    <textarea rows="6" id="txtDescription" class="form-control">@Model.BlogPost.Description</textarea>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @Html.Partial("~/Views/Blogifier/Admin/Custom/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script>
