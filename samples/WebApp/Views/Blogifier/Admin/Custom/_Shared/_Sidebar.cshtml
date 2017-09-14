@@ -2,14 +2,15 @@
 @using Blogifier.Core.Common
 @{
     var settingsView = Context.Request.Path.ToString().Contains("/admin/settings", StringComparison.InvariantCultureIgnoreCase);
+    var editorView = Context.Request.Path.ToString().Contains("/admin/editor", StringComparison.InvariantCultureIgnoreCase);
 }
 <ul class="bf-sidebar-nav">
 	<li class="nav-item">
-		@if (settingsView)
+		@if (settingsView || editorView)
 		{
 		<a class="nav-item-link" href="~/admin">Posts</a>
 		}
-		@if (!settingsView)
+		@if (!settingsView && !editorView)
 		{
 		<a class="nav-item-link active" href="~/admin">Posts</a>
 		<form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">

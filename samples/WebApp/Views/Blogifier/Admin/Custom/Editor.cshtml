@@ -1,7 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminEditorModel
 @using Blogifier.Core.Common
 @{
-    Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Editor.cshtml";
     var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
     if(string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
 }

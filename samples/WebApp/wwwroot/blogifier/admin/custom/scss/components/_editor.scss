@@ -4,9 +4,9 @@
     .mce-toolbar-grp {
         position: fixed;
         top: 0;
-        background: $cl-bf;
-        width: 100%;
-        left: 0;
+        background: #111;
+        right: 0;
+        left: $width-sidebar;
         z-index: 1000;
         padding: 0;
         -moz-box-sizing: border-box;
@@ -14,30 +14,13 @@
         box-sizing: border-box;
 
         > div {
-            width: 100%;
-            max-width: 1024px;
-            margin: 1.5rem auto;
+            margin: 1.5rem;
         }
 
         * {
             padding: 0;
             margin: 0;
             border: none;
-        }
-
-        @media (max-width:1024px) {
-            padding-left: 5rem;
-        }
-
-        @media (max-width: 800px) {
-            > div {
-                margin: 0;
-                border-right: 1px solid rgba(0,0,0,0.1) !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            padding-left: 4rem;
         }
     }
 }
