@@ -33,7 +33,28 @@ namespace Blogifier.Core.Data.Repositories
             var items = drafts.Concat(pubs).ToList();
 
             pager.Configure(items.Count);
-            return GetItems(items).Skip(skip).Take(pager.ItemsPerPage);
+
+            var postIds = items.Skip(skip).Take(pager.ItemsPerPage).Select(p => p.Id).ToList();
+
+            var posts = _db.PostCategories.Include(pc => pc.BlogPost).Include(pc => pc.Category)
+                .Where(pc => postIds.Contains(pc.BlogPostId))
+                .Select(pc => new PostListItem
+                {
+                    BlogPostId = pc.BlogPostId,
+                    Slug = pc.BlogPost.Slug,
+                    Title = pc.BlogPost.Title,
+                    Avatar = string.IsNullOrEmpty(pc.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : pc.BlogPost.Profile.Avatar,
+                    Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? ApplicationSettings.PostImage : pc.BlogPost.Image,
+                    Content = pc.BlogPost.Description,
+                    Published = pc.BlogPost.Published,
+                    AuthorName = pc.BlogPost.Profile.AuthorName,
+                    AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
+                    BlogSlug = pc.BlogPost.Profile.Slug,
+                    PostViews = pc.BlogPost.PostViews,
+                    PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
+                }).Distinct().ToList();
+
+            return posts;
         }
 
         public Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")
@@ -53,8 +74,9 @@ namespace Blogifier.Core.Data.Repositories
                     AuthorName = pc.BlogPost.Profile.AuthorName,
                     AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
                     BlogSlug = pc.BlogPost.Profile.Slug,
-                    PostViews = pc.BlogPost.PostViews
-                }).ToList();
+                    PostViews = pc.BlogPost.PostViews,
+                    PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
+                }).Distinct().ToList();
 
             if (!string.IsNullOrEmpty(blog))
                 posts = posts.Where(p => p.BlogSlug == blog).ToList();
@@ -146,21 +168,22 @@ namespace Blogifier.Core.Data.Repositories
 
         #region Private methods
 
-        private List<PostListItem> GetItems(List<BlogPost> postList)
+        private List<PostListItem> GetItems(List<PostCategory> postCategory)
         {
-            return postList.Select(p => new PostListItem
+            return postCategory.Select(p => new PostListItem
             {
-                BlogPostId = p.Id,
-                Slug = p.Slug,
-                Title = p.Title,
-                Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
-                Image = string.IsNullOrEmpty(p.Image) ? ApplicationSettings.PostImage : p.Image,
-                Content = p.Description,
-                Published = p.Published,
-                AuthorName = p.Profile.AuthorName,
-                AuthorEmail = p.Profile.AuthorEmail,
-                BlogSlug = p.Profile.Slug,
-                PostViews = p.PostViews
+                BlogPostId = p.BlogPost.Id,
+                Slug = p.BlogPost.Slug,
+                Title = p.BlogPost.Title,
+                Avatar = string.IsNullOrEmpty(p.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.BlogPost.Profile.Avatar,
+                Image = string.IsNullOrEmpty(p.BlogPost.Image) ? ApplicationSettings.PostImage : p.BlogPost.Image,
+                Content = p.BlogPost.Description,
+                Published = p.BlogPost.Published,
+                AuthorName = p.BlogPost.Profile.AuthorName,
+                AuthorEmail = p.BlogPost.Profile.AuthorEmail,
+                BlogSlug = p.BlogPost.Profile.Slug,
+                PostViews = p.BlogPost.PostViews,
+                PostCategories = p.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
             }).ToList();
         }
 

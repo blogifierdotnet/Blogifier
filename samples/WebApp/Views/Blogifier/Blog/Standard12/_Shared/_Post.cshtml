@@ -17,7 +17,15 @@
                                 <span class="post-meta-author">@item.AuthorName</span>
                             </a>
                             <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
-                            <span class="post-meta-category">in <a href="#">News</a></span>
+                            @if (item.PostCategories != null && item.PostCategories.Count > 0)
+                            {
+                                <span class="post-meta-category">in 
+                                    @foreach (var cat in item.PostCategories)
+                                    {
+                                        <a href="~/@ApplicationSettings.BlogRoute@item.BlogSlug/@cat">@cat</a>
+                                    }
+                                </span>
+                            }
                         </div>
                     </header>
                     <div class="post-content">
