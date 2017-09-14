@@ -30,7 +30,6 @@
 @import "components/scrollbar";
 @import "components/prism";
 @import "components/tinymce";
-@import "components/editor";
 
 // pages > posts
 @import "pages/posts/layout";
@@ -39,7 +38,7 @@
 @import "pages/posts/empty";
 
 // pages > editor
-@import "pages/editor/nav";
+@import "pages/editor/tinymce";
 @import "pages/editor/edit";
 
 // pages > filemanager
