@@ -1,4 +1,5 @@
 @using Blogifier.Core.Extensions
+@using Blogifier.Core.Common
 @{
     var settingsView = Context.Request.Path.ToString().Contains("/admin/settings", StringComparison.InvariantCultureIgnoreCase);
 }
@@ -42,7 +43,10 @@
 		<a class="nav-item-link active" href="~/admin/settings/profile">Settings</a>
 		<ul class="nav-item-body bf-sidebar-settings">
 			<li><a href="~/admin/settings/profile">Edit Profile</a></li>
-			<li><a href="~/admin/settings/personal">Blog Settings</a></li>
+            @if (ApplicationSettings.SingleBlog == false)
+            {
+                <li><a href="~/admin/settings/personal">Blog Settings</a></li>
+            }
 			<li><a href="~/admin/settings/custom">Custom Code</a></li>
 			<li><a href="~/admin/settings/import">Import Rss</a></li>
 			@if (Model.Profile != null && Model.Profile.IsAdmin)
