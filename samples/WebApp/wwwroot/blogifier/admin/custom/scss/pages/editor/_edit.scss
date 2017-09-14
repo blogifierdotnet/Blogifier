@@ -100,7 +100,7 @@
 
     ul {
         @include unstyled(ul);
-        max-height: 360px;
+        max-height: 15rem;
         overflow-y: auto;
     }
 

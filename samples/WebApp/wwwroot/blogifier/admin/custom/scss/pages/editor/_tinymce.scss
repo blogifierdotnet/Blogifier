@@ -4,7 +4,7 @@
     .mce-toolbar-grp {
         position: fixed;
         top: 0;
-        background: #111;
+        background: #222;
         right: 0;
         left: $width-sidebar;
         z-index: 1000;
@@ -42,7 +42,6 @@
             font-size: 0;
         }
     }
-
 
     .mce-btn {
         float: left;
@@ -86,8 +85,9 @@
 
         @media (max-width:480px) {
             .mce-ico {
-                font-size:.75rem;
+                font-size: .75rem;
             }
+
             button {
                 height: 2rem;
             }
