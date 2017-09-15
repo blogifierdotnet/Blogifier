@@ -5,6 +5,7 @@
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
     var curPost = 0;
+    var searchTerm = Context.Request.Query["search"];
 }
 
 <div class="bf-posts-toolbar">
@@ -22,9 +23,12 @@
     </form>
 </div>
 <ul class="bf-posts-list" aria-label="posts">
-    <li class="item item-search">
-        <a href="/admin"><i class="fa fa-chevron-left"></i><span>Search Resault:</span></a>
-    </li>
+    @if (!string.IsNullOrEmpty(searchTerm))
+    {
+        <li class="item item-search">
+            <a href="/admin"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
+        </li>
+    }
     @foreach (var item in Model.BlogPosts)
     {
         var published = item.Published == DateTime.MinValue ? "DRAFT" : item.Published.ToString("MMM dd, yyyy");
