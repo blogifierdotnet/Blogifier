@@ -104,7 +104,8 @@
             }
         }
         var updatePostCoverCallback = function (data) {
-            $('.bf-editor-cover').css('background-image', 'url(' + data.url + ')');  
+            $('.bf-editor-cover').css('background-image', 'url(' + data.url + ')'); 
+            $('#hdnPostImg').val(data.url);
             toastr.success('Updated');
         }
     </script>

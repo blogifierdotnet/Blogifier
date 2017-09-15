@@ -97,9 +97,12 @@ namespace Blogifier.Core.Controllers.Api
         public Asset UpdatePostImage(string type, int assetId, int postId)
         {
             var asset = _db.Assets.Single(a => a.Id == assetId);
-            var post = _db.BlogPosts.Single(p => p.Id == postId);
-            post.Image = asset.Url;
-            _db.Complete();
+            if(postId > 0)
+            {
+                var post = _db.BlogPosts.Single(p => p.Id == postId);
+                post.Image = asset.Url;
+                _db.Complete();
+            }
             return asset;
         }
 
