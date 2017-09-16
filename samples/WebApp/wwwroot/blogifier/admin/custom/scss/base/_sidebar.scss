@@ -1,8 +1,9 @@
 .bf-sidebar-header {
     position: relative;
     display: block;
-    padding: 1.5rem;
     border-bottom: 1px solid $cl-black-5;
+    padding: 1.5rem;
+    padding-left: 5rem;
 
     .item-img {
         width: 2.5rem;
@@ -14,15 +15,47 @@
         margin-right: 1rem;
     }
 
-    .item-name {
+    span {
         display: block;
-        line-height: 2.5rem;
-        padding-left: 3.5rem;
         color: #fff;
+        height: 1.25rem;
+        @include ellipsis;
+    }
+
+    .item-name {
         font-weight: $fw-medium;
+        line-height: 1.75rem;
+    }
+
+    .item-url {
+        font-size: .75rem;
+        line-height: 1.5rem;
+        color: $cl-white-50;
     }
 }
 
+.bf-sidebar-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 3.5rem;
+    width: 3.5rem;
+    background: none;
+    border: none;
+    display: none;
+
+    i {
+        font-size: 1.125rem;
+        color: #fff;
+        display: block;
+        height: 100%;
+        line-height: 3.5rem;
+    }
+
+    &.active {
+        background: $cl-black-10;
+    }
+}
 
 .bf-sidebar-nav {
     @include unstyled(ul);
@@ -61,7 +94,7 @@
     padding: 1rem;
     text-align: center;
     opacity: .2;
-    outline:none;
+    outline: none;
 
     &:hover, &:focus {
         opacity: 1;

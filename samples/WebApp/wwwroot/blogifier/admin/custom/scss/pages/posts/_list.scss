@@ -20,7 +20,10 @@
 
 .bf-posts-search {
     position: relative;
-
+    .form-control {
+        padding: 0 1rem;
+        height:2.5rem;
+    }
     .item-submit {
         @include unstyled(button);
         position: absolute;
