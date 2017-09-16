@@ -37,8 +37,8 @@
             <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
             <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
             <div class="item-info">
-                <span>@item.PostViews Views /</span>
-                <a aria-label="Publish date">@published</a>
+                <span class="item-info-views" aria-label="Views">@item.PostViews Views /</span>
+                <span class="item-info-date" aria-label="Publish date">@published</span>
             </div>
             <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
         </li>

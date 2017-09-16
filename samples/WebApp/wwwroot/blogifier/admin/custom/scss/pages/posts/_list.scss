@@ -16,14 +16,21 @@
             transform: translate(-50%, -50%);
         }
     }
+
+    @media screen and (max-width:55rem) {
+        padding: 1rem 1rem 1rem 0;
+    }
 }
 
 .bf-posts-search {
     position: relative;
+    width: 12rem;
+
     .form-control {
         padding: 0 1rem;
-        height:2.5rem;
+        height: 2.5rem;
     }
+
     .item-submit {
         @include unstyled(button);
         position: absolute;
@@ -40,6 +47,16 @@
             color: #000;
         }
     }
+
+    @media screen and (max-width:75rem) {
+        .item-submit {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width:30rem) {
+        display: none;
+    }
 }
 
 .bf-posts-list {
@@ -48,19 +65,20 @@
     .item {
         border-bottom: 1px solid $cl-black-5;
         position: relative;
-          &:hover {
+
+        &:hover {
             background-color: #fafafa;
         }
     }
 
     .item-empty {
         padding: 1rem 4rem;
-        font-size: 1.125rem;
+        font-size: 1rem;
         color: #aaa;
     }
 
     .item-search {
-        font-size: 1.125rem;
+        font-size: 1rem;
 
         a {
             display: block;
@@ -77,13 +95,15 @@
             display: block;
             padding: 0;
             width: 4rem;
-            height: 4rem;
+            height: 100%;
             line-height: 4rem;
             text-align: center;
         }
+
+        @media screen and (max-width:75rem) {
+            font-size: 1rem;
+        }
     }
-
-
 
     .item-select {
         position: absolute;
@@ -93,7 +113,7 @@
         display: block;
         padding: 0;
         width: 4rem;
-        height: 4rem;
+        height: 100%;
 
         .custom-control-indicator {
             top: 50%;
@@ -103,7 +123,7 @@
     }
 
     .item-link {
-        font-size: 1.125rem;
+        font-size: 1rem;
         font-weight: 400;
         color: #000;
         height: 4rem;
@@ -111,8 +131,7 @@
         padding-left: 4rem;
         display: block;
         @include ellipsis;
-        padding-right:15rem;
-      
+        padding-right: 15rem;
     }
 
     .item-show {
@@ -121,7 +140,7 @@
         top: 50%;
         transform: translateY(-50%);
         width: 4rem;
-        height: 4rem;
+        height: 100%;
 
         i {
             position: absolute;
@@ -143,11 +162,39 @@
         font-size: .75rem;
         text-transform: uppercase;
         line-height: 4rem;
-        padding-right:1rem;
+        padding-right: 1rem;
+        color: #aaa;
 
         label {
             margin: 0;
             vertical-align: top;
+        }
+    }
+
+    @media screen and (max-width:75rem) {
+        .item-link {
+            padding-right: 11rem;
+        }
+
+        .item-info-views {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width:55rem) {
+        .item-link, .item-info, .item-search a,, .item-search a i {
+            height: 3rem;
+            line-height: 3rem;
+        }
+    }
+
+    @media screen and (max-width:40rem) {
+        .item-link {
+            padding-right: 4.5rem;
+        }
+
+        .item-info {
+            display: none;
         }
     }
 }
@@ -155,7 +202,7 @@
 .bf-posts-pagination {
     @include unstyled(ul);
     @include clearfix();
-    font-size: 1.125rem;
+    font-size: 1rem;
 
     .item {
         float: left;
@@ -163,10 +210,9 @@
         height: 4rem;
 
         &-link {
-            font-size: 1.125rem;
+            font-size: 1rem;
             width: 4rem;
-            height: 4rem;
-            line-height: 4rem;
+            height: 100%;
             display: block;
             text-align: center;
 
@@ -174,6 +220,13 @@
                 line-height: 4rem;
                 display: block;
             }
+        }
+    }
+
+    @media screen and (max-width:55rem) {
+        .item, .item-link i {
+            height: 3rem;
+            line-height: 3rem;
         }
     }
 }
