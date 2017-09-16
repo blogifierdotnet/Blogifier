@@ -91,3 +91,17 @@ $('.modal').on('hidden.bs.modal', function () {
 
 // sidebar settings active style
 $('.bf-sidebar-settings li a[href*="' + location.pathname + '"]').addClass('active');
+
+
+// sidebar toggle mobile
+$(".bf-sidebar-toggle").on("click", function () {
+    $(".bf-sidebar-nav").stop(true, true).slideToggle();
+});
+
+$(window).resize(function () {
+    if ($(window).width() >= 881) {
+        $(".bf-sidebar-nav").show();
+    } else {
+        $(".bf-sidebar-nav").hide();
+    } 
+});

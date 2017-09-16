@@ -4,8 +4,11 @@ html, body {
 
 body {
     font-family: $font-family-base;
-    overflow-y: scroll;
     cursor: default;
+
+    @media screen and (min-width:75rem) {
+        overflow-y: scroll;
+    }
 }
 
 //
