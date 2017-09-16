@@ -1,6 +1,6 @@
 // color = cl
 $cl-bf: #5731b3;
-$cl-bf-light: #6A3CBC;
+$cl-bf-light: lighten($cl-bf, 10%);
 
 $cl-black-5: rgba(0, 0, 0, 0.05);
 $cl-black-10: rgba(0, 0, 0, 0.10);
@@ -47,5 +47,3 @@ $radius-xl: 16px;
 // width
 $width-sidebar: 20rem;
 
-// height
-$ht-filters: 3rem;
