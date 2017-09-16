@@ -80,10 +80,8 @@ document.body.removeChild(scrollDiv);
 
 
 $('.modal').on('show.bs.modal', function () {
-    $(".bf-nav").css("padding-right", scrollbarWidth);
     $(".mce-toolbar-grp").css({
-        "left": -scrollbarWidth,
-        "padding-left": scrollbarWidth
+        "right": scrollbarWidth
     });
 });
 
