@@ -43,6 +43,10 @@
         font-weight: $fw-normal;
         width: 100%;
     }
+
+    @media screen and (max-width:55rem) {
+        padding:3.75rem 2rem;
+    }
 }
 
 .bf-editor-footer {
@@ -63,6 +67,10 @@
             font-size: .75rem;
             text-transform: uppercase;
         }
+    }
+
+    @media screen and (max-width:55rem) {
+        padding: 1rem;
     }
 }
 

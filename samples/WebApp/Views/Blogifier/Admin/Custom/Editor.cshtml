@@ -2,14 +2,14 @@
 @using Blogifier.Core.Common
 @{
     var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
-    if(string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
+    if (string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
 }
 <div id="post-edit" class="bf-editor d-flex flex-column">
     <form id="frmEditor" class="bf-editor-form">
         <div class="bf-editor-header bf-editor-cover" style="background-image:url(@postCover);">
             <textarea class="bf-editor-title" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">@Model.BlogPost.Title</textarea>
         </div>
-         <textarea id="txtContent" name="txtContent" class="form-control form-control-text" placeholder="Post Content...">@Model.BlogPost.Content</textarea>
+        <textarea id="txtContent" name="txtContent" class="form-control form-control-text" placeholder="Post Content...">@Model.BlogPost.Content</textarea>
         <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
         <input type="hidden" id="hdnPostSlug" name="hdnPostSlug" value="@Model.BlogPost.Slug" />
         <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
@@ -104,9 +104,34 @@
             }
         }
         var updatePostCoverCallback = function (data) {
-            $('.bf-editor-cover').css('background-image', 'url(' + data.url + ')'); 
+            $('.bf-editor-cover').css('background-image', 'url(' + data.url + ')');
             $('#hdnPostImg').val(data.url);
             toastr.success('Updated');
         }
+
+        $(window).on("load", function () {
+            var stickyNavTop = $(".mce-toolbar-grp").offset().top;
+            $(window).resize(function () {
+                if ($(window).width() <= 880) {
+                    stickyNavTop = $(".mce-toolbar-grp").offset().top;
+                }
+            });
+            var stickyNav = function () {
+                var scrollTop = $(window).scrollTop();
+
+                if (scrollTop > stickyNavTop && $(window).width() <= 880) {
+                    $(".mce-tinymce").addClass('sticky').css("padding-top", $(".mce-toolbar-grp").height());
+                } else {
+                    $(".mce-tinymce").removeClass('sticky').css("padding-top", "0");
+                }
+            };
+
+            stickyNav();
+            $(window).scroll(function () {
+                stickyNav();
+            });
+        });
+
+
     </script>
 }
