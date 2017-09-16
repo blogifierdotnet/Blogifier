@@ -13,15 +13,38 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
+        padding: 1.5rem;
 
         > div {
-            margin: 1.5rem;
         }
 
         * {
             padding: 0;
             margin: 0;
             border: none;
+        }
+    }
+
+    @media screen and (max-width:75rem) {
+        .mce-toolbar-grp {
+            left: $width-sidebar-sm;
+        }
+    }
+
+    @media screen and (max-width:55rem) {
+
+        .mce-toolbar-grp {
+            position: relative;
+            left: 0;
+            top: 0;
+            padding: 1rem;
+        }
+    }
+
+    @media screen and (max-width:50rem) {
+
+        .mce-toolbar-grp {
+            padding: 0;
         }
     }
 }
@@ -84,9 +107,14 @@
             text-align: center;
         }
 
+        @media (max-width:50rem) {
+            button {
+                height: 3rem;
+            }
+        }
+
         @media (max-width:480px) {
             .mce-ico {
-                font-size: .75rem;
             }
 
             button {

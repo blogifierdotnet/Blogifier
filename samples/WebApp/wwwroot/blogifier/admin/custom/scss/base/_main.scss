@@ -28,4 +28,31 @@ body {
         background: $cl-bf;
         color: #fff;
     }
+
+    @media screen and (max-width:75rem) {
+        padding-left: $width-sidebar-sm;
+
+        .bf-sidebar {
+            width: $width-sidebar-sm;
+        }
+    }
+
+
+    @media screen and (max-width:55rem) {
+        padding-left: 0;
+
+        .bf-sidebar {
+            position: absolute;
+            right: 0;
+            width: auto;
+            bottom: auto;
+            height: auto;
+            z-index: 1000;
+        }
+    }
+
+    @media screen and (max-width:55rem) {
+        height: auto;
+        padding-top: 3.5rem;
+    }
 }

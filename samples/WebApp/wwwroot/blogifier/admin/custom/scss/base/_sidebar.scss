@@ -32,6 +32,27 @@
         line-height: 1.5rem;
         color: $cl-white-50;
     }
+
+    @media screen and (max-width:55rem) {
+        padding: .5rem 3.5rem;
+
+        .item-img {
+            top: .75rem;
+            left: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .item-name {
+            height: 2.5rem;
+            line-height: 2.625rem;
+            padding-left: 1rem;
+        }
+
+        .item-url {
+            display: none;
+        }
+    }
 }
 
 .bf-sidebar-toggle {
@@ -54,6 +75,10 @@
 
     &.active {
         background: $cl-black-10;
+    }
+
+    @media screen and (max-width:55rem) {
+        display: block;
     }
 }
 
@@ -87,6 +112,10 @@
     .nav-item-body {
         background: $cl-black-5;
     }
+
+    @media screen and (max-width:55rem) {
+        display: none;
+    }
 }
 
 
@@ -102,5 +131,9 @@
 
     img {
         width: 1.25rem;
+    }
+
+    @media screen and (max-width:55rem) {
+        display: none;
     }
 }
