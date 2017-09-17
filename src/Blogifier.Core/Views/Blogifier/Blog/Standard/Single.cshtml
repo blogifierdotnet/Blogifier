@@ -1,35 +1,35 @@
-@model Blogifier.Core.Data.Models.BlogPostDetailModel
+﻿@model Blogifier.Core.Data.Models.BlogPostDetailModel
 @using Blogifier.Core.Common
 @{
     var cf = Model.CustomFields;
     var customCode = (cf.ContainsKey("Post") && !string.IsNullOrEmpty(cf["Post"])) ? cf["Post"] : "";
+    var avatar = string.IsNullOrEmpty(Model.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : Model.BlogPost.Profile.Avatar;
 }
 <article class="post-single">
-    <header class="cover" style="background-image: url('@Model.CoverImg')">
-        <img class="cover-img" src="@Model.CoverImg" alt="@Model.BlogPost.Title" />
-        <div class="cover-title container">
-            <h1>@Model.BlogPost.Title</h1>
-            <p>
-            <span class="post-single-author">by <a href="~/@ApplicationSettings.BlogRoute@Model.BlogPost.Profile.Slug">@Model.BlogPost.Profile.AuthorName</a></span>
-            /
-            <span class="post-single-date">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</span>
-            @if (Model.BlogCategories.Count > 0)
-            {
-                <span class="post-single-category">
-                    /
-                    @foreach (var cat in Model.BlogCategories)
+    <header class="page-cover post-header" style="background-image: url('@Model.CoverImg')">
+        <section class="container">
+            <h2 class="post-title">@Model.BlogPost.Title</h2>
+            <div class="post-meta">
+                <a href="~/@ApplicationSettings.BlogRoute@Model.BlogPost.Profile.Slug">
+                    <img class="post-meta-img" src="@avatar" alt="@Model.BlogPost.Profile.AuthorName" />
+                    <span class="post-meta-author">@Model.BlogPost.Profile.AuthorName</span>
+                </a>
+                <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.BlogPost.Published)</time>
+                <span class="post-meta-category">
+                    in
+                    @if (Model.BlogCategories.Count > 0)
                     {
-                        <a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@cat.Value">@cat.Text</a>
+                        @foreach (var cat in Model.BlogCategories)
+                        {
+                            <a href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug/@cat.Value">@cat.Text</a>
+                        }
                     }
                 </span>
-            }
-            </p>
-        </div>
+            </div>
+        </section>
     </header>
-    <section class="blog-content container">
-        <div class="post-single-content">
-            @Html.Raw(Model.BlogPost.Content)
-            @Html.Raw(customCode)
-        </div>
-    </section>
+    <div class="post-content container">
+        @Html.Raw(Model.BlogPost.Content)
+        @Html.Raw(customCode)
+    </div>
 </article>

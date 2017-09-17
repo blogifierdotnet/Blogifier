@@ -1,4 +1,4 @@
-@using Blogifier.Core.Common
+﻿@using Blogifier.Core.Common
 @{
     var customFooter = "";
     try
@@ -9,13 +9,15 @@
     catch { }
 }
 <footer class="blog-footer">
-    <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title. Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
+    <div class="container">
+        <p>Copyright © @DateTime.Now.Year @ApplicationSettings.Title.</p>
+        <p>Powered by <a href="http://blogifier.net/" data-toggle="tooltip" target="_blank" title="Version - @ApplicationSettings.Version">Blogifier</a>.</p>
+    </div>
 </footer>
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
-<script src="~/embedded/blog/standard/js/jquery-3.2.1.min.js"></script>
-<script src="~/embedded/blog/standard/js/tether.min.js"></script>
+<script src="~/embedded/blog/standard/js/jquery.min.js"></script>
+<script src="~/embedded/blog/standard/js/popper.min.js"></script>
 <script src="~/embedded/blog/standard/js/bootstrap.min.js"></script>
-<script src="~/embedded/blog/standard/js/jquery.dotdotdot.min.js"></script>
 <script src="~/embedded/blog/standard/js/prism.js"></script>
 <script src="~/embedded/blog/standard/js/blog.js" asp-append-version="true"></script>
 @Html.Raw(customFooter)
