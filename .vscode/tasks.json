@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\tests\\Blogifier.Test\\Blogifier.Test.csproj"
+                "${workspaceRoot}\\samples\\WebApp\\WebApp.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

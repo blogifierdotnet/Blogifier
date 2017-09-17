@@ -37,23 +37,7 @@ namespace Blogifier.Core.Data.Repositories
 
             var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
 
-            var posts = postPage
-                .Select(p => new PostListItem
-                {
-                    BlogPostId = p.Id,
-                    Slug = p.Slug,
-                    Title = p.Title,
-                    Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
-                    Image = string.IsNullOrEmpty(p.Image) ? ApplicationSettings.PostImage : p.Image,
-                    Content = p.Description,
-                    Published = p.Published,
-                    AuthorName = p.Profile.AuthorName,
-                    AuthorEmail = p.Profile.AuthorEmail,
-                    BlogSlug = p.Profile.Slug,
-                    PostViews = p.PostViews,
-                    PostCategories = (from pc in _db.PostCategories where pc.BlogPostId == p.Id select pc.Category.Slug).ToList()
-                }).Distinct().ToList();
-            return posts;
+            return GetPostItems(postPage);
         }
 
         public Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")
@@ -100,23 +84,11 @@ namespace Blogifier.Core.Data.Repositories
             if(categories.Count > 0)
                 posts = posts.Where(p => p.PostCategories.Any(pc => pc.BlogPostId == p.Id && categories.Contains(pc.CategoryId.ToString())));
 
-            var postItems = posts.Select(p => new PostListItem
-                {
-                    BlogPostId = p.Id,
-                    Slug = p.Slug,
-                    Title = p.Title,
-                    Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
-                    Image = string.IsNullOrEmpty(p.Image) ? ApplicationSettings.PostImage : p.Image,
-                    Content = p.Description,
-                    Published = p.Published,
-                    AuthorName = p.Profile.AuthorName,
-                    AuthorEmail = p.Profile.AuthorEmail,
-                    BlogSlug = p.Profile.Slug,
-                    PostViews = p.PostViews
-                }).Distinct().ToList();
+            pager.Configure(posts.Count());
 
-            pager.Configure(postItems.Count);
-            return Task.Run(() => postItems.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToList());
+            var postPage = posts.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToList();
+
+            return Task.Run(() => GetPostItems(postPage));
         }
 
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
@@ -167,23 +139,23 @@ namespace Blogifier.Core.Data.Repositories
 
         #region Private methods
 
-        private List<PostListItem> GetItems(List<PostCategory> postCategory)
+        private List<PostListItem> GetPostItems(List<BlogPost> posts)
         {
-            return postCategory.Select(p => new PostListItem
+            return posts.Select(p => new PostListItem
             {
-                BlogPostId = p.BlogPost.Id,
-                Slug = p.BlogPost.Slug,
-                Title = p.BlogPost.Title,
-                Avatar = string.IsNullOrEmpty(p.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.BlogPost.Profile.Avatar,
-                Image = string.IsNullOrEmpty(p.BlogPost.Image) ? ApplicationSettings.PostImage : p.BlogPost.Image,
-                Content = p.BlogPost.Description,
-                Published = p.BlogPost.Published,
-                AuthorName = p.BlogPost.Profile.AuthorName,
-                AuthorEmail = p.BlogPost.Profile.AuthorEmail,
-                BlogSlug = p.BlogPost.Profile.Slug,
-                PostViews = p.BlogPost.PostViews,
-                PostCategories = p.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
-            }).ToList();
+                BlogPostId = p.Id,
+                Slug = p.Slug,
+                Title = p.Title,
+                Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
+                Image = string.IsNullOrEmpty(p.Image) ? ApplicationSettings.PostImage : p.Image,
+                Content = p.Description,
+                Published = p.Published,
+                AuthorName = p.Profile.AuthorName,
+                AuthorEmail = p.Profile.AuthorEmail,
+                BlogSlug = p.Profile.Slug,
+                PostViews = p.PostViews,
+                PostCategories = (from pc in _db.PostCategories where pc.BlogPostId == p.Id select pc.Category.Slug).ToList()
+            }).Distinct().ToList();
         }
 
         #endregion
