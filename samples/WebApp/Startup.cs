@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
+using Serilog;
+using Serilog.Events;
 
 namespace WebApp
 {
@@ -15,6 +17,11 @@ namespace WebApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+              .Enrich.FromLogContext()
+              .WriteTo.RollingFile("Logs/blogifier-{Date}.txt", LogEventLevel.Warning)
+              .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +38,9 @@ namespace WebApp
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddLogging(loggingBuilder =>
+                loggingBuilder.AddSerilog(dispose: true));
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
