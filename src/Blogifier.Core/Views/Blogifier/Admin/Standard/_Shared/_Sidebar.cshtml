@@ -1,0 +1,62 @@
+@using Blogifier.Core.Extensions
+@using Blogifier.Core.Common
+@{
+    var settingsView = Context.Request.Path.ToString().Contains("/admin/settings", StringComparison.InvariantCultureIgnoreCase);
+    var editorView = Context.Request.Path.ToString().Contains("/admin/editor", StringComparison.InvariantCultureIgnoreCase);
+}
+<ul class="bf-sidebar-nav">
+	<li class="nav-item">
+		@if (settingsView || editorView)
+		{
+		<a class="nav-item-link" href="~/admin">Posts</a>
+		}
+		@if (!settingsView && !editorView)
+		{
+		<a class="nav-item-link active" href="~/admin">Posts</a>
+		<form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+			<div class="filters-group filters-group-status">
+				@foreach (var ftr in Model.StatusFilter)
+				{
+				var ftrChecked = ftr.Selected ? "checked" : "";
+				<label class="filters-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
+				}
+			</div>
+			<div class="filters-group filters-group-category">
+				<div class="filters-group-title">Categories</div>
+                <div class="filters-group-category-list" data-simplebar>
+                    @foreach (var cat in Model.CategoryFilter)
+                    {
+                        var isChecked = cat.Selected ? "checked" : "";
+                        <label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+                    }
+                </div>
+			</div>
+		</form>
+		}
+	</li>
+	<li class="nav-item">
+		@if (!settingsView)
+		{
+		<a class="nav-item-link" href="~/admin/settings/profile">Settings</a>
+		}
+		@if (settingsView)
+		{
+		<a class="nav-item-link active" href="~/admin/settings/profile">Settings</a>
+		<ul class="nav-item-body bf-sidebar-settings">
+			<li><a href="~/admin/settings/profile">Edit Profile</a></li>
+            @if (ApplicationSettings.SingleBlog == false)
+            {
+                <li><a href="~/admin/settings/personal">Blog Settings</a></li>
+            }
+			<li><a href="~/admin/settings/custom">Custom Code</a></li>
+			<li><a href="~/admin/settings/import">Import Rss</a></li>
+			@if (Model.Profile != null && Model.Profile.IsAdmin)
+			{
+			<li><a href="~/admin/settings/application">Administration</a></li>
+			<li><a href="~/admin/settings/about">About</a></li>
+			}
+		</ul>
+		}
+	</li>
+	<li class="nav-item"><a class="nav-item-link" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
+</ul>

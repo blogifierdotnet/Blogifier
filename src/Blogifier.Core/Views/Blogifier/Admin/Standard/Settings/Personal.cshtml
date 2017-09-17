@@ -1,6 +1,6 @@
-@model Blogifier.Core.Data.Models.SettingsPersonal
+﻿@model Blogifier.Core.Data.Models.SettingsPersonal
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Settings.cshtml";
+    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
 }
 
 @if (!Model.BlogExists)
@@ -9,72 +9,59 @@
         You must save your profile before you can navigate to other pages.
     </div>
 }
-
-<h4 class="admin-content-title">Blog Settings</h4>
-<form method="post" asp-controller="Settings" asp-action="Personal" asp-antiforgery="true">
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Blog Title</label>
-        <div class="col-md-9">
+<div class="bf-settings bf-settings-personal">
+    <form method="post" asp-controller="Settings" asp-action="Personal" asp-antiforgery="true">
+        <div class="form-group">
+            <label>Blog Title</label>
             <input type="text" asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Blog Description</label>
-        <div class="col-md-9">
+        <div class="form-group">
+            <label>Blog Description</label>
             <input asp-for="Description" type="text" class="form-control" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Blog Theme</label>
-        <div class="col-md-9">
+        <div class="form-group">
+            <label>Blog Theme</label>
             <select asp-for="BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Blog Cover</label>
-        <div class="input-group col-md-9">
-            <input type="text" asp-for="Image" class="form-control" readonly />
-            @*<span class="input-group-btn" style="display:none;">
-                <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
-            </span>*@
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profileimage');"> upload</button>
-            </span>
+        <div class="form-group">
+            <label>Blog Cover</label>
+            <div class="input-group">
+                <input type="text" asp-for="Image" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateCoverCallback);"> upload</button>
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">Blog Logo</label>
-        <div class="input-group col-md-9">
-            <input type="text" asp-for="Logo" class="form-control" readonly />
-            @*<span class="input-group-btn" style="display:none;">
-                <button type="button" class="btn btn-secondary" onclick="return uploadController.remove('');"> remove </button>
-            </span>*@
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-secondary btn-upload" onclick="return filePickerController.open('profilelogo');"> upload</button>
-            </span>
+        <div class="form-group">
+            <label>Blog Logo</label>
+            <div class="input-group">
+                <input type="text" asp-for="Logo" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateLogoCallback);"> upload</button>
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-9 offset-md-3">
-            <button type="submit" class="btn btn-black btn-main">Save</button>
-        </div>
-    </div>
-</form>
-<div style="display:none;">
-    <form method="post" name="frmUploadAssets" id="frmUploadAssets" asp-action="Index" asp-controller="Blogifier/Api/Assets/Multiple" enctype="multipart/form-data">
-        <input type="file" name="files" id="files" multiple onchange="filePickerController.uploadAssets(); return false;" />
-        <input type="submit" value="Upload Multiple" />
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
     </form>
 </div>
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FilePicker.cshtml")
+@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FileManager.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {
         <script>toastr.success('@ViewBag.Message')</script>
     }
+    <script>
+        var updateCoverCallback = function (data) {
+            $('#Image').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateLogoCallback = function (data) {
+            $('#Logo').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
     <script>document.getElementById('Title').focus()</script>
-    <script src="~/embedded/admin/standard/js/filePickerController.js"></script>
-    <script src="~/embedded/admin/standard/js/assetController.js"></script>
+    <script src="~/embedded/admin/standard/js/app/fileManagerController.js"></script>
 }

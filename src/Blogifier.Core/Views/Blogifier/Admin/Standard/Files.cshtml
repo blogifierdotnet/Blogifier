@@ -1,4 +1,4 @@
-@{ 
+﻿@{ 
     string filter = Url.ActionContext.HttpContext.Request.Query["filter"];
     if(filter == null) { filter = ""; }
     var checkImg = filter.Contains("filterImages") ? "checked" : "";
@@ -47,6 +47,6 @@
     </div>
 </div>
 @section Scripts{
-    <script src="~/embedded/admin/standard/js/assetController.js"></script>
+    <script src="~/embedded/admin/standard/js/app/assetController.js"></script>
     <script>assetController.loadFileManager()</script>
 }
