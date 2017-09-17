@@ -1,7 +1,5 @@
 ## Blogifier.Core [![NuGet](https://img.shields.io/nuget/v/Blogifier.Core.svg)](https://www.nuget.org/packages/Blogifier.Core)
 
-## Blogifier.Core.PostgreSql [![NuGet](https://img.shields.io/nuget/v/Blogifier.Core.PostgreSql.svg)](https://www.nuget.org/packages/Blogifier.Core.PostgreSql)
-
 The goal of this project is to "blogify" ASP.NET applications; Blogifier.Core built and published as a [Nuget package](https://www.nuget.org/packages/Blogifier.Core) that can be installed by ASP.NET application to provide common blogging functionality.
 
 ## Demo site
