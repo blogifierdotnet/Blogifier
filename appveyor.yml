@@ -1,0 +1,12 @@
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+# scripts to run before build
+before_build:
+  - dotnet restore
+
+build_script:
+  - dotnet build .\Blogifier.Core.sln
+  
+test_script:
+  - dotnet test .\tests\Blogifier.Test
