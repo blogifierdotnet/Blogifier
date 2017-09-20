@@ -3,7 +3,6 @@ using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.Custom;
 using Blogifier.Core.Services.Search;
-using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -14,14 +13,12 @@ namespace Blogifier.Core.Services.Data
     {
         IUnitOfWork _db;
         ICustomService _custom;
-        IRssService _rss;
         ISearchService _search;
 
-        public DataService(IUnitOfWork db, ICustomService custom, IRssService rss, ISearchService search)
+        public DataService(IUnitOfWork db, ICustomService custom, ISearchService search)
         {
             _db = db;
             _custom = custom;
-            _rss = rss;
             _search = search;
         }
 
