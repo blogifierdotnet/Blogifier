@@ -1,5 +1,7 @@
 .mce-tinymce {
     border: none !important;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
 
     .mce-toolbar-grp {
@@ -44,7 +46,7 @@
         &.sticky {
             .mce-toolbar-grp {
                 position: fixed;
-                top:0;
+                top: 0;
             }
         }
     }

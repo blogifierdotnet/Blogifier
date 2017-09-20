@@ -2,11 +2,6 @@
     min-height: 100%;
     position: relative;
 
-    &-form {
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-    }
 
     @media screen and (max-width:55rem) {
     }
@@ -59,6 +54,22 @@
 
     @media screen and (max-width:30rem) {
         margin-top: 4rem;
+    }
+}
+
+.bf-editor-form {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+
+    .form-control-text {
+        border: 0;
+        background: none;
+        padding: 0;
+        height: 100%;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
     }
 }
 
