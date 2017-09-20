@@ -1,10 +1,14 @@
 .bf-editor {
     min-height: 100%;
+    position: relative;
 
     &-form {
         -webkit-box-flex: 1;
         -ms-flex: 1;
         flex: 1;
+    }
+
+    @media screen and (max-width:55rem) {
     }
 }
 
@@ -45,7 +49,16 @@
     }
 
     @media screen and (max-width:55rem) {
-        padding:3.75rem 2rem;
+        margin-top: 6rem;
+        padding: 2rem;
+
+        .bf-editor-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media screen and (max-width:30rem) {
+        margin-top: 4rem;
     }
 }
 
@@ -70,7 +83,21 @@
     }
 
     @media screen and (max-width:55rem) {
-        padding: 1rem;
+        padding: .5rem;
+
+        .btn {
+            padding: 0 .5rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-group-icon {
+            .btn {
+                padding: 0;
+                width: 2.5rem;
+            }
+        }
     }
 }
 

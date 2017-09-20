@@ -32,23 +32,22 @@
     }
 
     @media screen and (max-width:55rem) {
-        padding:0;
+        padding: 0;
+
         .mce-toolbar-grp {
-            position: relative;
+            position: absolute;
             left: 0;
-            top: 0;
+            top: 0rem;
             padding: 0;
         }
 
         &.sticky {
             .mce-toolbar-grp {
                 position: fixed;
-                top: 0;
+                top:0;
             }
         }
     }
-
-   
 }
 
 #mceu_20-body {

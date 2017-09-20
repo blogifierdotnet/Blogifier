@@ -120,9 +120,9 @@
                 var scrollTop = $(window).scrollTop();
 
                 if (scrollTop > stickyNavTop && $(window).width() <= 880) {
-                    $(".mce-tinymce").addClass('sticky').css("padding-top", $(".mce-toolbar-grp").height());
-                } else {
-                    $(".mce-tinymce").removeClass('sticky').css("padding-top", "0");
+                    $(".mce-tinymce").addClass('sticky');
+                } else { 
+                    $(".mce-tinymce").removeClass('sticky');
                 }
             };
 
