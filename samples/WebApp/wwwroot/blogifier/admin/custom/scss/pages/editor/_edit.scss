@@ -8,7 +8,7 @@
 }
 
 .bf-editor-header {
-    background: #333;
+    background-color: #333;
     position: relative;
     width: 100%;
     z-index: 100;
@@ -53,7 +53,7 @@
     }
 
     @media screen and (max-width:30rem) {
-        margin-top: 4rem;
+        margin-top: 5rem;
     }
 }
 
