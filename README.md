@@ -6,16 +6,15 @@ The goal of this project is to "blogify" ASP.NET applications; Blogifier.Core bu
 
 The [demo site](http://blogifier.azurewebsites.net) is a playground you can use to check out Blogifier features. You can register new user and write post to test admin panel.
 
-![demo site](https://user-images.githubusercontent.com/1932785/28844834-8fd2a022-76cb-11e7-9262-13e4fb31079f.PNG)
+![demo site](https://user-images.githubusercontent.com/1932785/30626484-dfc57f74-9d8f-11e7-9896-4dedcaad641b.PNG)
 
 ## System Requirements
 
 * Windows or Linux
-* ASP.NET Core 1.1
-* .NET Framework 4.5.2
+* ASP.NET Core 2.0
 * Visual Studio 2017 or VS Code
 * Authentication enabled
-* SQL Server (Windows) or PostgreSql (Linux)
+* Entity Framework Core
 
 Designed for cross-platform development, every build pushed to Windows and Linux servers.
 
@@ -69,7 +68,7 @@ Default application settings can be overwritten in application `appsettings.json
 
 ## Database Providers
 
-Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider for Blogigier.Core package and PostgreSql provider for Blogifier.Core.PostgreSql
+Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider by default but supports other Entity Framework databases.
 
 Connection string cascades based on conditions:
 * Use default built-in Blogifier connection string
@@ -86,6 +85,4 @@ Connection string cascades based on conditions:
 
 ## Administration
 
-![admin](https://user-images.githubusercontent.com/1932785/28844983-225a02c8-76cc-11e7-8293-a15d7e1f0422.PNG)
-
-![admin2](https://user-images.githubusercontent.com/1932785/28845126-99c0a6fa-76cc-11e7-9232-57cb1f42b2ad.PNG)
+![admin](https://user-images.githubusercontent.com/1932785/30626534-25b5b260-9d90-11e7-814e-fc14f510f23e.PNG)
