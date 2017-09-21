@@ -7,7 +7,7 @@
     .mce-toolbar-grp {
         position: fixed;
         top: 0;
-        background: #222; 
+        background: #222;
         right: 0;
         left: $width-sidebar;
         z-index: 1000;
@@ -195,4 +195,14 @@
     font-size: 1.25rem;
     color: #aaa;
     font-weight: $fw-light;
+
+    @media screen and (max-width:71rem) {
+        top: 2.25rem;
+        left: 2rem;
+    }
+
+    @media screen and (max-width:30rem) {
+        top: 1.25rem;
+        left: 1rem;
+    }
 }

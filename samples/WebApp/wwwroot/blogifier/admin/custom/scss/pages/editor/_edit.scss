@@ -43,6 +43,10 @@
         width: 100%;
     }
 
+    @media screen and (max-width:71rem) {
+        padding-left: 2rem;
+    }
+
     @media screen and (max-width:55rem) {
         margin-top: 6rem;
         padding: 2rem;
@@ -53,6 +57,7 @@
     }
 
     @media screen and (max-width:30rem) {
+        padding: 1.5rem 1rem;
         margin-top: 5rem;
     }
 }
@@ -93,11 +98,15 @@
         }
     }
 
+    @media screen and (max-width:71rem) {
+        padding: 2rem;
+    }
+
     @media screen and (max-width:55rem) {
-        padding: .5rem;
+        padding: .5rem 1rem;
 
         .btn {
-            padding: 0 .5rem;
+            padding: 0 .75rem;
             height: 2.5rem;
             line-height: 2.5rem;
             font-size: 1rem;
