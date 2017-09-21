@@ -101,10 +101,6 @@
             line-height: 4rem;
             text-align: center;
         }
-
-        @media screen and (max-width:75rem) {
-            font-size: 1rem;
-        }
     }
 
     .item-select {
@@ -228,6 +224,16 @@
         .item-link {
             padding-left: 3rem;
         }
+
+        .item-search {
+            a {
+                padding: 0 3rem;
+            }
+
+            i {
+                width: 3rem;
+            }
+        }
     }
 
     @media screen and (max-width:40rem) {
@@ -269,6 +275,10 @@
         .item, .item-link i {
             height: 3rem;
             line-height: 3rem;
+        }
+
+        .item-link {
+            width: 3rem;
         }
     }
 }
