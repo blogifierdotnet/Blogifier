@@ -21,16 +21,18 @@
 				<label class="filters-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
 				}
 			</div>
-			<div class="filters-group filters-group-category">
-				<div class="filters-group-title">Categories</div>
-                <div class="filters-group-category-list" data-simplebar>
-                    @foreach (var cat in Model.CategoryFilter)
-                    {
-                        var isChecked = cat.Selected ? "checked" : "";
-                        <label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                    }
-                </div>
-			</div>
+			@if(Model.CategoryFilter != null && Model.CategoryFilter.Count > 0){
+				<div class="filters-group filters-group-category">
+					<div class="filters-group-title">Categories</div>
+					<div class="filters-group-category-list" data-simplebar>
+						@foreach (var cat in Model.CategoryFilter)
+						{
+							var isChecked = cat.Selected ? "checked" : "";
+							<label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+						}
+					</div>
+				</div>
+			}
 		</form>
 		}
 	</li>

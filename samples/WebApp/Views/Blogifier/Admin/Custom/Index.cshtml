@@ -40,7 +40,9 @@
                 <span class="item-info-views" aria-label="Views">@item.PostViews Views /</span>
                 <span class="item-info-date" aria-label="Publish date">@published</span>
             </div>
-            <span class="item-status item-status-published" title="Published"><i class="fa fa-circle"></i></span>
+            @if(item.Published > DateTime.MinValue){
+                <span class="item-status item-status-published" title="Published"><i class="fa fa-circle"></i></span>
+            }
             <a class="item-show" href="/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
         </li>
     }
