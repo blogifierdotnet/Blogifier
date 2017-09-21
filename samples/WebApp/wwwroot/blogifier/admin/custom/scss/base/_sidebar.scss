@@ -64,6 +64,7 @@
     background: none;
     border: none;
     display: none;
+    outline: none !important;
 
     i {
         font-size: 1.125rem;
@@ -74,7 +75,7 @@
     }
 
     &.active {
-        background: $cl-black-10;
+        background: $cl-white-10;
     }
 
     @media screen and (max-width:55rem) {
