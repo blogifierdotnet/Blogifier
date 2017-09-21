@@ -122,6 +122,12 @@
 
     @media screen and (max-width:30rem) {
         padding: .5rem;
+
+        .dropdown-menu {
+            .fa {
+                display: none;
+            }
+        }
     }
 }
 

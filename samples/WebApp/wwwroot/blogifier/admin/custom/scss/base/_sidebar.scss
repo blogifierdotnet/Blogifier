@@ -37,8 +37,8 @@
         padding: .5rem 3.5rem;
 
         .item-img {
-            top: .75rem;
-            left: 1.5rem;
+            top: .8125rem;
+            left: 1rem;
             width: 2rem;
             height: 2rem;
         }
@@ -46,7 +46,6 @@
         .item-name {
             height: 2.5rem;
             line-height: 2.625rem;
-            padding-left: 1rem;
         }
 
         .item-url {
@@ -63,6 +62,7 @@
     width: 3.5rem;
     background: none;
     border: none;
+    padding: 0;
     display: none;
     outline: none !important;
 
@@ -71,7 +71,7 @@
         color: #fff;
         display: block;
         height: 100%;
-        line-height: 3.5rem;
+        line-height: 3.75rem;
     }
 
     &.active {
