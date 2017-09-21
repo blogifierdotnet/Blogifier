@@ -7,7 +7,7 @@
     .mce-toolbar-grp {
         position: fixed;
         top: 0;
-        background: #4e2ca2;
+        background: #222; 
         right: 0;
         left: $width-sidebar;
         z-index: 1000;
@@ -85,7 +85,6 @@
         &.mce-active, &.mce-active:hover {
             background: rgba(0,0,0,.1);
         }
-
 
         button {
             display: block;

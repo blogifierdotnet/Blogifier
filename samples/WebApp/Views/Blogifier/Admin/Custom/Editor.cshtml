@@ -110,22 +110,15 @@
         }
 
         $(window).on("load", function () {
-            var stickyNavTop = $(".mce-toolbar-grp").offset().top;
-            $(window).resize(function () {
-                if ($(window).width() <= 880) {
-                    stickyNavTop = $(".mce-toolbar-grp").offset().top;
-                }
-            });
+            var stickyNavTop = 57;
             var stickyNav = function () {
                 var scrollTop = $(window).scrollTop();
-
                 if (scrollTop > stickyNavTop && $(window).width() <= 880) {
                     $(".mce-tinymce").addClass('sticky');
                 } else { 
                     $(".mce-tinymce").removeClass('sticky');
                 }
             };
-
             stickyNav();
             $(window).scroll(function () {
                 stickyNav();
