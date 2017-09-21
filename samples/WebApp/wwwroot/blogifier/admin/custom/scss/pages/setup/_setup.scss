@@ -1,9 +1,7 @@
 .bf-setup {
     background: $cl-bf;
     color: #fff;
-    display: flex;
     height: 100%;
-    padding: 4rem 2rem;
     overflow-y: auto;
     // form
     &-header {
@@ -21,13 +19,17 @@
     }
 
     &-form {
-        margin: auto;
+        padding: 8rem 2rem 2rem;
     }
 
     &-body {
         width: 100%;
         max-width: 30rem;
         margin: 0 auto;
+    }
+
+    &-url {
+        display: block;
     }
 
     .btn {
@@ -63,6 +65,23 @@
         right: 0;
         bottom: 0;
         animation: ease-in setup-logo forwards .5s 1s;
+        z-index: 1000;
+    }
+
+    @media screen and (max-width:55rem) {
+
+        &-form {
+            padding: 4rem 2rem 2rem;
+        }
+
+        &-title {
+            font-size: 2rem;
+        }
+
+        &-info {
+            font-size: 1rem;
+            font-weight: 400;
+        }
     }
 }
 
