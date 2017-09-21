@@ -119,6 +119,10 @@
             }
         }
     }
+
+    @media screen and (max-width:30rem) {
+        padding: .5rem;
+    }
 }
 
 .bf-editor-settings {
