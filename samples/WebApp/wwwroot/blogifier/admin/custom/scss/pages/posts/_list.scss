@@ -19,6 +19,10 @@
 
     @media screen and (max-width:55rem) {
         padding: 1rem 1rem 1rem 0;
+
+        .custom-control {
+            width: 3rem;
+        }
     }
 }
 
@@ -48,7 +52,11 @@
         }
     }
 
-    @media screen and (max-width:30rem) {
+    @media screen and (max-width:35rem) {
+        width: 10.25rem;
+    }
+
+    @media screen and (max-width:30rem - .0625rem) {
         display: none;
     }
 }
@@ -125,8 +133,9 @@
         padding-left: 4rem;
         display: block;
         @include ellipsis;
-        padding-right: 15rem;
+        padding-right: 18rem;
     }
+
 
     .item-show {
         position: absolute;
@@ -149,25 +158,47 @@
         }
     }
 
+    .item-status {
+        color: #444;
+        font-size: .625rem;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        right: 4rem;
+        width: 2rem;
+
+        &-published {
+            color: #00c748
+        }
+
+        &-draft {
+            color: #ff9b00;
+        }
+
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            display: block;
+            margin-top: -1px;
+        }
+    }
+
     .item-info {
         position: absolute;
-        right: 4rem;
+        right: 5.75rem;
         top: 0;
         font-size: .75rem;
         text-transform: uppercase;
         line-height: 4rem;
-        padding-right: 1rem;
+        padding-right: 1.5rem;
         color: #aaa;
-
-        label {
-            margin: 0;
-            vertical-align: top;
-        }
     }
 
     @media screen and (max-width:75rem) {
         .item-link {
-            padding-right: 11rem;
+            padding-right: 12rem;
         }
 
         .item-info-views {
@@ -176,15 +207,32 @@
     }
 
     @media screen and (max-width:55rem) {
+
         .item-link, .item-info, .item-search a,, .item-search a i {
             height: 3rem;
             line-height: 3rem;
+        }
+
+        .item-show, .item-select {
+            width: 3rem;
+        }
+
+        .item-status {
+            right: 3rem;
+        }
+
+        .item-info {
+            right: 4.5rem;
+        }
+
+        .item-link {
+            padding-left: 3rem;
         }
     }
 
     @media screen and (max-width:40rem) {
         .item-link {
-            padding-right: 4.5rem;
+            padding-right: 5.5rem;
         }
 
         .item-info {

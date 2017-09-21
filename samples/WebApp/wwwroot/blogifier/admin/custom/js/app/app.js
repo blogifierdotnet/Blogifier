@@ -69,6 +69,15 @@ $(function () {
     });
 });
 
+// tooltips
+$(function () {
+    $(".bf-posts-list .item-status").tooltip({
+        placement: 'top',
+        container: 'body'
+        //position: '-10px'
+    });
+});
+
 // fixed elements on modal
 
 // Create the measurement node for scrollbar
