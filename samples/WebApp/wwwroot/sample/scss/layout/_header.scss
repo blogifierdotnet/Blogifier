@@ -1,6 +1,7 @@
 ﻿&-header {
-    text-align: center;
-    padding-top: 5rem;
+    padding: 7rem 1rem 2rem;
+    background: $color-blogifier;
+    color: #fff;
 
     h1 {
         margin: 0 0 1rem;
@@ -11,7 +12,6 @@
     }
 
     p {
-        opacity: .7;
         margin: 0;
     }
 
@@ -24,6 +24,7 @@
             padding: .5rem;
             border-radius: 0;
         }
+
         overflow: hidden;
     }
 
@@ -32,7 +33,6 @@
     }
 
     @media screen and (max-width:460px) {
-        background: #292929;
-        padding: 2rem 0;
+        padding: 2rem 1rem;
     }
 }

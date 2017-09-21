@@ -16,7 +16,6 @@ label {
 }
 
 hr {
-    border-color: #333;
     margin: 2rem 0;
 }
 
@@ -63,9 +62,7 @@ pre {
 }
 
 .form-control {
-    background: none !important;
-    border-color: #444;
-    color: #fff;
+    
 
     &:focus, &[disabled] {
         background: none !important;

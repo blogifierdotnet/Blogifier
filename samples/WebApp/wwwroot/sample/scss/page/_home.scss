@@ -2,17 +2,17 @@
     padding: 4rem 0 3rem;
 
     a {
-        background: #5731b3;
+        background: $color-blogifier;
         display: block;
         line-height: 5rem;
         text-align: center;
         border-radius: 5rem;
         font-size: 1.25rem;
         margin-bottom: 1rem;
-        text-decoration:none;
-        border:4px solid #222;
-        &:hover{
-            box-shadow:0 0 0 4px #5731b3;
+        text-decoration: none;
+
+        &:hover {
+            background:#000;
         }
     }
 }
