@@ -125,14 +125,17 @@
         var first = pg.currentPage == 1 ? 1 : ((pg.currentPage - 1) * pg.itemsPerPage) + 1;
         if (last > pg.total) { last = pg.total; }
 
-        var pager = '<span class="item-pagination" style="margin-right: 10px">' + first + '-' + last + ' out of ' + pg.total + '</span>';
+        var pager = "";
 
         if (pg.showOlder === true) {
-            pager += '<button type="button" class="btn btn-outline-secondary btn-sm" onclick="return fileManagerController.load(' + pg.older + ')"><i class="fa fa-angle-left"></i></button>';
+            pager += '<button type="button" class="item-btn" onclick="return fileManagerController.load(' + pg.older + ')"><i class="fa fa-chevron-left"></i></button>';
         }
+        pager += '<span class="item-pagination">' + first + '-' + last + ' out of ' + pg.total + '</span>';
         if (pg.showNewer === true) {
-            pager += '<button type="button" class="btn btn-outline-secondary btn-sm" onclick="return fileManagerController.load(' + pg.newer + ')"><i class="fa fa-angle-right"></i></button>';
+            pager += '<button type="button" class="item-btn" onclick="return fileManagerController.load(' + pg.newer + ')"><i class="fa fa-chevron-right"></i></button>';
         }
+
+
         $('#file-pagination').append(pager);
         showBtns();
     }

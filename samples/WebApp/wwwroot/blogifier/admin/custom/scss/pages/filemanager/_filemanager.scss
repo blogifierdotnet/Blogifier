@@ -2,6 +2,8 @@
     .modal-dialog {
         width: 100%;
         max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
     }
 
     .modal-content {
@@ -48,14 +50,6 @@
                 left: .5rem;
             }
         }
-
-        .item-pagination {
-            line-height: 2.5rem;
-            font-size: .75rem;
-            height: 2.25rem;
-            text-transform: uppercase;
-            color: #868e96;
-        }
     }
 
     &-body {
@@ -68,10 +62,18 @@
 
         .item {
             display: block;
-            box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.25);
             border-radius: 3px;
+            border: 1px solid #eee;
             position: relative;
             overflow: hidden;
+
+            &:hover {
+                border-color: #ddd;
+
+                .item-name {
+                    border-color: #ddd;
+                }
+            }
         }
 
         .item-img {
@@ -79,17 +81,7 @@
             overflow: hidden;
             position: relative;
 
-            &::after {
-                content: "";
-                display: block;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: rgba(0, 0, 0, 0.1);
-                z-index: 1;
-            }
+
 
             img {
                 min-width: 100%;
@@ -109,6 +101,7 @@
             background: #fff;
             font-size: .875rem;
             @include ellipsis;
+            border-top: 1px solid #eee;
 
             .custom-control-indicator {
                 top: .578125rem;
@@ -122,10 +115,28 @@
         padding: 1rem;
         border-top: 1px solid #eee;
 
-        .fa {
-            font-size: 1.375rem;
-            display: block;
-            line-height: 1.875rem;
+        .file-pagination {
+        }
+
+        .item-btn {
+            @include unstyled(button);
+            cursor: pointer;
+            height: 2.5rem;
+
+            &:hover {
+                color: $cl-bf;
+            }
+        }
+
+        .item-pagination {
+            font-size: .75rem;
+            height: 2.25rem;
+            line-height: 2.25rem;
+            text-transform: uppercase;
+            color: #868e96;
+            margin: 0 1rem;
+            display: inline-block;
+            vertical-align: top;
         }
     }
 }
