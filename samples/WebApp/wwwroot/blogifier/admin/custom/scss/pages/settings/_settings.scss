@@ -35,6 +35,10 @@
         border: 1px solid #eee;
         margin-bottom: 2rem;
 
+        &:last-child {
+            margin: 0;
+        }
+
         &-head {
             padding: 1rem;
             border-bottom: 1px solid #eee;
@@ -60,6 +64,12 @@
                     font-weight: 500;
                 }
             }
+        }
+    }
+
+    @media screen and (max-width:48rem) {
+        .item-blog {
+            margin-bottom: 1rem;
         }
     }
 }
@@ -132,7 +142,6 @@
     @media screen and (max-width:48rem) {
         .loading {
             margin: 0 auto;
-            display: block;
             width: 2.5rem;
         }
     }
