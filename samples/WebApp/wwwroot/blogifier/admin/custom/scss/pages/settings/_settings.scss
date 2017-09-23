@@ -21,7 +21,7 @@
     .btn-main {
         width: 10rem;
 
-        @media screen and (max-width:48rem) {
+        @media screen and (max-width:48rem - .0625rem) {
             width: 100%;
         }
     }
@@ -123,6 +123,17 @@
 
         .admin-content-title {
             display: block;
+        }
+    }
+}
+
+
+.bf-settings-import {
+    @media screen and (max-width:48rem) {
+        .loading {
+            margin: 0 auto;
+            display: block;
+            width: 2.5rem;
         }
     }
 }
