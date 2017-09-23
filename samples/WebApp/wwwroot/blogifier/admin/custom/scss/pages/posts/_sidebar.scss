@@ -7,10 +7,17 @@
         display: block;
         color: $cl-white-50;
         font-size: .875rem;
-        padding-left: 1.75rem;
+        padding-left: 2.1875rem;
+        cursor: pointer;
+
+        &:hover {
+            color: #fff;
+        }
     }
 
     .filters-group {
+        margin-left: -.125rem;
+
         &-title {
             display: block;
             font-size: 1rem;
