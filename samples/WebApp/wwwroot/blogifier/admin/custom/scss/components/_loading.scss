@@ -2,6 +2,7 @@
     text-align: center;
     padding: 1.25rem 0;
     @include clearfix;
+    display: none;
 
     &-sm {
         padding: 1rem 0;

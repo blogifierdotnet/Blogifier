@@ -11,7 +11,7 @@
             Categories: []
         }
         if (obj.Title.length > 0 || obj.Content.length > 0) {
-            $('.spin-icon').fadeIn('fast');
+            $('.loading').fadeIn('fast');
             $('.admin-editor-toolbar').fadeOut('fast');
         }
         if (obj.Title.length === 0) {
@@ -39,7 +39,7 @@
         $('#hdnPublished').val(callback.published);
         toastr.success('Saved');
         loadActionButtons();
-        $('.spin-icon').fadeOut('fast');
+        $('.loading').fadeOut('fast');
         $('.admin-editor-toolbar').fadeIn('fast');
     }
 
@@ -142,7 +142,7 @@
         var btn = '';
         if (postId === '0') {
             // new
-            btn += '<div class="btn-group">';
+            btn += '<div class="btn-group float-left">';
             btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-sm btn-primary">Publish</button>';
             btn += '<button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
             btn += '<ul class="dropdown-menu dropdown-menu-right">';
@@ -152,7 +152,7 @@
         else {
             if (published.indexOf("0001") >= 0) {
                 // draft
-                btn += '<div class="btn-group">';
+                btn += '<div class="btn-group float-left">';
                 btn += '<button type="button" onclick="editorController.savePost(true); return false;" class="btn btn-sm btn-primary">Publish</button>';
                 btn += '<button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
                 btn += '<ul class="dropdown-menu dropdown-menu-right">';
@@ -162,14 +162,14 @@
             }
             else {
                 // published
-                btn += '<div class="btn-group">';
+                btn += '<div class="btn-group float-left">';
                 btn += '<button type="button" onclick="editorController.savePost(); return false;" class="btn btn-sm btn-primary">Save</button>';
                 btn += '<button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>';
                 btn += '<ul class="dropdown-menu dropdown-menu-right">';
                 btn += '<li><a class="dropdown-item" href="#" onclick="editorController.unpublishPost(); return false;"><i class="fa fa-archive"></i>Unpublish</a></li>';
                 btn += '<li><a class="dropdown-item" href="#" onclick="editorController.deletePost(); return false;"><i class="fa fa-trash"></i>Delete</a></li>';
                 btn += '</ul></div>';
-                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-outline-primary btn-icon float-right" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
+                btn += '<a href="' + webRoot + blogRoute + postSlug + '" target="_blank" class="btn btn-outline-primary btn-icon float-left btn-sm ml-2" aria-label="View post" title="View" data-placement="bottom"><i class="fa fa-eye"></i></a>';
             }
         }
         $('#action-buttons').append(btn);

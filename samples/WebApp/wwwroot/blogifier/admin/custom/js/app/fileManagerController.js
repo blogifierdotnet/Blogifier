@@ -142,10 +142,10 @@
 
     function loading() {
         $('#btnDelete').hide();
-        $('.spin-icon').fadeIn();
+        $('.loading').fadeIn();
     }
     function loaded() {
-        $('.spin-icon').hide();
+        $('.loading').hide();
     }
 
     function humanFileSize(size) {

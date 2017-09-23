@@ -123,9 +123,23 @@
     @media screen and (max-width:30rem) {
         padding: .5rem;
 
+
         .dropdown-menu {
             .fa {
                 display: none;
+            }
+        }
+    }
+
+    @media screen and (max-width:29.9375rem) {
+
+        .btn-cancel {
+            font-size: 0;
+
+            &::after {
+                @include icon("\f060");
+                font-size: 1rem;
+                line-height: 2.25rem;
             }
         }
     }
