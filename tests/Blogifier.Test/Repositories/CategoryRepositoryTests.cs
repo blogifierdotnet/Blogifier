@@ -13,19 +13,35 @@ namespace Blogifier.Test.Repositories
     public class CategoryRepositoryTests
     {
         private readonly IEnumerable<Category> _categories = Enumerable.Range(1, 10)
-        .Select(i => new Category
-        {
-            Id = i,
-            Title = $"cat {i}",
-            Slug = $"slug {i}"
-        });
+            .Select(i => new Category
+            {
+                Id = i,
+                Title = $"cat {i}",
+                Slug = $"slug {i}"
+            });
+
+        private readonly IEnumerable<BlogPost> _blogPosts = Enumerable.Range(1, 10)
+            .Select(i => new BlogPost
+            {
+                Id = i,
+                Title = $"blogpost {i}"
+            });
+
+        private readonly IEnumerable<PostCategory> _postCategories = Enumerable.Range(1, 10)
+            .Select(i => new PostCategory
+            {
+                Id = i,
+                BlogPostId = i,
+                CategoryId = i,
+                LastUpdated = DateTime.Now.AddDays(-i)
+            });
 
         [Fact]
-        private void Find_By_NotMatching_Id_Returns_0_Results()
+        public void Find_By_NotMatching_Id_Returns_0_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
@@ -34,15 +50,15 @@ namespace Blogifier.Test.Repositories
             ClearMemoryDb(dbName);
 
             // assert
-            Assert.Equal(0, result.Count());
+            Assert.Empty(result);
         }
 
         [Fact]
-        private void Find_ById_Matching_1_Category_Returns_1_Result()
+        public void Find_ById_Matching_1_Category_Returns_1_Result()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
@@ -55,11 +71,11 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        private void Find_WithNullPager_Returns_All_Results()
+        public void Find_WithNullPager_Returns_All_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
@@ -71,11 +87,11 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        private void Find_ByTitle_Matching_10_Cat_Returns_10_Results()
+        public void Find_ByTitle_Matching_10_Cat_Returns_10_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
@@ -87,11 +103,11 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        private void Find_ByTitle_Returns_Ordered_Results()
+        public void Find_ByTitle_Returns_Ordered_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
@@ -105,11 +121,11 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        private void Find_ByTitle_Matching_10_Categs_With_1ItemPerPage_Returns_1_Result()
+        public void Find_ByTitle_Matching_10_Categs_With_1ItemPerPage_Returns_1_Result()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = GetMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1, 1);
 
@@ -121,7 +137,170 @@ namespace Blogifier.Test.Repositories
             Assert.Equal(1, result.Count());
         }
 
-        private BlogifierDbContext GetMemoryDb(string dbName)
+        [Fact]
+        public void GetPostCategories_Having_IncorrectPostId_Returns_0_Items()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.PostCategories(-1);
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetPostCategories_CorrectPostId_Returns_1_Result()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.PostCategories(3);
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal(1, result.Count());
+        }
+
+        [Fact]
+        public void GetPostCategories_CorrectPostId_Returns_Correct_Category()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.PostCategories(3);
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal("3", result.First().Value);
+            Assert.Equal("cat 3", result.First().Text);
+        }
+
+        [Fact]
+        public void GetCategoryList_IncorrectId_Returns_0_Items()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.CategoryList(x => x.Id == -1);
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetCategoryList_CorrectId_Returns_1_Item()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.CategoryList(x => x.Id == 5);
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal(1, result.Count());
+        }
+
+        [Fact]
+        public void GetCategoryList_MatchAllItems_Returns_All_Items()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.CategoryList(x => x.Title.Contains("cat"));
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal(10, result.Count());
+        }
+
+        [Fact]
+        public void GetCategoryList_Returns_Ordered_Items()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = sut.CategoryList(x => x.Title.Contains("cat"));
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal("cat 1", result.First().Text);
+            Assert.Equal("cat 9", result.Last().Text);
+        }
+
+        [Fact]
+        public async void SingleIncluded_NotMatchingPredicate_Returns_0_Items()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = await sut.SingleIncluded(x => x.Title == "java");
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void SingleIncluded_MatchingPredicate_Returns_1_Item()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = await sut.SingleIncluded(x => x.Title == "cat 1");
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.Equal("cat 1", result.Title);
+            Assert.Equal(1, result.Id);
+        }
+
+        [Fact]
+        public async void SingleIncluded_MatchingPredicate_Result_Contains_PostCategories()
+        {
+            // arrange
+            var dbName = Guid.NewGuid().ToString();
+            var db = SetupMemoryDb(dbName);
+            var sut = new CategoryRepository(db);
+
+            // act
+            var result = await sut.SingleIncluded(x => x.Title == "cat 5");
+            ClearMemoryDb(dbName);
+
+            // assert
+            Assert.NotNull(result.PostCategories);
+        }
+
+        private BlogifierDbContext SetupMemoryDb(string dbName)
         {
             var options = new DbContextOptionsBuilder<BlogifierDbContext>()
                 .UseInMemoryDatabase(dbName).Options;
@@ -129,6 +308,8 @@ namespace Blogifier.Test.Repositories
             var context = new BlogifierDbContext(options);
 
             context.Categories.AddRange(_categories);
+            context.BlogPosts.AddRange(_blogPosts);
+            context.PostCategories.AddRange(_postCategories);
             context.SaveChanges();
 
             return context;
@@ -142,6 +323,8 @@ namespace Blogifier.Test.Repositories
             using (var context = new BlogifierDbContext(options))
             {
                 context.Categories.RemoveRange(_categories);
+                context.BlogPosts.RemoveRange(_blogPosts);
+                context.PostCategories.RemoveRange(_postCategories);
                 context.SaveChanges();
             }
         }
