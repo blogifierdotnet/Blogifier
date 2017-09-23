@@ -29,8 +29,21 @@ body {
 
 .mce-content-body {
     height: 100%;
-    padding:3rem 3rem 0 !important;
+    padding: 3rem 3rem 1rem !important;
 }
+
+@media screen and (max-width:880px) {
+    .mce-content-body {
+        padding: 2rem !important;
+    }
+}
+
+@media screen and (max-width:30rem) {
+    .mce-content-body {
+        padding: 1rem !important;
+    }
+}
+
 
 img, video {
     max-width: 100%;
@@ -95,18 +108,18 @@ pre {
     border: 1px solid gray
 }
 
-    .mce-preview-object[data-mce-selected="2"] .mce-shim {
-        display: none
-    }
+.mce-preview-object[data-mce-selected="2"] .mce-shim {
+    display: none
+}
 
-    .mce-preview-object .mce-shim {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)
-    }
+.mce-preview-object .mce-shim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)
+}
 
 figure.align-left {
     float: left
@@ -129,26 +142,26 @@ figure.image {
     background: #f5f2f0
 }
 
-    figure.image img {
-        margin: 8px 8px 0 8px
-    }
+figure.image img {
+    margin: 8px 8px 0 8px
+}
 
-    figure.image figcaption {
-        margin: 6px 8px 6px 8px;
-        text-align: center
-    }
+figure.image figcaption {
+    margin: 6px 8px 6px 8px;
+    text-align: center
+}
 
 .mce-toc {
     border: 1px solid gray
 }
 
-    .mce-toc h2 {
-        margin: 4px
-    }
+.mce-toc h2 {
+    margin: 4px
+}
 
-    .mce-toc li {
-        list-style-type: none
-    }
+.mce-toc li {
+    list-style-type: none
+}
 
 .mce-pagebreak {
     cursor: default;
@@ -186,9 +199,9 @@ figure.image {
     background: #AAA
 }
 
-    .mce-shy::after {
-        content: '-'
-    }
+.mce-shy::after {
+    content: '-'
+}
 
 .mce-match-marker {
     background: #AAA;
@@ -250,6 +263,6 @@ td[data-mce-selected], th[data-mce-selected] {
 }
 
 table {
-    width:100%;
-    max-width:100%;
+    width: 100%;
+    max-width: 100%;
 }

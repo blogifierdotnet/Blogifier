@@ -69,6 +69,15 @@ $(function () {
     });
 });
 
+// tooltips
+$(function () {
+    $(".bf-posts-list .item-status").tooltip({
+        placement: 'top',
+        container: 'body'
+        //position: '-10px'
+    });
+});
+
 // fixed elements on modal
 
 // Create the measurement node for scrollbar
@@ -95,6 +104,7 @@ $('.bf-sidebar-settings li a[href*="' + location.pathname + '"]').addClass('acti
 
 // sidebar toggle mobile
 $(".bf-sidebar-toggle").on("click", function () {
+    $(".bf-sidebar-toggle .fa").toggleClass("fa-navicon").toggleClass("fa-times");
     $(".bf-sidebar-nav").stop(true, true).slideToggle();
 });
 
@@ -103,5 +113,6 @@ $(window).resize(function () {
         $(".bf-sidebar-nav").show();
     } else {
         $(".bf-sidebar-nav").hide();
-    } 
+        $(".bf-sidebar-toggle .fa").removeClass("fa-times").addClass("fa-navicon");
+    }
 });

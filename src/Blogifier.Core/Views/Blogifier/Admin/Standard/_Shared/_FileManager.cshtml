@@ -8,10 +8,10 @@
                         <span class="custom-control-indicator"></span>
                     </label>
                     <button class="btn btn-light btn-sm float-left mr-2" type="button" onclick="return fileManagerController.uploadClick()">upload</button>
-                    <div class="spin-icon float-left"><i class="fa fa-spin fa-cog" style="color:white"></i></div>
+                    <div class="loading loading-white loading-sm float-left mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
                     <button id="btnDelete" class="btn btn-outline-light btn-icon btn-sm float-left" type="button" onclick="return fileManagerController.remove()"><i class="fa fa-trash"></i></button>
                     <div class="dropdown float-right ml-2">
-                        <button class="btn btn-outline-secondary btn-icon btn-sm dropdown-toggle" type="button" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
+                        <button class="btn btn-outline-light btn-icon btn-sm dropdown-toggle" type="button" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="filterFileManager">
                             <li>
                                 <form class="filemanager-search" action="" method="get">
@@ -41,13 +41,12 @@
                             </li>
                         </ul>
                     </div>
-                    <div id="file-pagination" class="btn-group btn-group-icon float-right ml-2" role="group"></div>
                 </div>
                 <div class="bf-filemanager-body">
                     <div id="fileManagerList" class="row no-gutters"></div>
                 </div>
                 <div class="bf-filemanager-footer clearfix">
-                   
+                    <div id="file-pagination" class="file-pagination float-left" role="group"></div>
                     <button id="btnSelect" class="btn btn-primary float-right btn-sm ml-2" type="button" onclick="return fileManagerController.pick(0)">select</button>
                     <button class="btn btn-link float-right btn-sm" type="button" data-dismiss="modal">cancel</button>
                 </div>

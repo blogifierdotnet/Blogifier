@@ -17,16 +17,13 @@
     </form>
     <div class="bf-editor-footer">
         <div class="btn-group btn-group-icon float-right">
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
-            <button type="button" class="btn btn-outline-primary" onclick="return fileManagerController.open(updatePostCoverCallback);" title="Change The Cover"><i class="fa fa-photo"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#postSettings" title="Post Settings"><i class="fa fa-cog"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="return fileManagerController.open(updatePostCoverCallback);" title="Change The Cover"><i class="fa fa-photo"></i></button>
         </div>
-        <span id="action-buttons"></span>
-        <a href="~/admin" class="btn btn-link">Cancel</a>
+        <span id="action-buttons" class="float-left mr-2"></span>
+        <a href="~/admin" class="btn btn-sm btn-cancel btn-outline-primary float-left">Cancel</a>
+        <div class="loading loading-sm ml-3 float-left"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
     </div>
-    <!--
-    TODO: Add Loading Style!s
-    <div class="spin-icon"><i class="fa fa-spin fa-cog"></i></div>
-    -->
 </div>
 
 <div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-hidden="true">
@@ -110,22 +107,15 @@
         }
 
         $(window).on("load", function () {
-            var stickyNavTop = $(".mce-toolbar-grp").offset().top;
-            $(window).resize(function () {
-                if ($(window).width() <= 880) {
-                    stickyNavTop = $(".mce-toolbar-grp").offset().top;
-                }
-            });
+            var stickyNavTop = 57;
             var stickyNav = function () {
                 var scrollTop = $(window).scrollTop();
-
                 if (scrollTop > stickyNavTop && $(window).width() <= 880) {
-                    $(".mce-tinymce").addClass('sticky').css("padding-top", $(".mce-toolbar-grp").height());
+                    $(".mce-tinymce").addClass('sticky');
                 } else {
-                    $(".mce-tinymce").removeClass('sticky').css("padding-top", "0");
+                    $(".mce-tinymce").removeClass('sticky');
                 }
             };
-
             stickyNav();
             $(window).scroll(function () {
                 stickyNav();

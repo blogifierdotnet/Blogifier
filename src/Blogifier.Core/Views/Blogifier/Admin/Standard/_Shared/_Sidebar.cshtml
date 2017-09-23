@@ -8,11 +8,11 @@
 	<li class="nav-item">
 		@if (settingsView || editorView)
 		{
-		<a class="nav-item-link" href="~/admin">Posts</a>
+		<a class="nav-item-link" href="~/admin"><i class="fa fa-align-justify"></i>Posts</a>
 		}
 		@if (!settingsView && !editorView)
 		{
-		<a class="nav-item-link active" href="~/admin">Posts</a>
+		<a class="nav-item-link active" href="~/admin"><i class="fa fa-align-justify"></i>Posts</a>
 		<form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
 			<div class="filters-group filters-group-status">
 				@foreach (var ftr in Model.StatusFilter)
@@ -21,27 +21,29 @@
 				<label class="filters-label custom-control custom-radio"><input type="radio" name="status-filter" value="@ftr.Value" @ftrChecked onclick="submitFilter()" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">@ftr.Text</span></label>
 				}
 			</div>
-			<div class="filters-group filters-group-category">
-				<div class="filters-group-title">Categories</div>
-                <div class="filters-group-category-list" data-simplebar>
-                    @foreach (var cat in Model.CategoryFilter)
-                    {
-                        var isChecked = cat.Selected ? "checked" : "";
-                        <label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
-                    }
-                </div>
-			</div>
+			@if(Model.CategoryFilter != null && Model.CategoryFilter.Count > 0){
+				<div class="filters-group filters-group-category">
+					<div class="filters-group-title">Categories</div>
+					<div class="filters-group-category-list" data-simplebar>
+						@foreach (var cat in Model.CategoryFilter)
+						{
+							var isChecked = cat.Selected ? "checked" : "";
+							<label class="filters-label custom-control custom-checkbox"><input type="checkbox" name="category-filter" value="@cat.Value" @isChecked onclick="submitFilter()" class="custom-control-input chk"><span class="custom-control-indicator"></span><span class="custom-control-description">@cat.Text</span></label>
+						}
+					</div>
+				</div>
+			}
 		</form>
 		}
 	</li>
 	<li class="nav-item">
 		@if (!settingsView)
 		{
-		<a class="nav-item-link" href="~/admin/settings/profile">Settings</a>
+		<a class="nav-item-link" href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a>
 		}
 		@if (settingsView)
 		{
-		<a class="nav-item-link active" href="~/admin/settings/profile">Settings</a>
+		<a class="nav-item-link active" href="~/admin/settings/profile"><i class="fa fa-cog"></i>Settings</a>
 		<ul class="nav-item-body bf-sidebar-settings">
 			<li><a href="~/admin/settings/profile">Edit Profile</a></li>
             @if (ApplicationSettings.SingleBlog == false)
@@ -58,5 +60,5 @@
 		</ul>
 		}
 	</li>
-	<li class="nav-item"><a class="nav-item-link" href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
+	<li class="nav-item"><a class="nav-item-link" href="#" onclick="profileLogOut(); return false;"><i class="fa fa-sign-out"></i>Logoff</a></li>
 </ul>

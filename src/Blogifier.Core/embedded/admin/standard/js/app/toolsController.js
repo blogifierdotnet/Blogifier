@@ -7,14 +7,14 @@
             ImportImages: $('#chkImportImages').is(':checked'),
             ImportAttachements: $('#chkImportAttachements').is(':checked')
         };
-        $('.spin-icon').fadeIn();
+        $('.loading').fadeIn();
         $('#btnImport .btn').attr('disabled', 'disabled');
         dataService.put('blogifier/api/tools/rssimport', data, importRssCallback, fail);
     }
 
     function importRssCallback(data) {
         var msg = JSON.parse(data);
-        $('.spin-icon').fadeOut();
+        $('.loading').fadeOut();
         $('#btnImport .btn').removeAttr('disabled');
         if (msg.isSuccessStatusCode) {
             toastr.success(msg.reasonPhrase);
@@ -37,7 +37,7 @@
 
     function fail(data) {
         toastr.error('Failed');
-        $('.spin-icon').fadeOut();
+        $('.loading').fadeOut();
         $('#btnImport .btn').removeAttr('disabled');
     }
 
