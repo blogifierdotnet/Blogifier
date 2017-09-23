@@ -86,6 +86,12 @@
         margin-left: .25rem;
     }
 
+    .dropdown-toggle {
+        border-left: 1px solid rgba(255, 255, 255, 0.13);
+        width: 2rem;
+        font-size: 1rem;
+    }
+
     .dropdown-menu {
         width: 100%;
         max-width: 100%;
@@ -93,8 +99,9 @@
 
         .dropdown-item {
             font-weight: $fw-medium;
-            font-size: .75rem;
+            font-size: .875rem;
             text-transform: uppercase;
+            padding: .5rem .75rem;
         }
     }
 
