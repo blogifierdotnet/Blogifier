@@ -74,7 +74,7 @@ namespace WebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            Blogifier.Core.Configuration.InitApplication(app, env, null);
+            Blogifier.Core.Configuration.InitApplication(app, env);
         }
     }
 }

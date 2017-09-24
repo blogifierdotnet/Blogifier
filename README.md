@@ -26,22 +26,27 @@ Designed for cross-platform development, every build pushed to Windows and Linux
 
 ## Using Blogifier.Core Nuget Package
 
-1. In VS 2017, create new ASP.NET Core 1.1 Web Application with user authentication (single user accounts)
+1. In VS 2017, create new ASP.NET Core 2.0 Web Application with user authentication (single user accounts)
 2. Open Nuget Package Manager console and run this command:
 ```
 Install-Package Blogifier.Core
 ```
-3. Configure services and application in Startup.cs:
+3. Configure services and application in Startup.cs to use Blogifier:
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
+  var connectionString = Configuration.GetConnectionString("DefaultConnection");
+  System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseSqlServer(connectionString);
+  services.AddDbContext<ApplicationDbContext>(databaseOptions);
   ...
-  Blogifier.Core.Configuration.InitServices(services, Configuration);
+  services.AddMvc();
+  Blogifier.Core.Configuration.InitServices(services, databaseOptions, Configuration);
 }
-public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
   ...
-  Blogifier.Core.Configuration.InitApplication(app, env, loggerFactory);
+  Blogifier.Core.Configuration.InitApplication(app, env);
 }
 ```
 4. You should be able to run application and navigate to `/blog` and `/admin`
@@ -70,19 +75,39 @@ Default application settings can be overwritten in application `appsettings.json
 
 Blogifier.Core implements Entity Framework (code first) as ORM. It uses MS SQL Server provider by default but supports other Entity Framework databases.
 
+For example, to use PostgreSql provider you would install "Npgsql.EntityFrameworkCore.PostgreSQL" package and then use it instead of MS Sql Server:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "User ID=appuser;Password=blogifier;Host=localhost;Port=5432;Database=Blogifier;Pooling=true;"
+  }
+}
+```
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+  var connectionString = Configuration.GetConnectionString("DefaultConnection");
+  System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseNpgsql(connectionString);
+  services.AddDbContext<ApplicationDbContext>(databaseOptions);
+  ...
+  services.AddMvc();
+  Blogifier.Core.Configuration.InitServices(services, databaseOptions, Configuration);
+}
+```
+
 Connection string cascades based on conditions:
 * Use default built-in Blogifier connection string
 * Use default parent application connection string in `appsettings.json`
 * Use Blogifier connection string in `appsettings.json`.
 
-```json
-{
-  "Blogifier": {
-    "ConnectionString": "Server=.\\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;"
-  }
-}
-```
-
 ## Administration
 
+Blogifier provides built-in full featured administration pannel to create, update and publish posts.
+
 ![admin](https://user-images.githubusercontent.com/1932785/30626534-25b5b260-9d90-11e7-814e-fc14f510f23e.PNG)
+
+## Credits
+
+In 1.2 release, we've got a good number of pull requests from [alexandrudanpop](https://github.com/alexandrudanpop) helping significantly improve our testing suite. Greatly appreciated!

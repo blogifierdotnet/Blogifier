@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace Blogifier.Core
@@ -56,7 +55,7 @@ namespace Blogifier.Core
 			AddFileProviders(services);
 		}
 
-		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			app.UseMiddleware<EmbeddedResources>();
 
