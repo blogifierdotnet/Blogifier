@@ -4,6 +4,7 @@
         var obj = {
             Id: $('#hdnPostId').val(),
             Title: $("#txtPostTitle").val(),
+            Slug: $('#hdnPostSlug').val(),
             Image: $('#hdnPostImg').val(),
             Content: tinyMCE.activeEditor.getContent(),
             Description: $('#txtDescription').val(),

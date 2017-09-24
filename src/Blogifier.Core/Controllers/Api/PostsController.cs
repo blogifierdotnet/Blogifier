@@ -69,7 +69,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp = new BlogPost();
                 bp.ProfileId = blog.Id;
                 bp.Title = model.Title;
-                bp.Slug = GetSlug(model.Title, model.Id);
+                bp.Slug = GetSlug(model);
                 bp.Content = model.Content;
                 bp.Description = string.IsNullOrEmpty(model.Description) ? model.Content.ToDescription() : model.Description;
                 bp.Image = model.Image;
@@ -81,7 +81,7 @@ namespace Blogifier.Core.Controllers.Api
             {
                 bp = _db.BlogPosts.Single(p => p.Id == model.Id);
                 bp.Title = model.Title;
-                bp.Slug = GetSlug(model.Title, model.Id);
+                bp.Slug = GetSlug(model);
                 bp.Content = model.Content;
                 bp.Description = string.IsNullOrEmpty(model.Description) ? model.Content.ToDescription() : model.Description;
                 bp.Image = model.Image;
@@ -151,13 +151,31 @@ namespace Blogifier.Core.Controllers.Api
             return null;
         }
 
-        string GetSlug(string title, int id)
+        string GetSlug(PostEditModel model)
         {
-            var slug = title.ToSlug();
+            var slug = string.IsNullOrEmpty(model.Slug) ? model.Title.ToSlug() : model.Slug;
+            var profileSlug = slug;
             var cnt = 2;
 
+            // make sure post slug does not match blog slug
+            var profile = _db.Profiles.Single(p => p.Slug == slug);
+            if(profile != null)
+            {
+                while(cnt < 100)
+                {
+                    profileSlug = string.Format("{0}{1}", slug, cnt);
+                    if (_db.Profiles.Single(p => p.Slug == profileSlug) == null)
+                    {
+                        slug = profileSlug;
+                        break;
+                    }
+                    cnt++;
+                }
+            }
+            cnt = 2;
+
             var post = _db.BlogPosts.Single(p => p.Slug == slug);
-            if(post == null || post.Id == id)
+            if(post == null || post.Id == model.Id)
                 return slug;
 
             while (cnt < 100)

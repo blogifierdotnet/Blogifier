@@ -71,7 +71,7 @@ namespace Blogifier.Core.Middleware
                     }
                     else
                     {
-                        _logger.LogError(ex.Message);
+                        _logger.LogError(string.Format("Error processing embedded resource [{0}] - {1}", path, ex.Message));
                     }
                 }
             }
