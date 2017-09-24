@@ -25,6 +25,7 @@
     }
 
     function deleteBlog(id) {
+        $('.loading').fadeIn();
         dataService.remove("blogifier/api/tools/deleteblog/" + id, callbackDeleteBlog, fail);
     }
 

@@ -17,6 +17,7 @@
                 <div class="btn-group float-right">
                     @if (!blog.IsAdmin)
                     {
+                        <div class="loading  float-md-left ml-md-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
                         <button type="button" onclick="return toolsController.deleteBlog('@blog.ProfileId')" class="btn btn-outline-secondary btn-sm btn-icon" title="Delete"><i class="fa fa-trash"></i></button>
                     }
                 </div>
@@ -49,16 +50,16 @@
 
 @if (pgr.ShowNewer || pgr.ShowOlder)
 {
-    <ul class="pagination-custom" aria-label="Post navigation">
+    <ul class="bf-posts-pagination">
         @if (pgr.ShowOlder)
         {
-            <li><a href="~/admin/settings/application?page=@pgr.Older" aria-label="Older posts"><i class="fa fa-long-arrow-left"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
         }
-        <li><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
         @if (pgr.ShowNewer)
         {
-            <li><a href="~/admin/settings/application?page=@pgr.Newer" aria-label="Newer posts"><i class="fa fa-long-arrow-right"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
         }
+        <li class="item"><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
     </ul>
 }
 
