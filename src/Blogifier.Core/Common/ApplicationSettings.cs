@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using System.Linq;
 using System.Reflection;
 
 namespace Blogifier.Core.Common
@@ -35,7 +37,18 @@ namespace Blogifier.Core.Common
         #region database
 
         // this is not set directly from the appsettings.json file. Instead, this is passed from the host appplication to configure the appropriate database
-        public static System.Action<DbContextOptionsBuilder> DatabaseOptions { get; set; } = options => options.UseInMemoryDatabase(Constants.Blogifier);
+        public static System.Action<DbContextOptionsBuilder> DatabaseOptions { get; set; } = options =>
+        {
+            var memoryExtension = options.Options.FindExtension<InMemoryOptionsExtension>();
+            if (memoryExtension != null && !string.IsNullOrWhiteSpace(memoryExtension.StoreName))
+            {
+                options.UseInMemoryDatabase(memoryExtension.StoreName);
+            }
+            else
+            {
+                options.UseInMemoryDatabase(Constants.Blogifier);
+            }
+        };
 
         #endregion
 
