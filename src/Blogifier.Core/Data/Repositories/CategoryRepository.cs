@@ -91,7 +91,7 @@ namespace Blogifier.Core.Data.Repositories
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -104,10 +104,16 @@ namespace Blogifier.Core.Data.Repositories
                 var existing = _db.PostCategories.Where(
                     pc => pc.BlogPostId == postId &&
                     pc.CategoryId == categoryId).SingleOrDefault();
+
+                if (existing == null)
+                {
+                    return false;
+                }
+
                 _db.PostCategories.Remove(existing);
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
             }

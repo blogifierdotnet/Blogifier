@@ -300,6 +300,62 @@ namespace Blogifier.Test.Repositories
             Assert.NotNull(result.PostCategories);
         }
 
+        [Fact]
+        public void RemoveCategoryFromPost_NonMatching_RemovesNone()
+        {
+            var dbName = Guid.NewGuid().ToString();
+            try
+            {
+                // arrange
+                var db = SetupMemoryDb(dbName);
+                var sut = new CategoryRepository(db);
+
+                // act
+                var result = sut.RemoveCategoryFromPost(-1, -1);
+
+                // assert
+                Assert.False(result);
+                Assert.Equal(10, db.PostCategories.Count());
+            }
+            finally
+            {
+                ClearMemoryDb(dbName);
+            }
+        }
+
+        [Fact]
+        public void RemoveCategoryFromPost_Matching_RemovesOne()
+        {
+            var dbName = Guid.NewGuid().ToString();
+            try
+            {
+                // arrange
+                var db = SetupMemoryDb(dbName);
+                var sut = new CategoryRepository(db);
+
+                // act
+                var result = sut.RemoveCategoryFromPost(1, 1);
+                db.SaveChanges();
+
+                // assert
+                Assert.True(result);
+                Assert.Equal(9, db.PostCategories.Count());
+            }
+            finally
+            {
+                var options = new DbContextOptionsBuilder<BlogifierDbContext>()
+                    .UseInMemoryDatabase(dbName).Options;
+
+                using (var context = new BlogifierDbContext(options))
+                {
+                    context.Categories.RemoveRange(_categories);
+                    context.BlogPosts.RemoveRange(_blogPosts);
+                    context.PostCategories.RemoveRange(_postCategories.Where(pc => pc.Id != 1));
+                    context.SaveChanges();
+                }
+            }
+        }
+
         private BlogifierDbContext SetupMemoryDb(string dbName)
         {
             var options = new DbContextOptionsBuilder<BlogifierDbContext>()
