@@ -22,7 +22,6 @@ namespace Blogifier.Core.Controllers
 			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
         }
 
-        [Route("{page:int?}")]
         public IActionResult Index(int page = 1)
         {
             var model = _ds.GetPosts(page);
@@ -32,7 +31,7 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Index.cshtml", model);
         }
 
-        [Route("{slug:author}/{page:int?}")]
+        [Route("{slug:author}")]
         public IActionResult PostsByAuthor(string slug, int page = 1)
         {
             var model = _ds.GetPostsByAuthor(slug, page);
@@ -42,7 +41,7 @@ namespace Blogifier.Core.Controllers
             return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Author.cshtml", model);
         }
 
-        [Route("{slug:author}/{cat}/{page:int?}")]
+        [Route("{slug:author}/{cat}")]
         public IActionResult PostsByCategory(string slug, string cat, int page = 1)
         {
             var model = _ds.GetPostsByCategory(slug, cat, page);

@@ -89,10 +89,10 @@
         }
         var search = $('#search').val();
         if (search.length > 0) {
-            dataService.get('blogifier/api/assets/' + page + '?filter=' + filter + '&search=' + search, loadCallback, fail);
+            dataService.get('blogifier/api/assets?page=' + page + '&filter=' + filter + '&search=' + search, loadCallback, fail);
         }
         else {
-            dataService.get('blogifier/api/assets/' + page + '?filter=' + filter, loadCallback, fail);
+            dataService.get('blogifier/api/assets?page=' + page + '&filter=' + filter, loadCallback, fail);
         }
         return false;
     }

@@ -37,7 +37,7 @@ namespace Blogifier.Core.Controllers
 		}
 
         [VerifyProfile]
-        [HttpGet("{page:int?}")]
+        [HttpGet]
         public IActionResult Index(int page = 1, string search = "")
 		{
             if (page == 0) page = 1;
@@ -60,7 +60,7 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Index.cshtml", model);
         }
 
-        [HttpPost("{page:int?}")]
+        [HttpPost]
         public IActionResult Index(IFormCollection fc)
         {
             var pager = new Pager(1);

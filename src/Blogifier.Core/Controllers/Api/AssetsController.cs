@@ -28,8 +28,8 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         // GET: api/assets/2?search=foo&filter=filterImages
-        [HttpGet("{page:int?}")]
-        public AdminAssetList Get(int page, string search, string filter)
+        [HttpGet]
+        public AdminAssetList Get(string filter, string search = "", int page = 1)
         {
             var profile = GetProfile();
             var pager = new Pager(page);

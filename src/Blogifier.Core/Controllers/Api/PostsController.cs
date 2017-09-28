@@ -21,8 +21,8 @@ namespace Blogifier.Core.Controllers.Api
             _db = db;
         }
 
-        [HttpGet("{page:int?}")]
-        public AdminPostList Index(int page)
+        [HttpGet]
+        public AdminPostList Index(int page = 1)
         {
             var pager = new Pager(page);
             var model = new AdminPostList();

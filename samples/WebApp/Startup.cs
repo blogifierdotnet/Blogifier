@@ -22,7 +22,7 @@ namespace WebApp
 
             Log.Logger = new LoggerConfiguration()
               .Enrich.FromLogContext()
-              .WriteTo.RollingFile("Logs/blogifier-{Date}.txt", LogEventLevel.Warning)
+              .WriteTo.RollingFile("Logs/blogifier-{Date}.txt", LogEventLevel.Error)
               .CreateLogger();
         }
 

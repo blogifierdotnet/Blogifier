@@ -57,11 +57,11 @@
     <ul class="bf-posts-pagination">
         @if (pgr.ShowOlder)
         {
-            <li class="item"><a class="item-link" href="~/admin/@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
         }
         @if (pgr.ShowNewer)
         {
-            <li class="item"><a class="item-link" href="~/admin/@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
         }
         <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
     </ul>

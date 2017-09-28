@@ -66,12 +66,21 @@ namespace Blogifier.Core.Middleware
                 {
                     if(ex.Message == "Write to non-body 304 response." || ex.Message == "Writing to the response body is invalid for responses with status code 304.")
                     {
-                        context.Response.StatusCode = 304;
-                        return;
+                        try
+                        {
+                            context.Response.StatusCode = 304;
+                            return;
+                        }
+                        catch (Exception x)
+                        {
+                            //_logger.LogError(string.Format("Error setting status code for embedded resource [{0}] - {1}", path, x.Message));
+                            //return;
+                            //await _next.Invoke(context);
+                        }
                     }
                     else
                     {
-                        _logger.LogError(string.Format("Error processing embedded resource [{0}] - {1}", path, ex.Message));
+                        _logger.LogError(string.Format("Error processing embedded resource : ", ex.Message));
                     }
                 }
             }

@@ -41,11 +41,11 @@
         <ul class="pagination justify-content-center">
             @if (Model.Pager.ShowOlder)
                 {
-                <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
+                <li class="page-item prev"><a href="~/@ApplicationSettings.BlogRoute?page=@Model.Pager.Older"><i class="fa fa-angle-left"></i> <span>Older Posts</span></a></li>
             }
             @if (Model.Pager.ShowNewer)
                 {
-                <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
+                <li class="page-item next"><a href="~/@ApplicationSettings.BlogRoute?page=@Model.Pager.Newer"><span>Newer Posts</span> <i class="fa fa-angle-right"></i></a></li>
             }
         </ul>
     }
