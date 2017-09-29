@@ -61,7 +61,7 @@ namespace Blogifier.Core.Controllers
             return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Single.cshtml", model);
         }
 
-        [Route("search/{term}/{page:int?}")]
+        [Route("search/{term}")]
         public IActionResult PagedSearch(string term, int page = 1)
         {
             ViewBag.Term = term;
