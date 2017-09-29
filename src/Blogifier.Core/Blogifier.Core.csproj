@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
-    <Version>1.2.0.0</Version>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
+    <Version>1.2.1.0</Version>
     <Authors>blogifierdotnet</Authors>
     <Company>Blogifier</Company>
     <Description>Blogifier.Core will add full-featured, multi-user blog to your ASP.NET Core application. Along with administration panel to create, update and publish posts, upload files and images, expose RSS feed to subscribers and more.</Description>

@@ -46,20 +46,20 @@ namespace Blogifier.Core.Middleware
 
             if (path.Contains(".embedded.", StringComparison.OrdinalIgnoreCase))
             {
-                // embedded resources never change, set eTag and cache for a year
-                var requestedETag = context.Request.Headers[HeaderNames.IfNoneMatch];
-                var responseETag = GetToken(Encoding.ASCII.GetBytes(path));
-
-                if (requestedETag == responseETag)
-                    context.Response.StatusCode = (int)HttpStatusCode.NotModified;
-                
-                var resource = _resources[path];
-                Stream stream = new MemoryStream(resource.Content);
-
-                SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
-
                 try
                 {
+                    // embedded resources never change, set eTag and cache for a year
+                    var requestedETag = context.Request.Headers[HeaderNames.IfNoneMatch];
+                    var responseETag = GetToken(Encoding.ASCII.GetBytes(path));
+
+                    if (requestedETag == responseETag)
+                        context.Response.StatusCode = (int)HttpStatusCode.NotModified;
+
+                    var resource = _resources[path];
+                    Stream stream = new MemoryStream(resource.Content);
+
+                    SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
+
                     await stream.CopyToAsync(context.Response.Body);
                 }
                 catch (Exception ex)
@@ -71,11 +71,9 @@ namespace Blogifier.Core.Middleware
                             context.Response.StatusCode = 304;
                             return;
                         }
-                        catch (Exception x)
+                        catch(Exception x)
                         {
-                            //_logger.LogError(string.Format("Error setting status code for embedded resource [{0}] - {1}", path, x.Message));
-                            //return;
-                            //await _next.Invoke(context);
+                            var z = x.Message;
                         }
                     }
                     else
