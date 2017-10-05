@@ -257,7 +257,16 @@ namespace Blogifier.Core.Services.Syndication.Rss
                         
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
-                        var asset = await storage.UploadFromWeb(new Uri(uri), _model.Root, path);
+                        Asset asset;
+                        if (uri.Contains("data:image"))
+                        {
+                            asset = await storage.UploadBase64Image(uri, _model.Root, path);
+                        }
+                        else
+                        {
+                            asset = await storage.UploadFromWeb(new Uri(uri), _model.Root, path);
+                        }
+
                         asset.ProfileId = post.ProfileId;
                         asset.LastUpdated = SystemClock.Now();
 

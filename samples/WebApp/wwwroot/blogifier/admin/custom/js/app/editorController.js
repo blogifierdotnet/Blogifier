@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         skin: "blogifier",
         selector: '#txtContent',
         plugins: [
-            "autoresize autolink lists link image code textcolor imagetools hr media table contextmenu fileupload codesample placeholder"
+            "autoresize autolink lists link image paste code textcolor imagetools hr media table contextmenu fileupload codesample placeholder"
         ],
         toolbar: "heading bold italic underline strikethrough alignleft aligncenter alignright alignjustify | bullist numlist forecolor backcolor link media fileupload codesample code",
         block_formats: 'H=""; H1=h1;H2=h2;H3=h3;H4=h4;H5=h5;H6=h6',

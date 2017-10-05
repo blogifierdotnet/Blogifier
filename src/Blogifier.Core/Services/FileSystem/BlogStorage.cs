@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.FileSystem
 {
-	public enum ThemeType
+    public enum ThemeType
 	{
 		Blog, Admin
 	}
@@ -119,6 +119,48 @@ namespace Blogifier.Core.Services.FileSystem
                     Length = file.Length
                 };
             }
+        }
+
+        public async Task<Asset> UploadBase64Image(string baseImg, string root, string path = "")
+        {
+            path = path.Replace("/", _separator);
+            var fileName = "";
+
+            VerifyPath(path);
+
+            Random rnd = new Random();
+            
+            if (baseImg.StartsWith("data:image/png;base64,"))
+            {
+                fileName = string.Format("{0}.png", rnd.Next(1000, 9999));
+                baseImg = baseImg.Replace("data:image/png;base64,", "");
+            }
+            if (baseImg.StartsWith("data:image/jpeg;base64,"))
+            {
+                fileName = string.Format("{0}.jpeg", rnd.Next(1000, 9999));
+                baseImg = baseImg.Replace("data:image/jpeg;base64,", "");
+            }
+            if (baseImg.StartsWith("data:image/gif;base64,"))
+            {
+                fileName = string.Format("{0}.gif", rnd.Next(1000, 9999));
+                baseImg = baseImg.Replace("data:image/gif;base64,", "");
+            }
+
+            var filePath = string.IsNullOrEmpty(path) ?
+                Path.Combine(Location, fileName) :
+                Path.Combine(Location, path + _separator + fileName);
+
+            byte[] bytes = Convert.FromBase64String(baseImg);
+
+            await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(baseImg));
+
+            return new Asset
+            {
+                Title = fileName,
+                Path = filePath,
+                Url = GetUrl(filePath, root),
+                Length = bytes.Length
+            };
         }
 
         public async Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "")

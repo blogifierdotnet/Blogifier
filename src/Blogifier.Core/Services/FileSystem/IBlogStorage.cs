@@ -16,6 +16,7 @@ namespace Blogifier.Core.Services.FileSystem
         IList<string> GetAssets(string path);
         IList<SelectListItem> GetThemes(ThemeType themeType);
         Task<Asset> UploadFormFile(IFormFile file, string root, string path = "");
+        Task<Asset> UploadBase64Image(string baseImg, string root, string path = "");
         Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "");
     }
 }
