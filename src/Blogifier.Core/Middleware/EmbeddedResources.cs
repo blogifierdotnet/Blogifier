@@ -48,38 +48,16 @@ namespace Blogifier.Core.Middleware
             {
                 try
                 {
-                    // embedded resources never change, set eTag and cache for a year
-                    var requestedETag = context.Request.Headers[HeaderNames.IfNoneMatch];
-                    var responseETag = GetToken(Encoding.ASCII.GetBytes(path));
-
-                    if (requestedETag == responseETag)
-                        context.Response.StatusCode = (int)HttpStatusCode.NotModified;
-
                     var resource = _resources[path];
                     Stream stream = new MemoryStream(resource.Content);
 
-                    SetContextHeaders(context, responseETag, resource.ContentType, stream.Length);
+                    SetContextHeaders(context, resource.ContentType, stream.Length);
 
                     await stream.CopyToAsync(context.Response.Body);
                 }
                 catch (Exception ex)
                 {
-                    if(ex.Message == "Write to non-body 304 response." || ex.Message == "Writing to the response body is invalid for responses with status code 304.")
-                    {
-                        try
-                        {
-                            context.Response.StatusCode = 304;
-                            return;
-                        }
-                        catch(Exception x)
-                        {
-                            var z = x.Message;
-                        }
-                    }
-                    else
-                    {
-                        _logger.LogError(string.Format("Error processing embedded resource : ", ex.Message));
-                    }
+                    _logger.LogError(string.Format("Error processing embedded resource : ", ex.Message));
                 }
             }
             else
@@ -88,13 +66,10 @@ namespace Blogifier.Core.Middleware
             }
         }
 
-        void SetContextHeaders(HttpContext context, string etag, string resType, long length)
+        void SetContextHeaders(HttpContext context, string resType, long length)
         {
             // marker to identify embedded resource for troublshooting
             context.Response.Headers.Add("Embedded-Content", "true");
-
-            context.Response.Headers.Add(HeaderNames.CacheControl, "max-age=" + TimeSpan.FromDays(365));
-            context.Response.Headers.Add(HeaderNames.ETag, new[] { etag });
 
             if (ApplicationSettings.AddContentTypeHeaders)
                 context.Response.ContentType = resType;
