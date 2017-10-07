@@ -81,6 +81,26 @@ namespace Blogifier.Core.Services.Data
             };
         }
 
+        public BlogCategoryModel GetAllPostsByCategory(string cat, int page, bool pub = false)
+        {
+            var pager = new Pager(page);
+            IEnumerable<PostListItem> posts = _db.BlogPosts.ByCategory(cat, pager).Result;
+
+            if (page < 1 || page > pager.LastPage)
+                return null;
+
+            if (pub) posts = SantizePostListItems(posts);
+
+            return new BlogCategoryModel
+            {
+                Profile = null,
+                CustomFields = null,
+                Category = _db.Categories.Single(c => c.Slug == cat),
+                Posts = posts,
+                Pager = pager
+            };
+        }
+
         public BlogPostDetailModel GetPostBySlug(string slug, bool pub = false)
         {
             var vm = new BlogPostDetailModel();

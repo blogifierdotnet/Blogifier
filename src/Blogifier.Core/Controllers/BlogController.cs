@@ -41,6 +41,16 @@ namespace Blogifier.Core.Controllers
             return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Author.cshtml", model);
         }
 
+        [Route("category/{cat}")]
+        public IActionResult AllPostsByCategory(string cat, int page = 1)
+        {
+            var model = _ds.GetAllPostsByCategory(cat, page);
+            if (model == null)
+                return View(_theme + "Error.cshtml", 404);
+
+            return View("~/Views/Blogifier/Blog/" + ApplicationSettings.AdminTheme + "/Category.cshtml", model);
+        }
+
         [Route("{slug:author}/{cat}")]
         public IActionResult PostsByCategory(string slug, string cat, int page = 1)
         {

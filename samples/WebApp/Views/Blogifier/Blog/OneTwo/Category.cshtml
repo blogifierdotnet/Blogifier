@@ -2,8 +2,17 @@
 @using Blogifier.Core.Data.Models
 @model BlogCategoryModel
 @{
-    var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
-    Model.Pager.RouteValue = Model.Profile.Slug + "/" + Model.Category.Slug + "/";
+    var avatar = ApplicationSettings.ProfileAvatar;
+    Model.Pager.RouteValue = Model.Category.Slug + "/";
+
+    if (Model.Profile != null)
+    {
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+        Model.Pager.RouteValue = Model.Profile.Slug + "/" + Model.Category.Slug + "/";
+    }
 }
 <main class="page-category">
     <header class="page-cover" style="background-image: url('@Model.CoverImg')">

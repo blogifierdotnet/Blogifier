@@ -40,32 +40,38 @@ namespace Blogifier.Core.Data.Repositories
             return GetPostItems(postPage);
         }
 
-        public Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")
+        public async Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-            var posts = _db.PostCategories.Include(pc => pc.BlogPost).Include(pc => pc.Category)
+
+            var postsList = await _db.PostCategories
+                .Include(pc => pc.BlogPost)
+                .Include(pc => pc.Category)
+                .Include(pc => pc.BlogPost.Profile)
                 .Where(pc => pc.BlogPost.Published > DateTime.MinValue && pc.Category.Slug == slug)
-                .Select(pc => new PostListItem
-                {
-                    BlogPostId = pc.BlogPostId,
-                    Slug = pc.BlogPost.Slug,
-                    Title = pc.BlogPost.Title,
-                    Avatar = string.IsNullOrEmpty(pc.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : pc.BlogPost.Profile.Avatar,
-                    Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? ApplicationSettings.PostImage : pc.BlogPost.Image,
-                    Content = pc.BlogPost.Description,
-                    Published = pc.BlogPost.Published,
-                    AuthorName = pc.BlogPost.Profile.AuthorName,
-                    AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
-                    BlogSlug = pc.BlogPost.Profile.Slug,
-                    PostViews = pc.BlogPost.PostViews,
-                    PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
-                }).Distinct().ToList();
+                .ToListAsync();
+
+            var posts = postsList.Select(pc => new PostListItem
+            {
+                BlogPostId = pc.BlogPostId,
+                Slug = pc.BlogPost.Slug,
+                Title = pc.BlogPost.Title,
+                Avatar = string.IsNullOrEmpty(pc.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : pc.BlogPost.Profile.Avatar,
+                Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? ApplicationSettings.PostImage : pc.BlogPost.Image,
+                Content = pc.BlogPost.Description,
+                Published = pc.BlogPost.Published,
+                AuthorName = pc.BlogPost.Profile.AuthorName,
+                AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
+                BlogSlug = pc.BlogPost.Profile.Slug,
+                PostViews = pc.BlogPost.PostViews,
+                PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
+            }).Distinct().ToList();
 
             if (!string.IsNullOrEmpty(blog))
                 posts = posts.Where(p => p.BlogSlug == blog).ToList();
 
             pager.Configure(posts.Count);
-            return Task.Run(() => posts.Skip(skip).Take(pager.ItemsPerPage).ToList());
+            return await Task.Run(() => posts.Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
         // posts filtered on status (all, draft or published) and categories

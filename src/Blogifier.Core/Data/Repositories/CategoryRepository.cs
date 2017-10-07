@@ -91,7 +91,7 @@ namespace Blogifier.Core.Data.Repositories
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -113,7 +113,7 @@ namespace Blogifier.Core.Data.Repositories
                 _db.PostCategories.Remove(existing);
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }

@@ -82,8 +82,10 @@ namespace Blogifier.Core.Middleware
         {
             var stream = assembly.GetManifestResourceStream(path);
 
-            var resource = new CachedResource();
-            resource.ContentType = GetContentType(path);
+            var resource = new CachedResource
+            {
+                ContentType = GetContentType(path)
+            };
 
             using (var memoryStream = new MemoryStream())
             {

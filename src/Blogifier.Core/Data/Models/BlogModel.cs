@@ -41,9 +41,9 @@ namespace Blogifier.Core.Data.Models
 
     public class BlogCategoryModel : BlogBaseModel
     {
-        public override string LogoImg { get => string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
-        public override string CoverImg { get => string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
-        public override string LogoUrl { get => ApplicationSettings.BlogRoute + Profile.Slug; }
+        public override string LogoImg { get => Profile == null || string.IsNullOrEmpty(Profile.Logo) ? ApplicationSettings.ProfileLogo : Profile.Logo; }
+        public override string CoverImg { get => Profile == null || string.IsNullOrEmpty(Profile.Image) ? ApplicationSettings.ProfileImage : Profile.Image; }
+        public override string LogoUrl { get => Profile == null ? ApplicationSettings.BlogRoute : ApplicationSettings.BlogRoute + Profile.Slug; }
         public override string PageTitle { get => "Category: " + Category.Title; }
         public override string PageDescription { get => Profile == null ? PageTitle : Profile.Description + " - " + PageTitle; }
 
