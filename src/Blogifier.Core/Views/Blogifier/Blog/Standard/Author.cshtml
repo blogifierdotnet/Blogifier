@@ -12,26 +12,26 @@
         <h2 class="author-title">@Model.Profile.Title</h2>
         <p class="author-description">@Model.Profile.Description</p>
         <ul class="author-social">
-            @if (cf.ContainsKey("Google") && !string.IsNullOrEmpty(cf["Google"]))
+        @if (cf.ContainsKey("Google") && !string.IsNullOrEmpty(cf["Google"]))
         {
-                <li><a href='@cf["Google"]' target="_blank" title="Google Plus"><i class="fa fa-google"></i></a></li>
-            }
-            @if (cf.ContainsKey("Twitter") && !string.IsNullOrEmpty(cf["Twitter"]))
+            <li><a href='@cf["Google"]' target="_blank" title="Google Plus"><i class="fa fa-google"></i></a></li>
+        }
+        @if (cf.ContainsKey("Twitter") && !string.IsNullOrEmpty(cf["Twitter"]))
         {
-                <li><a href='@cf["Twitter"]' target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-            }
-            @if (cf.ContainsKey("Github") && !string.IsNullOrEmpty(cf["Github"]))
+            <li><a href='@cf["Twitter"]' target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+        }
+        @if (cf.ContainsKey("Github") && !string.IsNullOrEmpty(cf["Github"]))
         {
-                <li><a href='@cf["Github"]' target="_blank" title="GitHub"><i class="fa fa-github"></i></a></li>
-            }
-            @if (cf.ContainsKey("Instagram") && !string.IsNullOrEmpty(cf["Instagram"]))
+            <li><a href='@cf["Github"]' target="_blank" title="GitHub"><i class="fa fa-github"></i></a></li>
+        }
+        @if (cf.ContainsKey("Instagram") && !string.IsNullOrEmpty(cf["Instagram"]))
         {
-                <li><a href='@cf["Instagram"]' target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
-            }
-            @if (cf.ContainsKey("Facebook") && !string.IsNullOrEmpty(cf["Facebook"]))
+            <li><a href='@cf["Instagram"]' target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+        }
+        @if (cf.ContainsKey("Facebook") && !string.IsNullOrEmpty(cf["Facebook"]))
         {
-                <li><a href='@cf["Facebook"]' target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-            }
+            <li><a href='@cf["Facebook"]' target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+        }
         </ul>
     </div>
 </header>

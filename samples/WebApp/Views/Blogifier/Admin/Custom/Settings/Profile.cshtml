@@ -1,6 +1,11 @@
 ﻿@model Blogifier.Core.Data.Models.SettingsProfile
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Layout.cshtml";
+    if (!Model.CustomFields.ContainsKey("Google")) { Model.CustomFields.Add("Google", ""); }
+    if (!Model.CustomFields.ContainsKey("Twitter")) { Model.CustomFields.Add("Twitter", ""); }
+    if (!Model.CustomFields.ContainsKey("Github")) { Model.CustomFields.Add("Github", ""); }
+    if (!Model.CustomFields.ContainsKey("Facebook")) { Model.CustomFields.Add("Facebook", ""); }
+    if (!Model.CustomFields.ContainsKey("Instagram")) { Model.CustomFields.Add("Instagram", ""); }
 }
 <div class="bf-settings bf-settings-profile">
     <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">

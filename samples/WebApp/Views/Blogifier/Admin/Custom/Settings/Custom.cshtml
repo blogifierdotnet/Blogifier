@@ -1,6 +1,9 @@
 ﻿@model Blogifier.Core.Data.Models.SettingsCustom
 @{
     Layout = "~/Views/Blogifier/Admin/Custom/_Layout/_Layout.cshtml";
+    if (!Model.CustomFields.ContainsKey("Head")) { Model.CustomFields.Add("Head", ""); }
+    if (!Model.CustomFields.ContainsKey("Footer")) { Model.CustomFields.Add("Footer", ""); }
+    if (!Model.CustomFields.ContainsKey("Post")) { Model.CustomFields.Add("Post", ""); }
 }
 <div class="bf-settings bf-settings-custom">
     <form method="post" asp-controller="Settings" asp-action="Custom" asp-antiforgery="true">

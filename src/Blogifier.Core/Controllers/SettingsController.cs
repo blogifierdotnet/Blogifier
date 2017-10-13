@@ -236,25 +236,12 @@ namespace Blogifier.Core.Controllers
         {
             var fields = new Dictionary<string, string>();
 
-            fields.Add("Google", "");
-            fields.Add("Twitter", "");
-            fields.Add("Github", "");
-            fields.Add("Facebook", "");
-            fields.Add("Instagram", "");
-
-            fields.Add("Head", "");
-            fields.Add("Footer", "");
-            fields.Add("Post", "");
-
             var dbFields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == profileId);
             if (dbFields != null && dbFields.Count() > 0)
             {
                 foreach (var field in dbFields)
                 {
-                    if (fields.ContainsKey(field.CustomKey))
-                    {
-                        fields[field.CustomKey] = field.CustomValue;
-                    }
+                    fields.Add(field.CustomKey, field.CustomValue);
                 }
             }
             return fields;
