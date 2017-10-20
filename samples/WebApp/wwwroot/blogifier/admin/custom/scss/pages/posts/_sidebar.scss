@@ -17,12 +17,16 @@
 
     .filters-group {
         margin-left: -.125rem;
+        margin-bottom: 1rem;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
 
         &-title {
             display: block;
             font-size: 1rem;
             text-transform: uppercase;
-            margin-top: 1rem;
             font-size: .875rem;
             color: $cl-white-20;
             margin-bottom: .5rem;
