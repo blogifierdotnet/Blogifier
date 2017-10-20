@@ -17,6 +17,8 @@ namespace Blogifier.Core.Data.Models
     {
         public Pager Pager { get; set; }
         public IEnumerable<PostListItem> BlogPosts { get; set; }
+        public IEnumerable<Profile> Users { get; set; }
+
         public List<SelectListItem> StatusFilter { get; set; }
         public List<SelectListItem> CategoryFilter { get; set; }
     }

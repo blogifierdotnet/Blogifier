@@ -53,6 +53,20 @@
         }, 1000);
     }
 
+    function filter() {
+        var user = $('input[name=user-filter]:checked').val();
+        var status = $('input[name=status-filter]:checked').val();
+        var cats = $('input:checkbox:checked').map(function () {
+            return this.value;
+        }).get();
+
+        var url = webRoot + "admin?user=" + user + "&status=" + status;
+        if (cats.length > 0) {
+            url = url + "&cats=" + cats;
+        }
+        window.location.href = url;
+    }
+
     function fail(jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) { msg = 'Not connect.\n Verify Network.'; }
@@ -68,7 +82,8 @@
     return {
         publish: publish,
         unpublish: unpublish,
-        removePost: removePost
+        removePost: removePost,
+        filter: filter
     }
 }(DataService);
 

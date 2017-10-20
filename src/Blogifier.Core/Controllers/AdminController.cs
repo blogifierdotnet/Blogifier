@@ -44,6 +44,9 @@ namespace Blogifier.Core.Controllers
             var pager = new Pager(page);
             var model = new AdminPostsModel { Profile = GetProfile() };
 
+            if(model.Profile.IsAdmin)
+                model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
+
             model.StatusFilter = GetStatusFilter("A");
             model.CategoryFilter = _db.Categories.CategoryList(c => c.ProfileId == model.Profile.Id).ToList();
 
