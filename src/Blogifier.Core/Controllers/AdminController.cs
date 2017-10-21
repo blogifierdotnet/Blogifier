@@ -78,18 +78,29 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("editor/{id:int}")]
-        public IActionResult Editor(int id)
+        public IActionResult Editor(int id, string user = "0")
         {
             var profile = GetProfile();
+            var userProfile = profile;
 
-            List<SelectListItem> categories = null;
+            if (user != "0")
+            {
+                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+            }
+
             var post = new BlogPost();
-
-            categories = _db.Categories.CategoryList(c => c.ProfileId == profile.Id).ToList();
+            var categories = _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id).ToList();
 
             if (id > 0)
             {
-                post = _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id).Result;
+                if (profile.IsAdmin)
+                {
+                    post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
+                }
+                else
+                {
+                    post = _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id).Result;
+                }
             }
 
             if(post.PostCategories != null)

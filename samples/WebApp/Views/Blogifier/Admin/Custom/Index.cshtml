@@ -6,6 +6,11 @@
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
     var curPost = 0;
     var searchTerm = Context.Request.Query["search"];
+    var user = Context.Request.Query["user"];
+    if (string.IsNullOrEmpty(user))
+    {
+        user = "0";
+    }
 }
 
 <div class="bf-posts-toolbar">
@@ -36,7 +41,7 @@
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="item">
             <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId?user=@user">@item.Title</a>
             <div class="item-info">
                 <span class="item-info-views" aria-label="Views">@item.PostViews Views</span>
                 <span class="item-info-date" aria-label="Publish date">@publishedLbl</span>
