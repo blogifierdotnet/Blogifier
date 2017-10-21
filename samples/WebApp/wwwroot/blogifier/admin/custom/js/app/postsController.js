@@ -55,6 +55,9 @@
 
     function filter() {
         var user = $('input[name=user-filter]:checked').val();
+        if (!user) {
+            user = "0";
+        }
         var status = $('input[name=status-filter]:checked').val();
         var cats = $('input:checkbox:checked').map(function () {
             return this.value;

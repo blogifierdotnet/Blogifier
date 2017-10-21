@@ -38,47 +38,27 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [HttpGet]
-        public IActionResult Index(int page = 1, string search = "")
+        public IActionResult Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
 		{
-            if (page == 0) page = 1;
             var pager = new Pager(page);
-            var model = new AdminPostsModel { Profile = GetProfile() };
-
-            if(model.Profile.IsAdmin)
-                model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
-
-            model.StatusFilter = GetStatusFilter("A");
-            model.CategoryFilter = _db.Categories.CategoryList(c => c.ProfileId == model.Profile.Id).ToList();
-
-            if (string.IsNullOrEmpty(search))
-                model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
-            else
-                model.BlogPosts = _search.Find(pager, search, model.Profile.Slug).Result;
-
-            model.Pager = pager;
-
-            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == model.Profile.Id).FirstOrDefault();
-            ViewBag.IsFirstPost = anyPost == null;
-
-            return View(_theme + "Index.cshtml", model);
-        }
-
-        [HttpPost]
-        public IActionResult Index(IFormCollection fc)
-        {
-            var pager = new Pager(1);
             var profile = GetProfile();
             var model = new AdminPostsModel { Profile = profile };
 
-            var status = fc.ContainsKey("status-filter") ? fc["status-filter"].ToString() : "A";
+            if (model.Profile.IsAdmin)
+                model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
+
+            var userProfile = model.Profile;
+            if (user != "0")
+                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+
             model.StatusFilter = GetStatusFilter(status);
 
             var selectedCategories = new List<string>();
             var dbCategories = new List<Category>();
-            model.CategoryFilter = _db.Categories.CategoryList(c => c.ProfileId == model.Profile.Id).ToList();
-            if (fc.ContainsKey("category-filter"))
+            model.CategoryFilter = _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id).ToList();
+            if (!string.IsNullOrEmpty(cats))
             {
-                selectedCategories = fc["category-filter"].ToList();
+                selectedCategories = cats.Split(',').ToList();
                 foreach (var ftr in model.CategoryFilter)
                 {
                     if (selectedCategories.Contains(ftr.Value))
@@ -87,10 +67,10 @@ namespace Blogifier.Core.Controllers
                     }
                 }
             }
-            model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, profile.Slug, pager).Result;
+            model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager).Result;
             model.Pager = pager;
 
-            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == model.Profile.Id).FirstOrDefault();
+            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == userProfile.Id).FirstOrDefault();
             ViewBag.IsFirstPost = anyPost == null;
 
             return View(_theme + "Index.cshtml", model);

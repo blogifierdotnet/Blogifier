@@ -32,7 +32,7 @@
 		@if (!settingsView && !editorView)
 		{
 		<a class="nav-item-link active" href="~/admin"><i class="fa fa-align-justify"></i>Posts</a>
-		<form id="frmPostFilter" class="nav-item-body bf-posts-filters" asp-controller="Admin" asp-action="Index" method="post">
+		<form id="frmPostFilter" class="nav-item-body bf-posts-filters">
             @if (Model.Profile.IsAdmin)
             {
                 <div class="filters-group filters-group-users">
