@@ -33,7 +33,8 @@ namespace WebApp
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseSqlServer(connectionString);
+            // System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseSqlServer(connectionString);
+            System.Action<DbContextOptionsBuilder> databaseOptions = options => options.UseSqlite(connectionString);
 
             services.AddDbContext<ApplicationDbContext>(databaseOptions);
 

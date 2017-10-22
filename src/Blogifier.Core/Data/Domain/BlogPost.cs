@@ -29,6 +29,9 @@ namespace Blogifier.Core.Data.Domain
 
         public DateTime Published { get; set; }
 
+        public bool IsFeatured { get; set; }
+        public float Rating { get; set; }
+
         public Profile Profile { get; set; }
         public List<PostCategory> PostCategories { get; set; }
     }

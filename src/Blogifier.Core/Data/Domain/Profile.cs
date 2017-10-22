@@ -33,6 +33,9 @@ namespace Blogifier.Core.Data.Domain
         [StringLength(160)]
         public string AuthorEmail { get; set; }
 
+        [StringLength(4000)]
+        public string Bio { get; set; }
+
         public bool IsAdmin { get; set; }
 
         [Required]
