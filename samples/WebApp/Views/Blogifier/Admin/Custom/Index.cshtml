@@ -47,9 +47,15 @@
                 <span class="item-info-date" aria-label="Publish date">@publishedLbl</span>
             </div>
             <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
-            <button class="btn-unstyled item-favorite" onclick="postsController.favorite('@item.BlogPostId', this)">
-                <!-- toggle between "fa-star" and "fa-star-o" -->
-                <i class="fa fa-star-o"></i>
+            <button class="btn-unstyled item-favorite" onclick="postsController.featured('@item.BlogPostId', this)">
+                @if (item.IsFeatured)
+                {
+                    <i class="fa fa-star"></i>
+                }
+                else
+                {
+                    <i class="fa fa-star-o"></i>
+                }
             </button>
             <a class="item-show" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
         </li>

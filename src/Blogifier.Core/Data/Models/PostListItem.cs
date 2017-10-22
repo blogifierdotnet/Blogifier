@@ -18,6 +18,8 @@ namespace Blogifier.Core.Data.Models
         public string BlogSlug { get; set; }
 
         public int PostViews { get; set; }
+        public float Rating { get; set; }
+        public bool IsFeatured { get; set; }
 
         public List<string> PostCategories { get; set; }
 

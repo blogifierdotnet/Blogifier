@@ -7,5 +7,6 @@
         <p class="cover-desc">@ApplicationSettings.Description</p>
     </div>
 </section>
+@await Component.InvokeAsync("FeaturedPosts")
 @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Post.cshtml", Model.Posts)
 @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Pager.cshtml", Model.Pager)

@@ -1,0 +1,14 @@
+﻿@using Blogifier.Core.Data.Models;
+@using Blogifier.Core.Common;
+@model List<PostListItem>
+
+@foreach (var item in Model)
+{
+    <div class="card card-body featured">
+        <h4 class="card-title">@item.Title</h4>
+        <p class="card-text">@item.Content</p>
+        <div class="flex-row">
+            <a href="~/@ApplicationSettings.BlogRoute@item.Slug" class="card-link">Read more</a>
+        </div>
+    </div>
+}

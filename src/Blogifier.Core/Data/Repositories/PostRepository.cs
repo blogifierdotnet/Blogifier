@@ -64,6 +64,8 @@ namespace Blogifier.Core.Data.Repositories
                 AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
                 BlogSlug = pc.BlogPost.Profile.Slug,
                 PostViews = pc.BlogPost.PostViews,
+                Rating = pc.BlogPost.Rating,
+                IsFeatured = pc.BlogPost.IsFeatured,
                 PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
             }).Distinct().ToList();
 
@@ -160,6 +162,8 @@ namespace Blogifier.Core.Data.Repositories
                 AuthorEmail = p.Profile.AuthorEmail,
                 BlogSlug = p.Profile.Slug,
                 PostViews = p.PostViews,
+                Rating = p.Rating,
+                IsFeatured = p.IsFeatured,
                 PostCategories = (from pc in _db.PostCategories where pc.BlogPostId == p.Id select pc.Category.Slug).ToList()
             }).Distinct().ToList();
         }

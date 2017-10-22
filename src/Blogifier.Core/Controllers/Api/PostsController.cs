@@ -127,14 +127,17 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPut("featured/{id:int}")]
-        public IActionResult Featured(int id, string action = "add")
+        public IActionResult Featured(int id, string act = "add")
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
             if (post == null)
                 return NotFound();
 
-            
-            post.Published = DateTime.MinValue;
+            if (act == "add")
+                post.IsFeatured = true;
+            else
+                post.IsFeatured = false;
+
             _db.Complete();
             return new NoContentResult();
         }
