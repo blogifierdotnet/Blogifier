@@ -70,6 +70,19 @@
         window.location.href = url;
     }
 
+    function favorite(id, obj) {
+        var i = $(obj.firstElementChild);
+
+        if (i.hasClass("fa-star")) {
+            i.removeClass('fa-star').addClass('fa-star-o');
+            toastr.success("removeFavorite('" + id + "')");
+        }
+        else {
+            i.removeClass('fa-star-o').addClass('fa-star');
+            toastr.success("addFavorite('" + id + "')");
+        }
+    }
+
     function fail(jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) { msg = 'Not connect.\n Verify Network.'; }
@@ -86,7 +99,8 @@
         publish: publish,
         unpublish: unpublish,
         removePost: removePost,
-        filter: filter
+        filter: filter,
+        favorite: favorite
     }
 }(DataService);
 

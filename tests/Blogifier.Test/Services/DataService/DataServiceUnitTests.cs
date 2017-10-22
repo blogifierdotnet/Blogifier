@@ -2,7 +2,6 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Services.Custom;
 using Blogifier.Core.Services.Search;
 using Moq;
 using System;
@@ -21,8 +20,6 @@ namespace Blogifier.Test.Services.DataService
         private readonly Mock<IPostRepository> _postsRepository = new Mock<IPostRepository>();
 
         private readonly Mock<IProfileRepository> profileRepository = new Mock<IProfileRepository>();
-
-        private readonly Mock<ICustomService> _customService = new Mock<ICustomService>();
 
         private readonly Mock<ISearchService> _searchService = new Mock<ISearchService>();
 
@@ -355,7 +352,6 @@ namespace Blogifier.Test.Services.DataService
         {
             return new Core.Services.Data.DataService(
                 _unitOfWork.Object,
-                _customService.Object,
                 _searchService.Object);
         }
 

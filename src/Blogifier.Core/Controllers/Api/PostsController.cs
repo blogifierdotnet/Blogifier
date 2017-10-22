@@ -126,6 +126,19 @@ namespace Blogifier.Core.Controllers.Api
             return new NoContentResult();
         }
 
+        [HttpPut("featured/{id:int}")]
+        public IActionResult Featured(int id, string action = "add")
+        {
+            var post = _db.BlogPosts.Single(p => p.Id == id);
+            if (post == null)
+                return NotFound();
+
+            
+            post.Published = DateTime.MinValue;
+            _db.Complete();
+            return new NoContentResult();
+        }
+
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {

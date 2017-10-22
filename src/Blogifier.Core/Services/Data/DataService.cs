@@ -1,7 +1,7 @@
 ﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Services.Custom;
 using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -12,13 +12,11 @@ namespace Blogifier.Core.Services.Data
     public class DataService : IDataService
     {
         IUnitOfWork _db;
-        ICustomService _custom;
         ISearchService _search;
 
-        public DataService(IUnitOfWork db, ICustomService custom, ISearchService search)
+        public DataService(IUnitOfWork db, ISearchService search)
         {
             _db = db;
-            _custom = custom;
             _search = search;
         }
 
@@ -53,7 +51,7 @@ namespace Blogifier.Core.Services.Data
 
             return new BlogAuthorModel
             {
-                CustomFields = _custom.GetProfileCustomFields(profile).Result,
+                CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id).Result,
                 Profile = profile,
                 Posts = posts,
                 Pager = pager
@@ -74,7 +72,7 @@ namespace Blogifier.Core.Services.Data
             return new BlogCategoryModel
             {
                 Profile = profile,
-                CustomFields = _custom.GetProfileCustomFields(profile).Result,
+                CustomFields = _db.CustomFields.GetCustomFields( CustomType.Profile, profile.Id).Result,
                 Category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id),
                 Posts = posts,
                 Pager = pager
@@ -127,7 +125,7 @@ namespace Blogifier.Core.Services.Data
                     vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
-            vm.CustomFields = _custom.GetProfileCustomFields(vm.Profile).Result;
+            vm.CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, vm.Profile.Id).Result;
 
             if (pub)
             {
@@ -157,7 +155,7 @@ namespace Blogifier.Core.Services.Data
             {
                 Posts = posts,
                 Pager = pager,
-                CustomFields = _custom.GetProfileCustomFields(null).Result
+                CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, 0).Result
             };
         }
 

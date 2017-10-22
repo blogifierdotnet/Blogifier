@@ -3,7 +3,6 @@ using Blogifier.Core.Data;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Repositories;
 using Blogifier.Core.Middleware;
-using Blogifier.Core.Services.Custom;
 using Blogifier.Core.Services.Data;
 using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Routing;
@@ -34,7 +33,6 @@ namespace Blogifier.Core
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<ICustomService, CustomService>();
             services.AddTransient<IDataService, DataService>();
 
             // add blog route from ApplicationSettings
