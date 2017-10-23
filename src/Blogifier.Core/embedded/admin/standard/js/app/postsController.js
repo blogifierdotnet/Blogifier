@@ -23,6 +23,24 @@
             }
         }
     }
+    function featured(id, obj) {
+        var i = $(obj.firstElementChild);
+
+        if (i.hasClass("fa-star")) {
+            dataService.put("blogifier/api/posts/featured/" + id + "?act=remove", null, removeFeatured(i), fail);
+        }
+        else {
+            dataService.put("blogifier/api/posts/featured/" + id + "?act=add", null, addFeatured(i), fail);
+        }
+    }
+    function addFeatured(i) {
+        i.removeClass('fa-star-o').addClass('fa-star');
+        toastr.success("Updated");
+    }
+    function removeFeatured(i) {
+        i.removeClass('fa-star').addClass('fa-star-o');
+        toastr.success("Updated");
+    }
     function removePost() {
         loading();
         var items = $('.bf-posts-list input:checked');
@@ -53,6 +71,23 @@
         }, 1000);
     }
 
+    function filter() {
+        var user = $('input[name=user-filter]:checked').val();
+        if (!user) {
+            user = "0";
+        }
+        var status = $('input[name=status-filter]:checked').val();
+        var cats = $('input:checkbox:checked').map(function () {
+            return this.value;
+        }).get();
+
+        var url = webRoot + "admin?user=" + user + "&status=" + status;
+        if (cats.length > 0) {
+            url = url + "&cats=" + cats;
+        }
+        window.location.href = url;
+    }
+
     function fail(jqXHR, exception) {
         var msg = '';
         if (jqXHR.status === 0) { msg = 'Not connect.\n Verify Network.'; }
@@ -68,7 +103,9 @@
     return {
         publish: publish,
         unpublish: unpublish,
-        removePost: removePost
+        removePost: removePost,
+        filter: filter,
+        featured: featured
     }
 }(DataService);
 
