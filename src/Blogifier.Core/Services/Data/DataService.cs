@@ -51,7 +51,7 @@ namespace Blogifier.Core.Services.Data
 
             return new BlogAuthorModel
             {
-                CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id).Result,
+                CustomFields = _db.CustomFields == null ? new Dictionary<string, string>() : _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id).Result,
                 Profile = profile,
                 Posts = posts,
                 Pager = pager
@@ -107,7 +107,7 @@ namespace Blogifier.Core.Services.Data
             if (vm.BlogPost == null)
                 return null;
 
-            vm.Profile = vm.BlogPost.Profile;
+            vm.Profile = vm.BlogPost.Profile != null ? vm.BlogPost.Profile : _db.Profiles.Single(p => p.Id == vm.BlogPost.ProfileId);
 
             if (string.IsNullOrEmpty(vm.BlogPost.Image))
             {
@@ -125,7 +125,8 @@ namespace Blogifier.Core.Services.Data
                     vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
-            vm.CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, vm.Profile.Id).Result;
+
+            vm.CustomFields = vm.Profile.Id == 0 ? new Dictionary<string, string>() : _db.CustomFields.GetCustomFields(CustomType.Profile, vm.Profile.Id).Result;
 
             if (pub)
             {
@@ -155,7 +156,7 @@ namespace Blogifier.Core.Services.Data
             {
                 Posts = posts,
                 Pager = pager,
-                CustomFields = _db.CustomFields.GetCustomFields(CustomType.Profile, 0).Result
+                CustomFields = new Dictionary<string, string>()
             };
         }
 
