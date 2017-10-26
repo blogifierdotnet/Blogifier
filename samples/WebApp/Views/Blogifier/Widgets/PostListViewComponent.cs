@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace WebApp.Views.Blogifier.Widgets
 {
-    [ViewComponent(Name = "PostList")]
     public class PostListViewComponent : ViewComponent
     {
         IUnitOfWork _db;
