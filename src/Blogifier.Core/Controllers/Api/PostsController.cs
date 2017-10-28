@@ -129,6 +129,10 @@ namespace Blogifier.Core.Controllers.Api
         [HttpPut("featured/{id:int}")]
         public IActionResult Featured(int id, string act = "add")
         {
+            var profile = GetProfile();
+            if (!profile.IsAdmin)
+                return Unauthorized();
+
             var post = _db.BlogPosts.Single(p => p.Id == id);
             if (post == null)
                 return NotFound();

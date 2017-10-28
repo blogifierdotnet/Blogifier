@@ -4,7 +4,7 @@ The goal of this project is to "blogify" ASP.NET applications; Blogifier.Core bu
 
 ## Demo site
 
-The [demo site](http://blogifier.azurewebsites.net) is a playground you can use to check out Blogifier features. You can register new user and write post to test admin panel.
+The [demo site](http://blogifiercore.azurewebsites.net) is a playground you can use to check out Blogifier features. You can register new user and write post to test admin panel.
 
 ![demo site](https://user-images.githubusercontent.com/1932785/30626484-dfc57f74-9d8f-11e7-9896-4dedcaad641b.PNG)
 
@@ -31,7 +31,7 @@ Designed for cross-platform development, every build pushed to Windows and Linux
 ```
 Install-Package Blogifier.Core
 ```
-3. Configure services and application in Startup.cs to use Blogifier:
+3. Configure services and application in Startup.cs to use Blogifier (example for MS SQL Server):
 ```csharp
 public void ConfigureServices(IServiceCollection services)
 {
