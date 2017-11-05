@@ -23,17 +23,11 @@ namespace Blogifier.Core
     public class Configuration
     {
 		public static void InitServices(IServiceCollection services, System.Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
-		{
-            if(config != null)
-            {
-                var loader = new AppSettingsLoader();
-                loader.LoadFromConfigFile(config);
-            }
-                
+		{               
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<IDataService, DataService>();
+            services.AddTransient<IDataService, DataService>();           
 
             // add blog route from ApplicationSettings
             services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>
@@ -55,27 +49,11 @@ namespace Blogifier.Core
 
 		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env)
 		{
-			app.UseMiddleware<EmbeddedResources>();
+            app.UseMiddleware<AppSettingsLoader>();
+			app.UseMiddleware<EmbeddedResources>();     
 
-			ApplicationSettings.WebRootPath = env.WebRootPath;
+            ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
-
-            //if (!ApplicationSettings.UseInMemoryDatabase)
-            //{
-            //    try
-            //    {
-            //        using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            //        {
-            //            var db = scope.ServiceProvider.GetService<BlogifierDbContext>().Database;
-            //            db.EnsureCreated();
-            //            if (db.GetPendingMigrations() != null)
-            //            {
-            //                db.Migrate();
-            //            }
-            //        }
-            //    }
-            //    catch { }
-            //}
         }
 
 		static void AddDatabase(IServiceCollection services)

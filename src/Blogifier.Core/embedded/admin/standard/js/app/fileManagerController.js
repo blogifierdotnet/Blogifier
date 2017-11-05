@@ -45,6 +45,18 @@
             else if (callBack.name === 'updatePostCoverCallback') {
                 url = 'blogifier/api/assets/postimage/' + id + '/' + $('#hdnPostId').val();
             }
+            else if (callBack.name === 'updateAppLogoCallback') {
+                url = 'blogifier/api/assets/applogo/' + id;
+            }
+            else if (callBack.name === 'updateAppAvatarCallback') {
+                url = 'blogifier/api/assets/appavatar/' + id;
+            }
+            else if (callBack.name === 'updateAppCoverCallback') {
+                url = 'blogifier/api/assets/appcover/' + id;
+            }
+            else if (callBack.name === 'updateAppPostImageCallback') {
+                url = 'blogifier/api/assets/apppostimage/' + id;
+            }
             dataService.get(url, callBack, fail);
         }
         close();

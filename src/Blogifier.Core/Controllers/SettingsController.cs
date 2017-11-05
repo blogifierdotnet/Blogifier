@@ -227,6 +227,65 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
+        [VerifyProfile]
+        [Route("appsettings")]
+        public IActionResult AppSettings()
+        {
+            var profile = GetProfile();
+            var storage = new BlogStorage("");
+
+            var model = new SettingsApplication
+            {
+                Profile = profile,
+                BlogThemes = storage.GetThemes(ThemeType.Blog),
+                Title = ApplicationSettings.Title,
+                Description = ApplicationSettings.Description,
+                BlogTheme = ApplicationSettings.BlogTheme,
+                ItemsPerPage = ApplicationSettings.ItemsPerPage,
+                Logo = ApplicationSettings.ProfileLogo,
+                Avatar = ApplicationSettings.ProfileAvatar,
+                Image = ApplicationSettings.ProfileImage,
+                PostImage = ApplicationSettings.PostImage
+            };
+            return View(_theme + "AppSettings.cshtml", model);
+        }
+
+        [HttpPost]
+        [Route("appsettings")]
+        public IActionResult AppSettings(SettingsApplication model)
+        {
+            var storage = new BlogStorage("");
+            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
+            model.Profile = GetProfile();
+
+            if (ModelState.IsValid)
+            {
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "Title", model.Title);
+                ApplicationSettings.Title = model.Title;
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "Description", model.Description);
+                ApplicationSettings.Description = model.Description;
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "ItemsPerPage", model.ItemsPerPage.ToString());
+                ApplicationSettings.ItemsPerPage = model.ItemsPerPage;
+
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileLogo", model.Logo);
+                ApplicationSettings.ProfileLogo = model.Logo;
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileAvatar", model.Avatar);
+                ApplicationSettings.ProfileAvatar = model.Avatar;
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileImage", model.Image);
+                ApplicationSettings.ProfileImage = model.Image;
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "PostImage", model.PostImage);
+                ApplicationSettings.PostImage = model.PostImage;
+
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, "BlogTheme", model.BlogTheme);
+                ApplicationSettings.BlogTheme = model.BlogTheme;
+
+                _db.Complete();
+
+                ViewBag.Message = "Updated";
+            }
+            return View(_theme + "AppSettings.cshtml", model);
+        }
+
         Profile GetProfile()
         {
             return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);

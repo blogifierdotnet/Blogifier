@@ -72,19 +72,41 @@ namespace Blogifier.Core.Controllers.Api
 
             if (!string.IsNullOrEmpty(type))
             {
-                var profile = GetProfile();
-
-                if (type == "profilelogo")
+                if(type == "applogo")
                 {
-                    profile.Logo = asset.Url;
+                    ApplicationSettings.ProfileLogo = asset.Url;
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileLogo", asset.Url);
                 }
-                if (type == "profileavatar")
+                else if(type == "appavatar")
                 {
-                    profile.Avatar = asset.Url;
+                    ApplicationSettings.ProfileAvatar = asset.Url;
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileAvatar", asset.Url);
                 }
-                if (type == "profileimage")
+                else if (type == "appimage")
                 {
-                    profile.Image = asset.Url;
+                    ApplicationSettings.ProfileImage = asset.Url;
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, "ProfileImage", asset.Url);
+                }
+                else if (type == "apppostimage")
+                {
+                    ApplicationSettings.PostImage = asset.Url;
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, "PostImage", asset.Url);
+                }
+                else
+                {
+                    var profile = GetProfile();
+                    if (type == "profilelogo")
+                    {
+                        profile.Logo = asset.Url;
+                    }
+                    if (type == "profileavatar")
+                    {
+                        profile.Avatar = asset.Url;
+                    }
+                    if (type == "profileimage")
+                    {
+                        profile.Image = asset.Url;
+                    }                    
                 }
                 _db.Complete();
             }

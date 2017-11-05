@@ -244,3 +244,6 @@ artifacts/
 tools/
 *.cake
 *.ps1
+
+# SQLite files
+*.db

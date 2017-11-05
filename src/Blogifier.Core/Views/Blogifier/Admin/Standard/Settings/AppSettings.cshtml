@@ -1,0 +1,93 @@
+﻿@model Blogifier.Core.Data.Models.SettingsApplication
+@using Blogifier.Core.Common
+@using Blogifier.Core.Extensions
+@{
+    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
+}
+<div class="bf-settings bf-settings-personal">
+    <form method="post" asp-controller="Settings" asp-action="AppSettings" asp-antiforgery="true">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input asp-for="Description" type="text" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Items per page</label>
+            <input asp-for="ItemsPerPage" type="text" class="form-control" />
+            <span asp-validation-for="ItemsPerPage" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Logo</label>
+            <div class="input-group">
+                <input type="text" asp-for="Logo" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Avatar</label>
+            <div class="input-group">
+                <input type="text" asp-for="Avatar" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppAvatarCallback);"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Cover</label>
+            <div class="input-group">
+                <input type="text" asp-for="Image" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Post image</label>
+            <div class="input-group">
+                <input type="text" asp-for="PostImage" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppPostImageCallback);"> upload</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Theme</label>
+            <select asp-for="BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </form>
+</div>
+@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FileManager.cshtml")
+@section Scripts{
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script>toastr.success('@ViewBag.Message')</script>
+    }
+    <script>
+        var updateAppCoverCallback = function (data) {
+            $('#Image').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateAppLogoCallback = function (data) {
+            $('#Logo').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateAppAvatarCallback = function (data) {
+            $('#Avatar').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateAppPostImageCallback = function (data) {
+            $('#PostImage').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
+    <script>document.getElementById('Title').focus()</script>
+    <script src="~/embedded/admin/standard/js/app/fileManagerController.js"></script>
+}

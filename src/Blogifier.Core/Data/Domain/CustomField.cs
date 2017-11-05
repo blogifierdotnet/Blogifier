@@ -20,6 +20,7 @@ namespace Blogifier.Core.Data.Domain
     {
         Profile = 0,
         Post = 1,
-        Asset = 2
+        Asset = 2,
+        Application = 3
     }
 }

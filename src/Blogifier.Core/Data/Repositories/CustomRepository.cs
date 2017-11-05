@@ -41,17 +41,13 @@ namespace Blogifier.Core.Data.Repositories
 
         public Task SetCustomField(CustomType customType, int parentId, string key, string value)
         {
-            var dbFields = _db.CustomFields.Where(f => f.CustomType == customType && f.ParentId == parentId).OrderBy(f => f.Title);
-            if (dbFields != null && dbFields.Count() > 0)
+            var dbField = _db.CustomFields
+                .Where(f => f.CustomType == customType && f.ParentId == parentId && f.CustomKey == key)
+                .FirstOrDefault();
+
+            if (dbField != null)
             {
-                foreach (var field in dbFields)
-                {
-                    if (field.CustomKey == key)
-                    {
-                        field.CustomValue = value;
-                        break;
-                    }
-                }
+                dbField.CustomValue = value;
             }
             else
             {
