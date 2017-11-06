@@ -246,4 +246,4 @@ tools/
 *.ps1
 
 # SQLite files
-*.db
+samples/**/Data/*.db
