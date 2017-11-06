@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using System.Linq;
 using System.Reflection;
 
 namespace Blogifier.Core.Common
