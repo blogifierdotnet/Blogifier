@@ -7,13 +7,12 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
@@ -38,11 +37,13 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [HttpGet]
-        public IActionResult Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
+        public async Task<IActionResult> Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
 		{
             var pager = new Pager(page);
             var profile = GetProfile();
             var model = new AdminPostsModel { Profile = profile };
+
+            model.CustomFields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
 
             if (model.Profile.IsAdmin)
                 model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
@@ -67,7 +68,7 @@ namespace Blogifier.Core.Controllers
                     }
                 }
             }
-            model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager).Result;
+            model.BlogPosts = await _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager);
             model.Pager = pager;
 
             var anyPost = _db.BlogPosts.Find(p => p.ProfileId == userProfile.Id).FirstOrDefault();

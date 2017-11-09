@@ -21,6 +21,7 @@ namespace Blogifier.Core.Data.Models
 
         public List<SelectListItem> StatusFilter { get; set; }
         public List<SelectListItem> CategoryFilter { get; set; }
+        public Dictionary<string, string> CustomFields { get; set; }
     }
 
     public class AdminEditorModel : AdminBaseModel
@@ -115,5 +116,13 @@ namespace Blogifier.Core.Data.Models
         public string Title { get; set; }
         public string PostId { get; set; }
         public string CategoryId { get; set; }
+    }
+
+    public class CustomFieldItem
+    {
+        [Required]
+        [StringLength(140)]
+        public string CustomKey { get; set; }
+        public string CustomValue { get; set; }
     }
 }

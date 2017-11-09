@@ -36,7 +36,7 @@
     }
     @foreach (var item in Model.BlogPosts)
     {
-        var publishedLbl = item.Published == DateTime.MinValue ? "" : " / " + item.Published.ToString("MMM dd, yyyy");
+        var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : " / " + item.Published.ToString("MMM dd, yyyy");
         var publishedClass = item.Published == DateTime.MinValue ? "item-status-draft" : "item-status-published";
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="item">

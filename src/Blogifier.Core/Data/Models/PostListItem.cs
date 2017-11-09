@@ -12,6 +12,7 @@ namespace Blogifier.Core.Data.Models
         public string Image { get; set; }
         public string Content { get; set; }
         public DateTime Published { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public string AuthorName { get; set; }
         public string AuthorEmail { get; set; }
