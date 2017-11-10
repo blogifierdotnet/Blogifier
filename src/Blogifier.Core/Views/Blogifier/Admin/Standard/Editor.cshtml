@@ -96,7 +96,7 @@
                 tinymce.activeEditor.execCommand('mceInsertContent', false, '<img src="' + data.url + '" />');
             }
             else {
-                var tag = '<a class="download" href="' + data.url + '">' + data.title + ' (' + humanFileSize(data.length) + ')</a>';
+                var tag = '<a class="download" href="' + data.url + '">' + data.title + ' (' + bytesToSize(data.length) + ')</a>';
                 tinymce.activeEditor.execCommand('mceInsertContent', false, tag);
             }
         }
