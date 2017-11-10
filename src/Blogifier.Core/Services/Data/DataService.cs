@@ -102,7 +102,7 @@ namespace Blogifier.Core.Services.Data
         public BlogPostDetailModel GetPostBySlug(string slug, bool pub = false)
         {
             var vm = new BlogPostDetailModel();
-            vm.BlogPost = _db.BlogPosts.SingleIncluded(p => p.Slug == slug && p.Published > DateTime.MinValue).Result;
+            vm.BlogPost = _db.BlogPosts.SingleIncluded(p => p.Slug == slug).Result;
 
             if (vm.BlogPost == null)
                 return null;
