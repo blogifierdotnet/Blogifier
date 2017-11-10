@@ -11,6 +11,7 @@
     {
         user = "0";
     }
+    var referrer = $"{Context.Request.Headers["Referer"]}";
 }
 
 <div class="bf-posts-toolbar">
@@ -31,7 +32,7 @@
     @if (!string.IsNullOrEmpty(searchTerm))
     {
         <li class="item item-search">
-            <a href="~/admin"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
+            <a href="@referrer"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
         </li>
     }
     @foreach (var item in Model.BlogPosts)

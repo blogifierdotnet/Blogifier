@@ -68,7 +68,16 @@ namespace Blogifier.Core.Controllers
                     }
                 }
             }
-            model.BlogPosts = await _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager);
+
+            if (string.IsNullOrEmpty(search))
+            {
+                model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager).Result;
+            }
+            else
+            {
+                model.BlogPosts = _search.Find(pager, search, userProfile.Slug).Result;
+            }
+            
             model.Pager = pager;
 
             var anyPost = _db.BlogPosts.Find(p => p.ProfileId == userProfile.Id).FirstOrDefault();

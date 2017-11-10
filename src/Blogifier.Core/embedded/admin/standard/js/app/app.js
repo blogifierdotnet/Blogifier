@@ -27,14 +27,6 @@ function bytesToSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
 
-//function loading() {
-//    $('#app-spinner').show();
-//}
-
-//function loaded() {
-//    $('#app-spinner').hide();
-//}
-
 // setup page
 $(".bf-setup-form #AuthorName").keyup(function () {
     var authorUrl = $(this).val();
