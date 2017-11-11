@@ -39,8 +39,15 @@ namespace Blogifier.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
 		{
-            var pager = new Pager(page);
             var profile = GetProfile();
+
+            var pageSize = ApplicationSettings.ItemsPerPage;
+            var fields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
+            if (fields.ContainsKey(Constants.PostListSize))
+                pageSize = int.Parse(fields[Constants.PostListSize]);
+
+            var pager = new Pager(page, pageSize);
+            
             var model = new AdminPostsModel { Profile = profile };
 
             model.CustomFields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
@@ -49,7 +56,7 @@ namespace Blogifier.Core.Controllers
                 model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
 
             var userProfile = model.Profile;
-            if (user != "0")
+            if (user != "0" && profile.IsAdmin)
                 userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
 
             model.StatusFilter = GetStatusFilter(status);

@@ -5,5 +5,7 @@
         public const string Blogifier = "Blogifier";
         public const string ProfileNotFound = "Profile not found";
         public const string ItemSaved = "Item saved";
+
+        public const string PostListSize = "PostListSize";
     }
 }
