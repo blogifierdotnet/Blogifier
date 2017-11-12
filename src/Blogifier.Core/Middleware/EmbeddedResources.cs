@@ -2,15 +2,12 @@
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Middleware
@@ -35,7 +32,6 @@ namespace Blogifier.Core.Middleware
                     var path = name.ReplaceIgnoreCase("Blogifier.Core", "").ToLower();
                     var resource = GetResource(name, assembly);
 					_resources.Add(path, resource);
-                    _logger.LogInformation("EMBEDDED: " + path);
 				}
 			}
 		}

@@ -58,9 +58,26 @@ namespace Blogifier.Core
 
             ApplicationSettings.WebRootPath = env.WebRootPath;
 			ApplicationSettings.ContentRootPath = env.ContentRootPath;
+
+            if (!ApplicationSettings.UseInMemoryDatabase && ApplicationSettings.InitializeDatabase)
+            {
+                try
+                {
+                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                    {
+                        var db = scope.ServiceProvider.GetService<BlogifierDbContext>().Database;
+                        db.EnsureCreated();
+                        if (db.GetPendingMigrations() != null)
+                        {
+                            db.Migrate();
+                        }
+                    }
+                }
+                catch { }
+            }
         }
 
-		static void AddDatabase(IServiceCollection services)
+        static void AddDatabase(IServiceCollection services)
 		{
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<BlogifierDbContext>(ApplicationSettings.DatabaseOptions);
@@ -108,6 +125,9 @@ namespace Blogifier.Core
 
                         if (section["UseInMemoryDatabase"] != null)
                             ApplicationSettings.UseInMemoryDatabase = section.GetValue<bool>("UseInMemoryDatabase");
+
+                        if (section["InitializeDatabase"] != null)
+                            ApplicationSettings.InitializeDatabase = section.GetValue<bool>("InitializeDatabase");
 
                         if (section["ConnectionString"] != null)
                             ApplicationSettings.ConnectionString = section.GetValue<string>("ConnectionString");
