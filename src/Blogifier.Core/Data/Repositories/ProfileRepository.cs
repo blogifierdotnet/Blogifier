@@ -26,7 +26,7 @@ namespace Blogifier.Core.Data.Repositories
 
             pager.Configure(all.Count());
 
-            var posts = all.Skip(skip).Take(pager.ItemsPerPage).ToList();
+            var posts = all.Skip(skip).Take(pager.ItemsPerPage).OrderByDescending(p => p.LastUpdated).ToList();
 
             return posts.Select(p => new ProfileListItem
             {

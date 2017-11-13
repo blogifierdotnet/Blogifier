@@ -82,9 +82,9 @@ namespace Blogifier.Core.Data.Repositories
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var posts = _db.BlogPosts.Include(p => p.PostCategories).Where(p => p.Profile.Slug == blog);
+            var posts = _db.BlogPosts.Where(p => p.Profile.Slug == blog);
 
-            if(status == "P")
+            if (status == "P")
                 posts = posts.Where(p => p.Published > DateTime.MinValue);
 
             if(status == "D")
