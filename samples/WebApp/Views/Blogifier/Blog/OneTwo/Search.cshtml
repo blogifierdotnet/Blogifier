@@ -1,4 +1,5 @@
 ﻿@using Blogifier.Core.Data.Models
+@using Blogifier.Core.Common
 @model BlogPostsModel
 @{
     var term = ViewBag.Term;
@@ -12,6 +13,6 @@
             <p class="page-cover-desc">Search Results:</p>
         </div>
     </header>
-    @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Post.cshtml", Model.Posts)
-    @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Pager.cshtml", Model.Pager)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneTwo/_Shared/_Post.cshtml", Model.Posts)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneTwo/_Shared/_Pager.cshtml", Model.Pager)
 </main>

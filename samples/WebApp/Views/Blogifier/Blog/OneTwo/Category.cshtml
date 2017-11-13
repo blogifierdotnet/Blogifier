@@ -21,6 +21,6 @@
             <p class="page-cover-desc">Category</p>
         </div>
     </header>
-    @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Post.cshtml", Model.Posts)
-    @Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Pager.cshtml", Model.Pager)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneTwo/_Shared/_Post.cshtml", Model.Posts)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneTwo/_Shared/_Pager.cshtml", Model.Pager)
 </main>

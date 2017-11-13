@@ -36,6 +36,6 @@
     </div>
 </header>
 <main class="page-author">
-    @Html.Partial("~/Views/Blogifier/Blog/Standard/_Shared/_Post.cshtml", Model.Posts)
-    @Html.Partial("~/Views/Blogifier/Blog/Standard/_Shared/_Pager.cshtml", Model.Pager)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Post.cshtml", Model.Posts)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Pager.cshtml", Model.Pager)
 </main>

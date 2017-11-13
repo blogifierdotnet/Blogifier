@@ -30,7 +30,7 @@
                             </a>
                             <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
                             @if (item.PostCategories != null && item.PostCategories.Count > 0)
-                        {
+                            {
                                 <span class="post-meta-category">
                                     in
                                     @foreach (var cat in item.PostCategories)
@@ -51,4 +51,4 @@
     }
 }
 
-@Html.Partial("~/Views/Blogifier/Blog/OneTwo/_Shared/_Pager.cshtml", Model.Pager)
+@Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneTwo/_Shared/_Pager.cshtml", Model.Pager)

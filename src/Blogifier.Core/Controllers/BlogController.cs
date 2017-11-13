@@ -11,7 +11,6 @@ namespace Blogifier.Core.Controllers
         IRssService _rss;
         IDataService _ds;
         private readonly ILogger _logger;
-        private readonly string _themePattern = "~/Views/Blogifier/Blog/{0}/";
         private readonly string _theme;
 
 		public BlogController(IRssService rss, IDataService ds, ILogger<BlogController> logger)
@@ -19,7 +18,7 @@ namespace Blogifier.Core.Controllers
             _rss = rss;
             _ds = ds;
             _logger = logger;
-			_theme = string.Format(_themePattern, ApplicationSettings.BlogTheme);
+            _theme = $"~/{ApplicationSettings.BlogThemesFolder}/{ApplicationSettings.BlogTheme}/";
         }
 
         public IActionResult Index(int page = 1)
@@ -38,7 +37,7 @@ namespace Blogifier.Core.Controllers
             if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Author.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + model.Profile.BlogTheme + "/Author.cshtml", model);
         }
 
         [Route("category/{cat}")]
@@ -48,7 +47,7 @@ namespace Blogifier.Core.Controllers
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View("~/Views/Blogifier/Blog/" + ApplicationSettings.AdminTheme + "/Category.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + ApplicationSettings.AdminTheme + "/Category.cshtml", model);
         }
 
         [Route("{slug:author}/{cat}")]
@@ -58,7 +57,7 @@ namespace Blogifier.Core.Controllers
             if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Category.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + model.Profile.BlogTheme + "/Category.cshtml", model);
         }
 
         [Route("{slug}")]
@@ -68,7 +67,7 @@ namespace Blogifier.Core.Controllers
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View("~/Views/Blogifier/Blog/" + model.Profile.BlogTheme + "/Single.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + model.Profile.BlogTheme + "/Single.cshtml", model);
         }
 
         [Route("search/{term}")]

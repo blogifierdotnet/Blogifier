@@ -138,6 +138,9 @@ namespace Blogifier.Core
                         if (section["BlogStorageFolder"] != null)
                             ApplicationSettings.BlogStorageFolder = section.GetValue<string>("BlogStorageFolder");
 
+                        if (section["BlogThemesFolder"] != null)
+                            ApplicationSettings.BlogThemesFolder = section.GetValue<string>("BlogThemesFolder");
+
                         if (section["SupportedStorageFiles"] != null)
                             ApplicationSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
 
