@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using System;
+using System.IO;
 using System.Reflection;
 
 namespace Blogifier.Core
@@ -85,23 +87,29 @@ namespace Blogifier.Core
 
 		static void AddFileProviders(IServiceCollection services)
 		{
-			var assemblyName = "Blogifier.Core";
+            try
+            {
+                services.Configure<RazorViewEngineOptions>(options =>
+                {
+                    foreach (string dll in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.TopDirectoryOnly))
+                    {
+                        try
+                        {
+                            var assembly = Assembly.LoadFile(dll);
+                            var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
 
-			try
-			{
-				var assembly = Assembly.Load(new AssemblyName(assemblyName));
-
-				services.Configure<RazorViewEngineOptions>(options =>
-				{
-                    // in some environments provider order matters
-                    if(ApplicationSettings.PrependFileProvider)
-					    options.FileProviders.Insert(0, new EmbeddedFileProvider(assembly, assemblyName));
-                    else
-					    options.FileProviders.Add(new EmbeddedFileProvider(assembly, assemblyName));
-				});
-			}
-			catch { }
-		}
+                            if (!string.IsNullOrEmpty(product) && product.StartsWith("Blogifier"))
+                            {
+                                options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
+                            }
+                        }
+                        catch (FileLoadException) { }
+                        catch (BadImageFormatException) { }
+                    }
+                });
+            }
+            catch { }
+        }
 
         static void LoadFromConfigFile(IConfiguration config)
         {
