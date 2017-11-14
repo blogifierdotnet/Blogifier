@@ -1,6 +1,7 @@
-﻿@model Blogifier.Core.Data.Models.SettingsProfile
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.SettingsProfile
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
     if (!Model.CustomFields.ContainsKey("Google")) { Model.CustomFields.Add("Google", ""); }
     if (!Model.CustomFields.ContainsKey("Twitter")) { Model.CustomFields.Add("Twitter", ""); }
     if (!Model.CustomFields.ContainsKey("Github")) { Model.CustomFields.Add("Github", ""); }
@@ -51,7 +52,7 @@
         <button type="submit" class="btn btn-primary btn-main">Save</button>
     </form>
 </div>
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FileManager.cshtml")
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {

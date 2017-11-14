@@ -32,7 +32,7 @@ namespace Blogifier.Core.Controllers
 			_rss = rss;
             _search = search;
             _logger = logger;
-			_theme = "~/Views/Blogifier/Admin/" + ApplicationSettings.AdminTheme + "/";
+			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
 		}
 
         [VerifyProfile]

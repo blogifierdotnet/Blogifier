@@ -2,7 +2,7 @@
 @using Blogifier.Core.Common
 @using Blogifier.Core.Extensions
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
 <div class="bf-settings bf-settings-about">
     <table class="table">
@@ -47,10 +47,6 @@
             <tr>
                 <td>SupportedStorageFiles</td>
                 <td>@ApplicationSettings.SupportedStorageFiles</td>
-            </tr>
-            <tr>
-                <td>AdminTheme</td>
-                <td>@ApplicationSettings.AdminTheme</td>
             </tr>
             <tr>
                 <td>BlogTheme</td>

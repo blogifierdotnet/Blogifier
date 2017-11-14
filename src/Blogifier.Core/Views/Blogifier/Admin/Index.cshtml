@@ -86,7 +86,7 @@
     </ul>
 }
 
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FileManager.cshtml")
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
 @section Scripts{
     <script src="~/embedded/admin/standard/js/lib/scrollbar.min.js"></script>
 

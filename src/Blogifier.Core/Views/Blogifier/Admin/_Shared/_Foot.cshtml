@@ -1,9 +1,8 @@
-    @using Blogifier.Core.Common
-
+@using Blogifier.Core.Common
 @{
     var themeFolder = "embedded/admin/standard";
 }
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_about.cshtml")
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_about.cshtml")
 <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
 <script src="~/@themeFolder/js/lib/jquery.min.js"></script>
 <script src="~/@themeFolder/js/lib/toastr.min.js"></script>

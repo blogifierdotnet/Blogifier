@@ -2,7 +2,7 @@
 @using Blogifier.Core.Common
 @using Blogifier.Core.Extensions
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
 <div class="bf-settings bf-settings-personal">
     <form method="post" asp-controller="Settings" asp-action="AppSettings" asp-antiforgery="true">
@@ -64,7 +64,7 @@
         <button type="submit" class="btn btn-primary btn-main">Save</button>
     </form>
 </div>
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_FileManager.cshtml")
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
 @section Scripts{
     @if (!string.IsNullOrEmpty(ViewBag.Message))
     {

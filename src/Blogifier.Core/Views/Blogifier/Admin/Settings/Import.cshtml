@@ -1,6 +1,7 @@
-﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.AdminBaseModel
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
 <div class="bf-settings bf-settings-import">
     <form id="frmImport" name="frmImport">

@@ -1,7 +1,7 @@
 @model Blogifier.Core.Data.Models.AdminSetupModel
 @using Blogifier.Core.Common
 @{
-    Layout = "~/Views/Blogifier/Admin/Standard/_Layout/_Setup.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Setup.cshtml";
 }
 <div class="bf-setup-logo"></div>
 <form class="bf-setup-form" method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true">

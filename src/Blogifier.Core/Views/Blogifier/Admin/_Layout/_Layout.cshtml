@@ -1,19 +1,19 @@
 ﻿@using Blogifier.Core.Common
 <!DOCTYPE html>
 <html lang="en">
-@Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_Head.cshtml")
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Head.cshtml")
 <body>
     <div class="bf">
         <div class="bf-sidebar d-flex flex-column">
-            @Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_Nav.cshtml")
-            @Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_Sidebar.cshtml")
+            @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Nav.cshtml")
+            @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Sidebar.cshtml")
             <a class="bf-sidebar-logo mt-auto" href="#" data-toggle="modal" data-target="#aboutBlogifier" title="Blogifier @Blogifier.Core.Common.ApplicationSettings.Version"><img src="/embedded/lib/img/logo.png" alt="Blogifier" /></a>
         </div>
         <div class="bf-content">
             @RenderBody()
         </div>
     </div>
-    @Html.Partial("~/Views/Blogifier/Admin/Standard/_Shared/_Foot.cshtml")
+    @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Foot.cshtml")
     @RenderSection("Scripts", false)
 </body>
 </html>

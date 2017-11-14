@@ -25,8 +25,7 @@ namespace Blogifier.Core.Controllers
 		{
 			_db = db;
             _logger = logger;
-            _theme = string.Format("~/Views/Blogifier/Admin/{0}/Settings/", 
-                ApplicationSettings.AdminTheme);
+            _theme = $"~/{ApplicationSettings.BlogAdminFolder}/Settings/";
         }
 
         [VerifyProfile]
