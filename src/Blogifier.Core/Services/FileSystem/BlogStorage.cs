@@ -12,11 +12,6 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.FileSystem
 {
-    public enum ThemeType
-	{
-		Blog, Admin
-	}
-
     public class BlogStorage : IBlogStorage
     {
         string _blogSlug;
@@ -53,7 +48,7 @@ namespace Blogifier.Core.Services.FileSystem
             }
         }
 
-        public IList<SelectListItem> GetThemes(ThemeType themeType)
+        public IList<SelectListItem> GetThemes()
         {
             var themes = new List<SelectListItem>();
             themes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
@@ -61,11 +56,7 @@ namespace Blogifier.Core.Services.FileSystem
             var path = ApplicationSettings.ContentRootPath == null ?
                 GetAppRoot() : ApplicationSettings.ContentRootPath;
 
-            path = Path.Combine(path, "Views");
-            path = Path.Combine(path, "Blogifier");
-
-			var themeFolder = themeType == ThemeType.Admin ? "Admin" : "Blog";
-			path = Path.Combine(path, themeFolder);
+            path = Path.Combine(path, ApplicationSettings.BlogThemesFolder.Replace("/", "\\"));
 
             if (Directory.Exists(path))
             {

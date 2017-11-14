@@ -14,7 +14,7 @@ namespace Blogifier.Core.Services.FileSystem
         void DeleteFile(string path);
         void DeleteFolder(string path);
         IList<string> GetAssets(string path);
-        IList<SelectListItem> GetThemes(ThemeType themeType);
+        IList<SelectListItem> GetThemes();
         Task<Asset> UploadFormFile(IFormFile file, string root, string path = "");
         Task<Asset> UploadBase64Image(string baseImg, string root, string path = "");
         Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "");

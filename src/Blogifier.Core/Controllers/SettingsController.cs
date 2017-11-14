@@ -178,7 +178,7 @@ namespace Blogifier.Core.Controllers
             var model = new SettingsPersonal
             {
                 Profile = profile,
-                BlogThemes = storage.GetThemes(ThemeType.Blog)
+                BlogThemes = storage.GetThemes()
             };
             if (profile != null)
             {
@@ -196,7 +196,7 @@ namespace Blogifier.Core.Controllers
         public IActionResult Personal(SettingsPersonal model)
         {
             var storage = new BlogStorage("");
-            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
+            model.BlogThemes = storage.GetThemes();
             model.Profile = GetProfile();
 
             if (ModelState.IsValid)
@@ -237,7 +237,7 @@ namespace Blogifier.Core.Controllers
             var model = new SettingsApplication
             {
                 Profile = profile,
-                BlogThemes = storage.GetThemes(ThemeType.Blog),
+                BlogThemes = storage.GetThemes(),
                 Title = ApplicationSettings.Title,
                 Description = ApplicationSettings.Description,
                 BlogTheme = ApplicationSettings.BlogTheme,
@@ -255,7 +255,7 @@ namespace Blogifier.Core.Controllers
         public IActionResult AppSettings(SettingsApplication model)
         {
             var storage = new BlogStorage("");
-            model.BlogThemes = storage.GetThemes(ThemeType.Blog);
+            model.BlogThemes = storage.GetThemes();
             model.Profile = GetProfile();
 
             if (ModelState.IsValid)
