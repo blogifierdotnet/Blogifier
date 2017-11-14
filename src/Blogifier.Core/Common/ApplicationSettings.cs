@@ -29,7 +29,6 @@ namespace Blogifier.Core.Common
         public static string Description { get; set; } = "Short description of the blog";
         public static int ItemsPerPage { get; set; } = 10;
 
-        public static string AdminTheme { get; set; } = "Standard";
         public static string BlogTheme { get; set; } = "Standard";
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
         public static string ProfileLogo { get; set; } = "/embedded/lib/img/logo.png";

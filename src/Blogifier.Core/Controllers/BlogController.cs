@@ -47,7 +47,7 @@ namespace Blogifier.Core.Controllers
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + ApplicationSettings.AdminTheme + "/Category.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + ApplicationSettings.BlogTheme + "/Category.cshtml", model);
         }
 
         [Route("{slug:author}/{cat}")]
