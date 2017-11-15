@@ -11,21 +11,18 @@ namespace Blogifier.Core.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Bio",
                 table: "Profiles",
-                type: "nvarchar(4000)",
                 maxLength: 4000,
                 nullable: true);
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsFeatured",
                 table: "BlogPosts",
-                type: "bit",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<float>(
                 name: "Rating",
                 table: "BlogPosts",
-                type: "real",
                 nullable: false,
                 defaultValue: 0f);
         }
