@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -24,7 +25,7 @@ namespace Blogifier.Core
 {
     public class Configuration
     {
-		public static void InitServices(IServiceCollection services, System.Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
+		public static void InitServices(IServiceCollection services, Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
 		{   
             if(config != null)
             {
@@ -79,6 +80,31 @@ namespace Blogifier.Core
             }
         }
 
+        public static IEnumerable<Assembly> GetAssemblies()
+        {
+            var assemblies = new List<Assembly>();
+            try
+            {
+                foreach (string dll in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.TopDirectoryOnly))
+                {
+                    try
+                    {
+                        var assembly = Assembly.LoadFile(dll);
+                        var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
+
+                        if (!string.IsNullOrEmpty(product) && product.StartsWith("Blogifier"))
+                        {
+                            assemblies.Add(assembly);
+                        }
+                    }
+                    catch (FileLoadException) { }
+                    catch (BadImageFormatException) { }
+                }
+            }
+            catch { }
+            return assemblies;
+        }
+
         static void AddDatabase(IServiceCollection services)
 		{
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -91,20 +117,9 @@ namespace Blogifier.Core
             {
                 services.Configure<RazorViewEngineOptions>(options =>
                 {
-                    foreach (string dll in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.TopDirectoryOnly))
+                    foreach (var assembly in GetAssemblies())
                     {
-                        try
-                        {
-                            var assembly = Assembly.LoadFile(dll);
-                            var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
-
-                            if (!string.IsNullOrEmpty(product) && product.StartsWith("Blogifier"))
-                            {
-                                options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
-                            }
-                        }
-                        catch (FileLoadException) { }
-                        catch (BadImageFormatException) { }
+                        options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
                     }
                 });
             }

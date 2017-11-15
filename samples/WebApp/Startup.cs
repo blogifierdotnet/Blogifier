@@ -11,6 +11,7 @@ using Serilog;
 using Serilog.Events;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace WebApp
 {
@@ -49,8 +50,14 @@ namespace WebApp
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc()
+                .ConfigureApplicationPartManager(p =>
+                {
+                    foreach (var assembly in Blogifier.Core.Configuration.GetAssemblies())
+                    {
+                        p.ApplicationParts.Add(new AssemblyPart(assembly));
+                    }
+                })
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
 
             services.AddCors(
                 o => o.AddPolicy("Blogifier", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
