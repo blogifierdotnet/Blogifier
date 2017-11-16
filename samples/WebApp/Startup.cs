@@ -54,7 +54,10 @@ namespace WebApp
                 {
                     foreach (var assembly in Blogifier.Core.Configuration.GetAssemblies())
                     {
-                        p.ApplicationParts.Add(new AssemblyPart(assembly));
+                        if (assembly.GetName().Name != "Blogifier.Core")
+                        {
+                            p.ApplicationParts.Add(new AssemblyPart(assembly));
+                        }
                     }
                 })
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

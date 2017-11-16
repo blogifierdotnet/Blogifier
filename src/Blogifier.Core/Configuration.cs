@@ -34,7 +34,8 @@ namespace Blogifier.Core
             services.AddTransient<IRssService, RssService>();
 			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<IDataService, DataService>();           
+            services.AddTransient<IDataService, DataService>();  
+            services.AddTransient<IComponentHelper, ComponentHelper>();
 
             // add blog route from ApplicationSettings
             services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>

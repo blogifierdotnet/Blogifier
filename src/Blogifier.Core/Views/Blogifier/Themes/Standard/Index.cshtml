@@ -1,6 +1,7 @@
 ﻿@using Blogifier.Core.Common
 @using Blogifier.Core.Data.Models
 @model BlogPostsModel
+@inject IComponentHelper helper
 <section class="blog-cover" style="background-image: url('@Model.CoverImg')">
     <div class="container">
         <h1 class="cover-title">@ApplicationSettings.Title</h1>
@@ -9,3 +10,7 @@
 </section>
 @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Post.cshtml", Model.Posts)
 @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Pager.cshtml", Model.Pager)
+
+<section class="container">
+    @await helper.InvokeAsync(Component, "Simple")
+</section>
