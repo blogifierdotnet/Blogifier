@@ -10,7 +10,3 @@
 </section>
 @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Post.cshtml", Model.Posts)
 @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Pager.cshtml", Model.Pager)
-
-<section class="container">
-    @await helper.InvokeAsync(Component, "Simple")
-</section>

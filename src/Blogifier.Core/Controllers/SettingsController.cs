@@ -276,6 +276,8 @@ namespace Blogifier.Core.Controllers
                 ApplicationSettings.PostImage = model.PostImage;
 
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, "BlogTheme", model.BlogTheme);
+
+                model.Profile.BlogTheme = model.BlogTheme;
                 ApplicationSettings.BlogTheme = model.BlogTheme;
 
                 _db.Complete();
