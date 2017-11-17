@@ -184,6 +184,42 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Setup.cshtml", model);
         }
 
+        [VerifyProfile]
+        [HttpGet]
+        [Route("packages/{packageType}")]
+        public IActionResult Packages(string packageType = "Widgets", string id = "")
+        {
+            var type = packageType.ToLower();
+            var page = "Widgets";
+
+            var model = new AdminPackagesModel { Profile = GetProfile() };
+            model.Packages = new List<PackageListItem>();
+
+            if(type == "widgets")
+            {
+                foreach (var assembly in Configuration.GetAssemblies())
+                {
+                    if (assembly.GetName().Name != "Blogifier.Core")
+                    {
+                        var item = new PackageListItem
+                        {
+                            Title = assembly.GetName().Name,
+                            Downloads = 5,
+                            Rating = 4.7
+                        };
+                        model.Packages.Add(item);
+                    }
+                }
+            }
+            
+            if(type == "themes")
+            {
+                page = "Themes";
+            }            
+
+            return View($"{_theme}Packages/{page}.cshtml", model);
+        }
+
         private Profile GetProfile()
         {
             return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
