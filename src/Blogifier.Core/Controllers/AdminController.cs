@@ -9,6 +9,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +23,18 @@ namespace Blogifier.Core.Controllers
 	{
 		private readonly string _theme;
         private readonly ILogger _logger;
+        private readonly ICompositeViewEngine _engine;
         IUnitOfWork _db;
 		IRssService _rss;
         ISearchService _search;
 
-		public AdminController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger)
+		public AdminController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger, ICompositeViewEngine engine)
 		{
 			_db = db;
 			_rss = rss;
             _search = search;
             _logger = logger;
+            _engine = engine;
 			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
 		}
 
@@ -189,35 +192,53 @@ namespace Blogifier.Core.Controllers
         [Route("packages/{packageType}")]
         public IActionResult Packages(string packageType = "Widgets", string id = "")
         {
-            var type = packageType.ToLower();
-            var page = "Widgets";
-
-            var model = new AdminPackagesModel { Profile = GetProfile() };
-            model.Packages = new List<PackageListItem>();
-
-            if(type == "widgets")
+            if (!string.IsNullOrEmpty(id))
             {
-                foreach (var assembly in Configuration.GetAssemblies())
+                var smodel = new AdminBaseModel { Profile = GetProfile() };
+
+                var path = $"~/Views/Shared/Components/{id}/Settings.cshtml";
+                var result = _engine.GetView("", path, false);
+                if (result.Success)
                 {
-                    if (assembly.GetName().Name != "Blogifier.Core")
-                    {
-                        var item = new PackageListItem
-                        {
-                            Title = assembly.GetName().Name,
-                            Downloads = 5,
-                            Rating = 4.7
-                        };
-                        model.Packages.Add(item);
-                    }
+                    return View(path, smodel);
+                }
+                else
+                {
+                    return View($"~/{ApplicationSettings.BlogAdminFolder}/Packages/Settings.cshtml", smodel);
                 }
             }
-            
-            if(type == "themes")
+            else
             {
-                page = "Themes";
-            }            
+                var type = packageType.ToLower();
+                var page = "Widgets";
 
-            return View($"{_theme}Packages/{page}.cshtml", model);
+                var model = new AdminPackagesModel { Profile = GetProfile() };
+                model.Packages = new List<PackageListItem>();
+
+                if (type == "widgets")
+                {
+                    foreach (var assembly in Configuration.GetAssemblies())
+                    {
+                        if (assembly.GetName().Name != "Blogifier.Core")
+                        {
+                            var item = new PackageListItem
+                            {
+                                Title = assembly.GetName().Name,
+                                Downloads = 5,
+                                Rating = 4.7
+                            };
+                            model.Packages.Add(item);
+                        }
+                    }
+                }
+
+                if (type == "themes")
+                {
+                    page = "Themes";
+                }
+
+                return View($"{_theme}Packages/{page}.cshtml", model);
+            }
         }
 
         private Profile GetProfile()
