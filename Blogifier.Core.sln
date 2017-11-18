@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "samples\WebApp\We
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Widgets", "Widgets", "{9938873B-64F2-4C6A-829C-0743BEFD5CA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogifier.Widgets.Newsletter", "src\Blogifier.Widgets.Newsletter\Blogifier.Widgets.Newsletter.csproj", "{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newsletter", "src\Newsletter\Newsletter.csproj", "{55299DF4-E5A0-4520-92C9-7FB785254D47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,16 +37,16 @@ Global
 		{0A0D2EA6-7BFC-4BDF-89CB-557E34CE6316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A0D2EA6-7BFC-4BDF-89CB-557E34CE6316}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A0D2EA6-7BFC-4BDF-89CB-557E34CE6316}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55299DF4-E5A0-4520-92C9-7FB785254D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55299DF4-E5A0-4520-92C9-7FB785254D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55299DF4-E5A0-4520-92C9-7FB785254D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55299DF4-E5A0-4520-92C9-7FB785254D47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{ED996A86-A66F-4F6D-A2A2-F39579D0A0CF} = {9938873B-64F2-4C6A-829C-0743BEFD5CA9}
+		{55299DF4-E5A0-4520-92C9-7FB785254D47} = {9938873B-64F2-4C6A-829C-0743BEFD5CA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A817A159-9B0A-47D5-B9A4-A4C6CDB9899A}
