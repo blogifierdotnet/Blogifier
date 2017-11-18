@@ -2,6 +2,7 @@
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Newsletter
@@ -24,8 +25,12 @@ namespace Newsletter
 
             if (field != null)
             {
-                field.CustomValue = field.CustomValue + "," + item.CustomValue;
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, item.CustomValue);
+                var emails = field.CustomValue.Split(',').ToList();
+                if (!emails.Contains(item.CustomValue))
+                {
+                    var newVal = field.CustomValue + "," + item.CustomValue;
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, newVal);
+                }               
             }
             else
             {
