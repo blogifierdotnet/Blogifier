@@ -58,12 +58,6 @@ namespace Blogifier.Core.Data.Models
         public Pager Pager { get; set; }
     }
 
-    public class AdminPackagesModel : AdminBaseModel
-    {
-        public IList<PackageListItem> Packages { get; set; }
-        public Pager Pager { get; set; }
-    }
-
     public class RssImportModel
     {
         public int ProfileId { get; set; }
@@ -124,26 +118,11 @@ namespace Blogifier.Core.Data.Models
         public string CategoryId { get; set; }
     }
 
-    public class AdminSettingsModel : AdminBaseModel
-    {
-        public dynamic Settings { get; set; }
-    }
-
     public class CustomFieldItem
     {
         [Required]
         [StringLength(140)]
         public string CustomKey { get; set; }
         public string CustomValue { get; set; }
-    }
-
-    public class PackageListItem
-    {
-        [Required]
-        public string Title { get; set; }
-        public bool HasSettings { get; set; }
-        public int Downloads { get; set; }
-        public double Rating { get; set; }
-        public string Image { get; set; }
     }
 }

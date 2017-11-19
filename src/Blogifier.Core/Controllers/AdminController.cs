@@ -11,8 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -202,7 +204,7 @@ namespace Blogifier.Core.Controllers
                 foreach (var assembly in Configuration.GetAssemblies())
                 {
                     var name = assembly.GetName().Name;
-
+                    
                     if (name != "Blogifier.Core")
                     {
                         var path = $"~/Views/Shared/Components/{name}/Settings.cshtml";
@@ -210,11 +212,24 @@ namespace Blogifier.Core.Controllers
 
                         var item = new PackageListItem
                         {
-                            Title = assembly.GetName().Name,
-                            HasSettings = view.Success,
-                            Downloads = 5,
-                            Rating = 4.7
+                            Title = name,
+                            Description = name,
+                            Version = assembly.GetName().Version.ToString()
                         };
+
+                        try
+                        {
+                            Type t = assembly.GetType("PackageInfo");
+                            if (t != null)
+                            {
+                                var info = (IPackageInfo)Activator.CreateInstance(t);
+                                item = info.GetAttributes();
+                            }
+                        }
+                        catch { }
+
+                        item.Description = item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description;
+                        item.HasSettings = view.Success;
                         model.Packages.Add(item);
                     }
                 }
