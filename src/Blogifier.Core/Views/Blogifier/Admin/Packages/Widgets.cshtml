@@ -4,7 +4,18 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
 <div class="bf-posts-toolbar">
-    <form class="bf-posts-search float-right" action="~/admin" method="get">
+    <label class="custom-control custom-checkbox float-left">
+        <input class="custom-control-input item-checkbox" type="checkbox" name="selectAll">
+        <span class="item-control custom-control-indicator"></span>
+    </label>
+    <div class="btn-group dropup float-left">
+        <button type="button" onclick="alert('not implemented'); return false;" class="btn btn-sm btn-primary">Disable</button>
+        <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <ul class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; transform: translate3d(137px, -2px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <li><a class="dropdown-item" href="#" onclick="alert('not implemented'); return false;">Uninstall</a></li>
+        </ul>
+    </div>
+    <form class="bf-posts-search float-right">
         <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
         <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
     </form>
@@ -12,25 +23,25 @@
 <ul class="bf-posts-list" aria-label="posts">
     @foreach (var item in Model.Packages)
     {
-        <li class="item">
-            <label class="item-select custom-control custom-checkbox">
-                <input type="checkbox" id="aaa" class="item-checkbox custom-control-input" />
-                <span class="item-control custom-control-indicator"></span>
-            </label>
-            @if (item.HasSettings)
-            {
+        @if (item.HasSettings)
+        {
+            <li class="item">
+                <label class="item-select custom-control custom-checkbox">
+                    <input type="checkbox" id="aaa" class="item-checkbox custom-control-input" />
+                    <span class="item-control custom-control-indicator"></span>
+                </label>
                 <a class="item-link item-link-mobile" href="~/admin/packages/widgets/@item.Title">@item.Title</a>
-            }
-            else
-            {
-                <a class="item-link item-link-mobile" href="#">@item.Title</a>
-            }
-            
-            <div class="item-info">
-                <span class="item-info-views" aria-label="Views">@item.Downloads downloads</span>
-            </div>
-            <span class="item-status"><i class="fa fa-circle"></i></span>
-            <a class="item-show" href="~/@ApplicationSettings.BlogRoute" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
-        </li>
+            </li>
+        }
+        else
+        {
+            <li class="item item-empty">
+                <label class="item-select custom-control custom-checkbox">
+                    <input type="checkbox" id="aaa" class="item-checkbox custom-control-input" />
+                    <span class="item-control custom-control-indicator"></span>
+                </label>
+                @item.Title
+            </li>
+        }
     }
 </ul>

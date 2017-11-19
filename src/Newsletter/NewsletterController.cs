@@ -24,23 +24,16 @@ namespace Newsletter
         public IActionResult Settings()
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
-            var emails = Emails();
 
-            //if (emails == null)
-            //    emails = new List<string>();
+            dynamic settings = new
+            {
+                Emails = Emails(),
+                Pager = new Pager(1)
+            };
 
-            //var settings = new NewsletterSettingsModel { Emails = Emails(), Pager = new Pager(1) };
-
-            var model = new AdminSettingsModel { Profile = profile, Settings = emails };
+            var model = new AdminSettingsModel { Profile = profile, Settings = settings };
 
             return View("~/Views/Shared/Components/Newsletter/Settings.cshtml", model);
-            //return View(
-            //    "~/Views/Shared/Components/Newsletter/Settings.cshtml",
-            //    new AdminBaseModel
-            //    {
-            //        Profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name)
-            //    }
-            //);
         }
 
         [HttpPut("blogifier/api/newsletter/subscribe")]
@@ -67,11 +60,5 @@ namespace Newsletter
             var field = _db.CustomFields.Single(f => f.CustomType == CustomType.Application && f.CustomKey == "NEWSLETTER");
             return field == null || string.IsNullOrEmpty(field.CustomValue) ? null : field.CustomValue.Split(',').ToList();
         }
-    }
-
-    public class NewsletterSettingsModel
-    {
-        public IEnumerable<string> Emails { get; set; }
-        public Pager Pager { get; set; }
     }
 }

@@ -26,6 +26,18 @@ namespace Blogifier.Core.Common
                 : await Task.FromResult(GetContent(name));
         }
 
+        public static object GetValue(dynamic settings, string prop)
+        {
+            try
+            {
+                return settings.GetType().GetProperty(prop).GetValue(settings, null);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private bool Exists(string name)
         {
             return _selector.SelectComponent(name) != null;

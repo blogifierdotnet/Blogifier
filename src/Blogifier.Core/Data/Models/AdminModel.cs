@@ -126,7 +126,7 @@ namespace Blogifier.Core.Data.Models
 
     public class AdminSettingsModel : AdminBaseModel
     {
-        public Object Settings { get; set; }
+        public dynamic Settings { get; set; }
     }
 
     public class CustomFieldItem
