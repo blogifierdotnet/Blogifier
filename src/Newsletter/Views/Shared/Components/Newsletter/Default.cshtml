@@ -1,20 +1,18 @@
-﻿<form id="frmNewsletter" name="frmNewsletter">
-    <section class="container">
-        <h4>Subscribe to our newsletter</h4>
-        <div id="msg-alert" class="alert alert-warning" role="alert" style="display: none">
-            Please enter valid email address.
+﻿<section class="container">
+    <h4>Subscribe to our newsletter</h4>
+    <div id="msg-alert" class="alert alert-warning" role="alert" style="display: none">
+        Please enter valid email address.
+    </div>
+    <div id="frm-newsletter">
+        <div class="input-group">
+            <input id="txtSubscriberEmail" type="email" class="form-control" placeholder="Your email address">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="newsletter.subscribe()">Subscribe!</button>
+            </span>
         </div>
-        <div id="frm-newsletter">
-            <div class="input-group">
-                <input id="txtSubscriberEmail" type="email" class="form-control" placeholder="Your email address">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" onclick="newsletter.subscribe()">Subscribe!</button>
-                </span>
-            </div>
-        </div>
-        <div id="msg-success" class="alert alert-success" role="alert" style="display: none">
-            Thank you!
-        </div>
-    </section>
-</form>
+    </div>
+    <div id="msg-success" class="alert alert-success" role="alert" style="display: none">
+        Thank you!
+    </div>
+</section>
 <script src="~/blogifier/widgets/newsletter/newsletter.js"></script>

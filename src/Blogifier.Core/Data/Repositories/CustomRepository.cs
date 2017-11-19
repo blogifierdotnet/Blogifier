@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Data.Domain;
+﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace Blogifier.Core.Data.Repositories
             if (dbField != null)
             {
                 dbField.CustomValue = value;
+                dbField.LastUpdated = SystemClock.Now();
             }
             else
             {
@@ -57,7 +59,8 @@ namespace Blogifier.Core.Data.Repositories
                     CustomValue = value,
                     Title = key,
                     CustomType = customType,
-                    ParentId = parentId
+                    ParentId = parentId,
+                    LastUpdated = SystemClock.Now()
                 });
             }
             return _db.SaveChangesAsync();

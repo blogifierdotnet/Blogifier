@@ -4,7 +4,8 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
 <div class="bf-posts-toolbar">
-    <a href="~/admin/packages/widgets" class="btn btn-default btn-sm float-left mr-3">Back</a>
+    <form class="bf-posts-search float-right" action="~/admin" method="get">
+        <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
+    </form>
 </div>
-
-<h4>Newsletter settings</h4>

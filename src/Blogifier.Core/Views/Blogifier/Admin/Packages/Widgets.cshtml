@@ -17,7 +17,15 @@
                 <input type="checkbox" id="aaa" class="item-checkbox custom-control-input" />
                 <span class="item-control custom-control-indicator"></span>
             </label>
-            <a class="item-link item-link-mobile" href="~/admin/packages/widgets?id=@item.Title">@item.Title</a>
+            @if (item.HasSettings)
+            {
+                <a class="item-link item-link-mobile" href="~/admin/packages/widgets/@item.Title">@item.Title</a>
+            }
+            else
+            {
+                <a class="item-link item-link-mobile" href="#">@item.Title</a>
+            }
+            
             <div class="item-info">
                 <span class="item-info-views" aria-label="Views">@item.Downloads downloads</span>
             </div>

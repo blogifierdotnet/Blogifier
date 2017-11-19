@@ -136,6 +136,7 @@ namespace Blogifier.Core.Data.Models
     {
         [Required]
         public string Title { get; set; }
+        public bool HasSettings { get; set; }
         public int Downloads { get; set; }
         public double Rating { get; set; }
         public string Image { get; set; }

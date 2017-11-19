@@ -190,55 +190,37 @@ namespace Blogifier.Core.Controllers
         [VerifyProfile]
         [HttpGet]
         [Route("packages/{packageType}")]
-        public IActionResult Packages(string packageType = "Widgets", string id = "")
+        public IActionResult Packages(string packageType = "Widgets")
         {
-            if (!string.IsNullOrEmpty(id))
+            var type = packageType.ToLower();
+            var model = new AdminPackagesModel { Profile = GetProfile() };
+
+            model.Packages = new List<PackageListItem>();
+
+            if (type == "widgets")
             {
-                var smodel = new AdminBaseModel { Profile = GetProfile() };
-
-                var path = $"~/Views/Shared/Components/{id}/Settings.cshtml";
-                var result = _engine.GetView("", path, false);
-                if (result.Success)
+                foreach (var assembly in Configuration.GetAssemblies())
                 {
-                    return View(path, smodel);
-                }
-                else
-                {
-                    return View($"~/{ApplicationSettings.BlogAdminFolder}/Packages/Settings.cshtml", smodel);
-                }
-            }
-            else
-            {
-                var type = packageType.ToLower();
-                var page = "Widgets";
+                    var name = assembly.GetName().Name;
 
-                var model = new AdminPackagesModel { Profile = GetProfile() };
-                model.Packages = new List<PackageListItem>();
-
-                if (type == "widgets")
-                {
-                    foreach (var assembly in Configuration.GetAssemblies())
+                    if (name != "Blogifier.Core")
                     {
-                        if (assembly.GetName().Name != "Blogifier.Core")
+                        var path = $"~/Views/Shared/Components/{name}/Settings.cshtml";
+                        var view = _engine.GetView("", path, false);
+
+                        var item = new PackageListItem
                         {
-                            var item = new PackageListItem
-                            {
-                                Title = assembly.GetName().Name,
-                                Downloads = 5,
-                                Rating = 4.7
-                            };
-                            model.Packages.Add(item);
-                        }
+                            Title = assembly.GetName().Name,
+                            HasSettings = view.Success,
+                            Downloads = 5,
+                            Rating = 4.7
+                        };
+                        model.Packages.Add(item);
                     }
                 }
-
-                if (type == "themes")
-                {
-                    page = "Themes";
-                }
-
-                return View($"{_theme}Packages/{page}.cshtml", model);
             }
+
+            return View($"{_theme}Packages/Widgets.cshtml", model);
         }
 
         private Profile GetProfile()
