@@ -15,7 +15,7 @@ namespace Blogifier.Widgets
 
         public IViewComponentResult Invoke()
         {
-            return View(_db.BlogPosts.All());
+            return View();
         }
     }
 }

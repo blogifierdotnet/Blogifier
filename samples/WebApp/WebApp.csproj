@@ -30,4 +30,8 @@
     </Content>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)src\Newsletter\bin\Debug\netcoreapp2.0\Newsletter.dll&quot; &quot;$(TargetDir)&quot; /Y" />
+  </Target>
+
 </Project>

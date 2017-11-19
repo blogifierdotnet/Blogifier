@@ -4,7 +4,7 @@ var newsletter = function () {
         var email = document.getElementById("txtSubscriberEmail");
 
         if (!isValidEmail(email.value)) {
-            alert("Please provide valid email address.");
+            $('#msg-alert').fadeIn();
             return false;
         }
 
@@ -19,7 +19,9 @@ var newsletter = function () {
             contentType: 'application/json',
             data: JSON.stringify(json),
             success: function (data) {
-                alert('Thank you!');
+                $('#msg-alert').hide();
+                $('#frm-newsletter').fadeOut();
+                $('#msg-success').fadeIn();
             }
         });
 
