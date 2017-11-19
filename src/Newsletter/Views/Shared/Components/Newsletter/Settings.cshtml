@@ -1,7 +1,8 @@
-﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+﻿@model Blogifier.Core.Data.Models.AdminSettingsModel
 @using Blogifier.Core.Common
 @{
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
+    var settings = (List<string>)Model.Settings;
 }
 <div class="bf-posts-toolbar">
     <form class="bf-posts-search float-right" action="~/admin" method="get">
@@ -9,3 +10,15 @@
         <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
     </form>
 </div>
+<ul class="bf-posts-list" aria-label="posts">
+    @foreach (var item in settings)
+    {
+        <li class="item">
+            <label class="item-select custom-control custom-checkbox">
+                <input type="checkbox" id="aaa" class="item-checkbox custom-control-input" />
+                <span class="item-control custom-control-indicator"></span>
+            </label>
+            <a class="item-link item-link-mobile" href="#">@item</a>
+        </li>
+    }
+</ul>

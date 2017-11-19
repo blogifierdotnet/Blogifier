@@ -124,6 +124,11 @@ namespace Blogifier.Core.Data.Models
         public string CategoryId { get; set; }
     }
 
+    public class AdminSettingsModel : AdminBaseModel
+    {
+        public Object Settings { get; set; }
+    }
+
     public class CustomFieldItem
     {
         [Required]
