@@ -19,6 +19,7 @@
 <ul class="bf-posts-list widgets-list" aria-label="widgets">
     @foreach (var item in Model.Packages)
     {
+        var publishedClass = item.Enabled ? "item-status-published" : "item-status-draft";
         @if (item.Enabled)
         {
             <li class="item">
@@ -26,11 +27,8 @@
                     <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input" />
                     <span class="item-control custom-control-indicator"></span>
                 </label>
-                <a class="item-link item-link-mobile" href="#">@item.Description</a>
-                @if (item.HasSettings)
-                {
-                    <a class="item-show" href="~/admin/packages/widgets/@item.Title" role="button"><i class="fa fa-external-link-square"></i></a>
-                }
+                <a class="item-link item-link-mobile" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
+                <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
             </li>
         }
         else
@@ -40,11 +38,8 @@
                     <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input" />
                     <span class="item-control custom-control-indicator"></span>
                 </label>
-                @item.Title <i class="fa fa-ban" aria-hidden="true"></i>
-                @if (item.HasSettings)
-                {
-                    <a class="item-show" href="~/admin/packages/widgets/@item.Title" role="button"><i class="fa fa-external-link-square"></i></a>
-                }
+                @item.Title
+                <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
             </li>
         }
     }
