@@ -1,0 +1,16 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@{
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
+}
+<div class="bf-posts-toolbar">
+    <form class="bf-posts-search float-right" action="~/admin" method="get">
+        <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<ul class="bf-posts-list" aria-label="posts">
+    <li class="item item-empty">
+        No themes found.
+    </li>
+</ul>

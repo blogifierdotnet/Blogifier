@@ -1,0 +1,99 @@
+﻿@model Blogifier.Core.Data.Models.AdminPostsModel
+@using Blogifier.Core.Common;
+@{
+    var pgr = Model.Pager;
+    var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
+    var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
+    var curPost = 0;
+    var searchTerm = Context.Request.Query["search"];
+    var user = Context.Request.Query["user"];
+    if (string.IsNullOrEmpty(user))
+    {
+        user = "0";
+    }
+    var referrer = $"{Context.Request.Headers["Referer"]}";
+}
+
+<div class="bf-posts-toolbar">
+    <label class="custom-control custom-checkbox float-left"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+    <a href="~/admin/editor/0" class="btn btn-primary btn-sm float-left mr-3">New Post</a>
+    <div class="loading loading-sm float-left mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    <div class="btn-group float-left" id="postsMultiactions" style="display: none">
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-sm btn-icon" data-toggle="tooltip" onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+    </div>
+    <form class="bf-posts-search float-right" action="~/admin" method="get">
+        <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<ul class="bf-posts-list" aria-label="posts">
+    @if (!string.IsNullOrEmpty(searchTerm))
+    {
+        <li class="item item-search">
+            <a href="@referrer"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
+        </li>
+    }
+    @foreach (var item in Model.BlogPosts)
+    {
+        var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : " / " + item.Published.ToString("MMM dd, yyyy");
+        var publishedClass = item.Published == DateTime.MinValue ? "item-status-draft" : "item-status-published";
+        if (curPost == 0) { curPost = item.BlogPostId; }
+        <li class="item">
+            <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+            <a class="item-link item-link-mobile" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+            <div class="item-info">
+                <span class="item-info-views" aria-label="Views">@item.PostViews Views</span>
+                <span class="item-info-date" aria-label="Publish date">@publishedLbl</span>
+            </div>
+            <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
+            @if (Model.Profile.IsAdmin)
+            {
+                <button class="btn-unstyled item-favorite" onclick="postsController.featured('@item.BlogPostId', this)">
+                    @if (item.IsFeatured)
+                    {
+                        <i class="fa fa-star"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-star-o"></i>
+                    }
+                </button>
+            }
+            <a class="item-show" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+        </li>
+    }
+    @if (Model.BlogPosts.Count() == 0)
+    {
+        <li class="item item-empty">
+            No posts found.
+        </li>
+    }
+</ul>
+@if (pgr.ShowNewer || pgr.ShowOlder)
+{
+    <ul class="bf-posts-pagination">
+        @if (pgr.ShowOlder)
+        {
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
+        }
+        @if (pgr.ShowNewer)
+        {
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
+        }
+        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+    </ul>
+}
+
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
+@section Scripts{
+    <script src="~/blogifier/admin/js/lib/scrollbar.min.js"></script>
+
+    <script src="~/blogifier/admin/js/app/postsController.js"></script>
+    <script>
+        var submitFilter = function () {
+            $('#frmPostFilter').submit();
+        }
+    </script>
+}
