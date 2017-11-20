@@ -13,6 +13,7 @@ namespace Newsletter
     public class NewsletterController : Controller
     {
         IUnitOfWork _db;
+        static readonly string key = "NEWSLETTER";
 
         public NewsletterController(IUnitOfWork db)
         {
@@ -55,9 +56,20 @@ namespace Newsletter
             }
         }
 
+        [HttpPut("blogifier/api/newsletter/remove/{id}")]
+        public async Task Remove(string id)
+        {
+            var emails = Emails();
+            if (emails != null && emails.Contains(id))
+            {
+                emails.Remove(id);
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, string.Join(",", emails));
+            }
+        }
+
         List<string> Emails()
         {
-            var field = _db.CustomFields.Single(f => f.CustomType == CustomType.Application && f.CustomKey == "NEWSLETTER");
+            var field = _db.CustomFields.Single(f => f.CustomType == CustomType.Application && f.CustomKey == key);
             return field == null || string.IsNullOrEmpty(field.CustomValue) ? null : field.CustomValue.Split(',').ToList();
         }
     }
