@@ -27,7 +27,6 @@ namespace Blogifier.Core.Data.Models
         public string Description { get; set; }
         public string IconUrl { get; set; }
         public string ProjectUrl { get; set; }
-        public string RepositoryUrl { get; set; }
         public string Tags { get; set; }
 
         public string Version { get; set; }

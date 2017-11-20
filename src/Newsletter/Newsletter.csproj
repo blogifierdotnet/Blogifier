@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <product>Blogifier.Widgets.Newsletter</product>
-    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

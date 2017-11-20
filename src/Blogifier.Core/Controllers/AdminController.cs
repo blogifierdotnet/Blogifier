@@ -228,8 +228,11 @@ namespace Blogifier.Core.Controllers
                         }
                         catch { }
 
+                        var disabled = Disabled();
+
                         item.Description = item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description;
                         item.HasSettings = view.Success;
+                        item.Enabled = disabled == null || !disabled.Contains(name);
                         model.Packages.Add(item);
                     }
                 }
@@ -241,6 +244,12 @@ namespace Blogifier.Core.Controllers
         private Profile GetProfile()
         {
             return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+        }
+
+        List<string> Disabled()
+        {
+            var field = _db.CustomFields.Single(f => f.CustomType == CustomType.Application && f.CustomKey == "DISABLED-PACKAGES");
+            return field == null || string.IsNullOrEmpty(field.CustomValue) ? null : field.CustomValue.Split(',').ToList();
         }
 
         List<SelectListItem> GetStatusFilter(string filter)
