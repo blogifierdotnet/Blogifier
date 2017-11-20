@@ -22,16 +22,22 @@ namespace Newsletter
 
         [VerifyProfile]
         [HttpGet("admin/packages/widgets/Newsletter")]
-        public IActionResult Settings()
+        public IActionResult Settings(string search = "")
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            var emails = Emails();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                emails = emails.Where(e => e.Contains(search)).ToList();
+            }
 
             dynamic settings = new
             {
-                Emails = Emails(),
+                Emails = emails,
                 Pager = new Pager(1)
             };
-
+                        
             var model = new AdminSettingsModel { Profile = profile, Settings = settings };
 
             return View("~/Views/Shared/Components/Newsletter/Settings.cshtml", model);

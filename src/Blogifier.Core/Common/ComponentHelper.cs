@@ -27,7 +27,7 @@ namespace Blogifier.Core.Common
 
         public async Task<IHtmlContent> InvokeAsync(IViewComponentHelper helper, string name, object arguments = null)
         {
-            if (Disabled().Contains(name))
+            if (Disabled() != null && Disabled().Contains(name))
             {
                 return await Task.FromResult(new HtmlString(""));
             }
