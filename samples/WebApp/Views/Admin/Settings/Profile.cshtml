@@ -1,7 +1,7 @@
 ﻿@using Blogifier.Core.Common
 @model Blogifier.Core.Data.Models.SettingsProfile
 @{
-    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
     if (!Model.CustomFields.ContainsKey("Google")) { Model.CustomFields.Add("Google", ""); }
     if (!Model.CustomFields.ContainsKey("Twitter")) { Model.CustomFields.Add("Twitter", ""); }
     if (!Model.CustomFields.ContainsKey("Github")) { Model.CustomFields.Add("Github", ""); }

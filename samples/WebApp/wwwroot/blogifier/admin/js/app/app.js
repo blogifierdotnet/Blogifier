@@ -91,7 +91,7 @@ $('.modal').on('hidden.bs.modal', function () {
 });
 
 // sidebar settings active style
-$('.bf-sidebar-settings li a[href*="' + location.pathname + '"]').addClass('active');
+$('.app-sidebar li .nav-link[href*="' + location.pathname + '"]').addClass('active');
 
 
 // sidebar toggle mobile

@@ -14,13 +14,13 @@
     var referrer = $"{Context.Request.Headers["Referer"]}";
 }
 
-<div class="row h-100">
-    <div class="col-md-3">
+<div class="app-body">
+    <div class="app-sidebar">
         @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Sidebar.cshtml")
     </div>
 
-    <div class="col-md-9">
-        <div class="bf-posts-toolbar d-flex mb-5">
+    <div class="app-content">
+        <div class="bf-posts-toolbar d-flex">
             <label class="custom-control custom-checkbox my-auto"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
             <a href="~/admin/editor/0" class="btn btn-primary btn-sm mr-3">New Post</a>
             <div class="btn-group" id="postsMultiactions" style="display: none">
@@ -36,64 +36,63 @@
         <hr />
         <ul class="bf-posts-list list-unstyled" aria-label="posts">
             @if (!string.IsNullOrEmpty(searchTerm))
-            {
-                <li class="item item-search">
-                    <a href="@referrer"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
-                </li>
-            }
+        {
+        <li class="item item-search">
+            <a href="@referrer"><i class="fa fa-chevron-left"></i><span>Search Resault: @searchTerm</span></a>
+        </li>
+        }
             @foreach (var item in Model.BlogPosts)
-            {
-                var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : " / " + item.Published.ToString("MMM dd, yyyy");
-                var publishedClass = item.Published == DateTime.MinValue ? "item-status-draft" : "item-status-published";
-                if (curPost == 0) { curPost = item.BlogPostId; }
-                <li class="item d-flex">
-                    <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-                    <a class="item-link mr-auto" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
-                    <div class="item-info">
-                        <span class="item-info-views" aria-label="Views">@item.PostViews Views</span>
-                        <span class="item-info-date" aria-label="Publish date">@publishedLbl</span>
-                    </div>
-                    <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
-                    @if (Model.Profile.IsAdmin)
-                    {
-                        <button class="btn-unstyled item-favorite" onclick="postsController.featured('@item.BlogPostId', this)">
-                            @if (item.IsFeatured)
-                    {
-                                <i class="fa fa-star"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-star-o"></i>
-                            }
-                        </button>
-                    }
-                    <a class="item-show" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
-                </li>
-            }
+        {
+            var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : " / " + item.Published.ToString("MMM dd, yyyy");
+            var publishedClass = item.Published == DateTime.MinValue ? "item-status-draft" : "item-status-published";
+            if (curPost == 0) { curPost = item.BlogPostId; }
+        <li class="item d-flex">
+            <label class="item-select custom-control custom-checkbox"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+            <a class="item-link mr-auto" href="~/admin/editor/@item.BlogPostId">@item.Title</a>
+            <div class="item-info">
+                <span class="item-info-views" aria-label="Views">@item.PostViews Views</span>
+                <span class="item-info-date" aria-label="Publish date">@publishedLbl</span>
+            </div>
+            <span class="item-status @publishedClass"><i class="fa fa-circle"></i></span>
+            @if (Model.Profile.IsAdmin)
+                {
+                <button class="btn-unstyled item-favorite" onclick="postsController.featured('@item.BlogPostId', this)">
+                    @if (item.IsFeatured)
+                {
+                        <i class="fa fa-star"></i>
+                        }
+                        else
+                        {
+                        <i class="fa fa-star-o"></i>
+                        }
+                </button>
+                }
+            <a class="item-show" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+        </li>
+        }
             @if (Model.BlogPosts.Count() == 0)
-            {
-                <li class="item item-empty">
-                    No posts found.
-                </li>
-            }
+        {
+        <li class="item item-empty">
+            No posts found.
+        </li>
+        }
         </ul>
         @if (pgr.ShowNewer || pgr.ShowOlder)
-        {
-            <ul class="bf-posts-pagination">
-                @if (pgr.ShowOlder)
-                {
-                    <li class="item"><a class="item-link" href="~/admin?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
-                }
-                @if (pgr.ShowNewer)
-                {
-                    <li class="item"><a class="item-link" href="~/admin?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
-                }
-                <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
-            </ul>
-        }
-
-
+    {
+    <ul class="bf-posts-pagination">
+        @if (pgr.ShowOlder)
+            {
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
+            }
+        @if (pgr.ShowNewer)
+            {
+            <li class="item"><a class="item-link" href="~/admin?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
+            }
+        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+    </ul>
+    }
     </div>
+
 </div>
 
 @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")

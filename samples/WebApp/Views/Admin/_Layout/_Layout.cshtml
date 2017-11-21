@@ -3,62 +3,8 @@
 <html lang="en">
 @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Head.cshtml")
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-        <a class="navbar-brand d-block d-lg-none" href="/admin">Admin</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#appNav" aria-controls="appNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="appNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3" href="~/admin/editor/0">New Post</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3" href="~/admin">Posts</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link px-lg-3 dropdown-toggle" href="#" id="packagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Packages
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="packagesDropdown">
-                        <a class="dropdown-item" href="~/admin/packages/widgets">Widgets</a>
-                        <a class="dropdown-item" href="~/admin/packages/themes">Themes</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link px-lg-3 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Settings
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="~/admin/settings/profile">Edit Profile</a>
-                        @if (ApplicationSettings.SingleBlog == false)
-                        {
-                            <a class="dropdown-item" href="~/admin/settings/personal">Blog Settings</a>
-                        }
-                        <a class="dropdown-item" href="~/admin/settings/custom">Custom Code</a>
-                        <a class="dropdown-item" href="~/admin/settings/import">Import Rss</a>
-                        @if (Model.Profile != null && Model.Profile.IsAdmin)
-                        {
-                            <a class="dropdown-item" href="~/admin/settings/appsettings">Application Settings</a>
-                            <a class="dropdown-item" href="~/admin/settings/application">Administration</a>
-                                    <a class="dropdown-item" href="~/admin/settings/about">About</a>
-                        }
-                    </div>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3" href="~/@ApplicationSettings.BlogRoute@Model.Profile.Slug" target="_blank" data-toggle="tooltip" title="Open Blog"><i class="fa fa-globe d-none d-lg-block"></i> <span class="d-inline-block d-lg-none">Open Blog</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3" href="#" onclick="profileLogOut(); return false;" title="Sign out"><i class="fa fa-sign-out d-none d-lg-block"></i> <span class="d-inline-block d-lg-none">Sign out</span></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
+    @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Nav.cshtml")
+    <div class="app">
         @RenderBody()
     </div>
     @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Foot.cshtml")

@@ -1,0 +1,23 @@
+﻿@using Blogifier.Core.Common
+<!DOCTYPE html>
+<html lang="en">
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Head.cshtml")
+<body>
+    @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Nav.cshtml")
+    <div class="app">
+        <div class="app-body">
+            <div class="app-sidebar">
+                <ul class="nav flex-column nav-pills">
+                    <li class="nav-item"><a class="nav-link" href="~/admin/packages/widgets">Widgets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/admin/packages/themes">Themes</a></li>
+                </ul>
+            </div>
+            <div class="app-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_Foot.cshtml")
+    @RenderSection("Scripts", false)
+</body>
+</html>

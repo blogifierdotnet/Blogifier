@@ -2,7 +2,7 @@
 @using Blogifier.Core.Common
 @using Blogifier.Core.Extensions
 @{
-    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
     if (!Model.CustomFields.ContainsKey(Constants.SendGridApiKey))
     {
         Model.CustomFields.Add(Constants.SendGridApiKey, "");
