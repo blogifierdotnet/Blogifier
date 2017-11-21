@@ -11,10 +11,14 @@ body {
 }
 
 
+img {
+    max-width:100%;
+}
+
 .app {
     height: 100%;
     position: relative;
-    padding-top: 3.5rem;
+    padding-top: 3rem;
 
     &-body {
         position: relative;
@@ -32,7 +36,7 @@ body {
 
     &-sidebar {
         background-color: #f2f2f2;
-        padding:5.5rem 2rem 2rem;
+        padding: 5rem 2rem 2rem;
 
         @media screen and (min-width: 992px) {
             min-height: 100%;
@@ -46,6 +50,17 @@ body {
 
         @media screen and (max-width: 991px) {
             display: none;
+        }
+    }
+
+
+    &-nav {
+        padding: 0 1rem;
+        height: 3rem;
+
+        .nav-link {
+            text-transform: uppercase;
+            font-size: .875rem;
         }
     }
 }
