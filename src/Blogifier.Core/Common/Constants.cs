@@ -7,5 +7,8 @@
         public const string ItemSaved = "Item saved";
 
         public const string PostListSize = "PostListSize";
+
+        public const string SendGridApiKey = "SEND-GRID-API-KEY";
+        public const string SendGridNotConfigured = "SendGrid service is not configured";
     }
 }
