@@ -244,7 +244,8 @@ namespace Blogifier.Core.Controllers
                 Logo = ApplicationSettings.ProfileLogo,
                 Avatar = ApplicationSettings.ProfileAvatar,
                 Image = ApplicationSettings.ProfileImage,
-                PostImage = ApplicationSettings.PostImage
+                PostImage = ApplicationSettings.PostImage,
+                CustomFields = _db.CustomFields.GetCustomFields(CustomType.Application, 0).Result
             };
             return View(_theme + "AppSettings.cshtml", model);
         }
@@ -276,6 +277,8 @@ namespace Blogifier.Core.Controllers
                 ApplicationSettings.PostImage = model.PostImage;
 
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, "BlogTheme", model.BlogTheme);
+
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.SendGridApiKey, model.CustomFields[Constants.SendGridApiKey]);
 
                 model.Profile.BlogTheme = model.BlogTheme;
                 ApplicationSettings.BlogTheme = model.BlogTheme;

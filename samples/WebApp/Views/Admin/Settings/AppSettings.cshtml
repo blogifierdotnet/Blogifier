@@ -3,6 +3,10 @@
 @using Blogifier.Core.Extensions
 @{
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
+    if (!Model.CustomFields.ContainsKey(Constants.SendGridApiKey))
+    {
+        Model.CustomFields.Add(Constants.SendGridApiKey, "");
+    }
 }
 <div class="bf-settings bf-settings-personal">
     <form method="post" asp-controller="Settings" asp-action="AppSettings" asp-antiforgery="true">
@@ -20,6 +24,10 @@
             <label>Items per page</label>
             <input asp-for="ItemsPerPage" type="text" class="form-control" />
             <span asp-validation-for="ItemsPerPage" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>SendGrid API Key</label>
+            <input type="text" asp-for='CustomFields[Constants.SendGridApiKey]' class="form-control" />
         </div>
         <div class="form-group">
             <label>Logo</label>

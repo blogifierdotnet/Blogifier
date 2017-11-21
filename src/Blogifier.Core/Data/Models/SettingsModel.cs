@@ -57,6 +57,7 @@ namespace Blogifier.Core.Data.Models
         public string PostImage { get; set; }
         public int ItemsPerPage { get; set; }
         public IList<SelectListItem> BlogThemes { get; set; }
+        public Dictionary<string, string> CustomFields { get; set; }
     }
 
     public class SettingsCustom : AdminBaseModel
