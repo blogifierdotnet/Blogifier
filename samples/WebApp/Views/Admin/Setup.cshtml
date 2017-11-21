@@ -3,33 +3,30 @@
 @{
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Setup.cshtml";
 }
-<div class="bf-setup-logo"></div>
-<form class="bf-setup-form" method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true">
-    <div class="bf-setup-header">
-        <h2 class="bf-setup-title">Setup Your Blog!</h2>
-        <p class="bf-setup-info">You can edit this information anytime from settings</p>
-    </div>
-    <div class="bf-setup-body">
+<div class="container p-5" style="max-width:480px;">
+    <h4>Setup Your Blog!</h4>
+    <p>You can edit this information anytime from settings.</p>
+    <form method="post" asp-controller="Admin" asp-action="Setup" asp-antiforgery="true">
         <div class="form-group">
-            <input type="text" asp-for="AuthorName" placeholder="Author Name" autocomplete="off" class="form-control form-control-lg" />
+            <input type="text" asp-for="AuthorName" placeholder="Author Name" autocomplete="off" class="form-control" />
             <span class="bf-setup-url"></span>
             <span asp-validation-for="AuthorName" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input type="email" asp-for="AuthorEmail" placeholder="Author Email" class="form-control form-control-lg" />
+            <input type="email" asp-for="AuthorEmail" placeholder="Author Email" class="form-control" />
             <span asp-validation-for="AuthorEmail" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input type="text" asp-for="Title" placeholder="Blog Title" class="form-control form-control-lg" />
+            <input type="text" asp-for="Title" placeholder="Blog Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <input type="text" asp-for="Description" placeholder="Blog Description" class="form-control form-control-lg" />
+            <input type="text" asp-for="Description" placeholder="Blog Description" class="form-control" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-light btn-lg btn-block btn-rounded">Continue</button>
-    </div>
-</form>
+        <button type="submit" class="btn btn-primary btn-block">Continue</button>
+    </form>
+</div>
 @section Scripts{
     <script>document.getElementById('AuthorName').focus()</script>
 }

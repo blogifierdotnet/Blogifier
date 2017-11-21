@@ -3,38 +3,39 @@
 @{
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 }
-<div class="bf-posts-toolbar">
-    <label class="custom-control custom-checkbox float-left">
+<div class="bf-posts-toolbar d-flex mb-5">
+    <label class="custom-control custom-checkbox my-auto">
         <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
         <span class="item-control custom-control-indicator"></span>
     </label>
-    <div class="btn-group dropup float-left">
+    <div class="btn-group dropdown">
         <button id="btnEnable" type="button" onclick="packagesController.enable(); return false;" class="btn btn-sm btn-primary">Enable</button>
         <button id="btnArrow" type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-        <ul class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; transform: translate3d(137px, -2px, 0px); top: 0px; left: 0px; will-change: transform;">
+        <ul class="dropdown-menu dropdown-menu-right">
             <li><a class="dropdown-item" href="#" onclick="packagesController.disable(); return false;">Disable</a></li>
         </ul>
     </div>
 </div>
-<ul class="bf-posts-list widgets-list" aria-label="widgets">
+<hr />
+<ul class="bf-posts-list widgets-list list-unstyled" aria-label="widgets">
     @foreach (var item in Model.Packages)
     {
         var enabledClass = item.Enabled ? "item-status-published" : "item-status-draft";
         var settingClass = item.HasSettings ? "item" : "item item-empty";
-        <li class="@settingClass">
+        <li class="@settingClass d-flex">
             <label class="item-select custom-control custom-checkbox">
                 <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input" />
                 <span class="item-control custom-control-indicator"></span>
             </label>
             @if (item.HasSettings)
             {
-                <a class="item-link item-link-mobile" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
+                <a class="item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
             }
             else
             {
                 @item.Title
             }
-            <span class="item-status @enabledClass"><i class="fa fa-circle"></i></span>
+            <span class="item-status @enabledClass ml-auto"><i class="fa fa-circle"></i></span>
         </li>
     }
 </ul>

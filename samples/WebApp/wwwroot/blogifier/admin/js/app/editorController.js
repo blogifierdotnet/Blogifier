@@ -203,76 +203,20 @@
 
 document.addEventListener("DOMContentLoaded", function (event) {
     tinymce.init({
-        skin: "blogifier",
+        skin: "lightgray",
         selector: '#txtContent',
         plugins: [
-            "autoresize autolink lists link image paste code textcolor imagetools hr media table contextmenu fileupload codesample placeholder"
+            "advlist autolink lists link image paste code textcolor imagetools hr media table contextmenu fileupload codesample"
         ],
-        toolbar: "heading bold italic underline strikethrough alignleft aligncenter alignright alignjustify | bullist numlist forecolor backcolor link media fileupload codesample code",
-        block_formats: 'H=""; H1=h1;H2=h2;H3=h3;H4=h4;H5=h5;H6=h6',
+        toolbar: "formatselect | bold italic underline strikethrough | forecolor backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | undo redo  | link media fileupload | removeformat codesample code",
         autosave_ask_before_unload: false,
-        contextmenu_never_use_native: true,
-        contextmenu: "link bold italic underline | inserttable hr | subscript superscript | removeformat",
-        height: 360,
-        autoresize_min_height: 260,
-        content_style: "html {overflow:hidden !important; opacity:0;}",
+        height: 500,
         statusbar: false,
         branding: false,
         menubar: false,
         relative_urls: false,
         browser_spellcheck: true,
         paste_data_images: true,
-        images_upload_url: '/blogifier/api/assets/upload',
-        placeholder_attrs: {
-            class: "tinymce-placeholder",
-            style: ""
-        },
-        setup: function (editor) {
-            editor.addButton('heading', {
-                type: 'menubutton',
-                title: 'Heading',
-                text: false,
-                icon: 'header',
-                classes: 'btn-heading',
-                menu: [{
-                    text: 'h1',
-                    classes: 'heading-1',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('FormatBlock', false, 'h1');
-                    }
-                }, {
-                    text: 'h2',
-                    classes: 'heading-2',
-                    onclick: function () {
-                        editor.execCommand('FormatBlock', false, 'h2');
-                    }
-                }, {
-                    text: 'h3',
-                    classes: 'heading-3',
-                    onclick: function () {
-                        editor.execCommand('FormatBlock', false, 'h3');
-                    }
-                }, {
-                    text: 'h4',
-                    classes: 'heading-4',
-                    onclick: function () {
-                        editor.execCommand('FormatBlock', false, 'h4');
-                    }
-                }, {
-                    text: 'h5',
-                    classes: 'heading-5',
-                    onclick: function () {
-                        editor.execCommand('FormatBlock', false, 'h5');
-                    }
-                }, {
-                    text: 'h6',
-                    classes: 'heading-6',
-                    onclick: function () {
-                        editor.execCommand('FormatBlock', false, 'h6');
-                    }
-                }]
-            });
-        }
+        images_upload_url: '/blogifier/api/assets/upload'
     });
 });
