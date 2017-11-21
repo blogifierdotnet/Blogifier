@@ -3,10 +3,13 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
+using Blogifier.Core.Services.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -15,10 +18,12 @@ namespace Blogifier.Core.Controllers.Api
     public class PostsController : Controller
     {
         IUnitOfWork _db;
+        IEmailService _email;
 
-        public PostsController(IUnitOfWork db)
+        public PostsController(IUnitOfWork db, IEmailService email)
         {
             _db = db;
+            _email = email;
         }
 
         [HttpGet]
@@ -60,7 +65,7 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody]PostEditModel model)
+        public async Task<IActionResult> Index([FromBody]PostEditModel model)
         {
             BlogPost bp;
             if (model.Id == 0)
@@ -76,6 +81,10 @@ namespace Blogifier.Core.Controllers.Api
                 bp.LastUpdated = SystemClock.Now();
                 bp.Published = model.Publish ? SystemClock.Now() : DateTime.MinValue;
                 _db.BlogPosts.Add(bp);
+                if (model.Publish)
+                {
+                    await Notify(bp.Title, bp.Description);
+                }
             }
             else
             {
@@ -88,13 +97,20 @@ namespace Blogifier.Core.Controllers.Api
                 bp.LastUpdated = SystemClock.Now();
                 // when publish button clicked, save and publish
                 // but do not unpublish - use unpublish/{id} for this
-                if (model.Publish) { bp.Published = SystemClock.Now(); }
+                if (model.Publish)
+                {
+                    if(bp.Published == DateTime.MinValue)
+                    {
+                        await Notify(bp.Title, bp.Description);
+                    }
+                    bp.Published = SystemClock.Now();
+                }
             }
             _db.Complete();
 
             if(model.Categories != null)
             {
-                _db.BlogPosts.UpdatePostCategories(
+                await _db.BlogPosts.UpdatePostCategories(
                     bp.Id, model.Categories.Select(c => c.Value).ToList());
                 _db.Complete();
             }
@@ -103,7 +119,7 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpPut("publish/{id:int}")]
-        public IActionResult Publish(int id)
+        public async Task<IActionResult> Publish(int id)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
             if (post == null)
@@ -111,6 +127,9 @@ namespace Blogifier.Core.Controllers.Api
 
             post.Published = SystemClock.Now();
             _db.Complete();
+
+            await Notify(post.Title, post.Description);
+
             return new NoContentResult();
         }
 
@@ -206,6 +225,22 @@ namespace Blogifier.Core.Controllers.Api
                 cnt++;
             }
             return slug;
+        }
+
+        async Task Notify(string title, string description)
+        {
+            var profile = GetProfile();
+
+            foreach (var email in Emails())
+            {
+                await _email.Send(email, title, description, GetProfile());
+            }
+        }
+
+        List<string> Emails()
+        {
+            var field = _db.CustomFields.Single(f => f.CustomType == CustomType.Application && f.CustomKey == "NEWSLETTER");
+            return field == null || string.IsNullOrEmpty(field.CustomValue) ? null : field.CustomValue.Split(',').ToList();
         }
     }
 }

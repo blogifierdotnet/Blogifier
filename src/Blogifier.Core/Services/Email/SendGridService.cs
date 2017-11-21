@@ -33,7 +33,7 @@ namespace Blogifier.Core.Services.Email
             if (string.IsNullOrEmpty(apiKey))
             {
                 _logger.LogError(Constants.SendGridNotConfigured);
-                return null;
+                return Task.FromResult(false);
             }
 
             var admin = _db.Profiles.Find(p => p.IsAdmin).FirstOrDefault();
