@@ -3,6 +3,7 @@ using Blogifier.Core.Data.Interfaces;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,11 +18,13 @@ namespace Blogifier.Core.Common
     public class ComponentHelper : IComponentHelper
     {
         private readonly IViewComponentSelector _selector;
-        IUnitOfWork _db;
+        private readonly IUnitOfWork _db;
+        private readonly ILogger _logger;
 
-        public ComponentHelper(IViewComponentSelector selector, IUnitOfWork db)
+        public ComponentHelper(IViewComponentSelector selector, IUnitOfWork db, ILogger<ComponentHelper> logger)
         {
             _selector = selector;
+            _logger = logger;
             _db = db;
         }
 
@@ -35,11 +38,12 @@ namespace Blogifier.Core.Common
             {
                 return Exists(name)
                 ? await helper.InvokeAsync(name, arguments)
-                : await Task.FromResult(GetContent(name));
+                : await Task.FromResult(new HtmlString(""));
             }
             catch (System.Exception ex)
             {
-                return await Task.FromResult(GetContent(ex.Message));
+                _logger.LogError($"Error loading widget: {ex.Message}");
+                return await Task.FromResult(new HtmlString(""));
             }
         }
 

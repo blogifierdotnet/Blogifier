@@ -82,6 +82,23 @@ namespace Blogifier
             });
 
             Core.Configuration.InitApplication(app, env);
+
+            if (!Core.Common.ApplicationSettings.UseInMemoryDatabase && Core.Common.ApplicationSettings.InitializeDatabase)
+            {
+                try
+                {
+                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                    {
+                        var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
+                        db.EnsureCreated();
+                        if (db.GetPendingMigrations() != null)
+                        {
+                            db.Migrate();
+                        }
+                    }
+                }
+                catch { }
+            }
         }
     }
 }
