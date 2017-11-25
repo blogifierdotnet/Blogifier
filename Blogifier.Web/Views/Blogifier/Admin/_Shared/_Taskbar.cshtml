@@ -1,0 +1,45 @@
+@using Blogifier.Core.Common
+@{
+    var avatar = ApplicationSettings.ProfileAvatar;
+    var userName = "";
+    var blogTitle = ApplicationSettings.Title;
+    var blogDesc = ApplicationSettings.Description;
+    var blogImg = ApplicationSettings.ProfileImage;
+    if (Model.Profile != null)
+    {
+        userName = Model.Profile.AuthorName;
+        blogTitle = Model.Profile.Title;
+        blogDesc = Model.Profile.Description;
+        blogImg = string.IsNullOrEmpty(Model.Profile.Image) ? blogImg : Model.Profile.Image;
+        if (!string.IsNullOrEmpty(Model.Profile.Avatar))
+        {
+            avatar = Model.Profile.Avatar;
+        }
+    }
+
+    var settingsURL = "admin/settings/general";
+    if (!Model.Profile.IsAdmin)
+    {
+        settingsURL = "admin/settings/profile";
+    }
+}
+<ul class="bf-taskbar d-flex flex-lg-column">
+    <li class="taskbar-item">
+        <a class="taskbar-item-link" href="~/admin/editor/0" title="New Post"><i class="taskbar-item-icon fa fa-plus"></i></a>
+    </li>
+    <li class="taskbar-item">
+        <a class="taskbar-item-link" href="~/admin" title="Posts"><i class="taskbar-item-icon fa fa-align-left"></i></a>
+    </li>
+    <li class="taskbar-item">
+        <a class="taskbar-item-link" href="~/admin/packages/widgets" title="Packages"><i class="taskbar-item-icon fa fa-cube"></i></a>
+    </li>
+    <li class="taskbar-item">
+        <a class="taskbar-item-link" href="~/@settingsURL" title="Settings"><i class="taskbar-item-icon fa fa-gear"></i></a>
+    </li>
+    <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
+        <a class="taskbar-item-link" href="~/" return false;" title="Visit Blog" target="_blank"><i class="taskbar-item-icon fa fa-globe"></i></a>
+    </li>
+    <li class="taskbar-item">
+        <a class="taskbar-item-link" onclick="profileLogOut(); return false;" title="Sign out"><i class="taskbar-item-icon fa fa-sign-out"></i></a>
+    </li>
+</ul>

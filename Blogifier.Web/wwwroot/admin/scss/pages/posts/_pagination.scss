@@ -1,0 +1,14 @@
+.bf-posts-pagination {
+  @include unstyled(ul);
+  padding: 0 2rem 2rem;
+
+  i {
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  @media screen and (max-width: 991px) {
+    padding: 0 1rem 1rem;
+  }
+}

@@ -1,0 +1,55 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@{
+    ViewData["Title"] = "Widgets";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+}
+
+<div class="bf-settings bf-settings-users" data-page-title="Widgets">
+
+    <!-- Toolbar -->
+    <div class="bf-toolbar d-flex">
+        <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+        <div id="postActionButtons" class="btn-group mr-3">
+            <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.enable()" title="Enable"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
+        </div>
+        <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    </div>
+    <!--/Toolbar -->
+
+    @if (Model.Packages.Any())
+    {
+        <ul class="bf-users-list d-block" aria-label="widgets">
+            @foreach (var item in Model.Packages)
+            {
+                var publishedClass = item.Enabled ? "item-status-published" : "item-status-draft";
+                <li class="post-list-item d-flex">
+                    <label class="item-select custom-control custom-checkbox mr-3 my-auto">
+                        <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input">
+                        <span class="item-control custom-control-indicator"></span>
+                    </label>
+                    @if (item.HasSettings)
+                    {
+                        <a class="item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
+                    }
+                    else
+                    {
+                        <div class="bf-posts-empty" style="margin-top: 13px">@item.Description</div>   
+                    }
+                    <span class="item-status @publishedClass ml-auto my-auto" data-original-title="" title=""><i class="fa fa-circle"></i></span>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="bf-posts-empty">
+            No widgets found!
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/admin/js/app/packagesController.js"></script>
+}

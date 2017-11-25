@@ -1,0 +1,7 @@
+.bf {
+  position: relative;
+  height: 100%;
+  @media screen and (min-width: 992px) {
+    padding-left: $width-taskbar;
+  }
+}

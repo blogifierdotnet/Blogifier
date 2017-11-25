@@ -1,0 +1,32 @@
+.bf-header {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #e5e5e5;
+  line-height: 3rem;
+  height: 3rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding-left: 1rem;
+  position: relative;
+
+  .fa {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform ease-out .25s;
+  }
+
+  span {
+    padding-left: .25rem;
+  }
+
+  &.active {
+    .fa-chevron-down {
+      transform: translateY(-50%) rotateX(180deg);
+    }
+
+    .fa-sliders {
+      transform: translateY(-50%) rotateY(180deg);
+    }
+  }
+}

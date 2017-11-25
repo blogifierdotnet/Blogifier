@@ -1,0 +1,32 @@
+.bf-content {
+  width: 100%;
+}
+
+.bf-title {
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    height: 2px;
+    background-color: #ddd;
+    left: 0;
+    top: 1rem - .125rem;
+    right: 0;
+    display: block;
+  }
+
+  span {
+    display: inline-block;
+    background-color: #fff;
+    position: relative;
+    z-index: 2;
+    padding-right: .5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 2rem;
+    color:#666;
+  }
+}

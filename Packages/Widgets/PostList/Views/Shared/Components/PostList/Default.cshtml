@@ -1,0 +1,20 @@
+﻿@using Blogifier.Core.Common;
+@using Blogifier.Core.Data.Domain;
+@using Blogifier.Core.Extensions
+@model IEnumerable<BlogPost>
+
+@foreach (var item in Model)
+{
+    var img = string.IsNullOrEmpty(item.Image) ? ApplicationSettings.PostImage : item.Image;
+
+    <article class="post">
+        <div class="post-cover"><img src="@img" alt="@item.Title"><span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span></div>
+        <h2 class="post-title"><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h2>
+        <div class="post-meta">
+            <a class="post-meta-author" href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Profile.AuthorName</a>
+            <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
+        </div>
+        <div class="post-description">@Html.Raw(item.Content)</div>
+        <a class="post-more btn btn-rounded btn-dark" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read</a>
+    </article>
+}

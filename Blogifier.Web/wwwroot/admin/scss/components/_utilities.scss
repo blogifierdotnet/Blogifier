@@ -1,0 +1,11 @@
+.hide {
+    display: none !important;
+}
+
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}

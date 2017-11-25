@@ -1,0 +1,20 @@
+﻿@using Blogifier.Core.Data.Models
+@using Blogifier.Core.Common
+@model BlogPostsModel
+@{
+    var term = ViewBag.Term;
+    var search = "search";
+    Model.Pager.RouteValue = search + "/" + term + "/";
+}
+<main class="page-search">
+    <header class="page-cover" style="background-image: url('@Model.CoverImg')">
+        <h2 class="page-cover-title">@term</h2>
+        <p class="page-cover-desc">Search Results:</p>
+    </header>
+    <div class="page-content">
+        <div class="container">
+            @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Post.cshtml", Model.Posts)
+            @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Pager.cshtml", Model.Pager)
+        </div>
+    </div>
+</main>

@@ -1,0 +1,55 @@
+﻿@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+    bool showRegistration = ViewData["ShowRegistration"] != null && (bool)ViewData["ShowRegistration"];
+}
+
+<div class="form-login">
+  @if (!SignInManager.IsSignedIn(User))
+  {
+    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+      <div class="bf-account-header">
+        <h1>Welcome!</h1>
+        <p>You can sign in or <a href="~/">back to blog</a>.</p>
+      </div>
+      <div asp-validation-summary="All" class="text-danger"></div>
+      <div class="form-group">
+        <input asp-for="Email" class="form-control form-control-lg form-control-top" placeholder="Email" autofocus>
+        <input asp-for="Password" class="form-control form-control-lg form-control-bottom" placeholder="Password">
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <span asp-validation-for="Password" class="text-danger"></span>
+      </div>
+      <div class="form-group">
+        <label class="custom-control custom-checkbox">
+          <input asp-for="RememberMe" class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">@Html.DisplayNameFor(m => m.RememberMe)</span>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      <div class="mt-3">
+          <a asp-action="ForgotPassword" class="btn btn-link btn-sm btn-block">Forgot your password?</a>
+      </div>
+
+      @if (showRegistration)
+      {
+        <hr class="my-4">
+        <a asp-action="Register" class="btn btn-outline-primary btn-lg btn-block" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+      }
+    </form>
+  }
+  else {
+    <div class="bf-account-header mb-0">
+      <div class="h5 mb-4">You are already signed in!</div>
+      <div class="btn-group d-flex">
+          <a href="~/" class="btn btn-outline-primary w-100">Blog</a>
+          <a href="~/admin" class="btn btn-outline-primary w-100">Admin</a>
+      </div>
+    </div>
+  }
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

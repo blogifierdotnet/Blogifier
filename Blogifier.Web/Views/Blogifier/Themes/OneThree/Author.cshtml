@@ -1,0 +1,41 @@
+﻿@using Blogifier.Core.Common
+@using Blogifier.Core.Data.Models
+@model BlogAuthorModel
+@{
+    var avatar = Model.Profile.Avatar == null ? ApplicationSettings.ProfileAvatar : Model.Profile.Avatar;
+    var cf = Model.CustomFields;
+    Model.Pager.RouteValue = Model.Profile.Slug + "/";
+}
+<header class="blog-cover author-info" style="background-image: url('@Model.CoverImg')">
+    <div class="container">
+        <img class="author-avatar" src="@avatar" width="100" alt="@Model.Profile.Title" />
+        <h2 class="author-title">@ApplicationSettings.Title</h2>
+        <p class="author-description">@ApplicationSettings.Description</p>
+        @*<ul class="author-social">
+            @if (cf.ContainsKey("Google") && !string.IsNullOrEmpty(cf["Google"]))
+            {
+                <li><a href='@cf["Google"]' target="_blank" title="Google Plus"><i class="fa fa-google"></i></a></li>
+            }
+            @if (cf.ContainsKey("Twitter") && !string.IsNullOrEmpty(cf["Twitter"]))
+            {
+                <li><a href='@cf["Twitter"]' target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            }
+            @if (cf.ContainsKey("Github") && !string.IsNullOrEmpty(cf["Github"]))
+            {
+                <li><a href='@cf["Github"]' target="_blank" title="GitHub"><i class="fa fa-github"></i></a></li>
+            }
+            @if (cf.ContainsKey("Instagram") && !string.IsNullOrEmpty(cf["Instagram"]))
+            {
+                <li><a href='@cf["Instagram"]' target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+            }
+            @if (cf.ContainsKey("Facebook") && !string.IsNullOrEmpty(cf["Facebook"]))
+            {
+                <li><a href='@cf["Facebook"]' target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+            }
+        </ul>*@
+    </div>
+</header>
+<main class="page-author">
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneThree/_Shared/_Post.cshtml", Model.Posts)
+    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneThree/_Shared/_Pager.cshtml", Model.Pager)
+</main>

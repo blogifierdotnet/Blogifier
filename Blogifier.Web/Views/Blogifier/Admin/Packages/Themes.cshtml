@@ -1,0 +1,23 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@{
+    ViewData["Title"] = "Themes";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+}
+<div class="bf-settings bf-settings-boxed bf-settings-about" data-page-title="Themes">
+    @if (Model.Packages.Any())
+    {
+        <div class="bf-posts-toolbar">
+            <form class="bf-posts-search float-right" action="~/admin" method="get">
+                <input class="form-control form-control-sm" type="search" name="search" placeholder="Search..." autocomplete="off" />
+                <button class="item-submit" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="bf-posts-empty">
+            No themes found!
+        </div>
+    }
+</div>

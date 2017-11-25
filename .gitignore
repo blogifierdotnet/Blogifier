@@ -144,12 +144,6 @@ publish/
 
 # NuGet Packages
 *.nupkg
-# The packages folder can be ignored because of Package Restore
-**/packages/*
-# except build/, which is used as an MSBuild target.
-!**/packages/build/
-# and blogfifier Packages
-!src/Blogifier.Core/Views/Blogifier/Admin/Packages
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
 # NuGet v3's project.json files produces more ignoreable files
@@ -238,8 +232,8 @@ _Pvt_Extensions
 .fake/
 
 PublishProfiles/
-samples/**/Logs/*
-samples/**/blogifier/data/*
+**/Logs/*
+**/blogifier/data/*
 
 # Build and CI files
 artifacts/
@@ -248,4 +242,4 @@ tools/
 *.ps1
 
 # SQLite files
-samples/**/Data/*.db
+**/Data/*.db

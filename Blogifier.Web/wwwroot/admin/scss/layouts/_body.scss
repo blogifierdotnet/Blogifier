@@ -1,0 +1,7 @@
+.bf-body {
+  position: relative;
+  @media screen and (min-width: 992px) {
+    min-height: 100%;
+    padding-left: $width-sidebar;
+  }
+}

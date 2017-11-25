@@ -1,0 +1,107 @@
+﻿@model Blogifier.Core.Data.Models.AdminBaseModel
+@using Blogifier.Core.Common
+@using Blogifier.Core.Extensions
+@{
+    ViewData["Title"] = "About";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
+}
+
+<div class="bf-settings bf-settings-boxed bf-settings-about mx-auto" data-page-title="@ViewData["Title"]">
+
+    <div class="text-center pt-5">
+        <p class="mb-3">
+            <img src="~/admin/img/logo.png" alt="Blogifier" width="150" />
+        </p>
+        <h4 class="mb-3">
+            Blogifier @ApplicationSettings.Version
+            @if (Model.Profile.IsAdmin)
+            {
+                <button type="button" data-target="#ApplicationSettingsModal" data-toggle="modal" class="ml-1 btn-unstyled nooutline text-muted"><i class="fa fa-info-circle"></i></button>
+            }
+        </h4>
+        <p class="text-justify mb-3">
+            Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. It is cross-platform, extendable and customizable web application, that brings all expected from modern blog in small, portable package. By default, it uses file-based SQLite database, scaling up to any Entity-Framework compatible data storage.
+        </p>
+        <ul class="nav text-left">
+            <li class="mr-3"><a href="http://blogifier.net/" target="_blank"><i class="fa fa-globe"></i> blogifier.net</a></li>
+            <li class="mr-3"><a href="https://github.com/blogifierdotnet/" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+            <li class="mr-3"><a href="https://twitter.com/blogifierdotnet/" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+
+    <!-- Application Settings Modal -->
+    <div class="modal fade" id="ApplicationSettingsModal" tabindex="-1" role="dialog" aria-labelledby="ApplicationSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ApplicationSettingsModalLabel">Application settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <ul class="list-settings">
+                    <li>
+                        <label>OperatingSystem</label>
+                        <p>@ApplicationSettings.OSDescription</p>
+                    </li>
+                    <li>
+                        <label>WebRootPath</label>
+                        <p>@ApplicationSettings.WebRootPath</p>
+                    </li>
+                    <li>
+                        <label>ContentRootPath</label>
+                        <p>@ApplicationSettings.ContentRootPath</p>
+                    </li>
+                    <li>
+                        <label>SingleBlog</label>
+                        <p>@ApplicationSettings.SingleBlog</p>
+                    </li>
+                    <li>
+                        <label>EnableLogging</label>
+                        <p>@ApplicationSettings.EnableLogging</p>
+                    </li>
+                    <li>
+                        <label>UseInMemoryDatabase</label>
+                        <p>@ApplicationSettings.UseInMemoryDatabase</p>
+                    </li>
+                    <li>
+                        <label>ConnectionString</label>
+                        <p>@ApplicationSettings.ConnectionString.MaskPassword()</p>
+                    </li>
+                    <li>
+                        <label>BlogStorageFolder</label>
+                        <p>@ApplicationSettings.BlogStorageFolder</p>
+                    </li>
+                    <li>
+                        <label>SupportedStorageFiles</label>
+                        <p>@ApplicationSettings.SupportedStorageFiles</p>
+                    </li>
+                    <li>
+                        <label>BlogTheme</label>
+                        <p>@ApplicationSettings.BlogTheme</p>
+                    </li>
+                    <li>
+                        <label>ProfileAvatar</label>
+                        <p>@ApplicationSettings.ProfileAvatar</p>
+                    </li>
+                    <li>
+                        <label>ProfileLogo</label>
+                        <p>@ApplicationSettings.ProfileLogo</p>
+                    </li>
+                    <li>
+                        <label>ProfileImage</label>
+                        <p>@ApplicationSettings.ProfileImage</p>
+                    </li>
+                    <li>
+                        <label>PostImage</label>
+                        <p>@ApplicationSettings.PostImage</p>
+                    </li>
+                    <li>
+                        <label>Version</label>
+                        <p>@ApplicationSettings.Version</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

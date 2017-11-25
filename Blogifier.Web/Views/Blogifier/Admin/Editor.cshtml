@@ -1,0 +1,162 @@
+﻿@model Blogifier.Core.Data.Models.AdminEditorModel
+@using Blogifier.Core.Common
+@{
+    ViewData["Title"] = "Editor";
+    var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
+    if (string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
+}
+<div class="bf-content">
+    <div id="post-edit" class="bf-editor">
+
+        <form id="frmEditor" class="bf-editor-form">
+            <!-- Editor Header -->
+            <div class="bf-editor-header" style="background-image:url(@postCover);">
+                <div class="container">
+                    <textarea class="bf-editor-title" id="txtPostTitle" rows="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus>@Model.BlogPost.Title</textarea>
+                </div>
+            </div>
+            <!--/Editor Header -->
+            <!-- Editor -->
+            <textarea id="txtContent" name="txtContent" class="bf-editor-text" placeholder="Post Content...">@Model.BlogPost.Content</textarea>
+            <input type="hidden" id="hdnPostId" name="hdnPostId" value="@Model.BlogPost.Id" />
+            <input type="hidden" id="hdnPostSlug" name="hdnPostSlug" value="@Model.BlogPost.Slug" />
+            <input type="hidden" id="hdnPostImg" name="hdnPostImg" value="@Model.BlogPost.Image" />
+            <input type="hidden" id="hdnPublished" name="hdnPublished" value="@Model.BlogPost.Published" />
+            <!--/Editor -->
+        </form>
+
+        <!-- Editor Footer -->
+        <div class="bf-editor-footer">
+            <div class="container d-flex">
+                <span id="action-buttons" class="mr-2"></span>
+                <button class="btn btn-sm btn-outline-light btn-rounded d-none d-lg-block" onclick="editorController.goBack()">Cancel</button>
+                <div class="loading loading-sm ml-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+                <div class="btn-group ml-auto d-none d-lg-flex">
+                    <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" data-tooltip title="Cover" onclick="return fileManagerController.open(updatePostCoverCallback);"><i class="fa fa-photo"></i></button>
+                    <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" data-tooltip title="Category" data-toggle="modal" data-target="#postCategories"><i class="fa fa-folder-open"></i></button>
+                    <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" data-tooltip title="Description" data-toggle="modal" data-target="#postDescription"><i class="fa fa-file-text"></i></button>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="dropdown ml-auto d-block d-lg-none">
+                    <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <button class="dropdown-item" onclick="return fileManagerController.open(updatePostCoverCallback);"><i class="fa fa-photo"></i> Cover</button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#postCategories"><i class="fa fa-folder-open"></i> Category</button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#postDescription"><i class="fa fa-file-text"></i> Description</button>
+                    </div>
+                </div>
+                <!--/Mobile Menu -->
+            </div>
+        </div>
+        <!--/Editor Footer -->
+
+    </div>
+</div>
+<!-- Modal Category -->
+<div class="modal fade" id="postCategories" tabindex="-1" role="dialog" aria-labelledby="postCategoriesLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="postCategoriesLabel">Category</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body bf-editor-category">
+        <form id="frmCategory">
+            <input type="text" id="txtCategory" title="Type and Enter" autocomplete="off" onkeypress="editorController.categoryKeyPress(event)" class="form-control" placeholder="Category Name..." autofocus />
+        </form>
+        <ul id="edit-categories">
+          @foreach (var category in Model.CategoryList)
+          {
+            <li id="cat-@category.Value">
+              <label class="custom-control custom-checkbox">
+                @if (category.Selected)
+                {
+                  <input type="checkbox" id="cbx-@category.Value" value="@category.Value" checked="checked" class="custom-control-input">
+                }
+                else
+                {
+                  <input type="checkbox" id="cbx-@category.Value" value="@category.Value" class="custom-control-input">
+                }
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">@category.Text</span>
+              </label>
+              <i class="fa fa-times" aria-label="Delete" data-tooltip data-placement="right" title="Delete @category.Text" onclick="editorController.removeCategory('@category.Value')"></i>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Description -->
+<div class="modal fade" id="postDescription" tabindex="-1" role="dialog" aria-labelledby="postDescriptionLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="postDescriptionLabel">Description</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <textarea rows="6" id="txtDescription" class="form-control" autofocus>@Model.BlogPost.Description</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
+@section Scripts{
+    <script>
+        var textarea = document.getElementById("txtPostTitle");
+        var limit = 200;
+
+        textarea.oninput = function () {
+            textarea.style.height = "";
+            textarea.style.height = Math.min(textarea.scrollHeight, 300) + "px";
+        };
+    </script>
+    <script src="~/admin/js/lib/autosize.min.js"></script>
+    <script src="~/admin/js/lib/tinymce/tinymce.min.js"></script>
+    <script src="~/admin/js/app/fileManagerController.js"></script>
+    <script src="~/admin/js/app/editorController.js"></script>
+    <script>
+        autosize($('#txtPostTitle'));
+
+        editorController.saveBackUrl();
+
+        editorController.loadPostImage();
+        editorController.loadActionButtons();
+
+        var insertImageCallback = function (data) {
+            if (data.assetType === 0) {
+                tinymce.activeEditor.execCommand('mceInsertContent', false, '<img src="' + data.url + '" />');
+            }
+            else {
+                var tag = '<a class="download" href="' + data.url + '">' + data.title + ' (' + bytesToSize(data.length) + ')</a>';
+                tinymce.activeEditor.execCommand('mceInsertContent', false, tag);
+            }
+        }
+        var updatePostCoverCallback = function (data) {
+            $('.bf-editor-header').css('background-image', 'url(' + data.url + ')');
+            $('#hdnPostImg').val(data.url);
+            toastr.success('Updated');
+        }
+
+        var stickyNav = function () {
+          var editorHeader = $(".bf-editor-header").offset();
+          var stickyNavTop = editorHeader.top + $(".bf-editor-header").outerHeight();
+          var scrollTop = $(window).scrollTop();
+          if (scrollTop > stickyNavTop) {
+              $(".mce-tinymce").addClass('sticky');
+
+          } else {
+              $(".mce-tinymce").removeClass('sticky');
+          }
+        };
+        $(window).on("load resize scroll",function(e){
+            stickyNav();
+        });
+    </script>
+}

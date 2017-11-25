@@ -1,0 +1,20 @@
+﻿@using Blogifier.Core.Common
+@using Blogifier.Core.Data.Models
+@using Blogifier.Core.Extensions
+@model IEnumerable<PostListItem>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <article class="post">
+            <div class="post-cover"><img src="@item.Image" alt="@item.Title"></div>
+            <h2 class="post-title"><a href="~/@ApplicationSettings.BlogRoute@item.Slug">@item.Title</a></h2>
+            <div class="post-meta">
+                <a class="post-meta-author" href="~/@ApplicationSettings.BlogRoute@item.BlogSlug">@item.AuthorName</a>
+                <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
+            </div>
+            <div class="post-description">@Html.Raw(item.Content)</div>
+            <a class="post-more btn btn-rounded btn-dark" href="~/@ApplicationSettings.BlogRoute@item.Slug">Read</a>
+        </article>
+    }
+}
