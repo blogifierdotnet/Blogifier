@@ -57,6 +57,9 @@ namespace Blogifier.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
+            if(_db.Profiles.All().Count() == 0)
+                return RedirectToAction(nameof(AccountController.Register), "Account");
+
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["ShowRegistration"] = IsFirstAdminAccount();
             return View();

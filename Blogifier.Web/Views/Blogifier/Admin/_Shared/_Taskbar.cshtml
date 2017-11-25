@@ -30,9 +30,12 @@
     <li class="taskbar-item">
         <a class="taskbar-item-link" href="~/admin" title="Posts"><i class="taskbar-item-icon fa fa-align-left"></i></a>
     </li>
-    <li class="taskbar-item">
-        <a class="taskbar-item-link" href="~/admin/packages/widgets" title="Packages"><i class="taskbar-item-icon fa fa-cube"></i></a>
-    </li>
+    @if (Model.Profile.IsAdmin)
+    {
+        <li class="taskbar-item">
+            <a class="taskbar-item-link" href="~/admin/packages/widgets" title="Packages"><i class="taskbar-item-icon fa fa-cube"></i></a>
+        </li>
+    }
     <li class="taskbar-item">
         <a class="taskbar-item-link" href="~/@settingsURL" title="Settings"><i class="taskbar-item-icon fa fa-gear"></i></a>
     </li>
