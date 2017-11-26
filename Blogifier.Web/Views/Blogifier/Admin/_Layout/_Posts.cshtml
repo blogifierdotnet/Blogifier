@@ -1,7 +1,5 @@
 ﻿@using Blogifier.Core.Common
 @using Blogifier.Core.Data.Domain;
-@using Blogifier.Core.Services;
-@inject IConfigService config
 @{
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Layout.cshtml";
 
@@ -34,7 +32,6 @@
             showUsers = true;
         }
     }
-    bool demo = config.GetSetting("Demo") == "true" && !Model.Profile.IsAdmin;
 }
 <div class="bf-header d-flex d-lg-none">Posts <i class="fa fa-sliders"></i></div>
 <div class="bf-body">
