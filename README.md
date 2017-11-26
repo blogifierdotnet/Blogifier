@@ -12,7 +12,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 
 1. Clone or download source code
 2. Run it in Visual Studio or VS Code
-3. Log in (admin@us.com / Blog@fier1)
+3. Register new user
 4. Write and publish posts
 
 ## Demo site

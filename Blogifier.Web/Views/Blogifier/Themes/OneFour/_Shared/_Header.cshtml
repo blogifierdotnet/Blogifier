@@ -12,9 +12,9 @@
 
 <header class="blog-header d-flex flex-column">
     <div class="container d-flex">
-        <a href="~/@logoUrl" class="blog-logo my-auto d-flex">
+        <a href="~/" class="blog-logo my-auto d-flex">
             <img src="@logoImg" alt="@ApplicationSettings.Title" class="my-auto" /> 
-            @if (@ViewData["bodyClass"] != "home") {
+            @if(ViewData["bodyClass"] != null && ViewData["bodyClass"].ToString() != "home") {
                 <span class="my-auto">@ApplicationSettings.Title</span>
             }
         </a>

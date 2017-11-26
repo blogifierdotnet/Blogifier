@@ -83,7 +83,10 @@ namespace Blogifier.Core.Controllers.Api
                 _db.BlogPosts.Add(bp);
                 if (model.Publish)
                 {
-                    await Notify(bp.Title, bp.Description);
+                    if (_email.Enabled)
+                    {
+                        await Notify(bp.Title, bp.Description);
+                    }
                 }
             }
             else
@@ -101,7 +104,10 @@ namespace Blogifier.Core.Controllers.Api
                 {
                     if(bp.Published == DateTime.MinValue)
                     {
-                        await Notify(bp.Title, bp.Description);
+                        if (_email.Enabled)
+                        {
+                            await Notify(bp.Title, bp.Description);
+                        }
                     }
                     bp.Published = SystemClock.Now();
                 }
