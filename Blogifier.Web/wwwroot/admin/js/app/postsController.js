@@ -90,7 +90,7 @@
             return this.value;
         }).get();
 
-        var url = webRoot + "admin?user=" + user + "&status=" + status;
+        var url = webRoot + "admin/posts?user=" + user + "&status=" + status;
         if (cats.length > 0) {
             url = url + "&cats=" + cats;
         }

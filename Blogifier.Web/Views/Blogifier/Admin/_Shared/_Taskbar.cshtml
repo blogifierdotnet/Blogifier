@@ -16,19 +16,15 @@
             avatar = Model.Profile.Avatar;
         }
     }
-
-    var settingsURL = "admin/settings/general";
-    if (!Model.Profile.IsAdmin)
-    {
-        settingsURL = "admin/settings/profile";
-    }
 }
 <ul class="bf-taskbar d-flex flex-lg-column">
     <li class="taskbar-item">
-        <a class="taskbar-item-link" href="~/admin/editor/0" title="New Post"><i class="taskbar-item-icon fa fa-plus"></i></a>
+        <a class="taskbar-item-link" href="~/admin/posts/editor/0" title="New Post"><i class="taskbar-item-icon fa fa-plus"></i></a>
     </li>
-    <li class="taskbar-item">
-        <a class="taskbar-item-link" href="~/admin" title="Posts"><i class="taskbar-item-icon fa fa-align-left"></i></a>
+    <li is-active-route asp-controller="Posts" class="taskbar-item">
+        <a asp-controller="Admin/Posts" asp-action="Index" class="taskbar-item-link" title="Posts">
+            <i class="taskbar-item-icon fa fa-align-left"></i>
+        </a>
     </li>
     @if (Model.Profile.IsAdmin)
     {

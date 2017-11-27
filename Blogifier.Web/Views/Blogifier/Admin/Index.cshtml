@@ -97,7 +97,7 @@
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="post-list-item d-flex">
             <label class="item-select custom-control custom-checkbox mr-3 my-auto" data-tooltip title="Select"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-            <a class="item-link" href="~/admin/editor/@item.BlogPostId?user=@user">@item.Title</a>
+            <a class="item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user">@item.Title</a>
             <span class="item-status item-status-@postStatus ml-auto my-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
             <span class="item-date my-auto ml-3">@publishedLbl</span>
             @if (Model.Profile.IsAdmin) {
@@ -118,7 +118,7 @@
     if (curPost == 0) { curPost = item.BlogPostId; }
     <div class="post-grid-col">
       <div class="post-grid-item">
-        <a class="item-link" href="~/admin/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
+        <a class="item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
         <div class="item-info d-flex">
           <label class="item-select custom-control custom-checkbox mr-3 my-auto" data-tooltip title="Select"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
           <span class="item-date my-auto">@publishedLbl</span>
