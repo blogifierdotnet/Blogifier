@@ -29,6 +29,7 @@ namespace Blogifier.Controllers
         private readonly IEmailService _emailSender;
         private readonly ILogger _logger;
         private readonly string _theme;
+        private readonly string _pwdTheme = "~/Views/Account/ChangePassword.cshtml";
 
         public SettingsController(
             UserManager<ApplicationUser> userManager,
@@ -45,6 +46,11 @@ namespace Blogifier.Controllers
             _db = db;
             _theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
         }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         [VerifyProfile]
         [Route("users")]
@@ -127,7 +133,6 @@ namespace Blogifier.Controllers
             return View(_theme + "Settings/Users.cshtml", regModel);
         }
 
-
         [HttpDelete("{id}")]
         [Route("users/{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -184,6 +189,60 @@ namespace Blogifier.Controllers
                 throw new ApplicationException($"Unexpected error occurred removing login for user with ID '{user.Id}'.");
             }
             return new NoContentResult();
+        }
+
+        [HttpGet]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var hasPassword = await _userManager.HasPasswordAsync(user);
+            if (!hasPassword)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var profile = _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            var model = new ChangePasswordViewModel { StatusMessage = StatusMessage, Profile = profile };
+            return View(_pwdTheme, model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            model.Profile = GetProfile();
+
+            if (!ModelState.IsValid)
+            {
+                return View(_pwdTheme, model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                model.StatusMessage = $"Error: Unable to load user with ID '{_userManager.GetUserId(User)}'";
+                return View(_pwdTheme, model);
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                model.StatusMessage = $"Error: {changePasswordResult.Errors.ToList()[0].Description}";
+                return View(_pwdTheme, model);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            _logger.LogInformation("User changed their password successfully.");
+            StatusMessage = "Your password has been changed.";
+
+            return RedirectToAction(nameof(ChangePassword));
         }
 
         #region Helpers

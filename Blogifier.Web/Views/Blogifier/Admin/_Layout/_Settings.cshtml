@@ -21,7 +21,9 @@
                 <li is-active-route asp-controller="Settings" asp-action="Profile">
                     <a asp-controller="Settings" asp-action="Profile">Profile</a>
                 </li>
-                <li><a href="~/account/changepassword">Password</a></li>
+                <li is-active-route asp-controller="Settings" asp-action="ChangePassword">
+                    <a asp-controller="Settings" asp-action="ChangePassword">Password</a>
+                </li>
                 @if (Model.Profile.IsAdmin)
                 {
                     <li is-active-route asp-controller="Settings" asp-action="Users">
