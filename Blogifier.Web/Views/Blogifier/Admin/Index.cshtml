@@ -24,7 +24,7 @@
     var listBtnStyle = postListStyle == "grid" ? "" : "active";
     var gridBtnStyle = postListStyle == "grid" ? "active" : "";
 
-    var postListSize = ApplicationSettings.ItemsPerPage.ToString();
+    var postListSize = BlogSettings.ItemsPerPage.ToString();
     if (Model.CustomFields.ContainsKey(Constants.PostListSize))
     {
         postListSize = Model.CustomFields[Constants.PostListSize];

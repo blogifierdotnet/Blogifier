@@ -18,7 +18,7 @@ namespace Blogifier.Core.Controllers
             _rss = rss;
             _ds = ds;
             _logger = logger;
-            _theme = $"~/{ApplicationSettings.BlogThemesFolder}/{ApplicationSettings.BlogTheme}/";
+            _theme = $"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/";
         }
 
         public IActionResult Index(int page = 1)
@@ -47,7 +47,7 @@ namespace Blogifier.Core.Controllers
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
-            return View($"~/{ApplicationSettings.BlogThemesFolder}/" + ApplicationSettings.BlogTheme + "/Category.cshtml", model);
+            return View($"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/Category.cshtml", model);
         }
 
         [Route("{slug:author}/{cat}")]

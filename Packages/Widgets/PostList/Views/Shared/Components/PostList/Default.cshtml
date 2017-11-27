@@ -5,7 +5,7 @@
 
 @foreach (var item in Model)
 {
-    var img = string.IsNullOrEmpty(item.Image) ? ApplicationSettings.PostImage : item.Image;
+    var img = string.IsNullOrEmpty(item.Image) ? BlogSettings.PostCover : item.Image;
 
     <article class="post">
         <div class="post-cover"><img src="@img" alt="@item.Title"><span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span></div>

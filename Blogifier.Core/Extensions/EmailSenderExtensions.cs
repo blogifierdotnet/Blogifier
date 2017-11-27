@@ -28,7 +28,7 @@ namespace Blogifier.Core.Extensions
                 var body = (string)obj["welcome-body"];
 
                 return emailSender.Send(email, 
-                    string.Format(subject, ApplicationSettings.Title),
+                    string.Format(subject, BlogSettings.Title),
                     string.Format(body, name, link));
             }
         }

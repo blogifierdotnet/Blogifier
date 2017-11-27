@@ -46,7 +46,7 @@ namespace Blogifier.Core.Controllers
             var profile = GetProfile();
            
             var fields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
-            var pageSize = ApplicationSettings.ItemsPerPage;
+            var pageSize = BlogSettings.ItemsPerPage;
 
             if (fields.ContainsKey(Constants.PostListSize))
                 pageSize = int.Parse(fields[Constants.PostListSize]);
@@ -176,7 +176,7 @@ namespace Blogifier.Core.Controllers
                 profile.IdentityName = User.Identity.Name;
                 profile.Slug = SlugFromTitle(profile.AuthorName);
                 profile.Avatar = ApplicationSettings.ProfileAvatar;
-                profile.BlogTheme = ApplicationSettings.BlogTheme;
+                profile.BlogTheme = BlogSettings.Theme;
 
                 profile.LastUpdated = SystemClock.Now();
 

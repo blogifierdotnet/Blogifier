@@ -105,8 +105,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
             var feed = new Feed()
             {
-                Title = ApplicationSettings.Title,
-                Description = ApplicationSettings.Description,
+                Title = BlogSettings.Title,
+                Description = BlogSettings.Description,
                 Link = new Uri(absoluteUri + "/rss"),
                 Copyright = "(c) " + DateTime.Now.Year
             };
@@ -331,7 +331,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
         bool ValidFileType(string file)
         {
-            var extentions = ApplicationSettings.SupportedStorageFiles.Split(',').ToList();
+            var extentions = BlogSettings.SupportedStorageFiles.Split(',').ToList();
             foreach (var ext in extentions)
             {
                 if (file.EndsWith("." + ext, StringComparison.OrdinalIgnoreCase))

@@ -176,34 +176,7 @@ namespace Blogifier.Core
                             ApplicationSettings.BlogThemesFolder = section.GetValue<string>("BlogThemesFolder");
 
                         if (section["SupportedStorageFiles"] != null)
-                            ApplicationSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
-
-                        if (section["BlogTheme"] != null)
-                            ApplicationSettings.BlogTheme = section.GetValue<string>("BlogTheme");
-
-                        // applicatin settings
-
-                        if (section["Title"] != null)
-                            ApplicationSettings.Title = section.GetValue<string>("Title");
-
-                        if (section["Description"] != null)
-                            ApplicationSettings.Description = section.GetValue<string>("Description");
-
-                        if (section["ItemsPerPage"] != null)
-                            ApplicationSettings.ItemsPerPage = section.GetValue<int>("ItemsPerPage");
-
-
-                        if (section["ProfileAvatar"] != null)
-                            ApplicationSettings.ProfileAvatar = section.GetValue<string>("ProfileAvatar");
-
-                        if (section["ProfileLogo"] != null)
-                            ApplicationSettings.ProfileLogo = section.GetValue<string>("ProfileLogo");
-
-                        if (section["ProfileImage"] != null)
-                            ApplicationSettings.ProfileImage = section.GetValue<string>("ProfileImage");
-
-                        if (section["PostImage"] != null)
-                            ApplicationSettings.PostImage = section.GetValue<string>("PostImage");
+                            BlogSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
 
                         // troubleshooting
 

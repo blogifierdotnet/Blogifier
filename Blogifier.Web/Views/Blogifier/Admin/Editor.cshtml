@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Editor";
     var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
-    if (string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
+    if (string.IsNullOrEmpty(postCover)) { postCover = BlogSettings.PostCover; }
 }
 <div class="bf-content">
     <div id="post-edit" class="bf-editor">

@@ -8,7 +8,7 @@
             ItemsPerPage = itemsPerPage;
 
             if (ItemsPerPage == 0)
-                ItemsPerPage = ApplicationSettings.ItemsPerPage;
+                ItemsPerPage = BlogSettings.ItemsPerPage;
 
             Newer = CurrentPage - 1;
             ShowNewer = CurrentPage > 1 ? true : false;

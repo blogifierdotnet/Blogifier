@@ -74,7 +74,7 @@ namespace Blogifier.Core.Controllers.Api
             {
                 if(type == "applogo")
                 {
-                    ApplicationSettings.ProfileLogo = asset.Url;
+                    BlogSettings.Logo = asset.Url;
                     _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
                 }
                 else if(type == "appavatar")
@@ -84,12 +84,12 @@ namespace Blogifier.Core.Controllers.Api
                 }
                 else if (type == "appimage")
                 {
-                    ApplicationSettings.ProfileImage = asset.Url;
+                    BlogSettings.Cover = asset.Url;
                     _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, asset.Url);
                 }
                 else if (type == "apppostimage")
                 {
-                    ApplicationSettings.PostImage = asset.Url;
+                    BlogSettings.PostCover = asset.Url;
                     _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, asset.Url);
                 }
                 else

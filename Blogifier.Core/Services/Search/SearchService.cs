@@ -76,7 +76,7 @@ namespace Blogifier.Core.Services.Search
                 BlogPostId = post.Id,
                 Slug = post.Slug,
                 Title = post.Title,
-                Image = string.IsNullOrEmpty(post.Image) ? ApplicationSettings.PostImage : post.Image,
+                Image = string.IsNullOrEmpty(post.Image) ? BlogSettings.PostCover : post.Image,
                 Content = post.Description,
                 Published = post.Published,
                 AuthorName = post.Profile.AuthorName,

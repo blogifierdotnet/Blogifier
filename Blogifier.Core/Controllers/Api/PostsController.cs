@@ -48,7 +48,7 @@ namespace Blogifier.Core.Controllers.Api
             var post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
 
             var postImg = post.Image == null ? profile.Image : post.Image;
-            if (string.IsNullOrEmpty(postImg)) postImg = ApplicationSettings.PostImage;
+            if (string.IsNullOrEmpty(postImg)) postImg = BlogSettings.PostCover;
 
             var model = new PostEditModel
             {

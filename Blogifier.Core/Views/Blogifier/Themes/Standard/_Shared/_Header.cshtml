@@ -1,6 +1,6 @@
 ﻿@using Blogifier.Core.Common
 @{
-    var logoImg = ApplicationSettings.ProfileLogo;
+    var logoImg = BlogSettings.Logo;
     var logoUrl = "http://blogifier.net";
     try
     {
@@ -10,7 +10,7 @@
     catch { }
 }
 <header class="blog-header clearfix">
-    <h1 class="blog-logo"><a href="~/@logoUrl"><img src="@logoImg" alt="@ApplicationSettings.Title" /></a></h1>
+    <h1 class="blog-logo"><a href="~/@logoUrl"><img src="@logoImg" alt="@BlogSettings.Title" /></a></h1>
     <button class="blog-header-toggle"><i class="fa fa-navicon"></i></button>
     <section class="blog-header-modal">
         <button class="blog-header-toggle"><i class="fa fa-times"></i></button>

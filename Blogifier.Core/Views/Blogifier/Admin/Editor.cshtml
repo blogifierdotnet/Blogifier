@@ -2,7 +2,7 @@
 @using Blogifier.Core.Common
 @{
     var postCover = string.IsNullOrEmpty(Model.BlogPost.Image) ? Model.Profile.Image : Model.BlogPost.Image;
-    if (string.IsNullOrEmpty(postCover)) { postCover = ApplicationSettings.PostImage; }
+    if (string.IsNullOrEmpty(postCover)) { postCover = BlogSettings.PostCover; }
 }
 <div id="post-edit" class="bf-editor d-flex flex-column">
     <form id="frmEditor" class="bf-editor-form">

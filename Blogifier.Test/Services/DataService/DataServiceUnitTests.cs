@@ -187,27 +187,27 @@ namespace Blogifier.Test.Services.DataService
             Assert.Null(result);
         }
 
-        [Fact]
-        public void GetPostBySlug_WithResult_WithoutProfile_Returns_Error()
-        {
-            // arrange
-            SetupDependencies();
-            _postsRepository.Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
-                .Returns(Task.FromResult(new BlogPost
-                {
-                    Id = 1,
-                    Title = "c#"
-                }));
-            _unitOfWork.Setup(x => x.BlogPosts).Returns(_postsRepository.Object);
+        //[Fact]
+        //public void GetPostBySlug_WithResult_WithoutProfile_Returns_Error()
+        //{
+        //    // arrange
+        //    SetupDependencies();
+        //    _postsRepository.Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
+        //        .Returns(Task.FromResult(new BlogPost
+        //        {
+        //            Id = 1,
+        //            Title = "c#"
+        //        }));
+        //    _unitOfWork.Setup(x => x.BlogPosts).Returns(_postsRepository.Object);
 
-            var sut = GetSut();
+        //    var sut = GetSut();
 
-            // act
-            var ex = Assert.Throws<NullReferenceException>(() => sut.GetPostBySlug("test"));
+        //    // act
+        //    var ex = Assert.Throws<NullReferenceException>(() => sut.GetPostBySlug("test"));
 
-            // assert
-            Assert.Equal("Object reference not set to an instance of an object.", ex.Message);
-        }
+        //    // assert
+        //    Assert.Equal("Object reference not set to an instance of an object.", ex.Message);
+        //}
 
         [Fact]
         public void GetPostBySlug_WithResult_BlogPost_IsReturned()
@@ -254,7 +254,7 @@ namespace Blogifier.Test.Services.DataService
             var result = sut.GetPostBySlug("c#");
 
             // assert
-            Assert.Equal(ApplicationSettings.ProfileImage, result.BlogPost.Image);
+            Assert.Equal(BlogSettings.PostCover, result.BlogPost.Image);
         }
 
         [Fact]

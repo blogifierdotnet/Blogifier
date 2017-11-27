@@ -27,29 +27,40 @@ namespace Blogifier.Core.Middleware
                     {
                         foreach (var cf in fields)
                         {
-                            if (cf.CustomKey == Constants.Title)
-                                ApplicationSettings.Title = cf.CustomValue;
-
-                            if (cf.CustomKey == Constants.Description)
-                                ApplicationSettings.Description = cf.CustomValue;
-
-                            if (cf.CustomKey == Constants.ItemsPerPage)
-                                ApplicationSettings.ItemsPerPage = int.Parse(cf.CustomValue);
-
-                            if (cf.CustomKey == Constants.ProfileLogo)
-                                ApplicationSettings.ProfileLogo = cf.CustomValue;
-
                             if (cf.CustomKey == Constants.ProfileAvatar)
                                 ApplicationSettings.ProfileAvatar = cf.CustomValue;
 
-                            if (cf.CustomKey == Constants.ProfileImage)
-                                ApplicationSettings.ProfileImage = cf.CustomValue;
+                            // blog
+                            if (cf.CustomKey == Constants.Title)
+                                BlogSettings.Title = cf.CustomValue;
 
-                            if (cf.CustomKey == Constants.PostImage)
-                                ApplicationSettings.PostImage = cf.CustomValue;
+                            if (cf.CustomKey == Constants.Description)
+                                BlogSettings.Description = cf.CustomValue;
+
+                            if (cf.CustomKey == Constants.ProfileLogo)
+                                BlogSettings.Logo = cf.CustomValue;
+
+                            if (cf.CustomKey == Constants.ProfileImage)
+                                BlogSettings.Cover = cf.CustomValue;
 
                             if (cf.CustomKey == Constants.BlogTheme)
-                                ApplicationSettings.BlogTheme = cf.CustomValue;
+                                BlogSettings.Theme = cf.CustomValue;
+
+                            if (cf.CustomKey == Constants.HeadCode)
+                                BlogSettings.Head = cf.CustomValue;
+
+                            if (cf.CustomKey == Constants.FooterCode)
+                                BlogSettings.Footer = cf.CustomValue;
+
+                            // posts
+                            if (cf.CustomKey == Constants.ItemsPerPage)
+                                BlogSettings.ItemsPerPage = int.Parse(cf.CustomValue);
+
+                            if (cf.CustomKey == Constants.PostImage)
+                                BlogSettings.PostCover = cf.CustomValue;
+
+                            if (cf.CustomKey == Constants.PostCode)
+                                BlogSettings.PostFooter = cf.CustomValue;
                         }
                     }
                 }

@@ -53,7 +53,7 @@ namespace Blogifier.Controllers
             var profile = GetProfile();
             if (!profile.IsAdmin)
             {
-                return View($"~/{ApplicationSettings.BlogThemesFolder}/{ApplicationSettings.BlogTheme}/Error.cshtml", 403);
+                return View($"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/Error.cshtml", 403);
             }
             var pager = new Pager(page);
             var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
@@ -96,7 +96,7 @@ namespace Blogifier.Controllers
                     profile.IdentityName = user.UserName;
                     profile.Slug = SlugFromTitle(profile.AuthorName);
                     profile.Avatar = ApplicationSettings.ProfileAvatar;
-                    profile.BlogTheme = ApplicationSettings.BlogTheme;
+                    profile.BlogTheme = BlogSettings.Theme;
 
                     profile.LastUpdated = SystemClock.Now();
 

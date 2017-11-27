@@ -1,6 +1,7 @@
 ﻿@using Blogifier.Core.Common
 @{
     var customFooter = "";
+    var returnUrl = Url.Action("Index", "Admin");
     try
     {
         var cf = Model.CustomFields;
@@ -31,7 +32,7 @@
             }
             else
             {
-                <a href="~/account/login?ReturnUrl=/admin">Login</a>
+                <a href="~/account/login?ReturnUrl=@returnUrl">Login</a>
             }
         </div>
     </div>

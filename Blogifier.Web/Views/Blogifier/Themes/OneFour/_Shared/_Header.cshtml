@@ -1,6 +1,6 @@
 ﻿@using Blogifier.Core.Common
 @{
-    var logoImg = ApplicationSettings.ProfileLogo;
+    var logoImg = BlogSettings.Logo;
     var logoUrl = "http://blogifier.net";
     try
     {
@@ -13,9 +13,9 @@
 <header class="blog-header d-flex flex-column">
     <div class="container d-flex">
         <a href="~/" class="blog-logo my-auto d-flex">
-            <img src="@logoImg" alt="@ApplicationSettings.Title" class="my-auto" /> 
+            <img src="@logoImg" alt="@BlogSettings.Title" class="my-auto" /> 
             @if(ViewData["bodyClass"] != null && ViewData["bodyClass"].ToString() != "home") {
-                <span class="my-auto">@ApplicationSettings.Title</span>
+                <span class="my-auto">@BlogSettings.Title</span>
             }
         </a>
         <ul class="blog-social nav ml-auto my-auto">

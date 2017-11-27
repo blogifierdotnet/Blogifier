@@ -144,7 +144,7 @@ namespace Blogifier.Controllers
                     profile.IdentityName = user.UserName;
                     profile.Slug = SlugFromTitle(profile.AuthorName);
                     profile.Avatar = ApplicationSettings.ProfileAvatar;
-                    profile.BlogTheme = ApplicationSettings.BlogTheme;
+                    profile.BlogTheme = BlogSettings.Theme;
 
                     profile.LastUpdated = Core.Common.SystemClock.Now();
 

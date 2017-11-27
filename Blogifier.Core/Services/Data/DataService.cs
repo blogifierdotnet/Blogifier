@@ -112,8 +112,8 @@ namespace Blogifier.Core.Services.Data
 
             if (string.IsNullOrEmpty(vm.BlogPost.Image))
             {
-                vm.BlogPost.Image = ApplicationSettings.ProfileImage;
-                if (!string.IsNullOrEmpty(ApplicationSettings.PostImage)) { vm.BlogPost.Image = ApplicationSettings.PostImage; }
+                vm.BlogPost.Image = BlogSettings.Cover;
+                if (!string.IsNullOrEmpty(BlogSettings.PostCover)) { vm.BlogPost.Image = BlogSettings.PostCover; }
                 if (!string.IsNullOrEmpty(vm.Profile.Image)) { vm.BlogPost.Image = vm.Profile.Image; }
             }
 
@@ -163,6 +163,9 @@ namespace Blogifier.Core.Services.Data
 
         Dictionary<string, string> GetCustom(int profileId = 0)
         {
+            if (_db.CustomFields == null)
+                return null;
+
             var fields = _db.CustomFields.GetBlogFields().Result;
             if (fields == null)
                 fields = new Dictionary<string, string>();

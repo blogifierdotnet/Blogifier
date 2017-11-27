@@ -5,7 +5,7 @@
 @inject IComponentHelper helper
 @{
     ViewData["bodyClass"] = "home";
-    var logoImg = ApplicationSettings.ProfileLogo;
+    var logoImg = BlogSettings.Logo;
     var logoUrl = "http://blogifier.net";
     try
     {
@@ -16,8 +16,8 @@
 }
 
 <div class="page-cover" style="background-image: url('@Model.CoverImg')">
-    <h1 class="page-cover-title"><a href="~/@logoUrl">@ApplicationSettings.Title</a></h1>
-    <p class="page-cover-desc">@ApplicationSettings.Description</p>
+    <h1 class="page-cover-title"><a href="~/@logoUrl">@BlogSettings.Title</a></h1>
+    <p class="page-cover-desc">@BlogSettings.Description</p>
 </div>
 
 <div class="page-content">

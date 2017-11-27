@@ -2,9 +2,9 @@
 @{
     var avatar = ApplicationSettings.ProfileAvatar;
     var userName = "";
-    var blogTitle = ApplicationSettings.Title;
-    var blogDesc = ApplicationSettings.Description;
-    var blogImg = ApplicationSettings.ProfileImage;
+    var blogTitle = BlogSettings.Title;
+    var blogDesc = BlogSettings.Description;
+    var blogImg = BlogSettings.Cover;
     if (Model.Profile != null)
     {
         userName = Model.Profile.AuthorName;

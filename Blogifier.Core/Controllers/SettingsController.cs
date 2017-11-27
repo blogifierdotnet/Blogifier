@@ -82,9 +82,9 @@ namespace Blogifier.Core.Controllers
 
                     profile.IdentityName = User.Identity.Name;
                     profile.Slug = SlugFromTitle(profile.AuthorName);
-                    profile.Title = ApplicationSettings.Title;
-                    profile.Description = ApplicationSettings.Description;
-                    profile.BlogTheme = ApplicationSettings.BlogTheme;
+                    profile.Title = BlogSettings.Title;
+                    profile.Description = BlogSettings.Description;
+                    profile.BlogTheme = BlogSettings.Theme;
 
                     _db.Profiles.Add(profile);
                 }
@@ -135,12 +135,12 @@ namespace Blogifier.Core.Controllers
             {
                 Profile = profile,
                 BlogThemes = storage.GetThemes(),
-                Title = ApplicationSettings.Title,
-                Description = ApplicationSettings.Description,
-                BlogTheme = ApplicationSettings.BlogTheme,
-                Logo = ApplicationSettings.ProfileLogo,
+                Title = BlogSettings.Title,
+                Description = BlogSettings.Description,
+                BlogTheme = BlogSettings.Theme,
+                Logo = BlogSettings.Logo,
                 Avatar = ApplicationSettings.ProfileAvatar,
-                Image = ApplicationSettings.ProfileImage,
+                Image = BlogSettings.Cover,
                 EmailKey = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey),
                 BlogHead = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.HeadCode),
                 BlogFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.FooterCode)
@@ -158,12 +158,12 @@ namespace Blogifier.Core.Controllers
 
             if (ModelState.IsValid)
             {
-                ApplicationSettings.Title = model.Title;
-                ApplicationSettings.Description = model.Description;
-                ApplicationSettings.ProfileLogo = model.Logo;
+                BlogSettings.Title = model.Title;
+                BlogSettings.Description = model.Description;
+                BlogSettings.Logo = model.Logo;
                 ApplicationSettings.ProfileAvatar = model.Avatar;
-                ApplicationSettings.ProfileImage = model.Image;
-                ApplicationSettings.BlogTheme = model.BlogTheme;
+                BlogSettings.Cover = model.Image;
+                BlogSettings.Theme = model.BlogTheme;
 
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Title, model.Title);
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Description, model.Description);
@@ -193,9 +193,9 @@ namespace Blogifier.Core.Controllers
             var model = new SettingsPosts
             {
                 Profile = profile,
-                PostImage = ApplicationSettings.PostImage,
+                PostImage = BlogSettings.Cover,
                 PostFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.PostCode),
-                ItemsPerPage = ApplicationSettings.ItemsPerPage
+                ItemsPerPage = BlogSettings.ItemsPerPage
             };
             return View(_theme + "Posts.cshtml", model);
         }
@@ -209,10 +209,10 @@ namespace Blogifier.Core.Controllers
             if (ModelState.IsValid)
             {
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ItemsPerPage, model.ItemsPerPage.ToString());
-                ApplicationSettings.ItemsPerPage = model.ItemsPerPage;
+                BlogSettings.ItemsPerPage = model.ItemsPerPage;
 
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, model.PostImage);
-                ApplicationSettings.PostImage = model.PostImage;
+                BlogSettings.PostCover = model.PostImage;
 
                 _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
 
