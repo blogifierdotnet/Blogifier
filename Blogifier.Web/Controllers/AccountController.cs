@@ -62,6 +62,7 @@ namespace Blogifier.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["ShowRegistration"] = IsFirstAdminAccount();
+            ViewData["ShowForgotPwd"] = _emailSender.Enabled;
             return View();
         }
 
