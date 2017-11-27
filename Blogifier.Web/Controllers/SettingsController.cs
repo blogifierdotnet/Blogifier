@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers
 {
     [Authorize]
-    [Route("admin")]
-    public class AdminController : Controller
+    [Route("admin/[controller]")]
+    public class SettingsController : Controller
     {
         private readonly IUnitOfWork _db;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,7 +30,7 @@ namespace Blogifier.Controllers
         private readonly ILogger _logger;
         private readonly string _theme;
 
-        public AdminController(
+        public SettingsController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailService emailSender,
@@ -47,7 +47,7 @@ namespace Blogifier.Controllers
         }
 
         [VerifyProfile]
-        [Route("settings/users")]
+        [Route("users")]
         public IActionResult Users(int page = 1)
         {
             var profile = GetProfile();
@@ -67,7 +67,7 @@ namespace Blogifier.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("settings/users")]
+        [Route("users")]
         public async Task<IActionResult> Register(UsersViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -129,7 +129,7 @@ namespace Blogifier.Controllers
 
 
         [HttpDelete("{id}")]
-        [Route("settings/users/{id}")]
+        [Route("users/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var admin = GetProfile();
@@ -185,7 +185,6 @@ namespace Blogifier.Controllers
             }
             return new NoContentResult();
         }
-
 
         #region Helpers
 

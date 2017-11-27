@@ -32,14 +32,16 @@
     </li>
     @if (Model.Profile.IsAdmin)
     {
-        <li is-active-route asp-controller="Packages" asp-action="Widgets" class="taskbar-item">
+        <li is-active-route asp-controller="Packages" class="taskbar-item">
             <a asp-controller="Packages" asp-action="Widgets" class="taskbar-item-link" title="Packages">
                 <i class="taskbar-item-icon fa fa-cube"></i>
             </a>
         </li>
     }
-    <li class="taskbar-item">
-        <a class="taskbar-item-link" href="~/@settingsURL" title="Settings"><i class="taskbar-item-icon fa fa-gear"></i></a>
+    <li is-active-route asp-controller="Settings" class="taskbar-item">
+        <a asp-controller="Settings" asp-action="General" class="taskbar-item-link" title="Settings">
+            <i class="taskbar-item-icon fa fa-gear"></i>
+        </a>
     </li>
     <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
         <a class="taskbar-item-link" href="~/" return false;" title="Visit Blog" target="_blank"><i class="taskbar-item-icon fa fa-globe"></i></a>

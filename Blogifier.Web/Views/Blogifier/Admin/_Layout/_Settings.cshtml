@@ -9,23 +9,35 @@
             @if (Model.Profile.IsAdmin)
             {
                 <ul class="bf-settings-sidebar-nav">
-                    <li><a href="~/admin/settings/general">General</a></li>
-                    <li><a href="~/admin/settings/posts">Posts</a></li>
+                    <li is-active-route asp-controller="Settings" asp-action="General">
+                        <a asp-controller="Settings" asp-action="General">General</a>
+                    </li>
+                    <li is-active-route asp-controller="Settings" asp-action="Posts">
+                        <a asp-controller="Settings" asp-action="Posts">Posts</a>
+                    </li>
                 </ul>
             }
             <ul class="bf-settings-sidebar-nav">
-                <li><a href="~/admin/settings/profile">Profile</a></li>
+                <li is-active-route asp-controller="Settings" asp-action="Profile">
+                    <a asp-controller="Settings" asp-action="Profile">Profile</a>
+                </li>
                 <li><a href="~/account/changepassword">Password</a></li>
                 @if (Model.Profile.IsAdmin)
                 {
-                    <li><a href="~/admin/settings/users">Users</a></li>
+                    <li is-active-route asp-controller="Settings" asp-action="Users">
+                        <a asp-controller="Settings" asp-action="Users">Users</a>
+                    </li>
                 }
             </ul>
             @if (Model.Profile.IsAdmin)
             {
                 <ul class="bf-settings-sidebar-nav">
-                    <li><a href="~/admin/settings/advanced">Advanced</a></li>
-                    <li><a href="~/admin/settings/about">About</a></li>
+                    <li is-active-route asp-controller="Settings" asp-action="Advanced">
+                        <a asp-controller="Settings" asp-action="Advanced">Advanced</a>
+                    </li>
+                    <li is-active-route asp-controller="Settings" asp-action="About">
+                        <a asp-controller="Settings" asp-action="About">About</a>
+                    </li>
                 </ul>
             }
         </div>
