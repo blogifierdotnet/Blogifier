@@ -188,68 +188,9 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Setup.cshtml", model);
         }
 
-        [VerifyProfile]
-        [HttpGet]
-        [Route("packages/{packageType}")]
-        public IActionResult Packages(string packageType = "Widgets")
-        {
-            var type = packageType.ToLower();
-            var model = new AdminPackagesModel { Profile = GetProfile() };
-
-            model.Packages = new List<PackageListItem>();
-
-            if (type == "widgets")
-            {
-                foreach (var assembly in Configuration.GetAssemblies())
-                {
-                    var name = assembly.GetName().Name;
-                    
-                    if (name != "Blogifier.Core")
-                    {
-                        var path = $"~/Views/Shared/Components/{name}/Settings.cshtml";
-                        var view = _engine.GetView("", path, false);
-
-                        var item = new PackageListItem
-                        {
-                            Title = name,
-                            Description = name,
-                            Version = assembly.GetName().Version.ToString()
-                        };
-
-                        try
-                        {
-                            Type t = assembly.GetType("PackageInfo");
-                            if (t != null)
-                            {
-                                var info = (IPackageInfo)Activator.CreateInstance(t);
-                                item = info.GetAttributes();
-                            }
-                        }
-                        catch { }
-
-                        var disabled = Disabled();
-                        var maxLen = 70;
-
-                        item.Description = item.Description.Length > maxLen ? item.Description.Substring(0, maxLen) + "..." : item.Description;
-                        item.HasSettings = view.Success;
-                        item.Enabled = disabled == null || !disabled.Contains(name);
-                        model.Packages.Add(item);
-                    }
-                }
-            }
-
-            return View($"{_theme}Packages/{packageType}.cshtml", model);
-        }
-
         private Profile GetProfile()
         {
             return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
-        }
-
-        List<string> Disabled()
-        {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
-            return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
 
         List<SelectListItem> GetStatusFilter(string filter)

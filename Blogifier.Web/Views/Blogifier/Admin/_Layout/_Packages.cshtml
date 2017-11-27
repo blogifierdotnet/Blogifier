@@ -7,8 +7,12 @@
     <div class="bf-sidebar d-lg-block">
         <div class="bf-settings-sidebar">
             <ul class="bf-settings-sidebar-nav">
-                <li><a href="~/admin/packages/widgets">Widgets</a></li>
-                <li><a href="~/admin/packages/themes">Themes</a></li>
+                <li is-active-route asp-controller="Packages" asp-action="Widgets">
+                    <a asp-controller="Packages" asp-action="Widgets">Widgets</a>
+                </li>
+                <li is-active-route asp-controller="Packages" asp-action="Themes">
+                    <a asp-controller="Packages" asp-action="Themes">Themes</a>
+                </li>
             </ul>
         </div>
     </div>
