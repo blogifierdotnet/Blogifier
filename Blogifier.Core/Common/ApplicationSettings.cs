@@ -13,7 +13,6 @@ namespace Blogifier.Core.Common
         // so instead of "site.com/blog" blogifier will be using "site.com" 
         public static string BlogRoute { get; set; } = "blog/";
 
-        public static bool SingleBlog { get; set; } = false;
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }
         public static bool InitializeDatabase { get; set; } = true;

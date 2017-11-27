@@ -151,9 +151,6 @@ namespace Blogifier.Core
                         if (section["BlogRoute"] != null)
                             ApplicationSettings.BlogRoute = section.GetValue<string>("BlogRoute");
 
-                        if (section["SingleBlog"] != null)
-                            ApplicationSettings.SingleBlog = section.GetValue<bool>("SingleBlog");
-
                         if (section["UseInMemoryDatabase"] != null)
                             ApplicationSettings.UseInMemoryDatabase = section.GetValue<bool>("UseInMemoryDatabase");
 
