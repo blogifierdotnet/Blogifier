@@ -36,7 +36,7 @@ namespace Blogifier.Core.Controllers
             _search = search;
             _logger = logger;
             _engine = engine;
-			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
+			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/Posts/";
 		}
 
         [VerifyProfile]
