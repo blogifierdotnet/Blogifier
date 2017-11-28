@@ -5,11 +5,17 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
 }
 
-<div class="bf-settings bf-settings-users" data-page-title="Widgets">
+<div class="bf-settings bf-settings-boxed bf-settings-about" data-page-title="Widgets">
 
     <!-- Toolbar -->
     <div class="bf-toolbar d-flex">
-        <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+        <label class="custom-control custom-checkbox my-auto mr-3">
+            <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
+            <span class="item-control custom-control-indicator"></span>
+        </label>
+        <a asp-controller="Packages" asp-action="Widgets" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px; margin-right: 20px">
+            <i class="fa fa-arrow-left"></i> &nbsp; Back
+        </a>
         <div id="postActionButtons" class="btn-group mr-3">
             <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.enable()" title="Enable"><i class="fa fa-check"></i></button>
             <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
@@ -31,11 +37,11 @@
                     </label>
                     @if (item.HasSettings)
                     {
-                        <a class="item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
+                    <a class="item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
                     }
                     else
                     {
-                        <div class="bf-posts-empty" style="margin-top: 13px">@item.Description</div>   
+                    <div class="bf-posts-empty" style="margin-top: 13px">@item.Description</div>
                     }
                     <span class="item-status @publishedClass ml-auto my-auto" data-original-title="" title=""><i class="fa fa-circle"></i></span>
                 </li>

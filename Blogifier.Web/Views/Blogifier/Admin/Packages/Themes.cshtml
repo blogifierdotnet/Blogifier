@@ -5,6 +5,22 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
 }
 <div class="bf-settings bf-settings-boxed bf-settings-about" data-page-title="Themes">
+
+    <!-- Toolbar -->
+    <div class="bf-toolbar d-flex">
+        <label class="custom-control custom-checkbox my-auto mr-3">
+            <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
+            <span class="item-control custom-control-indicator"></span>
+        </label>
+        <div id="postActionButtons" class="btn-group mr-3">
+            <a asp-controller="Packages" asp-action="Widgets" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px">
+                <i class="fa fa-arrow-left"></i> &nbsp; Back
+            </a>
+        </div>
+        <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    </div>
+    <!--/Toolbar -->
+
     @if (Model.Packages.Any())
     {
         <div class="bf-posts-toolbar">
