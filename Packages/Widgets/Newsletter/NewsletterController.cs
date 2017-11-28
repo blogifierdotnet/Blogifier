@@ -3,6 +3,7 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,20 @@ using System.Threading.Tasks;
 
 namespace Newsletter
 {
-    public class NewsletterController : Controller
+    [Authorize]
+    [Route("admin/[controller]")]
+    public class PackagesController : Controller
     {
         IUnitOfWork _db;
         static readonly string key = "NEWSLETTER";
 
-        public NewsletterController(IUnitOfWork db)
+        public PackagesController(IUnitOfWork db)
         {
             _db = db;
         }
 
         [VerifyProfile]
-        [HttpGet("admin/packages/widgets/Newsletter")]
+        [HttpGet("widgets/Newsletter")]
         public IActionResult Settings(string search = "")
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);

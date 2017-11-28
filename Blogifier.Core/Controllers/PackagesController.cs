@@ -3,7 +3,6 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
-using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -15,14 +14,13 @@ using System.Linq;
 namespace Blogifier.Core.Controllers
 {
     [Authorize]
-    [Route("packages")]
-	public class PackagesController : Controller
+    [Route("admin/[controller]")]
+    public class PackagesController : Controller
 	{
 		private readonly string _theme;
         private readonly ILogger _logger;
         private readonly ICompositeViewEngine _engine;
         IUnitOfWork _db;
-        ISearchService _search;
 
 		public PackagesController(IUnitOfWork db, ILogger<AdminController> logger, ICompositeViewEngine engine)
 		{

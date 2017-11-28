@@ -97,16 +97,12 @@ namespace Blogifier.Core
                         var assembly = Assembly.LoadFile(dll);
                         var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
 
-                        if (!string.IsNullOrEmpty(product) && product.StartsWith("Blogifier."))
+                        if (product.StartsWith("Blogifier.") && !product.StartsWith("Blogifier.Web"))
                         {
-                            if (!product.StartsWith("Blogifier.Web"))
-                            {
-                                assemblies.Add(assembly);
-                            }
+                            assemblies.Add(assembly);
                         }
                     }
-                    catch (FileLoadException) { }
-                    catch (BadImageFormatException) { }
+                    catch { }
                 }
             }
             catch { }
