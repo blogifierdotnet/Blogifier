@@ -52,15 +52,11 @@ namespace Blogifier.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
-        [VerifyProfile]
+        [MustBeAdmin]
         [Route("users")]
         public IActionResult Users(int page = 1)
         {
             var profile = GetProfile();
-            if (!profile.IsAdmin)
-            {
-                return View($"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/Error.cshtml", 403);
-            }
             var pager = new Pager(page);
             var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
@@ -72,6 +68,7 @@ namespace Blogifier.Controllers
         }
 
         [HttpPost]
+        [MustBeAdmin]
         [ValidateAntiForgeryToken]
         [Route("users")]
         public async Task<IActionResult> Register(UsersViewModel model, string returnUrl = null)
@@ -133,6 +130,7 @@ namespace Blogifier.Controllers
             return View(_theme + "Settings/Users.cshtml", regModel);
         }
 
+        [MustBeAdmin]
         [HttpDelete("{id}")]
         [Route("users/{id}")]
         public async Task<IActionResult> Delete(int id)

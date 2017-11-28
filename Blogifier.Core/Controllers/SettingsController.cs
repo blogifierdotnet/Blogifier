@@ -28,22 +28,6 @@ namespace Blogifier.Core.Controllers
             _theme = $"~/{ApplicationSettings.BlogAdminFolder}/Settings/";
         }
 
-        [VerifyProfile]
-        [Route("application")]
-        public IActionResult Application(int page = 1)
-        {
-            var pager = new Pager(page);
-            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
-
-            var model = new AdminApplicationModel
-            {
-                Profile = GetProfile(),
-                Blogs = blogs,
-                Pager = pager
-            };
-            return View(_theme + "Application.cshtml", model);
-        }
-
         [Route("profile")]
         public IActionResult Profile()
         {
@@ -111,20 +95,13 @@ namespace Blogifier.Core.Controllers
         }
 
         [VerifyProfile]
-        [Route("import")]
-        public IActionResult Import()
-        {
-            return View(_theme + "Import.cshtml", new AdminBaseModel { Profile = GetProfile() });
-        }
-
-        [VerifyProfile]
         [Route("about")]
         public IActionResult About()
         {
             return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
-        [VerifyProfile]
+        [MustBeAdmin]
         [Route("general")]
         public IActionResult General()
         {
@@ -149,6 +126,7 @@ namespace Blogifier.Core.Controllers
         }
 
         [HttpPost]
+        [MustBeAdmin]
         [Route("general")]
         public IActionResult General(SettingsGeneral model)
         {
@@ -184,7 +162,7 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "General.cshtml", model);
         }
 
-        [VerifyProfile]
+        [MustBeAdmin]
         [Route("posts")]
         public IActionResult Posts()
         {
@@ -201,6 +179,7 @@ namespace Blogifier.Core.Controllers
         }
 
         [HttpPost]
+        [MustBeAdmin]
         [Route("posts")]
         public IActionResult Posts(SettingsPosts model)
         {
@@ -223,7 +202,7 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Posts.cshtml", model);
         }
 
-        [VerifyProfile]
+        [MustBeAdmin]
         [Route("advanced")]
         public IActionResult Advanced()
         {

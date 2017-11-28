@@ -79,7 +79,7 @@ var postsController = function(dataService) {
 
   function reload() {
     setTimeout(function() {
-      window.location.href = webRoot + 'admin';
+      window.location.href = webRoot + 'admin/posts';
     }, 1000);
   }
 

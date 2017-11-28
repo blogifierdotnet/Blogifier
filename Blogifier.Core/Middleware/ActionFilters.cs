@@ -38,4 +38,32 @@ namespace Blogifier.Core.Middleware
             }
         }
     }
+
+    public class MustBeAdmin : ActionFilterAttribute
+    {
+        DbContextOptions<BlogifierDbContext> _options;
+
+        public MustBeAdmin()
+        {
+            var builder = new DbContextOptionsBuilder<BlogifierDbContext>();
+
+            ApplicationSettings.DatabaseOptions(builder);
+
+            _options = builder.Options;
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            using (var context = new BlogifierDbContext(_options))
+            {
+                var loggedUser = filterContext.HttpContext.User.Identity.Name;
+                var profile = context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == loggedUser).Result;
+
+                if(profile == null || !profile.IsAdmin)
+                {
+                    filterContext.Result = new RedirectResult("~/Error/403");
+                }
+            }
+        }
+    }
 }
