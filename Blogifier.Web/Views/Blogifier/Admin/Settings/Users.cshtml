@@ -10,7 +10,7 @@
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
-<div class="bf-settings bf-settings-users" data-page-title="@ViewData["Title"]">
+<div class="bf-settings bf-settings-users">
 
   <div class="bf-toolbar d-flex">
       <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>

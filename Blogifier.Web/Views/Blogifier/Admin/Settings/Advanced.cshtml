@@ -4,10 +4,8 @@
     ViewData["Title"] = "Avanced Settings";
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
 }
-<div class="bf-settings bf-settings-boxed" data-page-title="@ViewData["Title"]">
-    <div class="bf-title">
-        <span>Import & Export</span>
-    </div>
+<div class="bf-settings bf-settings-boxed">
+    <div class="bf-title"><span>Import & Export</span></div>
     <div class="btn-group d-flex" role="group">
         <button type="button" class="btn btn-outline-primary w-100" data-toggle="modal" data-target="#importRss">Import RSS</button>
         <button type="button" class="btn btn-outline-primary w-100" disabled>Export</button>
@@ -28,7 +26,7 @@
                 <form id="frmImport" name="frmImport">
                     <div class="form-group">
                         <label class="form-group-label">RSS URL</label>
-                        <input type="text" id="txtFeedUrl" class="form-control" />
+                        <input type="text" id="txtFeedUrl" class="form-control" autofocus />
                     </div>
                     <div class="form-group">
                         <label class="form-group-label">Domain URL</label>

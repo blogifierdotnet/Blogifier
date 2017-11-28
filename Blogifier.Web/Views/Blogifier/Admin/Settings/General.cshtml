@@ -5,10 +5,8 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
 }
 <form method="post" asp-controller="Settings" asp-action="General" asp-antiforgery="true">
-
-    <div class="bf-settings bf-settings-boxed bf-settings-appsettings" data-page-title="@ViewData["Title"]">
-        <div class="bf-title"><span>@ViewData["Title"]</span></div>
-
+    <div class="bf-settings bf-settings-boxed bf-settings-appsettings">
+        <div class="bf-title d-none d-lg-block"><span>@ViewData["Title"]</span></div>
         <div class="form-group">
             <label class="form-group-label">Title</label>
             <input type="text" asp-for="Title" class="form-control" />

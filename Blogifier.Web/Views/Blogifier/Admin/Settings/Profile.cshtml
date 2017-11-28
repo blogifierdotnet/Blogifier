@@ -5,8 +5,8 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
     if (!Model.CustomFields.ContainsKey("SendGridApiKey")) { Model.CustomFields.Add("SendGridApiKey", ""); }
 }
-<div class="bf-settings bf-settings-boxed bf-settings-profile" data-page-title="@ViewData["Title"]">
-    <div class="bf-title"><span>@ViewData["Title"]</span></div>
+<div class="bf-settings bf-settings-boxed bf-settings-profile">
+    <div class="bf-title d-none d-lg-block"><span>@ViewData["Title"]</span></div>
     <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
         <div class="form-group">
             <label class="form-group-label">Author Name</label>

@@ -109,19 +109,16 @@ $(".bf-header").on("click", function() {
   $(".bf-sidebar").stop(true, true).slideToggle();
 });
 
-//
-var settingPageTitle = $(".bf-settings").data("page-title");
-$(".bf-header span").text(settingPageTitle);
-
 // Tooltips
 $("[data-tooltip]").tooltip({
   container: 'body'
 });
 
-$('.modal').on('shown.bs.modal', function() {
-  $(this).find('[autofocus]').trigger('focus')
-})
 
+// autofocus for modals that has "autofocus" attribute
+$('.modal').on('shown.bs.modal', function() {
+  $(this).find('[autofocus]').trigger('focus');
+})
 
 // dropdown
 $('.dropdown-custom .dropdown-item').on('click', function() {

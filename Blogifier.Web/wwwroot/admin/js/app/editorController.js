@@ -76,10 +76,21 @@
         }
         return false;
     }
+    function categoryAddButton(e) {
+        e.preventDefault();
+        saveCategory();
+        return false;
+    }
 
     function saveCategory() {
-        var obj = { Title: $("#txtCategory").val() }
-        dataService.post("blogifier/api/categories/addcategory", obj, saveCategoryCallback, fail);
+        var categoryName = $("#txtCategory").val();
+        if (categoryName.length > 0) {
+          var obj = { Title: categoryName }
+          dataService.post("blogifier/api/categories/addcategory", obj, saveCategoryCallback, fail);
+        } else {
+          toastr.error('Enter the category name!');
+        }
+
     }
 
     function saveCategoryCallback(data) {
@@ -90,14 +101,16 @@
         li += '   <span class="custom-control-indicator"></span>';
         li += '   <span class="custom-control-description">' + obj.title + '</span>';
         li += '	</label>';
-        li += '<i class="fa fa-times" onclick="editorController.removeCategory(\'' + obj.id + '\')"></i>';
+        li += '<i class="fa fa-times" data-tooltip data-placement="right" title="Delete ' + obj.title + '" onclick="editorController.removeCategory(\'' + obj.id + '\')"></i>';
         li += '</li>';
         $("#edit-categories").prepend(li);
         $("#txtCategory").val('');
         $("#txtCategory").focus();
+        $(".bf-editor-category .fa").tooltip('update');
     }
 
     function removeCategory(id) {
+        $(".bf-editor-category .fa").tooltip('hide');
         dataService.remove("blogifier/api/categories/" + id, removeCategoryCallback(id), fail);
     }
 
@@ -205,6 +218,7 @@
         saveCategory: saveCategory,
         removeCategory: removeCategory,
         categoryKeyPress: categoryKeyPress,
+        categoryAddButton: categoryAddButton,
         loadPostImage: loadPostImage,
         resetPostImage: resetPostImage,
         loadActionButtons: loadActionButtons,
