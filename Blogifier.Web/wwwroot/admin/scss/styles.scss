@@ -12,8 +12,6 @@
 // Layouts
 @import "layouts/main";
 @import "layouts/bf";
-@import "layouts/body";
-@import "layouts/content";
 @import "layouts/header";
 @import "layouts/sidebar";
 @import "layouts/taskbar";
@@ -45,6 +43,7 @@
 // pages > settings
 @import "pages/settings/settings";
 @import "pages/settings/sidebar";
+@import "pages/settings/about";
 
 // pages > setup
 @import "pages/setup/setup";
