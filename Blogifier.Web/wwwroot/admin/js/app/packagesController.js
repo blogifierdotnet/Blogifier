@@ -33,22 +33,3 @@ var packagesController = function (dataService) {
         disable: disable
     }
 }(DataService);
-
-$(":checkbox").on("click", function () {
-    if (this.id == "selectAll") {
-        var selected = this.checked;
-        $("input:checkbox.item-checkbox").each(function () {
-            $(this).prop('checked', selected);
-        });
-    }
-    toggleActionBtns();
-});
-
-function toggleActionBtns() {
-    if ($("input:checkbox.item-checkbox:checked").length > 0) {
-        $('#postActionButtons > button').prop('disabled', false);
-    }
-    else {
-        $('#postActionButtons > button').prop('disabled', true);
-    }
-}

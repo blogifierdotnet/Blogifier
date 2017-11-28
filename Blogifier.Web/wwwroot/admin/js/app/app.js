@@ -1,4 +1,36 @@
-﻿// Toastr Options
+// Select All --------
+var selectAllCheckbox = $('#selectAll');
+var actionBtns = $('#multiActionBtns .btn');
+var itemCheckbox = '.item-checkbox';
+
+$(selectAllCheckbox).change(function() { //"select all" change
+  $(".item-checkbox").not(":hidden").prop('checked', $(this).prop("checked")); //change all ".item-checkbox" checked status
+  toggleActionBtns();
+
+});
+
+$(itemCheckbox).on('change', function() { //".item-checkbox" change
+  //uncheck "select all", if one of the listed checkbox item is unchecked
+  if (false == $(this).prop("checked")) { //if this item is unchecked
+    $(selectAllCheckbox).prop('checked', false); //change "select all" checked status to false
+  }
+
+  if ($(itemCheckbox + ':checked').not(":hidden").length == $(itemCheckbox).not(":hidden").length) { //check "select all" if all checkbox items are checked
+    $(selectAllCheckbox).prop('checked', true);
+  }
+  toggleActionBtns();
+});
+
+function toggleActionBtns() {
+  var bxs = $(itemCheckbox + ':checked').length;
+  if (bxs && bxs > 0) {
+    $(actionBtns).removeAttr('disabled');
+  } else {
+    $(actionBtns).attr('disabled', 'disabled');
+  }
+}
+
+﻿ // Toastr Options --------
 toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 

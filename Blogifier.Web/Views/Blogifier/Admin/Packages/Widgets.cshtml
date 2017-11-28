@@ -8,13 +8,13 @@
 <!-- Toolbar -->
 <div class="bf-toolbar d-flex">
     <label class="custom-control custom-checkbox my-auto mr-3" data-tooltip title="Select All">
-        <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
+        <input class="custom-control-input" type="checkbox" id="selectAll" name="selectAll">
         <span class="item-control custom-control-indicator"></span>
     </label>
     <a asp-controller="Packages" asp-action="Widgets" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px; margin-right: 20px">
         <i class="fa fa-arrow-left mr-2"></i> Back
     </a>
-    <div id="postActionButtons" class="btn-group mr-3">
+    <div id="multiActionBtns" class="btn-group mr-3">
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.enable()" title="Enable"><i class="fa fa-check"></i></button>
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
     </div>
