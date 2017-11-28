@@ -17,17 +17,17 @@
       <button type="button" id="userActionButtons" class="btn btn-outline-secondary btn-rounded btn-sm btn-icon mr-3" disabled="disabled" data-tooltip onclick="return usersController.removeUser()" title="Delete"><i class="fa fa-trash"></i></button>
       <div class="loading loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
   </div>
-  <ul class="bf-users-list d-block" aria-label="posts">
+  <ul class="bf-list d-block" aria-label="posts">
       @foreach (var blog in Model.Blogs)
       {
-          <li class="user-list-item d-flex ">
+          <li class="bf-list-item d-flex align-items-center">
               @if (!blog.IsAdmin)
               {
-                  <label class="item-select custom-control custom-checkbox my-auto mr-3"><input type="checkbox" id="@blog.ProfileId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                  <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@blog.ProfileId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
               }
-              <span class="item-name">@blog.AuthorName</span>
-              <span class="item-count ml-auto my-auto mr-3">@blog.PostCount Posts</span>
-              <a class="item-show my-auto" href="@blog.Url" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+              <span class="bf-list-item-name">@blog.AuthorName</span>
+              <span class="bf-list-item-text ml-auto mr-3">@blog.PostCount Posts</span>
+              <a class="bf-list-item-show" href="@blog.Url" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
           </li>
       }
   </ul>

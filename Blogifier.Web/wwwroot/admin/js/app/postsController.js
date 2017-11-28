@@ -145,10 +145,6 @@
     }
 }(DataService);
 
-$('.bf-posts-list .item-link-desktop').click(function () {
-    $('.bf-posts-list .item-link-desktop').removeClass('active');
-    $(this).addClass('active');
-});
 
 var itemCheckbox = $('.item-checkbox');
 var firstitemCheckbox = itemCheckbox.first();

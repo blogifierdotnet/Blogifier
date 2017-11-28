@@ -5,15 +5,14 @@
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
 }
 
-
 <!-- Toolbar -->
 <div class="bf-toolbar d-flex">
-    <label class="custom-control custom-checkbox my-auto mr-3">
+    <label class="custom-control custom-checkbox my-auto mr-3" data-tooltip title="Select All">
         <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
         <span class="item-control custom-control-indicator"></span>
     </label>
     <a asp-controller="Packages" asp-action="Widgets" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px; margin-right: 20px">
-        <i class="fa fa-arrow-left"></i> &nbsp; Back
+        <i class="fa fa-arrow-left mr-2"></i> Back
     </a>
     <div id="postActionButtons" class="btn-group mr-3">
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.enable()" title="Enable"><i class="fa fa-check"></i></button>
@@ -25,24 +24,24 @@
 
 @if (Model.Packages.Any())
 {
-    <ul class="" aria-label="widgets">
+    <ul class="bf-list" aria-label="widgets">
         @foreach (var item in Model.Packages)
         {
-            var publishedClass = item.Enabled ? "item-status-published" : "item-status-draft";
-            <li class="d-flex">
-                <label class="item-select custom-control custom-checkbox mr-3 my-auto">
+            var publishedClass = item.Enabled ? "published" : "draft";
+            <li class="bf-list-item d-flex align-items-center">
+                <label class="bf-list-item-select custom-control custom-checkbox mr-3" data-tooltip title="Select">
                     <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input">
                     <span class="item-control custom-control-indicator"></span>
                 </label>
                 @if (item.HasSettings)
                 {
-                <a class="item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
+                <a class="bf-list-item-link" href="~/admin/packages/widgets/@item.Title">@item.Description</a>
                 }
                 else
                 {
-                <div class="bf-posts-empty" style="margin-top: 13px">@item.Description</div>
+                <div class="bf-list-item-name">@item.Description</div>
                 }
-                <span class="item-status @publishedClass ml-auto my-auto" data-original-title="" title=""><i class="fa fa-circle"></i></span>
+                <span class="bf-list-item-status bf-list-item-status-@publishedClass ml-auto" data-tooltip title="@publishedClass"><i class="fa fa-circle"></i></span>
             </li>
         }
     </ul>
