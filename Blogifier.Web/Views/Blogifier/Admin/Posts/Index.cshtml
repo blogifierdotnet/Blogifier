@@ -15,7 +15,7 @@
         user = "0";
     }
     var postListStyle = "grid";
-    if(Model.CustomFields.ContainsKey(Constants.PostListStyle))
+    if (Model.CustomFields.ContainsKey(Constants.PostListStyle))
     {
         postListStyle = Model.CustomFields["PostListStyle"];
     }
@@ -31,7 +31,7 @@
     }
 
     var qs = "";
-    if(user != "0")
+    if (user != "0")
     {
         qs += $"&user={user}";
     }
@@ -55,39 +55,37 @@
 <div class="bf-toolbar d-flex">
     <label class="custom-control custom-checkbox my-auto mr-3" data-tooltip title="Select All"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
     <div id="postActionButtons" class="btn-group mr-3">
-      <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
-      <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
-      <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.publish()" title="Publish"><i class="fa fa-check"></i></button>
     </div>
     <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
     <div class="dropdown dropdown-custom ml-auto mr-3 d-none d-lg-block">
-      <button class="btn btn-sm btn-outline-secondary btn-rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="dropdown-value">@postListSize</span> Posts
-      </button>
-      <div class="dropdown-menu dropdown-menu-wide" aria-labelledby="dropdownMenuButton">
-        <button class="dropdown-item" type="button" onclick="postsController.selectListSize('10')">10</button>
-        <button class="dropdown-item" type="button" onclick="postsController.selectListSize('20')">20</button>
-        <button class="dropdown-item" type="button" onclick="postsController.selectListSize('30')">30</button>
-        <button class="dropdown-item" type="button" onclick="postsController.selectListSize('40')">40</button>
-        <button class="dropdown-item" type="button" onclick="postsController.selectListSize('50')">50</button>
-      </div>
+        <button class="btn btn-sm btn-outline-secondary btn-rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="dropdown-value">@postListSize</span> Posts
+        </button>
+        <div class="dropdown-menu dropdown-menu-wide" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item" type="button" onclick="postsController.selectListSize('10')">10</button>
+            <button class="dropdown-item" type="button" onclick="postsController.selectListSize('20')">20</button>
+            <button class="dropdown-item" type="button" onclick="postsController.selectListSize('30')">30</button>
+            <button class="dropdown-item" type="button" onclick="postsController.selectListSize('40')">40</button>
+            <button class="dropdown-item" type="button" onclick="postsController.selectListSize('50')">50</button>
+        </div>
     </div>
     <div class="btn-group ml-auto ml-lg-0">
-      <button id="post-list-btn" type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded @listBtnStyle" data-tooltip onclick="postsController.togglePostView('list')" title="List style"><i class="fa fa-list"></i></button>
-      <button id="post-grid-btn" type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded @gridBtnStyle" data-tooltip onclick="postsController.togglePostView('grid')" title="Grid style"><i class="fa fa-th"></i></button>
+        <button id="post-list-btn" type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded @listBtnStyle" data-tooltip onclick="postsController.togglePostView('list')" title="List style"><i class="fa fa-list"></i></button>
+        <button id="post-grid-btn" type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded @gridBtnStyle" data-tooltip onclick="postsController.togglePostView('grid')" title="Grid style"><i class="fa fa-th"></i></button>
     </div>
 </div>
 <!--/Toolbar -->
-
 <!-- Search -->
 @if (!string.IsNullOrEmpty(searchTerm))
 {
-  <div class="bf-post-search">
-      <a href="~/@returnUrl"><i class="fa fa-chevron-left"></i><span>Search Result: @searchTerm</span></a>
-  </div>
+    <div class="bf-post-search">
+        <a href="~/@returnUrl"><i class="fa fa-chevron-left"></i><span>Search Result: @searchTerm</span></a>
+    </div>
 }
 <!--/Search -->
-
 <!-- List -->
 <ul class="bf-list bf-posts-list @listStyle" aria-label="posts">
     @foreach (var item in Model.BlogPosts)
@@ -100,40 +98,50 @@
             <a class="bf-list-item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user">@item.Title</a>
             <span class="bf-list-item-status bf-list-item-status-@postStatus ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
             <span class="bf-list-item-date ml-3 d-none d-lg-block">@publishedLbl</span>
-            @if (Model.Profile.IsAdmin) {
-            <button class="btn-unstyled bf-list-item-favorite ml-3" data-tooltip title="featured" onclick="postsController.featured('@item.BlogPostId', this)"> @if (item.IsFeatured) { <i class="fa fa-star"></i> } else { <i class="fa fa-star-o"></i> } </button>
+            @if (Model.Profile.IsAdmin)
+            {
+                <button class="btn-unstyled bf-list-item-favorite ml-3" data-tooltip title="featured" onclick="postsController.featured('@item.BlogPostId', this)">
+                    @if (item.IsFeatured)
+                    { <i class="fa fa-star"></i> }
+                    else
+                    { <i class="fa fa-star-o"></i> }
+                </button>
             }
             <a class="bf-list-item-show ml-3" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" data-tooltip title="View"><i class="fa fa-external-link-square"></i></a>
         </li>
     }
 </ul>
 <!--/List -->
-
 <!-- Grid -->
 <div class="bf-posts-grid @gridStyle" aria-label="posts">
-  @foreach (var item in Model.BlogPosts)
-  {
-    var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : item.Published.ToString("MMM dd, yyyy");
-    var postStatus = item.Published == DateTime.MinValue ? "draft" : "published";
-    if (curPost == 0) { curPost = item.BlogPostId; }
-    <div class="post-grid-col">
-      <div class="post-grid-item">
-        <a class="item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
-        <div class="item-info d-flex">
-          <label class="item-select custom-control custom-checkbox mr-3 my-auto" data-tooltip title="Select"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-          <span class="item-date my-auto">@publishedLbl</span>
-          <span class="item-status item-status-@postStatus my-auto ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
-          @if (Model.Profile.IsAdmin) {
-            <button class="btn-unstyled item-favorite my-auto ml-3" data-tooltip title="featured" onclick="postsController.featured('@item.BlogPostId', this)"> @if (item.IsFeatured) { <i class="fa fa-star"></i> } else { <i class="fa fa-star-o"></i> } </button>
-          }
-          <a class="item-show my-auto ml-3" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" data-tooltip title="View"><i class="fa fa-external-link-square"></i></a>
+    @foreach (var item in Model.BlogPosts)
+    {
+        var publishedLbl = item.Published == DateTime.MinValue ? item.LastUpdated.ToString("MMM dd, yyyy") : item.Published.ToString("MMM dd, yyyy");
+        var postStatus = item.Published == DateTime.MinValue ? "draft" : "published";
+        if (curPost == 0) { curPost = item.BlogPostId; }
+        <div class="post-grid-col">
+            <div class="post-grid-item">
+                <a class="item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
+                <div class="item-info d-flex">
+                    <label class="item-select custom-control custom-checkbox mr-3 my-auto" data-tooltip title="Select"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                    <span class="item-date my-auto">@publishedLbl</span>
+                    <span class="item-status item-status-@postStatus my-auto ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
+                    @if (Model.Profile.IsAdmin)
+                    {
+                        <button class="btn-unstyled item-favorite my-auto ml-3" data-tooltip title="featured" onclick="postsController.featured('@item.BlogPostId', this)">
+                            @if (item.IsFeatured)
+                            { <i class="fa fa-star"></i> }
+                            else
+                            { <i class="fa fa-star-o"></i> }
+                        </button>
+                    }
+                    <a class="item-show my-auto ml-3" href="~/@ApplicationSettings.BlogRoute@item.Slug" target="_blank" data-tooltip title="View"><i class="fa fa-external-link-square"></i></a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  }
+    }
 </div>
 <!--/Grid -->
-
 <!-- Empty -->
 @if (Model.BlogPosts.Count() == 0)
 {
@@ -142,7 +150,6 @@
     </div>
 }
 <!--/Empty -->
-
 <!-- Pagination -->
 @if (pgr.ShowNewer || pgr.ShowOlder)
 {
@@ -162,10 +169,10 @@
 
 @Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
 @section Scripts{
-  <script src="~/admin/js/app/postsController.js"></script>
-  <script>
-      var submitFilter = function () {
-          $('#frmPostFilter').submit();
-      }
-  </script>
+    <script src="~/admin/js/app/postsController.js"></script>
+    <script>
+        var submitFilter = function () {
+            $('#frmPostFilter').submit();
+        }
+    </script>
 }

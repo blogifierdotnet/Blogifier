@@ -11,40 +11,40 @@
     var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
 <div class="bf-settings">
-  <div class="bf-toolbar d-flex">
-      <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-      <button type="button" class="btn btn-primary btn-rounded btn-sm mr-3" data-toggle="modal" data-target="#createUserModal">Create User</button>
-      <button type="button" id="userActionButtons" class="btn btn-outline-secondary btn-rounded btn-sm btn-icon mr-3" disabled="disabled" data-tooltip onclick="return usersController.removeUser()" title="Delete"><i class="fa fa-trash"></i></button>
-      <div class="loading loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
-  </div>
-  <ul class="bf-list d-block" aria-label="posts">
-      @foreach (var blog in Model.Blogs)
-      {
-          <li class="bf-list-item d-flex align-items-center">
-              @if (!blog.IsAdmin)
-              {
-                  <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@blog.ProfileId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-              }
-              <span class="bf-list-item-name">@blog.AuthorName</span>
-              <span class="bf-list-item-text ml-auto mr-3">@blog.PostCount Posts</span>
-              <a class="bf-list-item-show" href="@blog.Url" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
-          </li>
-      }
-  </ul>
-  @if (pgr.ShowNewer || pgr.ShowOlder)
-  {
-      <ul class="bf-posts-pagination">
-          @if (pgr.ShowOlder)
-          {
-              <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
-          }
-          @if (pgr.ShowNewer)
-          {
-              <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
-          }
-          <li class="item"><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
-      </ul>
-  }
+    <div class="bf-toolbar d-flex">
+        <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+        <button type="button" class="btn btn-primary btn-rounded btn-sm mr-3" data-toggle="modal" data-target="#createUserModal">Create User</button>
+        <button type="button" id="userActionButtons" class="btn btn-outline-secondary btn-rounded btn-sm btn-icon mr-3" disabled="disabled" data-tooltip onclick="return usersController.removeUser()" title="Delete"><i class="fa fa-trash"></i></button>
+        <div class="loading loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    </div>
+    <ul class="bf-list bf-users d-block" aria-label="posts">
+        @foreach (var blog in Model.Blogs)
+        {
+            <li class="bf-list-item d-flex align-items-center">
+                @if (!blog.IsAdmin)
+                {
+                    <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@blog.ProfileId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                }
+                <span class="bf-list-item-name">@blog.AuthorName</span>
+                <span class="bf-list-item-text ml-auto mr-3">@blog.PostCount Posts</span>
+                <a class="bf-list-item-show" href="@blog.Url" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+            </li>
+        }
+    </ul>
+    @if (pgr.ShowNewer || pgr.ShowOlder)
+    {
+        <ul class="bf-posts-pagination">
+            @if (pgr.ShowOlder)
+            {
+                <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Older"><i class="fa fa-chevron-left"></i></a></li>
+            }
+            @if (pgr.ShowNewer)
+            {
+                <li class="item"><a class="item-link" href="~/admin/settings/application?page=@pgr.Newer"><i class="fa fa-chevron-right"></i></a></li>
+            }
+            <li class="item"><a class="item-count">@cntFrom-@cntTo out of @pgr.Total</a></li>
+        </ul>
+    }
 </div>
 
 <!-- Create User Modal -->
@@ -82,15 +82,15 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label class="custom-control custom-checkbox my-auto mr-3">
-                              <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.IsAdmin" >
-                              <span class="custom-control-indicator"></span>
-                              <span class="custom-control-description">  @Html.DisplayNameFor(m => m.RegisterModel.IsAdmin)</span>
+                                <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.IsAdmin">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">  @Html.DisplayNameFor(m => m.RegisterModel.IsAdmin)</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="custom-control custom-checkbox my-auto mr-3">
-                            <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.SendEmailNotification" >
+                            <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.SendEmailNotification">
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description">@Html.DisplayNameFor(m => m.RegisterModel.SendEmailNotification)</span>
                         </label>

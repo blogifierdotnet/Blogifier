@@ -1,4 +1,4 @@
-﻿
+﻿// Toastr Options
 toastr.options.positionClass = 'toast-bottom-right';
 toastr.options.backgroundpositionClass = 'toast-bottom-right';
 
@@ -38,9 +38,13 @@ $(".bf-setup-form #AuthorName").keyup(function() {
   }
 });
 
-// tooltips
+// Tooltips
+$("[data-tooltip]").tooltip({
+  container: 'body'
+});
 
-var options = {
+// Taskbar Tooltip - this option will toggle the placement of the Tooltip on Desktop and Mobile
+var taskbarTooltipOptions = {
   placement: function(context, source) {
     if ($(window).width() > 991) {
       return "right";
@@ -49,78 +53,21 @@ var options = {
     }
   }
 };
-$(".bf-taskbar .taskbar-item-link").tooltip(options);
+$(".taskbar-item-link").tooltip(taskbarTooltipOptions);
 
-
-$(function() {
-  $("#postsMultiactions button").tooltip({
-    placement: 'bottom',
-    container: 'body'
-  });
-});
-
-// tooltips
-$(function() {
-  $(".bf-sidebar-logo").tooltip({
-    placement: 'top',
-    container: 'body'
-  });
-});
-
-// tooltips
-$(function() {
-  $(".bf-editor-footer .btn-icon, .bf-editor-footer .btn-group-icon .btn").tooltip({
-    placement: 'top',
-    container: 'body'
-  });
-});
-
-// tooltips
-$(function() {
-  $(".bf-posts-list .item-status").tooltip({
-    placement: 'top',
-    container: 'body'
-    //position: '-10px'
-  });
-});
-
-// fixed elements on modal
-
-// Create the measurement node for scrollbar
-var scrollDiv = document.createElement("div");
-scrollDiv.className = "scrollbar-measure";
-document.body.appendChild(scrollDiv);
-var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-document.body.removeChild(scrollDiv);
-
-$('.modal').on('show.bs.modal', function() {
-  $(".mce-toolbar-grp").css({
-    "right": scrollbarWidth
-  });
-});
-
-$('.modal').on('hidden.bs.modal', function() {
-  $(".mce-toolbar-grp").attr("style", "");
-});
-
-// sidebar toggle mobile
+// Sidebar Toggle mobile
 $(".bf-header").on("click", function() {
   $(this).toggleClass("active");
   $(".bf-sidebar").stop(true, true).slideToggle();
 });
 
-// Tooltips
-$("[data-tooltip]").tooltip({
-  container: 'body'
-});
-
-
 // autofocus for modals that has "autofocus" attribute
+// http://getbootstrap.com/docs/4.0/components/modal/#how-it-works
 $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').trigger('focus');
 })
 
-// dropdown
+// Dropdown
 $('.dropdown-custom .dropdown-item').on('click', function() {
   var thisValue = $(this).text();
   $(this).parent().parent().find(".dropdown-toggle .dropdown-value").text(thisValue);

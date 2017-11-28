@@ -24,7 +24,7 @@
 
 @if (Model.Packages.Any())
 {
-    <ul class="bf-list" aria-label="widgets">
+    <ul class="bf-list bf-packages-list" aria-label="widgets">
         @foreach (var item in Model.Packages)
         {
             var publishedClass = item.Enabled ? "published" : "draft";

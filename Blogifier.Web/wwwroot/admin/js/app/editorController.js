@@ -317,3 +317,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 });
+
+// Create the measurement node for scrollbar
+var scrollDiv = document.createElement("div");
+scrollDiv.className = "scrollbar-measure";
+document.body.appendChild(scrollDiv);
+var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+document.body.removeChild(scrollDiv);
+// toolbar fixed
+$('.modal').on('show.bs.modal', function() {
+  $(".mce-toolbar-grp").css({
+    "right": scrollbarWidth
+  });
+});
+$('.modal').on('hidden.bs.modal', function() {
+  $(".mce-toolbar-grp").attr("style", "");
+});
