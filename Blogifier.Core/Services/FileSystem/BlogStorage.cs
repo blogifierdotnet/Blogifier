@@ -2,7 +2,6 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,29 +45,6 @@ namespace Blogifier.Core.Services.FileSystem
                 }
                 return path;
             }
-        }
-
-        public IList<SelectListItem> GetThemes()
-        {
-            var themes = new List<SelectListItem>();
-            themes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
-
-            var path = ApplicationSettings.ContentRootPath == null ?
-                GetAppRoot() : ApplicationSettings.ContentRootPath;
-
-            path = Path.Combine(path, ApplicationSettings.BlogThemesFolder.Replace("/", "\\"));
-
-            if (Directory.Exists(path))
-            {
-                foreach (var dir in Directory.GetDirectories(path))
-                {
-                    if(dir.ExtractTitle().ToLower() != "standard")
-                    {
-                        themes.Add(new SelectListItem { Value = dir.ExtractTitle(), Text = dir.ExtractTitle() });
-                    }
-                }
-            }
-            return themes;
         }
 
         public IList<string> GetAssets(string path)

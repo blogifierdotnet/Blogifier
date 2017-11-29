@@ -25,9 +25,14 @@ namespace Blogifier.Core.Data.Models
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        public string IconUrl { get; set; }
+        public string Icon { get; set; }
+        public string Cover { get; set; }
         public string ProjectUrl { get; set; }
         public string Tags { get; set; }
+
+        // for app store
+        public int Downloads { get; set; }
+        public double Rating { get; set; }
 
         public string Version { get; set; }
         public bool HasSettings { get; set; }

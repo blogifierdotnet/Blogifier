@@ -13,6 +13,7 @@ using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -121,6 +122,24 @@ namespace Blogifier.Core
             {
                 services.Configure<RazorViewEngineOptions>(options =>
                 {
+                    try
+                    {
+                        // load blog themes list from physical file provider
+                        var themes = options.FileProviders[0].GetDirectoryContents("/Views/Blogifier/Themes");
+
+                        BlogSettings.BlogThemes = new List<SelectListItem>();
+                        BlogSettings.BlogThemes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
+
+                        foreach (var theme in themes)
+                        {
+                            BlogSettings.BlogThemes.Add(new SelectListItem {
+                                Text = theme.Name,
+                                Value = theme.Name
+                            });
+                        }
+                    }
+                    catch { }
+
                     foreach (var assembly in GetAssemblies())
                     {
                         options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));

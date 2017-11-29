@@ -111,7 +111,7 @@ namespace Blogifier.Core.Controllers
             var model = new SettingsGeneral
             {
                 Profile = profile,
-                BlogThemes = storage.GetThemes(),
+                BlogThemes = BlogSettings.BlogThemes,
                 Title = BlogSettings.Title,
                 Description = BlogSettings.Description,
                 BlogTheme = BlogSettings.Theme,
@@ -131,7 +131,7 @@ namespace Blogifier.Core.Controllers
         public IActionResult General(SettingsGeneral model)
         {
             var storage = new BlogStorage("");
-            model.BlogThemes = storage.GetThemes();
+            model.BlogThemes = BlogSettings.BlogThemes;
             model.Profile = GetProfile();
 
             if (ModelState.IsValid)

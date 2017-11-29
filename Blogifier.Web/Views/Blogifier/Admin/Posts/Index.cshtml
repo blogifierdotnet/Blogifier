@@ -46,8 +46,8 @@
         qs += $"&cats={cats}";
     }
 
-    var olderPage = $"admin?page={pgr.Older}{qs}";
-    var newerPage = $"admin?page={pgr.Newer}{qs}";
+    var olderPage = $"admin/posts?page={pgr.Older}{qs}";
+    var newerPage = $"admin/posts?page={pgr.Newer}{qs}";
     var returnUrl = qs.Length == 0 ? "admin" : $"admin?{qs.Substring(1)}";
 }
 

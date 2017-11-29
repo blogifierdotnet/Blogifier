@@ -24,14 +24,6 @@ namespace Blogifier.Tests.Services.FileSystem
         }
 
         [Fact]
-        public void CanLoadThemesFromThemesFolder()
-        {
-            var result = _storage.GetThemes();
-            Assert.True(result.Count > 0);
-            Assert.True(result[0].Text == "Standard");
-        }
-
-        [Fact]
         public void CanCreateDeleteFolder()
         {
             // foo

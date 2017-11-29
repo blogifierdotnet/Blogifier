@@ -1,4 +1,7 @@
-﻿namespace Blogifier.Core.Common
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+
+namespace Blogifier.Core.Common
 {
     public class BlogSettings
     {
@@ -9,6 +12,8 @@
         public static string Theme { get; set; } = "OneFour";
         public static string Head { get; set; } = "";
         public static string Footer { get; set; } = "";
+
+        public static IList<SelectListItem> BlogThemes { get; set; }
 
         // posts
         public static int ItemsPerPage { get; set; } = 10;
