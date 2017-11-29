@@ -44,6 +44,18 @@ textarea.form-control {
 }
 // custom control
 
+.custom-control-single {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  width: 1rem;
+  height: 1rem;
+
+  .custom-control-indicator {
+    top: 0;
+  }
+}
+
 .custom-control-input:checked ~ .custom-control-indicator {
   background-color: $cl-bf;
 }

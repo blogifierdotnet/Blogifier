@@ -1,6 +1,6 @@
 // search
 
-.bf-posts-search {
+.bf-posts-form-search {
   padding: 2rem;
 
   .form-control {
@@ -12,15 +12,6 @@
       font-style: italic;
       font-size: .75rem;
     }
-  }
-  @media screen and (max-width: 991px) {
-    // padding: 0;
-    //
-    // .form-control {
-    //   border: none;
-    //   padding: 0 1rem;
-    //   height: 3.25rem;
-    // }
   }
 }
 // filters
