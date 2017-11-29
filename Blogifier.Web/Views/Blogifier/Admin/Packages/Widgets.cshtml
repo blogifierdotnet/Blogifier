@@ -16,6 +16,52 @@
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
     </div>
     <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+
+    <!-- Package Info -->
+    <button type="button" class="btn btn-sm btn-primary btn-rounded ml-auto" data-toggle="modal" data-target="#packageInfo">About</button>
+    <div class="modal fade" id="packageInfo" tabindex="-1" role="dialog" aria-labelledby="packageInfoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="packageInfoLabel">Package Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="bf-package-info">
+                    <div class="bf-package-info-cover">
+                        <img src="/embedded/lib/img/cover.png" alt="Package Title" />
+                    </div>
+                    <div class="bf-package-info-body">
+                        <div class="bf-package-info-header">
+                            <img class="bf-package-info-logo" src="/embedded/lib/img/cover.png" alt="Package Title" />
+                            <h4 class="bf-package-info-title">Package Title</h4>
+                            <div class="bf-package-info-rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus deleniti voluptas, magni voluptatum aut reprehenderit fugiat cumque in, molestias laudantium inventore, saepe hic incidunt repellat eius. Quisquam, eum saepe deserunt.</p>
+                        <hr class="my-4" />
+                        <table class="table bf-package-info-table">
+                            <tr>
+                                <td>Version</td>
+                                <td>4.13.0</td>
+                            </tr>
+                            <tr>
+                                <td>Updated</td>
+                                <td>November 20, 2017</td>
+                            </tr>
+                            <tr>
+                                <td>Installs</td>
+                                <td>48894</td>
+                            </tr>
+                            <tr>
+                                <td>Developer</td>
+                                <td><a class="mr-3" href="#" target="_blank">Ruslan Tur</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Package Info -->
 </div>
 <!--/Toolbar -->
 
@@ -32,11 +78,11 @@
                 </label>
                 @if (item.HasSettings)
                 {
-                <a class="bf-list-item-link" href="~/blogifier/widgets/@item.Title/settings">@item.Description</a>
+                    <a class="bf-list-item-link" href="~/blogifier/widgets/@item.Title/settings">@item.Description</a>
                 }
                 else
                 {
-                <div class="bf-list-item-name">@item.Description</div>
+                    <div class="bf-list-item-name">@item.Description</div>
                 }
                 <span class="bf-list-item-status bf-list-item-status-@publishedClass ml-auto" data-tooltip title="@publishedClass"><i class="fa fa-circle"></i></span>
             </li>
