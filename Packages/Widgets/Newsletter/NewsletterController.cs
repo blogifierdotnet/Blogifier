@@ -11,20 +11,39 @@ using System.Threading.Tasks;
 
 namespace Newsletter
 {
-    [Authorize]
-    [Route("admin/[controller]")]
-    public class PackagesController : Controller
+    [Route("blogifier/widgets/[controller]")]
+    public class NewsletterController : Controller
     {
         IUnitOfWork _db;
         static readonly string key = "NEWSLETTER";
 
-        public PackagesController(IUnitOfWork db)
+        public NewsletterController(IUnitOfWork db)
         {
             _db = db;
         }
 
-        [VerifyProfile]
-        [HttpGet("widgets/Newsletter")]
+        [HttpPut("subscribe")]
+        public async Task Subscribe([FromBody]CustomFieldItem item)
+        {
+            var emails = Emails();
+
+            if (emails != null)
+            {
+                if (!emails.Contains(item.CustomValue))
+                {
+                    emails.Add(item.CustomValue);
+                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, string.Join(",", emails));
+                }
+            }
+            else
+            {
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, item.CustomValue);
+            }
+        }
+
+        [Authorize]
+        [MustBeAdmin]
+        [HttpGet("settings")]
         public IActionResult Settings(string search = "")
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
@@ -46,26 +65,9 @@ namespace Newsletter
             return View("~/Views/Shared/Components/Newsletter/Settings.cshtml", model);
         }
 
-        [HttpPut("blogifier/api/newsletter/subscribe")]
-        public async Task Subscribe([FromBody]CustomFieldItem item)
-        {
-            var emails = Emails();
-
-            if (emails != null)
-            {
-                if (!emails.Contains(item.CustomValue))
-                {
-                    emails.Add(item.CustomValue);
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, string.Join(",", emails));
-                }               
-            }
-            else
-            {
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, item.CustomValue);
-            }
-        }
-
-        [HttpPut("blogifier/api/newsletter/remove/{id}")]
+        [Authorize]
+        [MustBeAdmin]
+        [HttpPut("remove/{id}")]
         public async Task Remove(string id)
         {
             var emails = Emails();

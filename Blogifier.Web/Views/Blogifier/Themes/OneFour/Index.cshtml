@@ -44,5 +44,7 @@
             }
         }
         @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Pager.cshtml", Model.Pager)
+
+        @await helper.InvokeAsync(Component, "Newsletter")       
     </div>
 </div>

@@ -15,7 +15,7 @@ var newsletter = function () {
         }
 
         $.ajax({
-            url: '/blogifier/api/newsletter/subscribe',
+            url: root + 'blogifier/widgets/newsletter/subscribe',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(json),
