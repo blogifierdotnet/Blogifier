@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blogifier\Admin\Packages\Themes.cshtml" />
-    <EmbeddedResource Include="Views\Blogifier\Admin\Packages\Widgets.cshtml" />
-    <EmbeddedResource Include="wwwroot\admin\js\app\packagesController.js" />
+    <EmbeddedResource Include="Views\Blogifier\**\Single.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,9 +31,5 @@
     <Exec Command="xcopy &quot;$(SolutionDir)Packages\Widgets\Newsletter\bin\Debug\netcoreapp2.0\Newsletter.dll&quot; &quot;$(TargetDir)&quot; /Y" />
     <Exec Command="xcopy &quot;$(SolutionDir)Packages\Widgets\PostList\bin\Debug\netcoreapp2.0\PostList.dll&quot; &quot;$(TargetDir)&quot; /Y" />
   </Target>
-
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
 
 </Project>

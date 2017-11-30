@@ -122,29 +122,43 @@ namespace Blogifier.Core
             {
                 services.Configure<RazorViewEngineOptions>(options =>
                 {
-                    try
-                    {
-                        // load blog themes list from physical file provider
-                        var themes = options.FileProviders[0].GetDirectoryContents("/Views/Blogifier/Themes");
-
-                        BlogSettings.BlogThemes = new List<SelectListItem>();
-                        BlogSettings.BlogThemes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
-
-                        foreach (var theme in themes)
-                        {
-                            BlogSettings.BlogThemes.Add(new SelectListItem {
-                                Text = theme.Name,
-                                Value = theme.Name
-                            });
-                        }
-                    }
-                    catch { }
-
                     foreach (var assembly in GetAssemblies())
                     {
                         options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
                     }
                 });
+
+                LoadThemes();
+            }
+            catch { }
+        }
+
+        static void LoadThemes()
+        {
+            /*
+            This code relies on Blogifier.Web.csproj to have this line:
+            <EmbeddedResource Include="Views\Blogifier\**\Single.cshtml" />
+            We need it to populate list of installed themes when project
+            deployed precompiled and file system not accessible
+            */
+            try
+            {
+                var assembly = Assembly.LoadFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Blogifier.Web.dll"));
+                var provider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
+                var resources = provider.GetDirectoryContents("/");
+
+                BlogSettings.BlogThemes = new List<SelectListItem>();
+                BlogSettings.BlogThemes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
+
+                foreach (var rsrc in resources)
+                {
+                    var theme = rsrc.Name.Replace("Views.Blogifier.Themes.", "").Replace(".Single.cshtml", "");
+                    BlogSettings.BlogThemes.Add(new SelectListItem
+                    {
+                        Text = theme,
+                        Value = theme
+                    });
+                }
             }
             catch { }
         }
