@@ -145,7 +145,7 @@
 <!-- Empty -->
 @if (Model.BlogPosts.Count() == 0)
 {
-    <div class="bf-posts-empty">
+    <div class="bf-list-empty">
         No posts found!
     </div>
 }
@@ -153,16 +153,16 @@
 <!-- Pagination -->
 @if (pgr.ShowNewer || pgr.ShowOlder)
 {
-    <ul class="bf-posts-pagination d-flex">
+    <ul class="bf-pagination d-flex">
         @if (pgr.ShowOlder)
         {
-            <li class="item"><a class="item-link" href="~/@olderPage"><i class="fa fa-chevron-left"></i></a></li>
+            <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/@olderPage"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
         }
         @if (pgr.ShowNewer)
                 {
-            <li class="item"><a class="item-link" href="~/@newerPage"><i class="fa fa-chevron-right"></i></a></li>
+            <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/@newerPage"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
         }
-        <li class="item"><span class="item-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+        <li class="bf-pagination-item"><span class="bf-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
     </ul>
 }
 <!--/Pagination -->

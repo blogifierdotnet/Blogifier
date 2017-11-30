@@ -73,8 +73,8 @@ var postsController = function(dataService) {
   }
 
   function loading() {
-    $(postActionButtons).attr('disabled', 'disabled');
-    $('.spin-icon').fadeIn();
+    $(actionBtns).attr('disabled', 'disabled');
+    $('.loading').fadeIn();
   }
 
   function reload() {
