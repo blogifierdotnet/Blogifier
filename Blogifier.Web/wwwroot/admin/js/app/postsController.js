@@ -79,7 +79,7 @@ var postsController = function(dataService) {
 
   function reload() {
     setTimeout(function() {
-      window.location.href = webRoot + 'admin/posts';
+      window.location.href = webRoot + 'admin/blogposts';
     }, 1000);
   }
 
@@ -93,7 +93,7 @@ var postsController = function(dataService) {
       return this.value;
     }).get();
 
-    var url = webRoot + "admin/posts?user=" + user + "&status=" + status;
+    var url = webRoot + "admin/blogposts?user=" + user + "&status=" + status;
     if (cats.length > 0) {
       url = url + "&cats=" + cats;
     }

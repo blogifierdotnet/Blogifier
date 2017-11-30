@@ -20,7 +20,7 @@ namespace Blogifier.Core.Controllers
 {
     [Authorize]
     [Route("admin/[controller]")]
-    public class PostsController : Controller
+    public class BlogPostsController : Controller
 	{
 		private readonly string _theme;
         private readonly ILogger _logger;
@@ -29,7 +29,7 @@ namespace Blogifier.Core.Controllers
 		IRssService _rss;
         ISearchService _search;
 
-		public PostsController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger, ICompositeViewEngine engine)
+		public BlogPostsController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger, ICompositeViewEngine engine)
 		{
 			_db = db;
 			_rss = rss;

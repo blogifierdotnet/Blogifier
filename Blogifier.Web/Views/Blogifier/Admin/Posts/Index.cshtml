@@ -46,8 +46,8 @@
         qs += $"&cats={cats}";
     }
 
-    var olderPage = $"admin/posts?page={pgr.Older}{qs}";
-    var newerPage = $"admin/posts?page={pgr.Newer}{qs}";
+    var olderPage = $"admin/blogposts?page={pgr.Older}{qs}";
+    var newerPage = $"admin/blogposts?page={pgr.Newer}{qs}";
     var returnUrl = qs.Length == 0 ? "admin" : $"admin?{qs.Substring(1)}";
 }
 
@@ -95,7 +95,7 @@
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="bf-list-item d-flex align-items-center">
             <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
-            <a class="bf-list-item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user">@item.Title</a>
+            <a class="bf-list-item-link" href="~/admin/blogposts/editor/@item.BlogPostId?user=@user">@item.Title</a>
             <span class="bf-list-item-status bf-list-item-status-@postStatus ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
             <span class="bf-list-item-date ml-3 d-none d-lg-block">@publishedLbl</span>
             @if (Model.Profile.IsAdmin)
@@ -121,7 +121,7 @@
         if (curPost == 0) { curPost = item.BlogPostId; }
         <div class="post-grid-col">
             <div class="post-grid-item">
-                <a class="item-link" href="~/admin/posts/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
+                <a class="item-link" href="~/admin/blogposts/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
                 <div class="item-info d-flex align-items-center">
                     <label class="item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
                     <span class="item-date">@publishedLbl</span>
