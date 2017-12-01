@@ -1,18 +1,14 @@
 ﻿@model Blogifier.Core.Data.Models.AdminSettingsModel
 @using Blogifier.Core.Common
 @{
+    ViewData["Title"] = "Newsletter";
     Layout = ApplicationSettings.PkgSettingsLayout;
     var emails = (List<string>)ComponentHelper.GetValue(Model.Settings, "Emails");
 }
 
 <!-- Toolbar -->
-<div class="bf-toolbar d-flex">
-    <label class="custom-control custom-checkbox my-auto mr-3"><input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
-    <div id="postActionButtons" class="btn-group mr-3">
-        <a asp-controller="Packages" asp-action="Widgets" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px">
-            <i class="fa fa-arrow-left"></i> &nbsp; Back
-        </a>
-    </div>
+<div class="bf-toolbar d-flex align-items-center">
+    <label class="custom-control custom-checkbox custom-control-single mr-3"><input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
     <div id="postActionButtons" class="btn-group mr-3">
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return newsletter.remove()" title="Remove"><i class="fa fa-trash"></i></button>
     </div>
@@ -22,17 +18,17 @@
 
 @if (emails != null && emails.Any())
 {
-    <ul class="bf-users-list d-block" aria-label="newsletter">
+    <ul class="bf-list d-block" aria-label="newsletter">
         @foreach (var item in emails)
         {
-            <li class="post-list-item d-flex">
-                <label class="item-select custom-control custom-checkbox mr-3 my-auto">
+            <li class="bf-list-item d-flex align-items-center">
+                <label class="bf-list-item-select custom-control custom-checkbox mr-3 my-auto">
                     <input type="checkbox" value="@item" class="item-checkbox custom-control-input">
                     <span class="item-control custom-control-indicator"></span>
                 </label>
-                <div class="bf-posts-empty" style="margin-top: 13px">@item</div>
+                <div class="bf-list-item-name">@item</div>
             </li>
-        }
+        } 
     </ul>
 }
 else

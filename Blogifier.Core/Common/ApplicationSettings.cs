@@ -10,7 +10,7 @@ namespace Blogifier.Core.Common
 
         // default value is "blog/" for blogifier to use "site.com/blog"
         // if empty string, blog takes over the application
-        // so instead of "site.com/blog" blogifier will be using "site.com" 
+        // so instead of "site.com/blog" blogifier will be using "site.com"
         public static string BlogRoute { get; set; } = "blog/";
 
         public static bool EnableLogging { get; set; }
@@ -24,7 +24,7 @@ namespace Blogifier.Core.Common
 
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
 
-        public static string PkgSettingsLayout { get; set; } = "~/Views/Blogifier/Admin/_Layout/_Packages.cshtml";
+        public static string PkgSettingsLayout { get; set; } = "~/Views/Blogifier/Admin/_Layout/_PackagesSettings.cshtml";
 
         #endregion
 

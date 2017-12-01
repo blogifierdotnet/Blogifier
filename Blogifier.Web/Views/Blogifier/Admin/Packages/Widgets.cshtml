@@ -16,52 +16,6 @@
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
     </div>
     <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
-
-    <!-- Package Info -->
-    <button type="button" class="btn btn-sm btn-primary btn-rounded ml-auto" data-toggle="modal" data-target="#packageInfo">About</button>
-    <div class="modal fade" id="packageInfo" tabindex="-1" role="dialog" aria-labelledby="packageInfoLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="packageInfoLabel">Package Info</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
-                </div>
-                <div class="bf-package-info">
-                    <div class="bf-package-info-cover">
-                        <img src="/embedded/lib/img/cover.png" alt="Package Title" />
-                    </div>
-                    <div class="bf-package-info-body">
-                        <div class="bf-package-info-header">
-                            <img class="bf-package-info-logo" src="/embedded/lib/img/cover.png" alt="Package Title" />
-                            <h4 class="bf-package-info-title">Package Title</h4>
-                            <div class="bf-package-info-rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus deleniti voluptas, magni voluptatum aut reprehenderit fugiat cumque in, molestias laudantium inventore, saepe hic incidunt repellat eius. Quisquam, eum saepe deserunt.</p>
-                        <hr class="my-4" />
-                        <table class="table bf-package-info-table">
-                            <tr>
-                                <td>Version</td>
-                                <td>4.13.0</td>
-                            </tr>
-                            <tr>
-                                <td>Updated</td>
-                                <td>November 20, 2017</td>
-                            </tr>
-                            <tr>
-                                <td>Installs</td>
-                                <td>48894</td>
-                            </tr>
-                            <tr>
-                                <td>Developer</td>
-                                <td><a class="mr-3" href="#" target="_blank">Ruslan Tur</a></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Package Info -->
 </div>
 <!--/Toolbar -->
 
@@ -85,6 +39,7 @@
                     <div class="bf-list-item-name">@item.Description</div>
                 }
                 <span class="bf-list-item-status bf-list-item-status-@publishedClass ml-auto" data-tooltip title="@publishedClass"><i class="fa fa-circle"></i></span>
+                <button type="button" class="btn-unstyled ml-2" data-toggle="modal" data-target="#packageInfo" data-title="@item.Title" data-desc="@item.Description" data-version="1.0" data-logo="/embedded/lib/img/cover.png" data-cover="/embedded/lib/img/cover.png" data-date="November 20, 2017" data-installs="48894" data-developer="Ruslan Tur"><i class="fa fa-info-circle"></i></button>
             </li>
         }
     </ul>
@@ -96,6 +51,76 @@ else
     </div>
 }
 
+
+<!-- Package Info -->
+<div class="modal fade" id="packageInfo" tabindex="-1" role="dialog" aria-labelledby="packageInfoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageInfoLabel">Package Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="bf-package-info">
+                <div class="bf-package-info-cover">
+                    <img src="" alt="Package Title" />
+                </div>
+                <div class="bf-package-info-body">
+                    <div class="bf-package-info-header">
+                        <img class="bf-package-info-logo" src="" alt="Package Title" />
+                        <h4 class="bf-package-info-title">Package Title</h4>
+                        <div class="bf-package-info-rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
+                    </div>
+                    <p class="bf-package-info-desc"></p>
+                    <hr class="my-4" />
+                    <table class="table bf-package-info-table">
+                        <tr>
+                            <td>Version</td>
+                            <td class="bf-package-info-version"></td>
+                        </tr>
+                        <tr>
+                            <td>Updated</td>
+                            <td class="bf-package-info-date"></td>
+                        </tr>
+                        <tr>
+                            <td>Installs</td>
+                            <td class="bf-package-info-installs"></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td class="bf-package-info-developer"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Package Info -->
+
+
 @section Scripts{
     <script src="~/admin/js/app/packagesController.js"></script>
+    <script>
+        $('#packageInfo').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var modalPackage_Title = button.data('title')
+            var modalPackage_Desc = button.data('desc')
+            var modalPackage_Logo = button.data('logo')
+            var modalPackage_Cover = button.data('cover')
+            var modalPackage_Version = button.data('version')
+            var modalPackage_Date = button.data('date')
+            var modalPackage_Installs = button.data('installs')
+            var modalPackage_Developer = button.data('developer')
+
+            var modal = $(this)
+            modal.find('.bf-package-info .bf-package-info-title').text(modalPackage_Title)
+            modal.find('.bf-package-info .bf-package-info-desc').text(modalPackage_Desc)
+            modal.find('.bf-package-info .bf-package-info-logo').attr("src", modalPackage_Logo)
+            modal.find('.bf-package-info .bf-package-info-cover img').attr("src", modalPackage_Cover)
+            modal.find('.bf-package-info .bf-package-info-version').text(modalPackage_Version)
+            modal.find('.bf-package-info .bf-package-info-date').text(modalPackage_Date)
+            modal.find('.bf-package-info .bf-package-info-installs').text(modalPackage_Installs)
+            modal.find('.bf-package-info .bf-package-info-developer').text(modalPackage_Developer)
+        });
+    </script>
 }
