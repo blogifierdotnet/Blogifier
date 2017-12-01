@@ -201,6 +201,9 @@ namespace Blogifier.Core
                         if (section["BlogThemesFolder"] != null)
                             ApplicationSettings.BlogThemesFolder = section.GetValue<string>("BlogThemesFolder");
 
+                        if (section["PkgSettingsLayout"] != null)
+                            ApplicationSettings.PkgSettingsLayout = section.GetValue<string>("PkgSettingsLayout");
+
                         if (section["SupportedStorageFiles"] != null)
                             BlogSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
 

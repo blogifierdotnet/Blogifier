@@ -1,7 +1,7 @@
 ﻿@model Blogifier.Core.Data.Models.AdminSettingsModel
 @using Blogifier.Core.Common
 @{
-    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+    Layout = ApplicationSettings.PkgSettingsLayout;
     var emails = (List<string>)ComponentHelper.GetValue(Model.Settings, "Emails");
 }
 
