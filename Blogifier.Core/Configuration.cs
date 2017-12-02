@@ -7,6 +7,7 @@ using Blogifier.Core.Services;
 using Blogifier.Core.Services.Data;
 using Blogifier.Core.Services.Email;
 using Blogifier.Core.Services.FileSystem;
+using Blogifier.Core.Services.Packages;
 using Blogifier.Core.Services.Routing;
 using Blogifier.Core.Services.Search;
 using Blogifier.Core.Services.Syndication.Rss;
@@ -41,6 +42,7 @@ namespace Blogifier.Core
             services.AddTransient<IComponentHelper, ComponentHelper>();
             services.AddTransient<IEmailService, SendGridService>();
             services.AddTransient<IConfigService, ConfigService>();
+            services.AddTransient<IPackageService, PackageService>();
 
             // add blog route from ApplicationSettings
             services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>

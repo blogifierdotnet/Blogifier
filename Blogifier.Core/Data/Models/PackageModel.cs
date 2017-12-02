@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,7 @@ namespace Blogifier.Core.Data.Models
 
     public class AdminSettingsModel : AdminBaseModel
     {
+        public PackageListItem PackageItem { get; set; }
         public dynamic Settings { get; set; }
     }
 
@@ -27,6 +29,7 @@ namespace Blogifier.Core.Data.Models
         public string Description { get; set; }
         public string Icon { get; set; }
         public string Cover { get; set; }
+        public string Author { get; set; }
         public string ProjectUrl { get; set; }
         public string Tags { get; set; }
 
@@ -35,6 +38,7 @@ namespace Blogifier.Core.Data.Models
         public double Rating { get; set; }
 
         public string Version { get; set; }
+        public DateTime LastUpdated { get; set; }
         public bool HasSettings { get; set; }
         public bool Enabled { get; set; }
     }

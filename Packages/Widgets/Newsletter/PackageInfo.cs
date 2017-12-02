@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Data.Models;
+using System.Reflection;
 
 public class PackageInfo : IPackageInfo
 {
@@ -7,10 +8,13 @@ public class PackageInfo : IPackageInfo
         return new PackageListItem
         {
             Title = "Newsletter",
-            Description = "Newsletter email subscription widget",
+            Version = "1.0.0",
+            Description = "Newsletter widget for Blogifier allows visitors to subscribe to new publications by email.",
             Icon = "https://avatars0.githubusercontent.com/u/19671571?v=4&amp;s=180",
+            Author = "Blogifier",
             ProjectUrl = "https://github.com/blogifierdotnet/Blogifier",
-            Tags = "widget,newsletter,email"
+            Tags = "widget,newsletter,email",
+            LastUpdated = System.IO.File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location)
         };
     }
 }

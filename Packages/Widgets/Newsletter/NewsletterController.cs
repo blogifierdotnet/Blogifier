@@ -59,8 +59,14 @@ namespace Newsletter
                 Emails = emails,
                 Pager = new Pager(1)
             };
-                        
-            var model = new AdminSettingsModel { Profile = profile, Settings = settings };
+
+            var info = new PackageInfo();
+
+            var model = new AdminSettingsModel {
+                Profile = profile,
+                Settings = settings,
+                PackageItem = info.GetAttributes()
+            };
 
             return View("~/Views/Shared/Components/Newsletter/Settings.cshtml", model);
         }
