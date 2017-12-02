@@ -88,9 +88,9 @@ namespace Blogifier.Core.Services.Packages
                     catch { }
 
                     var disabled = Disabled();
-                    var maxLen = 70;
+                    //var maxLen = 70;
 
-                    item.Description = item.Description.Length > maxLen ? item.Description.Substring(0, maxLen) + "..." : item.Description;
+                    //item.Description = item.Description.Length > maxLen ? item.Description.Substring(0, maxLen) + "..." : item.Description;
                     item.HasSettings = view.Success;
                     item.Enabled = disabled == null || !disabled.Contains(name);
                     widgets.Add(item);

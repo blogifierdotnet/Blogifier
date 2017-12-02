@@ -2,16 +2,11 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Extensions;
 using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.Search;
-using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,23 +15,17 @@ namespace Blogifier.Core.Controllers
 {
     [Authorize]
     [Route("admin/[controller]")]
-    public class BlogPostsController : Controller
+    public class ContentController : Controller
 	{
 		private readonly string _theme;
-        private readonly ILogger _logger;
-        private readonly ICompositeViewEngine _engine;
         IUnitOfWork _db;
-		IRssService _rss;
         ISearchService _search;
 
-		public BlogPostsController(IUnitOfWork db, IRssService rss, ISearchService search, ILogger<AdminController> logger, ICompositeViewEngine engine)
+		public ContentController(IUnitOfWork db, ISearchService search)
 		{
 			_db = db;
-			_rss = rss;
             _search = search;
-            _logger = logger;
-            _engine = engine;
-			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/Posts/";
+			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/Content/";
 		}
 
         [VerifyProfile]

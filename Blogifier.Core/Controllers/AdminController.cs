@@ -29,7 +29,7 @@ namespace Blogifier.Core.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Redirect("~/admin/blogposts");
+            return Redirect("~/admin/content");
         }
 
         [VerifyProfile]
