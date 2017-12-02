@@ -1,5 +1,6 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
 @using Blogifier.Core.Common
+@using Newtonsoft.Json
 @{
     ViewData["Title"] = "Widgets";
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
@@ -81,10 +82,10 @@ else
                             <td>Updated</td>
                             <td class="bf-package-info-date"></td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <td>Installs</td>
                             <td class="bf-package-info-installs"></td>
-                        </tr>
+                        </tr>*@
                         <tr>
                             <td>Developer</td>
                             <td class="bf-package-info-developer"></td>
@@ -101,26 +102,6 @@ else
 @section Scripts{
     <script src="~/admin/js/app/packagesController.js"></script>
     <script>
-        $('#packageInfo').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var modalPackage_Title = button.data('title')
-            var modalPackage_Desc = button.data('desc')
-            var modalPackage_Logo = button.data('logo')
-            var modalPackage_Cover = button.data('cover')
-            var modalPackage_Version = button.data('version')
-            var modalPackage_Date = button.data('date')
-            var modalPackage_Installs = button.data('installs')
-            var modalPackage_Developer = button.data('developer')
-
-            var modal = $(this)
-            modal.find('.bf-package-info .bf-package-info-title').text(modalPackage_Title)
-            modal.find('.bf-package-info .bf-package-info-desc').text(modalPackage_Desc)
-            modal.find('.bf-package-info .bf-package-info-logo').attr("src", modalPackage_Logo)
-            modal.find('.bf-package-info .bf-package-info-cover img').attr("src", modalPackage_Cover)
-            modal.find('.bf-package-info .bf-package-info-version').text(modalPackage_Version)
-            modal.find('.bf-package-info .bf-package-info-date').text(modalPackage_Date)
-            modal.find('.bf-package-info .bf-package-info-installs').text(modalPackage_Installs)
-            modal.find('.bf-package-info .bf-package-info-developer').text(modalPackage_Developer)
-        });
+        packagesController.packages = eval(@Html.Raw(JsonConvert.SerializeObject(Model.Packages, Formatting.Indented)))
     </script>
 }

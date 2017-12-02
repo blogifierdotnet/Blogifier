@@ -75,10 +75,10 @@ namespace Blogifier.Core.Services.Packages
                             var attributes = info.GetAttributes();
                             if(attributes != null)
                             {
-                                item.Author = attributes.Author;
-                                item.Cover = attributes.Cover;
+                                item.Author = string.IsNullOrEmpty(attributes.Author) ? "Unknown" : attributes.Author;
+                                item.Cover = string.IsNullOrEmpty(attributes.Cover) ? BlogSettings.Cover : attributes.Cover;
                                 item.Description = attributes.Description;
-                                item.Icon = attributes.Icon;
+                                item.Icon = string.IsNullOrEmpty(attributes.Icon) ? BlogSettings.Logo : attributes.Icon;
                                 item.ProjectUrl = attributes.ProjectUrl;
                                 item.Tags = attributes.Tags;
                                 item.Title = attributes.Title;
