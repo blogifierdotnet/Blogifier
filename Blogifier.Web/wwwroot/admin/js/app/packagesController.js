@@ -18,6 +18,17 @@ var packagesController = function (dataService) {
         });
     }
 
+    function disableSingle(id) {
+        dataService.put('blogifier/api/packages/disable/' + id, obj, doneSingle, fail);
+    }
+    function enableSingle(id) {
+        dataService.put('blogifier/api/packages/enable/' + id, obj, doneSingle, fail);
+    }
+
+    function doneSingle(data) {
+        toastr.success('Updated');
+    }
+
     function done(data) {
         setTimeout(function () {
             window.location.href = getUrl('admin/packages/widgets');
@@ -32,6 +43,8 @@ var packagesController = function (dataService) {
     return {
         enable: enable,
         disable: disable,
+        disableSingle: disableSingle,
+        enableSingle: enableSingle,
         packages: packages
     }
 }(DataService);

@@ -14,9 +14,8 @@
                 <a asp-controller="Packages" asp-action="Widgets"><i class="fa fa-chevron-left mr-2"></i>Back</a>
             </div>
             <div class="btn-group d-flex">
-                <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded w-100">Disable</button>
-                @*<button type="button" class="btn btn-outline-secondary btn-sm btn-rounded w-100">Enable</button>*@
-                <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded w-100" disabled>Delete</button>
+                <button type="button" onclick="return packagesController.enableSingle('@info.Title')" class="btn btn-outline-secondary btn-sm btn-rounded w-100">Enable</button>
+                <button type="button" onclick="return packagesController.disableSingle('@info.Title')" class="btn btn-outline-secondary btn-sm btn-rounded w-100">Disable</button>
             </div>
         </div>
         <div class="p-3 mt-auto">
@@ -57,4 +56,5 @@
 </div>
 @section Scripts{
     @RenderSection("Scripts", false)
+    <script src="~/admin/js/app/packagesController.js"></script>
 }
