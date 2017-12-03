@@ -16,7 +16,7 @@ namespace Blogifier.Core.Common
         public static bool EnableLogging { get; set; }
         public static bool UseInMemoryDatabase { get; set; }
         public static bool InitializeDatabase { get; set; } = true;
-        public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
+        public static string ConnectionString { get; set; } = "DataSource=Data\\app.db";
 
         public static string BlogStorageFolder { get; set; } = "blogifier/data";
         public static string BlogAdminFolder { get; set; } = "Views/Embedded/Admin";
