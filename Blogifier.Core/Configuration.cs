@@ -27,10 +27,16 @@ using System.Reflection;
 
 namespace Blogifier.Core
 {
-    public class Configuration
+    public static class Configuration
     {
-		public static void InitServices(IServiceCollection services, Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
-		{   
+        public static IServiceCollection AddBlogifier(this IServiceCollection services, Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
+        {
+            InitServices(services, databaseOptions, config);
+            return services;
+        }
+
+        public static void InitServices(IServiceCollection services, Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
+        {
             if(config != null)
             {
                 LoadFromConfigFile(config);
@@ -61,6 +67,12 @@ namespace Blogifier.Core
 
 			AddFileProviders(services);
 		}
+
+        public static IApplicationBuilder UseBlogifier(this IApplicationBuilder app, IHostingEnvironment env)
+        {
+            InitApplication(app, env);
+            return app;
+        }
 
 		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env)
 		{
