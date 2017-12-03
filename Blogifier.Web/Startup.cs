@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Middleware;
+﻿using Blogifier.Core;
+using Blogifier.Core.Middleware;
 using Blogifier.Data;
 using Blogifier.Models;
 using Microsoft.AspNetCore.Builder;
@@ -53,7 +54,7 @@ namespace Blogifier
                 }
             });
 
-            Core.Configuration.InitServices(services, databaseOptions, Configuration);
+            services.AddBlogifier(databaseOptions, Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -77,7 +78,7 @@ namespace Blogifier
                     template: "{controller=Blog}/{action=Index}/{id?}");
             });
 
-            Core.Configuration.InitApplication(app, env);
+            app.UseBlogifier(env);
 
             if (!Core.Common.ApplicationSettings.UseInMemoryDatabase && Core.Common.ApplicationSettings.InitializeDatabase)
             {
