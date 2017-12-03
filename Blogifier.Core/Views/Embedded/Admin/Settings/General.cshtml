@@ -1,0 +1,114 @@
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.SettingsGeneral
+@{
+    ViewData["Title"] = "General Settings";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
+}
+<form method="post" asp-controller="Settings" asp-action="General" asp-antiforgery="true">
+    <div class="bf-content bf-content-boxed bf-settings">
+        <div class="bf-title d-none d-lg-block"><span>@ViewData["Title"]</span></div>
+        <div class="form-group">
+            <label class="form-group-label">Title</label>
+            <input type="text" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Description</label>
+            <textarea asp-for="Description" type="text" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Logo</label>
+            <div class="input-group">
+                <input type="text" asp-for="Logo" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> Select</button>
+                </span>
+            </div>
+        </div>
+        @*<div class="form-group">
+                <label class="form-group-label">Avatar</label>
+                <div class="input-group">
+                    <input type="text" asp-for="Avatar" class="form-control" readonly />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppAvatarCallback);"> upload</button>
+                    </span>
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label class="form-group-label">Cover</label>
+            <div class="input-group">
+                <input type="text" asp-for="Image" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> Select</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">SendGrid API Key</label>
+            <input type="text" asp-for='EmailKey' class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Theme</label>
+            <select asp-for="BlogTheme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
+        </div>
+        <div class="form-group d-md-flex my-4">
+            <div>
+                <label class="form-group-label">Custom Code</label>
+                <p class="text-muted my-auto small">Add Custom Code to the Footer or in the &lt;head&gt; tag.</p>
+            </div>
+            <a href="#" class="btn btn-sm btn-outline-dark ml-auto" data-toggle="modal" data-target="#customCodeModal">Add Code</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+
+    <!-- Custom Code Modal -->
+    <div class="modal fade" id="customCodeModal" tabindex="-1" role="dialog" aria-labelledby="customCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customCodeModalLabel">Custom Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-group-label">&lt;head&gt;</label>
+                        <p class="small mb-1">Example: Google Analytics, Google Webmaster Verification, etc.</p>
+                        <textarea asp-for="BlogHead" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label class="form-group-label">Footer</label>
+                        <p class="small mb-1">Example: Google Analytics, JavaScripts, etc.</p>
+                        <textarea asp-for="BlogFooter" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
+
+@section Scripts{
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script>toastr.success('@ViewBag.Message')</script>
+    }
+    <script>
+        var updateAppCoverCallback = function (data) {
+            $('#Image').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateAppLogoCallback = function (data) {
+            $('#Logo').val(data.url);
+            toastr.success('Updated');
+        }
+        var updateAppAvatarCallback = function (data) {
+            $('#Avatar').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
+    <script src="~/embedded/admin/js/app/fileManagerController.js"></script>
+}

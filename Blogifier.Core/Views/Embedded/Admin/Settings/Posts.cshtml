@@ -1,0 +1,49 @@
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.SettingsPosts
+@{
+    ViewData["Title"] = "Posts Settings";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
+}
+<div class="bf-content bf-content-boxed bf-settings">
+    <div class="bf-title d-none d-lg-block"><span>@ViewData["Title"]</span></div>
+    <form method="post" asp-controller="Settings" asp-action="Posts" asp-antiforgery="true">
+        <div class="form-group">
+            <label class="form-group-label">Items per page</label>
+            <input asp-for="ItemsPerPage" type="number" class="form-control" />
+            <span asp-validation-for="ItemsPerPage" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Default Post image</label>
+            <div class="input-group">
+                <input type="text" asp-for="PostImage" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppPostImageCallback);">Select</button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Custom Code</label>
+            <p class="small">Example: Comment systems, Share buttons or any other custom codes that you want to include inside of each post.</p>
+            <textarea asp-for='PostFooter' class="form-control" rows="3"></textarea>
+        </div>
+        <div id="btnSave" class="clearfix">
+            <button type="submit" class="btn btn-primary btn-main">Save</button>
+        </div>
+    </form>
+</div>
+
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
+
+@section Scripts{
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script>toastr.success('@ViewBag.Message')</script>
+    }
+    <script>
+        var updateAppPostImageCallback = function (data) {
+            $('#PostImage').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
+    <script src="~/embedded/admin/js/app/fileManagerController.js"></script>
+}

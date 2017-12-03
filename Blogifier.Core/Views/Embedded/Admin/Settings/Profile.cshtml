@@ -1,0 +1,60 @@
+﻿@using Blogifier.Core.Common
+@model Blogifier.Core.Data.Models.SettingsProfile
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
+    if (!Model.CustomFields.ContainsKey("SendGridApiKey")) { Model.CustomFields.Add("SendGridApiKey", ""); }
+}
+<div class="bf-content bf-content-boxed bf-settings">
+    <div class="bf-title d-none d-lg-block"><span>@ViewData["Title"]</span></div>
+    <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
+        <div class="form-group">
+            <label class="form-group-label">Author Name</label>
+            <input type="text" asp-for="AuthorName" class="form-control" />
+            <span asp-validation-for="AuthorName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="form-group-label">Email Address</label>
+            <input type="text" asp-for="AuthorEmail" class="form-control" />
+            <span asp-validation-for="AuthorEmail" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-group-label">Profile Photo</label>
+            <div class="input-group">
+                <input type="text" asp-for="Avatar" class="form-control" readonly />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);">Select</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-group-label">SendGrid API Key</label>
+            @if (Model.EmailEnabled)
+            {
+                <input type="text" asp-for="CustomFields[Constants.SendGridApiKey]" class="form-control" />
+            }
+            else
+            {
+                <input type="text" asp-for="CustomFields[Constants.SendGridApiKey]" class="form-control" disabled />
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </form>
+</div>
+@Html.Partial($"~/{ApplicationSettings.BlogAdminFolder}/_Shared/_FileManager.cshtml")
+@section Scripts{
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <script>toastr.success('@ViewBag.Message')</script>
+    }
+    <script>
+        var updateAvatarCallback = function (data) {
+            $('#Avatar').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
+    <script src="~/embedded/admin/js/app/fileManagerController.js"></script>
+}

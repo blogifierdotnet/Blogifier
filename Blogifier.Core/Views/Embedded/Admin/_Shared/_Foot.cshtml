@@ -1,0 +1,16 @@
+@using Blogifier.Core.Common
+<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>
+<script src="~/embedded/admin/js/lib/jquery.min.js"></script>
+<script src="~/embedded/admin/js/lib/toastr.min.js"></script>
+<script src="~/embedded/admin/js/lib/popper.min.js"></script>
+<script src="~/embedded/admin/js/lib/bootstrap.min.js"></script>
+<script src="~/embedded/admin/js/app/app.js"></script>
+<script src="~/embedded/admin/js/app/dataService.js"></script>
+<script src="~/embedded/admin/js/app/uploadController.js"></script>
+<script>
+    var webRoot = '@Url.Content("~/")';
+    var blogRoute = '@ApplicationSettings.BlogRoute';
+    function getUrl(str) {
+        return webRoot + str;
+    };
+</script>

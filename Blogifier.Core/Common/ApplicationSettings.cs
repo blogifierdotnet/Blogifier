@@ -19,7 +19,7 @@ namespace Blogifier.Core.Common
         public static string ConnectionString { get; set; } = @"Server=.\SQLEXPRESS;Database=Blogifier;Trusted_Connection=True;";
 
         public static string BlogStorageFolder { get; set; } = "blogifier/data";
-        public static string BlogAdminFolder { get; set; } = "Views/Blogifier/Admin";
+        public static string BlogAdminFolder { get; set; } = "Views/Embedded/Admin";
         public static string BlogThemesFolder { get; set; } = "Views/Blogifier/Themes";
 
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";

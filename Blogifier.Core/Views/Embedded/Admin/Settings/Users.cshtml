@@ -1,0 +1,117 @@
+﻿@using Blogifier.Core.Common
+@model Blogifier.Models.Admin.UsersViewModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Settings.cshtml";
+    var searchTerm = Context.Request.Query["search"];
+
+    var reg = Model.RegisterModel;
+    var pgr = Model.Pager;
+    var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
+    var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
+}
+<div class="bf-settings">
+    <div class="bf-toolbar d-flex align-items-center">
+        <label class="custom-control custom-control-single custom-checkbox mr-3" data-tooltip title="Select All"><input class="custom-control-input" id="selectAll" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+        <button type="button" class="btn btn-primary btn-rounded btn-sm mr-3" data-toggle="modal" data-target="#createUserModal">Create User</button>
+        <div id="multiActionBtns" class="mr-3">
+            <button type="button" class="btn btn-outline-secondary btn-rounded btn-sm btn-icon" disabled="disabled" data-tooltip onclick="return usersController.removeUser()" title="Delete"><i class="fa fa-trash"></i></button>
+        </div>
+        <div class="loading loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    </div>
+    <ul class="bf-list bf-users d-block" aria-label="posts">
+        @foreach (var blog in Model.Blogs)
+        {
+            <li class="bf-list-item d-flex align-items-center">
+                @if (!blog.IsAdmin)
+                {
+                    <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@blog.ProfileId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                }
+                <span class="bf-list-item-name">@blog.AuthorName</span>
+                <span class="bf-list-item-text ml-auto mr-3">@blog.PostCount Posts</span>
+                <a class="bf-list-item-show" href="@blog.Url" target="_blank" role="button"><i class="fa fa-external-link-square"></i></a>
+            </li>
+        }
+    </ul>
+    <!-- Pagination -->
+    @if (pgr.ShowNewer || pgr.ShowOlder)
+    {
+        <ul class="bf-pagination d-flex">
+            @if (pgr.ShowOlder)
+            {
+                <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin/settings/application?page=@pgr.Older"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
+            }
+            @if (pgr.ShowNewer)
+                {
+                <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin/settings/application?page=@pgr.Newer"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
+            }
+            <li class="bf-pagination-item"><span class="bf-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+        </ul>
+    }
+    <!--/Pagination -->
+</div>
+
+<!-- Create User Modal -->
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createUserModalLabel">Create User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Admin" asp-action="Register" asp-route-returnUrl="~/admin/settings/users" method="post">
+                    <div class="form-group">
+                        <label asp-for="RegisterModel.Email"></label>
+                        <input asp-for="RegisterModel.Email" class="form-control" autofocus>
+                        <span asp-validation-for="RegisterModel.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RegisterModel.AuthorName"></label>
+                        <input asp-for="RegisterModel.AuthorName" class="form-control">
+                        <span asp-validation-for="RegisterModel.AuthorName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RegisterModel.Password"></label>
+                        <input asp-for="RegisterModel.Password" class="form-control">
+                        <span asp-validation-for="RegisterModel.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RegisterModel.ConfirmPassword"></label>
+                        <input asp-for="RegisterModel.ConfirmPassword" class="form-control">
+                        <span asp-validation-for="RegisterModel.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label class="custom-control custom-checkbox my-auto mr-3">
+                                <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.IsAdmin">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">  @Html.DisplayNameFor(m => m.RegisterModel.IsAdmin)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox my-auto mr-3">
+                            <input class="custom-control-input" type="checkbox" asp-for="RegisterModel.SendEmailNotification">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">@Html.DisplayNameFor(m => m.RegisterModel.SendEmailNotification)</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/embedded/admin/js/app/usersController.js"></script>
+    @if (ViewData["AdminPage"] != null && (bool)ViewData["AdminPage"])
+    {
+        <script>
+            $('#createUserModal').modal();
+        </script>
+    }
+}

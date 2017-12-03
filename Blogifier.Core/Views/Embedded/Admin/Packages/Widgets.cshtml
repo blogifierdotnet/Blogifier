@@ -1,0 +1,107 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Widgets";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+}
+
+<!-- Toolbar -->
+<div class="bf-toolbar d-flex align-items-center">
+    <label class="custom-control custom-control-single custom-checkbox mr-3" data-tooltip title="Select All">
+        <input class="custom-control-input" type="checkbox" id="selectAll" name="selectAll">
+        <span class="item-control custom-control-indicator"></span>
+    </label>
+    <div id="multiActionBtns" class="btn-group mr-3">
+        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.enable()" title="Enable"><i class="fa fa-check"></i></button>
+        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return packagesController.disable()" title="Disable"><i class="fa fa-minus"></i></button>
+    </div>
+    <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+</div>
+<!--/Toolbar -->
+
+@if (Model.Packages.Any())
+{
+    <ul class="bf-list bf-packages-list" aria-label="widgets">
+        @foreach (var item in Model.Packages)
+        {
+            var publishedClass = item.Enabled ? "published" : "draft";
+            <li class="bf-list-item d-flex align-items-center">
+                <label class="bf-list-item-select custom-control custom-checkbox mr-3">
+                    <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input">
+                    <span class="item-control custom-control-indicator"></span>
+                </label>
+                @if (item.HasSettings)
+                {
+                    <a class="bf-list-item-link" href="~/blogifier/widgets/@item.Title/settings">@item.Description</a>
+                }
+                else
+                {
+                    <div class="bf-list-item-name">@item.Description</div>
+                }
+                <span class="bf-list-item-status bf-list-item-status-@publishedClass ml-auto" data-tooltip title="@publishedClass"><i class="fa fa-circle"></i></span>
+                <button type="button" class="btn-unstyled ml-2" data-toggle="modal" data-target="#packageInfo" data-title="@item.Title" data-desc="@item.Description" data-version="1.0" data-logo="/embedded/lib/img/cover.png" data-cover="/embedded/lib/img/cover.png" data-date="November 20, 2017" data-installs="48894" data-developer="Ruslan Tur"><i class="fa fa-info-circle"></i></button>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="bf-list-empty">
+        No widgets found!
+    </div>
+}
+
+
+<!-- Package Info -->
+<div class="modal fade" id="packageInfo" tabindex="-1" role="dialog" aria-labelledby="packageInfoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageInfoLabel">Package Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="bf-package-info">
+                <div class="bf-package-info-cover">
+                    <img src="" alt="Package Title" />
+                </div>
+                <div class="bf-package-info-body">
+                    <div class="bf-package-info-header">
+                        <img class="bf-package-info-logo" src="" alt="Package Title" />
+                        <h4 class="bf-package-info-title">Package Title</h4>
+                        <div class="bf-package-info-rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
+                    </div>
+                    <p class="bf-package-info-desc"></p>
+                    <hr class="my-4" />
+                    <table class="table bf-package-info-table">
+                        <tr>
+                            <td>Version</td>
+                            <td class="bf-package-info-version"></td>
+                        </tr>
+                        <tr>
+                            <td>Updated</td>
+                            <td class="bf-package-info-date"></td>
+                        </tr>
+                        @*<tr>
+                            <td>Installs</td>
+                            <td class="bf-package-info-installs"></td>
+                        </tr>*@
+                        <tr>
+                            <td>Developer</td>
+                            <td class="bf-package-info-developer"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Package Info -->
+
+
+@section Scripts{
+    <script src="~/embedded/admin/js/app/packagesController.js"></script>
+    <script>
+        packagesController.packages = eval(@Html.Raw(JsonConvert.SerializeObject(Model.Packages, Formatting.Indented)))
+    </script>
+}
