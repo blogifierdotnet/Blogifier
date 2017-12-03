@@ -11,16 +11,18 @@
         {
             avatar = Model.Profile.Avatar;
         }
-        Model.Pager.RouteValue = Model.Profile.Slug + "/" + Model.Category.Slug + "/";
+        Model.Pager.RouteValue = "category/" + Model.Category.Slug + "/";
     }
 }
 <main class="page-category">
     <header class="page-cover" style="background-image: url('@Model.CoverImg')">
-        <div class="container">
-            <h2 class="page-cover-title">@Model.Category.Title</h2>
-            <p class="page-cover-desc">Category</p>
-        </div>
+        <h2 class="page-cover-title">@Model.Category.Title</h2>
+        <p class="page-cover-desc">Category</p>
     </header>
-    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Post.cshtml", Model.Posts)
-    @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/Standard/_Shared/_Pager.cshtml", Model.Pager)
+    <div class="page-content">
+        <div class="container">
+            @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/_Shared/_Post.cshtml", Model.Posts)
+            @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/_Shared/_Pager.cshtml", Model.Pager)
+        </div>
+    </div>
 </main>

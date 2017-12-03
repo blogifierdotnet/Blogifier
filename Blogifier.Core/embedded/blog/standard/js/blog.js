@@ -1,30 +1,28 @@
-﻿//// cover
-//$(window).on('load resize', function () {
-//    if ($(window).height() <= 767 && $(window).width() <= 767) {
-//        var headerHeight = $(".blog-header").outerHeight();
-//        var coverHeight = $(window).height() - headerHeight;
-//        $(".cover").height(coverHeight);
-//    } else {
-//        $(".cover").attr('style', function (i, style) {
-//            return style.replace(/height[^;]+;?/g, '');
-//        });
-//    }
-//});
-
 // logout
 function profileLogOut() {
-    $("#frmLogOut").submit();
+  $("#frmLogOut").submit();
 }
 
-// blog-header
-$(".blog-header-toggle").click(function () {
-    $(".blog-header-modal").toggleClass("active");
-});
-
-
 // tooltip
-$('[data-toggle="tooltip"]').tooltip({
-    animation: false
-});
+$('[data-toggle="tooltip"]').tooltip();
 
+// Create the measurement node for scrollbar
+var scrollDiv = document.createElement("div");
+scrollDiv.className = "scrollbar-measure";
+document.body.appendChild(scrollDiv);
+var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+document.body.removeChild(scrollDiv);
 
+$('#blog-search').on('show.bs.modal', function() {
+  $(".blog-header").css({
+    "right": scrollbarWidth
+  });
+})
+$('#blog-search').on('hidden.bs.modal', function() {
+  $(".blog-header").css({
+    "right": "0"
+  });
+})
+$('#blog-search').on('shown.bs.modal', function() {
+  $('#blog-search .form-control').trigger('focus');
+})

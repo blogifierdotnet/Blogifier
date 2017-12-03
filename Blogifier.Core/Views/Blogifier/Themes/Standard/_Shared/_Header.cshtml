@@ -9,28 +9,20 @@
     }
     catch { }
 }
-<header class="blog-header clearfix">
-    <h1 class="blog-logo"><a href="~/@logoUrl"><img src="@logoImg" alt="@BlogSettings.Title" /></a></h1>
-    <button class="blog-header-toggle"><i class="fa fa-navicon"></i></button>
-    <section class="blog-header-modal">
-        <button class="blog-header-toggle"><i class="fa fa-times"></i></button>
-        <nav class="blog-nav">
-            <ul>
-                <li><a href="~/">Home</a></li>
-                <li><a href="~/@ApplicationSettings.BlogRoute">Blogs</a></li>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a href="~/admin">Admin</a></li>
-                    <li><a href="#" onclick="profileLogOut(); return false;">Logoff</a></li>
-                }
-                else
-                {
-                    <li><a href="~/account/login?ReturnUrl=%2Fadmin">Login</a></li>
-                }
-            </ul>
-        </nav>
-        <form class="blog-search" role="search" asp-controller="Blog" asp-action="Search" method="post">
-            <input type="search" id="term" name="term" placeholder="Search..." autocomplete="off">
-        </form>
-    </section>
+
+<header class="blog-header d-flex flex-column">
+    <div class="container d-flex">
+        <a href="~/" class="blog-logo my-auto d-flex">
+            <img src="@logoImg" alt="@BlogSettings.Title" class="my-auto" /> 
+            @if(ViewData["bodyClass"] != null && ViewData["bodyClass"].ToString() != "home") {
+                <span class="my-auto">@BlogSettings.Title</span>
+            }
+        </a>
+        <ul class="blog-social nav ml-auto my-auto">
+            <li class="blog-social-item"><a href="#" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-twitter"></i></a></li>
+            <li class="blog-social-item"><a href="#" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-google-plus"></i></a></li>
+            <li class="blog-social-item"><a href="#" target="_blank" class="blog-social-link"><i class="blog-social-icon fa fa-facebook-official"></i></a></li>
+        </ul>
+        <button class="blog-search-toggle btn-unstyled" type="button" data-toggle="modal" data-target="#blog-search"><i class="fa fa-search"></i></button>
+    </div>
 </header>
