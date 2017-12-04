@@ -219,7 +219,7 @@ namespace Blogifier.Core
                             ApplicationSettings.PkgSettingsLayout = section.GetValue<string>("PkgSettingsLayout");
 
                         if (section["SupportedStorageFiles"] != null)
-                            BlogSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
+                            ApplicationSettings.SupportedStorageFiles = section.GetValue<string>("SupportedStorageFiles");
 
                         // troubleshooting
 

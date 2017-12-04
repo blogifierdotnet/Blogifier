@@ -25,6 +25,7 @@ namespace Blogifier.Core.Common
         public static string ProfileAvatar { get; set; } = "/embedded/lib/img/avatar.jpg";
 
         public static string PkgSettingsLayout { get; set; } = "~/Views/Blogifier/Admin/_Layout/_PackagesSettings.cshtml";
+        public static string SupportedStorageFiles { get; set; } = "zip,txt,mp3,mp4,pdf,doc,docx,xls,xlsx,xml";
 
         #endregion
 
