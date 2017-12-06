@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Services.Packages;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
@@ -13,6 +14,7 @@ namespace Blogifier.Core.Common
     public interface IComponentHelper
     {
         Task<IHtmlContent> InvokeAsync(IViewComponentHelper helper, string name, object arguments = null);
+        Task<IHtmlContent> WidgetZone(IViewComponentHelper helper, string theme, string zone);
     }
 
     public class ComponentHelper : IComponentHelper
@@ -45,6 +47,23 @@ namespace Blogifier.Core.Common
                 _logger.LogError($"Error loading widget: {ex.Message}");
                 return await Task.FromResult(new HtmlString(""));
             }
+        }
+
+        public async Task<IHtmlContent> WidgetZone(IViewComponentHelper helper, string theme, string zone)
+        {
+            var widgets = new List<string>();
+
+            // get list of widgets for theme/zone
+            // ust to test - will come from DB
+            if(zone == "Sidebar")
+            {
+                widgets.Add("Hello");
+            }
+            else
+            {
+                widgets.Add("Simple");
+            }
+            return await InvokeAsync(helper, "WidgetZone", new ZoneViewModel { Theme = theme, Zone = zone, Widgets = widgets });
         }
 
         public static object GetValue(dynamic settings, string prop)
