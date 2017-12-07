@@ -31,17 +31,17 @@
                     </li>
                 }
             </ul>
-            @if (Model.Profile.IsAdmin)
-            {
-                <ul class="bf-settings-sidebar-nav">
+            <ul class="bf-settings-sidebar-nav">
+                @if (Model.Profile.IsAdmin)
+                {
                     <li is-active-route asp-controller="Settings" asp-action="Advanced">
                         <a asp-controller="Settings" asp-action="Advanced">Advanced</a>
                     </li>
-                    <li is-active-route asp-controller="Settings" asp-action="About">
-                        <a asp-controller="Settings" asp-action="About">About</a>
-                    </li>
-                </ul>
-            }
+                }
+                <li is-active-route asp-controller="Settings" asp-action="About">
+                    <a asp-controller="Settings" asp-action="About">About</a>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="bf-body">
