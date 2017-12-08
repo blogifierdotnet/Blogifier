@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.Packages
@@ -13,7 +14,7 @@ namespace Blogifier.Core.Services.Packages
     public interface IPackageService
     {
         Task<List<PackageListItem>> Find(PackageType packageType);
-        Task<PackageListItem> Single(string id);
+        //Task<PackageListItem> Single(string id);
     }
 
     public class PackageService : IPackageService
@@ -29,23 +30,77 @@ namespace Blogifier.Core.Services.Packages
 
         public Task<List<PackageListItem>> Find(PackageType packageType)
         {
-            if(packageType == PackageType.Widgets)
+            var pkgs = new List<PackageListItem>();
+
+            foreach (var assembly in Configuration.GetAssemblies())
             {
-                return Task.FromResult(Widgets());
+                var name = assembly.GetName().Name;
+                var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
+                var pkgType = "";
+
+                if (!string.IsNullOrEmpty(product))
+                {
+                    if (product.StartsWith(Constants.PkgPlugins) && packageType == PackageType.Plugins)
+                        pkgType = Constants.PkgPlugins;
+
+                    if (product.StartsWith(Constants.PkgThemes) && packageType == PackageType.Themes)
+                        pkgType = Constants.PkgThemes;
+
+                    if (product.StartsWith(Constants.PkgWidgets) && packageType == PackageType.Widgets)
+                        pkgType = Constants.PkgWidgets;
+
+                    if (!string.IsNullOrEmpty(pkgType))
+                    {
+                        var item = new PackageListItem
+                        {
+                            Title = name,
+                            Description = name,
+                            Version = assembly.GetName().Version.ToString(),
+                            LastUpdated = System.IO.File.GetLastWriteTime(assembly.Location)
+                        };
+
+                        try
+                        {
+                            Type t = assembly.GetType("PackageInfo");
+                            if (t != null)
+                            {
+                                var info = (IPackageInfo)Activator.CreateInstance(t);
+                                var attributes = info.GetAttributes();
+                                if (attributes != null)
+                                {
+                                    item.Author = string.IsNullOrEmpty(attributes.Author) ? "Unknown" : attributes.Author;
+                                    item.Cover = string.IsNullOrEmpty(attributes.Cover) ? BlogSettings.Cover : attributes.Cover;
+                                    item.Description = attributes.Description;
+                                    item.Icon = string.IsNullOrEmpty(attributes.Icon) ? BlogSettings.Logo : attributes.Icon;
+                                    item.ProjectUrl = attributes.ProjectUrl;
+                                    item.Tags = attributes.Tags;
+                                    item.Title = attributes.Title;
+                                }
+                            }
+                        }
+                        catch { }
+
+                        var disabled = Disabled();
+
+                        var path = $"~/Views/Shared/Components/{name}/Settings.cshtml";
+                        var view = _engine.GetView("", path, false);
+
+                        item.HasSettings = view.Success;
+                        item.Enabled = disabled == null || !disabled.Contains(name);
+                        pkgs.Add(item);
+                    }
+                }
             }
-            else
-            {
-                return null;
-            }
+            return Task.FromResult(pkgs);
         }
 
-        public Task<PackageListItem> Single(string id)
-        {
-            var item = Widgets().Where(w => w.Title == id).FirstOrDefault();
-            return Task.FromResult(item);
-        }
+        //public Task<PackageListItem> Single(string id)
+        //{
+        //    var item = Widgets().Where(w => w.Title == id).FirstOrDefault();
+        //    return Task.FromResult(item);
+        //}
 
-        List<PackageListItem> Widgets()
+        List<PackageListItem> Packages(PackageType packageType)
         {
             var widgets = new List<PackageListItem>();
 

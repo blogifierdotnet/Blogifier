@@ -24,5 +24,9 @@
         public const string HeadCode = "Head";
         public const string FooterCode = "Footer";
         public const string PostCode = "Post";
+
+        public const string PkgPlugins = "Blogifier.Plugins";
+        public const string PkgThemes = "Blogifier.Themes";
+        public const string PkgWidgets = "Blogifier.Widgets";
     }
 }

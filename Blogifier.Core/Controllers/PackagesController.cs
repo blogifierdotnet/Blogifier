@@ -47,6 +47,19 @@ namespace Blogifier.Core.Controllers
             return View($"{_theme}Packages/Themes.cshtml", model);
         }
 
+        [VerifyProfile]
+        [HttpGet("plugins")]
+        public async Task<IActionResult> Plugins()
+        {
+            var model = new AdminPackagesModel
+            {
+                Profile = GetProfile(),
+                Packages = await _pkgs.Find(PackageType.Plugins)
+            };
+
+            return View($"{_theme}Packages/Plugins.cshtml", model);
+        }
+
         private Profile GetProfile()
         {
             return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);

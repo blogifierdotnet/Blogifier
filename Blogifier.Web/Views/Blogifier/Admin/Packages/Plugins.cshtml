@@ -1,0 +1,53 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@{
+    ViewData["Title"] = "Plugins";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+}
+
+<!-- Toolbar -->
+<div class="bf-toolbar d-flex align-items-center">
+    <label class="custom-control custom-control-single custom-checkbox mr-3">
+        <input class="custom-control-input" type="checkbox" id="selectAll" name="selectAll">
+        <span class="item-control custom-control-indicator"></span>
+    </label>
+    <div id="multiActionBtns" class="btn-group mr-3">
+        <a asp-controller="Packages" asp-action="Plugins" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px">
+            <i class="fa fa-arrow-left"></i> &nbsp; Back
+        </a>
+    </div>
+    <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+</div>
+<!--/Toolbar -->
+
+@if (Model.Packages.Any())
+{
+    <ul class="bf-list bf-packages-list" aria-label="widgets">
+        @foreach (var item in Model.Packages)
+        {
+            var publishedClass = item.Enabled ? "published" : "draft";
+            <li class="bf-list-item d-flex align-items-center">
+                <label class="bf-list-item-select custom-control custom-checkbox mr-3">
+                    <input type="checkbox" value="@item.Title" class="item-checkbox custom-control-input">
+                    <span class="item-control custom-control-indicator"></span>
+                </label>
+                @if (item.HasSettings)
+                {
+                    <a class="bf-list-item-link" href="~/blogifier/widgets/@item.Title/settings">@item.Description</a>
+                }
+                else
+                {
+                    <div class="bf-list-item-name">@item.Description</div>
+                }
+                <span class="bf-list-item-status bf-list-item-status-@publishedClass ml-auto" data-tooltip title="@publishedClass"><i class="fa fa-circle"></i></span>
+                <button type="button" class="btn-unstyled ml-2" data-toggle="modal" data-target="#packageInfo" data-title="@item.Title" data-desc="@item.Description" data-version="1.0" data-logo="/embedded/lib/img/cover.png" data-cover="/embedded/lib/img/cover.png" data-date="November 20, 2017" data-installs="48894" data-developer="Ruslan Tur"><i class="fa fa-info-circle"></i></button>
+            </li>
+        }
+    </ul>
+}
+else
+{
+  <div class="bf-list-empty">
+      No plugins found!
+  </div>
+}
