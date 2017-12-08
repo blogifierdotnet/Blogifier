@@ -28,7 +28,7 @@ namespace Newsletter
             {
                 if (!emails.Contains(item.CustomValue))
                 {
-                    emails.Add(item.CustomValue);
+                    emails.Add(item.CustomValue + "|" + System.DateTime.UtcNow);
                     await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, string.Join(",", emails));
                 }
             }

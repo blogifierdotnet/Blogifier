@@ -1,7 +1,7 @@
 var newsletter = function () {
     var obj = {};
 
-    function subscribe() {
+    function subscribe(ip) {
         var email = document.getElementById("txtSubscriberEmail");
 
         if (!isValidEmail(email.value)) {
@@ -9,9 +9,20 @@ var newsletter = function () {
             return false;
         }
 
+        // user stats
+        var parser = new UAParser();
+        var result = parser.getResult();
+
+        var browser = result.browser.name + ' ' + result.browser.version;
+        var device = 'Undefined';
+        if (result.device.model) {
+            device = result.device.model + ' ' + result.device.type + ' ' + result.device.vendor;
+        }
+        var os = result.os.name + ' ' + result.os.version;
+        
         var json = {
             "CustomKey": "NEWSLETTER",
-            "CustomValue": email.value
+            "CustomValue": email.value + '|' + browser + '|' + device + '|' + os + '|' + ip
         }
 
         $.ajax({

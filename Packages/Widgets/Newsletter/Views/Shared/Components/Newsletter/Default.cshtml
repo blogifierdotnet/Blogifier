@@ -1,4 +1,7 @@
-﻿<section class="container">
+﻿@{ 
+    var ip = Context.Connection.RemoteIpAddress?.ToString();
+}
+<section class="container">
     <h4>Subscribe to our newsletter</h4>
     <div id="msg-alert" class="alert alert-warning" role="alert" style="display: none">
         Please enter valid email address.
@@ -7,7 +10,7 @@
         <div class="input-group">
             <input id="txtSubscriberEmail" type="email" class="form-control" placeholder="Your email address">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" onclick="newsletter.subscribe()">Subscribe!</button>
+                <button class="btn btn-default" type="button" onclick="newsletter.subscribe('@ip')">Subscribe!</button>
             </span>
         </div>
     </div>
@@ -18,4 +21,5 @@
 <script>
     var root = '@Url.Content("~/")';
 </script>
+<script src="~/widgets/newsletter/ua-parser.min.js"></script>
 <script src="~/widgets/newsletter/widget.js"></script>

@@ -1,5 +1,4 @@
 ﻿using Blogifier.Core.Data.Models;
-using System.Reflection;
 
 public class PackageInfo : IPackageInfo
 {

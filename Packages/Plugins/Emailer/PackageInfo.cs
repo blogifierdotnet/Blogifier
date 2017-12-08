@@ -8,7 +8,7 @@ public class PackageInfo : IPackageInfo
         {
             Title = "Emailer",
             Version = "1.0.0",
-            Description = "Emailer plugin for Blogifier works with Newsletter widget and allows to manage email subscribers",
+            Description = "Emailer plugin works with Newsletter widget. It allows to manage email subscribers.",
             Icon = "https://avatars0.githubusercontent.com/u/19671571?v=4&amp;s=180",
             Author = "Blogifier",
             ProjectUrl = "https://github.com/blogifierdotnet/Blogifier",
