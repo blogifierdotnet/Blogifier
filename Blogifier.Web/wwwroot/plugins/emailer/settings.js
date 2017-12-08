@@ -5,14 +5,14 @@ var newsletter = function (dataService) {
         $('.loading').fadeIn();
 
         $('input:checkbox.item-checkbox:checked').each(function () {
-            var url = 'blogifier/widgets/newsletter/remove/' + $(this).val();
+            var url = 'blogifier/plugins/emailer/remove/' + $(this).val();
             dataService.put(url, obj, done, fail);
         });
     }
 
     function done(data) {
         setTimeout(function () {
-            window.location.href = root + 'blogifier/widgets/newsletter/settings';
+            window.location.href = root + 'blogifier/plugins/emailer/settings';
         }, 2000);
     }
 

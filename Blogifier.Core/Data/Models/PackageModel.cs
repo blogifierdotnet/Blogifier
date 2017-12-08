@@ -24,6 +24,7 @@ namespace Blogifier.Core.Data.Models
 
     public class PackageListItem
     {
+        public PackageType PkgType { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
@@ -41,5 +42,13 @@ namespace Blogifier.Core.Data.Models
         public DateTime LastUpdated { get; set; }
         public bool HasSettings { get; set; }
         public bool Enabled { get; set; }
+    }
+
+    public enum PackageType
+    {
+        Undefined,
+        Widgets,
+        Themes,
+        Plugins
     }
 }
