@@ -1,13 +1,10 @@
 ﻿using Blogifier.Core.Common;
-using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -15,7 +12,6 @@ namespace Newsletter
     public class EmailerController : Controller
     {
         IUnitOfWork _db;
-        static readonly string key = "NEWSLETTER";
 
         public EmailerController(IUnitOfWork db)
         {
@@ -28,22 +24,10 @@ namespace Newsletter
         public IActionResult Settings(string search = "")
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
-            var emails = Emails();
 
-            try
-            {
-                var x = _db.Subscribers.All();
-            }
-            catch (System.Exception ex)
-            {
-                var z = ex.Message;
-            }
-            
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                emails = emails.Where(e => e.Contains(search)).ToList();
-            }
+            var emails = _db.Subscribers.All()
+                .Where(s => s.Active)
+                .OrderByDescending(s => s.LastUpdated);
 
             dynamic settings = new
             {
@@ -65,20 +49,15 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpPut("remove/{id}")]
-        public async Task Remove(string id)
+        public void Remove(string id)
         {
-            var emails = Emails();
-            if (emails != null && emails.Contains(id))
-            {
-                emails.Remove(id);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, string.Join(",", emails));
-            }
-        }
+            var existing = _db.Subscribers.Find(s => s.Email == id).FirstOrDefault();
 
-        List<string> Emails()
-        {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, key);
-            return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
+            if (existing != null)
+            {
+                _db.Subscribers.Remove(existing);
+                _db.Complete();
+            }
         }
     }
 }

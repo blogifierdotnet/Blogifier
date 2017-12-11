@@ -1,9 +1,13 @@
 ﻿@model Blogifier.Core.Data.Models.AdminSettingsModel
 @using Blogifier.Core.Common
+@using Blogifier.Core.Data.Domain
+@using Blogifier.Core.Extensions
 @{
     ViewData["Title"] = "Newsletter";
     Layout = ApplicationSettings.PkgSettingsLayout;
-    var emails = (List<string>)ComponentHelper.GetValue(Model.Settings, "Emails");
+
+    var result = ComponentHelper.GetValue(Model.Settings, "Emails");
+    var emails = (IEnumerable<Subscriber>)result;
 }
 
 <!-- Toolbar -->
@@ -31,11 +35,20 @@
         @foreach (var item in emails)
         {
             <li class="bf-list-item d-flex align-items-center">
-                <label class="bf-list-item-select custom-control custom-checkbox mr-3 my-auto">
-                    <input type="checkbox" value="@item" class="item-checkbox custom-control-input">
-                    <span class="item-control custom-control-indicator"></span>
-                </label>
-                <div class="bf-list-item-name">@item</div>
+                <div class="row" style="width: 100%">
+                    <div class="col-md-1">
+                        <label class="bf-list-item-select custom-control custom-checkbox mr-3 my-auto">
+                            <input type="checkbox" value="@item.Email" class="item-checkbox custom-control-input">
+                            <span class="item-control custom-control-indicator"></span>
+                        </label>
+                    </div>
+                    <div class="col-md-3">@item.Email</div>
+                    <div class="col-md-2">@item.Browser</div>
+                    <div class="col-md-2">@item.Device</div>
+                    <div class="col-md-1">@item.Os</div>
+                    <div class="col-md-1">@item.Ip</div>
+                    <div class="col-md-2">@item.LastUpdated.ToFriendlyDateTimeString()</div>
+                </div>
             </li>
         } 
     </ul>

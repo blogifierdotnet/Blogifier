@@ -1,10 +1,8 @@
-﻿using Blogifier.Core.Data.Domain;
+﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
-using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -12,7 +10,6 @@ namespace Newsletter
     public class NewsletterController : Controller
     {
         IUnitOfWork _db;
-        static readonly string key = "NEWSLETTER";
 
         public NewsletterController(IUnitOfWork db)
         {
@@ -20,28 +17,26 @@ namespace Newsletter
         }
 
         [HttpPut("subscribe")]
-        public async Task Subscribe([FromBody]CustomFieldItem item)
+        public int Subscribe([FromBody]Subscriber item)
         {
-            var emails = Emails();
+            item.Created = SystemClock.Now();
+            item.LastUpdated = SystemClock.Now();
+            item.Active = true;
 
-            if (emails != null)
+            var existing = _db.Subscribers.Find(s => s.Email == item.Email).FirstOrDefault();
+
+            if(existing == null)
             {
-                if (!emails.Contains(item.CustomValue))
-                {
-                    emails.Add(item.CustomValue + "|" + System.DateTime.UtcNow);
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, string.Join(",", emails));
-                }
+                _db.Subscribers.Add(item);
             }
             else
             {
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, item.CustomKey, item.CustomValue);
+                existing.Created = SystemClock.Now();
+                existing.LastUpdated = SystemClock.Now();
+                item.Active = true;
             }
-        }
 
-        List<string> Emails()
-        {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, key);
-            return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
+            return _db.Complete();
         }
     }
 }

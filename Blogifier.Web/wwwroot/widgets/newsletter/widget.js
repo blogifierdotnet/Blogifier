@@ -21,8 +21,11 @@ var newsletter = function () {
         var os = result.os.name + ' ' + result.os.version;
         
         var json = {
-            "CustomKey": "NEWSLETTER",
-            "CustomValue": email.value + '|' + browser + '|' + device + '|' + os + '|' + ip
+            "Email": email.value,
+            "Browser": browser,
+            "Device": device,
+            "Os": os,
+            "Ip": ip
         }
 
         $.ajax({
