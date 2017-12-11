@@ -14,6 +14,7 @@ namespace Blogifier.Core.Data.Repositories
             Categories = new CategoryRepository(_db);
             BlogPosts = new PostRepository(_db);
             CustomFields = new CustomRepository(_db);
+            Subscribers = new SubscriberRepository(_db);
         }
 
         public IAssetRepository Assets { get; private set; }
@@ -21,6 +22,7 @@ namespace Blogifier.Core.Data.Repositories
         public ICategoryRepository Categories { get; private set; }
         public IPostRepository BlogPosts { get; private set; }
         public ICustomRepository CustomFields { get; private set; }
+        public ISubscriberRepository Subscribers { get; private set; }
 
         public int Complete()
         {

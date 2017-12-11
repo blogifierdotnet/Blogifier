@@ -9,6 +9,7 @@ namespace Blogifier.Core.Data.Interfaces
         ICategoryRepository Categories { get; }
         IPostRepository BlogPosts { get; }
         ICustomRepository CustomFields { get; }
+        ISubscriberRepository Subscribers { get; }
 
         int Complete();
     }

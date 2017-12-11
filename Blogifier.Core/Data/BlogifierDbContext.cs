@@ -16,6 +16,7 @@ namespace Blogifier.Core.Data
         public DbSet<PostCategory> PostCategories { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<CustomField> CustomFields { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; } 
 
         #endregion
 
@@ -26,6 +27,8 @@ namespace Blogifier.Core.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Subscriber>().HasIndex(s => s.Email).IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -12,9 +12,10 @@ using System;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(BlogifierDbContext))]
-    partial class BlogifierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171210044837_Subscribers")]
+    partial class Subscribers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -30,6 +30,16 @@ namespace Newsletter
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
             var emails = Emails();
 
+            try
+            {
+                var x = _db.Subscribers.All();
+            }
+            catch (System.Exception ex)
+            {
+                var z = ex.Message;
+            }
+            
+
             if (!string.IsNullOrEmpty(search))
             {
                 emails = emails.Where(e => e.Contains(search)).ToList();

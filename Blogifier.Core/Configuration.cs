@@ -49,7 +49,7 @@ namespace Blogifier.Core
             services.AddTransient<IEmailService, SendGridService>();
             services.AddTransient<IConfigService, ConfigService>();
             services.AddTransient<IPackageService, PackageService>();
-
+            
             // add blog route from ApplicationSettings
             services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>
                 opt.UseBlogRoutePrefix(new Microsoft.AspNetCore.Mvc.RouteAttribute(ApplicationSettings.BlogRoute)));
