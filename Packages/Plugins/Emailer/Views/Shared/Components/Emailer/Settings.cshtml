@@ -7,11 +7,17 @@
     Layout = ApplicationSettings.PkgSettingsLayout;
 
     var result = ComponentHelper.GetValue(Model.Settings, "Emails");
+    var pager = ComponentHelper.GetValue(Model.Settings, "Pager");
+
     var emails = (IEnumerable<Subscriber>)result;
+    var pgr = (Pager)pager;
+
+    var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
+    var cntTo = pgr.CurrentPage * pgr.ItemsPerPage < pgr.Total ? pgr.CurrentPage * pgr.ItemsPerPage : pgr.Total;
 }
 
 <!-- Toolbar -->
-<div class="bf-toolbar d-flex align-items-center">
+<div class="bf-toolbar d-flex align-items-center" style="padding: 0 2rem">
     <label class="custom-control custom-checkbox custom-control-single mr-3">
         <input class="custom-control-input item-checkbox" type="checkbox" id="selectAll" name="selectAll">
         <span class="item-control custom-control-indicator"></span>
@@ -26,11 +32,23 @@
         <div class="loading-dot-2"></div>
         <div class="loading-dot-3"></div>
     </div>
+    <form class="bf-posts-form-search" action="~/blogifier/plugins/Emailer/settings" method="get">
+        <input class="form-control form-control-sm form-control-rounded pull-right" type="search" name="search" placeholder="Search..." autocomplete="off" />
+    </form>
 </div>
 <!--/Toolbar -->
 
 @if (emails != null && emails.Any())
 {
+    <div class="row" style="width: 100%; margin-top: 10px; margin-bottom: 10px">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-3"><label>Email</label></div>
+        <div class="col-md-2"><label>Browser</label></div>
+        <div class="col-md-2"><label>Device</label></div>
+        <div class="col-md-1"><label>OS</label></div>
+        <div class="col-md-1"><label>IP</label></div>
+        <div class="col-md-2"><label>Last updated</label></div>
+    </div>
     <ul class="bf-list d-block" aria-label="newsletter">
         @foreach (var item in emails)
         {
@@ -59,6 +77,24 @@ else
         No subscribers found!
     </div>
 }
+
+<!-- Pagination -->
+@if (pgr.ShowNewer || pgr.ShowOlder)
+{
+    <ul class="bf-pagination d-flex">
+        @if (pgr.ShowOlder)
+        {
+            <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/blogifier/plugins/Emailer/settings?page=@pgr.Older"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
+        }
+        @if (pgr.ShowNewer)
+                {
+            <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/blogifier/plugins/Emailer/settings?page=@pgr.Newer"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
+        }
+        <li class="bf-pagination-item"><span class="bf-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
+    </ul>
+}
+<!--/Pagination -->
+
 <script>
     var root = '@Url.Content("~/")';
 </script>

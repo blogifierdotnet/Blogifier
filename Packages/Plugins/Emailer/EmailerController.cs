@@ -1,9 +1,11 @@
 ﻿using Blogifier.Core.Common;
+using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Newsletter
@@ -21,18 +23,26 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpGet("settings")]
-        public IActionResult Settings(string search = "")
+        public IActionResult Settings(int page = 1, string search = "")
         {
             var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            var pager = new Pager(page);
 
-            var emails = _db.Subscribers.All()
-                .Where(s => s.Active)
-                .OrderByDescending(s => s.LastUpdated);
+            IEnumerable<Subscriber> emails;
 
+            if (string.IsNullOrEmpty(search))
+            {
+                emails = _db.Subscribers.Find(s => s.Active, pager);
+            }
+            else
+            {
+                emails = _db.Subscribers.Find(s => s.Active && s.Email.Contains(search), pager);
+            }
+                        
             dynamic settings = new
             {
                 Emails = emails,
-                Pager = new Pager(1)
+                Pager = pager
             };
 
             var info = new PackageInfo();

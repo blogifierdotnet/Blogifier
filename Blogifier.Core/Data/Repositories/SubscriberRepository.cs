@@ -12,6 +12,7 @@ namespace Blogifier.Core.Data.Repositories
     public class SubscriberRepository : Repository<Subscriber>, ISubscriberRepository
     {
         BlogifierDbContext _db;
+
         public SubscriberRepository(BlogifierDbContext db) : base(db)
         {
             _db = db;
@@ -20,7 +21,7 @@ namespace Blogifier.Core.Data.Repositories
         public IEnumerable<Subscriber> Find(Expression<Func<Subscriber, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-            var items = _db.Subscribers.AsNoTracking().Where(predicate).OrderByDescending(s => s.Created).ToList();
+            var items = _db.Subscribers.AsNoTracking().Where(predicate).OrderByDescending(s => s.LastUpdated).ToList();
             pager.Configure(items.Count);
             return items.Skip(skip).Take(pager.ItemsPerPage);
         }
