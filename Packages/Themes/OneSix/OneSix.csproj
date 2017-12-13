@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <product>Blogifier.Themes.OneSix</product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Author.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Category.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Error.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Index.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Layout\_Layout.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Search.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\Single.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_Shared\_Footer.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_Shared\_Head.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_Shared\_Header.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_Shared\_Pager.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_Shared\_Post.cshtml" />
+    <EmbeddedResource Remove="Views\Blogifier\Themes\OneSix\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Blogifier\Themes\OneSix\Author.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Category.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Error.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Layout\_Layout.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Search.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\Single.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_Shared\_Footer.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_Shared\_Head.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_Shared\_Header.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_Shared\_Pager.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_Shared\_Post.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Views\Blogifier\Themes\OneSix\_ViewStart.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Blogifier.Core\Blogifier.Core.csproj" />
+  </ItemGroup>
+
+</Project>

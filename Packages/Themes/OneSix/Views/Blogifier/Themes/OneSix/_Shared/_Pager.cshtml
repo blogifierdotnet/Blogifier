@@ -1,0 +1,18 @@
+﻿@using Blogifier.Core.Common
+@model Pager
+@if (Model != null)
+{
+    @if (Model.ShowOlder || Model.ShowNewer)
+    {
+        <ul class="pagination justify-content-center">
+            @if (Model.ShowOlder)
+            {
+                <li class="item item-prev"><a class="item-link" href="~/@ApplicationSettings.BlogRoute@Model.RouteValue?page=@Model.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
+            }
+            @if (Model.ShowNewer)
+            {
+                <li class="item item-next"><a class="item-link" href="~/@ApplicationSettings.BlogRoute@Model.RouteValue?page=@Model.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
+            }
+        </ul>
+    }
+}
