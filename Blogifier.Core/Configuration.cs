@@ -161,9 +161,11 @@ namespace Blogifier.Core
                 var provider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
                 var resources = provider.GetDirectoryContents("/");
 
+                // add standard theme from the Core
                 BlogSettings.BlogThemes = new List<SelectListItem>();
                 BlogSettings.BlogThemes.Add(new SelectListItem { Value = "Standard", Text = "Standard" });
 
+                // add themes from /Views/Blogifier/Themes folder
                 foreach (var rsrc in resources)
                 {
                     var theme = rsrc.Name.Replace("Views.Blogifier.Themes.", "").Replace(".Single.cshtml", "");
@@ -172,6 +174,22 @@ namespace Blogifier.Core
                         Text = theme,
                         Value = theme
                     });
+                }
+
+                // add externally loaded themes
+                var assemblies = GetAssemblies();
+                foreach (var asmb in assemblies)
+                {
+                    var product = asmb.GetCustomAttribute<AssemblyProductAttribute>().Product;
+
+                    if (product.StartsWith("Blogifier.Theme"))
+                    {
+                        BlogSettings.BlogThemes.Add(new SelectListItem
+                        {
+                            Text = asmb.GetName().Name,
+                            Value = asmb.GetName().Name
+                        });
+                    }
                 }
             }
             catch { }
