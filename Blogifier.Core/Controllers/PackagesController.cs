@@ -39,10 +39,13 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [HttpGet("themes")]
-        public IActionResult Themes()
+        public async Task<IActionResult> Themes()
         {
-            var model = new AdminPackagesModel { Profile = GetProfile() };
-            model.Packages = new List<PackageListItem>();
+            var model = new AdminPackagesModel
+            {
+                Profile = GetProfile(),
+                Packages = await _pkgs.Find(PackageType.Themes)
+            };
 
             return View($"{_theme}Packages/Themes.cshtml", model);
         }
