@@ -1,0 +1,34 @@
+﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
+@using Blogifier.Core.Common
+@{
+    ViewData["Title"] = "Themes";
+    Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
+}
+
+<!-- Toolbar -->
+<div class="bf-toolbar d-flex align-items-center">
+    <div id="multiActionBtns" class="btn-group mr-3">
+        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px">
+            <i class="fa fa-arrow-left"></i> &nbsp; Back
+        </a>
+    </div>
+    <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+</div>
+<!--/Toolbar -->
+
+<div class="bf-content bf-content-boxed bf-settings">
+    <div class="bf-title d-none d-lg-block"><span>Static Widgets</span></div>
+    <div class="form-group">
+
+    </div>
+
+    <div class="bf-title d-none d-lg-block"><span>Widget Zones</span></div>
+    <div class="form-group">
+
+    </div>
+
+    <div class="bf-title d-none d-lg-block"><span>Settings</span></div>
+    <div class="form-group">
+
+    </div>
+</div>
