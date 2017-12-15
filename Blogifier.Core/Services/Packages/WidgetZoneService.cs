@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Blogifier.Core.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blogifier.Core.Services.Packages
 {
@@ -10,12 +10,5 @@ namespace Blogifier.Core.Services.Packages
         {
             return View(vm);
         }
-    }
-
-    public class ZoneViewModel
-    {
-        public string Theme { get; set; }
-        public string Zone { get; set; }
-        public List<string> Widgets { get; set; }
     }
 }

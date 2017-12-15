@@ -28,7 +28,7 @@
                 <div class="col-md-11">
                     <div>@item.Description</div>
                     <div>
-                        <a asp-controller="Packages" asp-action="Settings" class="btn btn-outline-secondary btn-sm btn-rounded">
+                        <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded">
                             Settings
                         </a>
                         <div id="multiActionBtns" class="btn-group mr-3">

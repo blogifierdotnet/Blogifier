@@ -44,6 +44,19 @@ namespace Blogifier.Core.Data.Models
         public bool Enabled { get; set; }
     }
 
+    public class ThemeSettingsModel : AdminBaseModel
+    {
+        public List<ZoneViewModel> Zones { get; set; }
+
+    }
+
+    public class ZoneViewModel
+    {
+        public string Theme { get; set; }
+        public string Zone { get; set; }
+        public List<string> Widgets { get; set; }
+    }
+
     public enum PackageType
     {
         Undefined,

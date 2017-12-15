@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services.Packages;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,8 @@ namespace Blogifier.Core.Common
 {
     public interface IComponentHelper
     {
-        Task<IHtmlContent> InvokeAsync(IViewComponentHelper helper, string name, object arguments = null);
-        Task<IHtmlContent> WidgetZone(IViewComponentHelper helper, string theme, string zone);
+        Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string themeName, string widgetName, object arguments = null);
+        Task<IHtmlContent> AddZone(IViewComponentHelper helper, string theme, string zone, string[] defaultWidgets = null);
     }
 
     public class ComponentHelper : IComponentHelper
@@ -30,16 +31,26 @@ namespace Blogifier.Core.Common
             _db = db;
         }
 
-        public async Task<IHtmlContent> InvokeAsync(IViewComponentHelper helper, string name, object arguments = null)
+        public async Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string themeName, string widgetName, object arguments = null)
         {
-            if (Disabled() != null && Disabled().Contains(name))
+            if (Disabled() != null && Disabled().Contains(widgetName))
             {
                 return await Task.FromResult(new HtmlString(""));
             }
+
+            var key = $"{themeName}-{widgetName}";
+
+            var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
+
+            if (string.IsNullOrEmpty(setting))
+            {
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, "test");
+            }
+
             try
             {
-                return Exists(name)
-                ? await helper.InvokeAsync(name, arguments)
+                return Exists(widgetName)
+                ? await helper.InvokeAsync(widgetName, arguments)
                 : await Task.FromResult(new HtmlString(""));
             }
             catch (System.Exception ex)
@@ -49,21 +60,14 @@ namespace Blogifier.Core.Common
             }
         }
 
-        public async Task<IHtmlContent> WidgetZone(IViewComponentHelper helper, string theme, string zone)
+        public async Task<IHtmlContent> AddZone(IViewComponentHelper helper, string theme, string zone, string[] defaultWidgets = null)
         {
-            var widgets = new List<string>();
+            var widgets = defaultWidgets.ToList();
 
-            // get list of widgets for theme/zone
-            // ust to test - will come from DB
-            if(zone == "Sidebar")
-            {
-                widgets.Add("Hello");
-            }
-            else
-            {
-                widgets.Add("Simple");
-            }
-            return await InvokeAsync(helper, "WidgetZone", new ZoneViewModel { Theme = theme, Zone = zone, Widgets = widgets });
+            // check if zone widgets saved to DB
+            // if not save default widgets
+            
+            return await AddWidget(helper, theme, "WidgetZone", new ZoneViewModel { Theme = theme, Zone = zone, Widgets = widgets });
         }
 
         public static object GetValue(dynamic settings, string prop)

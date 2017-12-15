@@ -7,6 +7,7 @@ using Blogifier.Core.Services.Packages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
@@ -65,12 +66,29 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [HttpGet("settings")]
-        public async Task<IActionResult> Settings()
+        public async Task<IActionResult> Settings(string theme)
         {
-            var model = new AdminPackagesModel
+            var zones = new List<ZoneViewModel>();
+
+            var fields = await _db.CustomFields.GetCustomFields(CustomType.Application, 0);
+
+            if (fields.Any())
+            {
+                foreach (var field in fields)
+                {
+                    if (field.Key.StartsWith(theme))
+                    {
+                        var z = field.Key.Replace(theme + "-", "");
+                        var zone = new ZoneViewModel { Theme = theme, Zone = z };
+                        zones.Add(zone);
+                    }
+                }
+            }
+
+            var model = new ThemeSettingsModel
             {
                 Profile = GetProfile(),
-                Packages = await _pkgs.Find(PackageType.Themes)
+                Zones = zones
             };
 
             return View($"{_theme}Packages/Settings.cshtml", model);

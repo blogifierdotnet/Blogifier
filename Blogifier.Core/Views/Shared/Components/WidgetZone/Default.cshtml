@@ -1,5 +1,5 @@
 ﻿@using Blogifier.Core.Common
-@using Blogifier.Core.Services.Packages
+@using Blogifier.Core.Data.Models
 @model ZoneViewModel
 @inject IComponentHelper helper
 
@@ -9,7 +9,7 @@
     foreach (var item in Model.Widgets)
     {
         <div style="border: 1px solid red; margin: 2px">
-            @await helper.InvokeAsync(Component, item)
+            @await helper.AddWidget(Component, Model.Theme, item)
         </div>
     }
 }
