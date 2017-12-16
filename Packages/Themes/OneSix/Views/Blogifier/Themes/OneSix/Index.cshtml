@@ -45,9 +45,9 @@
         }
         @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneSix/_Shared/_Pager.cshtml", Model.Pager)
 
-        @await helper.AddWidget(Component, "OneSix", "Newsletter")
+        @*@await helper.AddWidget(Component, "OneSix", "Newsletter")
         
-        @await helper.AddZone(Component, "OneSix", "SideBar", new string[] { "Hello" })
+        @await helper.AddZone(Component, "OneSix", "SideBar", new string[] { "Hello", "Simple" })*@
         
     </div>
 </div>

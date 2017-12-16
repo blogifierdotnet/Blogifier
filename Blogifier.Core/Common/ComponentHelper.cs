@@ -33,18 +33,19 @@ namespace Blogifier.Core.Common
 
         public async Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string themeName, string widgetName, object arguments = null)
         {
+            var key = $"{themeName}-{widgetName}";
+
             if (Disabled() != null && Disabled().Contains(widgetName))
             {
                 return await Task.FromResult(new HtmlString(""));
-            }
-
-            var key = $"{themeName}-{widgetName}";
+            }           
 
             var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
 
             if (string.IsNullOrEmpty(setting))
             {
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, "test");
+                var args = arguments == null ? "" : arguments.ToString();
+                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, args);
             }
 
             try
@@ -62,11 +63,29 @@ namespace Blogifier.Core.Common
 
         public async Task<IHtmlContent> AddZone(IViewComponentHelper helper, string theme, string zone, string[] defaultWidgets = null)
         {
-            var widgets = defaultWidgets.ToList();
+            IHtmlContent html = new HtmlString("");
 
-            // check if zone widgets saved to DB
-            // if not save default widgets
-            
+            var key = $"{theme}:{zone}";
+            var widgets = defaultWidgets.ToList();
+            //var field = _db.CustomFields.GetValue(CustomType.Application, 0, key);
+
+            //if (string.IsNullOrEmpty(field))
+            //{
+            //    await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, widgets.ToString());
+            //}
+            //else
+            //{
+            //    widgets = field.Split(',').ToList();
+            //}
+
+            if (widgets.Any())
+            {
+                foreach (var widget in widgets)
+                {
+                    await AddWidget(helper, widget, zone);
+                }
+            }
+
             return await AddWidget(helper, theme, "WidgetZone", new ZoneViewModel { Theme = theme, Zone = zone, Widgets = widgets });
         }
 

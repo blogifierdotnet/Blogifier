@@ -76,9 +76,16 @@ namespace Blogifier.Core.Controllers
             {
                 foreach (var field in fields)
                 {
-                    if (field.Key.StartsWith(theme))
+                    if (field.Key.StartsWith(theme) && field.Key.Contains("-"))
                     {
-                        var z = field.Key.Replace(theme + "-", "");
+                        // widget
+                        var w = field.Key.Replace(theme + "-", "");
+                    }
+
+                    if (field.Key.StartsWith(theme) && field.Key.Contains(":"))
+                    {
+                        // zone
+                        var z = field.Key.Replace(theme + ":", "");
                         var zone = new ZoneViewModel { Theme = theme, Zone = z };
                         zones.Add(zone);
                     }
