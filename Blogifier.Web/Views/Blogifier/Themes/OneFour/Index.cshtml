@@ -22,7 +22,7 @@
 
 <div class="page-content">
     <div class="container">
-        @await helper.InvokeAsync(Component, "PostList", new { listType = 1, contentType = 1, count = 2 })
+        @await helper.AddWidget(Component, "OneFour", "PostList", new { listType = 1, contentType = 1, count = 2 })
 
         @if (Model.Posts != null)
         {
@@ -45,6 +45,6 @@
         }
         @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneFour/_Shared/_Pager.cshtml", Model.Pager)
 
-        @await helper.InvokeAsync(Component, "Newsletter")       
+        @await helper.AddWidget(Component, "OneFour", "Newsletter")       
     </div>
 </div>
