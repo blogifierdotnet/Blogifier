@@ -10,33 +10,104 @@
     <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-arrow-left mr-1"></i> Back</a>
 </div>
 <!--/Toolbar -->
-
 <div class="bf-content bf-content-boxed">
-  <div class="mb-5">
-    <div class="bf-title"><span>Static Widgets</span></div>
+
+  <section class="mb-5 pb-3">
+    <div class="bf-title mb-2"><span>Static Widgets</span></div>
+    <!-- SAMPLE WIDGET -->
     <div class="input-group mb-2">
-     <div class="form-control">Title of the widget</div>
-     <span class="input-group-btn">
-       <!--
-       NOTE: We see Customize button when this item is not disabled.
-        -->
-       <button class="btn btn-outline-default" type="button">Customize</button>
-       <!--
-       NOTE: Toggle between Disable and Enable.
-        -->
-       <button class="btn btn-outline-default" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-       <button class="btn btn-outline-default" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-     </span>
-   </div>
+      <div class="form-control">Title of the widget</div>
+      <span class="input-group-btn">
+        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+      </span>
+    </div>
+    <div class="input-group mb-2">
+      <div class="form-control">Title of the widget</div>
+      <span class="input-group-btn">
+        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+      </span>
+    </div>
+    <div class="input-group mb-2">
+      <div class="form-control">Title of the widget</div>
+      <span class="input-group-btn">
+        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+      </span>
+    </div>
+    <!--/SAMPLE WIDGET -->
+  </section>
+
+  <section class="mb-5 pb-3">
+    <div class="bf-title mb-2"><span>Widget Zones</span></div>
+    <div class="bf-themes-widgetzone">
+      <!-- SAMPLE WIDGET -->
+      <div class="input-group mb-2">
+        <div class="form-control">Title of the widget</div>
+        <span class="input-group-btn">
+          <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" data-tooltip><i class="fa fa-trash"></i></button>
+        </span>
+      </div>
+      <div class="input-group mb-2">
+        <div class="form-control">Title of the widget</div>
+        <span class="input-group-btn">
+          <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+          <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" data-tooltip><i class="fa fa-trash"></i></button>
+        </span>
+      </div>
+      <!--/SAMPLE WIDGET -->
+      <hr>
+      <div class="input-group">
+        <select class="form-control custom-select">
+          <option value="">Select</option>
+          <option value="">Select 1</option>
+          <option value="">Select 2</option>
+          <option value="">Select 3</option>
+        </select>
+        <span class="input-group-btn">
+          <button class="btn btn-outline-default" type="button">ADD</button>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="bf-title"><span>Other Settings</span></div>
+  </section>
+
+</div>
+
+
+<!-- Customize Modal -->
+<div class="modal fade" id="CustomizeWidgetModal" tabindex="-1" role="dialog" aria-labelledby="CustomizeWidgetModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CustomizeWidgetModalLabel">Customize [WIDGET TITLE]</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-group-label">Widget Title</label>
+          <input type="text" class="form-control" autofocus>
+        </div>
+        and other fields ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-rounded">Save changes</button>
+      </div>
+    </div>
   </div>
-
-    <div class="bf-title"><span>Widget Zones</span></div>
-    <div class="form-group">
-
-    </div>
-
-    <div class="bf-title"><span>Settings</span></div>
-    <div class="form-group">
-
-    </div>
 </div>
