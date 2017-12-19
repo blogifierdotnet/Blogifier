@@ -4,50 +4,30 @@
     ViewData["Title"] = "Themes";
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
 }
-
-<!-- Toolbar -->
-<div class="bf-toolbar d-flex align-items-center">
-    <label class="custom-control custom-control-single custom-checkbox mr-3">
-        <input class="custom-control-input" type="checkbox" id="selectAll" name="selectAll">
-        <span class="item-control custom-control-indicator"></span>
-    </label>
-    <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
-</div>
-<!--/Toolbar -->
-
-<div class="bf-content bf-content-boxed bf-settings">
-    @if (Model.Packages.Any())
+@if (Model.Packages.Any())
+{
+    @foreach (var item in Model.Packages)
     {
-        @foreach (var item in Model.Packages)
-        {
-            var publishedClass = item.Enabled ? "published" : "draft";
-            <div class="row">
-                <div class="col-md-1">
-                    <img src="@item.Icon" />
-                </div>
-                <div class="col-md-11">
-                    <div>@item.Description</div>
-                    <div>
-                        <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded">
-                            Settings
-                        </a>
-                        <div id="multiActionBtns" class="btn-group mr-3">
-                            <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded">
-                                <i class="fa fa-info-circle"></i>
-                            </a>
-                            <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                        </div>
+        var publishedClass = item.Enabled ? "published" : "draft";
+        <div class="bf-packages-list-item d-flex">
+            <div class="bf-packages-list-item-logo"><img class="bf-packages-list-item-img" src="@item.Icon" alt="@item.Title"></div>
+            <div class="bf-packages-list-item-info d-flex flex-column">
+                <div class="bf-packages-list-item-title">@item.Title</div>
+                <div class="bf-packages-list-item-desc">@item.Description</div>
+                <div class="bf-packages-list-item-actions mt-auto">
+                    <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded">Settings</a>
+                    <div class="btn-group">
+                        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-info-circle"></i></a>
+                        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
             </div>
-        }
-    }
-    else
-    {
-        <div class="bf-list-empty">
-            No themes found!
         </div>
     }
-</div>
+}
+else
+{
+    <div class="">
+        No themes found!
+    </div>
+}

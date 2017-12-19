@@ -1,3 +1,36 @@
+.bf-packages-list-item {
+  border-bottom: 1px solid #eee;
+  padding: 2rem;
+
+  &-logo {
+    min-width: 7rem;
+    width: 7rem;
+    height: 7rem;
+    background-color: #a5aab4;
+    border: 1px solid #a5aab4;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &-img {}
+  }
+
+  &-info {
+    width: 100%;
+    padding-left: 1.5rem;
+  }
+
+  &-title {
+    font-weight: 500;
+    font-size: 1.25rem;
+  }
+
+  &-desc {
+    margin-bottom: .25rem;
+  }
+
+  &-actions {}
+}
+
 .bf-package-info {
   &-cover {
     height: 12rem;
