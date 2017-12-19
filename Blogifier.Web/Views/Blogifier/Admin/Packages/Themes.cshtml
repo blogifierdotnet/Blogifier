@@ -15,10 +15,14 @@
                 <div class="bf-packages-list-item-title">@item.Title</div>
                 <div class="bf-packages-list-item-desc">@item.Description</div>
                 <div class="bf-packages-list-item-actions mt-auto">
-                    <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded">Settings</a>
+                    <!--
+                    NOTE: if the theme is active we show the "settings" button and if not, we show active button.
+                    <a asp-controller="Packages" asp-action="Active" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded mr-2">Active</a>
+                    -->
+                    <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded mr-2"><i class="fa fa-cog mr-1"></i> Settings</a>
                     <div class="btn-group">
-                        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-info-circle"></i></a>
-                        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash"></i></a>
+                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash mr-1"></i> Delete</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-info-circle mr-1"></i> Info</button>
                     </div>
                 </div>
             </div>

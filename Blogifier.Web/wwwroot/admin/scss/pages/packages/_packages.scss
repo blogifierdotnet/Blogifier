@@ -3,9 +3,9 @@
   padding: 2rem;
 
   &-logo {
-    min-width: 7rem;
-    width: 7rem;
-    height: 7rem;
+    min-width: 6rem;
+    width: 6rem;
+    height: 6rem;
     background-color: #a5aab4;
     border: 1px solid #a5aab4;
     border-radius: 1rem;
@@ -16,6 +16,7 @@
 
   &-info {
     width: 100%;
+    min-width: 0;
     padding-left: 1.5rem;
   }
 
@@ -26,6 +27,7 @@
 
   &-desc {
     margin-bottom: .25rem;
+    @include ellipsis;
   }
 
   &-actions {}
