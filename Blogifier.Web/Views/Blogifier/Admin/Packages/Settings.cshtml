@@ -7,27 +7,35 @@
 
 <!-- Toolbar -->
 <div class="bf-toolbar d-flex align-items-center">
-    <div id="multiActionBtns" class="btn-group mr-3">
-        <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded" style="padding: 0 20px">
-            <i class="fa fa-arrow-left"></i> &nbsp; Back
-        </a>
-    </div>
-    <div class="loading loading-sm mr-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+    <a asp-controller="Packages" asp-action="Themes" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-arrow-left mr-1"></i> Back</a>
 </div>
 <!--/Toolbar -->
 
-<div class="bf-content bf-content-boxed bf-settings">
-    <div class="bf-title d-none d-lg-block"><span>Static Widgets</span></div>
+<div class="bf-content bf-content-boxed">
+  <div class="mb-5">
+    <div class="bf-title"><span>Static Widgets</span></div>
+    <div class="input-group mb-2">
+     <div class="form-control">Title of the widget</div>
+     <span class="input-group-btn">
+       <!--
+       NOTE: We see Customize button when this item is not disabled.
+        -->
+       <button class="btn btn-outline-default" type="button">Customize</button>
+       <!--
+       NOTE: Toggle between Disable and Enable.
+        -->
+       <button class="btn btn-outline-default" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+       <button class="btn btn-outline-default" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+     </span>
+   </div>
+  </div>
+
+    <div class="bf-title"><span>Widget Zones</span></div>
     <div class="form-group">
 
     </div>
 
-    <div class="bf-title d-none d-lg-block"><span>Widget Zones</span></div>
-    <div class="form-group">
-
-    </div>
-
-    <div class="bf-title d-none d-lg-block"><span>Settings</span></div>
+    <div class="bf-title"><span>Settings</span></div>
     <div class="form-group">
 
     </div>

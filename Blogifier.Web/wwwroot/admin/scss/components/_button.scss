@@ -74,3 +74,19 @@
 .btn-outline-secondary {
   @include btn-outline($cl-gray);
 }
+
+.btn-outline-default {
+  background: none;
+  border-color: #ddd;
+  box-shadow: none !important;
+
+  &:hover {
+    background: #ddd;
+  }
+}
+
+
+// temporary fix
+.input-group-btn:not(:first-child)>.btn, .input-group-btn:not(:first-child)>.btn-group {
+     margin-left:-1px; 
+}
