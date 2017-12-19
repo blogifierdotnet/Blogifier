@@ -9,7 +9,7 @@
     foreach (var item in Model.Widgets)
     {
         <div style="border: 1px solid red; margin: 2px">
-            @await helper.AddWidget(Component, Model.Theme, item)
+            @await helper.AddWidget(Component, item)
         </div>
     }
 }

@@ -1,21 +1,26 @@
 ﻿using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
-using Blogifier.Core.Services.Packages;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Common
 {
     public interface IComponentHelper
     {
-        Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string themeName, string widgetName, object arguments = null);
-        Task<IHtmlContent> AddZone(IViewComponentHelper helper, string theme, string zone, string[] defaultWidgets = null);
+        Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string widget, object arguments = null);
+        Task<IHtmlContent> AddZone(IViewComponentHelper helper, string zone, string[] defaultWidgets = null);
     }
 
     public class ComponentHelper : IComponentHelper
@@ -31,42 +36,46 @@ namespace Blogifier.Core.Common
             _db = db;
         }
 
-        public async Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string themeName, string widgetName, object arguments = null)
+        public async Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string widget, object arguments = null)
         {
-            var key = $"{themeName}-{widgetName}";
-
-            if (Disabled() != null && Disabled().Contains(widgetName))
-            {
+            if (Disabled() != null && Disabled().Contains(widget))
                 return await Task.FromResult(new HtmlString(""));
-            }           
 
-            var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
+            //if (widget != "WidgetZone")
+            //{
+            //    var key = $"{BlogSettings.Theme}-widget-{widget}";
+            //    var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
 
-            if (string.IsNullOrEmpty(setting))
-            {
-                var args = arguments == null ? "" : arguments.ToString();
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, args);
-            }
+            //    if (string.IsNullOrEmpty(setting))
+            //    {
+            //        var arg = ObjectToString(arguments);
+            //        await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, arg);
+            //    }
+            //    else
+            //    {
+            //        arguments = StringToObject(setting);
+            //    }
+            //}
 
             try
             {
-                return Exists(widgetName)
-                ? await helper.InvokeAsync(widgetName, arguments)
+                return Exists(widget)
+                ? await helper.InvokeAsync(widget, arguments)
                 : await Task.FromResult(new HtmlString(""));
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Error loading widget: {ex.Message}");
                 return await Task.FromResult(new HtmlString(""));
             }
         }
 
-        public async Task<IHtmlContent> AddZone(IViewComponentHelper helper, string theme, string zone, string[] defaultWidgets = null)
+        public async Task<IHtmlContent> AddZone(IViewComponentHelper helper, string zone, string[] defaultWidgets = null)
         {
-            IHtmlContent html = new HtmlString("");
-
-            var key = $"{theme}:{zone}";
+            var html = new HtmlString("");
             var widgets = defaultWidgets.ToList();
+
+            //var key = $"{BlogSettings.Theme}:{zone}";
             //var field = _db.CustomFields.GetValue(CustomType.Application, 0, key);
 
             //if (string.IsNullOrEmpty(field))
@@ -78,15 +87,15 @@ namespace Blogifier.Core.Common
             //    widgets = field.Split(',').ToList();
             //}
 
-            if (widgets.Any())
-            {
-                foreach (var widget in widgets)
-                {
-                    await AddWidget(helper, widget, zone);
-                }
-            }
+            //if (widgets.Any())
+            //{
+            //    foreach (var widget in widgets)
+            //    {
+            //        await AddWidget(helper, widget, null);
+            //    }
+            //}
 
-            return await AddWidget(helper, theme, "WidgetZone", new ZoneViewModel { Theme = theme, Zone = zone, Widgets = widgets });
+            return await AddWidget(helper, "WidgetZone", new ZoneViewModel { Theme = BlogSettings.Theme, Zone = zone, Widgets = widgets });
         }
 
         public static object GetValue(dynamic settings, string prop)
@@ -115,6 +124,19 @@ namespace Blogifier.Core.Common
         private static IHtmlContent GetContent(string name)
         {
             return new HtmlString($"<div class=\"widget-not-found\">Widget {name} not found</div>");
+        }
+
+
+        public string ObjectToString(object obj)
+        {
+            //return JsonConvert.SerializeObject(obj, new ExpandoObjectConverter());
+            return JsonConvert.SerializeObject(obj);
+        }
+
+        public object StringToObject(string json)
+        {
+            //return JsonConvert.DeserializeObject<ExpandoObject>(json, new ExpandoObjectConverter());
+            return JsonConvert.DeserializeObject(json);
         }
     }
 }

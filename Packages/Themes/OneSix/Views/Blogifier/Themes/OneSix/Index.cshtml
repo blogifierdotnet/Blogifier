@@ -22,7 +22,7 @@
 
 <div class="page-content">
     <div class="container">
-        @await helper.AddWidget(Component, "OneSix", "PostList", new { listType = 1, contentType = 1, count = 2 })
+        @await helper.AddWidget(Component, "PostList", new { listType = 1, contentType = 1, count = 2 })
 
         @if (Model.Posts != null)
         {
@@ -45,9 +45,9 @@
         }
         @Html.Partial($"~/{ApplicationSettings.BlogThemesFolder}/OneSix/_Shared/_Pager.cshtml", Model.Pager)
 
-        @*@await helper.AddWidget(Component, "OneSix", "Newsletter")
+        @await helper.AddWidget(Component, "Newsletter")
         
-        @await helper.AddZone(Component, "OneSix", "SideBar", new string[] { "Hello", "Simple" })*@
+        @await helper.AddZone(Component, "SideBar", new string[] { "Hello", "Simple" })
         
     </div>
 </div>
