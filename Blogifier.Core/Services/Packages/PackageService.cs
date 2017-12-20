@@ -82,7 +82,7 @@ namespace Blogifier.Core.Services.Packages
                                     item.Author = string.IsNullOrEmpty(attributes.Author) ? "Unknown" : attributes.Author;
                                     item.Cover = string.IsNullOrEmpty(attributes.Cover) ? BlogSettings.Cover : attributes.Cover;
                                     item.Description = attributes.Description;
-                                    item.Icon = string.IsNullOrEmpty(attributes.Icon) ? BlogSettings.Logo : attributes.Icon;
+                                    item.Icon = string.IsNullOrEmpty(attributes.Icon) ? Constants.PkgIcon : attributes.Icon;
                                     item.ProjectUrl = attributes.ProjectUrl;
                                     item.Tags = attributes.Tags;
                                     item.Title = attributes.Title;
@@ -98,6 +98,16 @@ namespace Blogifier.Core.Services.Packages
 
                         item.HasSettings = view.Success;
                         item.Enabled = disabled == null || !disabled.Contains(name);
+
+                        if (item.Icon == null)
+                            item.Icon = Constants.PkgIcon;
+
+                        if (item.Cover == null)
+                            item.Cover = BlogSettings.Cover;
+
+                        if (item.Author == null)
+                            item.Author = "Unknown";
+
                         pkgs.Add(item);
                     }
                 }

@@ -23,6 +23,48 @@
         @RenderBody()
     </div>
 </div>
+
+<!-- Package Info -->
+<div class="modal fade" id="packageInfo" tabindex="-1" role="dialog" aria-labelledby="packageInfoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageInfoLabel">Package Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="bf-package-info">
+                <div class="bf-package-info-cover">
+                    <img src="" alt="Package Title" />
+                </div>
+                <div class="bf-package-info-body">
+                    <div class="bf-package-info-header">
+                        <img class="bf-package-info-logo" src="" alt="Package Title" />
+                        <h4 class="bf-package-info-title">Package Title</h4>
+                        <div class="bf-package-info-rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
+                    </div>
+                    <p class="bf-package-info-desc"></p>
+                    <hr class="my-4" />
+                    <table class="table bf-package-info-table">
+                        <tr>
+                            <td>Version</td>
+                            <td class="bf-package-info-version"></td>
+                        </tr>
+                        <tr>
+                            <td>Updated</td>
+                            <td class="bf-package-info-date"></td>
+                        </tr>
+                        <tr>
+                            <td>Developer</td>
+                            <td class="bf-package-info-developer"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Package Info -->
+
 @section Scripts{
     @RenderSection("Scripts", false)
 }

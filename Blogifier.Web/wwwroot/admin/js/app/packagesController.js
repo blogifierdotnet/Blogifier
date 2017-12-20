@@ -2,34 +2,16 @@ var packagesController = function (dataService) {
     var obj = {};
     var packages = [];
 
-    function enable() {
-        $('.loading').fadeIn();
-
-        $('input:checkbox.item-checkbox:checked').each(function () {
-            dataService.put('blogifier/api/packages/enable/' + $(this).val(), obj, done, fail);
-        });
+    function enable(id) {
+        dataService.put('blogifier/api/packages/enable/' + id, obj, done, fail);
     }
 
-    function disable() {
-        $('.loading').fadeIn();
-
-        $('input:checkbox.item-checkbox:checked').each(function () {
-            dataService.put('blogifier/api/packages/disable/' + $(this).val(), obj, done, fail);
-        });
-    }
-
-    function disableSingle(id) {
-        dataService.put('blogifier/api/packages/disable/' + id, obj, doneSingle, fail);
-    }
-    function enableSingle(id) {
-        dataService.put('blogifier/api/packages/enable/' + id, obj, doneSingle, fail);
-    }
-
-    function doneSingle(data) {
-        toastr.success('Updated');
+    function disable(id) {
+        dataService.put('blogifier/api/packages/disable/' + id, obj, done, fail);
     }
 
     function done(data) {
+        toastr.success('Updated');
         setTimeout(function () {
             window.location.href = getUrl('admin/packages/widgets');
         }, 2000);
@@ -43,8 +25,6 @@ var packagesController = function (dataService) {
     return {
         enable: enable,
         disable: disable,
-        disableSingle: disableSingle,
-        enableSingle: enableSingle,
         packages: packages
     }
 }(DataService);

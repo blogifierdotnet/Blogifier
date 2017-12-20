@@ -28,5 +28,6 @@
         public const string PkgPlugins = "Blogifier.Plugins";
         public const string PkgThemes = "Blogifier.Themes";
         public const string PkgWidgets = "Blogifier.Widgets";
+        public const string PkgIcon = "https://avatars0.githubusercontent.com/u/19671571?v=4&amp;amp;s=180";
     }
 }
