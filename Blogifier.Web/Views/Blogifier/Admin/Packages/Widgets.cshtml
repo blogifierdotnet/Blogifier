@@ -31,7 +31,9 @@
                             <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" onclick="return packagesController.enable('@item.Title')"><i class="fa fa-play mr-1"></i> Enable</button>
                         }
                         @*<button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash mr-1"></i> Delete</button>*@
-                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" data-toggle="modal" data-target="#packageInfo" data-title="@item.Title" data-desc="@item.Description" data-version="1.0" data-logo="/embedded/lib/img/cover.png" data-cover="/embedded/lib/img/cover.png" data-date="November 20, 2017" data-installs="48894" data-developer="Ruslan Tur"><i class="fa fa-info-circle mr-1"></i> info</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" onclick="return packagesController.showInfo('@item.Title')">
+                            <i class="fa fa-info-circle mr-1"></i> Info
+                        </button>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,9 @@
                     <a asp-controller="Packages" asp-action="Settings" asp-route-theme="@item.Title" class="btn btn-outline-secondary btn-sm btn-rounded mr-2"><i class="fa fa-cog mr-1"></i> Settings</a>
                     <div class="btn-group">
                         @*<button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash mr-1"></i> Delete</button>*@
-                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-info-circle mr-1"></i> Info</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" onclick="return packagesController.showInfo('@item.Title')">
+                            <i class="fa fa-info-circle mr-1"></i> Info
+                        </button>
                     </div>
                 </div>
             </div>
@@ -34,4 +36,8 @@ else
     <div class="">
         No themes found!
     </div>
+}
+
+@section Scripts{
+    <script src="~/admin/js/app/packagesController.js"></script>
 }

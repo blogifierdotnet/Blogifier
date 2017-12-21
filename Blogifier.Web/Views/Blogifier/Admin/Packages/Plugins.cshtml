@@ -20,7 +20,7 @@
                     <a href="~/blogifier/plugins/@item.Title/settings" class="btn btn-outline-secondary btn-sm btn-rounded mr-2"><i class="fa fa-cog mr-1"></i> Settings</a>
                     <div class="btn-group">
                         @*<button type="button" class="btn btn-outline-secondary btn-sm btn-rounded"><i class="fa fa-trash mr-1"></i> Delete</button>*@
-                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" data-toggle="modal" data-target="#packageInfo">
+                        <button type="button" class="btn btn-outline-secondary btn-sm btn-rounded" onclick="return packagesController.showInfo('@item.Title')">
                             <i class="fa fa-info-circle mr-1"></i> Info
                         </button>
                     </div>

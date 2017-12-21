@@ -1,6 +1,8 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Blogifier.Core.Data.Models;
+using Blogifier.Core.Services.Packages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,12 +17,20 @@ namespace Blogifier.Core.Controllers.Api
     public class PackagesController : Controller
     {
         IUnitOfWork _db;
+        IPackageService _pkgs;
         ILogger _logger;
 
-        public PackagesController(IUnitOfWork db, ILogger<AssetsController> logger)
+        public PackagesController(IUnitOfWork db, IPackageService pkgs, ILogger<AssetsController> logger)
         {
             _db = db;
+            _pkgs = pkgs;
             _logger = logger;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<PackageListItem> GetSingle(string id)
+        {
+            return await _pkgs.Single(id);
         }
 
         [HttpPut("enable/{id}")]

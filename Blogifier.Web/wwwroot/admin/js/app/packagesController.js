@@ -22,9 +22,30 @@ var packagesController = function (dataService) {
         toastr.error('Failed');
     }
 
+    function showInfo(id) {
+        dataService.get('blogifier/api/packages/' + id, infoCallback, fail);
+        return false;
+    }
+
+    function infoCallback(data) {
+        $('#packageInfoLabel').html(data.title);
+
+        $('.bf-package-info-cover').find("img").attr('src', data.cover);
+        $('.bf-package-info-logo').attr('src', data.icon);
+        $('.bf-package-info-title').html(data.title);
+        $('.bf-package-info-desc').html(data.description);
+
+        $('.bf-package-info-version').html(data.version);
+        $('.bf-package-info-date').html(getDate(data.lastUpdated));
+        $('.bf-package-info-developer').html(data.author);
+
+        $('#packageInfo').modal();
+    }
+
     return {
         enable: enable,
         disable: disable,
+        showInfo: showInfo,
         packages: packages
     }
 }(DataService);
