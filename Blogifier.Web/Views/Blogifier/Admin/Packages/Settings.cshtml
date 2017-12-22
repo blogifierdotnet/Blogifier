@@ -14,32 +14,26 @@
 
   <section class="mb-5 pb-3">
     <div class="bf-title mb-2"><span>Static Widgets</span></div>
-    <!-- SAMPLE WIDGET -->
-    <div class="input-group mb-2">
-      <div class="form-control">Title of the widget</div>
-      <span class="input-group-btn">
-        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-      </span>
-    </div>
-    <div class="input-group mb-2">
-      <div class="form-control">Title of the widget</div>
-      <span class="input-group-btn">
-        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-      </span>
-    </div>
-    <div class="input-group mb-2">
-      <div class="form-control">Title of the widget</div>
-      <span class="input-group-btn">
-        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-      </span>
-    </div>
-    <!--/SAMPLE WIDGET -->
+    @if (Model.Widgets != null && Model.Widgets.Count > 0)
+    {
+        @foreach (var widget in Model.Widgets)
+        {
+            <div class="input-group mb-2">
+                <div class="form-control">@widget</div>
+                <span class="input-group-btn">
+                    <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+                    <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+                    <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+                </span>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="bf-list-empty">
+            No widgets found
+        </div>
+    }
   </section>
 
   <section class="mb-5 pb-3">

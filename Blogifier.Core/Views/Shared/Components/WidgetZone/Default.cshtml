@@ -6,10 +6,10 @@
 @if (Model.Widgets != null && Model.Widgets.Count > 0)
 {
     <div>ZONE: @Model.Zone</div>
-    foreach (var item in Model.Widgets)
+    foreach (var widget in Model.Widgets)
     {
         <div style="border: 1px solid red; margin: 2px">
-            @await helper.AddWidget(Component, item)
+            @await helper.AddZoneWidget(Component, Model.Zone, widget)
         </div>
     }
 }

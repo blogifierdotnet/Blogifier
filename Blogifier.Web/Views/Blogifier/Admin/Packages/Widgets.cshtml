@@ -1,6 +1,5 @@
 ﻿@model Blogifier.Core.Data.Models.AdminPackagesModel
 @using Blogifier.Core.Common
-@using Newtonsoft.Json
 @{
     ViewData["Title"] = "Widgets";
     Layout = $"~/{ApplicationSettings.BlogAdminFolder}/_Layout/_Packages.cshtml";
@@ -49,7 +48,4 @@ else
 
 @section Scripts{
     <script src="~/admin/js/app/packagesController.js"></script>
-    <script>
-        packagesController.packages = eval(@Html.Raw(JsonConvert.SerializeObject(Model.Packages, Formatting.Indented)))
-    </script>
 }

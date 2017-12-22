@@ -47,7 +47,7 @@ namespace Blogifier.Core.Data.Models
     public class ThemeSettingsModel : AdminBaseModel
     {
         public List<ZoneViewModel> Zones { get; set; }
-
+        public List<string> Widgets { get; set; }
     }
 
     public class ZoneViewModel

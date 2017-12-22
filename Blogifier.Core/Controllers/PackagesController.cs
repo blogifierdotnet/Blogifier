@@ -69,6 +69,7 @@ namespace Blogifier.Core.Controllers
         public async Task<IActionResult> Settings(string theme)
         {
             var zones = new List<ZoneViewModel>();
+            var widgets = new List<string>();
 
             var fields = await _db.CustomFields.GetCustomFields(CustomType.Application, 0);
 
@@ -76,18 +77,35 @@ namespace Blogifier.Core.Controllers
             {
                 foreach (var field in fields)
                 {
-                    if (field.Key.StartsWith(theme) && field.Key.Contains("-"))
+                    var wKey = $"w:{theme}-";
+                    var zKey = $"z:{theme}-";
+
+                    if (field.Key.StartsWith(wKey))
                     {
-                        // widget
-                        var w = field.Key.Replace(theme + "-", "");
+                        widgets.Add(field.Key.Replace(wKey, ""));
                     }
 
-                    if (field.Key.StartsWith(theme) && field.Key.Contains(":"))
+                    if (field.Key.StartsWith(zKey))
                     {
-                        // zone
-                        var z = field.Key.Replace(theme + ":", "");
-                        var zone = new ZoneViewModel { Theme = theme, Zone = z };
-                        zones.Add(zone);
+                        var zValues = field.Key.Replace(zKey, "").Split('-');
+                        if(zValues.Length == 2)
+                        {
+                            var zone = zValues[0];
+                            var widget = zValues[1];
+
+                            var zoneItem = zones.Where(z => z.Zone == zone).FirstOrDefault();
+
+                            if(zoneItem == null)
+                            {                              
+                                zones.Add(new ZoneViewModel {
+                                    Theme = theme, Zone = zone, Widgets = new List<string> { widget } }
+                                );
+                            }
+                            else
+                            {
+                                zoneItem.Widgets.Add(widget);
+                            }
+                        }
                     }
                 }
             }
@@ -95,7 +113,8 @@ namespace Blogifier.Core.Controllers
             var model = new ThemeSettingsModel
             {
                 Profile = GetProfile(),
-                Zones = zones
+                Zones = zones,
+                Widgets = widgets
             };
 
             return View($"{_theme}Packages/Settings.cshtml", model);
