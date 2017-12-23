@@ -12,7 +12,7 @@
 </section>
 
 <section class="container">
-    @await helper.InvokeAsync(Component, "PostList", new { listType = 1, count = 2 })
+    @await helper.AddWidget(Component, "PostList", new { listType = 1, count = 2 })
 </section>
 
 @if (Model.Posts != null)
