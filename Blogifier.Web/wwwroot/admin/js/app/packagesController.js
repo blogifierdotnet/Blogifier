@@ -41,15 +41,29 @@ var packagesController = function (dataService) {
         $('#packageInfo').modal();
     }
 
-    function addWidgetToZone(btn, zone) {
+    function addWidget(btn, zone) {
         var widget = $(btn).parent().parent().find('select').val();
-        toastr.success(zone + ' :: ' + widget);
+        var obj = {};
+        dataService.put("blogifier/api/packages/addwidget/" + zone + "/" + widget, obj, doneAndReload, fail);
+    }
+
+    function removeWidget(zone, widget) {
+        var obj = {};
+        dataService.put("blogifier/api/packages/removewidget/" + zone + "/" + widget, obj, doneAndReload, fail);
+    }
+
+    function doneAndReload(data) {
+        toastr.success('Updated');
+        setTimeout(function () {
+            location.reload();
+        }, 2000);
     }
 
     return {
         enable: enable,
         disable: disable,
         showInfo: showInfo,
-        addWidgetToZone: addWidgetToZone
+        addWidget: addWidget,
+        removeWidget: removeWidget
     }
 }(DataService);

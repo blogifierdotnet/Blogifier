@@ -62,6 +62,26 @@ namespace Blogifier.Core.Controllers.Api
             }
         }
 
+        [HttpPut("addwidget/{zone}/{widget}")]
+        public async Task AddWidget(string zone, string widget)
+        {
+            var key = $"z:{BlogSettings.Theme}-{zone}-{widget}";
+            await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, "");
+        }
+
+        [HttpPut("removewidget/{zone}/{widget}")]
+        public IActionResult RemoveWidget(string zone, string widget)
+        {
+            var key = $"z:{BlogSettings.Theme}-{zone}-{widget}";
+            var field = _db.CustomFields.Single(f => f.CustomKey == key);
+            if(field != null)
+            {
+                _db.CustomFields.Remove(field);
+                _db.Complete();
+            }
+            return Ok();
+        }
+
         List<string> Disabled()
         {
             var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
