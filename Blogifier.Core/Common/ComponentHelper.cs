@@ -44,14 +44,14 @@ namespace Blogifier.Core.Common
 
         public async Task<IHtmlContent> AddZoneWidget(IViewComponentHelper helper, string zone, string widget, object arguments = null)
         {
-            if (Disabled() != null && Disabled().Contains(widget))
+            if (Disabled() != null && (await Disabled()).Contains(widget))
                 return await Task.FromResult(new HtmlString(""));
 
             if (widget != "WidgetZone")
             {
                 var key = zone == "" ? $"w:{BlogSettings.Theme}-{widget}" : $"z:{BlogSettings.Theme}-{zone}-{widget}";
 
-                var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
+                var setting = await _db.CustomFields.GetValue(CustomType.Application, 0, key);
 
                 if (string.IsNullOrEmpty(setting))
                 {
@@ -117,9 +117,9 @@ namespace Blogifier.Core.Common
             }
         }
 
-        List<string> Disabled()
+        async Task<List<string>> Disabled()
         {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
+            var field = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
             return field == null || string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
 

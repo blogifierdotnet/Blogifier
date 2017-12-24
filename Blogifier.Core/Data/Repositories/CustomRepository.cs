@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Common;
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,9 +46,9 @@ namespace Blogifier.Core.Data.Repositories
             return Task.Run(() => Load(dbFields));
         }
 
-        public string GetValue(CustomType customType, int parentId, string key)
+        public async Task<string> GetValue(CustomType customType, int parentId, string key)
         {
-            var field = _db.CustomFields.Where(f => f.CustomType == customType && f.ParentId == parentId && f.CustomKey == key).FirstOrDefault();
+            var field = await _db.CustomFields.Where(f => f.CustomType == customType && f.ParentId == parentId && f.CustomKey == key).FirstOrDefaultAsync();
             return field == null || field.CustomValue == null ? string.Empty : field.CustomValue;
         }
 

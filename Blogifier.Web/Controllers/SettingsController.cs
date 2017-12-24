@@ -295,7 +295,7 @@ namespace Blogifier.Controllers
                 Profile = profile,
                 RegisterModel = new RegisterViewModel()
             };
-            model.RegisterModel.SendGridApiKey = _db.CustomFields.GetValue(
+            model.RegisterModel.SendGridApiKey = await _db.CustomFields.GetValue(
                 CustomType.Application, profile.Id, Constants.SendGridApiKey);
 
             return model;

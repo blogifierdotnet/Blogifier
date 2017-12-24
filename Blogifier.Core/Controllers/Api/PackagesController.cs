@@ -36,7 +36,7 @@ namespace Blogifier.Core.Controllers.Api
         [HttpPut("enable/{id}")]
         public async Task Enable(string id)
         {
-            var disabled = Disabled();
+            var disabled = await Disabled();
             if (disabled != null && disabled.Contains(id))
             {
                 disabled.Remove(id);
@@ -47,7 +47,7 @@ namespace Blogifier.Core.Controllers.Api
         [HttpPut("disable/{id}")]
         public async Task Disable(string id)
         {
-            var disabled = Disabled();
+            var disabled = await Disabled();
             if (disabled == null)
             {
                 await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.DisabledPackages, id);
@@ -62,9 +62,9 @@ namespace Blogifier.Core.Controllers.Api
             }
         }
 
-        List<string> Disabled()
+        async Task<List<string>> Disabled()
         {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
+            var field = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
             return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
 

@@ -40,7 +40,7 @@ namespace Blogifier.Core.Controllers
                 model.AuthorName = model.Profile.AuthorName;
                 model.AuthorEmail = model.Profile.AuthorEmail;
                 model.Avatar = model.Profile.Avatar;
-                model.EmailEnabled = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey).Length > 0;
+                model.EmailEnabled = (await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey)).Length > 0;
                 model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
             }
             return View(_theme + "Profile.cshtml", model);
@@ -119,9 +119,9 @@ namespace Blogifier.Core.Controllers
                 Logo = BlogSettings.Logo,
                 Avatar = ApplicationSettings.ProfileAvatar,
                 Image = BlogSettings.Cover,
-                EmailKey = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey),
-                BlogHead = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.HeadCode),
-                BlogFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.FooterCode)
+                EmailKey = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey),
+                BlogHead = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.HeadCode),
+                BlogFooter = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.FooterCode)
             };
             return View(_theme + "General.cshtml", model);
         }
@@ -173,7 +173,7 @@ namespace Blogifier.Core.Controllers
             {
                 Profile = profile,
                 PostImage = BlogSettings.Cover,
-                PostFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.PostCode),
+                PostFooter = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.PostCode),
                 ItemsPerPage = BlogSettings.ItemsPerPage
             };
             return View(_theme + "Posts.cshtml", model);

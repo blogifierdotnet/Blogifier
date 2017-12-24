@@ -83,7 +83,7 @@ namespace Blogifier.Core.Controllers.Api
                 _db.BlogPosts.Add(bp);
                 if (model.Publish)
                 {
-                    if (_email.Enabled)
+                    if (await _email.Enabled())
                     {
                         await Notify(bp.Title, bp.Description);
                     }
@@ -104,7 +104,7 @@ namespace Blogifier.Core.Controllers.Api
                 {
                     if (bp.Published == DateTime.MinValue)
                     {
-                        if (_email.Enabled)
+                        if (await _email.Enabled())
                         {
                             await Notify(bp.Title, bp.Description);
                         }
@@ -237,15 +237,15 @@ namespace Blogifier.Core.Controllers.Api
         {
             var profile = await GetProfile();
 
-            foreach (var email in Emails())
+            foreach (var email in await Emails())
             {
                 await _email.Send(email, title, description, await GetProfile());
             }
         }
 
-        List<string> Emails()
+        async Task<List<string>> Emails()
         {
-            var field = _db.CustomFields.GetValue(CustomType.Application, 0, "NEWSLETTER");
+            var field = await _db.CustomFields.GetValue(CustomType.Application, 0, "NEWSLETTER");
             return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
     }
