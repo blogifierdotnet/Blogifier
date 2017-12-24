@@ -36,44 +36,45 @@
     }
   </section>
 
-  <section class="mb-5 pb-3">
-    <div class="bf-title mb-2"><span>Widget Zones</span></div>
-    <div class="bf-themes-widgetzone">
-      <!-- SAMPLE WIDGET -->
-      <div class="input-group mb-2">
-        <div class="form-control">Title of the widget</div>
-        <span class="input-group-btn">
-          <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" data-tooltip><i class="fa fa-trash"></i></button>
-        </span>
-      </div>
-      <div class="input-group mb-2">
-        <div class="form-control">Title of the widget</div>
-        <span class="input-group-btn">
-          <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
-          <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" data-tooltip><i class="fa fa-trash"></i></button>
-        </span>
-      </div>
-      <!--/SAMPLE WIDGET -->
-      <hr>
-      <div class="input-group">
-        <select class="form-control custom-select">
-          <option value="">Select</option>
-          <option value="">Select 1</option>
-          <option value="">Select 2</option>
-          <option value="">Select 3</option>
-        </select>
-        <span class="input-group-btn">
-          <button class="btn btn-outline-default" type="button">ADD</button>
-        </span>
-      </div>
-    </div>
-  </section>
-
+  @if(Model.Zones != null && Model.Zones.Count > 0)
+  {
+    foreach (var zone in Model.Zones)
+    {
+    <section class="mb-5 pb-3">
+        <div class="bf-title mb-2"><span>@zone.Zone</span></div>
+        <div class="bf-themes-widgetzone">
+            @foreach (var widget in zone.Widgets)
+            {
+                <div class="input-group mb-2">
+                    <div class="form-control">@widget</div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
+                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" data-tooltip><i class="fa fa-trash"></i></button>
+                    </span>
+                </div>
+            }
+            <hr>
+            <div class="input-group">
+                <select class="form-control custom-select">
+                    @if (Model.WidgetPackages != null && Model.WidgetPackages.Count > 0)
+                    {
+                        foreach (var pkg in Model.WidgetPackages)
+                        {
+                            <option value="@pkg.Title">@pkg.Title</option>
+                        }
+                    }
+                </select>
+                <span class="input-group-btn">
+                    <button class="btn btn-outline-default" type="button" onclick="return packagesController.addWidgetToZone(this, '@zone.Zone')">ADD</button>
+                </span>
+            </div>
+        </div>
+    </section>
+    }
+  }
+  
   <section>
     <div class="bf-title"><span>Other Settings</span></div>
   </section>
@@ -105,3 +106,7 @@
     </div>
   </div>
 </div>
+
+@section Scripts{
+    <script src="~/admin/js/app/packagesController.js"></script>
+}

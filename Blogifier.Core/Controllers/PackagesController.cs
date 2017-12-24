@@ -114,7 +114,8 @@ namespace Blogifier.Core.Controllers
             {
                 Profile = GetProfile(),
                 Zones = zones,
-                Widgets = widgets
+                Widgets = widgets,
+                WidgetPackages = await _pkgs.Find(PackageType.Widgets)
             };
 
             return View($"{_theme}Packages/Settings.cshtml", model);

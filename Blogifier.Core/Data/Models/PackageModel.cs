@@ -48,6 +48,7 @@ namespace Blogifier.Core.Data.Models
     {
         public List<ZoneViewModel> Zones { get; set; }
         public List<string> Widgets { get; set; }
+        public List<PackageListItem> WidgetPackages { get; set; }
     }
 
     public class ZoneViewModel

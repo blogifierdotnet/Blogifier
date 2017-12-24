@@ -41,9 +41,15 @@ var packagesController = function (dataService) {
         $('#packageInfo').modal();
     }
 
+    function addWidgetToZone(btn, zone) {
+        var widget = $(btn).parent().parent().find('select').val();
+        toastr.success(zone + ' :: ' + widget);
+    }
+
     return {
         enable: enable,
         disable: disable,
-        showInfo: showInfo
+        showInfo: showInfo,
+        addWidgetToZone: addWidgetToZone
     }
 }(DataService);
