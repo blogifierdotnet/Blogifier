@@ -87,7 +87,7 @@ namespace Blogifier.Core.Controllers
                 // save custom fields
                 if(profile.Id > 0 && model.CustomFields != null)
                 {
-                    SaveCustomFields(model.CustomFields, profile.Id);
+                    await SaveCustomFields(model.CustomFields, profile.Id);
                 }
                 model.CustomFields = await _db.CustomFields.GetUserFields(model.Profile.Id);
 
@@ -222,13 +222,13 @@ namespace Blogifier.Core.Controllers
             return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
         }
 
-        void SaveCustomFields(Dictionary<string, string> fields, int profileId)
+        async Task SaveCustomFields(Dictionary<string, string> fields, int profileId)
         {
             if(fields != null && fields.Count > 0)
             {
                 foreach (var field in fields)
                 {
-                    _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
+                    await _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
                 }
             }
         }

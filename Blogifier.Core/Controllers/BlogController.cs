@@ -22,9 +22,9 @@ namespace Blogifier.Core.Controllers
             _theme = $"~/{ApplicationSettings.BlogThemesFolder}/{BlogSettings.Theme}/";
         }
 
-        public IActionResult Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var model = _ds.GetPosts(page);
+            var model = await _ds.GetPosts(page);
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
@@ -72,10 +72,10 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("search/{term}")]
-        public IActionResult PagedSearch(string term, int page = 1)
+        public async Task<IActionResult> PagedSearch(string term, int page = 1)
         {
             ViewBag.Term = term;
-            var model = _ds.SearchPosts(term, page);
+            var model = await _ds.SearchPosts(term, page);
 
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
@@ -84,10 +84,10 @@ namespace Blogifier.Core.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search()
+        public async Task<IActionResult> Search()
         {
             ViewBag.Term = HttpContext.Request.Form["term"];
-            var model = _ds.SearchPosts(ViewBag.Term, 1);
+            var model = await _ds.SearchPosts(ViewBag.Term, 1);
 
             return View(_theme + "Search.cshtml", model);
         }

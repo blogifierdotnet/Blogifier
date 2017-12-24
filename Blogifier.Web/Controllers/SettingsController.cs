@@ -98,7 +98,7 @@ namespace Blogifier.Controllers
                     profile.Description = "New blog description";
 
                     profile.IdentityName = user.UserName;
-                    profile.Slug = SlugFromTitle(profile.AuthorName);
+                    profile.Slug = await SlugFromTitle(profile.AuthorName);
                     profile.Avatar = ApplicationSettings.ProfileAvatar;
                     profile.BlogTheme = BlogSettings.Theme;
 
@@ -271,14 +271,14 @@ namespace Blogifier.Controllers
             }
         }
 
-        string SlugFromTitle(string title)
+        async Task<string> SlugFromTitle(string title)
         {
             var slug = title.ToSlug();
-            if (_db.Profiles.Single(b => b.Slug == slug) != null)
+            if (await _db.Profiles.Single(b => b.Slug == slug) != null)
             {
                 for (int i = 2; i < 100; i++)
                 {
-                    if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
+                    if (await _db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
                     {
                         return slug + i.ToString();
                     }

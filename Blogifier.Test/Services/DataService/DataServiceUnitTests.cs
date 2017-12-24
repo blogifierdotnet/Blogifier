@@ -128,14 +128,14 @@ namespace Blogifier.Test.Services.DataService
         }
 
         [Fact]
-        public void SearchPosts_With_Page_GreaterThan_0_Result_IsNotNull()
+        public async void SearchPosts_With_Page_GreaterThan_0_Result_IsNotNull()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1);
+            var result = await sut.SearchPosts("dotnet", 1);
 
             // assert
             Assert.NotNull(result);

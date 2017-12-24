@@ -2,9 +2,11 @@
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
 {
@@ -18,25 +20,25 @@ namespace Blogifier.Widgets
             _db = db;
         }
 
-        public IViewComponentResult Invoke(ListType listType, ContentType contentType = ContentType.Content, bool html = true, int length = 0, int count = 3)
+        public async Task<IViewComponentResult> Invoke(ListType listType, ContentType contentType = ContentType.Content, bool html = true, int length = 0, int count = 3)
         {
-            IEnumerable<BlogPost> posts;
+            IQueryable<BlogPost> query;
             switch (listType)
             {
                 case ListType.FeaturedPosts:
-                    posts = _db.BlogPosts.All()
+                    query = _db.BlogPosts.All()
                         .Where(p => p.Published > DateTime.MinValue && p.IsFeatured)
                         .OrderByDescending(p => p.Published)
                         .Take(count);
                     break;
                 case ListType.RecentPosts:
-                    posts = _db.BlogPosts.All()
+                    query = _db.BlogPosts.All()
                         .Where(p => p.Published > DateTime.MinValue)
                         .OrderByDescending(p => p.Published)
                         .Take(count);
                     break;
                 case ListType.PopularPosts:
-                    posts = _db.BlogPosts.All()
+                    query = _db.BlogPosts.All()
                         .Where(p => p.Published > DateTime.MinValue)
                         .OrderByDescending(p => p.PostViews)
                         .Take(count);
@@ -44,7 +46,7 @@ namespace Blogifier.Widgets
                 default:
                     throw new ApplicationException("Unknown list type");
             }
-
+            var posts = await query.ToListAsync();
             // apply filters
             foreach (var item in posts)
             {
@@ -62,7 +64,7 @@ namespace Blogifier.Widgets
                 }
             }
 
-            return View(posts);
+            return View(query);
         }
     }
 

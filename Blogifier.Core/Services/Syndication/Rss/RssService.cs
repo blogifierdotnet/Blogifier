@@ -324,7 +324,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     }
                     catIds.Add(blogCategory.Id.ToString());
                 }
-                var blogPost = _db.BlogPosts.Single(p => p.Slug == item.Title.ToSlug());
+                var blogPost = await _db.BlogPosts.Single(p => p.Slug == item.Title.ToSlug());
                 await _db.BlogPosts.UpdatePostCategories(blogPost.Id, catIds);
             }
         }
