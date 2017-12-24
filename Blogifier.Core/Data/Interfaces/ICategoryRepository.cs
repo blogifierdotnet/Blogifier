@@ -10,14 +10,14 @@ namespace Blogifier.Core.Data.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        IEnumerable<Category> Find(Expression<Func<Category, bool>> predicate, Pager pager);
+        Task<IEnumerable<Category>> Find(Expression<Func<Category, bool>> predicate, Pager pager);
 
-        IEnumerable<SelectListItem> PostCategories(int postId);
-        IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate);
+        Task<IEnumerable<SelectListItem>> PostCategories(int postId);
+        Task<IEnumerable<SelectListItem>> CategoryList(Expression<Func<Category, bool>> predicate);
 
         Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate);
 
-        bool AddCategoryToPost(int postId, int categoryId);
-        bool RemoveCategoryFromPost(int postId, int categoryId);
+        Task<bool> AddCategoryToPost(int postId, int categoryId);
+        Task<bool> RemoveCategoryFromPost(int postId, int categoryId);
     }
 }

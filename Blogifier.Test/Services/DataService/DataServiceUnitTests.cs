@@ -26,97 +26,97 @@ namespace Blogifier.Test.Services.DataService
         private readonly Mock<ICategoryRepository> _categoryRepository = new Mock<ICategoryRepository>();
 
         [Fact]
-        public void GetPosts_Page_SmallerThan_1_Returns_Null()
+        public async void GetPosts_Page_SmallerThan_1_Returns_Null()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPosts(0);
+            var result = await sut.GetPosts(0);
 
             // assert
             Assert.Null(result);
         }
 
         [Fact]
-        public void GetPosts_WithPager_Returns_AllPosts()
+        public async void GetPosts_WithPager_Returns_AllPosts()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPosts(1);
+            var result = await sut.GetPosts(1);
 
             // assert
             Assert.Equal(result.Posts.Count(), 1);
         }
 
         [Fact]
-        public void GetPosts_With_PubEquals_true_AuthorEmail_Is_EmptyString()
+        public async void GetPosts_With_PubEquals_true_AuthorEmail_Is_EmptyString()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
             // act
-            var result = sut.GetPosts(1, true);
+            var result = await sut.GetPosts(1, true);
 
             // assert
             Assert.Empty(result.Posts.First().AuthorEmail);
         }
 
         [Fact]
-        public void GetPostsByAuthor_Page_SmallerThan_1_Returns_Null()
+        public async Task GetPostsByAuthor_Page_SmallerThan_1_Returns_Null()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostsByAuthor("joe", -1);
+            var result = await sut.GetPostsByAuthor("joe", -1);
 
             // assert
             Assert.Null(result);
         }
 
         [Fact]
-        public void GetPostsByAuthor_WithPager_Returns_AllPosts()
+        public async Task GetPostsByAuthor_WithPager_Returns_AllPosts()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostsByAuthor("joe", 1);
+            var result = await sut.GetPostsByAuthor("joe", 1);
 
             // assert
             Assert.Equal(result.Posts.Count(), 1);
         }
 
         [Fact]
-        public void GetPostsByAuthor_With_PubEquals_false_AuthorEmail_Is_Not_Empty()
+        public async Task GetPostsByAuthor_With_PubEquals_false_AuthorEmail_Is_Not_Empty()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostsByAuthor("joe", 1);
+            var result = await sut.GetPostsByAuthor("joe", 1);
 
             // assert
             Assert.NotEmpty(result.Posts.First().AuthorEmail);
         }
 
         [Fact]
-        public void GetPostsByAuthor_BlogCategoryModel_IsCreated_WithProvided_Fields()
+        public async Task GetPostsByAuthor_BlogCategoryModel_IsCreated_WithProvided_Fields()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostsByAuthor("joe", 1);
+            var result = await sut.GetPostsByAuthor("joe", 1);
 
             // assert
             Assert.Equal(result.Profile.Id, 1);
@@ -128,49 +128,49 @@ namespace Blogifier.Test.Services.DataService
         }
 
         [Fact]
-        public void SearchPosts_With_Page_GreaterThan_0_Result_IsNotNull()
+        public async void SearchPosts_With_Page_GreaterThan_0_Result_IsNotNull()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1);
+            var result = await sut.SearchPosts("dotnet", 1);
 
             // assert
             Assert.NotNull(result);
         }
 
         [Fact]
-        public void SearchPosts_With_PubEquals_true_AuthorEmail_Is_Empty()
+        public async void SearchPosts_With_PubEquals_true_AuthorEmail_Is_Empty()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1, true);
+            var result = await sut.SearchPosts("dotnet", 1, true);
 
             // assert
             Assert.Empty(result.Posts.First().AuthorEmail);
         }
 
         [Fact]
-        public void SearchPosts_WithOneResult_Returns_OnePost()
+        public async void SearchPosts_WithOneResult_Returns_OnePost()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1, true);
+            var result = await sut.SearchPosts("dotnet", 1, true);
 
             // assert
             Assert.Equal(result.Posts.Count(), 1);
         }
 
         [Fact]
-        public void GetPostBySlug_NoResult_Returns_Null()
+        public async Task GetPostBySlug_NoResult_Returns_Null()
         {
             // arrange
             SetupDependencies();
@@ -181,7 +181,7 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("test");
+            var result = await sut.GetPostBySlug("test");
 
             // assert
             Assert.Null(result);
@@ -210,7 +210,7 @@ namespace Blogifier.Test.Services.DataService
         //}
 
         [Fact]
-        public void GetPostBySlug_WithResult_BlogPost_IsReturned()
+        public async Task GetPostBySlug_WithResult_BlogPost_IsReturned()
         {
             // arrange
             SetupDependencies();
@@ -226,7 +226,7 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("test");
+            var result = await sut.GetPostBySlug("test");
 
             // assert
             Assert.Equal(1, result.BlogPost.Id);
@@ -235,7 +235,7 @@ namespace Blogifier.Test.Services.DataService
 
 
         [Fact]
-        public void GetPostBySlug_WithResult_WithoutImage_DefaultImage_Is_Assigned()
+        public async Task GetPostBySlug_WithResult_WithoutImage_DefaultImage_Is_Assigned()
         {
             // arrange
             SetupDependencies();
@@ -251,14 +251,14 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("c#");
+            var result = await sut.GetPostBySlug("c#");
 
             // assert
             Assert.Equal(BlogSettings.PostCover, result.BlogPost.Image);
         }
 
         [Fact]
-        public void GetPostBySlug_WithResult_WithImage_ProfileImage_Is_Assigned()
+        public async Task GetPostBySlug_WithResult_WithImage_ProfileImage_Is_Assigned()
         {
             // arrange
             SetupDependencies();
@@ -277,14 +277,14 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("c#");
+            var result = await sut.GetPostBySlug("c#");
 
             // assert
             Assert.Equal("img1", result.BlogPost.Image);
         }
 
         [Fact]
-        public void GetPostBySlug_WithResult_WithPostCategories_Categories_Are_Added()
+        public async Task GetPostBySlug_WithResult_WithPostCategories_Categories_Are_Added()
         {
             // arrange
             SetupDependencies();
@@ -307,7 +307,7 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("c#");
+            var result = await sut.GetPostBySlug("c#");
 
             // assert
             Assert.Equal("slug1", result.BlogCategories.First().Value);
@@ -315,7 +315,7 @@ namespace Blogifier.Test.Services.DataService
         }
 
         [Fact]
-        public void GetPostBySlug_With_Pub_true_Profile_Has_EmptyProperties()
+        public async Task GetPostBySlug_With_Pub_true_Profile_Has_EmptyProperties()
         {
             // arrange
             SetupDependencies();
@@ -338,7 +338,7 @@ namespace Blogifier.Test.Services.DataService
             var sut = GetSut();
 
             // act
-            var result = sut.GetPostBySlug("c#", true);
+            var result = await sut.GetPostBySlug("c#", true);
 
             // assert
             Assert.Equal("", result.Profile.AuthorEmail);
@@ -359,11 +359,12 @@ namespace Blogifier.Test.Services.DataService
         {
             _postsRepository
                 .Setup(x => x.Find(It.IsAny<Expression<Func<BlogPost, bool>>>(), It.IsAny<Pager>()))
-                .Returns(new List<PostListItem>
+                .Returns(Task.FromResult<IEnumerable<PostListItem>>(new List<PostListItem>
                 {
                     new PostListItem { AuthorName = "Joe", Title = "dotnet core" , AuthorEmail = "test@test.com"}
-                });
-            _postsRepository.Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
+                }));
+            _postsRepository
+                .Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
                 .Returns(Task.FromResult(new BlogPost
                 {
                     Id = 1,
@@ -374,22 +375,22 @@ namespace Blogifier.Test.Services.DataService
 
             profileRepository
                 .Setup(x => x.Single(It.IsAny<Expression<Func<Profile, bool>>>()))
-                .Returns(new Profile
+                .Returns(Task.FromResult(new Profile
                 {
                     Id = 1,
                     AuthorName = "Joe",
                     AuthorEmail = "test@test.com"
-                });
+                }));
             _unitOfWork.Setup(x => x.Profiles).Returns(profileRepository.Object);
 
             _categoryRepository
                 .Setup(x => x.Single(It.IsAny<Expression<Func<Category, bool>>>()))
-                .Returns(new Category
+                .Returns(Task.FromResult(new Category
                 {
                     Id = 203,
                     Slug = "slug1",
                     Title = "123"
-                });
+                }));
             _unitOfWork.Setup(x => x.Categories).Returns(_categoryRepository.Object);
 
             _searchService

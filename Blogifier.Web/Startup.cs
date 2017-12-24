@@ -30,11 +30,11 @@ namespace Blogifier
 
         public void ConfigureServices(IServiceCollection services)
         {
-            System.Action<DbContextOptionsBuilder> databaseOptions = options => 
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            System.Action<DbContextOptionsBuilder> databaseOptions = options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddDbContext<ApplicationDbContext>(databaseOptions);
-
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -62,7 +62,12 @@ namespace Blogifier
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
@@ -82,19 +87,14 @@ namespace Blogifier
 
             if (!Core.Common.ApplicationSettings.UseInMemoryDatabase && Core.Common.ApplicationSettings.InitializeDatabase)
             {
-                try
+                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                    var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;                    
+                    if (db.GetPendingMigrations() != null)
                     {
-                        var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
-                        db.EnsureCreated();
-                        if (db.GetPendingMigrations() != null)
-                        {
-                            db.Migrate();
-                        }
+                        db.Migrate();
                     }
                 }
-                catch { }
             }
         }
     }

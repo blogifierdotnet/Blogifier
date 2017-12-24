@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Interfaces
 {
@@ -11,6 +12,6 @@ namespace Blogifier.Core.Data.Interfaces
         ICustomRepository CustomFields { get; }
         ISubscriberRepository Subscribers { get; }
 
-        int Complete();
+        Task<int> Complete();
     }
 }

@@ -3,11 +3,12 @@ using Blogifier.Core.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Interfaces
 {
     public interface ISubscriberRepository : IRepository<Subscriber>
     {
-        IEnumerable<Subscriber> Find(Expression<Func<Subscriber, bool>> predicate, Pager pager);
+        Task<IEnumerable<Subscriber>> Find(Expression<Func<Subscriber, bool>> predicate, Pager pager);
     }
 }

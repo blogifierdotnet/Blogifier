@@ -32,7 +32,7 @@ namespace Blogifier.Core.Controllers
         public async Task<IActionResult> Widgets()
         {
             var model = new AdminPackagesModel {
-                Profile = GetProfile(),
+                Profile = await GetProfile(),
                 Packages = await _pkgs.Find(PackageType.Widgets)
             };
             return View($"{_theme}Packages/Widgets.cshtml", model);
@@ -44,7 +44,7 @@ namespace Blogifier.Core.Controllers
         {
             var model = new AdminPackagesModel
             {
-                Profile = GetProfile(),
+                Profile = await GetProfile(),
                 Packages = await _pkgs.Find(PackageType.Themes)
             };
 
@@ -57,7 +57,7 @@ namespace Blogifier.Core.Controllers
         {
             var model = new AdminPackagesModel
             {
-                Profile = GetProfile(),
+                Profile = await GetProfile(),
                 Packages = await _pkgs.Find(PackageType.Plugins)
             };
 
@@ -112,7 +112,7 @@ namespace Blogifier.Core.Controllers
 
             var model = new ThemeSettingsModel
             {
-                Profile = GetProfile(),
+                Profile = await GetProfile(),
                 Zones = zones,
                 Widgets = widgets,
                 WidgetPackages = await _pkgs.Find(PackageType.Widgets)
@@ -121,9 +121,9 @@ namespace Blogifier.Core.Controllers
             return View($"{_theme}Packages/Settings.cshtml", model);
         }
 
-        private Profile GetProfile()
+        private async Task<Profile> GetProfile()
         {
-            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
     }
 }

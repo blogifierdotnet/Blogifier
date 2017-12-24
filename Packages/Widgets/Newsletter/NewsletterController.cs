@@ -2,7 +2,9 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -17,17 +19,17 @@ namespace Newsletter
         }
 
         [HttpPut("subscribe")]
-        public int Subscribe([FromBody]Subscriber item)
+        public async Task<int> Subscribe([FromBody]Subscriber item)
         {
             item.Created = SystemClock.Now();
             item.LastUpdated = SystemClock.Now();
             item.Active = true;
 
-            var existing = _db.Subscribers.Find(s => s.Email == item.Email).FirstOrDefault();
+            var existing = await _db.Subscribers.Where(s => s.Email == item.Email).FirstOrDefaultAsync();
 
             if(existing == null)
             {
-                _db.Subscribers.Add(item);
+                await _db.Subscribers.Add(item);
             }
             else
             {
@@ -36,7 +38,7 @@ namespace Newsletter
                 item.Active = true;
             }
 
-            return _db.Complete();
+            return await _db.Complete();
         }
     }
 }

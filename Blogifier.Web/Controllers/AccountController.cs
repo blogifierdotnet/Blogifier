@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -57,12 +58,12 @@ namespace Blogifier.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            if(_db.Profiles.All().Count() == 0)
+            if(!await _db.Profiles.All().AnyAsync())
                 return RedirectToAction(nameof(AccountController.Register), "Account");
 
             ViewData["ReturnUrl"] = returnUrl;
-            ViewData["ShowRegistration"] = IsFirstAdminAccount();
-            ViewData["ShowForgotPwd"] = _emailSender.Enabled;
+            ViewData["ShowRegistration"] = await IsFirstAdminAccount();
+            ViewData["ShowForgotPwd"] = await _emailSender.Enabled();
             return View();
         }
 
@@ -105,10 +106,10 @@ namespace Blogifier.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string returnUrl = null)
         {
             // block registration if admin already added
-            if (!IsFirstAdminAccount())
+            if (!await IsFirstAdminAccount())
                 return View("Error");
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -132,7 +133,7 @@ namespace Blogifier.Controllers
                     // create new profile
                     var profile = new Profile();
 
-                    if (_db.Profiles.All().ToList().Count == 0 || model.IsAdmin)
+                    if (!await _db.Profiles.All().AnyAsync() || model.IsAdmin)
                     {
                         profile.IsAdmin = true;
                     }
@@ -143,14 +144,14 @@ namespace Blogifier.Controllers
                     profile.Description = "New blog description";
 
                     profile.IdentityName = user.UserName;
-                    profile.Slug = SlugFromTitle(profile.AuthorName);
+                    profile.Slug = await SlugFromTitle(profile.AuthorName);
                     profile.Avatar = ApplicationSettings.ProfileAvatar;
                     profile.BlogTheme = BlogSettings.Theme;
 
                     profile.LastUpdated = Core.Common.SystemClock.Now();
 
-                    _db.Profiles.Add(profile);
-                    _db.Complete();
+                    await _db.Profiles.Add(profile);
+                    await _db.Complete();
 
                     _logger.LogInformation(string.Format("Created a new profile at /{0}", profile.Slug));
 
@@ -296,14 +297,14 @@ namespace Blogifier.Controllers
             }
         }
 
-        string SlugFromTitle(string title)
+        async Task<string> SlugFromTitle(string title)
         {
             var slug = title.ToSlug();
-            if (_db.Profiles.Single(b => b.Slug == slug) != null)
+            if (await _db.Profiles.Single(b => b.Slug == slug) != null)
             {
                 for (int i = 2; i < 100; i++)
                 {
-                    if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
+                    if (await _db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
                     {
                         return slug + i.ToString();
                     }
@@ -312,11 +313,11 @@ namespace Blogifier.Controllers
             return slug;
         }
 
-        bool IsFirstAdminAccount()
+        async Task<bool> IsFirstAdminAccount()
         {
             // only show registration link if no admin yet exists
             // otherwise new users registered by admin from users panel
-            return _db.Profiles.Find(p => p.IsAdmin).ToList().Count == 0;
+            return !await _db.Profiles.Where(p => p.IsAdmin).AnyAsync();
         }
 
         // SendGrid account must be added to configuration settings

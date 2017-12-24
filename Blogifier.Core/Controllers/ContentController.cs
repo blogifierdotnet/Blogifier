@@ -7,6 +7,7 @@ using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Blogifier.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
 		{
-            var profile = GetProfile();
+            var profile = await GetProfile();
            
             var fields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
             var pageSize = BlogSettings.ItemsPerPage;
@@ -46,17 +47,17 @@ namespace Blogifier.Core.Controllers
             model.CustomFields = fields;
 
             if (model.Profile.IsAdmin)
-                model.Users = _db.Profiles.Find(p => p.IdentityName != model.Profile.IdentityName);
+                model.Users = await _db.Profiles.Where(p => p.IdentityName != model.Profile.IdentityName).ToListAsync();
 
             var userProfile = model.Profile;
             if (user != "0" && profile.IsAdmin)
-                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+                userProfile = await _db.Profiles.Single(p => p.Id == int.Parse(user));
 
             model.StatusFilter = GetStatusFilter(status);
 
             var selectedCategories = new List<string>();
             var dbCategories = new List<Category>();
-            model.CategoryFilter = _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id).ToList();
+            model.CategoryFilter = (await _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id)).ToList();
             if (!string.IsNullOrEmpty(cats))
             {
                 selectedCategories = cats.Split(',').ToList();
@@ -71,16 +72,16 @@ namespace Blogifier.Core.Controllers
 
             if (string.IsNullOrEmpty(search))
             {
-                model.BlogPosts = _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager).Result;
+                model.BlogPosts = await _db.BlogPosts.ByFilter(status, selectedCategories, userProfile.Slug, pager);
             }
             else
             {
-                model.BlogPosts = _search.Find(pager, search, userProfile.Slug).Result;
+                model.BlogPosts = await _search.Find(pager, search, userProfile.Slug);
             }
             
             model.Pager = pager;
 
-            var anyPost = _db.BlogPosts.Find(p => p.ProfileId == userProfile.Id).FirstOrDefault();
+            var anyPost = await _db.BlogPosts.Where(p => p.ProfileId == userProfile.Id).FirstOrDefaultAsync();
             ViewBag.IsFirstPost = anyPost == null;
 
             return View(_theme + "Index.cshtml", model);
@@ -88,28 +89,28 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("editor/{id:int}")]
-        public IActionResult Editor(int id, string user = "0")
+        public async Task<IActionResult> Editor(int id, string user = "0")
         {
-            var profile = GetProfile();
+            var profile = await GetProfile();
             var userProfile = profile;
 
             if (user != "0")
             {
-                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+                userProfile = await _db.Profiles.Single(p => p.Id == int.Parse(user));
             }
 
             var post = new BlogPost();
-            var categories = _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id).ToList();
+            var categories = await _db.Categories.CategoryList(c => c.ProfileId == userProfile.Id);
 
             if (id > 0)
             {
                 if (profile.IsAdmin)
                 {
-                    post = _db.BlogPosts.SingleIncluded(p => p.Id == id).Result;
+                    post = await _db.BlogPosts.SingleIncluded(p => p.Id == id);
                 }
                 else
                 {
-                    post = _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id).Result;
+                    post = await _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id);
                 }
             }
 
@@ -131,9 +132,9 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Editor.cshtml", model);
         }
 
-        private Profile GetProfile()
+        private async Task<Profile> GetProfile()
         {
-            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
 
         List<SelectListItem> GetStatusFilter(string filter)

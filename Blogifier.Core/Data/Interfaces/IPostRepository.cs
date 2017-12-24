@@ -3,6 +3,7 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -10,8 +11,8 @@ namespace Blogifier.Core.Data.Interfaces
 {
     public interface IPostRepository : IRepository<BlogPost>
     {
-        IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
-        IEnumerable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate);
+        Task<IEnumerable<PostListItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
+        IQueryable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate);
         Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "");
         Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager);
         Task<BlogPost> SingleIncluded(Expression<Func<BlogPost, bool>> predicate);

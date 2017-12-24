@@ -5,8 +5,10 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api
 {
@@ -24,10 +26,11 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpGet("blogcategories")]
-        public IEnumerable<string> GetBlogCategories()
+        public async Task<IEnumerable<string>> GetBlogCategories()
         {
             var blogCats = new List<string>();
-            var cats = _db.Categories.Find(c => c.ProfileId == GetProfile().Id);
+            var profile = await GetProfile();
+            var cats = await _db.Categories.Where(c => c.ProfileId == profile.Id).ToListAsync();
             foreach (var cat in cats)
             {
                 blogCats.Add(cat.Title);
@@ -36,31 +39,33 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<CategoryItem> Get(int page)
+        public async Task<IEnumerable<CategoryItem>> Get(int page)
         {
-            return CategoryList.Items(_db, GetProfile().Id);
+            var profile = await GetProfile();
+            return await CategoryList.Items(_db, profile.Id);
         }
 
         [HttpGet("{slug}")]
-        public IEnumerable<CategoryItem> GetBySlug(string slug)
+        public async Task<IEnumerable<CategoryItem>> GetBySlug(string slug)
         {
-            var post = _db.BlogPosts.Single(p => p.Slug == slug);
+            var post = await _db.BlogPosts.Single(p => p.Slug == slug);
             var postId = post == null ? 0 : post.Id;
+            var profile = await GetProfile();
 
-            return CategoryList.Items(_db, GetProfile().Id, postId);
+            return await CategoryList.Items(_db, profile.Id, postId);
         }
 
         [HttpGet("{id:int}")]
-        public CategoryItem GetById(int id)
+        public async Task<CategoryItem> GetById(int id)
         {
-            return GetItem(_db.Categories.Single(c => c.Id == id));
+            return await GetItem(await _db.Categories.Single(c => c.Id == id));
         }
 
         [HttpPost("addcategory")]
-        public IActionResult AddCategory([FromBody]AdminCategoryModel model)
+        public async Task<IActionResult> AddCategory([FromBody]AdminCategoryModel model)
         {
-            var profile = GetProfile();
-            var existing = _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
+            var profile = await GetProfile();
+            var existing = await _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             if (existing == null)
             {
                 var newCategory = new Category
@@ -71,92 +76,93 @@ namespace Blogifier.Core.Controllers.Api
                     Slug = model.Title.ToSlug(),
                     LastUpdated = SystemClock.Now()
                 };
-                _db.Categories.Add(newCategory);
-                _db.Complete();
-                existing = _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
+                await _db.Categories.Add(newCategory);
+                await _db.Complete();
+                existing = await _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             }
-            var callback = new { Id = existing.Id, Title = existing.Title };
+            var callback = new { existing.Id, existing.Title };
             return new CreatedResult("blogifier/api/categories/" + existing.Id, callback);
         }
 
         [HttpPut("addcategorytopost")]
-        public void AddCategoryToPost([FromBody]AdminCategoryModel model)
+        public async Task AddCategoryToPost([FromBody]AdminCategoryModel model)
         {
-            var existing = _db.Categories.Single(c => c.Title == model.Title);
+            var existing = await _db.Categories.Single(c => c.Title == model.Title);
             if(existing == null)
             {
+                var profile = await GetProfile();
                 var newCategory = new Category
                 {
-                    ProfileId = GetProfile().Id,
+                    ProfileId = profile.Id,
                     Title = model.Title,
                     Description = model.Title,
                     Slug = model.Title.ToSlug(),
                     LastUpdated = SystemClock.Now()
                 };
-                _db.Categories.Add(newCategory);
-                _db.Complete();
+                await _db.Categories.Add(newCategory);
+                await _db.Complete();
 
-                existing = _db.Categories.Single(c => c.Title == model.Title);
+                existing = await _db.Categories.Single(c => c.Title == model.Title);
             }
-            _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
-            _db.Complete();
+            await _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
+            await _db.Complete();
         }
 
         [HttpPut("removecategoryfrompost")]
-        public void RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
+        public async Task RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
         {
-            _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
-            _db.Complete();
+            await _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
+            await _db.Complete();
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody]CategoryItem category)
+        public async Task<IActionResult> Put([FromBody]CategoryItem category)
         {
-            var blog = GetProfile();
+            var profile = await GetProfile();
             if (ModelState.IsValid)
             {
                 int id = string.IsNullOrEmpty(category.Id) ? 0 : int.Parse(category.Id);
                 if (id > 0)
                 {
-                    var existing = _db.Categories.Single(c => c.Id == id);
+                    var existing = await _db.Categories.Single(c => c.Id == id);
                     if (existing == null)
                         return NotFound();
 
                     existing.Title = category.Title;
                     existing.Description = string.IsNullOrEmpty(category.Description) ? category.Title : category.Description;
                     existing.LastUpdated = SystemClock.Now();
-                    _db.Complete();
+                    await _db.Complete();
                 }
                 else
                 {
                     var newCategory = new Category
                     {
-                        ProfileId = blog.Id,
+                        ProfileId = profile.Id,
                         Title = category.Title,
                         Description = string.IsNullOrEmpty(category.Description) ? category.Title : category.Description,
                         Slug = category.Title.ToSlug(),
                         LastUpdated = SystemClock.Now()
                     };
-                    _db.Categories.Add(newCategory);
-                    _db.Complete();
+                    await _db.Categories.Add(newCategory);
+                    await _db.Complete();
                 }
             }
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = _db.Categories.Single(c => c.Id == id);
+            var category = await _db.Categories.Single(c => c.Id == id);
             if (category == null)
                 return NotFound();
 
             _db.Categories.Remove(category);
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 
-        CategoryItem GetItem(Category category)
+        async Task<CategoryItem> GetItem(Category category)
         {
             var vCount = 0;
             var pCount = 0;
@@ -165,9 +171,10 @@ namespace Blogifier.Core.Controllers.Api
                 pCount = category.PostCategories.Count;
                 foreach (var pc in category.PostCategories)
                 {
-                    vCount += _db.BlogPosts.Single(p => p.Id == pc.BlogPostId).PostViews;
+                    var blogPost = await _db.BlogPosts.Single(p => p.Id == pc.BlogPostId);
+                    vCount += blogPost.PostViews;
                 }
-                _db.Complete();
+                await _db.Complete();
             }
             return new CategoryItem
             {
@@ -180,7 +187,7 @@ namespace Blogifier.Core.Controllers.Api
             };
         }
 
-        Profile GetProfile()
+        async Task<Profile> GetProfile()
         {
             var key = "_BLOGIFIER_CACHE_BLOG_KEY";
             Profile publisher;
@@ -190,7 +197,7 @@ namespace Blogifier.Core.Controllers.Api
             }
             else
             {
-                publisher = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+                publisher = await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
                 _cache.Set(key, publisher,
                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(System.TimeSpan.FromHours(2)));
                 return publisher;
