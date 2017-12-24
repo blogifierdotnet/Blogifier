@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Repositories
 {
@@ -17,29 +16,29 @@ namespace Blogifier.Core.Data.Repositories
             _entities = context.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> All()
+        public IEnumerable<TEntity> All()
         {
-            return _entities;
+            return _entities.ToList();
         }
 
-        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _entities.Where(predicate);
         }
 
-        public async Task<TEntity> Single(Expression<Func<TEntity, bool>> predicate)
+        public TEntity Single(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _entities.SingleOrDefaultAsync(predicate);
+            return _entities.SingleOrDefault(predicate);
         }
 
-        public async Task Add(TEntity entity)
+        public void Add(TEntity entity)
         {         
-            await _entities.AddAsync(entity);
+            _entities.Add(entity);
         }
 
-        public async Task AddRange(IEnumerable<TEntity> entities)
+        public void AddRange(IEnumerable<TEntity> entities)
         {
-            await _entities.AddRangeAsync(entities);
+            _entities.AddRange(entities);
         }
 
         public void Remove(TEntity entity)

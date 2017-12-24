@@ -7,6 +7,6 @@ namespace Blogifier.Core.Services.Syndication.Rss
     public interface IRssService
     {
         Task<HttpResponseMessage> Import(RssImportModel model);
-        Task<string> Display(string absoluteUri, string author);
+        string Display(string absoluteUri, string author);
     }
 }

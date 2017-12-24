@@ -12,7 +12,6 @@ using Blogifier.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -55,13 +54,13 @@ namespace Blogifier.Controllers
 
         [MustBeAdmin]
         [Route("users")]
-        public async Task<IActionResult> Users(int page = 1)
+        public IActionResult Users(int page = 1)
         {
             var profile = GetProfile();
             var pager = new Pager(page);
-            var blogs = await _db.Profiles.ProfileList(p => p.Id > 0, pager);
+            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
-            var model = await GetUsersModel();
+            var model = GetUsersModel();
             model.Blogs = blogs;
             model.Pager = pager;
 
@@ -87,7 +86,7 @@ namespace Blogifier.Controllers
                     // create new profile
                     var profile = new Profile();
 
-                    if (!await _db.Profiles.All().AnyAsync() || model.RegisterModel.IsAdmin)
+                    if (_db.Profiles.All().ToList().Count == 0 || model.RegisterModel.IsAdmin)
                     {
                         profile.IsAdmin = true;
                     }
@@ -98,14 +97,14 @@ namespace Blogifier.Controllers
                     profile.Description = "New blog description";
 
                     profile.IdentityName = user.UserName;
-                    profile.Slug = await SlugFromTitle(profile.AuthorName);
+                    profile.Slug = SlugFromTitle(profile.AuthorName);
                     profile.Avatar = ApplicationSettings.ProfileAvatar;
                     profile.BlogTheme = BlogSettings.Theme;
 
                     profile.LastUpdated = SystemClock.Now();
 
-                    await _db.Profiles.Add(profile);
-                    await _db.Complete();
+                    _db.Profiles.Add(profile);
+                    _db.Complete();
 
                     _logger.LogInformation(string.Format("Created a new profile at /{0}", profile.Slug));
 
@@ -122,9 +121,9 @@ namespace Blogifier.Controllers
 
             // If we got this far, something failed, redisplay form
             var pager = new Pager(1);
-            var blogs = await _db.Profiles.ProfileList(p => p.Id > 0, pager);
+            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
-            var regModel = await GetUsersModel();
+            var regModel = GetUsersModel();
             regModel.Blogs = blogs;
             regModel.Pager = pager;
 
@@ -136,43 +135,43 @@ namespace Blogifier.Controllers
         [Route("users/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var admin = await GetProfile();
+            var admin = GetProfile();
 
             if (!admin.IsAdmin || admin.Id == id)
                 return NotFound();
 
-            var profile = await _db.Profiles.Single(p => p.Id == id);
+            var profile = _db.Profiles.Single(p => p.Id == id);
 
             _logger.LogInformation(string.Format("Delete blog {0} by {1}", profile.Title, profile.AuthorName));
 
-            var assets = await _db.Assets.Where(a => a.ProfileId == id).ToListAsync();
+            var assets = _db.Assets.Find(a => a.ProfileId == id);
             _db.Assets.RemoveRange(assets);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Assets deleted");
 
-            var categories = await _db.Categories.Where(c => c.ProfileId == id).ToListAsync();
+            var categories = _db.Categories.Find(c => c.ProfileId == id);
             _db.Categories.RemoveRange(categories);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Categories deleted");
 
-            var posts = await _db.BlogPosts.Where(p => p.ProfileId == id).ToListAsync();
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == id);
             _db.BlogPosts.RemoveRange(posts);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Posts deleted");
 
-            var fields = await _db.CustomFields.Where(f => f.CustomType == CustomType.Profile && f.ParentId == id).ToListAsync();
+            var fields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == id);
             _db.CustomFields.RemoveRange(fields);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
-            var profileToDelete = await _db.Profiles.Single(b => b.Id == id);
+            var profileToDelete = _db.Profiles.Single(b => b.Id == id);
 
             var storage = new BlogStorage(profileToDelete.Slug);
             storage.DeleteFolder("");
             _logger.LogInformation("Storage deleted");
 
             _db.Profiles.Remove(profileToDelete);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Profile deleted");
 
             // remove login
@@ -206,7 +205,7 @@ namespace Blogifier.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var profile = await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            var profile = _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             var model = new ChangePasswordViewModel { StatusMessage = StatusMessage, Profile = profile };
             return View(_pwdTheme, model);
         }
@@ -216,7 +215,7 @@ namespace Blogifier.Controllers
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            model.Profile = await GetProfile();
+            model.Profile = GetProfile();
 
             if (!ModelState.IsValid)
             {
@@ -246,9 +245,9 @@ namespace Blogifier.Controllers
 
         #region Helpers
 
-        private async Task<Profile> GetProfile()
+        private Profile GetProfile()
         {
-            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
 
         private void AddErrors(IdentityResult result)
@@ -271,14 +270,14 @@ namespace Blogifier.Controllers
             }
         }
 
-        async Task<string> SlugFromTitle(string title)
+        string SlugFromTitle(string title)
         {
             var slug = title.ToSlug();
-            if (await _db.Profiles.Single(b => b.Slug == slug) != null)
+            if (_db.Profiles.Single(b => b.Slug == slug) != null)
             {
                 for (int i = 2; i < 100; i++)
                 {
-                    if (await _db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
+                    if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
                     {
                         return slug + i.ToString();
                     }
@@ -287,16 +286,16 @@ namespace Blogifier.Controllers
             return slug;
         }
 
-        async Task<UsersViewModel> GetUsersModel()
+        UsersViewModel GetUsersModel()
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
 
             var model = new UsersViewModel
             {
                 Profile = profile,
                 RegisterModel = new RegisterViewModel()
             };
-            model.RegisterModel.SendGridApiKey = await _db.CustomFields.GetValue(
+            model.RegisterModel.SendGridApiKey = _db.CustomFields.GetValue(
                 CustomType.Application, profile.Id, Constants.SendGridApiKey);
 
             return model;

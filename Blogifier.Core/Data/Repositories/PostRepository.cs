@@ -20,50 +20,24 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<PostListItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
+        public IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var query = _db.BlogPosts
-                .Where(predicate)
-                .Select(p => new PostListItem
-                {
-                BlogPostId = p.Id,
-                Slug = p.Slug,
-                Title = p.Title,
-                Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
-                Image = string.IsNullOrEmpty(p.Image) ? BlogSettings.PostCover : p.Image,
-                Content = p.Description,
-                Published = p.Published,
-                LastUpdated = p.LastUpdated,
-                AuthorName = p.Profile.AuthorName,
-                AuthorEmail = p.Profile.AuthorEmail,
-                BlogSlug = p.Profile.Slug,
-                PostViews = p.PostViews,
-                Rating = p.Rating,
-                IsFeatured = p.IsFeatured,
-                PostCategories = p.PostCategories.Select(a => a.Category.Slug)
-            });
+            var drafts = _db.BlogPosts.Include(p => p.Profile)
+                .Where(p => p.Published == DateTime.MinValue).Where(predicate)
+                .OrderByDescending(p => p.LastUpdated).ToList();
 
-            var drafts =  query
-                .Where(p => p.Published == DateTime.MinValue)                
-                .OrderByDescending(p => p.LastUpdated)
-                .AsQueryable();
+            var pubs = _db.BlogPosts.Include(p => p.Profile)
+                .Where(p => p.Published > DateTime.MinValue).Where(predicate)
+                .OrderByDescending(p => p.Published).ToList();
 
-            var pubs = query
-                .Where(p => p.Published > DateTime.MinValue)
-                
-                .OrderByDescending(p => p.Published)
-                .AsQueryable();
+            var items = drafts.Concat(pubs).ToList();
+            pager.Configure(items.Count);
 
-            var items = drafts.Concat(pubs);
+            var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
 
-            pager.Configure(await items.CountAsync());
-
-            var postPage = await items.Skip(skip).Take(pager.ItemsPerPage)
-                .ToListAsync();
-
-            return postPage;
+            return GetPostItems(postPage);
         }
 
         public async Task<List<PostListItem>> ByCategory(string slug, Pager pager, string blog = "")
@@ -75,27 +49,26 @@ namespace Blogifier.Core.Data.Repositories
                 .Include(pc => pc.Category)
                 .Include(pc => pc.BlogPost.Profile)
                 .Where(pc => pc.BlogPost.Published > DateTime.MinValue && pc.Category.Slug == slug)
-                .Select(pc => new PostListItem
-                {
-                    BlogPostId = pc.BlogPostId,
-                    Slug = pc.BlogPost.Slug,
-                    Title = pc.BlogPost.Title,
-                    Avatar = string.IsNullOrEmpty(pc.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : pc.BlogPost.Profile.Avatar,
-                    Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? BlogSettings.PostCover : pc.BlogPost.Image,
-                    Content = pc.BlogPost.Description,
-                    Published = pc.BlogPost.Published,
-                    LastUpdated = pc.LastUpdated,
-                    AuthorName = pc.BlogPost.Profile.AuthorName,
-                    AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
-                    BlogSlug = pc.BlogPost.Profile.Slug,
-                    PostViews = pc.BlogPost.PostViews,
-                    Rating = pc.BlogPost.Rating,
-                    IsFeatured = pc.BlogPost.IsFeatured,
-                    PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
-                })
                 .ToListAsync();
 
-            var posts = postsList.Distinct().ToList();
+            var posts = postsList.Select(pc => new PostListItem
+            {
+                BlogPostId = pc.BlogPostId,
+                Slug = pc.BlogPost.Slug,
+                Title = pc.BlogPost.Title,
+                Avatar = string.IsNullOrEmpty(pc.BlogPost.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : pc.BlogPost.Profile.Avatar,
+                Image = string.IsNullOrEmpty(pc.BlogPost.Image) ? BlogSettings.PostCover : pc.BlogPost.Image,
+                Content = pc.BlogPost.Description,
+                Published = pc.BlogPost.Published,
+                LastUpdated = pc.LastUpdated,
+                AuthorName = pc.BlogPost.Profile.AuthorName,
+                AuthorEmail = pc.BlogPost.Profile.AuthorEmail,
+                BlogSlug = pc.BlogPost.Profile.Slug,
+                PostViews = pc.BlogPost.PostViews,
+                Rating = pc.BlogPost.Rating,
+                IsFeatured = pc.BlogPost.IsFeatured,
+                PostCategories = pc.BlogPost.PostCategories.Select(c => c.Category.Slug).ToList()
+            }).Distinct().ToList();
 
             if (!string.IsNullOrEmpty(blog))
                 posts = posts.Where(p => p.BlogSlug == blog).ToList();
@@ -105,7 +78,7 @@ namespace Blogifier.Core.Data.Repositories
         }
 
         // posts filtered on status (all, draft or published) and categories
-        public async Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager)
+        public Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
@@ -114,59 +87,41 @@ namespace Blogifier.Core.Data.Repositories
             if (status == "P")
                 posts = posts.Where(p => p.Published > DateTime.MinValue);
 
-            if (status == "D")
+            if(status == "D")
                 posts = posts.Where(p => p.Published == DateTime.MinValue);
 
-            if (categories.Count > 0)
+            if(categories.Count > 0)
                 posts = posts.Where(p => p.PostCategories.Any(pc => pc.BlogPostId == p.Id && categories.Contains(pc.CategoryId.ToString())));
 
-            pager.Configure(await posts.CountAsync());
+            pager.Configure(posts.Count());
 
-            var postPage = await posts.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage)
-                .Select(p => new PostListItem
-                {
-                    BlogPostId = p.Id,
-                    Slug = p.Slug,
-                    Title = p.Title,
-                    Avatar = string.IsNullOrEmpty(p.Profile.Avatar) ? ApplicationSettings.ProfileAvatar : p.Profile.Avatar,
-                    Image = string.IsNullOrEmpty(p.Image) ? BlogSettings.PostCover : p.Image,
-                    Content = p.Description,
-                    Published = p.Published,
-                    LastUpdated = p.LastUpdated,
-                    AuthorName = p.Profile.AuthorName,
-                    AuthorEmail = p.Profile.AuthorEmail,
-                    BlogSlug = p.Profile.Slug,
-                    PostViews = p.PostViews,
-                    Rating = p.Rating,
-                    IsFeatured = p.IsFeatured,
-                    PostCategories = p.PostCategories.Select(a => a.Category.Slug)
-                }).ToListAsync();
+            var postPage = posts.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToList();
 
-            return postPage;
+            return Task.Run(() => GetPostItems(postPage));
         }
 
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
         {
-            _db.PostCategories.RemoveRange(await _db.PostCategories.Where(c => c.BlogPostId == postId).ToListAsync());
-            await _db.SaveChangesAsync();
+            _db.PostCategories.RemoveRange(_db.PostCategories.Where(c => c.BlogPostId == postId));
+            _db.SaveChanges();
 
             if (catIds != null && catIds.Count() > 0)
             {
                 foreach (var id in catIds)
                 {
-                    await _db.PostCategories.AddAsync(new PostCategory
+                    _db.PostCategories.Add(new PostCategory
                     {
                         BlogPostId = postId,
                         CategoryId = int.Parse(id),
                         LastUpdated = DateTime.UtcNow
                     });
-                    await _db.SaveChangesAsync();
+                    _db.SaveChanges();
                 }
             }
             await _db.SaveChangesAsync();
         }
 
-        public IQueryable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate)
+        public IEnumerable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate)
         {
             return _db.BlogPosts.AsNoTracking().Where(predicate).OrderByDescending(p => p.LastUpdated)
                 .Include(p => p.PostCategories).Include(p => p.Profile);
@@ -193,7 +148,7 @@ namespace Blogifier.Core.Data.Repositories
 
         #region Private methods
 
-        private List<PostListItem> GetPostItems2(IQueryable<BlogPost> posts)
+        private List<PostListItem> GetPostItems(List<BlogPost> posts)
         {
             return posts.Select(p => new PostListItem
             {

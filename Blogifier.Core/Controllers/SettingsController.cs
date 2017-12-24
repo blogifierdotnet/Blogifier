@@ -7,11 +7,9 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
@@ -31,34 +29,34 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("profile")]
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile()
         {
             var model = new SettingsProfile();
-            model.Profile = await GetProfile();
+            model.Profile = GetProfile();
             
             if(model.Profile != null)
             {
                 model.AuthorName = model.Profile.AuthorName;
                 model.AuthorEmail = model.Profile.AuthorEmail;
                 model.Avatar = model.Profile.Avatar;
-                model.EmailEnabled = (await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey)).Length > 0;
-                model.CustomFields = await _db.CustomFields.GetUserFields(model.Profile.Id);
+                model.EmailEnabled = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey).Length > 0;
+                model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
             }
             return View(_theme + "Profile.cshtml", model);
         }
 
         [HttpPost]
         [Route("profile")]
-        public async Task<IActionResult> Profile(SettingsProfile model)
+        public IActionResult Profile(SettingsProfile model)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             if (ModelState.IsValid)
             {
                 if (profile == null)
                 {
                     profile = new Profile();
 
-                    if (!await _db.Profiles.All().AnyAsync())
+                    if (_db.Profiles.All().ToList().Count == 0)
                     {
                         profile.IsAdmin = true;
                     }
@@ -67,12 +65,12 @@ namespace Blogifier.Core.Controllers
                     profile.Avatar = model.Avatar;
 
                     profile.IdentityName = User.Identity.Name;
-                    profile.Slug = await SlugFromTitle(profile.AuthorName);
+                    profile.Slug = SlugFromTitle(profile.AuthorName);
                     profile.Title = BlogSettings.Title;
                     profile.Description = BlogSettings.Description;
                     profile.BlogTheme = BlogSettings.Theme;
 
-                    await _db.Profiles.Add(profile);
+                    _db.Profiles.Add(profile);
                 }
                 else
                 {
@@ -80,16 +78,16 @@ namespace Blogifier.Core.Controllers
                     profile.AuthorEmail = model.AuthorEmail;
                     profile.Avatar = model.Avatar;
                 }
-                await _db.Complete();
+                _db.Complete();
 
-                model.Profile = await GetProfile();
+                model.Profile = GetProfile();
 
                 // save custom fields
                 if(profile.Id > 0 && model.CustomFields != null)
                 {
-                    await SaveCustomFields(model.CustomFields, profile.Id);
+                    SaveCustomFields(model.CustomFields, profile.Id);
                 }
-                model.CustomFields = await _db.CustomFields.GetUserFields(model.Profile.Id);
+                model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
 
                 ViewBag.Message = "Profile updated";
             }
@@ -98,16 +96,16 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("about")]
-        public async Task<IActionResult> About()
+        public IActionResult About()
         {
-            return View(_theme + "About.cshtml", new AdminBaseModel { Profile = await GetProfile() });
+            return View(_theme + "About.cshtml", new AdminBaseModel { Profile = GetProfile() });
         }
 
         [MustBeAdmin]
         [Route("general")]
-        public async Task<IActionResult> General()
+        public IActionResult General()
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             var storage = new BlogStorage("");
 
             var model = new SettingsGeneral
@@ -120,9 +118,9 @@ namespace Blogifier.Core.Controllers
                 Logo = BlogSettings.Logo,
                 Avatar = ApplicationSettings.ProfileAvatar,
                 Image = BlogSettings.Cover,
-                EmailKey = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey),
-                BlogHead = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.HeadCode),
-                BlogFooter = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.FooterCode)
+                EmailKey = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey),
+                BlogHead = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.HeadCode),
+                BlogFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.FooterCode)
             };
             return View(_theme + "General.cshtml", model);
         }
@@ -130,11 +128,11 @@ namespace Blogifier.Core.Controllers
         [HttpPost]
         [MustBeAdmin]
         [Route("general")]
-        public async Task<IActionResult> General(SettingsGeneral model)
+        public IActionResult General(SettingsGeneral model)
         {
             var storage = new BlogStorage("");
             model.BlogThemes = BlogSettings.BlogThemes;
-            model.Profile = await GetProfile();
+            model.Profile = GetProfile();
 
             if (ModelState.IsValid)
             {
@@ -145,19 +143,19 @@ namespace Blogifier.Core.Controllers
                 BlogSettings.Cover = model.Image;
                 BlogSettings.Theme = model.BlogTheme;
 
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Title, model.Title);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Description, model.Description);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, model.Logo);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, model.Avatar);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, model.Image);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.BlogTheme, model.BlogTheme);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.SendGridApiKey, model.EmailKey);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.HeadCode, model.BlogHead);
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.FooterCode, model.BlogFooter);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Title, model.Title);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.Description, model.Description);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, model.Logo);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, model.Avatar);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, model.Image);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.BlogTheme, model.BlogTheme);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.SendGridApiKey, model.EmailKey);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.HeadCode, model.BlogHead);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.FooterCode, model.BlogFooter);
 
                 model.Profile.BlogTheme = model.BlogTheme;
 
-                await _db.Complete();
+                _db.Complete();
 
                 ViewBag.Message = "Updated";
             }
@@ -166,15 +164,15 @@ namespace Blogifier.Core.Controllers
 
         [MustBeAdmin]
         [Route("posts")]
-        public async Task<IActionResult> Posts()
+        public IActionResult Posts()
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
 
             var model = new SettingsPosts
             {
                 Profile = profile,
                 PostImage = BlogSettings.Cover,
-                PostFooter = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.PostCode),
+                PostFooter = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.PostCode),
                 ItemsPerPage = BlogSettings.ItemsPerPage
             };
             return View(_theme + "Posts.cshtml", model);
@@ -183,21 +181,21 @@ namespace Blogifier.Core.Controllers
         [HttpPost]
         [MustBeAdmin]
         [Route("posts")]
-        public async Task<IActionResult> Posts(SettingsPosts model)
+        public IActionResult Posts(SettingsPosts model)
         {
-            model.Profile = await GetProfile();
+            model.Profile = GetProfile();
 
             if (ModelState.IsValid)
             {
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ItemsPerPage, model.ItemsPerPage.ToString());
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ItemsPerPage, model.ItemsPerPage.ToString());
                 BlogSettings.ItemsPerPage = model.ItemsPerPage;
 
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, model.PostImage);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, model.PostImage);
                 BlogSettings.PostCover = model.PostImage;
 
-                await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
+                _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
 
-                await _db.Complete();
+                _db.Complete();
 
                 ViewBag.Message = "Updated";
             }
@@ -206,9 +204,9 @@ namespace Blogifier.Core.Controllers
 
         [MustBeAdmin]
         [Route("advanced")]
-        public async Task<IActionResult> Advanced()
+        public IActionResult Advanced()
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
 
             var model = new SettingsAdvanced
             {
@@ -217,30 +215,30 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Advanced.cshtml", model);
         }
 
-        async Task<Profile> GetProfile()
+        Profile GetProfile()
         {
-            return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
         }
 
-        async Task SaveCustomFields(Dictionary<string, string> fields, int profileId)
+        void SaveCustomFields(Dictionary<string, string> fields, int profileId)
         {
             if(fields != null && fields.Count > 0)
             {
                 foreach (var field in fields)
                 {
-                    await _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
+                    _db.CustomFields.SetCustomField(CustomType.Profile, profileId, field.Key, field.Value);
                 }
             }
         }
 
-        async Task<string> SlugFromTitle(string title)
+        string SlugFromTitle(string title)
         {
             var slug = title.ToSlug();
-            if (await _db.Profiles.Single(b => b.Slug == slug) != null)
+            if (_db.Profiles.Single(b => b.Slug == slug) != null)
             {
                 for (int i = 2; i < 100; i++)
                 {
-                    if (await _db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
+                    if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
                     {
                         return slug + i.ToString();
                     }

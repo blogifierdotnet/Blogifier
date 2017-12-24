@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services.Data
 {
@@ -22,29 +21,29 @@ namespace Blogifier.Core.Services.Data
             _search = search;
         }
 
-        public async Task<BlogPostsModel> GetPosts(int page, bool pub = false)
+        public BlogPostsModel GetPosts(int page, bool pub = false)
         {
             var pager = new Pager(page);
-            IEnumerable<PostListItem> posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
+            IEnumerable<PostListItem> posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
 
             if (page < 1 || page > pager.LastPage)
                 return null;
 
-            if (pub) posts = SantizePostListItems(posts);
+            if(pub) posts = SantizePostListItems(posts);
 
             return new BlogPostsModel
             {
                 Posts = posts,
                 Pager = pager,
-                CustomFields = await GetCustom()
+                CustomFields = GetCustom()
             };
         }
 
-        public async Task<BlogAuthorModel> GetPostsByAuthor(string auth, int page, bool pub = false)
+        public BlogAuthorModel GetPostsByAuthor(string auth, int page, bool pub = false)
         {
             var pager = new Pager(page);
-            var profile = await _db.Profiles.Single(p => p.Slug == auth);
-            var posts = await _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > DateTime.MinValue, pager);
+            var profile = _db.Profiles.Single(p => p.Slug == auth);
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == profile.Id && p.Published > DateTime.MinValue, pager);
 
             if (page < 1 || page > pager.LastPage)
                 return null;
@@ -53,38 +52,38 @@ namespace Blogifier.Core.Services.Data
 
             return new BlogAuthorModel
             {
-                CustomFields = await GetCustom(profile.Id),
+                CustomFields = GetCustom(profile.Id),
                 Profile = profile,
                 Posts = posts,
                 Pager = pager
             };
         }
 
-        public async Task<BlogCategoryModel> GetPostsByCategory(string auth, string cat, int page, bool pub = false)
+        public BlogCategoryModel GetPostsByCategory(string auth, string cat, int page, bool pub = false)
         {
             var pager = new Pager(page);
-            IEnumerable<PostListItem> posts = await _db.BlogPosts.ByCategory(cat, pager);
+            IEnumerable<PostListItem> posts = _db.BlogPosts.ByCategory(cat, pager).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return null;
 
             if (pub) posts = SantizePostListItems(posts);
-            var profile = await _db.Profiles.Single(p => p.Slug == auth);
+            var profile = _db.Profiles.Single(p => p.Slug == auth);
 
             return new BlogCategoryModel
             {
                 Profile = profile,
-                CustomFields = await GetCustom(profile.Id),
-                Category = await _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id),
+                CustomFields = GetCustom(profile.Id),
+                Category = _db.Categories.Single(c => c.Slug == cat && c.ProfileId == profile.Id),
                 Posts = posts,
                 Pager = pager
             };
         }
 
-        public async Task<BlogCategoryModel> GetAllPostsByCategory(string cat, int page, bool pub = false)
+        public BlogCategoryModel GetAllPostsByCategory(string cat, int page, bool pub = false)
         {
             var pager = new Pager(page);
-            IEnumerable<PostListItem> posts = await _db.BlogPosts.ByCategory(cat, pager);
+            IEnumerable<PostListItem> posts = _db.BlogPosts.ByCategory(cat, pager).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return null;
@@ -94,22 +93,22 @@ namespace Blogifier.Core.Services.Data
             return new BlogCategoryModel
             {
                 Profile = null,
-                CustomFields = await GetCustom(),
-                Category = await _db.Categories.Single(c => c.Slug == cat),
+                CustomFields = GetCustom(),
+                Category = _db.Categories.Single(c => c.Slug == cat),
                 Posts = posts,
                 Pager = pager
             };
         }
 
-        public async Task<BlogPostDetailModel> GetPostBySlug(string slug, bool pub = false)
+        public BlogPostDetailModel GetPostBySlug(string slug, bool pub = false)
         {
             var vm = new BlogPostDetailModel();
-            vm.BlogPost = await _db.BlogPosts.SingleIncluded(p => p.Slug == slug);
+            vm.BlogPost = _db.BlogPosts.SingleIncluded(p => p.Slug == slug).Result;
 
             if (vm.BlogPost == null)
                 return null;
 
-            vm.Profile = vm.BlogPost.Profile != null ? vm.BlogPost.Profile : await _db.Profiles.Single(p => p.Id == vm.BlogPost.ProfileId);
+            vm.Profile = vm.BlogPost.Profile != null ? vm.BlogPost.Profile : _db.Profiles.Single(p => p.Id == vm.BlogPost.ProfileId);
 
             if (string.IsNullOrEmpty(vm.BlogPost.Image))
             {
@@ -123,12 +122,12 @@ namespace Blogifier.Core.Services.Data
             {
                 foreach (var pc in vm.BlogPost.PostCategories)
                 {
-                    var cat = await _db.Categories.Single(c => c.Id == pc.CategoryId);
+                    var cat = _db.Categories.Single(c => c.Id == pc.CategoryId);
                     vm.BlogCategories.Add(new SelectListItem { Value = cat.Slug, Text = cat.Title });
                 }
             }
 
-            vm.CustomFields = await GetCustom(vm.Profile.Id);
+            vm.CustomFields = GetCustom(vm.Profile.Id);
 
             if (pub)
             {
@@ -144,10 +143,10 @@ namespace Blogifier.Core.Services.Data
             return vm;
         }
 
-        public async Task<BlogPostsModel> SearchPosts(string term, int page, bool pub = false)
+        public BlogPostsModel SearchPosts(string term, int page, bool pub = false)
         {
             var pager = new Pager(page);
-            IEnumerable<PostListItem> posts = await _search.Find(pager, term);
+            IEnumerable<PostListItem> posts = _search.Find(pager, term).Result;
 
             if (page < 1 || page > pager.LastPage)
                 return null;
@@ -158,22 +157,22 @@ namespace Blogifier.Core.Services.Data
             {
                 Posts = posts,
                 Pager = pager,
-                CustomFields = await GetCustom()
+                CustomFields = GetCustom()
             };
         }
 
-        async Task<Dictionary<string, string>> GetCustom(int profileId = 0)
+        Dictionary<string, string> GetCustom(int profileId = 0)
         {
             if (_db.CustomFields == null)
                 return null;
 
-            var fields = await _db.CustomFields.GetBlogFields();
+            var fields = _db.CustomFields.GetBlogFields().Result;
             if (fields == null)
                 fields = new Dictionary<string, string>();
 
             if (profileId > 0)
             {
-                var usrFields = await _db.CustomFields.GetUserFields(profileId);
+                var usrFields = _db.CustomFields.GetUserFields(profileId).Result;
                 usrFields.ToList().ForEach(x => fields.Add(x.Key, x.Value));
             }
             return fields;

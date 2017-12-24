@@ -1,5 +1,4 @@
 ﻿using Blogifier.Core.Data.Interfaces;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Repositories
 {
@@ -25,9 +24,9 @@ namespace Blogifier.Core.Data.Repositories
         public ICustomRepository CustomFields { get; private set; }
         public ISubscriberRepository Subscribers { get; private set; }
 
-        public async Task<int> Complete()
+        public int Complete()
         {
-            return await _db.SaveChangesAsync();
+            return _db.SaveChanges();
         }
 
         public void Dispose()

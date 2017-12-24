@@ -5,10 +5,8 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -25,20 +23,20 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpGet("settings")]
-        public async Task<IActionResult> Settings(int page = 1, string search = "")
+        public IActionResult Settings(int page = 1, string search = "")
         {
-            var profile = await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
             var pager = new Pager(page);
 
             IEnumerable<Subscriber> emails;
 
             if (string.IsNullOrEmpty(search))
             {
-                emails = await _db.Subscribers.Find(s => s.Active, pager);
+                emails = _db.Subscribers.Find(s => s.Active, pager);
             }
             else
             {
-                emails = await _db.Subscribers.Find(s => s.Active && s.Email.Contains(search), pager);
+                emails = _db.Subscribers.Find(s => s.Active && s.Email.Contains(search), pager);
             }
                         
             dynamic settings = new
@@ -61,14 +59,14 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpPut("remove/{id}")]
-        public async Task Remove(string id)
+        public void Remove(string id)
         {
-            var existing = await _db.Subscribers.Where(s => s.Email == id).FirstOrDefaultAsync();
+            var existing = _db.Subscribers.Find(s => s.Email == id).FirstOrDefault();
 
             if (existing != null)
             {
                 _db.Subscribers.Remove(existing);
-                await _db.Complete();
+                _db.Complete();
             }
         }
     }

@@ -37,19 +37,19 @@ namespace Blogifier.Core
 
         public static void InitServices(IServiceCollection services, Action<DbContextOptionsBuilder> databaseOptions = null, IConfiguration config = null)
         {
-            if (config != null)
+            if(config != null)
             {
                 LoadFromConfigFile(config);
             }
             services.AddTransient<IRssService, RssService>();
-            services.AddTransient<IBlogStorage, BlogStorage>();
+			services.AddTransient<IBlogStorage, BlogStorage>();
             services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<IDataService, DataService>();
+            services.AddTransient<IDataService, DataService>();  
             services.AddTransient<IComponentHelper, ComponentHelper>();
             services.AddTransient<IEmailService, SendGridService>();
             services.AddTransient<IConfigService, ConfigService>();
             services.AddTransient<IPackageService, PackageService>();
-
+            
             // add blog route from ApplicationSettings
             services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(opt =>
                 opt.UseBlogRoutePrefix(new Microsoft.AspNetCore.Mvc.RouteAttribute(ApplicationSettings.BlogRoute)));
@@ -65,8 +65,8 @@ namespace Blogifier.Core
 
             AddDatabase(services);
 
-            AddFileProviders(services);
-        }
+			AddFileProviders(services);
+		}
 
         public static IApplicationBuilder UseBlogifier(this IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -74,24 +74,29 @@ namespace Blogifier.Core
             return app;
         }
 
-        public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env)
-        {
+		public static void InitApplication(IApplicationBuilder app, IHostingEnvironment env)
+		{
             app.UseMiddleware<AppSettingsLoader>();
-            app.UseMiddleware<EmbeddedResources>();
+			app.UseMiddleware<EmbeddedResources>();     
 
             ApplicationSettings.WebRootPath = env.WebRootPath;
-            ApplicationSettings.ContentRootPath = env.ContentRootPath;
+			ApplicationSettings.ContentRootPath = env.ContentRootPath;
 
             if (!ApplicationSettings.UseInMemoryDatabase && ApplicationSettings.InitializeDatabase)
             {
-                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                try
                 {
-                    var db = scope.ServiceProvider.GetService<BlogifierDbContext>().Database;        
-                    if (db.GetPendingMigrations() != null)
+                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                     {
-                        db.Migrate();
+                        var db = scope.ServiceProvider.GetService<BlogifierDbContext>().Database;
+                        db.EnsureCreated();
+                        if (db.GetPendingMigrations() != null)
+                        {
+                            db.Migrate();
+                        }
                     }
                 }
+                catch { }
             }
         }
 
@@ -120,13 +125,13 @@ namespace Blogifier.Core
         }
 
         static void AddDatabase(IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+		{
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<BlogifierDbContext>(ApplicationSettings.DatabaseOptions);
         }
 
-        static void AddFileProviders(IServiceCollection services)
-        {
+		static void AddFileProviders(IServiceCollection services)
+		{
             try
             {
                 services.Configure<RazorViewEngineOptions>(options =>

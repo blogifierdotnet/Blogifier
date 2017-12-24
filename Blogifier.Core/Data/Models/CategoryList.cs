@@ -1,15 +1,14 @@
 ﻿using Blogifier.Core.Data.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Models
 {
     public class CategoryList
     {
-        public static async Task<IEnumerable<CategoryItem>> Items(IUnitOfWork db, int profileId, int postId = 0)
+        public static IEnumerable<CategoryItem> Items(IUnitOfWork db, int profileId, int postId = 0)
         {
-            var categories = await db.Categories.Find(c => c.ProfileId == profileId, null);
+            var categories = db.Categories.Find(c => c.ProfileId == profileId, null).ToList();
             var items = new List<CategoryItem>();
             if (categories.Any())
             {
@@ -21,8 +20,7 @@ namespace Blogifier.Core.Data.Models
                     {
                         foreach (var pc in item.PostCategories)
                         {
-                            var blogPost = await db.BlogPosts.Single(p => p.Id == pc.BlogPostId);
-                            cnt += blogPost.PostViews;
+                            cnt += db.BlogPosts.Single(p => p.Id == pc.BlogPostId).PostViews;
                             if (pc.BlogPostId == postId)
                             {
                                 selected = true;

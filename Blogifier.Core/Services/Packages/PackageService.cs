@@ -28,19 +28,19 @@ namespace Blogifier.Core.Services.Packages
             _engine = engine;
         }
 
-        public async Task<List<PackageListItem>> Find(PackageType packageType)
+        public Task<List<PackageListItem>> Find(PackageType packageType)
         {
-            var items = (await Packages()).Where(p => p.PkgType == packageType).ToList();
-            return items;
+            var items = Packages().Where(p => p.PkgType == packageType).ToList();
+            return Task.FromResult(items);
         }
 
-        public async Task<PackageListItem> Single(string id)
+        public Task<PackageListItem> Single(string id)
         {
-            var item = (await Packages()).Where(p => p.Title == id).FirstOrDefault();
-            return item;
+            var item = Packages().Where(p => p.Title == id).FirstOrDefault();
+            return Task.FromResult(item);
         }
 
-        async Task<List<PackageListItem>> Packages()
+        List<PackageListItem> Packages()
         {
             var pkgs = new List<PackageListItem>();
 
@@ -91,7 +91,7 @@ namespace Blogifier.Core.Services.Packages
                         }
                         catch { }
 
-                        var disabled = await Disabled();
+                        var disabled = Disabled();
 
                         var path = $"~/Views/Shared/Components/{name}/Settings.cshtml";
                         var view = _engine.GetView("", path, false);
@@ -115,9 +115,9 @@ namespace Blogifier.Core.Services.Packages
             return pkgs;
         }
 
-        async Task<List<string>> Disabled()
+        List<string> Disabled()
         {
-            var field = await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
+            var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
             return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
     }

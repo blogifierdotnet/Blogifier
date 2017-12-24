@@ -5,7 +5,6 @@ using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ namespace Blogifier.Core.Controllers.Api
         [Route("rssimport")]
         public async Task<HttpResponseMessage> RssImport([FromBody]RssImportModel rss)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             rss.ProfileId = profile.Id;
             rss.Root = Url.Content("~/");
             
@@ -41,53 +40,53 @@ namespace Blogifier.Core.Controllers.Api
 
         [HttpDelete("{id}")]
         [Route("deleteblog/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
 
             if (!profile.IsAdmin || profile.Id == id)
                 return NotFound();
 
             _logger.LogInformation(string.Format("Delete blog {0} by {1}", id, profile.AuthorName));
 
-            var assets = await _db.Assets.Where(a => a.ProfileId == id).ToListAsync();
+            var assets = _db.Assets.Find(a => a.ProfileId == id);
             _db.Assets.RemoveRange(assets);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Assets deleted");
 
-            var categories = await _db.Categories.Where(c => c.ProfileId == id).ToListAsync();
+            var categories = _db.Categories.Find(c => c.ProfileId == id);
             _db.Categories.RemoveRange(categories);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Categories deleted");
 
-            var posts = await _db.BlogPosts.Where(p => p.ProfileId == id).ToListAsync();
+            var posts = _db.BlogPosts.Find(p => p.ProfileId == id);
             _db.BlogPosts.RemoveRange(posts);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Posts deleted");
 
-            var fields = await _db.CustomFields.Where(f => f.CustomType == CustomType.Profile && f.ParentId == id).ToListAsync();
+            var fields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == id);
             _db.CustomFields.RemoveRange(fields);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
-            var profileToDelete = await _db.Profiles.Single(b => b.Id == id);
+            var profileToDelete = _db.Profiles.Single(b => b.Id == id);
 
             var storage = new BlogStorage(profileToDelete.Slug);
             storage.DeleteFolder("");
             _logger.LogInformation("Storage deleted");
 
             _db.Profiles.Remove(profileToDelete);
-            await _db.Complete();
+            _db.Complete();
             _logger.LogInformation("Profile deleted");
 
             return new NoContentResult();
         }
 
-        async Task<Profile> GetProfile()
+        Profile GetProfile()
         {
             try
             {
-                return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             }
             catch
             {

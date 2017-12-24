@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Repositories
 {
@@ -19,15 +18,15 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public  async Task<IEnumerable<ProfileListItem>> ProfileList(Expression<Func<Profile, bool>> predicate, Pager pager)
+        public IEnumerable<ProfileListItem> ProfileList(Expression<Func<Profile, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
             var all = _db.Profiles.Include(p => p.Assets).Include(p => p.BlogPosts).Where(predicate);
 
-            pager.Configure(await all.CountAsync());
+            pager.Configure(all.Count());
 
-            var posts = await all.OrderBy(p => p.Id).Skip(skip).Take(pager.ItemsPerPage).ToListAsync();
+            var posts = all.OrderBy(p => p.Id).Skip(skip).Take(pager.ItemsPerPage).ToList();
 
             return posts.Select(p => new ProfileListItem
             {

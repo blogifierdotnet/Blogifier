@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Repositories
 {
@@ -18,12 +17,12 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Asset>> Find(Expression<Func<Asset, bool>> predicate, Pager pager)
+        public IEnumerable<Asset> Find(Expression<Func<Asset, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-            var items = _db.Assets.AsNoTracking().Where(predicate).OrderByDescending(a => a.LastUpdated);
-            pager.Configure(await items.CountAsync());
-            return await items.Skip(skip).Take(pager.ItemsPerPage).ToListAsync();
+            var items = _db.Assets.AsNoTracking().Where(predicate).OrderByDescending(a => a.LastUpdated).ToList();
+            pager.Configure(items.Count);
+            return items.Skip(skip).Take(pager.ItemsPerPage);
         }
     }
 }
