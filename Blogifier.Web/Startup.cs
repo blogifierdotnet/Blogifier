@@ -30,11 +30,11 @@ namespace Blogifier
 
         public void ConfigureServices(IServiceCollection services)
         {
-            System.Action<DbContextOptionsBuilder> databaseOptions = options => 
+            System.Action<DbContextOptionsBuilder> databaseOptions = options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddDbContext<ApplicationDbContext>(databaseOptions);
-
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -87,19 +87,15 @@ namespace Blogifier
 
             if (!Core.Common.ApplicationSettings.UseInMemoryDatabase && Core.Common.ApplicationSettings.InitializeDatabase)
             {
-                try
+                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                    var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
+                    db.EnsureCreated();
+                    if (db.GetPendingMigrations() != null)
                     {
-                        var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
-                        db.EnsureCreated();
-                        if (db.GetPendingMigrations() != null)
-                        {
-                            db.Migrate();
-                        }
+                        db.Migrate();
                     }
                 }
-                catch { }
             }
         }
     }
