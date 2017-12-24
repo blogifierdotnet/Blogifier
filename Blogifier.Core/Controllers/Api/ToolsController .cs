@@ -5,6 +5,7 @@ using Blogifier.Core.Services.FileSystem;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -49,22 +50,22 @@ namespace Blogifier.Core.Controllers.Api
 
             _logger.LogInformation(string.Format("Delete blog {0} by {1}", id, profile.AuthorName));
 
-            var assets = _db.Assets.Find(a => a.ProfileId == id);
+            var assets = await _db.Assets.Where(a => a.ProfileId == id).ToListAsync();
             _db.Assets.RemoveRange(assets);
             await _db.Complete();
             _logger.LogInformation("Assets deleted");
 
-            var categories = _db.Categories.Find(c => c.ProfileId == id);
+            var categories = await _db.Categories.Where(c => c.ProfileId == id).ToListAsync();
             _db.Categories.RemoveRange(categories);
             await _db.Complete();
             _logger.LogInformation("Categories deleted");
 
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == id);
+            var posts = await _db.BlogPosts.Where(p => p.ProfileId == id).ToListAsync();
             _db.BlogPosts.RemoveRange(posts);
             await _db.Complete();
             _logger.LogInformation("Posts deleted");
 
-            var fields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == id);
+            var fields = await _db.CustomFields.Where(f => f.CustomType == CustomType.Profile && f.ParentId == id).ToListAsync();
             _db.CustomFields.RemoveRange(fields);
             await _db.Complete();
             _logger.LogInformation("Custom fields deleted");

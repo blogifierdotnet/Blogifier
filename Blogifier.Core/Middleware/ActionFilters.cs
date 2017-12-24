@@ -26,12 +26,12 @@ namespace Blogifier.Core.Middleware
             _options = builder.Options;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
             using (var context = new BlogifierDbContext(_options))
             {
                 var user = filterContext.HttpContext.User.Identity.Name;
-                if (context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == user).Result == null)
+                if (await context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == user) == null)
                 {
                     filterContext.Result = new RedirectResult("~/admin/setup");
                 }
@@ -52,12 +52,12 @@ namespace Blogifier.Core.Middleware
             _options = builder.Options;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
             using (var context = new BlogifierDbContext(_options))
             {
                 var loggedUser = filterContext.HttpContext.User.Identity.Name;
-                var profile = context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == loggedUser).Result;
+                var profile = await context.Profiles.SingleOrDefaultAsync(p => p.IdentityName == loggedUser);
 
                 if(profile == null || !profile.IsAdmin)
                 {

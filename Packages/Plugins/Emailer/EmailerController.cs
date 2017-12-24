@@ -5,6 +5,7 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,11 +34,11 @@ namespace Newsletter
 
             if (string.IsNullOrEmpty(search))
             {
-                emails = _db.Subscribers.Find(s => s.Active, pager);
+                emails = await _db.Subscribers.Find(s => s.Active, pager);
             }
             else
             {
-                emails = _db.Subscribers.Find(s => s.Active && s.Email.Contains(search), pager);
+                emails = await _db.Subscribers.Find(s => s.Active && s.Email.Contains(search), pager);
             }
                         
             dynamic settings = new
@@ -62,7 +63,7 @@ namespace Newsletter
         [HttpPut("remove/{id}")]
         public async Task Remove(string id)
         {
-            var existing = _db.Subscribers.Find(s => s.Email == id).FirstOrDefault();
+            var existing = await _db.Subscribers.Where(s => s.Email == id).FirstOrDefaultAsync();
 
             if (existing != null)
             {

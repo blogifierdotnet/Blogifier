@@ -27,13 +27,14 @@ namespace Blogifier.Core.Controllers.Api
         }
 
         [HttpGet]
-        public AdminPostList Index(int page = 1)
+        public async Task<AdminPostList> Index(int page = 1)
         {
             var pager = new Pager(page);
-            var model = new AdminPostList();
-
-            model.BlogPosts = _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager);
-            model.Pager = pager;
+            var model = new AdminPostList
+            {
+                BlogPosts = await _db.BlogPosts.Find(p => p.Profile.IdentityName == User.Identity.Name, pager),
+                Pager = pager
+            };
             return model;
         }
 
@@ -59,7 +60,7 @@ namespace Blogifier.Core.Controllers.Api
                 Published = post.Published,
                 Image = postImg,
                 PostViews = post.PostViews,
-                Categories = _db.Categories.PostCategories(post.Id)
+                Categories = await _db.Categories.PostCategories(post.Id)
             };
             return model;
         }
@@ -80,7 +81,7 @@ namespace Blogifier.Core.Controllers.Api
                 bp.Image = model.Image;
                 bp.LastUpdated = SystemClock.Now();
                 bp.Published = model.Publish ? SystemClock.Now() : DateTime.MinValue;
-                _db.BlogPosts.Add(bp);
+                await _db.BlogPosts.Add(bp);
                 if (model.Publish)
                 {
                     if (await _email.Enabled())

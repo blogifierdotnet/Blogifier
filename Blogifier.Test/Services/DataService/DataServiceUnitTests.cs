@@ -26,41 +26,41 @@ namespace Blogifier.Test.Services.DataService
         private readonly Mock<ICategoryRepository> _categoryRepository = new Mock<ICategoryRepository>();
 
         [Fact]
-        public void GetPosts_Page_SmallerThan_1_Returns_Null()
+        public async void GetPosts_Page_SmallerThan_1_Returns_Null()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPosts(0);
+            var result = await sut.GetPosts(0);
 
             // assert
             Assert.Null(result);
         }
 
         [Fact]
-        public void GetPosts_WithPager_Returns_AllPosts()
+        public async void GetPosts_WithPager_Returns_AllPosts()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.GetPosts(1);
+            var result = await sut.GetPosts(1);
 
             // assert
             Assert.Equal(result.Posts.Count(), 1);
         }
 
         [Fact]
-        public void GetPosts_With_PubEquals_true_AuthorEmail_Is_EmptyString()
+        public async void GetPosts_With_PubEquals_true_AuthorEmail_Is_EmptyString()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
             // act
-            var result = sut.GetPosts(1, true);
+            var result = await sut.GetPosts(1, true);
 
             // assert
             Assert.Empty(result.Posts.First().AuthorEmail);
@@ -142,28 +142,28 @@ namespace Blogifier.Test.Services.DataService
         }
 
         [Fact]
-        public void SearchPosts_With_PubEquals_true_AuthorEmail_Is_Empty()
+        public async void SearchPosts_With_PubEquals_true_AuthorEmail_Is_Empty()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1, true);
+            var result = await sut.SearchPosts("dotnet", 1, true);
 
             // assert
             Assert.Empty(result.Posts.First().AuthorEmail);
         }
 
         [Fact]
-        public void SearchPosts_WithOneResult_Returns_OnePost()
+        public async void SearchPosts_WithOneResult_Returns_OnePost()
         {
             // arrange
             SetupDependencies();
             var sut = GetSut();
 
             // act
-            var result = sut.SearchPosts("dotnet", 1, true);
+            var result = await sut.SearchPosts("dotnet", 1, true);
 
             // assert
             Assert.Equal(result.Posts.Count(), 1);
@@ -359,11 +359,12 @@ namespace Blogifier.Test.Services.DataService
         {
             _postsRepository
                 .Setup(x => x.Find(It.IsAny<Expression<Func<BlogPost, bool>>>(), It.IsAny<Pager>()))
-                .Returns(new List<PostListItem>
+                .Returns(Task.FromResult<IEnumerable<PostListItem>>(new List<PostListItem>
                 {
                     new PostListItem { AuthorName = "Joe", Title = "dotnet core" , AuthorEmail = "test@test.com"}
-                });
-            _postsRepository.Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
+                }));
+            _postsRepository
+                .Setup(x => x.SingleIncluded(It.IsAny<Expression<Func<BlogPost, bool>>>()))
                 .Returns(Task.FromResult(new BlogPost
                 {
                     Id = 1,

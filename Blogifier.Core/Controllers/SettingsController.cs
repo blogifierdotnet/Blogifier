@@ -7,6 +7,7 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace Blogifier.Core.Controllers
                 model.AuthorEmail = model.Profile.AuthorEmail;
                 model.Avatar = model.Profile.Avatar;
                 model.EmailEnabled = (await _db.CustomFields.GetValue(CustomType.Application, 0, Constants.SendGridApiKey)).Length > 0;
-                model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
+                model.CustomFields = await _db.CustomFields.GetUserFields(model.Profile.Id);
             }
             return View(_theme + "Profile.cshtml", model);
         }
@@ -57,7 +58,7 @@ namespace Blogifier.Core.Controllers
                 {
                     profile = new Profile();
 
-                    if (_db.Profiles.All().ToList().Count == 0)
+                    if (!await _db.Profiles.All().AnyAsync())
                     {
                         profile.IsAdmin = true;
                     }
@@ -71,7 +72,7 @@ namespace Blogifier.Core.Controllers
                     profile.Description = BlogSettings.Description;
                     profile.BlogTheme = BlogSettings.Theme;
 
-                    _db.Profiles.Add(profile);
+                    await _db.Profiles.Add(profile);
                 }
                 else
                 {
@@ -88,7 +89,7 @@ namespace Blogifier.Core.Controllers
                 {
                     SaveCustomFields(model.CustomFields, profile.Id);
                 }
-                model.CustomFields = _db.CustomFields.GetUserFields(model.Profile.Id).Result;
+                model.CustomFields = await _db.CustomFields.GetUserFields(model.Profile.Id);
 
                 ViewBag.Message = "Profile updated";
             }

@@ -12,6 +12,7 @@ using Blogifier.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace Blogifier.Controllers
         {
             var profile = GetProfile();
             var pager = new Pager(page);
-            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
+            var blogs = await _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
             var model = await GetUsersModel();
             model.Blogs = blogs;
@@ -86,7 +87,7 @@ namespace Blogifier.Controllers
                     // create new profile
                     var profile = new Profile();
 
-                    if (_db.Profiles.All().ToList().Count == 0 || model.RegisterModel.IsAdmin)
+                    if (!await _db.Profiles.All().AnyAsync() || model.RegisterModel.IsAdmin)
                     {
                         profile.IsAdmin = true;
                     }
@@ -103,7 +104,7 @@ namespace Blogifier.Controllers
 
                     profile.LastUpdated = SystemClock.Now();
 
-                    _db.Profiles.Add(profile);
+                    await _db.Profiles.Add(profile);
                     await _db.Complete();
 
                     _logger.LogInformation(string.Format("Created a new profile at /{0}", profile.Slug));
@@ -121,7 +122,7 @@ namespace Blogifier.Controllers
 
             // If we got this far, something failed, redisplay form
             var pager = new Pager(1);
-            var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
+            var blogs = await _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
             var regModel = await GetUsersModel();
             regModel.Blogs = blogs;
@@ -144,22 +145,22 @@ namespace Blogifier.Controllers
 
             _logger.LogInformation(string.Format("Delete blog {0} by {1}", profile.Title, profile.AuthorName));
 
-            var assets = _db.Assets.Find(a => a.ProfileId == id);
+            var assets = await _db.Assets.Where(a => a.ProfileId == id).ToListAsync();
             _db.Assets.RemoveRange(assets);
             await _db.Complete();
             _logger.LogInformation("Assets deleted");
 
-            var categories = _db.Categories.Find(c => c.ProfileId == id);
+            var categories = await _db.Categories.Where(c => c.ProfileId == id).ToListAsync();
             _db.Categories.RemoveRange(categories);
             await _db.Complete();
             _logger.LogInformation("Categories deleted");
 
-            var posts = _db.BlogPosts.Find(p => p.ProfileId == id);
+            var posts = await _db.BlogPosts.Where(p => p.ProfileId == id).ToListAsync();
             _db.BlogPosts.RemoveRange(posts);
             await _db.Complete();
             _logger.LogInformation("Posts deleted");
 
-            var fields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == id);
+            var fields = await _db.CustomFields.Where(f => f.CustomType == CustomType.Profile && f.ParentId == id).ToListAsync();
             _db.CustomFields.RemoveRange(fields);
             await _db.Complete();
             _logger.LogInformation("Custom fields deleted");

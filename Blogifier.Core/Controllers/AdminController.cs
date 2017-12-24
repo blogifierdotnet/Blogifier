@@ -7,6 +7,7 @@ using Blogifier.Core.Middleware;
 using Blogifier.Core.Services.Search;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,16 +16,16 @@ namespace Blogifier.Core.Controllers
 {
     [Authorize]
     [Route("admin")]
-	public class AdminController : Controller
-	{
-		private readonly string _theme;
+    public class AdminController : Controller
+    {
+        private readonly string _theme;
         IUnitOfWork _db;
 
-		public AdminController(IUnitOfWork db, ISearchService search, ILogger<AdminController> logger)
-		{
-			_db = db;
-			_theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
-		}
+        public AdminController(IUnitOfWork db, ISearchService search, ILogger<AdminController> logger)
+        {
+            _db = db;
+            _theme = $"~/{ApplicationSettings.BlogAdminFolder}/";
+        }
 
         [VerifyProfile]
         [HttpGet]
@@ -55,7 +56,7 @@ namespace Blogifier.Core.Controllers
             {
                 var profile = new Profile();
 
-                if (_db.Profiles.All().ToList().Count == 0)
+                if (!await _db.Profiles.All().AnyAsync())
                 {
                     profile.IsAdmin = true;
                 }
@@ -71,7 +72,7 @@ namespace Blogifier.Core.Controllers
 
                 profile.LastUpdated = SystemClock.Now();
 
-                _db.Profiles.Add(profile);
+                await _db.Profiles.Add(profile);
                 await _db.Complete();
 
                 return RedirectToAction("Index");

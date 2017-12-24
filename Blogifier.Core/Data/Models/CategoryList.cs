@@ -9,7 +9,7 @@ namespace Blogifier.Core.Data.Models
     {
         public static async Task<IEnumerable<CategoryItem>> Items(IUnitOfWork db, int profileId, int postId = 0)
         {
-            var categories = db.Categories.Find(c => c.ProfileId == profileId, null).ToList();
+            var categories = await db.Categories.Find(c => c.ProfileId == profileId, null);
             var items = new List<CategoryItem>();
             if (categories.Any())
             {

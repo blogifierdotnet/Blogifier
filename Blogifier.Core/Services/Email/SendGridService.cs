@@ -2,6 +2,7 @@
 using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -43,7 +44,7 @@ namespace Blogifier.Core.Services.Email
                 return;
             }
 
-            var admin = _db.Profiles.Find(p => p.IsAdmin).FirstOrDefault();
+            var admin = await _db.Profiles.Where(p => p.IsAdmin).FirstOrDefaultAsync();
             var sentFrom = admin.AuthorEmail;
 
             // if user has own API key, use it instead of app API key

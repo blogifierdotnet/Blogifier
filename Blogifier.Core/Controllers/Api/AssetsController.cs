@@ -6,6 +6,7 @@ using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -40,15 +41,15 @@ namespace Blogifier.Core.Controllers.Api
 
             if (filter == "filterImages")
             {
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
+                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
             }
             else if (filter == "filterAttachments")
             {
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
+                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
             }
             else
             {
-                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
+                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
             }
 
             return new AdminAssetList { Assets = assets, Pager = pager };
@@ -72,12 +73,12 @@ namespace Blogifier.Core.Controllers.Api
 
             if (!string.IsNullOrEmpty(type))
             {
-                if(type == "applogo")
+                if (type == "applogo")
                 {
                     BlogSettings.Logo = asset.Url;
                     await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
                 }
-                else if(type == "appavatar")
+                else if (type == "appavatar")
                 {
                     ApplicationSettings.ProfileAvatar = asset.Url;
                     await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, asset.Url);
@@ -106,7 +107,7 @@ namespace Blogifier.Core.Controllers.Api
                     if (type == "profileimage")
                     {
                         profile.Image = asset.Url;
-                    }                    
+                    }
                 }
                 await _db.Complete();
             }
@@ -119,7 +120,7 @@ namespace Blogifier.Core.Controllers.Api
         public async Task<Asset> UpdatePostImage(string type, int assetId, int postId)
         {
             var asset = await _db.Assets.Single(a => a.Id == assetId);
-            if(postId > 0)
+            if (postId > 0)
             {
                 var post = await _db.BlogPosts.Single(p => p.Id == postId);
                 post.Image = asset.Url;
@@ -174,8 +175,8 @@ namespace Blogifier.Core.Controllers.Api
 
             // reset profile image to default
             // if asset was removed
-            var profiles = _db.Profiles.Find(p => p.Image == asset.Url || p.Avatar == asset.Url || p.Logo == asset.Url).ToList();
-            if(profiles != null)
+            var profiles = await _db.Profiles.Where(p => p.Image == asset.Url || p.Avatar == asset.Url || p.Logo == asset.Url).ToListAsync();
+            if (profiles != null)
             {
                 foreach (var item in profiles)
                 {
@@ -197,7 +198,7 @@ namespace Blogifier.Core.Controllers.Api
             if (type == "profileAvatar")
                 profile.Avatar = null;
 
-            if(type == "profileLogo")
+            if (type == "profileLogo")
                 profile.Logo = null;
 
             if (type == "profileImage")
@@ -227,7 +228,7 @@ namespace Blogifier.Core.Controllers.Api
 
             // sometimes we just want to override uploaded file
             // only add DB record if asset does not exist yet
-            var existingAsset = _db.Assets.Find(a => a.Path == asset.Path).FirstOrDefault();
+            var existingAsset = await _db.Assets.Where(a => a.Path == asset.Path).FirstOrDefaultAsync();
             if (existingAsset == null)
             {
                 asset.ProfileId = profile.Id;
@@ -241,7 +242,7 @@ namespace Blogifier.Core.Controllers.Api
                 {
                     asset.AssetType = AssetType.Attachment;
                 }
-                _db.Assets.Add(asset);
+                await _db.Assets.Add(asset);
             }
             else
             {

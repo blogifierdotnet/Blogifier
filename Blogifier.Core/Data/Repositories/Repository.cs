@@ -17,12 +17,12 @@ namespace Blogifier.Core.Data.Repositories
             _entities = context.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> All()
+        public IQueryable<TEntity> All()
         {
-            return _entities.ToList();
+            return _entities;
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
             return _entities.Where(predicate);
         }
@@ -32,14 +32,14 @@ namespace Blogifier.Core.Data.Repositories
             return await _entities.SingleOrDefaultAsync(predicate);
         }
 
-        public void Add(TEntity entity)
+        public async Task Add(TEntity entity)
         {         
-            _entities.Add(entity);
+            await _entities.AddAsync(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public async Task AddRange(IEnumerable<TEntity> entities)
         {
-            _entities.AddRange(entities);
+            await _entities.AddRangeAsync(entities);
         }
 
         public void Remove(TEntity entity)

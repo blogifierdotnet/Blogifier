@@ -5,6 +5,7 @@ using Blogifier.Core.Data.Models;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Blogifier.Core.Controllers.Api
         {
             var blogCats = new List<string>();
             var profile = await GetProfile();
-            var cats = _db.Categories.Find(c => c.ProfileId == profile.Id);
+            var cats = await _db.Categories.Where(c => c.ProfileId == profile.Id).ToListAsync();
             foreach (var cat in cats)
             {
                 blogCats.Add(cat.Title);
@@ -75,7 +76,7 @@ namespace Blogifier.Core.Controllers.Api
                     Slug = model.Title.ToSlug(),
                     LastUpdated = SystemClock.Now()
                 };
-                _db.Categories.Add(newCategory);
+                await _db.Categories.Add(newCategory);
                 await _db.Complete();
                 existing = await _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             }
@@ -98,19 +99,19 @@ namespace Blogifier.Core.Controllers.Api
                     Slug = model.Title.ToSlug(),
                     LastUpdated = SystemClock.Now()
                 };
-                _db.Categories.Add(newCategory);
+                await _db.Categories.Add(newCategory);
                 await _db.Complete();
 
                 existing = await _db.Categories.Single(c => c.Title == model.Title);
             }
-            _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
+            await _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
             await _db.Complete();
         }
 
         [HttpPut("removecategoryfrompost")]
         public async Task RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
         {
-            _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
+            await _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
             await _db.Complete();
         }
 
@@ -142,7 +143,7 @@ namespace Blogifier.Core.Controllers.Api
                         Slug = category.Title.ToSlug(),
                         LastUpdated = SystemClock.Now()
                     };
-                    _db.Categories.Add(newCategory);
+                    await _db.Categories.Add(newCategory);
                     await _db.Complete();
                 }
             }

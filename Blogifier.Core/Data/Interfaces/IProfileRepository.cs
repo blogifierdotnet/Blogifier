@@ -4,12 +4,13 @@ using Blogifier.Core.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Interfaces
 {
     public interface IProfileRepository : IRepository<Profile>
     {
-        IEnumerable<ProfileListItem> ProfileList(Expression<Func<Profile, bool>> predicate, Pager pager);
+        Task<IEnumerable<ProfileListItem>> ProfileList(Expression<Func<Profile, bool>> predicate, Pager pager);
     }
 
     public enum BlogImgType

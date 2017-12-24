@@ -18,9 +18,9 @@ namespace Blogifier.Core.Controllers.Api.Public
 
         // GET blogifier/api/public/posts
         // GET blogifier/api/public/posts?page=2
-        public BlogPostsModel Get(int page = 1)
+        public async Task<BlogPostsModel> Get(int page = 1)
         {
-            return _ds.GetPosts(page, true);
+            return await _ds.GetPosts(page, true);
         }
 
         // GET blogifier/api/public/posts/author/filip-stanek
@@ -42,9 +42,9 @@ namespace Blogifier.Core.Controllers.Api.Public
         // GET blogifier/api/public/posts/search/dot%20net
         // GET blogifier/api/public/posts/search/dot%20net?page=2
         [HttpGet("[action]/{term}")]
-        public BlogPostsModel Search(string term, int page = 1)
+        public async Task<BlogPostsModel> Search(string term, int page = 1)
         {
-            return _ds.SearchPosts(term, page, true);
+            return await _ds.SearchPosts(term, page, true);
         }
 
         // GET blogifier/api/public/posts/post/running-local-web-pages-in-cefsharpwpf

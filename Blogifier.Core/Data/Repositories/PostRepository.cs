@@ -20,22 +20,22 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public IEnumerable<PostListItem> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
+        public async Task<IEnumerable<PostListItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
             var drafts = _db.BlogPosts.Include(p => p.Profile)
                 .Where(p => p.Published == DateTime.MinValue).Where(predicate)
-                .OrderByDescending(p => p.LastUpdated).ToList();
+                .OrderByDescending(p => p.LastUpdated);
 
             var pubs = _db.BlogPosts.Include(p => p.Profile)
                 .Where(p => p.Published > DateTime.MinValue).Where(predicate)
-                .OrderByDescending(p => p.Published).ToList();
+                .OrderByDescending(p => p.Published);
 
-            var items = drafts.Concat(pubs).ToList();
-            pager.Configure(items.Count);
+            var items = drafts.Concat(pubs);
+            pager.Configure(await items.CountAsync());
 
-            var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
+            var postPage = await items.Skip(skip).Take(pager.ItemsPerPage).ToListAsync();
 
             return GetPostItems(postPage);
         }
@@ -78,7 +78,7 @@ namespace Blogifier.Core.Data.Repositories
         }
 
         // posts filtered on status (all, draft or published) and categories
-        public Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager)
+        public async Task<List<PostListItem>> ByFilter(string status, List<string> categories, string blog, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
@@ -87,41 +87,41 @@ namespace Blogifier.Core.Data.Repositories
             if (status == "P")
                 posts = posts.Where(p => p.Published > DateTime.MinValue);
 
-            if(status == "D")
+            if (status == "D")
                 posts = posts.Where(p => p.Published == DateTime.MinValue);
 
-            if(categories.Count > 0)
+            if (categories.Count > 0)
                 posts = posts.Where(p => p.PostCategories.Any(pc => pc.BlogPostId == p.Id && categories.Contains(pc.CategoryId.ToString())));
 
-            pager.Configure(posts.Count());
+            pager.Configure(await posts.CountAsync());
 
-            var postPage = posts.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToList();
+            var postPage = await posts.OrderByDescending(pc => pc.Published).Skip(skip).Take(pager.ItemsPerPage).ToListAsync();
 
-            return Task.Run(() => GetPostItems(postPage));
+            return GetPostItems(postPage);
         }
 
         public async Task UpdatePostCategories(int postId, IEnumerable<string> catIds)
         {
-            _db.PostCategories.RemoveRange(_db.PostCategories.Where(c => c.BlogPostId == postId));
-            _db.SaveChanges();
+            _db.PostCategories.RemoveRange(await _db.PostCategories.Where(c => c.BlogPostId == postId).ToListAsync());
+            await _db.SaveChangesAsync();
 
             if (catIds != null && catIds.Count() > 0)
             {
                 foreach (var id in catIds)
                 {
-                    _db.PostCategories.Add(new PostCategory
+                    await _db.PostCategories.AddAsync(new PostCategory
                     {
                         BlogPostId = postId,
                         CategoryId = int.Parse(id),
                         LastUpdated = DateTime.UtcNow
                     });
-                    _db.SaveChanges();
+                    await _db.SaveChangesAsync();
                 }
             }
             await _db.SaveChangesAsync();
         }
 
-        public IEnumerable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate)
+        public IQueryable<BlogPost> AllIncluded(Expression<Func<BlogPost, bool>> predicate)
         {
             return _db.BlogPosts.AsNoTracking().Where(predicate).OrderByDescending(p => p.LastUpdated)
                 .Include(p => p.PostCategories).Include(p => p.Profile);

@@ -44,30 +44,34 @@ namespace Blogifier.Test.Services.Syndication
 
                 if(profile == null)
                 {
-                    profile = new Profile();
-                    profile.IdentityName = "test";
-                    profile.AuthorName = "test";
-                    profile.AuthorEmail = "test@us.com";
-                    profile.Title = "test";
-                    profile.Slug = "test";
-                    profile.Description = "the test";
-                    profile.BlogTheme = "Standard";
+                    profile = new Profile
+                    {
+                        IdentityName = "test",
+                        AuthorName = "test",
+                        AuthorEmail = "test@us.com",
+                        Title = "test",
+                        Slug = "test",
+                        Description = "the test",
+                        BlogTheme = "Standard"
+                    };
 
-                    uow.Profiles.Add(profile);
+                    await uow.Profiles.Add(profile);
                     await uow.Complete();
                 }
 
-                Assert.True(context.Profiles.ToList().Count > 0);
+                Assert.True(await context.Profiles.CountAsync() > 0);
 
                 var service = new RssService(uow, null);
 
-                var model = new RssImportModel();
-                model.FeedUrl = path;
-                model.ProfileId = profile.Id;
+                var model = new RssImportModel
+                {
+                    FeedUrl = path,
+                    ProfileId = profile.Id
+                };
 
-                var result = service.Import(model);
+                var result = await service.Import(model);
 
-                Assert.True(context.BlogPosts.ToList().Count > 1);
+                Assert.True(await context.BlogPosts.CountAsync() > 1);
             }
 
             Assert.NotNull(feed);
