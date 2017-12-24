@@ -18,7 +18,7 @@ namespace Blogifier.Core.Data.Migrations
                     Browser = table.Column<string>(type: "TEXT", nullable: true),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Device = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 160, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     Ip = table.Column<string>(type: "TEXT", nullable: true),
                     LastUpdated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Os = table.Column<string>(type: "TEXT", nullable: true)

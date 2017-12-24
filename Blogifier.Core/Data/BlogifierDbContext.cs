@@ -23,7 +23,6 @@ namespace Blogifier.Core.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             ApplicationSettings.DatabaseOptions(optionsBuilder);
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -20,9 +20,9 @@ namespace Blogifier.Core.Data.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Category>> Find(Expression<Func<Category, bool>> predicate, Pager pager)
+        public IEnumerable<Category> Find(Expression<Func<Category, bool>> predicate, Pager pager)
         {
-            if (pager == null)
+            if(pager == null)
             {
                 return _db.Categories.AsNoTracking()
                     .Include(c => c.PostCategories)
@@ -35,17 +35,18 @@ namespace Blogifier.Core.Data.Repositories
             var categories = _db.Categories.AsNoTracking()
                 .Include(c => c.PostCategories)
                 .Where(predicate)
-                .OrderBy(c => c.Title);
+                .OrderBy(c => c.Title)
+                .ToList();
 
-            pager.Configure(await categories.CountAsync());
-
-            return await categories.Skip(skip).Take(pager.ItemsPerPage).ToListAsync();
+            pager.Configure(categories.Count());
+            
+            return categories.Skip(skip).Take(pager.ItemsPerPage);
         }
 
-        public async Task<IEnumerable<SelectListItem>> PostCategories(int postId)
+        public IEnumerable<SelectListItem> PostCategories(int postId)
         {
             var items = new List<SelectListItem>();
-            var postCategories = await _db.PostCategories.Include(pc => pc.Category).Where(c => c.BlogPostId == postId).ToListAsync();
+            var postCategories = _db.PostCategories.Include(pc => pc.Category).Where(c => c.BlogPostId == postId);
             foreach (var item in postCategories)
             {
                 var newItem = new SelectListItem { Value = item.Id.ToString(), Text = item.Category.Title };
@@ -57,10 +58,10 @@ namespace Blogifier.Core.Data.Repositories
             return items.OrderBy(c => c.Text);
         }
 
-        public async Task<IEnumerable<SelectListItem>> CategoryList(Expression<Func<Category, bool>> predicate)
+        public IEnumerable<SelectListItem> CategoryList(Expression<Func<Category, bool>> predicate)
         {
-            return await _db.Categories.Where(predicate).OrderBy(c => c.Title)
-                .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToListAsync();
+            return _db.Categories.Where(predicate).OrderBy(c => c.Title)
+                .Select(c => new SelectListItem { Text = c.Title, Value = c.Id.ToString() }).ToList();
         }
 
         public async Task<Category> SingleIncluded(Expression<Func<Category, bool>> predicate)
@@ -70,23 +71,23 @@ namespace Blogifier.Core.Data.Repositories
                 .FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<bool> AddCategoryToPost(int postId, int categoryId)
+        public bool AddCategoryToPost(int postId, int categoryId)
         {
             try
             {
-                var existing = await _db.PostCategories.Where(
+                var existing = _db.PostCategories.Where(
                     pc => pc.BlogPostId == postId &&
-                    pc.CategoryId == categoryId).SingleOrDefaultAsync();
+                    pc.CategoryId == categoryId).SingleOrDefault();
 
                 if (existing == null)
                 {
-                    await _db.PostCategories.AddAsync(new PostCategory
+                    _db.PostCategories.Add(new PostCategory
                     {
                         BlogPostId = postId,
                         CategoryId = categoryId,
                         LastUpdated = SystemClock.Now()
                     });
-                    await _db.SaveChangesAsync();
+                    _db.SaveChanges();
                 }
                 return true;
             }
@@ -96,13 +97,13 @@ namespace Blogifier.Core.Data.Repositories
             }
         }
 
-        public async Task<bool> RemoveCategoryFromPost(int postId, int categoryId)
+        public bool RemoveCategoryFromPost(int postId, int categoryId)
         {
             try
             {
-                var existing = await _db.PostCategories.Where(
+                var existing = _db.PostCategories.Where(
                     pc => pc.BlogPostId == postId &&
-                    pc.CategoryId == categoryId).SingleOrDefaultAsync();
+                    pc.CategoryId == categoryId).SingleOrDefault();
 
                 if (existing == null)
                 {

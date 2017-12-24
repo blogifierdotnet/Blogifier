@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Blogifier.Test.Repositories
@@ -38,83 +37,83 @@ namespace Blogifier.Test.Repositories
             });
 
         [Fact]
-        public async void Find_By_NotMatching_Id_Returns_0_Results()
+        public void Find_By_NotMatching_Id_Returns_0_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
             // act
-            var result = await sut.Find(x => x.Id == 321, pager);
-            await ClearMemoryDb(dbName);
+            var result = sut.Find(x => x.Id == 321, pager).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Empty(result);
         }
 
         [Fact]
-        public async void Find_ById_Matching_1_Category_Returns_1_Result()
+        public void Find_ById_Matching_1_Category_Returns_1_Result()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
             // act
-            var result = await sut.Find(x => x.Id == 1, pager);
-            await ClearMemoryDb(dbName);
+            var result = sut.Find(x => x.Id == 1, pager).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(1, result.Count());
         }
 
         [Fact]
-        public async void Find_WithNullPager_Returns_All_Results()
+        public void Find_WithNullPager_Returns_All_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.Find(x => x.Id == 1 || x.Id == 2, null);            
+            var result = sut.Find(x => x.Id == 1 || x.Id == 2, null).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(2, result.Count());
-            await ClearMemoryDb(dbName);
         }
 
         [Fact]
-        public async void Find_ByTitle_Matching_10_Cat_Returns_10_Results()
+        public void Find_ByTitle_Matching_10_Cat_Returns_10_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.Find(x => x.Title.Contains("cat"), null);            
+            var result = sut.Find(x => x.Title.Contains("cat"), null).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(10, result.Count());
-            await ClearMemoryDb(dbName);
         }
 
         [Fact]
-        public async void Find_ByTitle_Returns_Ordered_Results()
+        public void Find_ByTitle_Returns_Ordered_Results()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1);
 
             // act
-            var result = await sut.Find(x => x.Title.Contains("cat"), pager);
-            await ClearMemoryDb(dbName);
+            var result = sut.Find(x => x.Title.Contains("cat"), pager).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal("cat 1", result.First().Title);
@@ -122,65 +121,65 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        public async void Find_ByTitle_Matching_10_Categs_With_1ItemPerPage_Returns_1_Result()
+        public void Find_ByTitle_Matching_10_Categs_With_1ItemPerPage_Returns_1_Result()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
             var pager = new Pager(1, 1);
 
             // act
-            var result = await sut.Find(x => x.Title.Contains("cat"), pager);
-            await ClearMemoryDb(dbName);
+            var result = sut.Find(x => x.Title.Contains("cat"), pager).ToList();
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(1, result.Count());
         }
 
         [Fact]
-        public async void GetPostCategories_Having_IncorrectPostId_Returns_0_Items()
+        public void GetPostCategories_Having_IncorrectPostId_Returns_0_Items()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.PostCategories(-1);
-            await ClearMemoryDb(dbName);
+            var result = sut.PostCategories(-1);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Empty(result);
         }
 
         [Fact]
-        public async void GetPostCategories_CorrectPostId_Returns_1_Result()
+        public void GetPostCategories_CorrectPostId_Returns_1_Result()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.PostCategories(3);
-            await ClearMemoryDb(dbName);
+            var result = sut.PostCategories(3);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(1, result.Count());
         }
 
         [Fact]
-        public async void GetPostCategories_CorrectPostId_Returns_Correct_Category()
+        public void GetPostCategories_CorrectPostId_Returns_Correct_Category()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.PostCategories(3);
-            await ClearMemoryDb(dbName);
+            var result = sut.PostCategories(3);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal("3", result.First().Value);
@@ -188,64 +187,64 @@ namespace Blogifier.Test.Repositories
         }
 
         [Fact]
-        public async void GetCategoryList_IncorrectId_Returns_0_Items()
+        public void GetCategoryList_IncorrectId_Returns_0_Items()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.CategoryList(x => x.Id == -1);
-            await ClearMemoryDb(dbName);
+            var result = sut.CategoryList(x => x.Id == -1);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Empty(result);
         }
 
         [Fact]
-        public async void GetCategoryList_CorrectId_Returns_1_Item()
+        public void GetCategoryList_CorrectId_Returns_1_Item()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.CategoryList(x => x.Id == 5);
-            await ClearMemoryDb(dbName);
+            var result = sut.CategoryList(x => x.Id == 5);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(1, result.Count());
         }
 
         [Fact]
-        public async void GetCategoryList_MatchAllItems_Returns_All_Items()
+        public void GetCategoryList_MatchAllItems_Returns_All_Items()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.CategoryList(x => x.Title.Contains("cat"));
-            await ClearMemoryDb(dbName);
+            var result = sut.CategoryList(x => x.Title.Contains("cat"));
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal(10, result.Count());
         }
 
         [Fact]
-        public async void GetCategoryList_Returns_Ordered_Items()
+        public void GetCategoryList_Returns_Ordered_Items()
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
-            var result = await sut.CategoryList(x => x.Title.Contains("cat"));
-            await ClearMemoryDb(dbName);
+            var result = sut.CategoryList(x => x.Title.Contains("cat"));
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal("cat 1", result.First().Text);
@@ -257,12 +256,12 @@ namespace Blogifier.Test.Repositories
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
             var result = await sut.SingleIncluded(x => x.Title == "java");
-            await ClearMemoryDb(dbName);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Null(result);
@@ -273,12 +272,12 @@ namespace Blogifier.Test.Repositories
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
             var result = await sut.SingleIncluded(x => x.Title == "cat 1");
-            await ClearMemoryDb(dbName);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.Equal("cat 1", result.Title);
@@ -290,57 +289,57 @@ namespace Blogifier.Test.Repositories
         {
             // arrange
             var dbName = Guid.NewGuid().ToString();
-            var db = await SetupMemoryDb(dbName);
+            var db = SetupMemoryDb(dbName);
             var sut = new CategoryRepository(db);
 
             // act
             var result = await sut.SingleIncluded(x => x.Title == "cat 5");
-            await ClearMemoryDb(dbName);
+            ClearMemoryDb(dbName);
 
             // assert
             Assert.NotNull(result.PostCategories);
         }
 
         [Fact]
-        public async void RemoveCategoryFromPost_NonMatching_RemovesNone()
+        public void RemoveCategoryFromPost_NonMatching_RemovesNone()
         {
             var dbName = Guid.NewGuid().ToString();
             try
             {
                 // arrange
-                var db = await SetupMemoryDb(dbName);
+                var db = SetupMemoryDb(dbName);
                 var sut = new CategoryRepository(db);
 
                 // act
-                var result = await sut.RemoveCategoryFromPost(-1, -1);
+                var result = sut.RemoveCategoryFromPost(-1, -1);
 
                 // assert
                 Assert.False(result);
-                Assert.Equal(10, await db.PostCategories.CountAsync());
+                Assert.Equal(10, db.PostCategories.Count());
             }
             finally
             {
-                await ClearMemoryDb(dbName);
+                ClearMemoryDb(dbName);
             }
         }
 
         [Fact]
-        public async void RemoveCategoryFromPost_Matching_RemovesOne()
+        public void RemoveCategoryFromPost_Matching_RemovesOne()
         {
             var dbName = Guid.NewGuid().ToString();
             try
             {
                 // arrange
-                var db = await SetupMemoryDb(dbName);
+                var db = SetupMemoryDb(dbName);
                 var sut = new CategoryRepository(db);
 
                 // act
-                var result = await sut.RemoveCategoryFromPost(1, 1);
-                await db.SaveChangesAsync();
+                var result = sut.RemoveCategoryFromPost(1, 1);
+                db.SaveChanges();
 
                 // assert
                 Assert.True(result);
-                Assert.Equal(9, await db.PostCategories.CountAsync());
+                Assert.Equal(9, db.PostCategories.Count());
             }
             finally
             {
@@ -352,27 +351,27 @@ namespace Blogifier.Test.Repositories
                     context.Categories.RemoveRange(_categories);
                     context.BlogPosts.RemoveRange(_blogPosts);
                     context.PostCategories.RemoveRange(_postCategories.Where(pc => pc.Id != 1));
-                    await context.SaveChangesAsync();
+                    context.SaveChanges();
                 }
             }
         }
 
-        private async Task<BlogifierDbContext> SetupMemoryDb(string dbName)
+        private BlogifierDbContext SetupMemoryDb(string dbName)
         {
             var options = new DbContextOptionsBuilder<BlogifierDbContext>()
                 .UseInMemoryDatabase(dbName).Options;
 
             var context = new BlogifierDbContext(options);
 
-            await context.Categories.AddRangeAsync(_categories);
-            await context.BlogPosts.AddRangeAsync(_blogPosts);
-            await context.PostCategories.AddRangeAsync(_postCategories);
-            await context.SaveChangesAsync();
+            context.Categories.AddRange(_categories);
+            context.BlogPosts.AddRange(_blogPosts);
+            context.PostCategories.AddRange(_postCategories);
+            context.SaveChanges();
 
             return context;
         }
 
-        private async Task ClearMemoryDb(string dbName)
+        private void ClearMemoryDb(string dbName)
         {
             var options = new DbContextOptionsBuilder<BlogifierDbContext>()
                .UseInMemoryDatabase(dbName).Options;
@@ -382,7 +381,7 @@ namespace Blogifier.Test.Repositories
                 context.Categories.RemoveRange(_categories);
                 context.BlogPosts.RemoveRange(_blogPosts);
                 context.PostCategories.RemoveRange(_postCategories);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
     }

@@ -33,14 +33,14 @@ namespace Blogifier.Core.Services.Syndication.Rss
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             _model = model;
 
-            if (model == null || string.IsNullOrEmpty(model.FeedUrl))
+            if(model == null || string.IsNullOrEmpty(model.FeedUrl))
             {
                 response.StatusCode = HttpStatusCode.NotFound;
                 response.ReasonPhrase = "RSS feed URL is required";
                 return response;
             }
 
-            var blog = await _db.Profiles.Single(b => b.Id == model.ProfileId);
+            var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
             if (blog == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
@@ -80,8 +80,8 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     {
                         await ImportAttachements(post, storage);
                     }
-                    await _db.BlogPosts.Add(post);
-                    await _db.Complete();
+                    _db.BlogPosts.Add(post);
+                    _db.Complete();
                     _logger.LogInformation(string.Format("RSS item added : {0}", item.Title));
 
                     await AddCategories(item, model.ProfileId);
@@ -89,7 +89,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 response.ReasonPhrase = string.Format("Imported {0} blog posts", items.Count);
                 return response;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _logger.LogError(string.Format("Error importing RSS : {0}", ex.Message));
 
@@ -99,7 +99,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        public async Task<string> Display(string absoluteUri, string author)
+        public string Display(string absoluteUri, string author)
         {
             IEnumerable<PostListItem> pubs;
 
@@ -113,11 +113,11 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
             if (string.IsNullOrEmpty(author))
             {
-                pubs = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
+                pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow, new Pager(1));
             }
             else
             {
-                var profile = await _db.Profiles.Single(p => p.Slug == author);
+                var profile = _db.Profiles.Single(p => p.Slug == author);
                 feed = new Feed()
                 {
                     Title = profile.Title,
@@ -126,12 +126,12 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     Copyright = "(c) " + DateTime.Now.Year
                 };
 
-                pubs = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow && p.Profile.Slug == author, new Pager(1));
+                pubs = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Published < DateTime.UtcNow && p.Profile.Slug == author, new Pager(1));
             }
 
             foreach (var post in pubs)
             {
-                var postDetails = await _db.BlogPosts.Single(p => p.Slug == post.Slug);
+                var postDetails = _db.BlogPosts.Single(p => p.Slug == post.Slug);
 
                 var item = new FeedItem()
                 {
@@ -143,7 +143,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     Author = new Author() { Name = post.AuthorName, Email = post.AuthorEmail }
                 };
 
-                item.Categories = (await _db.Categories.PostCategories(post.BlogPostId)).Select(c => c.Text).ToList();
+                item.Categories = _db.Categories.PostCategories(post.BlogPostId).Select(c => c.Text).ToList();
                 item.Comments = new Uri(absoluteUri + "/blog/" + post.Slug);
                 feed.Items.Add(item);
             }
@@ -170,15 +170,15 @@ namespace Blogifier.Core.Services.Syndication.Rss
             var ns = XNamespace.Get(@"http://purl.org/rss/1.0/modules/content/");
             var entries = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel")
                 .Elements().Where(i => i.Name.LocalName == "item")
-                          select new FeedItem
-                          {
-                              Description = item.Element("description").Value,
-                              Body = item.Element(ns + "encoded") == null ? "" : item.Element(ns + "encoded").Value,
-                              Link = new Uri(item.Element("link").Value),
-                              PublishDate = SystemClock.RssPubishedToDateTime(item.Element("pubDate").Value),
-                              Title = item.Element("title").Value,
-                              Categories = (from category in item.Elements("category") select category.Value).ToList()
-                          };
+                select new FeedItem
+                {
+                    Description = item.Element("description").Value,
+                    Body = item.Element(ns + "encoded") == null ? "" : item.Element(ns + "encoded").Value,
+                    Link = new Uri(item.Element("link").Value),
+                    PublishDate = SystemClock.RssPubishedToDateTime(item.Element("pubDate").Value),
+                    Title = item.Element("title").Value,
+                    Categories = (from category in item.Elements("category") select category.Value).ToList()
+                };
             return entries.ToList();
         }
 
@@ -254,7 +254,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                     try
                     {
                         uri = ValidateUrl(item);
-
+                        
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
                         Asset asset;
@@ -270,13 +270,13 @@ namespace Blogifier.Core.Services.Syndication.Rss
                         asset.ProfileId = post.ProfileId;
                         asset.LastUpdated = SystemClock.Now();
 
-                        if (isAttachement)
+                        if(isAttachement)
                             asset.AssetType = AssetType.Attachment;
 
                         post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
 
-                        await _db.Assets.Add(asset);
-                        await _db.Complete();
+                        _db.Assets.Add(asset);
+                        _db.Complete();
                     }
                     catch (Exception ex)
                     {
@@ -308,7 +308,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
                 foreach (var cat in item.Categories)
                 {
-                    var blogCategory = await _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
+                    var blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     if (blogCategory == null)
                     {
                         var newCat = new Category
@@ -317,14 +317,14 @@ namespace Blogifier.Core.Services.Syndication.Rss
                             Title = cat,
                             Slug = cat.ToSlug()
                         };
-                        await _db.Categories.Add(newCat);
-                        await _db.Complete();
+                        _db.Categories.Add(newCat);
+                        _db.Complete();
 
-                        blogCategory = await _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
+                        blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     }
                     catIds.Add(blogCategory.Id.ToString());
                 }
-                var blogPost = await _db.BlogPosts.Single(p => p.Slug == item.Title.ToSlug());
+                var blogPost = _db.BlogPosts.Single(p => p.Slug == item.Title.ToSlug());
                 await _db.BlogPosts.UpdatePostCategories(blogPost.Id, catIds);
             }
         }

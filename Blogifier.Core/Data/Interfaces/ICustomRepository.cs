@@ -12,6 +12,6 @@ namespace Blogifier.Core.Data.Interfaces
 
         Task<int> SetCustomField(CustomType customType, int parentId, string key, string value);
 
-        Task<string> GetValue(CustomType customType, int parentId, string key);
+        string GetValue(CustomType customType, int parentId, string key);
     }
 }

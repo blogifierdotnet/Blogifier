@@ -3,7 +3,6 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Blogifier.Core.Data.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +28,9 @@ namespace Blogifier.Core.Services.Search
 
             IEnumerable<BlogPost> posts;
             if(string.IsNullOrEmpty(blogSlug))
-                posts = await _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue).ToListAsync();
+                posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue).ToList();
             else
-                posts = await _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue && p.Profile.Slug == blogSlug).ToListAsync();
+                posts = _db.BlogPosts.AllIncluded(p => p.Published > DateTime.MinValue && p.Profile.Slug == blogSlug).ToList();
 
             foreach (var item in posts)
             {

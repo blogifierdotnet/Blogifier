@@ -6,7 +6,6 @@ using Blogifier.Core.Services.FileSystem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -30,9 +29,9 @@ namespace Blogifier.Core.Controllers.Api
 
         // GET: api/assets/2?search=foo&filter=filterImages
         [HttpGet]
-        public async Task<AdminAssetList> Get(string filter, string search = "", int page = 1)
+        public AdminAssetList Get(string filter, string search = "", int page = 1)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             var pager = new Pager(page);
             IEnumerable<Asset> assets;
 
@@ -41,15 +40,15 @@ namespace Blogifier.Core.Controllers.Api
 
             if (filter == "filterImages")
             {
-                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Image, pager);
             }
             else if (filter == "filterAttachments")
             {
-                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term) && a.AssetType == AssetType.Attachment, pager);
             }
             else
             {
-                assets = await _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
+                assets = _db.Assets.Find(a => a.ProfileId == profile.Id && a.Title.Contains(term), pager);
             }
 
             return new AdminAssetList { Assets = assets, Pager = pager };
@@ -59,43 +58,43 @@ namespace Blogifier.Core.Controllers.Api
         [HttpGet("asset/{id:int}")]
         public async Task<Asset> GetSingle(int id)
         {
-            var model = await _db.Assets.Single(a => a.Id == id);
-            return model;
+            var model = _db.Assets.Single(a => a.Id == id);
+            return await Task.Run(() => model);
         }
 
         // GET: api/assets/profilelogo/3
         [HttpGet]
         [Route("{type}/{id:int}")]
-        public async Task<Asset> UpdateProfileImage(string type, int id)
+        public Asset UpdateProfileImage(string type, int id)
         {
-            var asset = await _db.Assets.Single(a => a.Id == id);
+            var asset = _db.Assets.Single(a => a.Id == id);
             type = type.ToLower();
 
             if (!string.IsNullOrEmpty(type))
             {
-                if (type == "applogo")
+                if(type == "applogo")
                 {
                     BlogSettings.Logo = asset.Url;
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileLogo, asset.Url);
                 }
-                else if (type == "appavatar")
+                else if(type == "appavatar")
                 {
                     ApplicationSettings.ProfileAvatar = asset.Url;
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, asset.Url);
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileAvatar, asset.Url);
                 }
                 else if (type == "appimage")
                 {
                     BlogSettings.Cover = asset.Url;
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, asset.Url);
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.ProfileImage, asset.Url);
                 }
                 else if (type == "apppostimage")
                 {
                     BlogSettings.PostCover = asset.Url;
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, asset.Url);
+                    _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostImage, asset.Url);
                 }
                 else
                 {
-                    var profile = await GetProfile();
+                    var profile = GetProfile();
                     if (type == "profilelogo")
                     {
                         profile.Logo = asset.Url;
@@ -107,9 +106,9 @@ namespace Blogifier.Core.Controllers.Api
                     if (type == "profileimage")
                     {
                         profile.Image = asset.Url;
-                    }
+                    }                    
                 }
-                await _db.Complete();
+                _db.Complete();
             }
             return asset;
         }
@@ -117,14 +116,14 @@ namespace Blogifier.Core.Controllers.Api
         // GET: api/assets/postimage/3/5
         [HttpGet]
         [Route("postimage/{assetId:int}/{postId:int}")]
-        public async Task<Asset> UpdatePostImage(string type, int assetId, int postId)
+        public Asset UpdatePostImage(string type, int assetId, int postId)
         {
-            var asset = await _db.Assets.Single(a => a.Id == assetId);
-            if (postId > 0)
+            var asset = _db.Assets.Single(a => a.Id == assetId);
+            if(postId > 0)
             {
-                var post = await _db.BlogPosts.Single(p => p.Id == postId);
+                var post = _db.BlogPosts.Single(p => p.Id == postId);
                 post.Image = asset.Url;
-                await _db.Complete();
+                _db.Complete();
             }
             return asset;
         }
@@ -153,13 +152,13 @@ namespace Blogifier.Core.Controllers.Api
 
         // DELETE api/assets/5
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var asset = await _db.Assets.Single(a => a.Id == id);
+            var asset = _db.Assets.Single(a => a.Id == id);
             if (asset == null)
                 return NotFound();
 
-            var blog = await GetProfile();
+            var blog = GetProfile();
             try
             {
                 var storage = new BlogStorage(blog.Slug);
@@ -171,19 +170,19 @@ namespace Blogifier.Core.Controllers.Api
             }
 
             _db.Assets.Remove(asset);
-            await _db.Complete();
+            _db.Complete();
 
             // reset profile image to default
             // if asset was removed
-            var profiles = await _db.Profiles.Where(p => p.Image == asset.Url || p.Avatar == asset.Url || p.Logo == asset.Url).ToListAsync();
-            if (profiles != null)
+            var profiles = _db.Profiles.Find(p => p.Image == asset.Url || p.Avatar == asset.Url || p.Logo == asset.Url).ToList();
+            if(profiles != null)
             {
                 foreach (var item in profiles)
                 {
                     if (item.Image == asset.Url) item.Image = null;
                     if (item.Avatar == asset.Url) item.Avatar = null;
                     if (item.Logo == asset.Url) item.Logo = null;
-                    await _db.Complete();
+                    _db.Complete();
                 }
             }
             return new NoContentResult();
@@ -191,36 +190,36 @@ namespace Blogifier.Core.Controllers.Api
 
         // DELETE api/assets/profilelogo
         [HttpDelete("{type}")]
-        public async Task<IActionResult> Delete(string type)
+        public IActionResult Delete(string type)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
 
             if (type == "profileAvatar")
                 profile.Avatar = null;
 
-            if (type == "profileLogo")
+            if(type == "profileLogo")
                 profile.Logo = null;
 
             if (type == "profileImage")
                 profile.Image = null;
 
-            await _db.Complete();
+            _db.Complete();
             return new NoContentResult();
         }
 
         // DELETE api/assets/resetpostimage/5
         [HttpDelete("resetpostimage/{id:int}")]
-        public async Task<IActionResult> ResetPostImage(int id)
+        public IActionResult ResetPostImage(int id)
         {
-            var post = await _db.BlogPosts.Single(p => p.Id == id);
+            var post = _db.BlogPosts.Single(p => p.Id == id);
             post.Image = null;
-            await _db.Complete();
+            _db.Complete();
             return Json("admin/editor/" + id);
         }
 
         async Task<Asset> SaveFile(IFormFile file)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             var storage = new BlogStorage(profile.Slug);
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);
 
@@ -228,7 +227,7 @@ namespace Blogifier.Core.Controllers.Api
 
             // sometimes we just want to override uploaded file
             // only add DB record if asset does not exist yet
-            var existingAsset = await _db.Assets.Where(a => a.Path == asset.Path).FirstOrDefaultAsync();
+            var existingAsset = _db.Assets.Find(a => a.Path == asset.Path).FirstOrDefault();
             if (existingAsset == null)
             {
                 asset.ProfileId = profile.Id;
@@ -242,21 +241,21 @@ namespace Blogifier.Core.Controllers.Api
                 {
                     asset.AssetType = AssetType.Attachment;
                 }
-                await _db.Assets.Add(asset);
+                _db.Assets.Add(asset);
             }
             else
             {
                 existingAsset.LastUpdated = SystemClock.Now();
             }
-            await _db.Complete();
+            _db.Complete();
             return asset;
         }
 
-        async Task<Profile> GetProfile()
+        Profile GetProfile()
         {
             try
             {
-                return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             }
             catch
             {

@@ -23,15 +23,15 @@ namespace Blogifier.Core.Controllers.Api
         [Route("setcustomfield")]
         public async Task SetCustomField([FromBody]CustomFieldItem item)
         {
-            var profile = await GetProfile();
+            var profile = GetProfile();
             await _db.CustomFields.SetCustomField(CustomType.Profile, profile.Id, item.CustomKey, item.CustomValue);
         }
 
-        async Task<Profile> GetProfile()
+        Profile GetProfile()
         {
             try
             {
-                return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             }
             catch
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Blogifier.Core.Data.Models
 {
-    public class PostListItem //: IEquatable<PostListItem>
+    public class PostListItem : IEquatable<PostListItem>
     {
         public int BlogPostId { get; set; }
         public string Slug { get; set; }
@@ -22,19 +22,19 @@ namespace Blogifier.Core.Data.Models
         public float Rating { get; set; }
         public bool IsFeatured { get; set; }
 
-        public IEnumerable<string> PostCategories { get; set; }
+        public List<string> PostCategories { get; set; }
 
-        //public bool Equals(PostListItem other)
-        //{
-        //    if (BlogPostId == other.BlogPostId)
-        //        return true;
+        public bool Equals(PostListItem other)
+        {
+            if (BlogPostId == other.BlogPostId)
+                return true;
 
-        //    return false;
-        //}
+            return false;
+        }
 
-        //public override int GetHashCode()
-        //{
-        //    return BlogPostId.GetHashCode();
-        //}
+        public override int GetHashCode()
+        {
+            return BlogPostId.GetHashCode();
+        }
     }
 }

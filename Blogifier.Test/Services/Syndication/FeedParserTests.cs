@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Blogifier.Test.Services.Syndication
@@ -31,7 +30,7 @@ namespace Blogifier.Test.Services.Syndication
         [Theory()]
         [InlineData(@"SeedData\Feeds\BlogEngineRSS.xml")]
         [InlineData(@"SeedData\Feeds\WordPressRSS.xml")]
-        public async Task CanParseRssFeed(string feed)
+        public void CanParseRssFeed(string feed)
         {
             using (var context = new BlogifierDbContext(_options))
             {
@@ -40,38 +39,34 @@ namespace Blogifier.Test.Services.Syndication
 
                 var uow = new UnitOfWork(context);
 
-                var profile = await uow.Profiles.Single(p => p.IdentityName == "test");
+                var profile = uow.Profiles.Single(p => p.IdentityName == "test");
 
                 if(profile == null)
                 {
-                    profile = new Profile
-                    {
-                        IdentityName = "test",
-                        AuthorName = "test",
-                        AuthorEmail = "test@us.com",
-                        Title = "test",
-                        Slug = "test",
-                        Description = "the test",
-                        BlogTheme = "Standard"
-                    };
+                    profile = new Profile();
+                    profile.IdentityName = "test";
+                    profile.AuthorName = "test";
+                    profile.AuthorEmail = "test@us.com";
+                    profile.Title = "test";
+                    profile.Slug = "test";
+                    profile.Description = "the test";
+                    profile.BlogTheme = "Standard";
 
-                    await uow.Profiles.Add(profile);
-                    await uow.Complete();
+                    uow.Profiles.Add(profile);
+                    uow.Complete();
                 }
 
-                Assert.True(await context.Profiles.CountAsync() > 0);
+                Assert.True(context.Profiles.ToList().Count > 0);
 
                 var service = new RssService(uow, null);
 
-                var model = new RssImportModel
-                {
-                    FeedUrl = path,
-                    ProfileId = profile.Id
-                };
+                var model = new RssImportModel();
+                model.FeedUrl = path;
+                model.ProfileId = profile.Id;
 
-                var result = await service.Import(model);
+                var result = service.Import(model);
 
-                Assert.True(await context.BlogPosts.CountAsync() > 1);
+                Assert.True(context.BlogPosts.ToList().Count > 1);
             }
 
             Assert.NotNull(feed);
