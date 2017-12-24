@@ -2,12 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>aspnet-WebApp-369A2B28-7315-4454-AED5-A00184C38B6F</UserSecretsId>
-    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>     
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn />
+    <UserSecretsId>aspnet-WebApp-369A2B28-7315-4454-AED5-A00184C38B6F</UserSecretsId>   
   </PropertyGroup>
 
   <ItemGroup>
