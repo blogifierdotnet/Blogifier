@@ -44,7 +44,7 @@ namespace Blogifier.Core.Common
 
         public async Task<IHtmlContent> AddZoneWidget(IViewComponentHelper helper, string zone, string widget, object arguments = null)
         {
-            if (Disabled() != null && (await Disabled()).Contains(widget))
+            if (await Disabled() != null && (await Disabled()).Contains(widget))
                 return await Task.FromResult(new HtmlString(""));
 
             if (widget != "WidgetZone")

@@ -62,7 +62,7 @@ namespace Blogifier.Controllers
                 return RedirectToAction(nameof(AccountController.Register), "Account");
 
             ViewData["ReturnUrl"] = returnUrl;
-            ViewData["ShowRegistration"] = IsFirstAdminAccount();
+            ViewData["ShowRegistration"] = await IsFirstAdminAccount();
             ViewData["ShowForgotPwd"] = await _emailSender.Enabled();
             return View();
         }

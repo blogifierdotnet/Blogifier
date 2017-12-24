@@ -89,8 +89,7 @@ namespace Blogifier
             {
                 using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;
-                    db.EnsureCreated();
+                    var db = scope.ServiceProvider.GetService<ApplicationDbContext>().Database;                    
                     if (db.GetPendingMigrations() != null)
                     {
                         db.Migrate();
