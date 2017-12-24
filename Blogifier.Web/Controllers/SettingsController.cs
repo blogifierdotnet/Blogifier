@@ -54,13 +54,13 @@ namespace Blogifier.Controllers
 
         [MustBeAdmin]
         [Route("users")]
-        public IActionResult Users(int page = 1)
+        public async Task<IActionResult> Users(int page = 1)
         {
             var profile = GetProfile();
             var pager = new Pager(page);
             var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
-            var model = GetUsersModel();
+            var model = await GetUsersModel();
             model.Blogs = blogs;
             model.Pager = pager;
 
@@ -123,7 +123,7 @@ namespace Blogifier.Controllers
             var pager = new Pager(1);
             var blogs = _db.Profiles.ProfileList(p => p.Id > 0, pager);
 
-            var regModel = GetUsersModel();
+            var regModel = await GetUsersModel();
             regModel.Blogs = blogs;
             regModel.Pager = pager;
 
@@ -135,12 +135,12 @@ namespace Blogifier.Controllers
         [Route("users/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var admin = GetProfile();
+            var admin = await GetProfile();
 
             if (!admin.IsAdmin || admin.Id == id)
                 return NotFound();
 
-            var profile = _db.Profiles.Single(p => p.Id == id);
+            var profile = await _db.Profiles.Single(p => p.Id == id);
 
             _logger.LogInformation(string.Format("Delete blog {0} by {1}", profile.Title, profile.AuthorName));
 
@@ -164,7 +164,7 @@ namespace Blogifier.Controllers
             _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
-            var profileToDelete = _db.Profiles.Single(b => b.Id == id);
+            var profileToDelete = await _db.Profiles.Single(b => b.Id == id);
 
             var storage = new BlogStorage(profileToDelete.Slug);
             storage.DeleteFolder("");
@@ -205,7 +205,7 @@ namespace Blogifier.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var profile = _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+            var profile = await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             var model = new ChangePasswordViewModel { StatusMessage = StatusMessage, Profile = profile };
             return View(_pwdTheme, model);
         }
@@ -215,7 +215,7 @@ namespace Blogifier.Controllers
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            model.Profile = GetProfile();
+            model.Profile = await GetProfile();
 
             if (!ModelState.IsValid)
             {
@@ -245,9 +245,9 @@ namespace Blogifier.Controllers
 
         #region Helpers
 
-        private Profile GetProfile()
+        private async Task<Profile> GetProfile()
         {
-            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
 
         private void AddErrors(IdentityResult result)
@@ -286,9 +286,9 @@ namespace Blogifier.Controllers
             return slug;
         }
 
-        UsersViewModel GetUsersModel()
+        async Task<UsersViewModel> GetUsersModel()
         {
-            var profile = GetProfile();
+            var profile = await GetProfile();
 
             var model = new UsersViewModel
             {

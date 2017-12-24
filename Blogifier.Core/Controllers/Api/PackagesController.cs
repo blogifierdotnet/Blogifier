@@ -68,11 +68,11 @@ namespace Blogifier.Core.Controllers.Api
             return string.IsNullOrEmpty(field) ? null : field.Split(',').ToList();
         }
 
-        Profile GetProfile()
+        async Task<Profile> GetProfile()
         {
             try
             {
-                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             }
             catch
             {

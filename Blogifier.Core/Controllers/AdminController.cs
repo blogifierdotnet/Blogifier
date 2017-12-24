@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
@@ -34,9 +35,9 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("files")]
-        public IActionResult Files(string search = "")
+        public async Task<IActionResult> Files(string search = "")
         {
-            return View(_theme + "Files.cshtml", new AdminBaseModel { Profile = GetProfile() });
+            return View(_theme + "Files.cshtml", new AdminBaseModel { Profile = await GetProfile() });
         }
 
         [Route("setup")]
@@ -48,7 +49,7 @@ namespace Blogifier.Core.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("setup")]
-        public IActionResult Setup(AdminSetupModel model)
+        public async Task<IActionResult> Setup(AdminSetupModel model)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +65,7 @@ namespace Blogifier.Core.Controllers
                 profile.Description = model.Description;
 
                 profile.IdentityName = User.Identity.Name;
-                profile.Slug = SlugFromTitle(profile.AuthorName);
+                profile.Slug = await SlugFromTitle(profile.AuthorName);
                 profile.Avatar = ApplicationSettings.ProfileAvatar;
                 profile.BlogTheme = BlogSettings.Theme;
 
@@ -78,19 +79,19 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Setup.cshtml", model);
         }
 
-        private Profile GetProfile()
+        private async Task<Profile> GetProfile()
         {
-            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
 
-        string SlugFromTitle(string title)
+        async Task<string> SlugFromTitle(string title)
         {
             var slug = title.ToSlug();
-            if (_db.Profiles.Single(b => b.Slug == slug) != null)
+            if (await _db.Profiles.Single(b => b.Slug == slug) != null)
             {
                 for (int i = 2; i < 100; i++)
                 {
-                    if (_db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
+                    if (await _db.Profiles.Single(b => b.Slug == slug + i.ToString()) == null)
                     {
                         return slug + i.ToString();
                     }

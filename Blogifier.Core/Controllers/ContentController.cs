@@ -32,7 +32,7 @@ namespace Blogifier.Core.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1, string user = "0", string status = "A", string cats = "", string search = "")
 		{
-            var profile = GetProfile();
+            var profile = await GetProfile();
            
             var fields = await _db.CustomFields.GetCustomFields(CustomType.Profile, profile.Id);
             var pageSize = BlogSettings.ItemsPerPage;
@@ -50,7 +50,7 @@ namespace Blogifier.Core.Controllers
 
             var userProfile = model.Profile;
             if (user != "0" && profile.IsAdmin)
-                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+                userProfile = await _db.Profiles.Single(p => p.Id == int.Parse(user));
 
             model.StatusFilter = GetStatusFilter(status);
 
@@ -88,14 +88,14 @@ namespace Blogifier.Core.Controllers
 
         [VerifyProfile]
         [Route("editor/{id:int}")]
-        public IActionResult Editor(int id, string user = "0")
+        public async Task<IActionResult> Editor(int id, string user = "0")
         {
-            var profile = GetProfile();
+            var profile = await GetProfile();
             var userProfile = profile;
 
             if (user != "0")
             {
-                userProfile = _db.Profiles.Single(p => p.Id == int.Parse(user));
+                userProfile = await _db.Profiles.Single(p => p.Id == int.Parse(user));
             }
 
             var post = new BlogPost();
@@ -109,7 +109,7 @@ namespace Blogifier.Core.Controllers
                 }
                 else
                 {
-                    post = _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id).Result;
+                    post = await _db.BlogPosts.SingleIncluded(p => p.Id == id && p.Profile.Id == profile.Id);
                 }
             }
 
@@ -131,9 +131,9 @@ namespace Blogifier.Core.Controllers
             return View(_theme + "Editor.cshtml", model);
         }
 
-        private Profile GetProfile()
+        private async Task<Profile> GetProfile()
         {
-            return _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            return await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
         }
 
         List<SelectListItem> GetStatusFilter(string filter)

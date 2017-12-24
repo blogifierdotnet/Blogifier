@@ -2,6 +2,7 @@
 using Blogifier.Core.Services.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers.Api.Public
 {
@@ -25,17 +26,17 @@ namespace Blogifier.Core.Controllers.Api.Public
         // GET blogifier/api/public/posts/author/filip-stanek
         // GET blogifier/api/public/posts/author/filip-stanek?page=2
         [HttpGet("[action]/{slug}")]
-        public BlogAuthorModel Author(string slug, int page = 1)
+        public async Task<BlogAuthorModel> Author(string slug, int page = 1)
         {
-            return _ds.GetPostsByAuthor(slug, page, true);
+            return await _ds.GetPostsByAuthor(slug, page, true);
         }
 
         // GET blogifier/api/public/posts/author/category/mobile
         // GET blogifier/api/public/posts/author/category/mobile?page=2
         [HttpGet("[action]/{auth}/{cat}")]
-        public BlogCategoryModel Category(string auth, string cat, int page = 1)
+        public async Task<BlogCategoryModel> Category(string auth, string cat, int page = 1)
         {
-            return _ds.GetPostsByCategory(auth, cat, page, true);
+            return await _ds.GetPostsByCategory(auth, cat, page, true);
         }
 
         // GET blogifier/api/public/posts/search/dot%20net
@@ -48,9 +49,9 @@ namespace Blogifier.Core.Controllers.Api.Public
 
         // GET blogifier/api/public/posts/post/running-local-web-pages-in-cefsharpwpf
         [HttpGet("[action]/{slug}")]
-        public BlogPostDetailModel Post(string slug)
+        public async Task<BlogPostDetailModel> Post(string slug)
         {
-            return _ds.GetPostBySlug(slug, true);
+            return await _ds.GetPostBySlug(slug, true);
         }
     }
 }

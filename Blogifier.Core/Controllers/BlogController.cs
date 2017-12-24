@@ -3,6 +3,7 @@ using Blogifier.Core.Services.Data;
 using Blogifier.Core.Services.Syndication.Rss;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Controllers
 {
@@ -31,9 +32,9 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("{slug:author}")]
-        public IActionResult PostsByAuthor(string slug, int page = 1)
+        public async Task<IActionResult> PostsByAuthor(string slug, int page = 1)
         {
-            var model = _ds.GetPostsByAuthor(slug, page);
+            var model = await _ds.GetPostsByAuthor(slug, page);
             if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
@@ -41,9 +42,9 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("category/{cat}")]
-        public IActionResult AllPostsByCategory(string cat, int page = 1)
+        public async Task<IActionResult> AllPostsByCategory(string cat, int page = 1)
         {
-            var model = _ds.GetAllPostsByCategory(cat, page);
+            var model = await _ds.GetAllPostsByCategory(cat, page);
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
@@ -51,9 +52,9 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("{slug:author}/{cat}")]
-        public IActionResult PostsByCategory(string slug, string cat, int page = 1)
+        public async Task<IActionResult> PostsByCategory(string slug, string cat, int page = 1)
         {
-            var model = _ds.GetPostsByCategory(slug, cat, page);
+            var model = await _ds.GetPostsByCategory(slug, cat, page);
             if(model == null)
                 return View(_theme + "Error.cshtml", 404);
 
@@ -61,9 +62,9 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("{slug}")]
-        public IActionResult SinglePublication(string slug)
+        public async Task<IActionResult> SinglePublication(string slug)
         {
-            var model = _ds.GetPostBySlug(slug);
+            var model = await _ds.GetPostBySlug(slug);
             if (model == null)
                 return View(_theme + "Error.cshtml", 404);
 
@@ -92,7 +93,7 @@ namespace Blogifier.Core.Controllers
         }
 
         [Route("rss/{slug:author?}")]
-        public IActionResult Rss(string slug)
+        public async Task<IActionResult> Rss(string slug)
         {
             var absoluteUri = string.Concat(
                 Request.Scheme, "://",
@@ -101,7 +102,7 @@ namespace Blogifier.Core.Controllers
 
             var x = slug;
 
-            var rss = _rss.Display(absoluteUri, slug);
+            var rss = await _rss.Display(absoluteUri, slug);
             return Content(rss, "text/xml");
         }
 

@@ -31,7 +31,7 @@ namespace Blogifier
         public void ConfigureServices(IServiceCollection services)
         {
             System.Action<DbContextOptionsBuilder> databaseOptions = options => 
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddDbContext<ApplicationDbContext>(databaseOptions);
 

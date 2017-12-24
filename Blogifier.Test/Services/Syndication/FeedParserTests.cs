@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Blogifier.Test.Services.Syndication
@@ -30,7 +31,7 @@ namespace Blogifier.Test.Services.Syndication
         [Theory()]
         [InlineData(@"SeedData\Feeds\BlogEngineRSS.xml")]
         [InlineData(@"SeedData\Feeds\WordPressRSS.xml")]
-        public void CanParseRssFeed(string feed)
+        public async Task CanParseRssFeed(string feed)
         {
             using (var context = new BlogifierDbContext(_options))
             {
@@ -39,7 +40,7 @@ namespace Blogifier.Test.Services.Syndication
 
                 var uow = new UnitOfWork(context);
 
-                var profile = uow.Profiles.Single(p => p.IdentityName == "test");
+                var profile = await uow.Profiles.Single(p => p.IdentityName == "test");
 
                 if(profile == null)
                 {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data.Repositories
 {
@@ -26,9 +27,9 @@ namespace Blogifier.Core.Data.Repositories
             return _entities.Where(predicate);
         }
 
-        public TEntity Single(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> Single(Expression<Func<TEntity, bool>> predicate)
         {
-            return _entities.SingleOrDefault(predicate);
+            return await _entities.SingleOrDefaultAsync(predicate);
         }
 
         public void Add(TEntity entity)

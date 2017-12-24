@@ -31,7 +31,7 @@ namespace Blogifier.Core.Controllers.Api
         [Route("rssimport")]
         public async Task<HttpResponseMessage> RssImport([FromBody]RssImportModel rss)
         {
-            var profile = GetProfile();
+            var profile = await GetProfile();
             rss.ProfileId = profile.Id;
             rss.Root = Url.Content("~/");
             
@@ -40,9 +40,9 @@ namespace Blogifier.Core.Controllers.Api
 
         [HttpDelete("{id}")]
         [Route("deleteblog/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var profile = GetProfile();
+            var profile = await GetProfile();
 
             if (!profile.IsAdmin || profile.Id == id)
                 return NotFound();
@@ -69,7 +69,7 @@ namespace Blogifier.Core.Controllers.Api
             _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
-            var profileToDelete = _db.Profiles.Single(b => b.Id == id);
+            var profileToDelete = await _db.Profiles.Single(b => b.Id == id);
 
             var storage = new BlogStorage(profileToDelete.Slug);
             storage.DeleteFolder("");
@@ -82,11 +82,11 @@ namespace Blogifier.Core.Controllers.Api
             return new NoContentResult();
         }
 
-        Profile GetProfile()
+        async Task<Profile> GetProfile()
         {
             try
             {
-                return _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
+                return await _db.Profiles.Single(p => p.IdentityName == User.Identity.Name);
             }
             catch
             {

@@ -40,7 +40,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                 return response;
             }
 
-            var blog = _db.Profiles.Single(b => b.Id == model.ProfileId);
+            var blog = await _db.Profiles.Single(b => b.Id == model.ProfileId);
             if (blog == null)
             {
                 response.StatusCode = HttpStatusCode.NotFound;
@@ -99,7 +99,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
         }
 
-        public string Display(string absoluteUri, string author)
+        public async Task<string> Display(string absoluteUri, string author)
         {
             IEnumerable<PostListItem> pubs;
 
@@ -117,7 +117,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
             }
             else
             {
-                var profile = _db.Profiles.Single(p => p.Slug == author);
+                var profile = await _db.Profiles.Single(p => p.Slug == author);
                 feed = new Feed()
                 {
                     Title = profile.Title,
@@ -131,7 +131,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
             foreach (var post in pubs)
             {
-                var postDetails = _db.BlogPosts.Single(p => p.Slug == post.Slug);
+                var postDetails = await _db.BlogPosts.Single(p => p.Slug == post.Slug);
 
                 var item = new FeedItem()
                 {
@@ -308,7 +308,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
 
                 foreach (var cat in item.Categories)
                 {
-                    var blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
+                    var blogCategory = await _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     if (blogCategory == null)
                     {
                         var newCat = new Category
@@ -320,7 +320,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                         _db.Categories.Add(newCat);
                         _db.Complete();
 
-                        blogCategory = _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
+                        blogCategory = await _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     }
                     catIds.Add(blogCategory.Id.ToString());
                 }

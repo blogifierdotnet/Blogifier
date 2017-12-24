@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -23,9 +24,9 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpGet("settings")]
-        public IActionResult Settings(int page = 1, string search = "")
+        public async Task<IActionResult> Settings(int page = 1, string search = "")
         {
-            var profile = _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
+            var profile = await _db.Profiles.Single(b => b.IdentityName == User.Identity.Name);
             var pager = new Pager(page);
 
             IEnumerable<Subscriber> emails;
