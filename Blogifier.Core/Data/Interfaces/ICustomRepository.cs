@@ -10,7 +10,7 @@ namespace Blogifier.Core.Data.Interfaces
         Task<Dictionary<string, string>> GetBlogFields();
         Task<Dictionary<string, string>> GetUserFields(int profileId);
 
-        Task SetCustomField(CustomType customType, int parentId, string key, string value);
+        Task<int> SetCustomField(CustomType customType, int parentId, string key, string value);
 
         string GetValue(CustomType customType, int parentId, string key);
     }
