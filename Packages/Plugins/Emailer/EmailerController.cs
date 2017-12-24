@@ -60,14 +60,14 @@ namespace Newsletter
         [Authorize]
         [MustBeAdmin]
         [HttpPut("remove/{id}")]
-        public void Remove(string id)
+        public async Task Remove(string id)
         {
             var existing = _db.Subscribers.Find(s => s.Email == id).FirstOrDefault();
 
             if (existing != null)
             {
                 _db.Subscribers.Remove(existing);
-                _db.Complete();
+                await _db.Complete();
             }
         }
     }

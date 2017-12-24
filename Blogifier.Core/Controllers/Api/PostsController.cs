@@ -112,13 +112,13 @@ namespace Blogifier.Core.Controllers.Api
                     bp.Published = SystemClock.Now();
                 }
             }
-            _db.Complete();
+            await _db.Complete();
 
             if (model.Categories != null)
             {
                 await _db.BlogPosts.UpdatePostCategories(
                     bp.Id, model.Categories.Select(c => c.Value).ToList());
-                _db.Complete();
+                await _db.Complete();
             }
             var callback = new { Id = bp.Id, Slug = bp.Slug, Published = bp.Published, Image = bp.Image };
             return new CreatedResult("blogifier/api/posts/" + bp.Id, callback);
@@ -132,7 +132,7 @@ namespace Blogifier.Core.Controllers.Api
                 return NotFound();
 
             post.Published = SystemClock.Now();
-            _db.Complete();
+            await _db.Complete();
 
             await Notify(post.Title, post.Description);
 
@@ -147,7 +147,7 @@ namespace Blogifier.Core.Controllers.Api
                 return NotFound();
 
             post.Published = DateTime.MinValue;
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 
@@ -167,7 +167,7 @@ namespace Blogifier.Core.Controllers.Api
             else
                 post.IsFeatured = false;
 
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 
@@ -179,7 +179,7 @@ namespace Blogifier.Core.Controllers.Api
                 return NotFound();
 
             _db.BlogPosts.Remove(post);
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 

@@ -150,7 +150,7 @@ namespace Blogifier.Controllers
                     profile.LastUpdated = Core.Common.SystemClock.Now();
 
                     _db.Profiles.Add(profile);
-                    _db.Complete();
+                    await _db.Complete();
 
                     _logger.LogInformation(string.Format("Created a new profile at /{0}", profile.Slug));
 

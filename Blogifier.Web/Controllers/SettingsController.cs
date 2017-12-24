@@ -104,7 +104,7 @@ namespace Blogifier.Controllers
                     profile.LastUpdated = SystemClock.Now();
 
                     _db.Profiles.Add(profile);
-                    _db.Complete();
+                    await _db.Complete();
 
                     _logger.LogInformation(string.Format("Created a new profile at /{0}", profile.Slug));
 
@@ -146,22 +146,22 @@ namespace Blogifier.Controllers
 
             var assets = _db.Assets.Find(a => a.ProfileId == id);
             _db.Assets.RemoveRange(assets);
-            _db.Complete();
+            await _db.Complete();
             _logger.LogInformation("Assets deleted");
 
             var categories = _db.Categories.Find(c => c.ProfileId == id);
             _db.Categories.RemoveRange(categories);
-            _db.Complete();
+            await _db.Complete();
             _logger.LogInformation("Categories deleted");
 
             var posts = _db.BlogPosts.Find(p => p.ProfileId == id);
             _db.BlogPosts.RemoveRange(posts);
-            _db.Complete();
+            await _db.Complete();
             _logger.LogInformation("Posts deleted");
 
             var fields = _db.CustomFields.Find(f => f.CustomType == CustomType.Profile && f.ParentId == id);
             _db.CustomFields.RemoveRange(fields);
-            _db.Complete();
+            await _db.Complete();
             _logger.LogInformation("Custom fields deleted");
 
             var profileToDelete = await _db.Profiles.Single(b => b.Id == id);
@@ -171,7 +171,7 @@ namespace Blogifier.Controllers
             _logger.LogInformation("Storage deleted");
 
             _db.Profiles.Remove(profileToDelete);
-            _db.Complete();
+            await _db.Complete();
             _logger.LogInformation("Profile deleted");
 
             // remove login

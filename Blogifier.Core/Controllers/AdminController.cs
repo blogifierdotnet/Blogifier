@@ -72,7 +72,7 @@ namespace Blogifier.Core.Controllers
                 profile.LastUpdated = SystemClock.Now();
 
                 _db.Profiles.Add(profile);
-                _db.Complete();
+                await _db.Complete();
 
                 return RedirectToAction("Index");
             }

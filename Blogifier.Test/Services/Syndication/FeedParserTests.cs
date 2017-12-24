@@ -54,7 +54,7 @@ namespace Blogifier.Test.Services.Syndication
                     profile.BlogTheme = "Standard";
 
                     uow.Profiles.Add(profile);
-                    uow.Complete();
+                    await uow.Complete();
                 }
 
                 Assert.True(context.Profiles.ToList().Count > 0);

@@ -108,7 +108,7 @@ namespace Blogifier.Core.Controllers.Api
                         profile.Image = asset.Url;
                     }                    
                 }
-                _db.Complete();
+                await _db.Complete();
             }
             return asset;
         }
@@ -123,7 +123,7 @@ namespace Blogifier.Core.Controllers.Api
             {
                 var post = await _db.BlogPosts.Single(p => p.Id == postId);
                 post.Image = asset.Url;
-                _db.Complete();
+                await _db.Complete();
             }
             return asset;
         }
@@ -170,7 +170,7 @@ namespace Blogifier.Core.Controllers.Api
             }
 
             _db.Assets.Remove(asset);
-            _db.Complete();
+            await _db.Complete();
 
             // reset profile image to default
             // if asset was removed
@@ -182,7 +182,7 @@ namespace Blogifier.Core.Controllers.Api
                     if (item.Image == asset.Url) item.Image = null;
                     if (item.Avatar == asset.Url) item.Avatar = null;
                     if (item.Logo == asset.Url) item.Logo = null;
-                    _db.Complete();
+                    await _db.Complete();
                 }
             }
             return new NoContentResult();
@@ -203,7 +203,7 @@ namespace Blogifier.Core.Controllers.Api
             if (type == "profileImage")
                 profile.Image = null;
 
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 
@@ -213,7 +213,7 @@ namespace Blogifier.Core.Controllers.Api
         {
             var post = await _db.BlogPosts.Single(p => p.Id == id);
             post.Image = null;
-            _db.Complete();
+            await _db.Complete();
             return Json("admin/editor/" + id);
         }
 
@@ -247,7 +247,7 @@ namespace Blogifier.Core.Controllers.Api
             {
                 existingAsset.LastUpdated = SystemClock.Now();
             }
-            _db.Complete();
+            await _db.Complete();
             return asset;
         }
 

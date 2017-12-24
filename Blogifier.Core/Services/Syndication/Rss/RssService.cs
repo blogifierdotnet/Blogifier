@@ -81,7 +81,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                         await ImportAttachements(post, storage);
                     }
                     _db.BlogPosts.Add(post);
-                    _db.Complete();
+                    await _db.Complete();
                     _logger.LogInformation(string.Format("RSS item added : {0}", item.Title));
 
                     await AddCategories(item, model.ProfileId);
@@ -276,7 +276,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                         post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
 
                         _db.Assets.Add(asset);
-                        _db.Complete();
+                        await _db.Complete();
                     }
                     catch (Exception ex)
                     {
@@ -318,7 +318,7 @@ namespace Blogifier.Core.Services.Syndication.Rss
                             Slug = cat.ToSlug()
                         };
                         _db.Categories.Add(newCat);
-                        _db.Complete();
+                        await _db.Complete();
 
                         blogCategory = await _db.Categories.Single(c => c.Title == cat && c.ProfileId == blogId);
                     }

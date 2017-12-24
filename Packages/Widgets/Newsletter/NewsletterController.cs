@@ -3,6 +3,7 @@ using Blogifier.Core.Data.Domain;
 using Blogifier.Core.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Newsletter
 {
@@ -17,7 +18,7 @@ namespace Newsletter
         }
 
         [HttpPut("subscribe")]
-        public int Subscribe([FromBody]Subscriber item)
+        public async Task<int> Subscribe([FromBody]Subscriber item)
         {
             item.Created = SystemClock.Now();
             item.LastUpdated = SystemClock.Now();
@@ -36,7 +37,7 @@ namespace Newsletter
                 item.Active = true;
             }
 
-            return _db.Complete();
+            return await _db.Complete();
         }
     }
 }

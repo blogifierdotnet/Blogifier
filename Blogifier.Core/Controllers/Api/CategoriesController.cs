@@ -76,7 +76,7 @@ namespace Blogifier.Core.Controllers.Api
                     LastUpdated = SystemClock.Now()
                 };
                 _db.Categories.Add(newCategory);
-                _db.Complete();
+                await _db.Complete();
                 existing = await _db.Categories.Single(c => c.Title == model.Title && c.ProfileId == profile.Id);
             }
             var callback = new { existing.Id, existing.Title };
@@ -99,19 +99,19 @@ namespace Blogifier.Core.Controllers.Api
                     LastUpdated = SystemClock.Now()
                 };
                 _db.Categories.Add(newCategory);
-                _db.Complete();
+                await _db.Complete();
 
                 existing = await _db.Categories.Single(c => c.Title == model.Title);
             }
             _db.Categories.AddCategoryToPost(int.Parse(model.PostId), existing.Id);
-            _db.Complete();
+            await _db.Complete();
         }
 
         [HttpPut("removecategoryfrompost")]
-        public void RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
+        public async Task RemoveCategoryFromPost([FromBody]AdminCategoryModel model)
         {
             _db.Categories.RemoveCategoryFromPost(int.Parse(model.PostId), int.Parse(model.CategoryId));
-            _db.Complete();
+            await _db.Complete();
         }
 
         [HttpPut]
@@ -130,7 +130,7 @@ namespace Blogifier.Core.Controllers.Api
                     existing.Title = category.Title;
                     existing.Description = string.IsNullOrEmpty(category.Description) ? category.Title : category.Description;
                     existing.LastUpdated = SystemClock.Now();
-                    _db.Complete();
+                    await _db.Complete();
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Blogifier.Core.Controllers.Api
                         LastUpdated = SystemClock.Now()
                     };
                     _db.Categories.Add(newCategory);
-                    _db.Complete();
+                    await _db.Complete();
                 }
             }
             return new NoContentResult();
@@ -157,7 +157,7 @@ namespace Blogifier.Core.Controllers.Api
                 return NotFound();
 
             _db.Categories.Remove(category);
-            _db.Complete();
+            await _db.Complete();
             return new NoContentResult();
         }
 
@@ -173,7 +173,7 @@ namespace Blogifier.Core.Controllers.Api
                     var blogPost = await _db.BlogPosts.Single(p => p.Id == pc.BlogPostId);
                     vCount += blogPost.PostViews;
                 }
-                _db.Complete();
+                await _db.Complete();
             }
             return new CategoryItem
             {

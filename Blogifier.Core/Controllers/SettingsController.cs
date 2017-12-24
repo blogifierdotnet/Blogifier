@@ -79,7 +79,7 @@ namespace Blogifier.Core.Controllers
                     profile.AuthorEmail = model.AuthorEmail;
                     profile.Avatar = model.Avatar;
                 }
-                _db.Complete();
+                await _db.Complete();
 
                 model.Profile = await GetProfile();
 
@@ -156,7 +156,7 @@ namespace Blogifier.Core.Controllers
 
                 model.Profile.BlogTheme = model.BlogTheme;
 
-                _db.Complete();
+                await _db.Complete();
 
                 ViewBag.Message = "Updated";
             }
@@ -196,7 +196,7 @@ namespace Blogifier.Core.Controllers
 
                 await _db.CustomFields.SetCustomField(CustomType.Application, 0, Constants.PostCode, model.PostFooter);
 
-                _db.Complete();
+                await _db.Complete();
 
                 ViewBag.Message = "Updated";
             }
