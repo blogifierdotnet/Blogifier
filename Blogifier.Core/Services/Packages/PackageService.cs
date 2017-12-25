@@ -31,12 +31,34 @@ namespace Blogifier.Core.Services.Packages
         public Task<List<PackageListItem>> Find(PackageType packageType)
         {
             var items = Packages().Where(p => p.PkgType == packageType).ToList();
+
+            if(packageType == PackageType.Themes)
+            {
+                foreach (var theme in BlogSettings.BlogThemes)
+                {
+                    if(items.Find(p => p.Title == theme.Text) == null)
+                    {
+                        var item = new PackageListItem
+                        {
+                            Title = theme.Text,
+                            Description = theme.Text
+                        };
+
+                        items.Add(item);
+                    }
+                }
+            }
+
             return Task.FromResult(items);
         }
 
         public Task<PackageListItem> Single(string id)
         {
             var item = Packages().Where(p => p.Title == id).FirstOrDefault();
+
+            if (item == null)
+                item = new PackageListItem { Title = id, Description = id };
+
             return Task.FromResult(item);
         }
 
@@ -98,15 +120,6 @@ namespace Blogifier.Core.Services.Packages
 
                         item.HasSettings = view.Success;
                         item.Enabled = disabled == null || !disabled.Contains(name);
-
-                        if (item.Icon == null)
-                            item.Icon = Constants.PkgIcon;
-
-                        if (item.Cover == null)
-                            item.Cover = BlogSettings.Cover;
-
-                        if (item.Author == null)
-                            item.Author = "Unknown";
 
                         pkgs.Add(item);
                     }

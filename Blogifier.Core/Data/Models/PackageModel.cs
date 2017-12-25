@@ -28,9 +28,9 @@ namespace Blogifier.Core.Data.Models
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Icon { get; set; }
-        public string Cover { get; set; }
-        public string Author { get; set; }
+        public string Icon { get; set; } = Constants.PkgIcon;
+        public string Cover { get; set; } = BlogSettings.Cover;
+        public string Author { get; set; } = "Unknown";
         public string ProjectUrl { get; set; }
         public string Tags { get; set; }
 
@@ -38,8 +38,8 @@ namespace Blogifier.Core.Data.Models
         public int Downloads { get; set; }
         public double Rating { get; set; }
 
-        public string Version { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public string Version { get; set; } = "1.0.0";
+        public DateTime LastUpdated { get; set; } = SystemClock.Now();
         public bool HasSettings { get; set; }
         public bool Enabled { get; set; }
     }
