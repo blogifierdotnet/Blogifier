@@ -52,6 +52,11 @@ var packagesController = function (dataService) {
         dataService.put("blogifier/api/packages/removewidget/" + zone + "/" + widget, obj, doneAndReload, fail);
     }
 
+    function moveUp(zone, widget) {
+        var obj = {};
+        dataService.put("blogifier/api/packages/moveup/" + zone + "/" + widget, obj, doneAndReload, fail);
+    }
+
     function doneAndReload(data) {
         toastr.success('Updated');
         setTimeout(function () {
@@ -64,6 +69,7 @@ var packagesController = function (dataService) {
         disable: disable,
         showInfo: showInfo,
         addWidget: addWidget,
-        removeWidget: removeWidget
+        removeWidget: removeWidget,
+        moveUp: moveUp
     }
 }(DataService);

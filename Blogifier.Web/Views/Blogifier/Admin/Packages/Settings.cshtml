@@ -22,8 +22,8 @@
                 <div class="form-control">@widget</div>
                 <span class="input-group-btn">
                     <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-                    <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-                    <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+                    @*<button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+                    <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>*@
                 </span>
             </div>
         }
@@ -49,8 +49,9 @@
                     <div class="form-control">@widget</div>
                     <span class="input-group-btn">
                         <button class="btn btn-outline-default" type="button" data-toggle="modal" data-target="#CustomizeWidgetModal">Customize</button>
-                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
-                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>
+                        @*<button class="btn btn-outline-default btn-icon" type="button" title="click to Enable" data-tooltip><i class="fa fa-play"></i></button>
+                        <button class="btn btn-outline-default btn-icon" type="button" title="click to Disable" data-tooltip><i class="fa fa-pause"></i></button>*@
+                        <button class="btn btn-outline-default btn-icon" type="button" title="click to move up" onclick="return packagesController.moveUp('@zone.Zone', '@widget')" data-tooltip><i class="fa fa-arrow-up"></i></button>
                         <button class="btn btn-outline-default btn-icon" type="button" title="click to Delete" onclick="return packagesController.removeWidget('@zone.Zone', '@widget')" data-tooltip><i class="fa fa-trash"></i></button>
                     </span>
                 </div>

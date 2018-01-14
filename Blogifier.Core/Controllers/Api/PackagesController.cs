@@ -82,6 +82,12 @@ namespace Blogifier.Core.Controllers.Api
             return Ok();
         }
 
+        [HttpPut("moveup/{zone}/{widget}")]
+        public IActionResult MoveUp(string zone, string widget)
+        {
+            return Ok();
+        }
+
         List<string> Disabled()
         {
             var field = _db.CustomFields.GetValue(CustomType.Application, 0, Constants.DisabledPackages);
