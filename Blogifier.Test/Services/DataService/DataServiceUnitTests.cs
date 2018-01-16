@@ -50,7 +50,7 @@ namespace Blogifier.Test.Services.DataService
             var result = sut.GetPosts(1);
 
             // assert
-            Assert.Equal(result.Posts.Count(), 1);
+            Assert.Single(result.Posts);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Blogifier.Test.Services.DataService
             var result = sut.GetPostsByAuthor("joe", 1);
 
             // assert
-            Assert.Equal(result.Posts.Count(), 1);
+            Assert.Single(result.Posts);
         }
 
         [Fact]
@@ -119,12 +119,12 @@ namespace Blogifier.Test.Services.DataService
             var result = sut.GetPostsByAuthor("joe", 1);
 
             // assert
-            Assert.Equal(result.Profile.Id, 1);
-            Assert.Equal(result.Profile.AuthorName, "Joe");
-            Assert.Equal(result.Profile.AuthorEmail, "test@test.com");
-            Assert.Equal(result.Posts.First().AuthorName, "Joe");
-            Assert.Equal(result.Posts.First().Title, "dotnet core");
-            Assert.Equal(result.Posts.First().AuthorEmail, "test@test.com");
+            Assert.Equal(1, result.Profile.Id);
+            Assert.Equal("Joe", result.Profile.AuthorName);
+            Assert.Equal("test@test.com", result.Profile.AuthorEmail);
+            Assert.Equal("Joe", result.Posts.First().AuthorName);
+            Assert.Equal("dotnet core", result.Posts.First().Title);
+            Assert.Equal("test@test.com", result.Posts.First().AuthorEmail);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace Blogifier.Test.Services.DataService
             var result = sut.SearchPosts("dotnet", 1, true);
 
             // assert
-            Assert.Equal(result.Posts.Count(), 1);
+            Assert.Single(result.Posts);
         }
 
         [Fact]
@@ -343,7 +343,7 @@ namespace Blogifier.Test.Services.DataService
             // assert
             Assert.Equal("", result.Profile.AuthorEmail);
             Assert.Equal("", result.Profile.IdentityName);
-            Assert.Equal(false, result.Profile.IsAdmin);
+            Assert.False(result.Profile.IsAdmin);
             Assert.Null(result.Profile.BlogPosts);
             Assert.Null(result.Profile.Assets);
         }

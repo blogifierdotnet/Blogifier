@@ -20,7 +20,7 @@ namespace Blogifier.Tests.Services.FileSystem
         public void VerifyStorageLocation()
         {
             var path = string.Format("WebApp{0}wwwroot{0}blogifier{0}data{0}test", _separator);
-            Assert.True(_storage.Location.EndsWith(path));
+            Assert.EndsWith(path, _storage.Location);
         }
 
         [Fact]
@@ -58,12 +58,12 @@ namespace Blogifier.Tests.Services.FileSystem
         public async Task CanCreateDeleteFiles()
         {
             var result = await _storage.UploadFromWeb(_imgUri, "/");
-            Assert.True(result.Url.EndsWith("Picasa.png", StringComparison.OrdinalIgnoreCase));
+            Assert.EndsWith("Picasa.png", result.Url, StringComparison.OrdinalIgnoreCase);
             _storage.DeleteFile("Picasa.png");
 
             _storage.CreateFolder("foo");
             result = await _storage.UploadFromWeb(_imgUri, "/", "foo");
-            Assert.True(result.Url.EndsWith("foo/Picasa.png", StringComparison.OrdinalIgnoreCase));
+            Assert.EndsWith("foo/Picasa.png", result.Url, StringComparison.OrdinalIgnoreCase);
 
             _storage.DeleteFolder("foo");
             var assets = _storage.GetAssets("");
@@ -78,11 +78,11 @@ namespace Blogifier.Tests.Services.FileSystem
 
             var result = _storage.GetAssets("");
             Assert.True(result.Count > 0);
-            Assert.True(result[0].EndsWith(string.Format("{0}foo", _separator)));
+            Assert.EndsWith(string.Format("{0}foo", _separator), result[0]);
 
             result = _storage.GetAssets("foo");
             Assert.True(result.Count > 0);
-            Assert.True(result[0].EndsWith(string.Format("{0}foo{0}Picasa.png", _separator), StringComparison.OrdinalIgnoreCase));
+            Assert.EndsWith(string.Format("{0}foo{0}Picasa.png", _separator), result[0], StringComparison.OrdinalIgnoreCase);
 
             _storage.DeleteFolder("foo");
         }

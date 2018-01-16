@@ -22,8 +22,8 @@ namespace Blogifier.Test.Extensions
         public void ReplacePasswordFromConnectionString(string conn)
         {
             var result = conn.MaskPassword();
-            Assert.False(result.Contains("One@pass99"));
-            Assert.True(result.Contains("Password=******"));
+            Assert.DoesNotContain("One@pass99", result);
+            Assert.Contains("Password=******", result);
         }
     }
 }

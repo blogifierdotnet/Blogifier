@@ -40,7 +40,7 @@ namespace Blogifier.Test.Repositories
             ClearMemoryDb(dbName);
 
             // assert
-            Assert.Equal(0, result.Count());
+            Assert.Empty(result);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Blogifier.Test.Repositories
             ClearMemoryDb(dbName);
 
             // assert
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
         }
 
         private BlogifierDbContext GetMemoryDb(string dbName)
