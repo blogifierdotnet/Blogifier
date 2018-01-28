@@ -23,11 +23,11 @@ namespace Blogifier.Core.Data.Repositories
 
             if(parentId == 0)
             {
-                dbFields = _db.CustomFields.Where(f => f.CustomType == customType).OrderBy(f => f.Title);
+                dbFields = _db.CustomFields.Where(f => f.CustomType == customType).OrderBy(f => f.CustomKey);
             }
             else
             {
-                dbFields = _db.CustomFields.Where(f => f.CustomType == customType && f.ParentId == parentId).OrderBy(f => f.Title);
+                dbFields = _db.CustomFields.Where(f => f.CustomType == customType && f.ParentId == parentId).OrderBy(f => f.CustomKey);
             }
 
             return Task.Run(() => Load(dbFields));

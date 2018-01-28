@@ -88,10 +88,11 @@ namespace Blogifier.Core.Controllers
                     if (field.Key.StartsWith(zKey))
                     {
                         var zValues = field.Key.Replace(zKey, "").Split('-');
-                        if(zValues.Length == 2)
+                        if(zValues.Length == 3)
                         {
                             var zone = zValues[0];
-                            var widget = zValues[1];
+                            var cnt = zValues[1];
+                            var widget = zValues[2];
 
                             var zoneItem = zones.Where(z => z.Zone == zone).FirstOrDefault();
 

@@ -22,6 +22,7 @@ namespace Blogifier.Core.Common
         Task<IHtmlContent> AddWidget(IViewComponentHelper helper, string widget, object arguments = null);
         Task<IHtmlContent> AddZoneWidget(IViewComponentHelper helper, string zone, string widget, object arguments = null);
         Task<IHtmlContent> AddZone(IViewComponentHelper helper, string zone, string[] defaultWidgets = null);
+        void ResortWidgets(string zone, string widget);
     }
 
     public class ComponentHelper : IComponentHelper
@@ -49,18 +50,25 @@ namespace Blogifier.Core.Common
 
             if (widget != "WidgetZone")
             {
-                var key = zone == "" ? $"w:{BlogSettings.Theme}-{widget}" : $"z:{BlogSettings.Theme}-{zone}-{widget}";
+                var key = zone == "" ? $"w:{BlogSettings.Theme}-" : $"z:{BlogSettings.Theme}-{zone}-";
 
-                var setting = _db.CustomFields.GetValue(CustomType.Application, 0, key);
+                var field = _db.CustomFields.Find(f => f.CustomKey.StartsWith(key) && f.CustomKey.EndsWith(widget)).FirstOrDefault();
 
-                if (string.IsNullOrEmpty(setting))
+                if(field == null)
                 {
                     var arg = ObjectToString(arguments);
-                    await _db.CustomFields.SetCustomField(CustomType.Application, 0, key, "");
-                }
-                else
-                {
-                    // arguments = StringToObject(setting);
+
+                    if (key.StartsWith("z:"))
+                    {
+                        var widgets = _db.CustomFields.Find(f => f.CustomKey.StartsWith($"z:{BlogSettings.Theme}-{zone}")).ToList();
+                        var cnt = widgets == null ? 1 : widgets.Count + 1;
+
+                        await _db.CustomFields.SetCustomField(CustomType.Application, 0, $"z:{BlogSettings.Theme}-{zone}-{cnt}-{widget}", "");
+                    }
+                    else
+                    {
+                        await _db.CustomFields.SetCustomField(CustomType.Application, 0, key + widget, "");
+                    }
                 }
             }
 
@@ -114,6 +122,64 @@ namespace Blogifier.Core.Common
             catch
             {
                 return null;
+            }
+        }
+
+        public void ResortWidgets(string zone, string widget)
+        {
+            var key = $"z:{BlogSettings.Theme}-{zone}";
+
+            var widgets = _db.CustomFields.Find(w => w.CustomKey.StartsWith(key))
+                .OrderBy(w => w.CustomKey).ToList();
+
+            if (widgets != null && widgets.Count > 0)
+            {
+                var selectedWidget = _db.CustomFields.Find(f => f.CustomKey.StartsWith(key) && f.CustomKey.EndsWith(widget)).FirstOrDefault();
+
+                if (selectedWidget != null)
+                {
+                    // reorder zone widgets
+                    int prev = -1;
+                    for (int i = widgets.Count - 1; i >= 0; i--)
+                    {
+                        var wKey = widgets[i].CustomKey;
+                        var forUpdate = _db.CustomFields.Find(f => f.CustomKey == wKey).FirstOrDefault();
+
+                        if(forUpdate != null)
+                        {
+                            var vals = wKey.Replace("z:", "").Split('-');
+                            var cnt = vals[2];
+
+                            if (vals[3] == widget)
+                            {
+                                // move up
+                                if (i > 0)
+                                {
+                                    prev = i - 1;
+                                    var w = $"{key}-{i}-{widget}";
+
+                                    forUpdate.CustomKey = w;
+                                    _db.Complete();
+                                }
+                            }
+                            else if (i == prev)
+                            {
+                                // move down
+                                var w = $"{key}-{i + 2}-{vals[3]}";
+
+                                forUpdate.CustomKey = w;
+                                _db.Complete();
+                            }
+                            else
+                            {
+                                var w = $"{key}-{i + 1}-{vals[3]}";
+
+                                forUpdate.CustomKey = w;
+                                _db.Complete();
+                            }
+                        }
+                    }
+                }
             }
         }
 

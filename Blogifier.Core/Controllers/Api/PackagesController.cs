@@ -18,12 +18,14 @@ namespace Blogifier.Core.Controllers.Api
     {
         IUnitOfWork _db;
         IPackageService _pkgs;
+        IComponentHelper _helper;
         ILogger _logger;
 
-        public PackagesController(IUnitOfWork db, IPackageService pkgs, ILogger<AssetsController> logger)
+        public PackagesController(IUnitOfWork db, IPackageService pkgs, IComponentHelper helper, ILogger<AssetsController> logger)
         {
             _db = db;
             _pkgs = pkgs;
+            _helper = helper;
             _logger = logger;
         }
 
@@ -85,6 +87,7 @@ namespace Blogifier.Core.Controllers.Api
         [HttpPut("moveup/{zone}/{widget}")]
         public IActionResult MoveUp(string zone, string widget)
         {
+            _helper.ResortWidgets(zone, widget);
             return Ok();
         }
 
