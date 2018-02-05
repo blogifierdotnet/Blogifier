@@ -53,7 +53,10 @@
 
 <!-- Toolbar -->
 <div class="bf-toolbar d-flex align-items-center">
-    <label class="custom-control custom-control-single custom-checkbox mr-3" data-tooltip title="Select All"><input id="selectAll" class="custom-control-input" type="checkbox" name="selectAll"><span class="item-control custom-control-indicator"></span></label>
+    <label class="custom-control custom-checkbox custom-control-single mr-3" data-tooltip title="Select All">
+      <input class="custom-control-input" type="checkbox" id="selectAll" name="selectAll">
+      <span class="item-control custom-control-label"></span>
+    </label>
     <div id="multiActionBtns" class="btn-group mr-3">
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.removePost()" title="Delete"><i class="fa fa-trash"></i></button>
         <button type="button" class="btn btn-outline-secondary btn-icon btn-sm btn-rounded" disabled="disabled" data-tooltip onclick="return postsController.unpublish()" title="Unpublish"><i class="fa fa-archive"></i></button>
@@ -94,7 +97,10 @@
         var postStatus = item.Published == DateTime.MinValue ? "draft" : "published";
         if (curPost == 0) { curPost = item.BlogPostId; }
         <li class="bf-list-item d-flex align-items-center">
-            <label class="bf-list-item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+            <label class="custom-control custom-checkbox custom-control-single mr-3">
+              <input class="custom-control-input item-checkbox" type="checkbox" id="@item.BlogPostId">
+              <span class="item-control custom-control-label" for="@item.BlogPostId"></span>
+            </label>
             <a class="bf-list-item-link" href="~/admin/content/editor/@item.BlogPostId?user=@user">@item.Title</a>
             <span class="bf-list-item-status bf-list-item-status-@postStatus ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
             <span class="bf-list-item-date ml-3 d-none d-lg-block">@publishedLbl</span>
@@ -123,7 +129,10 @@
             <div class="post-grid-item">
                 <a class="item-link" href="~/admin/content/editor/@item.BlogPostId?user=@user" style="background-image:url(@item.Image);"><div class="item-title mt-auto">@item.Title</div></a>
                 <div class="item-info d-flex align-items-center">
-                    <label class="item-select custom-control custom-checkbox mr-3"><input type="checkbox" id="@item.BlogPostId" class="item-checkbox custom-control-input"><span class="item-control custom-control-indicator"></span></label>
+                    <label class="custom-control custom-checkbox custom-control-single mr-3">
+                      <input class="custom-control-input item-checkbox" type="checkbox" id="@item.BlogPostId">
+                      <span class="item-control custom-control-label"></span>
+                    </label>
                     <span class="item-date">@publishedLbl</span>
                     <span class="item-status item-status-@postStatus ml-auto" data-tooltip title="@postStatus"><i class="fa fa-circle"></i></span>
                     @if (Model.Profile.IsAdmin)
