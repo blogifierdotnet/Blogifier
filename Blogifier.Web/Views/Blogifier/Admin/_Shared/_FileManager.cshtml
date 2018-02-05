@@ -4,9 +4,10 @@
             <div class="modal-body">
                 <div class="modal-header d-flex">
                     <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
-                        <input type="checkbox" class="custom-control-input item-check">
-                        <span class="custom-control-indicator"></span>
+                      <input type="checkbox" class="custom-control-input item-check">
+                      <span class="custom-control-label"></span>
                     </label>
+
                     <button class="btn btn-primary btn-sm btn-rounded mr-2" type="button" onclick="return fileManagerController.uploadClick()">upload</button>
                     <button id="btnDelete" class="btn btn-outline-secondary btn-icon btn-rounded btn-sm mr-2" type="button" data-placement="bottom" data-tooltip title="Delete" onclick="return fileManagerController.remove()"><i class="fa fa-trash"></i></button>
                     <div class="loading loading-white loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
@@ -17,19 +18,16 @@
                                 <input type="search" id="search" name="search" class="form-control" placeholder="Search..." />
                             </form>
                             <label class="custom-control custom-radio d-block">
-                                <input id="filterAll" value="filterAll" name="filter" type="radio" checked class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">All</span>
+                              <input id="filterAll" value="filterAll" name="filter" type="radio" checked class="custom-control-input" onchange="return fileManagerController.load(1)">
+                              <span class="custom-control-label">All</span>
                             </label>
                             <label class="custom-control custom-radio d-block">
-                                <input id="filterImages" value="filterImages" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Images</span>
+                              <input id="filterImages" value="filterImages" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
+                              <span class="custom-control-label">Images</span>
                             </label>
                             <label class="custom-control custom-radio d-block">
-                                <input id="filterAttachments" value="filterAttachments" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Attachments</span>
+                              <input id="filterAttachments" value="filterAttachments" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
+                              <span class="custom-control-label">Attachments</span>
                             </label>
                         </div>
                     </div>
