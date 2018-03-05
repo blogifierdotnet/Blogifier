@@ -8,6 +8,13 @@ namespace Blogifier.Core.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "Priority",
+                table: "CustomFields",
+                type: "INTEGER",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "Subscribers",
                 columns: table => new
@@ -39,6 +46,10 @@ namespace Blogifier.Core.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Subscribers");
+
+            migrationBuilder.DropColumn(
+                name: "Priority",
+                table: "CustomFields");
         }
     }
 }

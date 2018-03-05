@@ -12,17 +12,14 @@ using System;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(BlogifierDbContext))]
-    [Migration("20171210044837_Subscribers")]
+    [Migration("20180305005010_Subscribers")]
     partial class Subscribers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
-                .HasAnnotation("Npgsql:ValueGeneratedOnAdd", true)
-                .HasAnnotation("MySql:ValueGeneratedOnAdd", true)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
             modelBuilder.Entity("Blogifier.Core.Data.Domain.Asset", b =>
                 {
@@ -148,6 +145,8 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<int>("ParentId");
+
+                    b.Property<int>("Priority");
 
                     b.Property<string>("Title")
                         .IsRequired()

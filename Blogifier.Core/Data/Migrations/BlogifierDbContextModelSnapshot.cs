@@ -148,6 +148,8 @@ namespace Blogifier.Core.Data.Migrations
 
                     b.Property<int>("ParentId");
 
+                    b.Property<int>("Priority");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(160);

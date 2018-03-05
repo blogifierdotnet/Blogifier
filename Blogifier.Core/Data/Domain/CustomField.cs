@@ -14,6 +14,8 @@ namespace Blogifier.Core.Data.Domain
         [StringLength(140)]
         public string CustomKey { get; set; }     
         public string CustomValue { get; set; }
+
+        public int Priority { get; set; }
     }
 
     public enum CustomType
@@ -21,6 +23,10 @@ namespace Blogifier.Core.Data.Domain
         Profile = 0,
         Post = 1,
         Asset = 2,
-        Application = 3
+        Application = 3,
+        Theme = 4,
+        Zone = 5,
+        Widget = 6,
+        Setting = 7
     }
 }
