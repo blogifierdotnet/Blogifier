@@ -232,14 +232,3 @@ _Pvt_Extensions
 .fake/
 
 PublishProfiles/
-**/Logs/*
-**/blogifier/data/*
-
-# Build and CI files
-artifacts/
-tools/
-*.cake
-*.ps1
-
-# SQLite files
-**/Data/*.db
