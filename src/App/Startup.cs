@@ -5,15 +5,32 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(o => o.UseSqlite("DataSource=Data\\app.db"));
+            var section = Configuration.GetSection("Blogifier");
+
+            if(section.GetValue<string>("DbProvider") == "SQLite")
+            {
+                services.AddDbContext<AppDbContext>(o => o.UseSqlite(section.GetValue<string>("ConnString")));
+            }
+            else
+            {
+                services.AddDbContext<AppDbContext>(o => o.UseInMemoryDatabase("Blogifier"));
+            }
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()

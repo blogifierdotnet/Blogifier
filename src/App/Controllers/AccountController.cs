@@ -9,12 +9,10 @@ namespace App.Controllers
 {
     public class AccountController : Controller
     {
-        UserManager<AppUser> _um;
         SignInManager<AppUser> _sm;
 
-        public AccountController(UserManager<AppUser> um, SignInManager<AppUser> sm)
+        public AccountController(SignInManager<AppUser> sm)
         {
-            _um = um;
             _sm = sm;
         }
 
@@ -62,7 +60,7 @@ namespace App.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(BlogController.Index), "Blog");
+                return Redirect("~/");
             }
         }
     }
