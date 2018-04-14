@@ -1,0 +1,25 @@
+﻿
+<div class="bf-sidebar d-lg-block">
+    <div class="bf-settings-sidebar">
+        <ul class="bf-settings-sidebar-nav">
+            @if (ViewBag.IsAdmin)
+            {
+            <li is-active-route asp-controller="Settings" asp-action="Index">
+                <a asp-controller="Settings" asp-action="Index">General</a>
+            </li>
+            }
+            <li is-active-route asp-controller="Settings" asp-action="Profile">
+                <a asp-controller="Settings" asp-action="Profile">Profile</a>
+            </li>
+            <li is-active-route asp-controller="Settings" asp-action="Password">
+                <a asp-controller="Settings" asp-action="Password">Password</a>
+            </li>
+            @if (ViewBag.IsAdmin)
+            {
+            <li is-active-route asp-controller="Settings" asp-action="Users">
+                <a asp-controller="Settings" asp-action="Users">Users</a>
+            </li>    
+            }
+        </ul>
+    </div>
+</div>

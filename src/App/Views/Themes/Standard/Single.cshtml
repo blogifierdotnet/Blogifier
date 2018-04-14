@@ -1,0 +1,34 @@
+﻿@model PostItem
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @Html.Partial($"~/Views/Themes/Standard/_Shared/_Head.cshtml")
+</head>
+<body class="@ViewData["bodyClass"]">
+    <!--[if lt IE 10]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    @Html.Partial($"~/Views/Themes/Standard/_Shared/_Header.cshtml")
+    <article class="post-single">
+        <div class="post-cover" style="background-image: url('@ViewBag.Cover')"></div>
+        <section class="container">
+            <div class=" post-body">
+                <header class="post-header">
+                    <h2 class="post-title">@Model.Title</h2>
+                    <div class="post-meta">
+                        <a href="~/authors/@Model.Author.UserName">
+                            <img class="post-meta-img" src="~/@Model.Author.Avatar" alt="@Model.Author.DisplayName" />
+                            <span class="post-meta-author">@Model.Author.DisplayName</span>
+                        </a>
+                        <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.Published)</time>
+                    </div>
+                </header>
+                <div class="post-content">
+                    @Html.Raw(Model.Content)
+                </div>
+            </div>
+        </section>
+    </article>
+    @Html.Partial($"~/Views/Themes/Standard/_Shared/_Footer.cshtml")
+</body>
+</html>

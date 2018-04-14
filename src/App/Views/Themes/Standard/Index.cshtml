@@ -1,0 +1,46 @@
+﻿@model PostListModel
+@{
+    Layout = "~/Views/Themes/Standard/_Layout.cshtml";
+    ViewData["bodyClass"] = "home";
+    var pgr = Model.Pager;
+}
+<div class="page-content">
+    <div class="container">
+
+        @if (Model.Posts != null)
+        {
+            foreach (var item in Model.Posts)
+            {
+                var img = string.IsNullOrEmpty(item.Cover) ? AppSettings.DefaultCover : item.Cover;
+                var cont = AppSettings.PostListType == "content" ? item.Content : item.Description;
+                <article class="post">
+                    <div class="post-cover"><img src="~/@img" alt="@item.Title"></div>
+                    <h2 class="post-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
+                    <div class="post-meta">
+                        <a class="post-meta-author" href="~/authors/@item.Author.UserName">@item.Author.DisplayName</a>
+                        <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
+                    </div>
+                    <div class="post-description">@Html.Raw(cont)</div>
+                    <a class="post-more btn btn-rounded btn-dark" href="~/blog/@item.Slug">Read</a>
+                </article>
+            }
+        }
+
+        @if (pgr != null)
+        {
+            @if (pgr.ShowOlder || pgr.ShowNewer)
+            {
+                <ul class="pagination justify-content-center">
+                    @if (pgr.ShowOlder)
+                    {
+                        <li class="item item-prev"><a class="item-link" href="~/blog?page=@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
+                    }
+                    @if (pgr.ShowNewer)
+                    {
+                        <li class="item item-next"><a class="item-link" href="~/blog?page=@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
+                    }
+                </ul>
+            }
+        }
+    </div>
+</div>

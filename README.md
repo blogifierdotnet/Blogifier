@@ -7,17 +7,16 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 * Windows, Mac or Linux
 * ASP.NET Core 2.0
 * Visual Studio 2017, VS Code or other code editor (Atom, Sublime etc)
-* [SQLite, SQL Server or any EF compatible database](https://github.com/blogifierdotnet/Blogifier/wiki/Database)
+* SQLite by default, MS SQL Server tested, EF compatible databases should work
 
 ## Getting Started
 
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
-3. Click "Login" when page loaded in the browser and register new user
-4. Login as registered user and go to `/admin` to write and publish posts
+3. Use admin/Admin@pass1 to log in as admininstrator
 
 ## Demo site
 
 The [demo site](http://blogifier.azurewebsites.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
 
-![postgrid14](https://raw.githubusercontent.com/blogifierdotnet/Design/master/v1.5/01.jpg)
+![demo-img](https://user-images.githubusercontent.com/1932785/38769576-c1d92a8c-3fca-11e8-96a7-acfd848de339.png)

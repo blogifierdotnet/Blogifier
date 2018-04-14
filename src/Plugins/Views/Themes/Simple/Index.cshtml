@@ -1,0 +1,54 @@
+﻿@model Core.Data.PostListModel
+@{
+    Layout = "~/Views/Themes/Simple/_Layout.cshtml";
+    ViewData["bodyClass"] = "home";
+    var pgr = Model.Pager;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="my-4">
+                @Core.AppSettings.Title
+                <small>@Core.AppSettings.Description</small>
+            </h1>
+            @if (Model != null && Model.Posts != null && Model.Posts.Any())
+            {
+                foreach (var post in Model.Posts)
+                {
+                    var img = string.IsNullOrEmpty(post.Cover) ? Core.AppSettings.DefaultCover : post.Cover;
+                    img = $"{Url.Content("~/")}{img}";
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="@img" alt="Card image cap">
+                        <div class="card-body">
+                            <h2 class="card-title">@post.Title</h2>
+                            <p class="card-text">@Html.Raw(post.Description)</p>
+                            <a href="~/blog/@post.Slug" class="btn btn-primary">Read More &rarr;</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Posted on @post.Published.ToString("M"), @post.Published.Year by
+                            <a href="~/authors/@post.Author.UserName">@post.Author.DisplayName</a>
+                        </div>
+                    </div>
+                }
+            }
+            @if (pgr.ShowOlder || pgr.ShowNewer)
+            {
+                <ul class="pagination justify-content-center mb-4">
+                    @if (pgr.ShowOlder){
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@pgr.Older">&larr; Older</a>
+                    </li>
+                    }
+                    @if (pgr.ShowNewer){
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@pgr.Newer">Newer &rarr;</a>
+                    </li>
+                    }
+                </ul>   
+            }
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("~/Views/Themes/Simple/Shared/_Sidebar.cshtml")
+        </div>
+    </div>
+</div>

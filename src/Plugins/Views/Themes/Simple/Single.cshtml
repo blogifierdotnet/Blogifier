@@ -1,0 +1,33 @@
+﻿@model Core.Data.PostItem
+@{
+    Layout = "~/Views/Themes/Simple/_Layout.cshtml";
+}
+<style>
+    .post img {
+        max-width: 100%;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="my-4">
+                @Core.AppSettings.Title
+                <small>@Core.AppSettings.Description</small>
+            </h1>
+            <div class="card mb-4">
+                <img class="card-img-top" src="@ViewBag.Cover" alt="Card image cap">
+                <div class="card-body post">
+                    <h2 class="card-title">@Model.Title</h2>
+                    @Html.Raw(Model.Content)
+                </div>
+                <div class="card-footer text-muted">
+                    Posted on @Model.Published.ToString("M"), @Model.Published.Year by
+                    <a href="~/authors/@Model.Author.UserName">@Model.Author.DisplayName</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("~/Views/Themes/Simple/Shared/_Sidebar.cshtml")
+        </div>
+    </div>
+</div>

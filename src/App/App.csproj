@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="wwwroot\themes\simple\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <PropertyGroup>
+      <PluginBaseDir>$(SolutionDir)src\Plugins\</PluginBaseDir>
+    </PropertyGroup>
+    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Plugins.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Plugins.dll')" />
+  </Target>
+
+</Project>

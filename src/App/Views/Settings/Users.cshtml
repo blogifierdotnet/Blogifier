@@ -1,0 +1,109 @@
+﻿@model IEnumerable<AuthorItem>
+<style>
+    .modal-body .row {
+        line-height: 2.5em;
+        border-bottom: 1px solid #efefef;
+    }
+</style>
+<div class="bf-main">
+    @Html.Partial("~/Views/Settings/_Taskbar.cshtml")
+    <div class="bf-body">
+        <div class="bf-content bf-content-boxed bf-settings">
+            <div class="bf-title d-none d-lg-block"><span>Users</span></div>
+            <div>
+                <button type="button" onclick="authorController.create()" class="btn btn-primary btn-main">Add new</button>
+            </div>
+            @foreach (var user in Model)
+            {
+                <div class="card" style="width: 130px; margin: 10px 5px 0 0; float: left">
+                    <img class="card-img-top" style="height: 130px; overflow: hidden" src="~/@user.Avatar" alt="@user.Avatar" />
+                    <div class="card-body">
+                        <p style="text-align: center">
+                            <a href="#" onclick="return authorController.open('@user.Id')">@user.UserName</a>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modAuthor" tabindex="-1" role="dialog" aria-labelledby="authorModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authorTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">User name:</div>
+                    <div id="userName" class="col-sm"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4">Email:</div>
+                    <div id="userEmail" class="col-sm"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4">User ID:</div>
+                    <div id="userId" class="col-sm"></div>
+                </div>
+                <div class="row">
+                    <div class="col-4">Date created:</div>
+                    <div id="userCreated" class="col-sm"></div>
+                </div>
+            </div>
+            <div id="footerBtns" class="modal-footer">
+                <button type="button" onclick="authorController.remove()" class="btn btn-sm btn-danger">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modCreate" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register new user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmCreate">
+                    <div class="form-group">
+                        <label class="form-group-label">User name</label>
+                        <input type="text" id="txtUserName" name="txtUserName" class="form-control" required autofocus />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label">Email</label>
+                        <input type="text" id="txtEmail" name="txtEmail" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label">Password</label>
+                        <input type="password" id="txtPwd" name="txtPwd" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label">Confirm password</label>
+                        <input type="password" id="txtConfirmPwd" name="txtConfirmPwd" class="form-control" required />
+                    </div>
+                </form>
+            </div>
+            <div id="footerBtns" class="modal-footer">
+                <button type="button" onclick="authorController.save()" class="btn btn-sm btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @if (TempData["msg"] != null)
+    {
+        <script>toastr.success('@TempData["msg"]')</script>
+    }
+    <script src="~/admin/js/lib/jquery.validate.min.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/admin/js/app/authorController.js"></script>
+}

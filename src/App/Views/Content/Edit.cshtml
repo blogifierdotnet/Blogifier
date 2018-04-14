@@ -1,0 +1,161 @@
+﻿@model PostItem
+<link href="~/admin/markdown/simplemde.min.css" rel="stylesheet" />
+@{ 
+    var img = string.IsNullOrEmpty(Model.Cover) ? Core.AppSettings.DefaultCover : Model.Cover;
+    img = $"{Url.Content("~/")}{img}";
+    var btnDisabled = Model.Id == 0 ? "disabled" : "";
+}
+
+<style>
+    .CodeMirror {
+        border: 0 !important;
+        background-color: #F6F6F6;
+    }
+
+    .editor-toolbar {
+        background-color: #FFF;
+        padding: 0;
+        margin: 0;
+        margin-top: -48px;
+        border: 0;
+    }
+
+    .editor-hdr-wrapper {
+        background-color: #FFF;
+        height: 48px;
+        overflow: hidden;
+    }
+
+    .editor-preview {
+        background-color: #F6F6F6;
+    }
+
+    body {
+        background-color: #F6F6F6;
+    }
+</style>
+
+<form id="frmEditor" class="bf-editor-form" method="post" asp-controller="Content" asp-action="Edit" asp-antiforgery="true">
+    <div class="bf-body">
+        <div id="post-edit" class="bf-editor">
+            <!-- Editor Header -->
+            <div class="bf-editor-header" style="background-image:url('@img');">
+                <div class="container">
+                    <textarea asp-for="Title" class="bf-editor-title" id="txtPostTitle" rows="1" tabindex="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+                </div>
+            </div>
+            <!--/Editor Header -->
+            <!-- Editor Footer -->
+            <div class="bf-editor-footer">
+                <div class="container d-flex">
+
+                    <div id="action-buttons" class="mr-2 act-new">
+                        <div class="btn-group">
+                            <button type="button" tabindex="3" onclick="editorController.save('P'); return false;" class="btn btn-sm btn-primary btn-rounded">Publish</button>
+                            <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.save(); return false;">Save</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="action-buttons" style="display: none" class="mr-2 act-upd">
+                        <div class="btn-group">
+                            <button type="button" tabindex="3" onclick="editorController.save(); return false;" class="btn btn-sm btn-primary btn-rounded">Save</button>
+                            <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(97px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                @if (Model.Published > DateTime.MinValue)
+                                {
+                                    <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.unpublish(); return false;">Unpublish</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.publish(); return false;">Publish</a>
+                                }
+                                <a class="dropdown-item" tabindex="6" href="#" onclick="editorController.remove(); return false;">Delete</a>
+                            </div>
+                        </div>
+                        <a href="~/blog/@Model.Slug" id="btn-view" tabindex="7" target="_blank" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="View post" title="View" data-placement="bottom">View</a>
+                    </div>
+
+                    <a href="~/content" tabindex="8" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="Cancel" title="Cancel" data-placement="bottom">Cancel</a>
+
+                    <div class="loading loading-sm ml-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
+                    <div class="btn-group ml-auto d-none d-lg-flex">
+                        <button @btnDisabled class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="9" data-tooltip title="Cover" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i></button>
+                        <button @btnDisabled class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="10" data-tooltip title="Settings" onclick="return editorController.settings()"><i class="fa fa-cog"></i></button>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <div class="dropdown ml-auto d-block d-lg-none">
+                        <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="11" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                            <button class="dropdown-item" tabindex="12" onclick="return fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i> Cover</button>
+                            <button class="dropdown-item" tabindex="13" onclick="return editorController.settings()"><i class="fa fa-file-text"></i> Settings</button>
+                        </div>
+                    </div>
+                    <!--/Mobile Menu -->
+                </div>
+            </div>
+            <!--/Editor Footer -->
+
+            <div class="editor-hdr-wrapper">&nbsp;</div>
+            <div class="container">
+                <!-- Editor -->
+                <textarea id="mdEditor" tabindex="2" rows="4" cols="50"></textarea>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Slug" />
+                <input type="hidden" asp-for="Content" />
+                <input type="hidden" asp-for="Status" />
+                <!--/Editor -->               
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Description -->
+    <div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="settingsLabel">Post Settings</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Description"></label>
+                        <textarea rows="4" asp-for="Description" class="form-control" autofocus></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Published"></label>
+                        <input type="text" asp-for="Published" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Partial("~/Views/Shared/_FileMgr.cshtml")
+
+@section Scripts{
+    <script src="~/admin/js/app/editorController.js"></script>
+    <script src="~/admin/js/app/fileManagerController.js"></script>
+    <script src="~/admin/markdown/simplemde.min.js"></script>
+    <script>
+        editorController.loadButtons('@Model.Id');
+
+        var simplemde = getEditor();
+
+        var updatePostCoverCallback = function (data) {
+            $('.bf-editor-header').css('background-image', 'url(' + webRoot + data.url + ')');
+            $('#hdnPostImg').val(data.url);
+            toastr.success('Updated');
+        }
+    </script>
+    @if (Context.Request.Query["msg"] == "ok")
+    {
+        <script>toastr.success('Updated')</script>
+    }
+}

@@ -1,0 +1,19 @@
+.blog-footer {
+  border-top: 1px solid #fafafa;
+  color: #000;
+  font-size: .75rem;
+  padding: 3rem 0;
+  text-transform: uppercase;
+
+  a {
+    color: #000;
+
+    &:hover {
+      color: $color-theme;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}
