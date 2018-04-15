@@ -15,7 +15,7 @@
                 <img class="card-img-top" style="height: 130px; overflow: hidden" src="~/@user.Avatar" alt="@user.Avatar" />
                 <div class="card-body">
                     <p style="text-align: center">
-                        <a href="~/settings/profile?name=@user.UserName">@user.UserName</a>
+                        <a asp-action="Profile" asp-route-name="@user.UserName">@user.UserName</a>
                     </p>
                 </div>
             </div>

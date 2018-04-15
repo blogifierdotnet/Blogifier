@@ -13,7 +13,7 @@ namespace Core
         public static string Description { get; set; } = "Short blog description";
         [Required]
         [StringLength(120)]
-        public static string Theme { get; set; } = "Simple";
+        public static string Theme { get; set; } = "Standard";
         [StringLength(160)]
         public static string Logo { get; set; } = "lib/img/logo.png";
         [StringLength(160)]
