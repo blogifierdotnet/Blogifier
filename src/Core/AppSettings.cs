@@ -15,7 +15,7 @@ namespace Core
         [StringLength(120)]
         public static string Theme { get; set; } = "Standard";
         [StringLength(160)]
-        public static string Logo { get; set; } = "lib/img/logo.png";
+        public static string Logo { get; set; } = "lib/img/logo-white.png";
         [StringLength(160)]
         public static string Cover { get; set; } = "lib/img/cover.png";
         public static int ItemsPerPage { get; set; } = 10;

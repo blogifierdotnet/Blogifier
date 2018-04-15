@@ -67,9 +67,9 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 
 The [demo site](http://blogifier.azurewebsites.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
 
-![Demo-1.png](/data/admin/2018/4/Demo-1.png)",
+![Demo-1.png](/data/admin/admin-editor.png)",
                             UserId = userId,
-                            Cover = "data/admin/Sample1.png",
+                            Cover = "data/admin/cover-blog.png",
                             PostViews = 5,
                             Rating = 4.5,
                             Published = DateTime.UtcNow.AddDays(-100)
@@ -84,7 +84,7 @@ Blogifier is multi-user application with simple admin/user roles, allowing every
 ### Content Management
 Built-in file manager allows upload images and files and use them as links in the post editor.
 
-![file-mgr.png](/data/admin/2018/4/file-mgr.png)
+![file-mgr.png](/data/admin/admin-files.png)
 
 ### Plugin System
 Blogifier built as highly extendable application allowing themes, widgets and modules to be side-loaded and added to blog at runtime.
@@ -100,7 +100,7 @@ There is simple but quick and functional search in the post lists, as well as se
 * RSS Feed
 * Plugin management",
                             UserId = userId,
-                            Cover = "data/admin/Sample2.png",
+                            Cover = "data/admin/cover-globe.png",
                             PostViews = 15,
                             Rating = 4.0,
                             Published = DateTime.UtcNow.AddDays(-55)
@@ -119,22 +119,22 @@ There is simple but quick and functional search in the post lists, as well as se
                             AssetType = AssetType.Image,
                             DownloadCount = 100,
                             Published = DateTime.Now.AddDays(-15),
-                            Title = "Sample1",
+                            Title = "admin-editor",
                             Length = 1000,
                             UserId = userId,
-                            Path = @"data\admin\Sample1.png",
-                            Url = "data/admin/Sample1.png"
+                            Path = @"data\admin\admin-editor.png",
+                            Url = "data/admin/admin-editor.png"
                         },
                         new Asset
                         {
                             AssetType = AssetType.Image,
                             DownloadCount = 200,
                             Published = DateTime.Now.AddDays(-10),
-                            Title = "Sample2",
+                            Title = "admin-files",
                             Length = 2000,
                             UserId = userId,
-                            Path = @"data\admin\Sample2.png",
-                            Url = "data/admin/Sample2.png"
+                            Path = @"data\admin\admin-files.png",
+                            Url = "data/admin/admin-files.png"
                         },
                         new Asset
                         {
@@ -146,6 +146,40 @@ There is simple but quick and functional search in the post lists, as well as se
                             UserId = userId,
                             Path = @"data\admin\avatar.png",
                             Url = "data/admin/avatar.png"
+                        },
+
+                        new Asset
+                        {
+                            AssetType = AssetType.Image,
+                            DownloadCount = 0,
+                            Published = DateTime.Now.AddDays(-10),
+                            Title = "cover-blog",
+                            Length = 2000,
+                            UserId = userId,
+                            Path = @"data\admin\cover-blog.png",
+                            Url = "data/admin/cover-blog.png"
+                        },
+                        new Asset
+                        {
+                            AssetType = AssetType.Image,
+                            DownloadCount = 0,
+                            Published = DateTime.Now.AddDays(-10),
+                            Title = "cover-desk",
+                            Length = 2000,
+                            UserId = userId,
+                            Path = @"data\admin\cover-desk.jpg",
+                            Url = "data/admin/cover-desk.jpg"
+                        },
+                        new Asset
+                        {
+                            AssetType = AssetType.Image,
+                            DownloadCount = 0,
+                            Published = DateTime.Now.AddDays(-10),
+                            Title = "cover-globe",
+                            Length = 2000,
+                            UserId = userId,
+                            Path = @"data\admin\cover-globe.png",
+                            Url = "data/admin/cover-globe.png"
                         }
                     };
 
@@ -159,7 +193,6 @@ There is simple but quick and functional search in the post lists, as well as se
                     UserName = "demo",
                     Email = "demo@us.com",
                     DisplayName = "Demo Account",
-                    //Avatar = "data/demo/avatar.jpg",
                     Created = SystemClock.Now().AddDays(-140)
                 };
                 IdentityResult result2 = userManager.CreateAsync
@@ -199,6 +232,7 @@ There is simple but quick and functional search in the post lists, as well as se
                 }
 
                 context.SaveChanges();
+                AppSettings.Cover = "data/admin/cover-desk.jpg";
             }
         }
 
