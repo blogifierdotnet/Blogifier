@@ -94,11 +94,54 @@ namespace App.Controllers
             return View(authors);
         }
 
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile(string name = "")
         {
-            var author = await _db.Authors.GetItem(u => u.UserName == User.Identity.Name);
-            ViewBag.IsAdmin = author.IsAdmin;
+            AuthorItem author;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                author = await _db.Authors.GetItem(u => u.UserName == User.Identity.Name);
+            }
+            else
+            {
+                if (!IsAdmin())
+                    return Redirect("~/error/403");
+
+                author = await _db.Authors.GetItem(u => u.UserName == name);
+            }
+            
+            ViewBag.IsAdmin = IsAdmin();
             return View(author);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(AuthorItem model)
+        {
+            ViewBag.IsAdmin = IsAdmin();
+
+            if (ModelState.IsValid)
+            {
+                var user = _db.Authors.Single(a => a.Id == model.Id);
+                user.DisplayName = model.DisplayName;
+                user.Email = model.Email;
+
+                var result = await _db.Authors.SaveUser(user);
+                if (result.Succeeded)
+                {
+                    TempData["msg"] = Resources.Updated;
+
+                    if (model.UserName == User.Identity.Name)
+                        return RedirectToAction(nameof(Profile));
+                    else
+                        return Redirect($"~/settings/profile?name={model.UserName}");
+                }
+                else
+                {
+                    ModelState.AddModelError("Custom", result.Errors.First().Description);
+                }
+            }
+            
+            return View(model);
         }
 
         public IActionResult Password()
@@ -130,37 +173,65 @@ namespace App.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Profile(AuthorItem model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = _db.Authors.Single(a => a.Id == model.Id);
-                user.DisplayName = model.DisplayName;
-                user.Email = model.Email;
-
-                var result = await _db.Authors.SaveUser(user);
-                if (result.Succeeded)
-                {
-                    TempData["msg"] = Resources.Updated;
-                    return RedirectToAction(nameof(Profile));
-                }
-                else
-                {
-                    ModelState.AddModelError("Custom", result.Errors.First().Description);
-                }
-            }
-
-            ViewBag.IsAdmin = IsAdmin();
-            return View(model);
-        }
-
         public IActionResult Register()
         {
             if (!IsAdmin())
                 return Redirect("~/error/403");
 
+            ViewBag.IsAdmin = IsAdmin();
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (!IsAdmin())
+                return Redirect("~/error/403");
+
+            if (ModelState.IsValid)
+            {
+                var user = _db.Authors.Single(a => a.UserName == model.UserName);
+                if (user == null)
+                {
+                    user = new AppUser
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email
+                    };
+
+                    var result = await _db.Authors.SaveUser(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        TempData["msg"] = Resources.Created;
+                        return RedirectToAction(nameof(Users));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Custom", result.Errors.First().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("Custom", Resources.UserExists);
+                }
+            }
+            ViewBag.IsAdmin = IsAdmin();
+            return View();
+        }
+
+        public async Task<IActionResult> Remove(string name)
+        {
+            var author = _db.Authors.Single(a => a.UserName == name);
+
+            if (!IsAdmin() || name == User.Identity.Name)
+                Redirect("~/error/403");
+
+            await _db.Authors.RemoveUser(author);
+
+            TempData["msg"] = Resources.Removed;
+
+            return RedirectToAction(nameof(Users));
         }
 
         bool IsAdmin()

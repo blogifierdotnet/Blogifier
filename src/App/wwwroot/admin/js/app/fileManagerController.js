@@ -203,3 +203,17 @@ $(firstItemCheckfm).on('change', function () {
     $(itemCheckfm).prop('checked', this.checked);
     fileManagerController.showBtns();
 });
+
+// callbacks
+var updateAvatarCallback = function (data) {
+    $('#Avatar').val(data.url);
+    toastr.success('Updated');
+}
+var updateAppCoverCallback = function (data) {
+    $('#Cover').val(data.url);
+    toastr.success('Updated');
+}
+var updateAppLogoCallback = function (data) {
+    $('#Logo').val(data.url);
+    toastr.success('Updated');
+}

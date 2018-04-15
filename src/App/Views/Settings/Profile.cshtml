@@ -2,7 +2,7 @@
 <div class="bf-main">
     @Html.Partial($"~/Views/Settings/_Taskbar.cshtml")
     <div class="bf-body">
-        <form method="post" asp-controller="Settings" asp-action="Profile" asp-antiforgery="true">
+        <form method="post" asp-action="Profile" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
                 <div class="bf-title d-none d-lg-block"><span>Profile</span></div>
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -14,6 +14,8 @@
                     <label class="form-group-label" asp-for="Email"></label>
                     <input type="text" asp-for="Email" class="form-control" />
                 </div>
+                @if(Model.UserName == User.Identity.Name)
+                {
                 <div class="form-group">
                     <label class="form-group-label" asp-for="Avatar"></label>
                     <div class="input-group">
@@ -23,13 +25,19 @@
                         </span>
                     </div>
                 </div>
+                }
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="UserName" />
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
+                @if (!Model.IsAdmin && ViewBag.IsAdmin)
+                {
+                <a asp-action="Remove" asp-route-name="@Model.UserName" class="btn btn-danger">Delete</a>
+                }
             </div>
         </form>
     </div>
 </div>
+
 @Html.Partial("~/Views/Shared/_FileMgr.cshtml")
 
 @section Scripts{
@@ -37,11 +45,5 @@
     {
         <script>toastr.success('@TempData["msg"]')</script>
     }
-    <script>
-        var updateAvatarCallback = function (data) {
-            $('#Avatar').val(data.url);
-            toastr.success('Updated');
-        }
-    </script>
     <script src="~/admin/js/app/fileManagerController.js"></script>
 }

@@ -6,7 +6,6 @@
 <div class="bf-main">
     @Html.Partial("~/Views/Settings/_Taskbar.cshtml")
     <div class="bf-body">
-
         <form method="post" asp-controller="Settings" asp-action="Index" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
                 <div class="bf-title d-none d-lg-block"><span>Blog settings</span></div>
@@ -26,7 +25,6 @@
                     <input type="text" asp-for="ItemsPerPage" class="form-control" />
                     <span asp-validation-for="ItemsPerPage" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label class="form-group-label">Show in the blog list</label>
                     <div>
@@ -34,12 +32,10 @@
                         <input type="radio" name="app-post-list-type" value="description" @descSel> Post description
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-group-label">Theme</label>
                     <select asp-for="Theme" asp-items="Model.BlogThemes" class="form-control custom-select"></select>
                 </div>
-
                 <div class="form-group">
                     <label class="form-group-label">Logo image</label>
                     <div class="input-group">
@@ -58,11 +54,9 @@
                         </span>
                     </div>
                 </div>
-
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
             </div>
         </form>
-
     </div>
 </div>
 
@@ -73,15 +67,5 @@
     {
         <script>toastr.success('@TempData["msg"]')</script>
     }
-    <script>
-        var updateAppCoverCallback = function (data) {
-            $('#Cover').val(data.url);
-            toastr.success('Updated');
-        }
-        var updateAppLogoCallback = function (data) {
-            $('#Logo').val(data.url);
-            toastr.success('Updated');
-        }
-    </script>
     <script src="~/admin/js/app/fileManagerController.js"></script>
 }
