@@ -18,9 +18,8 @@ namespace Core
             AddFileProviders(services);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddTransient<ISearchService, SearchService>();
-
+            services.AddTransient<ISyndication, SyndicationService>();
             services.AddTransient<UserManager<AppUser>>();
 
             return services;
