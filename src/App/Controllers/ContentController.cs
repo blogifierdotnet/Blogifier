@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -69,7 +70,10 @@ namespace App.Controllers
                 if (model.Status == SaveStatus.Unpublishing)
                     model.Published = DateTime.MinValue;
 
+                model.Slug = await GetSlug(model.Id, model.Title);
+
                 var item = await _db.BlogPosts.SaveItem(model);
+
                 return RedirectToAction(nameof(Edit), new { slug = item.Slug, msg = "ok" });
             }
 
@@ -103,6 +107,35 @@ namespace App.Controllers
         async Task<AuthorItem> GetAuthor()
         {
             return await _db.Authors.GetItem(a => a.UserName == User.Identity.Name);
+        }
+
+        public async Task<string> GetSlug(int id, string title)
+        {
+            string slug = title.ToSlug();
+            BlogPost post;
+
+            if(id == 0)
+                post = _db.BlogPosts.Single(p => p.Slug == slug);
+            else
+                post = _db.BlogPosts.Single(p => p.Slug == slug && p.Id != id);
+
+            if(post == null)
+                return await Task.FromResult(slug);
+
+            for(int i = 2; i < 100; i++)
+            {
+                if(id == 0)
+                    post = _db.BlogPosts.Single(p => p.Slug == $"{slug}{i}");
+                else
+                    post = _db.BlogPosts.Single(p => p.Slug == $"{slug}{i}" && p.Id != id);
+
+                if (post == null)
+                {
+                    return await Task.FromResult(slug + i.ToString());
+                }
+            }
+
+            return await Task.FromResult(slug);
         }
     }
 }

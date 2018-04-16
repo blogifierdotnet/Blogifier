@@ -63,9 +63,9 @@ namespace Core.Data
                 post = new BlogPost
                 {
                     Title = item.Title,
-                    Slug = item.Title.ToSlug(), //--------------
+                    Slug = item.Slug,
                     Content = item.Content,
-                    Description = string.IsNullOrEmpty(item.Description) ? item.Title : item.Description,
+                    Description = item.Description ?? item.Title,
                     UserId = item.Author.Id,
                     Published = item.Published
                 };
@@ -80,9 +80,9 @@ namespace Core.Data
                 post = _db.BlogPosts.Single(p => p.Id == item.Id);
 
                 post.Title = item.Title;
-                post.Slug = item.Title.ToSlug(); //--------------
+                post.Slug = item.Slug;
                 post.Content = item.Content;
-                post.Description = string.IsNullOrEmpty(item.Description) ? item.Title : item.Description;
+                post.Description = item.Description ?? item.Title;
                 post.UserId = item.Author.Id;
                 post.Published = item.Published;
                 await _db.SaveChangesAsync();
