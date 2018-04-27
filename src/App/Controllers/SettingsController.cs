@@ -3,12 +3,14 @@ using Core.Data;
 using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace App.Controllers
 {
@@ -16,10 +18,12 @@ namespace App.Controllers
     public class SettingsController : Controller
     {
         IUnitOfWork _db;
+        ISyndication _feed;
 
-        public SettingsController(IUnitOfWork db)
+        public SettingsController(IUnitOfWork db, ISyndication feed)
         {
             _db = db;
+            _feed = feed;
         }
 
         public IActionResult Index()
@@ -232,6 +236,30 @@ namespace App.Controllers
             TempData["msg"] = Resources.Removed;
 
             return RedirectToAction(nameof(Users));
+        }
+
+        public IActionResult RssImport()
+        {
+            if (!IsAdmin())
+                return Redirect("~/error/403");
+
+            ViewBag.IsAdmin = IsAdmin();
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RssImport(IFormFile file)
+        {
+            if (!IsAdmin())
+                return Redirect("~/error/403");
+
+            var userId = _db.Authors.Single(a => a.UserName == User.Identity.Name).Id;
+
+            await _feed.RssImport(file, userId);
+
+            ViewBag.IsAdmin = true;
+            return View();
         }
 
         bool IsAdmin()

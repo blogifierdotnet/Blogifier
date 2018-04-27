@@ -5,7 +5,6 @@ using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -48,8 +47,7 @@ namespace App.Controllers
         [Route("blog/{slug}")]
         public async Task<IActionResult> Single(string slug)
         {
-            var posts = await _db.BlogPosts.Find(p => p.Slug == slug, new Pager(1));
-            var post = posts.FirstOrDefault();
+            var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
 
             post.Content = Markdown.ToHtml(post.Content);
 

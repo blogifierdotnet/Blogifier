@@ -1,10 +1,13 @@
 ﻿using Core.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -14,7 +17,9 @@ namespace Core.Services
     {
         Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
         Task<ISyndicationFeedWriter> GetWriter(string type, string host, XmlWriter xmlWriter);
+        Task RssImport(IFormFile file, string userId);
     }
+
     public class SyndicationService : ISyndication
     {
         IUnitOfWork _db;
@@ -80,6 +85,69 @@ namespace Core.Services
             await atom.WriteGenerator("Blogifier", "https://github.com/blogifierdotnet/Blogifier", "1.0");
             await atom.WriteValue("updated", lastPost.Published.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             return atom;
+        }
+
+        public async Task RssImport(IFormFile file, string userId)
+        {
+            var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
+            var converter = new ReverseMarkdown.Converter();
+
+            using (var xmlReader = XmlReader.Create(reader, new XmlReaderSettings() {  }))
+            {
+                var feedReader = new RssFeedReader(xmlReader);
+
+                while (await feedReader.Read())
+                {
+                    if(feedReader.ElementType == SyndicationElementType.Item)
+                    {
+                        try
+                        {
+                            var item = await feedReader.ReadItem();
+
+                            PostItem post = new PostItem
+                            {
+                                Author = await _db.Authors.GetItem(a => a.Id == userId),
+                                Content = converter.Convert(item.Description),
+                                Title = item.Title,
+                                Slug = await GetSlug(item.Title),
+                                Published = item.Published.DateTime,
+                                Description = item.Title,
+                                Status = SaveStatus.Publishing
+                            };
+
+                            await _db.BlogPosts.SaveItem(post);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex.Message);
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        public async Task<string> GetSlug(string title)
+        {
+            string slug = title.ToSlug();
+            BlogPost post;
+
+            post = _db.BlogPosts.Single(p => p.Slug == slug);
+
+            if (post == null)
+                return await Task.FromResult(slug);
+
+            for (int i = 2; i < 100; i++)
+            {
+                post = _db.BlogPosts.Single(p => p.Slug == $"{slug}{i}");
+
+                if (post == null)
+                {
+                    return await Task.FromResult(slug + i.ToString());
+                }
+            }
+
+            return await Task.FromResult(slug);
         }
     }
 }
