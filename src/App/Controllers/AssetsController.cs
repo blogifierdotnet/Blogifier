@@ -15,12 +15,14 @@ namespace App.Controllers
     public class AssetsController : Controller
     {
         IUnitOfWork _db;
+        IStorageService _storage;
         UserManager<AppUser> _um;
 
-        public AssetsController(IUnitOfWork db, UserManager<AppUser> um)
+        public AssetsController(IUnitOfWork db, IStorageService storage, UserManager<AppUser> um)
         {
             _db = db;
             _um = um;
+            _storage = storage;
         }
 
         public async Task<AssetsModel> Index(int page = 1, string filter = "", string search = "")
@@ -94,9 +96,8 @@ namespace App.Controllers
         public IActionResult Remove(int id)
         {
             var asset = _db.Assets.Single(a => a.Id == id);
-            var storage = new BlogStorage(User.Identity.Name.ToLower());
 
-            storage.DeleteFile(asset.Path);
+            _storage.DeleteFile(asset.Path);
 
             _db.Assets.Remove(asset);
             _db.Complete();
@@ -119,10 +120,9 @@ namespace App.Controllers
             var user = _um.Users.Where(u => u.UserName == User.Identity.Name)
                     .FirstOrDefault();
 
-            var storage = new BlogStorage(User.Identity.Name.ToLower());
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);
 
-            var asset = await storage.UploadFormFile(file, Url.Content("~/"), path);
+            var asset = await _storage.UploadFormFile(file, Url.Content("~/"), path);
 
             // sometimes we just want to override uploaded file
             // only add DB record if asset does not exist yet

@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace App.Controllers
 {
@@ -19,11 +18,15 @@ namespace App.Controllers
     {
         IUnitOfWork _db;
         ISyndication _feed;
+        IRssImportService _rss;
+        IStorageService _storage;
 
-        public SettingsController(IUnitOfWork db, ISyndication feed)
+        public SettingsController(IUnitOfWork db, ISyndication feed, IRssImportService rss, IStorageService storage)
         {
             _db = db;
             _feed = feed;
+            _rss = rss;
+            _storage = storage;
         }
 
         public IActionResult Index()
@@ -232,6 +235,7 @@ namespace App.Controllers
                 Redirect("~/error/403");
 
             await _db.Authors.RemoveUser(author);
+            _storage.DeleteFolder(author.UserName);
 
             TempData["msg"] = Resources.Removed;
 
@@ -254,9 +258,9 @@ namespace App.Controllers
             if (!IsAdmin())
                 return Redirect("~/error/403");
 
-            var userId = _db.Authors.Single(a => a.UserName == User.Identity.Name).Id;
+            var user = _db.Authors.Single(a => a.UserName == User.Identity.Name);
 
-            await _feed.RssImport(file, userId);
+            await _rss.ImportFromFile(file);
 
             ViewBag.IsAdmin = true;
             return View();
@@ -272,8 +276,7 @@ namespace App.Controllers
             var themes = new List<SelectListItem>();
             themes.Add(new SelectListItem { Text = "Simple", Value = "Simple" });
 
-            var storage = new BlogStorage("");
-            var storageThemes = storage.GetThemes();
+            var storageThemes = _storage.GetThemes();
 
             if(storageThemes != null && storageThemes.Count > 0)
             {

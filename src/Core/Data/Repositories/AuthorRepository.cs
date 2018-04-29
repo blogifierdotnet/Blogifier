@@ -82,9 +82,6 @@ namespace Core.Data
 
         public async Task RemoveUser(AppUser user)
         {
-            var storage = new BlogStorage("");
-            storage.DeleteFolder(user.UserName);
-
             var authorPosts = _db.BlogPosts
                 .Where(p => p.UserId == user.Id).ToList();
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Services
 {
-    public interface IBlogStorage
+    public interface IStorageService
     {
         string Location { get; }
         void CreateFolder(string path);
@@ -22,23 +22,28 @@ namespace Core.Services
         Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "");
     }
 
-    public class BlogStorage : IBlogStorage
+    public class StorageService : IStorageService
     {
         string _blogSlug;
         string _separator = Path.DirectorySeparatorChar.ToString();
         string _uploadFolder = "data";
+        IHttpContextAccessor _httpContext;
 
-        public BlogStorage(string blogSlug)
+        public StorageService(IHttpContextAccessor httpContext)
         {
-            // can be null when blog not yet created
-            // and called to get themes for new profile
-            if (!string.IsNullOrEmpty(blogSlug))
+            if(httpContext.HttpContext == null)
             {
-                _blogSlug = blogSlug;
-
-                if (!Directory.Exists(Location))
-                    CreateFolder("");
+                _blogSlug = "";
             }
+            else
+            {
+                _blogSlug = httpContext.HttpContext.User.Identity.Name;
+            }
+            
+            _httpContext = httpContext;
+
+            if (!Directory.Exists(Location))
+                CreateFolder("");
         }
 
         public string Location

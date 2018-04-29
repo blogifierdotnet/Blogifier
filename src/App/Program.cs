@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Data;
+using Core.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,7 +32,10 @@ namespace App
                         services.GetRequiredService(typeof(UserManager<AppUser>));
 
                     var context = services.GetRequiredService<AppDbContext>();
-                    DbInitializer.Initialize(context, userMgr);
+
+                    var storage = services.GetRequiredService<IStorageService>();
+
+                    DbInitializer.Initialize(context, userMgr, storage);
                 }
                 catch { }
             }

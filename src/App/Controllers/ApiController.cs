@@ -1,5 +1,6 @@
 ﻿using Core.Data;
 using Core.Data.Models;
+using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace App.Controllers
     public class ApiController : Controller
     {
         IUnitOfWork _db;
+        IStorageService _storage;
 
-        public ApiController(IUnitOfWork db)
+        public ApiController(IUnitOfWork db, IStorageService storage)
         {
             _db = db;
+            _storage = storage;
         }
 
         [HttpGet, Authorize, Route("[controller]/author/{id}")]
@@ -59,6 +62,7 @@ namespace App.Controllers
                 Redirect("~/error/403");
 
             await _db.Authors.RemoveUser(author);
+            _storage.DeleteFolder(author.UserName);
         }
 
         bool IsAdmin()

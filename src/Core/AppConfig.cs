@@ -1,8 +1,10 @@
 ﻿using Core.Data;
 using Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,16 @@ namespace Core
         {
             AddFileProviders(services);
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ISyndication, SyndicationService>();
-            services.AddTransient<UserManager<AppUser>>();
+            services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IRssImportService, RssImportService>();
+
+            services.AddTransient<UserManager<AppUser>>();          
 
             return services;
         }
