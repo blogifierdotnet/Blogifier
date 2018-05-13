@@ -31,7 +31,7 @@ namespace Core.Services
 
         public StorageService(IHttpContextAccessor httpContext)
         {
-            if(httpContext.HttpContext == null)
+            if(httpContext == null || httpContext.HttpContext == null)
             {
                 _blogSlug = "";
             }
