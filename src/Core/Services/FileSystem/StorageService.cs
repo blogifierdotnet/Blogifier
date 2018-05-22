@@ -12,14 +12,17 @@ namespace Core.Services
     public interface IStorageService
     {
         string Location { get; }
+        
         void CreateFolder(string path);
-        void DeleteFile(string path);
         void DeleteFolder(string path);
-        IList<string> GetAssets(string path);
-        IList<string> GetThemes();
+        
         Task<Asset> UploadFormFile(IFormFile file, string root, string path = "");
         Task<Asset> UploadBase64Image(string baseImg, string root, string path = "");
         Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "");
+        void DeleteFile(string path);
+
+        IList<string> GetAssets(string path);
+        IList<string> GetThemes();
     }
 
     public class StorageService : IStorageService
@@ -83,7 +86,7 @@ namespace Core.Services
         public IList<string> GetThemes()
         {
             var items = new List<string>();
-            var dir = Path.Combine(AppSettings.ContentRootPath, $"Views{_separator}Themes");
+            var dir = Path.Combine(GetAppRoot(), $"Views{_separator}Themes");
             try
             {
                 foreach (string d in Directory.GetDirectories(dir))
@@ -266,18 +269,18 @@ namespace Core.Services
             return string.Concat(_uploadFolder, "/", _blogSlug, url);
         }
 
-        /// <summary>
-        /// This only needed when ApplicationSettings.WebRootPath not available
-        /// for example when executing unit tests
-        /// </summary>
-        /// <returns>Path to application folder</returns>
         string GetAppRoot()
         {
+            // normal application run
+            if(!string.IsNullOrEmpty(AppSettings.ContentRootPath))
+                return AppSettings.ContentRootPath;
+
+            // unit tests run
             var assembly = Assembly.Load(new AssemblyName("Tests"));
             var uri = new UriBuilder(assembly.CodeBase);
             var path = Uri.UnescapeDataString(uri.Path);
             var root = Path.GetDirectoryName(path);
-            root = root.Substring(0, root.IndexOf("Tests")).Replace("tests\\", "");
+            root = root.Substring(0, root.IndexOf("Tests")); //.Replace("tests\\", "");
 
             return Path.Combine(root, "App");
         }
