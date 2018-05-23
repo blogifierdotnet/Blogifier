@@ -5,6 +5,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace App
 {
@@ -37,7 +38,11 @@ namespace App
 
                     DbInitializer.Initialize(context, userMgr, storage);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    //TODO: log exception
+                    var msg = ex.Message;
+                }
             }
         }
 

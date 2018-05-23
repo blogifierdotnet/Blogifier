@@ -231,8 +231,10 @@ There is simple but quick and functional search in the post lists, as well as se
                     context.Assets.Add(asset2);
                 }
 
-                context.SaveChanges();
                 AppSettings.Cover = "data/admin/cover-desk.jpg";
+                context.Settings.Add(new Setting { SettingKey = "app-cover", SettingValue = AppSettings.Cover });
+
+                context.SaveChanges();
             }
         }
 

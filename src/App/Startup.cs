@@ -27,6 +27,10 @@ namespace App
             {
                 services.AddDbContext<AppDbContext>(o => o.UseSqlite(section.GetValue<string>("ConnString")));
             }
+            else if (section.GetValue<string>("DbProvider") == "SqlServer")
+            {
+                services.AddDbContext<AppDbContext>(o => o.UseSqlServer(section.GetValue<string>("ConnString")));
+            }
             else
             {
                 services.AddDbContext<AppDbContext>(o => o.UseInMemoryDatabase("Blogifier"));
