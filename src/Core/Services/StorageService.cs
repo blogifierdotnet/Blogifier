@@ -68,19 +68,15 @@ namespace Core.Services
 
         public IList<string> GetAssets(string path)
         {
-            var items = new List<string>();
             path = path.Replace("/", _separator);
-            var dir = string.IsNullOrEmpty(path) ? Location : Path.Combine(Location, path);
             try
             {
-                foreach (string f in Directory.GetFiles(dir))
-                    items.Add(f);
-
-                foreach (string d in Directory.GetDirectories(dir))
-                    items.Add(d);
+                var dir = string.IsNullOrEmpty(path) ? Location : Path.Combine(Location, path);
+                var items = Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
+                return new List<string>(items);
             }
             catch { }
-            return items;
+            return null;
         }
 
         public IList<string> GetThemes()

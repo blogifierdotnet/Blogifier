@@ -9,7 +9,8 @@ namespace Tests.Services
     {
         IStorageService _storage;
         static string _img = "picasa.png";
-        static Uri _imgUri = new Uri("http://dnbe.net/v01/images/" + _img);
+        static Uri _uri1 = new Uri("http://dnbe.net/v01/images/" + _img);
+        static Uri _uri2 = new Uri("http://dnbe.net/v01/images/mp3player.png");
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
 
         public StorageServiceTests()
@@ -33,9 +34,32 @@ namespace Tests.Services
         }
 
         [Fact]
+        public async Task CanGetAssets()
+        {
+            // create folders and files
+            _storage.CreateFolder("foo");
+            _storage.CreateFolder("foo/bar");
+
+            await _storage.UploadFromWeb(_uri1, "/", "foo");
+            await _storage.UploadFromWeb(_uri2, "/", "foo/bar");
+
+            // get all files from folder structure
+            var assets = _storage.GetAssets("foo");
+
+            Assert.NotNull(assets);
+            Assert.NotEmpty(assets);
+
+            // cleanup
+            _storage.DeleteFolder("foo");
+
+            var folder = System.IO.Path.Combine(_storage.Location, "foo");
+            Assert.False(System.IO.Directory.Exists(folder));
+        }
+
+        [Fact]
         public async Task CanCreateDeleteFile()
         {
-            var result = await _storage.UploadFromWeb(_imgUri, "/");
+            var result = await _storage.UploadFromWeb(_uri1, "/");
             Assert.True(System.IO.File.Exists(result.Path));
 
             _storage.DeleteFile(_img);
@@ -51,7 +75,7 @@ namespace Tests.Services
             Assert.True(System.IO.Directory.Exists(folder));
 
             // not just emply folder
-            await _storage.UploadFromWeb(_imgUri, "/", "foo");
+            await _storage.UploadFromWeb(_uri1, "/", "foo");
 
             _storage.DeleteFolder(folder);
             Assert.False(System.IO.Directory.Exists(folder));
