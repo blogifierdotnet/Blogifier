@@ -1,4 +1,5 @@
-﻿using Core.Services;
+﻿using Core.Data;
+using Core.Services;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -54,6 +55,16 @@ namespace Tests.Services
 
             var folder = System.IO.Path.Combine(_storage.Location, "foo");
             Assert.False(System.IO.Directory.Exists(folder));
+        }
+
+        [Fact]
+        public async Task CanFindAssets()
+        {
+            var pager = new Pager(1);
+            var assets = await _storage.Find(null, pager, "");
+
+            Assert.NotNull(assets);
+            Assert.NotEmpty(assets);
         }
 
         [Fact]

@@ -79,40 +79,6 @@ namespace Core.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Core.Data.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AssetType");
-
-                    b.Property<int>("DownloadCount");
-
-                    b.Property<long>("Length");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<DateTime>("Published");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(160);
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Assets");
-                });
-
             modelBuilder.Entity("Core.Data.BlogPost", b =>
                 {
                     b.Property<int>("Id")

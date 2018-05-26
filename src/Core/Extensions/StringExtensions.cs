@@ -70,6 +70,18 @@ namespace Core
             return source.IndexOf(toCheck, comp) >= 0;
         }
 
+        // true if string ends with image extension
+        public static bool IsImagePath(this string str)
+        {
+            if(str.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                str.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                str.EndsWith(".gif", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static string ReplaceIgnoreCase(this string str, string search, string replacement)
         {
             string result = Regex.Replace(

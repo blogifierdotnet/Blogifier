@@ -145,14 +145,7 @@
     <script src="~/admin/markdown/simplemde.min.js"></script>
     <script>
         editorController.loadButtons('@Model.Id');
-
         var simplemde = getEditor();
-
-        var updatePostCoverCallback = function (data) {
-            $('.bf-editor-header').css('background-image', 'url(' + webRoot + data.url + ')');
-            $('#hdnPostImg').val(data.url);
-            toastr.success('Updated');
-        }
     </script>
     @if (Context.Request.Query["msg"] == "ok")
     {

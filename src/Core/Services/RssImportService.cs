@@ -153,7 +153,7 @@ namespace Core.Services
 
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
-                        Asset asset;
+                        AssetItem asset;
                         if (uri.Contains("data:image"))
                         {
                             asset = await _storage.UploadBase64Image(uri, webRoot, path);
@@ -163,15 +163,8 @@ namespace Core.Services
                             asset = await _storage.UploadFromWeb(new Uri(uri), webRoot, path);
                         }
 
-                        asset.UserId = _user.Id;
-                        asset.Published = SystemClock.Now();
-
-                        if (isAttachement)
-                            asset.AssetType = AssetType.Attachment;
-
                         post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
 
-                        _db.Assets.Add(asset);
                         _db.Complete();
                     }
                     catch (Exception)

@@ -11,7 +11,6 @@ namespace Core.Data
         }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<Asset> Assets { get; set; }
         public DbSet<Setting> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

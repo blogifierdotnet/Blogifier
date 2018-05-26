@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -16,13 +17,15 @@ namespace Core.Services
         void CreateFolder(string path);
         void DeleteFolder(string path);
         
-        Task<Asset> UploadFormFile(IFormFile file, string root, string path = "");
-        Task<Asset> UploadBase64Image(string baseImg, string root, string path = "");
-        Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "");
+        Task<AssetItem> UploadFormFile(IFormFile file, string root, string path = "");
+        Task<AssetItem> UploadBase64Image(string baseImg, string root, string path = "");
+        Task<AssetItem> UploadFromWeb(Uri requestUri, string root, string path = "");
         void DeleteFile(string path);
 
         IList<string> GetAssets(string path);
         IList<string> GetThemes();
+
+        Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "");
     }
 
     public class StorageService : IStorageService
@@ -92,7 +95,7 @@ namespace Core.Services
             return items;
         }
 
-        public async Task<Asset> UploadFormFile(IFormFile file, string root, string path = "")
+        public async Task<AssetItem> UploadFormFile(IFormFile file, string root, string path = "")
         {
             path = path.Replace("/", _separator);
 
@@ -106,17 +109,16 @@ namespace Core.Services
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);
-                return new Asset
+                return new AssetItem
                 {
                     Title = fileName,
                     Path = TrimFilePath(filePath),
-                    Url = GetUrl(filePath, root),
-                    Length = file.Length
+                    Url = GetUrl(filePath, root)
                 };
             }
         }
 
-        public async Task<Asset> UploadBase64Image(string baseImg, string root, string path = "")
+        public async Task<AssetItem> UploadBase64Image(string baseImg, string root, string path = "")
         {
             path = path.Replace("/", _separator);
             var fileName = "";
@@ -149,16 +151,15 @@ namespace Core.Services
 
             await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(baseImg));
 
-            return new Asset
+            return new AssetItem
             {
                 Title = fileName,
                 Path = filePath,
-                Url = GetUrl(filePath, root),
-                Length = bytes.Length
+                Url = GetUrl(filePath, root)
             };
         }
 
-        public async Task<Asset> UploadFromWeb(Uri requestUri, string root, string path = "")
+        public async Task<AssetItem> UploadFromWeb(Uri requestUri, string root, string path = "")
         {
             path = path.Replace("/", _separator);
 
@@ -178,16 +179,31 @@ namespace Core.Services
                         stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 3145728, true))
                     {
                         await contentStream.CopyToAsync(stream);
-                        return new Asset
+                        return new AssetItem
                         {
                             Title = fileName,
                             Path = filePath,
-                            Url = GetUrl(filePath, root),
-                            Length = contentStream.Length
+                            Url = GetUrl(filePath, root)
                         };
                     }
                 }
             }
+        }
+
+        public async Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "")
+        {
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+            var files = GetAssets(path);
+            var items = MapFilesToAssets(files);
+
+            if (predicate != null)
+                items = items.Where(predicate).ToList();
+
+            pager.Configure(items.Count);
+
+            var page = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
+
+            return await Task.FromResult(page);
         }
 
         public void CreateFolder(string path)
@@ -310,6 +326,78 @@ namespace Core.Services
             }
 
             return title.Replace("/", "");
+        }
+
+        List<AssetItem> MapFilesToAssets(IList<string> assets)
+        {
+            var items = new List<AssetItem>();
+
+            foreach (var asset in assets)
+            {
+                items.Add(new AssetItem {
+                    Path = asset,
+                    Url = pathToUrl(asset),
+                    Title = pathToTitle(asset),
+                    Image = pathToImage(asset)
+                });
+            }
+
+            return items;
+        }
+
+        string pathToUrl(string path)
+        {
+            return path.Substring(path.IndexOf("wwwroot") + 8)
+                .Replace(_separator, "/");
+        }
+
+        string pathToTitle(string path)
+        {
+            var title = path;
+
+            if(title.LastIndexOf(_separator) > 0)
+                title = title.Substring(title.LastIndexOf(_separator));       
+
+            if(title.IndexOf('.') > 0)
+                title = title.Substring(1, title.IndexOf('.'));
+
+            return title;
+        }
+
+        string pathToImage(string path)
+        {
+            if(path.IsImagePath())
+                return pathToUrl(path);
+
+            var ext = "blank.png";
+
+            if (path.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                ext = "xml.png";
+
+            if (path.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+                ext = "zip.png";
+
+            if (path.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+                ext = "txt.png";
+
+            if (path.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                ext = "pdf.png";
+
+            if (path.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase))
+                ext = "mp3.png";
+
+            if (path.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
+                ext = "mp4.png";
+
+            if (path.EndsWith(".doc", StringComparison.OrdinalIgnoreCase) ||
+                path.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
+                ext = "doc.png";
+
+            if (path.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ||
+                path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+                ext = "xls.png";
+
+            return $"lib/img/doctypes/{ext}";
         }
     }
 }

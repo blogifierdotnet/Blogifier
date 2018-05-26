@@ -14,17 +14,17 @@
     function pick(id) {
         var items = $('.bf-filemanager .item-check:checked');
         if (callBack.name === 'insertImageCallback') {
-            if (id === 0) {
-                for (i = 0; i < items.length; i++) {
-                    dataService.get('assets/single/' + items[i].id, callBack, fail);
-                }
+            if (items.length === 0) {
+                callBack(id);
             }
             else {
-                dataService.get('assets/single/' + id, callBack, fail);
+                for (i = 0; i < items.length; i++) {
+                    callBack(items[i].id);
+                }
             }
         }
         else {
-            if (id === 0) {
+            if (id === '') {
                 if (items.length === 0) {
                     toastr.error('Please select an item');
                 }
@@ -68,10 +68,10 @@
         var items = $('#fileManagerList input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
-                dataService.remove('assets/remove/' + items[i].id, emptyCallback, fail);
+                dataService.remove('assets/remove?id=' + items[i].url, emptyCallback, fail);
             }
             else {
-                dataService.remove('assets/remove/' + items[i].id, removeCallback, fail);
+                dataService.remove('assets/remove?id=' + items[i].url, removeCallback, fail);
             }
         }
     }
@@ -104,9 +104,9 @@
             var src = asset.assetType === 0 ? webRoot + asset.url : webRoot + asset.image;
             var tag = '<div class="col-sm-6 col-md-4 col-lg-3">' +
                 '	<div class="item">' +
-                '		<div class="item-img" onclick="fileManagerController.pick(' + asset.id + '); return false"><img src="' + src + '" alt="' + asset.title + '" /></div>' +
+                '		<div class="item-img" onclick="fileManagerController.pick(\'' + asset.url + '\'); return false"><img src="' + src + '" alt="' + asset.title + '" /></div>' +
                 '		<label class="custom-control custom-checkbox item-name">' +
-                '			<input type="checkbox" id="' + asset.id + '" class="custom-control-input item-check" onchange="fileManagerController.check(this)">' +
+                '			<input type="checkbox" id="' + asset.url + '" class="custom-control-input item-check" onchange="fileManagerController.check(this)">' +
                 '			<span class="custom-control-label">' + asset.title + '</span>' +
                 '		</label>' +
                 '	</div>' +
@@ -146,9 +146,6 @@
     }
 
     function emptyCallback(data) { }
-    function fail() {
-        toastr.error('Failed');
-    }
 
     function check(cbx) {
         if (!cbx.checked) {
@@ -215,5 +212,25 @@ var updateAppCoverCallback = function (data) {
 }
 var updateAppLogoCallback = function (data) {
     $('#Logo').val(data.url);
+    toastr.success('Updated');
+}
+
+var insertImageCallback = function (data) {
+    var cm = _editor.codemirror;
+    var output = data + '](' + webRoot + data + ')';
+
+    if (data.toLowerCase().match(/.(jpg|jpeg|png|gif)$/i)) {
+        output = '\r\n![' + output;
+    }
+    else {
+        output = '\r\n[' + output;
+    }
+    var selectedText = cm.getSelection();
+    cm.replaceSelection(output);
+};
+
+var updatePostCoverCallback = function (data) {
+    $('.bf-editor-header').css('background-image', 'url(' + webRoot + data.url + ')');
+    $('#hdnPostImg').val(data.url);
     toastr.success('Updated');
 }

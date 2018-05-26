@@ -11,8 +11,8 @@ using System;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180407054543_InitDb")]
-    partial class InitDb
+    [Migration("20180526152612_InitAppDb")]
+    partial class InitAppDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,40 +78,6 @@ namespace Core.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Core.Data.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AssetType");
-
-                    b.Property<int>("DownloadCount");
-
-                    b.Property<long>("Length");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<DateTime>("Published");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(160);
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Assets");
                 });
 
             modelBuilder.Entity("Core.Data.BlogPost", b =>

@@ -140,20 +140,6 @@ function openFileMgr(editor) {
     fileManagerController.open(insertImageCallback);
 }
 
-var insertImageCallback = function (data) {
-    var cm = _editor.codemirror;
-    var output = data.title + '](' + webRoot + data.url + ')';
-
-    if (data.url.toLowerCase().match(/.(jpg|jpeg|png|gif)$/i)) {
-        output = '\r\n![' + output;
-    }
-    else {
-        output = '\r\n[' + output;
-    }
-    var selectedText = cm.getSelection();
-    cm.replaceSelection(output);
-};
-
 // Create the measurement node for scrollbar
 var scrollDiv = document.createElement("div");
 scrollDiv.className = "scrollbar-measure";

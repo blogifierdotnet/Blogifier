@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Data.Models;
 
 namespace Core.Data
 {
@@ -13,6 +12,7 @@ namespace Core.Data
         Task<IEnumerable<PostItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
         Task<PostItem> SaveItem(PostItem item);
+        Task SaveCover(int postId, string asset);
     }
 
     public class PostRepository : Repository<BlogPost>, IPostRepository
@@ -90,6 +90,14 @@ namespace Core.Data
                 item.Slug = post.Slug;
             }
             return await Task.FromResult(item);
+        }
+
+        public async Task SaveCover(int postId, string asset)
+        {
+            var item = _db.BlogPosts.Single(p => p.Id == postId);
+            item.Cover = asset;
+
+            await _db.SaveChangesAsync();
         }
     }
 }

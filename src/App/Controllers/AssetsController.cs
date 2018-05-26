@@ -15,40 +15,40 @@ namespace App.Controllers
     public class AssetsController : Controller
     {
         IUnitOfWork _db;
-        IStorageService _storage;
+        IStorageService _ss;
         UserManager<AppUser> _um;
 
-        public AssetsController(IUnitOfWork db, IStorageService storage, UserManager<AppUser> um)
+        public AssetsController(IUnitOfWork db, IStorageService ss, UserManager<AppUser> um)
         {
             _db = db;
             _um = um;
-            _storage = storage;
+            _ss = ss;
         }
 
         public async Task<AssetsModel> Index(int page = 1, string filter = "", string search = "")
         {
             var pager = new Pager(page);
             var user = _um.Users.Single(u => u.UserName == User.Identity.Name);
-            IEnumerable<Asset> items;
+            IEnumerable<AssetItem> items;
 
             if (string.IsNullOrEmpty(search))
             {
                 if (filter == "filterImages")
                 {
-                    items = await _db.Assets.Find(a => a.UserId == user.Id && a.AssetType == AssetType.Image, pager);
+                    items = await _ss.Find(a => a.AssetType == AssetType.Image, pager);
                 }
                 else if(filter == "filterAttachments")
                 {
-                    items = await _db.Assets.Find(a => a.UserId == user.Id && a.AssetType == AssetType.Attachment, pager);
+                    items = await _ss.Find(a => a.AssetType == AssetType.Attachment, pager);
                 }
                 else
                 {
-                    items = await _db.Assets.Find(a => a.UserId == user.Id, pager);
+                    items = await _ss.Find(null, pager);
                 }
             }
             else
             {
-                items = await _db.Assets.Find(a => a.Title.Contains(search), pager);
+                items = await _ss.Find(a => a.Title.Contains(search), pager);
             }
 
             if (page < 1 || page > pager.LastPage)
@@ -61,46 +61,34 @@ namespace App.Controllers
             };
         }
 
-        public async Task<Asset> Pick(string type, string asset, string post)
+        public async Task<AssetItem> Pick(string type, string asset, string post)
         {
-            var url = _db.Assets.Single(a => a.Id == int.Parse(asset)).Url;
-
             if (type == "postCover")
             {
-                return await _db.Assets.SavePostCover(int.Parse(post), int.Parse(asset));
+                await _db.BlogPosts.SaveCover(int.Parse(post), asset);
             }
-            else if(type == "appCover")
+            else if (type == "appCover")
             {
-                await _db.Settings.SaveSetting("app-cover", url);
+                await _db.Settings.SaveSetting("app-cover", asset);
             }
             else if (type == "appLogo")
             {
-                await _db.Settings.SaveSetting("app-logo", url);
+                await _db.Settings.SaveSetting("app-logo", asset);
             }
             else if (type == "avatar")
             {
                 var user = await _um.FindByNameAsync(User.Identity.Name);
-                user.Avatar = url;
+                user.Avatar = asset;
                 await _um.UpdateAsync(user);
             }
 
-            var dbAsset = _db.Assets.Single(a => a.Id == int.Parse(asset));
-            return await Task.FromResult(dbAsset);
+            var item = await _ss.Find(a => a.Url == asset, new Pager(1));
+            return item.FirstOrDefault();
         }
 
-        public async Task<Asset> Single(int id)
+        public IActionResult Remove(string url)
         {
-            return await Task.FromResult(_db.Assets.Single(a => a.Id == id));
-        }
-
-        public IActionResult Remove(int id)
-        {
-            var asset = _db.Assets.Single(a => a.Id == id);
-
-            _storage.DeleteFile(asset.Path);
-
-            _db.Assets.Remove(asset);
-            _db.Complete();
+            _ss.DeleteFile(url);
 
             return Ok("Deleted");
         }
@@ -122,42 +110,7 @@ namespace App.Controllers
 
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);
 
-            var asset = await _storage.UploadFormFile(file, Url.Content("~/"), path);
-
-            // sometimes we just want to override uploaded file
-            // only add DB record if asset does not exist yet
-            var existingAsset = _db.Assets.Find(a => a.Path == asset.Path).FirstOrDefault();
-            if (existingAsset == null)
-            {
-                asset.UserId = user.Id;
-                asset.Published = SystemClock.Now();
-
-                if (IsImageFile(asset.Url))
-                {
-                    asset.AssetType = AssetType.Image;
-                }
-                else
-                {
-                    asset.AssetType = AssetType.Attachment;
-                }
-                _db.Assets.Add(asset);
-            }
-            else
-            {
-                existingAsset.Published = SystemClock.Now();
-            }
-            _db.Complete();
-        }
-
-        bool IsImageFile(string file)
-        {
-            if (file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                file.EndsWith(".gif", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            return false;
+            var asset = await _ss.UploadFormFile(file, Url.Content("~/"), path);
         }
     }
 }

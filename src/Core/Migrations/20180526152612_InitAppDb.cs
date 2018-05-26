@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Core.Migrations
 {
-    public partial class InitDb : Migration
+    public partial class InitAppDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,26 +49,6 @@ namespace Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Assets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    AssetType = table.Column<int>(nullable: false),
-                    DownloadCount = table.Column<int>(nullable: false),
-                    Length = table.Column<long>(nullable: false),
-                    Path = table.Column<string>(maxLength: 250, nullable: false),
-                    Published = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(maxLength: 160, nullable: false),
-                    Url = table.Column<string>(maxLength: 250, nullable: false),
-                    UserId = table.Column<string>(maxLength: 250, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,9 +246,6 @@ namespace Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Assets");
 
             migrationBuilder.DropTable(
                 name: "BlogPosts");

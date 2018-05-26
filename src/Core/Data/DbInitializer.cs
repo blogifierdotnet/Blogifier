@@ -111,82 +111,6 @@ There is simple but quick and functional search in the post lists, as well as se
                     {
                         context.BlogPosts.Add(p);
                     }
-
-                    var assets = new Asset[]
-                    {
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 100,
-                            Published = DateTime.Now.AddDays(-15),
-                            Title = "admin-editor",
-                            Length = 1000,
-                            UserId = userId,
-                            Path = @"data\admin\admin-editor.png",
-                            Url = "data/admin/admin-editor.png"
-                        },
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 200,
-                            Published = DateTime.Now.AddDays(-10),
-                            Title = "admin-files",
-                            Length = 2000,
-                            UserId = userId,
-                            Path = @"data\admin\admin-files.png",
-                            Url = "data/admin/admin-files.png"
-                        },
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 0,
-                            Published = DateTime.Now.AddDays(-10),
-                            Title = "Avatar",
-                            Length = 2000,
-                            UserId = userId,
-                            Path = @"data\admin\avatar.png",
-                            Url = "data/admin/avatar.png"
-                        },
-
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 0,
-                            Published = DateTime.Now.AddDays(-10),
-                            Title = "cover-blog",
-                            Length = 2000,
-                            UserId = userId,
-                            Path = @"data\admin\cover-blog.png",
-                            Url = "data/admin/cover-blog.png"
-                        },
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 0,
-                            Published = DateTime.Now.AddDays(-10),
-                            Title = "cover-desk",
-                            Length = 2000,
-                            UserId = userId,
-                            Path = @"data\admin\cover-desk.jpg",
-                            Url = "data/admin/cover-desk.jpg"
-                        },
-                        new Asset
-                        {
-                            AssetType = AssetType.Image,
-                            DownloadCount = 0,
-                            Published = DateTime.Now.AddDays(-10),
-                            Title = "cover-globe",
-                            Length = 2000,
-                            UserId = userId,
-                            Path = @"data\admin\cover-globe.png",
-                            Url = "data/admin/cover-globe.png"
-                        }
-                    };
-
-                    foreach (Asset a in assets)
-                    {
-                        context.Assets.Add(a);
-                    }
                 }
 
                 var user2 = new AppUser {
@@ -216,19 +140,6 @@ There is simple but quick and functional search in the post lists, as well as se
                         Rating = 3.5,
                         Published = DateTime.UtcNow.AddDays(-10)
                     });
-
-                    var asset2 = new Asset
-                    {
-                        AssetType = AssetType.Image,
-                        DownloadCount = 0,
-                        Published = DateTime.Now.AddDays(-8),
-                        Title = "demo-cover.jpg",
-                        Length = 2000,
-                        UserId = user2.Id,
-                        Path = @"data\demo\demo-cover.jpg",
-                        Url = "data/demo/demo-cover.jpg"
-                    };
-                    context.Assets.Add(asset2);
                 }
 
                 AppSettings.Cover = "data/admin/cover-desk.jpg";
