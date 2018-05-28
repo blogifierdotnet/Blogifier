@@ -16,32 +16,38 @@ namespace Core.Services
 {
     public interface IRssImportService
     {
-        Task ImportFromFile(IFormFile file);
+        Task ImportFormFile(IFormFile file);
+        Task ImportFile(string fileName);
     }
 
     public class RssImportService : IRssImportService
     {
         IUnitOfWork _db;
         IStorageService _storage;
-        IHttpContextAccessor _http;
-        AppUser _user;
+        string _user;
         string _siteUrl;
 
-        public RssImportService(IUnitOfWork db, IHttpContextAccessor http, IStorageService storage)
+        public RssImportService(IUnitOfWork db, IStorageService storage, string user)
         {
             _db = db;
-            _user = _db.Authors.Single(a => a.UserName == http.HttpContext.User.Identity.Name);
+            _user = user;
             _storage = storage;
-            _http = http;
         }
 
-        public async Task ImportFromFile(IFormFile file)
+        public async Task ImportFile(string fileName)
+        {
+            var reader = new StreamReader(fileName, Encoding.UTF8);
+            await Import(reader);
+        }
+
+        public async Task ImportFormFile(IFormFile file)
         {
             var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
+            await Import(reader);
+        }
 
-            var req = _http.HttpContext.Request;
-            var xxx = req.PathBase;
-            
+        async Task Import(StreamReader reader)
+        {          
             using (var xmlReader = XmlReader.Create(reader, new XmlReaderSettings() { }))
             {
                 var feedReader = new RssFeedReader(xmlReader);
@@ -62,7 +68,7 @@ namespace Core.Services
 
                             PostItem post = new PostItem
                             {
-                                Author = await _db.Authors.GetItem(a => a.UserName == _user.UserName),
+                                Author = await _db.Authors.GetItem(a => a.UserName == _user),
                                 Title = item.Title,
                                 Description = item.Title,
                                 Content = item.Description,

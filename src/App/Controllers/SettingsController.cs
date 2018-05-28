@@ -260,7 +260,7 @@ namespace App.Controllers
 
             var user = _db.Authors.Single(a => a.UserName == User.Identity.Name);
 
-            await _rss.ImportFromFile(file);
+            await _rss.ImportFormFile(file);
 
             ViewBag.IsAdmin = true;
             return View();
