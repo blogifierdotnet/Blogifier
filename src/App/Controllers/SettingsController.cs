@@ -17,66 +17,35 @@ namespace App.Controllers
     public class SettingsController : Controller
     {
         IUnitOfWork _db;
-        ISyndication _feed;
-        IRssImportService _rss;
+        ISyndicationService _feed;
         IStorageService _storage;
 
-        public SettingsController(IUnitOfWork db, ISyndication feed, IRssImportService rss, IStorageService storage)
+        public SettingsController(IUnitOfWork db, ISyndicationService feed, IStorageService storage)
         {
             _db = db;
             _feed = feed;
-            _rss = rss;
             _storage = storage;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.IsAdmin = IsAdmin();
 
             if (!ViewBag.IsAdmin)
                 return RedirectToAction(nameof(Profile));
 
-            var model = new SettingsModel
-            {
-                Title = AppSettings.Title,
-                Description = AppSettings.Description,
-                Logo = AppSettings.Logo,
-                Cover = AppSettings.Cover,
-                PostListType = AppSettings.PostListType,
-                ItemsPerPage = AppSettings.ItemsPerPage,
-                Theme = AppSettings.Theme,
-                BlogThemes = GetThemes()
-            };
+            var blog = await _db.Blogs.GetBlog();
+            blog.BlogThemes = GetThemes();
 
-            return View(model);
+            return View(blog);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(SettingsModel model)
+        public async Task<IActionResult> Index(BlogItem model)
         {
             if (ModelState.IsValid)
             {
-                if(AppSettings.Title != model.Title)
-                    await _db.Settings.SaveSetting("app-title", model.Title);
-
-                if(AppSettings.Description != model.Description)
-                    await _db.Settings.SaveSetting("app-desc", model.Description);
-
-                if (AppSettings.Logo != model.Logo)
-                    await _db.Settings.SaveSetting("app-logo", model.Logo);
-
-                if (AppSettings.DefaultCover != model.Cover)
-                    await _db.Settings.SaveSetting("app-cover", model.Cover);
-
-                if(AppSettings.Theme != model.Theme)
-                    await _db.Settings.SaveSetting("app-theme", model.Theme);
-
-                if(AppSettings.ItemsPerPage != model.ItemsPerPage)
-                    await _db.Settings.SaveSetting("app-items-per-page", model.ItemsPerPage.ToString());
-
-                var selectedListType = Request.Form["app-post-list-type"];
-                if (AppSettings.PostListType != selectedListType)
-                    await _db.Settings.SaveSetting("app-post-list-type", selectedListType);
+                await _db.Blogs.SaveBlog(model);
 
                 TempData["msg"] = Resources.Updated;
                 return RedirectToAction(nameof(Index));
@@ -260,7 +229,7 @@ namespace App.Controllers
 
             var user = _db.Authors.Single(a => a.UserName == User.Identity.Name);
 
-            await _rss.ImportFormFile(file);
+            await _feed.ImportRss(file, User.Identity.Name);
 
             ViewBag.IsAdmin = true;
             return View();

@@ -73,17 +73,22 @@ namespace Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Settings",
+                name: "Blogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SettingKey = table.Column<string>(maxLength: 140, nullable: false),
-                    SettingValue = table.Column<string>(nullable: true)
+                    Cover = table.Column<string>(maxLength: 160, nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: false),
+                    ItemsPerPage = table.Column<int>(nullable: false),
+                    Logo = table.Column<string>(maxLength: 160, nullable: true),
+                    PostListType = table.Column<string>(nullable: true),
+                    Theme = table.Column<string>(maxLength: 120, nullable: false),
+                    Title = table.Column<string>(maxLength: 160, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,7 +256,7 @@ namespace Core.Migrations
                 name: "BlogPosts");
 
             migrationBuilder.DropTable(
-                name: "Settings");
+                name: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

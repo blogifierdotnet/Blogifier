@@ -1,18 +1,17 @@
 ﻿using Core.Data;
 using Core.Data.Models;
 using Core.Services;
+using Moq;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
-using Moq;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Services
 {
     public class RssImportServiceTests
     {
-        private readonly Mock<IRssImportService> _importService = new Mock<IRssImportService>();
+        private readonly Mock<ISyndicationService> _syndicationService = new Mock<ISyndicationService>();
         private readonly Mock<IStorageService> _storageService = new Mock<IStorageService>();
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly Mock<IAuthorRepository> authorRepository = new Mock<IAuthorRepository>();
@@ -35,10 +34,10 @@ namespace Tests.Services
             Assert.True(true);
         }
 
-        private Core.Services.RssImportService GetSut()
+        private SyndicationService GetSut()
         {
-            return new Core.Services.RssImportService(
-                _unitOfWork.Object, _storageService.Object, "admin");
+            return new SyndicationService(
+                _unitOfWork.Object, _storageService.Object);
         }
 
         private void SetupDependencies()

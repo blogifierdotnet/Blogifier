@@ -1,5 +1,4 @@
-﻿using Core;
-using Core.Data;
+﻿using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -16,8 +15,6 @@ namespace App
             var host = BuildWebHost(args);
 
             SeedData(host);
-
-            LoadSettings(host);
 
             host.Run();
         }
@@ -43,30 +40,6 @@ namespace App
                     //TODO: log exception
                     var msg = ex.Message;
                 }
-            }
-        }
-
-        static void LoadSettings(IWebHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<AppDbContext>();
-
-                    foreach (var s in context.Settings)
-                    {
-                        if (s.SettingKey == "app-title") AppSettings.Title = s.SettingValue;
-                        if (s.SettingKey == "app-desc") AppSettings.Description = s.SettingValue;
-                        if (s.SettingKey == "app-logo") AppSettings.Logo = s.SettingValue;
-                        if (s.SettingKey == "app-cover") AppSettings.Cover = s.SettingValue;
-                        if (s.SettingKey == "app-theme") AppSettings.Theme = s.SettingValue;
-                        if (s.SettingKey == "app-post-list-type") AppSettings.PostListType = s.SettingValue;
-                        if (s.SettingKey == "app-items-per-page") AppSettings.ItemsPerPage = int.Parse(s.SettingValue);
-                    }
-                }
-                catch { }
             }
         }
 

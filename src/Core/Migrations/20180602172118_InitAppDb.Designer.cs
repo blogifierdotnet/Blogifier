@@ -11,7 +11,7 @@ using System;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180526152612_InitAppDb")]
+    [Migration("20180602172118_InitAppDb")]
     partial class InitAppDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,38 @@ namespace Core.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Core.Data.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Cover")
+                        .HasMaxLength(160);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("ItemsPerPage");
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(160);
+
+                    b.Property<string>("PostListType");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasMaxLength(120);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("Core.Data.BlogPost", b =>
                 {
                     b.Property<int>("Id")
@@ -114,22 +146,6 @@ namespace Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BlogPosts");
-                });
-
-            modelBuilder.Entity("Core.Data.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("SettingKey")
-                        .IsRequired()
-                        .HasMaxLength(140);
-
-                    b.Property<string>("SettingValue");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -63,17 +63,21 @@ namespace App.Controllers
 
         public async Task<AssetItem> Pick(string type, string asset, string post)
         {
+            var blog = await _db.Blogs.GetBlog();
+
             if (type == "postCover")
             {
                 await _db.BlogPosts.SaveCover(int.Parse(post), asset);
             }
             else if (type == "appCover")
             {
-                await _db.Settings.SaveSetting("app-cover", asset);
+                blog.Cover = asset;
+                _db.Complete();
             }
             else if (type == "appLogo")
             {
-                await _db.Settings.SaveSetting("app-logo", asset);
+                blog.Logo = asset;
+                _db.Complete();
             }
             else if (type == "avatar")
             {

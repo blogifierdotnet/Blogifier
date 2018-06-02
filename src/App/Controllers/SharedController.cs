@@ -9,9 +9,9 @@ namespace App.Controllers
 {
     public class SharedController : Controller
     {
-        ISyndication _feed;
+        ISyndicationService _feed;
 
-        public SharedController(ISyndication feed)
+        public SharedController(ISyndicationService feed)
         {
             _feed = feed;
         }

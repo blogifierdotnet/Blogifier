@@ -24,9 +24,8 @@ namespace Core
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<ISyndication, SyndicationService>();
+            services.AddTransient<ISyndicationService, SyndicationService>();
             services.AddTransient<IStorageService, StorageService>();
-            services.AddTransient<IRssImportService, RssImportService>();
 
             services.AddTransient<UserManager<AppUser>>();          
 

@@ -10,18 +10,27 @@ namespace Core.Data
     {
         public static void Initialize(AppDbContext context, UserManager<AppUser> userManager, IStorageService storage)
         {
-            if (context.BlogPosts.Any())
+            if (context.Blogs.Any())
                 return;
 
             ReloadStorage(storage);
 
+            var blog = new Blog
+            {
+                Title = "Blog tigle",
+                Description = "Short description of the blog",
+                Logo = "lib/img/logo-white.png",
+                Cover = "data/admin/cover-desk.png",
+                Theme = "Standard",
+                PostListType = "A",
+                ItemsPerPage = 10 
+            };
+
+            context.Blogs.Add(blog);
+            context.SaveChanges();
+
             if (userManager.FindByNameAsync("admin").Result == null)
             {
-                // app settings
-
-                context.Settings.Add(new Setting { SettingKey = "app-title", SettingValue = "Blog title" });
-                context.Settings.Add(new Setting { SettingKey = "app-desc", SettingValue = "Short description of the blog" });
-
                 // content
 
                 var user = new AppUser {
@@ -141,9 +150,6 @@ There is simple but quick and functional search in the post lists, as well as se
                         Published = DateTime.UtcNow.AddDays(-10)
                     });
                 }
-
-                AppSettings.Cover = "data/admin/cover-desk.jpg";
-                context.Settings.Add(new Setting { SettingKey = "app-cover", SettingValue = AppSettings.Cover });
 
                 context.SaveChanges();
             }
