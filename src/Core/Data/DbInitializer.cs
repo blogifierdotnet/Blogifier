@@ -11,7 +11,19 @@ namespace Core.Data
         public static void Initialize(AppDbContext context, UserManager<AppUser> userManager, IStorageService storage)
         {
             if (context.Blogs.Any())
+            {
+                var b = context.Blogs.FirstOrDefault();
+
+                AppSettings.Title = b.Title;
+                AppSettings.Description = b.Description;
+                AppSettings.Logo = b.Logo;
+                AppSettings.Cover = b.Cover;
+                AppSettings.Theme = b.Theme;
+                AppSettings.PostListType = b.PostListType;
+                AppSettings.ItemsPerPage = b.ItemsPerPage;
+
                 return;
+            }
 
             ReloadStorage(storage);
 
@@ -22,7 +34,7 @@ namespace Core.Data
                 Logo = "lib/img/logo-white.png",
                 Cover = "data/admin/cover-desk.png",
                 Theme = "Standard",
-                PostListType = "A",
+                PostListType = "description",
                 ItemsPerPage = 10 
             };
 

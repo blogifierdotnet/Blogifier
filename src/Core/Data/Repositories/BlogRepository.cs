@@ -52,6 +52,9 @@ namespace Core.Data
                 blog.ItemsPerPage = item.ItemsPerPage;
             }
             await _db.SaveChangesAsync();
+
+            // update app settings
+            AppSettings.Load(item);
         }
 
         BlogItem MapBlogToItem(Blog blog)
