@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,10 @@ namespace App
                     var storage = services.GetRequiredService<IStorageService>();
 
                     DbInitializer.Initialize(context, userMgr, storage);
+
+                    // load application settings from appsettings.json
+                    var app = services.GetRequiredService<IAppSettingsServices<AppItem>>();
+                    AppConfig.SetSettings(app.Value);
                 }
                 catch (Exception ex)
                 {

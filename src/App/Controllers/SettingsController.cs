@@ -19,33 +19,48 @@ namespace App.Controllers
         IUnitOfWork _db;
         ISyndicationService _feed;
         IStorageService _storage;
+        IAppSettingsServices<AppItem> _app;
 
-        public SettingsController(IUnitOfWork db, ISyndicationService feed, IStorageService storage)
+        public SettingsController(IUnitOfWork db, ISyndicationService feed, IStorageService storage, IAppSettingsServices<AppItem> app)
         {
             _db = db;
             _feed = feed;
             _storage = storage;
+            _app = app;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.IsAdmin = IsAdmin();
 
             if (!ViewBag.IsAdmin)
                 return RedirectToAction(nameof(Profile));
 
-            var blog = await _db.Blogs.GetBlog();
-            blog.BlogThemes = GetThemes();
+            _app.Value.BlogThemes = GetThemes();
 
-            return View(blog);
+            return View(_app.Value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(BlogItem model)
+        public IActionResult Index(AppItem model)
         {
             if (ModelState.IsValid)
             {
-                await _db.Blogs.SaveBlog(model);
+                _app.Update(app =>
+                {
+                    app.Title = model.Title;
+                    app.Description = model.Description;
+                    app.Logo = model.Logo;
+                    app.Cover = model.Cover;
+                    app.Theme = model.Theme;
+                    app.PostListType = model.PostListType;
+                    app.ItemsPerPage = model.ItemsPerPage;
+                });
+
+                //TODO: find better way to wait on config rewrite
+                System.Threading.Thread.Sleep(500);
+
+                AppConfig.SetSettings(model);
 
                 TempData["msg"] = Resources.Updated;
                 return RedirectToAction(nameof(Index));

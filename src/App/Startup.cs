@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Data;
+using Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ namespace App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            AddDb(services);
+            services.AddAppDatabase(Configuration);
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -36,7 +37,7 @@ namespace App
                 }
             });
 
-            services.AddCore();
+            services.AddAppServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -58,24 +59,6 @@ namespace App
                     name: "default",
                     template: "{controller=Blog}/{action=Index}/{id?}");
             });
-        }
-
-        void AddDb(IServiceCollection services)
-        {
-            var section = Configuration.GetSection("Blogifier");
-
-            if (section.GetValue<string>("DbProvider") == "SQLite")
-            {
-                services.AddDbContext<AppDbContext>(o => o.UseSqlite(section.GetValue<string>("ConnString")));
-            }
-            else if (section.GetValue<string>("DbProvider") == "SqlServer")
-            {
-                services.AddDbContext<AppDbContext>(o => o.UseSqlServer(section.GetValue<string>("ConnString")));
-            }
-            else
-            {
-                services.AddDbContext<AppDbContext>(o => o.UseInMemoryDatabase("Blogifier"));
-            }
         }
     }
 }

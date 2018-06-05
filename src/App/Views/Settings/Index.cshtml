@@ -1,4 +1,4 @@
-﻿@model BlogItem
+﻿@model AppItem
 @{
     var contSel = AppSettings.PostListType == "content" ? "checked" : "";
     var descSel = AppSettings.PostListType == "description" ? "checked" : "";
@@ -9,6 +9,8 @@
         <form method="post" asp-controller="Settings" asp-action="Index" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
                 <div class="bf-title d-none d-lg-block"><span>Blog settings</span></div>
+                <input type="hidden" asp-for="DbProvider" />
+                <input type="hidden" asp-for="ConnString" />
 
                 <div class="form-group">
                     <label class="form-group-label">Title</label>

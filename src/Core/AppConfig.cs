@@ -1,11 +1,4 @@
 ﻿using Core.Data;
-using Core.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,38 +8,6 @@ namespace Core
 {
     public static class AppConfig
     {
-        public static IServiceCollection AddCore(this IServiceCollection services)
-        {
-            AddFileProviders(services);
-
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddTransient<ISearchService, SearchService>();
-            services.AddTransient<ISyndicationService, SyndicationService>();
-            services.AddTransient<IStorageService, StorageService>();
-
-            services.AddTransient<UserManager<AppUser>>();          
-
-            return services;
-        }
-
-        static void AddFileProviders(IServiceCollection services)
-        {
-            try
-            {
-                services.Configure<RazorViewEngineOptions>(options =>
-                {
-                    foreach (var assembly in GetAssemblies())
-                    {
-                        options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
-                    }
-                });
-            }
-            catch { }
-        }
-
         public static IEnumerable<Assembly> GetAssemblies()
         {
             var assemblies = new List<Assembly>();
@@ -69,6 +30,17 @@ namespace Core
             }
             catch { }
             return assemblies;
+        }
+
+        public static void SetSettings(AppItem app)
+        {
+            AppSettings.Title = app.Title;
+            AppSettings.Description = app.Description;
+            AppSettings.Logo = app.Logo;
+            AppSettings.Cover = app.Cover;
+            AppSettings.Theme = app.Theme;
+            AppSettings.PostListType = app.PostListType;
+            AppSettings.ItemsPerPage = app.ItemsPerPage;
         }
     }
 }

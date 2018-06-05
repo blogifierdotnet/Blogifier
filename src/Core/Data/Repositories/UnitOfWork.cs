@@ -6,7 +6,6 @@ namespace Core.Data
     public interface IUnitOfWork : IDisposable
     {
         IPostRepository BlogPosts { get; }
-        IBlogRepository Blogs { get; }
         IAuthorRepository Authors { get; }
 
         int Complete();
@@ -25,12 +24,10 @@ namespace Core.Data
             _sm = sm;
 
             BlogPosts = new PostRepository(_db, _um);
-            Blogs = new BlogRepository(_db);
             Authors = new AuthorRepository(_db, _um, _sm);
         }
 
         public IPostRepository BlogPosts { get; private set; }
-        public IBlogRepository Blogs { get; private set; }
         public IAuthorRepository Authors { get; private set; }
 
         public int Complete()

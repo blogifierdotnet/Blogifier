@@ -16,13 +16,15 @@ namespace App.Controllers
     {
         IUnitOfWork _db;
         IStorageService _ss;
+        IAppSettingsServices<AppItem> _app;
         UserManager<AppUser> _um;
 
-        public AssetsController(IUnitOfWork db, IStorageService ss, UserManager<AppUser> um)
+        public AssetsController(IUnitOfWork db, IStorageService ss, UserManager<AppUser> um, IAppSettingsServices<AppItem> app)
         {
             _db = db;
             _um = um;
             _ss = ss;
+            _app = app;
         }
 
         public async Task<AssetsModel> Index(int page = 1, string filter = "", string search = "")
@@ -63,21 +65,17 @@ namespace App.Controllers
 
         public async Task<AssetItem> Pick(string type, string asset, string post)
         {
-            var blog = await _db.Blogs.GetBlog();
-
             if (type == "postCover")
             {
                 await _db.BlogPosts.SaveCover(int.Parse(post), asset);
             }
             else if (type == "appCover")
             {
-                blog.Cover = asset;
-                _db.Complete();
+                _app.Update(opt => { opt.Cover = asset; });
             }
             else if (type == "appLogo")
             {
-                blog.Logo = asset;
-                _db.Complete();
+                _app.Update(opt => { opt.Logo = asset; });
             }
             else if (type == "avatar")
             {
