@@ -13,10 +13,8 @@ namespace App
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
-
+            var host = CreateWebHostBuilder(args).Build();
             SeedData(host);
-
             host.Run();
         }
 
@@ -48,9 +46,7 @@ namespace App
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
     }
 }

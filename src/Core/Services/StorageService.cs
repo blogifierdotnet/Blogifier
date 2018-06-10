@@ -287,12 +287,23 @@ namespace Core.Services
             if(!string.IsNullOrEmpty(AppSettings.ContentRootPath))
                 return AppSettings.ContentRootPath;
 
-            // unit tests run
-            var assembly = Assembly.Load(new AssemblyName("Tests"));
+            // unit tests of seed data load
+            Assembly assembly;
+            var assemblyName = "Tests";
+            try
+            {
+                assembly = Assembly.Load(new AssemblyName(assemblyName));
+            }
+            catch
+            {
+                assemblyName = "App";
+                assembly = Assembly.Load(new AssemblyName(assemblyName));
+            }
+            
             var uri = new UriBuilder(assembly.CodeBase);
             var path = Uri.UnescapeDataString(uri.Path);
             var root = Path.GetDirectoryName(path);
-            root = root.Substring(0, root.IndexOf("Tests")); //.Replace("tests\\", "");
+            root = root.Substring(0, root.IndexOf(assemblyName)); //.Replace("tests\\", "");
 
             return Path.Combine(root, "App");
         }

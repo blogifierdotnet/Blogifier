@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Services;
 using System;
 using System.Threading.Tasks;
@@ -60,6 +61,8 @@ namespace Tests.Services
         [Fact]
         public async Task CanFindAssets()
         {
+            AppSettings.ItemsPerPage = 10;
+
             var pager = new Pager(1);
             var assets = await _storage.Find(null, pager, "");
 
