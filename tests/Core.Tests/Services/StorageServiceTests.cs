@@ -1,11 +1,10 @@
-﻿using Core;
-using Core.Data;
+﻿using Core.Data;
 using Core.Services;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Tests.Services
+namespace Core.Tests.Services
 {
     public class StorageServiceTests
     {
@@ -84,7 +83,7 @@ namespace Tests.Services
         public async Task CanCreateDeleteFolder()
         {
             var folder = System.IO.Path.Combine(_storage.Location, "foo");
-            
+
             _storage.CreateFolder("foo");
             Assert.True(System.IO.Directory.Exists(folder));
 

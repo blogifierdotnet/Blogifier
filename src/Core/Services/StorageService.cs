@@ -56,8 +56,7 @@ namespace Core.Services
         {
             get
             {
-                var path = AppSettings.WebRootPath == null ?
-                    Path.Combine(GetAppRoot(), "wwwroot") : AppSettings.WebRootPath;
+                var path = AppSettings.WebRootPath ?? Path.Combine(GetAppRoot(), "wwwroot");
 
                 path = Path.Combine(path, _uploadFolder.Replace("/", Path.DirectorySeparatorChar.ToString()));
 
@@ -289,7 +288,7 @@ namespace Core.Services
 
             // unit tests of seed data load
             Assembly assembly;
-            var assemblyName = "Tests";
+            var assemblyName = "Core.Tests";
             try
             {
                 assembly = Assembly.Load(new AssemblyName(assemblyName));
@@ -303,7 +302,12 @@ namespace Core.Services
             var uri = new UriBuilder(assembly.CodeBase);
             var path = Uri.UnescapeDataString(uri.Path);
             var root = Path.GetDirectoryName(path);
-            root = root.Substring(0, root.IndexOf(assemblyName)); //.Replace("tests\\", "");
+            root = root.Substring(0, root.IndexOf(assemblyName));
+
+            if (root.EndsWith($"tests{_separator}"))
+            {
+                root = root.Replace($"tests{_separator}", $"src{_separator}");
+            }
 
             return Path.Combine(root, "App");
         }

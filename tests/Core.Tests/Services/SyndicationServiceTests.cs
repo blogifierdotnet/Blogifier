@@ -7,37 +7,44 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Tests.Services
+namespace Core.Tests.Services
 {
-    public class RssImportServiceTests
+    public class SyndicationServiceTests
     {
         private readonly Mock<ISyndicationService> _syndicationService = new Mock<ISyndicationService>();
-        private readonly Mock<IStorageService> _storageService = new Mock<IStorageService>();
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly Mock<IAuthorRepository> authorRepository = new Mock<IAuthorRepository>();
         private readonly Mock<IPostRepository> postRepository = new Mock<IPostRepository>();
+        private readonly IStorageService _storage;
+
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
+        
+        public SyndicationServiceTests()
+        {
+            _storage = new StorageService(null);
+        }
 
         [Fact]
-        public void DummyTest()
+        public async Task CanImportFromRssFeed()
         {
             /*
             var db = GetMemoryDb("blogifier");
-            var x = await db.Users.AllAsync(u => u.Id == "admin");
+            var users = await db.Users.AllAsync(u => u.Id == "admin");
+            */
 
             SetupDependencies();
             var sut = GetSut();
 
-            var result = sut.ImportFile("/home/ruslan/src/github/Blogifier/src/App/wwwroot/data/_test/be3.xml");
-            */
-            
-            Assert.True(true);
+            var fileName = $"{_storage.Location}{_separator}_init{_separator}_test{_separator}be3.xml";
+            var result = await sut.ImportRss(fileName, "admin");
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
 
         private SyndicationService GetSut()
         {
-            return new SyndicationService(
-                _unitOfWork.Object, _storageService.Object);
+            return new SyndicationService(_unitOfWork.Object, _storage); // _storageService.Object);
         }
 
         private void SetupDependencies()
@@ -61,26 +68,19 @@ namespace Tests.Services
                     Slug = "post-one"
                 });
             _unitOfWork.Setup(x => x.BlogPosts).Returns(postRepository.Object);
-
-            _storageService
-                .Setup(x => x.UploadFromWeb(It.IsAny<Uri>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(new AssetItem { Url = "a/b", Path = "a/b" }));
         }
 
-        /*
-        private AppDbContext GetMemoryDb(string dbName)
-        {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(dbName).Options;
+        //private AppDbContext GetMemoryDb(string dbName)
+        //{
+        //    var options = new DbContextOptionsBuilder<AppDbContext>()
+        //        .UseInMemoryDatabase(dbName).Options;
 
-            var context = new AppDbContext(options); 
+        //    var context = new AppDbContext(options); 
 
-            context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
-            context.SaveChanges();
+        //    context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
+        //    context.SaveChanges();
 
-            return context;
-        }
-        */
-
+        //    return context;
+        //}
     }
 }

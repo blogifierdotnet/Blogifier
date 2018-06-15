@@ -20,14 +20,15 @@ namespace Core.Services
         Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
         Task<ISyndicationFeedWriter> GetWriter(string type, string host, XmlWriter xmlWriter);
 
-        Task ImportRss(IFormFile file, string user);
-        Task ImportRss(string fileName, string user);
+        Task<List<string>> ImportRss(IFormFile file, string user);
+        Task<List<string>> ImportRss(string fileName, string user);
     }
 
     public class SyndicationService : ISyndicationService
     {
         IUnitOfWork _db;
         IStorageService _storage;
+        List<string> _msgs;
         string _user;
         string _siteUrl;
 
@@ -35,6 +36,7 @@ namespace Core.Services
         {
             _db = db;
             _storage = storage;
+            _msgs = new List<string>();
         }
 
         public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
@@ -97,18 +99,20 @@ namespace Core.Services
 
         #region RSS Import
 
-        public async Task ImportRss(string fileName, string user)
+        public async Task<List<string>> ImportRss(string fileName, string user)
         {
             _user = user;
             var reader = new StreamReader(fileName, Encoding.UTF8);
             await Import(reader);
+            return await Task.FromResult(_msgs);
         }
 
-        public async Task ImportRss(IFormFile file, string user)
+        public async Task<List<string>> ImportRss(IFormFile file, string user)
         {
             _user = user;
             var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
             await Import(reader);
+            return await Task.FromResult(_msgs);
         }
 
         async Task Import(StreamReader reader)
@@ -142,11 +146,16 @@ namespace Core.Services
                                 Status = SaveStatus.Publishing
                             };
 
-                            await ImportImages(post);
+                            _msgs.Add($"Imported post: {post.Title}");
+
+                            // var xxx = _db.BlogPosts.All().Count();
+
+                            // await ImportImages(post);
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine(ex.Message);
+                            // System.Diagnostics.Debug.WriteLine(ex.Message);
+                            _msgs.Add(ex.Message);
                         }
                     }
                 }
