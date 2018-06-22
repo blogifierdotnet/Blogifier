@@ -26,6 +26,8 @@ namespace Core.Services
         IList<string> GetThemes();
 
         Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "");
+
+        Task Reset();
     }
 
     public class StorageService : IStorageService
@@ -225,6 +227,33 @@ namespace Core.Services
         {
             path = path.Replace($"{_uploadFolder}{_separator}{_blogSlug}{_separator}", "");
             File.Delete(GetFullPath(path));
+        }
+
+        public async Task Reset()
+        {
+            try
+            {
+                var dirs = Directory.GetDirectories(Location);
+                foreach (var dir in dirs)
+                {
+                    if (!dir.EndsWith("_init"))
+                    {
+                        Directory.Delete(dir, true);
+                    }
+                }
+                var srcLoc = Path.Combine(Location, "_init");
+
+                foreach (string dirPath in Directory.GetDirectories(srcLoc, "*",
+                    SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(srcLoc, Location));
+
+                foreach (string newPath in Directory.GetFiles(srcLoc, "*.*",
+                    SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(srcLoc, Location), true);
+
+                await Task.CompletedTask;
+            }
+            catch { }
         }
 
         void VerifyPath(string path)

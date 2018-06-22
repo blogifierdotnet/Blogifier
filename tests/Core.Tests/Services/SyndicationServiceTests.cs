@@ -24,24 +24,6 @@ namespace Core.Tests.Services
             _storage = new StorageService(null);
         }
 
-        [Fact]
-        public async Task CanImportFromRssFeed()
-        {
-            /*
-            var db = GetMemoryDb("blogifier");
-            var users = await db.Users.AllAsync(u => u.Id == "admin");
-            */
-
-            SetupDependencies();
-            var sut = GetSut();
-
-            var fileName = $"{_storage.Location}{_separator}_init{_separator}_test{_separator}be3.xml";
-            var result = await sut.ImportRss(fileName, "admin");
-
-            Assert.NotNull(result);
-            Assert.NotEmpty(result);
-        }
-
         private SyndicationService GetSut()
         {
             return new SyndicationService(_unitOfWork.Object, _storage); // _storageService.Object);

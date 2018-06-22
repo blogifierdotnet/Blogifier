@@ -8,12 +8,10 @@ namespace Core.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(AppDbContext context, UserManager<AppUser> userManager, IStorageService storage)
+        public static void Initialize(AppDbContext context, UserManager<AppUser> userManager)
         {
             if (context.BlogPosts.Any())
                 return;
-
-            ReloadStorage(storage);
 
             if (userManager.FindByNameAsync("admin").Result == null)
             {
@@ -139,31 +137,6 @@ There is simple but quick and functional search in the post lists, as well as se
 
                 context.SaveChanges();
             }
-        }
-
-        static void ReloadStorage(IStorageService storage)
-        {
-            try
-            {
-                var dirs = Directory.GetDirectories(storage.Location);
-                foreach (var dir in dirs)
-                {
-                    if (!dir.EndsWith("_init"))
-                    {
-                        Directory.Delete(dir, true);
-                    }
-                }
-                var srcLoc = Path.Combine(storage.Location, "_init");
-
-                foreach (string dirPath in Directory.GetDirectories(srcLoc, "*",
-                    SearchOption.AllDirectories))
-                    Directory.CreateDirectory(dirPath.Replace(srcLoc, storage.Location));
-
-                foreach (string newPath in Directory.GetFiles(srcLoc, "*.*",
-                    SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(srcLoc, storage.Location), true);
-            }
-            catch { }
         }
     }
 }

@@ -17,11 +17,11 @@ namespace App.Controllers
     public class SettingsController : Controller
     {
         IUnitOfWork _db;
-        ISyndicationService _feed;
+        IFeedImportService _feed;
         IStorageService _storage;
         IAppSettingsServices<AppItem> _app;
 
-        public SettingsController(IUnitOfWork db, ISyndicationService feed, IStorageService storage, IAppSettingsServices<AppItem> app)
+        public SettingsController(IUnitOfWork db, IFeedImportService feed, IStorageService storage, IAppSettingsServices<AppItem> app)
         {
             _db = db;
             _feed = feed;
@@ -244,7 +244,7 @@ namespace App.Controllers
 
             var user = _db.Authors.Single(a => a.UserName == User.Identity.Name);
 
-            await _feed.ImportRss(file, User.Identity.Name);
+            await _feed.Import(file, User.Identity.Name);
 
             ViewBag.IsAdmin = true;
             return View();

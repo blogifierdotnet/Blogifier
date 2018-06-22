@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace App
 {
@@ -32,7 +33,11 @@ namespace App
 
                     var storage = services.GetRequiredService<IStorageService>();
 
-                    DbInitializer.Initialize(context, userMgr, storage);
+                    if(!context.BlogPosts.Any())
+                    {
+                        storage.Reset();
+                        DbInitializer.Initialize(context, userMgr);
+                    }
 
                     // load application settings from appsettings.json
                     var app = services.GetRequiredService<IAppSettingsServices<AppItem>>();
