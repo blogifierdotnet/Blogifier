@@ -26,17 +26,13 @@ namespace App
                 var services = scope.ServiceProvider;
                 try
                 {
-                    UserManager<AppUser> userMgr = (UserManager<AppUser>)
-                        services.GetRequiredService(typeof(UserManager<AppUser>));
-
                     var context = services.GetRequiredService<AppDbContext>();
-
                     var storage = services.GetRequiredService<IStorageService>();
 
                     if(!context.BlogPosts.Any())
                     {
                         storage.Reset();
-                        DbInitializer.Initialize(context, userMgr);
+                        DbInitializer.Seed(services);
                     }
 
                     // load application settings from appsettings.json

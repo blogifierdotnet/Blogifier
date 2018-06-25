@@ -1,6 +1,7 @@
 ﻿using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace Core.Tests.Services
 {
-    public class FeedImportServiceTests
+    public class FeedImportServiceTests : IClassFixture<WebApplicationFactory<App.Startup>>
     {
         Mock<UserManager<AppUser>> _um = new Mock<UserManager<AppUser>>();
         Mock<SignInManager<AppUser>> _sm = new Mock<SignInManager<AppUser>>();
@@ -21,9 +22,20 @@ namespace Core.Tests.Services
 
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
 
+        private readonly WebApplicationFactory<App.Startup> _factory;
+
+        public FeedImportServiceTests(WebApplicationFactory<App.Startup> factory)
+        {
+            _factory = factory;
+        }
+
         [Fact]
         public async Task CanImportFromRssFeed()
         {
+            var client = _factory.CreateClient();
+
+            var defaultPage = await client.GetAsync("http://localhost:63023/");
+
             var sut = GetSut();
 
             var fileName = $"{_ss.Location}{_separator}_init{_separator}_test{_separator}be3.xml";
