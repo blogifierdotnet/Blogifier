@@ -57,6 +57,7 @@ namespace Core.Extensions
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ISyndicationService, SyndicationService>();
             services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IFeedImportService, FeedImportService>();
 
             services.AddTransient<UserManager<AppUser>>();
 

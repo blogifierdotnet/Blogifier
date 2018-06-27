@@ -32,7 +32,7 @@ namespace App
                     if(!context.BlogPosts.Any())
                     {
                         storage.Reset();
-                        DbInitializer.Seed(services);
+                        context.Seed(services);
                     }
 
                     // load application settings from appsettings.json
