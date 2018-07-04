@@ -4,16 +4,15 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Core.Services
 {
-    public interface IAppSettingsServices<out T> : IOptionsSnapshot<T> where T : class, new()
+    public interface IAppSettingsService<out T> : IOptionsSnapshot<T> where T : class, new()
     {
         void Update(Action<T> applyChanges);
     }
 
-    public class AppSettingsService<T> : IAppSettingsServices<T> where T : class, new()
+    public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new()
     {
         private readonly IHostingEnvironment _environment;
         private readonly IOptionsMonitor<T> _options;

@@ -16,10 +16,10 @@ namespace App.Controllers
     {
         IUnitOfWork _db;
         IStorageService _ss;
-        IAppSettingsServices<AppItem> _app;
+        IAppSettingsService<AppItem> _app;
         UserManager<AppUser> _um;
 
-        public AssetsController(IUnitOfWork db, IStorageService ss, UserManager<AppUser> um, IAppSettingsServices<AppItem> app)
+        public AssetsController(IUnitOfWork db, IStorageService ss, UserManager<AppUser> um, IAppSettingsService<AppItem> app)
         {
             _db = db;
             _um = um;

@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
 
 namespace Core
 {
@@ -15,6 +17,8 @@ namespace Core
 
         public static string WebRootPath { get; set; }
         public static string ContentRootPath { get; set; }
+
+        public static Action<DbContextOptionsBuilder> DbOptions { get; set; }
 
         public static string Version
         {

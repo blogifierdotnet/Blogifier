@@ -1,11 +1,13 @@
 ﻿using Core;
 using Core.Data;
 using Core.Extensions;
+using Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,7 +24,13 @@ namespace App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAppDatabase(Configuration);
+            var section = Configuration.GetSection("Blogifier");
+
+            services.AddAppSettings<AppItem>(section);
+
+            AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
+
+            services.AddDbContext<AppDbContext>(AppSettings.DbOptions);
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()

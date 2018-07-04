@@ -19,9 +19,9 @@ namespace App.Controllers
         IUnitOfWork _db;
         IFeedImportService _feed;
         IStorageService _storage;
-        IAppSettingsServices<AppItem> _app;
+        IAppSettingsService<AppItem> _app;
 
-        public SettingsController(IUnitOfWork db, IFeedImportService feed, IStorageService storage, IAppSettingsServices<AppItem> app)
+        public SettingsController(IUnitOfWork db, IFeedImportService feed, IStorageService storage, IAppSettingsService<AppItem> app)
         {
             _db = db;
             _feed = feed;

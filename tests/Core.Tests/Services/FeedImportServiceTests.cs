@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using App;
+using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -6,13 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Core.Tests.Services
 {
-    public class FeedImportServiceTests : IClassFixture<WebApplicationFactory<App.Startup>>
+    public class FeedImportServiceTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         Mock<UserManager<AppUser>> _um = new Mock<UserManager<AppUser>>();
         Mock<SignInManager<AppUser>> _sm = new Mock<SignInManager<AppUser>>();
@@ -20,30 +25,63 @@ namespace Core.Tests.Services
         IUnitOfWork _db;
         IStorageService _ss;
 
-        static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
+        static string _separator = Path.DirectorySeparatorChar.ToString();
 
-        private readonly WebApplicationFactory<App.Startup> _factory;
+        private readonly WebApplicationFactory<Startup> _factory;
 
-        public FeedImportServiceTests(WebApplicationFactory<App.Startup> factory)
+        public FeedImportServiceTests(WebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
 
+
+
         [Fact]
-        public async Task CanImportFromRssFeed()
+        public void UnitCosts()
         {
-            var client = _factory.CreateClient();
+            var inputFile = "Original.txt";
+            var outputFile = "GuardRailMissing.txt";
+            var existsFile = "GuardRailExists.txt";
+            var errorFile = "Errors.txt";
 
-            var defaultPage = await client.GetAsync("http://localhost:63023/");
+            var lines = File.ReadAllLines(inputFile);
 
-            var sut = GetSut();
+            for (var i = 0; i < lines.Length; i += 1)
+            {
+                var line = lines[i];
 
-            var fileName = $"{_ss.Location}{_separator}_init{_separator}_test{_separator}be3.xml";
-            var result = await sut.Import(fileName, "admin");
+                try
+                {
+                    if (line.StartsWith("940"))
+                    {
+                        File.AppendAllText(existsFile, line + System.Environment.NewLine);
+                    }
+                    else
+                    {
+                        File.AppendAllText(outputFile, line + System.Environment.NewLine);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    File.AppendAllText(errorFile, line + " " + ex.Message + System.Environment.NewLine);
+                }
+            }
 
-            Assert.NotNull(result);
-            Assert.NotEmpty(result);
+            Assert.True(true);
         }
+
+
+        //[Fact]
+        //public async Task CanImportFromRssFeed()
+        //{
+        //    var sut = GetSut();
+
+        //    var fileName = $"{_ss.Location}{_separator}_init{_separator}_test{_separator}be3.xml";
+        //    var result = await sut.Import(fileName, "admin");
+
+        //    Assert.NotNull(result);
+        //    Assert.NotEmpty(result);
+        //}
 
         private FeedImportService GetSut()
         {
@@ -59,10 +97,28 @@ namespace Core.Tests.Services
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(dbName).Options;
 
+            //AppSettings.DbOptions = options => options.UseInMemoryDatabase("abc");
+
             var context = new AppDbContext(options);
 
-            context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
-            context.SaveChanges();
+            
+
+            //context.Seed()
+
+            //context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
+            //context.SaveChanges();
+
+            return context;
+        }
+
+        public AppDbContext Context => InMemoryContext();
+        private AppDbContext InMemoryContext()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .EnableSensitiveDataLogging()
+                .Options;
+            var context = new AppDbContext(options);
 
             return context;
         }
@@ -89,4 +145,28 @@ namespace Core.Tests.Services
         }
 
     }
+
+
+    //public class TestingFunctionalTests : IClassFixture<WebApplicationFactory<Startup>>
+    //{
+    //    public HttpClient Client { get; }
+    //    public WebApplicationFactory<Startup> Server { get; }
+
+    //    public TestingFunctionalTests(WebApplicationFactory<Startup> server)
+    //    {
+    //        Client = server.CreateClient();
+    //        Server = server;
+    //    }
+
+    //    [Fact]
+    //    public async Task GetHomePage()
+    //    {
+    //        // Arrange & Act
+    //        var response = await Client.GetAsync("/");
+
+    //        // Assert
+    //        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    //    }
+    //}
+
 }
