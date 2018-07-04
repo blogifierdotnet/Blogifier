@@ -10,7 +10,7 @@ namespace App.Pages
         private readonly IUnitOfWork _db;
 
         public PostListModel Posts { get; set; }
-        public AuthorItem Author { get; set; }
+        public Author Author { get; set; }
 
         public AuthorsModel(IUnitOfWork db)
         {
@@ -19,10 +19,10 @@ namespace App.Pages
 
         public async void OnGetAsync(string name)
         {
-            Author = await _db.Authors.GetItem(a => a.UserName == name);
+            Author = await _db.Authors.GetItem(a => a.AppUserName == name);
 
             var pager = new Pager(1);
-            var posts = await _db.BlogPosts.Find(p => p.UserId == Author.Id && p.Published > DateTime.MinValue, pager);
+            var posts = await _db.BlogPosts.Find(p => p.AuthorId == Author.Id && p.Published > DateTime.MinValue, pager);
 
             Posts = new PostListModel { Posts = posts, Pager = pager };
         }

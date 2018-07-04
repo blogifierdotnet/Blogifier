@@ -17,7 +17,7 @@
                     <div class="post-cover"><img src="~/@img" alt="@item.Title"></div>
                     <h2 class="post-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
                     <div class="post-meta">
-                        <a class="post-meta-author" href="~/authors/@item.Author.UserName">@item.Author.DisplayName</a>
+                        <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>
                         <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
                     </div>
                     <div class="post-description">@Html.Raw(cont)</div>

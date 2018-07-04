@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,14 +17,10 @@ namespace Core.Data
     public class PostRepository : Repository<BlogPost>, IPostRepository
     {
         AppDbContext _db;
-        UserManager<AppUser> _um;
-        ItemMapper _map;
 
-        public PostRepository(AppDbContext db, UserManager<AppUser> um) : base(db)
+        public PostRepository(AppDbContext db) : base(db)
         {
             _db = db;
-            _um = um;
-            _map = new ItemMapper(_db, _um);
         }
 
         public async Task<IEnumerable<PostItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
@@ -45,13 +40,17 @@ namespace Core.Data
 
             var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
 
-            return await Task.FromResult(_map.MapPostsToItems(postPage));
+            return await Task.FromResult(PostListToItems(postPage));
         }
 
         public async Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate)
         {
             var post = _db.BlogPosts.Single(predicate);
-            return await Task.FromResult(_map.MapPostToItem(post));
+            var item = PostToItem(post);
+
+            item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? "lib/img/avatar.jpg" : item.Author.Avatar;
+
+            return await Task.FromResult(item);
         }
 
         public async Task<PostItem> SaveItem(PostItem item)
@@ -66,14 +65,14 @@ namespace Core.Data
                     Slug = item.Slug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
-                    UserId = item.Author.Id,
+                    AuthorId = item.Author.Id,
                     Published = item.Published
                 };
                 _db.BlogPosts.Add(post);
                 await _db.SaveChangesAsync();
 
                 post = _db.BlogPosts.Single(p => p.Slug == post.Slug);
-                item = _map.MapPostToItem(post);
+                item = PostToItem(post);
             }
             else
             {
@@ -83,7 +82,7 @@ namespace Core.Data
                 post.Slug = item.Slug;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
-                post.UserId = item.Author.Id;
+                post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
                 await _db.SaveChangesAsync();
 
@@ -98,6 +97,40 @@ namespace Core.Data
             item.Cover = asset;
 
             await _db.SaveChangesAsync();
+        }
+
+        PostItem PostToItem(BlogPost p)
+        {
+            return new PostItem
+            {
+                Id = p.Id,
+                Slug = p.Slug,
+                Title = p.Title,
+                Description = p.Description,
+                Content = p.Content,
+                Cover = p.Cover,
+                PostViews = p.PostViews,
+                Rating = p.Rating,
+                Published = p.Published,
+                Author = _db.Authors.Single(a => a.Id == p.AuthorId)
+            };
+        }
+
+        public List<PostItem> PostListToItems(List<BlogPost> posts)
+        {
+            return posts.Select(p => new PostItem
+            {
+                Id = p.Id,
+                Slug = p.Slug,
+                Title = p.Title,
+                Description = p.Description,
+                Content = p.Content,
+                Cover = p.Cover,
+                PostViews = p.PostViews,
+                Rating = p.Rating,
+                Published = p.Published,
+                Author = _db.Authors.Single(a => a.Id == p.AuthorId)
+            }).Distinct().ToList();
         }
     }
 }

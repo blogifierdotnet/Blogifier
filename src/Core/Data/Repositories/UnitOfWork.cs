@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 
 namespace Core.Data
 {
@@ -14,17 +13,13 @@ namespace Core.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _db;
-        private readonly UserManager<AppUser> _um;
-        private readonly SignInManager<AppUser> _sm;
 
-        public UnitOfWork(AppDbContext db, UserManager<AppUser> um, SignInManager<AppUser> sm)
+        public UnitOfWork(AppDbContext db)
         {
             _db = db;
-            _um = um;
-            _sm = sm;
 
-            BlogPosts = new PostRepository(_db, _um);
-            Authors = new AuthorRepository(_db, _um, _sm);
+            BlogPosts = new PostRepository(_db);
+            Authors = new AuthorRepository(_db);
         }
 
         public IPostRepository BlogPosts { get; private set; }

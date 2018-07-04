@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AuthorItem>
+﻿@model IEnumerable<Author>
 <style>
     .modal-body .row {
         line-height: 2.5em;
@@ -11,11 +11,12 @@
         <div class="bf-content bf-content-boxed bf-settings">
             @foreach (var user in Model)
             {
+                var avatar = user.Avatar ?? AppSettings.Avatar;
             <div class="card" style="width: 130px; margin: 10px 5px 0 0; float: left">
-                <img class="card-img-top" style="height: 130px; overflow: hidden" src="~/@user.Avatar" alt="@user.Avatar" />
+                <img class="card-img-top" style="height: 130px; overflow: hidden" src="~/@avatar" alt="@avatar" />
                 <div class="card-body">
                     <p style="text-align: center">
-                        <a asp-action="Profile" asp-route-name="@user.UserName">@user.UserName</a>
+                        <a asp-action="Profile" asp-route-name="@user.AppUserName">@user.AppUserName</a>
                     </p>
                 </div>
             </div>

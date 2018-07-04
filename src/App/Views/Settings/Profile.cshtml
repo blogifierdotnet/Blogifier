@@ -1,4 +1,4 @@
-﻿@model AuthorItem
+﻿@model Author
 <div class="bf-main">
     @Html.Partial($"~/Views/Settings/_Taskbar.cshtml")
     <div class="bf-body">
@@ -14,7 +14,7 @@
                     <label class="form-group-label" asp-for="Email"></label>
                     <input type="text" asp-for="Email" class="form-control" />
                 </div>
-                @if(Model.UserName == User.Identity.Name)
+                @if(Model.AppUserName == User.Identity.Name)
                 {
                 <div class="form-group">
                     <label class="form-group-label" asp-for="Avatar"></label>
@@ -27,11 +27,11 @@
                 </div>
                 }
                 <input type="hidden" asp-for="Id" />
-                <input type="hidden" asp-for="UserName" />
+                <input type="hidden" asp-for="AppUserName" />
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
                 @if (!Model.IsAdmin && ViewBag.IsAdmin)
                 {
-                <a asp-action="Remove" asp-route-name="@Model.UserName" class="btn btn-danger">Delete</a>
+                <a asp-action="Remove" asp-route-name="@Model.AppUserName" class="btn btn-danger">Delete</a>
                 }
             </div>
         </form>

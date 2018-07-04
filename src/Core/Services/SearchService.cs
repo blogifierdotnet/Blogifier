@@ -83,17 +83,17 @@ namespace Core.Services
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
-                Published = p.Published,
-                Author = (from usr in _um.Users
-                    where usr.Id == p.UserId
-                    select new AuthorItem
-                    {
-                        Id = usr.Id,
-                        UserName = usr.UserName,
-                        DisplayName = usr.DisplayName,
-                        Avatar = usr.Avatar,
-                        Created = usr.Created
-                    }).FirstOrDefault()
+                Published = p.Published
+                //Author = (from usr in _um.Users
+                //    where usr.Id == p.UserId
+                //    select new AuthorItem
+                //    {
+                //        Id = usr.Id,
+                //        UserName = usr.UserName,
+                //        DisplayName = usr.DisplayName,
+                //        Avatar = usr.Avatar,
+                //        Created = usr.Created
+                //    }).FirstOrDefault()
             };
         }
     }

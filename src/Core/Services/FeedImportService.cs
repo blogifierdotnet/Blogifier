@@ -73,7 +73,7 @@ namespace Core.Services
 
                             PostItem post = new PostItem
                             {
-                                Author = await _db.Authors.GetItem(a => a.UserName == _usr),
+                                Author = await _db.Authors.GetItem(a => a.AppUserName == _usr),
                                 Title = item.Title,
                                 Description = item.Title,
                                 Content = item.Description,

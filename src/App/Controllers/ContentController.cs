@@ -26,7 +26,7 @@ namespace App.Controllers
         public async Task<IActionResult> Index(int page = 1, string status = "A", string search = "")
         {
             var author = await GetAuthor();
-            Expression<Func<BlogPost, bool>> predicate = p => p.UserId == author.Id;
+            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
             var pager = new Pager(page);
             IEnumerable<PostItem> posts;
 
@@ -37,9 +37,9 @@ namespace App.Controllers
             else
             {
                 if (status == "P")
-                    predicate = p => p.Published > DateTime.MinValue && p.UserId == author.Id;
+                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
                 if (status == "D")
-                    predicate = p => p.Published == DateTime.MinValue && p.UserId == author.Id;
+                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
 
                 posts = await _db.BlogPosts.Find(predicate, pager);
             }
@@ -104,9 +104,9 @@ namespace App.Controllers
             return Redirect("~/content");
         }
 
-        async Task<AuthorItem> GetAuthor()
+        async Task<Author> GetAuthor()
         {
-            return await _db.Authors.GetItem(a => a.UserName == User.Identity.Name);
+            return await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
         }
 
         public async Task<string> GetSlug(int id, string title)

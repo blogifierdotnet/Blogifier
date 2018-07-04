@@ -87,18 +87,18 @@ namespace App.Controllers
 
         public async Task<IActionResult> Profile(string name = "")
         {
-            AuthorItem author;
+            Author author;
 
             if (string.IsNullOrEmpty(name))
             {
-                author = await _db.Authors.GetItem(u => u.UserName == User.Identity.Name);
+                author = await _db.Authors.GetItem(u => u.AppUserName == User.Identity.Name);
             }
             else
             {
                 if (!IsAdmin())
                     return Redirect("~/error/403");
 
-                author = await _db.Authors.GetItem(u => u.UserName == name);
+                author = await _db.Authors.GetItem(u => u.AppUserName == name);
             }
             
             ViewBag.IsAdmin = IsAdmin();
@@ -106,7 +106,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Profile(AuthorItem model)
+        public async Task<IActionResult> Profile(Author model)
         {
             ViewBag.IsAdmin = IsAdmin();
 
@@ -114,17 +114,17 @@ namespace App.Controllers
             {
                 var user = _db.Authors.Single(a => a.Id == model.Id);
                 user.DisplayName = model.DisplayName;
-                user.Email = model.Email;
+                //user.Email = model.Email;
 
                 var result = await _db.Authors.SaveUser(user);
                 if (result.Succeeded)
                 {
                     TempData["msg"] = Resources.Updated;
 
-                    if (model.UserName == User.Identity.Name)
+                    if (model.AppUserName == User.Identity.Name)
                         return RedirectToAction(nameof(Profile));
                     else
-                        return Redirect($"~/settings/profile?name={model.UserName}");
+                        return Redirect($"~/settings/profile?name={model.AppUserName}");
                 }
                 else
                 {
@@ -181,13 +181,13 @@ namespace App.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _db.Authors.Single(a => a.UserName == model.UserName);
+                var user = _db.Authors.Single(a => a.AppUserName == model.UserName);
                 if (user == null)
                 {
-                    user = new AppUser
+                    user = new Author
                     {
-                        UserName = model.UserName,
-                        Email = model.Email
+                        AppUserName = model.UserName
+                        //Email = model.Email
                     };
 
                     var result = await _db.Authors.SaveUser(user, model.Password);
@@ -213,13 +213,13 @@ namespace App.Controllers
 
         public async Task<IActionResult> Remove(string name)
         {
-            var author = _db.Authors.Single(a => a.UserName == name);
+            var author = _db.Authors.Single(a => a.AppUserName == name);
 
             if (!IsAdmin() || name == User.Identity.Name)
                 Redirect("~/error/403");
 
             await _db.Authors.RemoveUser(author);
-            _storage.DeleteFolder(author.UserName);
+            _storage.DeleteFolder(author.AppUserName);
 
             TempData["msg"] = Resources.Removed;
 
@@ -242,7 +242,7 @@ namespace App.Controllers
             if (!IsAdmin())
                 return Redirect("~/error/403");
 
-            var user = _db.Authors.Single(a => a.UserName == User.Identity.Name);
+            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
 
             await _feed.Import(file, User.Identity.Name);
 
@@ -252,7 +252,7 @@ namespace App.Controllers
 
         bool IsAdmin()
         {
-            return _db.Authors.Single(a => a.UserName == User.Identity.Name).IsAdmin;
+            return _db.Authors.Single(a => a.AppUserName == User.Identity.Name).IsAdmin;
         }
 
         List<SelectListItem> GetThemes()

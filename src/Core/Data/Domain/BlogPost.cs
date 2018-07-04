@@ -8,9 +8,7 @@ namespace Core.Data
         public BlogPost() { }
 
         public int Id { get; set; }
-
-        [StringLength(250)]
-        public string UserId { get; set; }
+        public int AuthorId { get; set; }
 
         [Required]
         [StringLength(160)]

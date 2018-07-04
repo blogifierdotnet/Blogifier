@@ -64,7 +64,7 @@ namespace Core.Data
         public double Rating { get; set; }
         public DateTime Published { get; set; }
 
-        public AuthorItem Author { get; set; }
+        public Author Author { get; set; }
         public SaveStatus Status { get; set; }
 
         #region IEquatable

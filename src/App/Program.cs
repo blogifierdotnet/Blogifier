@@ -3,6 +3,7 @@ using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
@@ -18,7 +19,12 @@ namespace App
             {
                 var services = scope.ServiceProvider;
 
-                
+                var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
+                if (!userMgr.Users.Any())
+                {
+                    userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "Admin@pass1");
+                    userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "Demo@pass1");
+                }
 
                 var context = services.GetRequiredService<AppDbContext>();
 
@@ -29,7 +35,7 @@ namespace App
                 if (!context.BlogPosts.Any())
                 {
                     services.GetRequiredService<IStorageService>().Reset();
-                    context.Seed(services);
+                    context.Seed();
                 }
             }
 

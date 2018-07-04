@@ -86,7 +86,7 @@ namespace Core.Tests.Services
         private FeedImportService GetSut()
         {
             
-            _db = new UnitOfWork(GetDb("blogifier"), TestUserManager<AppUser>(), null);
+            _db = new UnitOfWork(GetDb("blogifier"));
             _ss = new StorageService(null);
 
             return new FeedImportService(_db, _ss);

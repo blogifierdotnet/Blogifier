@@ -37,6 +37,7 @@ namespace Core
             AppSettings.Title = app.Title;
             AppSettings.Description = app.Description;
             AppSettings.Logo = app.Logo;
+            AppSettings.Avatar = app.Avatar;
             AppSettings.Cover = app.Cover;
             AppSettings.Theme = app.Theme;
             AppSettings.PostListType = app.PostListType;

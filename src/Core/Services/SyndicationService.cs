@@ -30,29 +30,29 @@ namespace Core.Services
             var items = new List<AtomEntry>();
             var posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, new Pager(1));
 
-            var user = _db.Authors.Find(a => a.IsAdmin).FirstOrDefault();
+            //var user = _db.Authors.Find(a => a.IsAdmin).FirstOrDefault();
 
-            foreach (var post in posts)
-            {
-                var item = new AtomEntry
-                {
-                    Title = post.Title,
-                    Description = post.Content,
-                    Id = $"{host}/blog/{post.Slug}",
-                    Published = post.Published,
-                    LastUpdated = post.Published,
-                    ContentType = "html",
-                };
+            //foreach (var post in posts)
+            //{
+            //    var item = new AtomEntry
+            //    {
+            //        Title = post.Title,
+            //        Description = post.Content,
+            //        Id = $"{host}/blog/{post.Slug}",
+            //        Published = post.Published,
+            //        LastUpdated = post.Published,
+            //        ContentType = "html",
+            //    };
 
-                //foreach (string category in post.Categories)
-                //{
-                //    item.AddCategory(new SyndicationCategory(category));
-                //}
+            //    //foreach (string category in post.Categories)
+            //    //{
+            //    //    item.AddCategory(new SyndicationCategory(category));
+            //    //}
 
-                item.AddContributor(new SyndicationPerson(user.DisplayName, user.Email));
-                item.AddLink(new SyndicationLink(new Uri(item.Id)));
-                items.Add(item);
-            }
+            //    item.AddContributor(new SyndicationPerson(user.DisplayName, user.Email));
+            //    item.AddLink(new SyndicationLink(new Uri(item.Id)));
+            //    items.Add(item);
+            //}
 
             return await Task.FromResult(items);
         }

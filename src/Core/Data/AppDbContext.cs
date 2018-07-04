@@ -1,8 +1,6 @@
 ﻿using Core.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -15,6 +13,7 @@ namespace Core.Data
         }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,99 +28,71 @@ namespace Core.Data
             base.OnModelCreating(builder);
         }
 
-        public void Seed(IServiceProvider services)
+        public void Seed()
         {
+            if (BlogPosts.Any())
+                return;
 
-            using (var scope = services.CreateScope())
+            Authors.Add(new Author {
+                AppUserName = "admin",
+                Email = "admin@us.com",
+                DisplayName = "Administrator",
+                IsAdmin = true,
+                Created = DateTime.UtcNow.AddDays(-120)
+            });
+
+            Authors.Add(new Author {
+                AppUserName = "demo",
+                Email = "demo@us.com",
+                DisplayName = "Demo user",
+                Created = DateTime.UtcNow.AddDays(-110)
+            });
+
+            SaveChanges();
+
+            var adminId = Authors.Single(a => a.AppUserName == "admin").Id;
+            var demoId = Authors.Single(a => a.AppUserName == "demo").Id;
+
+            BlogPosts.Add(new BlogPost
             {
-                var context = services.GetRequiredService<AppDbContext>();
+                Title = "Welcome to Blogifier!",
+                Slug = "welcome-to-blogifier!",
+                Description = "Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.",
+                Content = SeedData.PostWhatIs,
+                AuthorId = adminId,
+                Cover = "data/admin/cover-blog.png",
+                PostViews = 5,
+                Rating = 4.5,
+                Published = DateTime.UtcNow.AddDays(-100)
+            });
 
-                if (context.BlogPosts.Any())
-                    return;
+            BlogPosts.Add(new BlogPost
+            {
+                Title = "Blogifier Features",
+                Slug = "blogifier-features",
+                Description = "List of the main features supported by Blogifier, includes user management, content management, plugin system, markdown editor, simple search and others. This is not the full list and work in progress.",
+                Content = SeedData.PostFeatures,
+                AuthorId = adminId,
+                Cover = "data/admin/cover-globe.png",
+                PostViews = 15,
+                Rating = 4.0,
+                Published = DateTime.UtcNow.AddDays(-55)
+            });
 
-                var users = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
+            BlogPosts.Add(new BlogPost
+            {
+                Title = "Demo post",
+                Slug = "demo-post",
+                Description = "This demo site is a sandbox to test Blogifier features. It runs in-memory and does not save any data, so you can try everything without making any mess. Have fun!",
+                Content = SeedData.PostDemo,
+                AuthorId = demoId,
+                Cover = "data/demo/demo-cover.jpg",
+                PostViews = 25,
+                Rating = 3.5,
+                Published = DateTime.UtcNow.AddDays(-10)
+            });
 
-                if (users.FindByNameAsync("admin").Result == null)
-                {
-                    var user = new AppUser
-                    {
-                        UserName = "admin",
-                        Email = "admin@us.com",
-                        DisplayName = "Administrator",
-                        Avatar = "data/admin/avatar.png",
-                        Created = SystemClock.Now().AddDays(-150),
-                        IsAdmin = true
-                    };
-
-                    var result = users.CreateAsync(user, "Admin@pass1").Result;
-
-                    if (result.Succeeded)
-                    {
-                        var userId = users.FindByNameAsync("admin").Result.Id;
-
-                        var posts = new BlogPost[]
-                        {
-                            new BlogPost
-                            {
-                                Title = "Welcome to Blogifier!",
-                                Slug = "welcome-to-blogifier!",
-                                Description = "Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.",
-                                Content = SeedData.PostWhatIs,
-                                UserId = userId,
-                                Cover = "data/admin/cover-blog.png",
-                                PostViews = 5,
-                                Rating = 4.5,
-                                Published = DateTime.UtcNow.AddDays(-100)
-                            },
-                            new BlogPost
-                            {
-                                Title = "Blogifier Features",
-                                Slug = "blogifier-features",
-                                Description = "List of the main features supported by Blogifier, includes user management, content management, plugin system, markdown editor, simple search and others. This is not the full list and work in progress.",
-                                Content = SeedData.PostFeatures,
-                                UserId = userId,
-                                Cover = "data/admin/cover-globe.png",
-                                PostViews = 15,
-                                Rating = 4.0,
-                                Published = DateTime.UtcNow.AddDays(-55)
-                            }
-                        };
-
-                        foreach (BlogPost p in posts)
-                        {
-                            context.BlogPosts.Add(p);
-                        }
-                    }
-
-                    var user2 = new AppUser
-                    {
-                        UserName = "demo",
-                        Email = "demo@us.com",
-                        DisplayName = "Demo Account",
-                        Created = SystemClock.Now().AddDays(-140)
-                    };
-
-                    var result2 = users.CreateAsync(user2, "Demo@pass1").Result;
-
-                    if (result2.Succeeded)
-                    {
-                        context.BlogPosts.Add(new BlogPost
-                        {
-                            Title = "Demo post",
-                            Slug = "demo-post",
-                            Description = "This demo site is a sandbox to test Blogifier features. It runs in-memory and does not save any data, so you can try everything without making any mess. Have fun!",
-                            Content = SeedData.PostDemo,
-                            UserId = users.FindByNameAsync("demo").Result.Id,
-                            Cover = "data/demo/demo-cover.jpg",
-                            PostViews = 25,
-                            Rating = 3.5,
-                            Published = DateTime.UtcNow.AddDays(-10)
-                        });
-                    }
-
-                    context.SaveChanges();
-                }
-            }
+            SaveChanges();
         }
     }
 

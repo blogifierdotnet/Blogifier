@@ -20,6 +20,9 @@ namespace Core.Data
         [StringLength(160)]
         [Display(Name = "Blog logo URL")]
         public string Logo { get; set; }
+        [StringLength(160)]
+        [Display(Name = "Blog avatar")]
+        public string Avatar { get; set; }
         [Required]
         [StringLength(120)]
         public string Theme { get; set; }

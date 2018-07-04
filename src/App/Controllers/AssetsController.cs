@@ -79,9 +79,9 @@ namespace App.Controllers
             }
             else if (type == "avatar")
             {
-                var user = await _um.FindByNameAsync(User.Identity.Name);
+                var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
                 user.Avatar = asset;
-                await _um.UpdateAsync(user);
+                _db.Authors.Add(user);
             }
 
             var item = await _ss.Find(a => a.Url == asset, new Pager(1));

@@ -32,12 +32,12 @@ namespace Core.Tests.Services
         private void SetupDependencies()
         {
             authorRepository
-                .Setup(x => x.GetItem(It.IsAny<Expression<Func<AppUser, bool>>>()))
-                .Returns(Task.FromResult(new AuthorItem
+                .Setup(x => x.GetItem(It.IsAny<Expression<Func<Author, bool>>>()))
+                .Returns(Task.FromResult(new Author
                 {
-                    Id = "admin",
-                    UserName = "admin",
-                    Email = "admin@us.com"
+                    Id = 1,
+                    AppUserName = "admin"
+                    //Email = "admin@us.com"
                 }));
             _unitOfWork.Setup(x => x.Authors).Returns(authorRepository.Object);
 

@@ -50,7 +50,7 @@ namespace App.Controllers
             var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
 
             post.Content = Markdown.ToHtml(post.Content);
-
+            
             ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
             ViewBag.Cover = string.IsNullOrEmpty(post.Cover) ? $"{Url.Content("~/")}{AppSettings.DefaultCover}" : $"{Url.Content("~/")}{post.Cover}";
             ViewBag.Title = post.Title;
