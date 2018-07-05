@@ -112,24 +112,17 @@ namespace App.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _db.Authors.Single(a => a.Id == model.Id);
-                user.DisplayName = model.DisplayName;
-                //user.Email = model.Email;
+                var author = _db.Authors.Single(a => a.Id == model.Id);
+                author.DisplayName = model.DisplayName;
+                author.Email = model.Email;
 
-                var result = await _db.Authors.SaveUser(user);
-                if (result.Succeeded)
-                {
-                    TempData["msg"] = Resources.Updated;
+                await _db.Authors.Save(author);
+                TempData["msg"] = Resources.Updated;
 
-                    if (model.AppUserName == User.Identity.Name)
-                        return RedirectToAction(nameof(Profile));
-                    else
-                        return Redirect($"~/settings/profile?name={model.AppUserName}");
-                }
+                if (model.AppUserName == User.Identity.Name)
+                    return RedirectToAction(nameof(Profile));
                 else
-                {
-                    ModelState.AddModelError("Custom", result.Errors.First().Description);
-                }
+                    return Redirect($"~/settings/profile?name={model.AppUserName}");
             }
             
             return View(model);
@@ -186,21 +179,14 @@ namespace App.Controllers
                 {
                     user = new Author
                     {
-                        AppUserName = model.UserName
-                        //Email = model.Email
+                        AppUserName = model.UserName,
+                        Email = model.Email
                     };
 
-                    var result = await _db.Authors.SaveUser(user, model.Password);
+                    await _db.Authors.Save(user);
 
-                    if (result.Succeeded)
-                    {
-                        TempData["msg"] = Resources.Created;
-                        return RedirectToAction(nameof(Users));
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Custom", result.Errors.First().Description);
-                    }
+                    TempData["msg"] = Resources.Created;
+                    return RedirectToAction(nameof(Users));
                 }
                 else
                 {
@@ -218,7 +204,7 @@ namespace App.Controllers
             if (!IsAdmin() || name == User.Identity.Name)
                 Redirect("~/error/403");
 
-            await _db.Authors.RemoveUser(author);
+            await _db.Authors.Remove(author.Id);
             _storage.DeleteFolder(author.AppUserName);
 
             TempData["msg"] = Resources.Removed;

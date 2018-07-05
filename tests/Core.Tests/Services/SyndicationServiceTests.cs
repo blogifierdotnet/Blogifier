@@ -51,18 +51,5 @@ namespace Core.Tests.Services
                 });
             _unitOfWork.Setup(x => x.BlogPosts).Returns(postRepository.Object);
         }
-
-        //private AppDbContext GetMemoryDb(string dbName)
-        //{
-        //    var options = new DbContextOptionsBuilder<AppDbContext>()
-        //        .UseInMemoryDatabase(dbName).Options;
-
-        //    var context = new AppDbContext(options); 
-
-        //    context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
-        //    context.SaveChanges();
-
-        //    return context;
-        //}
     }
 }

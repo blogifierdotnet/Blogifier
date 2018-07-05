@@ -46,22 +46,22 @@ namespace App.Controllers
         [HttpPut, Authorize, Route("[controller]/author")]
         public async Task UpdateAuthor(int id, [FromBody]Author model)
         {
-            var user = _db.Authors.Single(a => a.Id == model.Id);
-            user.DisplayName = model.DisplayName;
-            //user.Email = model.Email;
+            var author = _db.Authors.Single(a => a.Id == model.Id);
+            author.DisplayName = model.DisplayName;
+            author.Email = model.Email;
 
-            await _db.Authors.SaveUser(user);
+            await _db.Authors.Save(author);
         }
 
         [HttpDelete, Authorize, Route("[controller]/author/{id}")]
-        public async Task RemoveAuthor(string id)
+        public async Task RemoveAuthor(int id)
         {
-            var author = _db.Authors.Single(a => a.AppUserId == id);
+            var author = _db.Authors.Single(a => a.Id == id);
 
             if (!IsAdmin() || author.AppUserName == User.Identity.Name)
                 Redirect("~/error/403");
 
-            await _db.Authors.RemoveUser(author);
+            await _db.Authors.Remove(id);
             _storage.DeleteFolder(author.AppUserName);
         }
 

@@ -35,42 +35,6 @@ namespace Core.Tests.Services
         }
 
 
-
-        [Fact]
-        public void UnitCosts()
-        {
-            var inputFile = "Original.txt";
-            var outputFile = "GuardRailMissing.txt";
-            var existsFile = "GuardRailExists.txt";
-            var errorFile = "Errors.txt";
-
-            var lines = File.ReadAllLines(inputFile);
-
-            for (var i = 0; i < lines.Length; i += 1)
-            {
-                var line = lines[i];
-
-                try
-                {
-                    if (line.StartsWith("940"))
-                    {
-                        File.AppendAllText(existsFile, line + System.Environment.NewLine);
-                    }
-                    else
-                    {
-                        File.AppendAllText(outputFile, line + System.Environment.NewLine);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    File.AppendAllText(errorFile, line + " " + ex.Message + System.Environment.NewLine);
-                }
-            }
-
-            Assert.True(true);
-        }
-
-
         //[Fact]
         //public async Task CanImportFromRssFeed()
         //{

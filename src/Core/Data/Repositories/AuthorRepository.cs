@@ -1,4 +1,5 @@
 ﻿using Core.Data.Models;
+using Core.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Core.Data
     {
         Task<Author> GetItem(Expression<Func<Author, bool>> predicate);
         Task<IEnumerable<Author>> GetItems(Expression<Func<Author, bool>> predicate, Pager pager);
-        Task<IdentityResult> SaveUser(Author user, string pwd = "");
-        Task RemoveUser(Author user);
+        Task Save(Author author);
+        Task Remove(int id);
         Task ChangePassword(ChangePasswordModel model);
     }
 
@@ -28,40 +29,59 @@ namespace Core.Data
 
         public async Task<Author> GetItem(Expression<Func<Author, bool>> predicate)
         {
-            var author = _db.Authors.Single(predicate);
+            try
+            {
+                var author = _db.Authors.Single(predicate);
 
-            author.Avatar = author.Avatar ?? AppSettings.Avatar;
+                if (author != null)
+                {
+                    author.Avatar = author.Avatar ?? AppSettings.Avatar;
+                }
 
-            return await Task.FromResult(author);
+                return await Task.FromResult(author);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Author>> GetItems(Expression<Func<Author, bool>> predicate, Pager pager)
         {
-            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+            var take = pager.ItemsPerPage == 0 ? 10 : pager.ItemsPerPage;
+            var skip = pager.CurrentPage * take - take;
 
             var users = _db.Authors.Where(predicate)
                 .OrderBy(u => u.DisplayName).ToList();
 
             pager.Configure(users.Count);
 
-            var list = users.Skip(skip).Take(pager.ItemsPerPage).ToList();
+            var list = users.Skip(skip).Take(take).ToList();
 
             return await Task.FromResult(list);
         }
 
-        public async Task<IdentityResult> SaveUser(Author user, string pwd = "")
+        public async Task Save(Author author)
         {
-            //if (user.Created == DateTime.MinValue)
-            //{
-            //    user.DisplayName = user.UserName;
-            //    user.Created = SystemClock.Now();
-            //    return await _um.CreateAsync(user, pwd);
-            //}
-            //else
-            //{
-            //    return await _um.UpdateAsync(user);
-            //} 
-            return null;
+            if (author.Created == DateTime.MinValue)
+            {
+                author.DisplayName = author.AppUserName;
+                author.Created = SystemClock.Now();
+                await _db.Authors.AddAsync(author);
+            }
+            else
+            {
+                var dbAuthor = _db.Authors.Single(a => a.Id == author.Id);
+
+                dbAuthor.DisplayName = author.DisplayName;
+                dbAuthor.Avatar = author.Avatar;
+                dbAuthor.Email = author.Email;
+                dbAuthor.Created = SystemClock.Now();
+
+                _db.Authors.Update(dbAuthor);
+            }
+
+            await _db.SaveChangesAsync();
         }
 
         public async Task ChangePassword(ChangePasswordModel model)
@@ -77,16 +97,16 @@ namespace Core.Data
             //await _sm.SignInAsync(user, isPersistent: false);
         }
 
-        public async Task RemoveUser(Author user)
+        public async Task Remove(int id)
         {
-            //var authorPosts = _db.BlogPosts
-            //    .Where(p => p.UserId == user.Id).ToList();
+            var authorPosts = _db.BlogPosts
+                .Where(p => p.AuthorId == id).ToList();
 
-            //if (authorPosts != null && authorPosts.Any())
-            //    _db.BlogPosts.RemoveRange(authorPosts);
+            if (authorPosts != null && authorPosts.Any())
+                _db.BlogPosts.RemoveRange(authorPosts);
 
-            //_db.Users.Remove(user);
-            //await _db.SaveChangesAsync();
+            _db.Authors.Remove(_db.Authors.Single(a => a.Id == id));
+            await _db.SaveChangesAsync();
         }
     }
 }

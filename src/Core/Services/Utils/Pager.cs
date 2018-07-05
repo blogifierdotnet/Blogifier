@@ -18,6 +18,12 @@
 
         public void Configure(int total)
         {
+            if (total == 0)
+                return;
+
+            if (ItemsPerPage == 0)
+                ItemsPerPage = 10;
+
             Total = total;
             var lastItem = CurrentPage * ItemsPerPage;
             ShowOlder = total > lastItem ? true : false;
