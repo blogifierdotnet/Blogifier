@@ -4,11 +4,11 @@ using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -20,13 +20,15 @@ namespace App.Controllers
         IFeedImportService _feed;
         IStorageService _storage;
         IAppSettingsService<AppItem> _app;
+        UserManager<AppUser> _um;
 
-        public SettingsController(IUnitOfWork db, IFeedImportService feed, IStorageService storage, IAppSettingsService<AppItem> app)
+        public SettingsController(IUnitOfWork db, IFeedImportService feed, IStorageService storage, IAppSettingsService<AppItem> app, UserManager<AppUser> um)
         {
             _db = db;
             _feed = feed;
             _storage = storage;
             _app = app;
+            _um = um;
         }
 
         public IActionResult Index()
@@ -174,6 +176,10 @@ namespace App.Controllers
 
             if (ModelState.IsValid)
             {
+                // register new app user account
+                var result = await _um.CreateAsync(new AppUser { UserName = model.UserName, Email = model.Email }, model.Password);
+
+                // add user as author to app database
                 var user = _db.Authors.Single(a => a.AppUserName == model.UserName);
                 if (user == null)
                 {
@@ -243,8 +249,10 @@ namespace App.Controllers
 
         List<SelectListItem> GetThemes()
         {
-            var themes = new List<SelectListItem>();
-            themes.Add(new SelectListItem { Text = "Simple", Value = "Simple" });
+            var themes = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Simple", Value = "Simple" }
+            };
 
             var storageThemes = _storage.GetThemes();
 

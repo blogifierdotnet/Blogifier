@@ -31,16 +31,16 @@ namespace App.Controllers
             if (!IsAdmin())
                 Redirect("~/error/403");
 
-            var user = _db.Authors.Single(a => a.AppUserName == model.UserName);
-            //if (user == null)
-            //{
-            //    user = new AppUser
-            //    {
-            //        UserName = model.UserName,
-            //        Email = model.Email
-            //    };
-            //    await _db.Authors.SaveUser(user, model.Password);
-            //}
+            var author = _db.Authors.Single(a => a.AppUserName == model.UserName);
+            if (author == null)
+            {
+                author = new Author
+                {
+                    AppUserName = model.UserName,
+                    Email = model.Email
+                };
+                await _db.Authors.Save(author);
+            }
         }
 
         [HttpPut, Authorize, Route("[controller]/author")]

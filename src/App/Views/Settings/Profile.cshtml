@@ -1,6 +1,6 @@
 ﻿@model Author
 <div class="bf-main">
-    @Html.Partial($"~/Views/Settings/_Taskbar.cshtml")
+    <partial name="~/Views/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
         <form method="post" asp-action="Profile" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
@@ -14,31 +14,30 @@
                     <label class="form-group-label" asp-for="Email"></label>
                     <input type="text" asp-for="Email" class="form-control" />
                 </div>
-                @if(Model.AppUserName == User.Identity.Name)
+                @if (Model.AppUserName == User.Identity.Name)
                 {
-                <div class="form-group">
-                    <label class="form-group-label" asp-for="Avatar"></label>
-                    <div class="input-group">
-                        <input type="text" asp-for="Avatar" class="form-control" readonly />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);"> Select</button>
-                        </span>
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Avatar"></label>
+                        <div class="input-group">
+                            <input type="text" asp-for="Avatar" class="form-control" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);"> Select</button>
+                            </span>
+                        </div>
                     </div>
-                </div>
                 }
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="AppUserName" />
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
                 @if (!Model.IsAdmin && ViewBag.IsAdmin)
                 {
-                <a asp-action="Remove" asp-route-name="@Model.AppUserName" class="btn btn-danger">Delete</a>
+                    <a asp-action="Remove" asp-route-name="@Model.AppUserName" class="btn btn-danger">Delete</a>
                 }
             </div>
         </form>
     </div>
 </div>
-
-@Html.Partial("~/Views/Shared/_FileMgr.cshtml")
+<partial name="~/Views/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
     @if (TempData["msg"] != null)

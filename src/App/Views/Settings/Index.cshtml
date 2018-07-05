@@ -4,7 +4,7 @@
     var descSel = AppSettings.PostListType == "description" ? "checked" : "";
 }
 <div class="bf-main">
-    @Html.Partial("~/Views/Settings/_Taskbar.cshtml")
+    <partial name="~/Views/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
         <form method="post" asp-controller="Settings" asp-action="Index" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
@@ -61,8 +61,7 @@
         </form>
     </div>
 </div>
-
-@Html.Partial($"~/Views/Shared/_FileMgr.cshtml")
+<partial name="~/Views/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
     @if (TempData["msg"] != null)
