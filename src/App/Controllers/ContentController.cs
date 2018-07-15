@@ -49,7 +49,7 @@ namespace App.Controllers
 
         public async Task<IActionResult> Edit(string slug = "", string msg = "")
         {
-            var post = new PostItem { Author = await GetAuthor() };
+            var post = new PostItem { Author = await GetAuthor(), Cover = AppSettings.Cover };
 
             if (!string.IsNullOrEmpty(slug))
                 post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
