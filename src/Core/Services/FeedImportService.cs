@@ -82,13 +82,13 @@ namespace Core.Services
                                 Status = SaveStatus.Publishing
                             };
 
-                            _msgs.Add(new ImportMessage { Status = Status.Success, Message = $"Post: {post.Title}" });
+                            _msgs.Add(new ImportMessage { ImportType = ImportType.Post, Status = Status.Success, Message = post.Title });
 
                             await ImportPost(post);
                         }
                         catch (Exception ex)
                         {
-                            _msgs.Add(new ImportMessage { Status = Status.Error, Message = ex.Message });
+                            _msgs.Add(new ImportMessage { ImportType = ImportType.Post, Status = Status.Error, Message = ex.Message });
                         }
                     }
                 }
@@ -98,18 +98,22 @@ namespace Core.Services
         async Task ImportPost(PostItem post)
         {
             var images = GetPostImages(post.Content);
+            await AddPostAssets(images, post);
 
-            // await SaveAssets(images, post, false);
+            var attachements = GetAttachements(post.Content);
+            await AddPostAssets(attachements, post);
 
             var converter = new ReverseMarkdown.Converter();
             post.Content = converter.Convert(post.Content);
 
-            // await _db.BlogPosts.SaveItem(post);
+            post.Cover = AppSettings.Cover;
+
+            await _db.BlogPosts.SaveItem(post);
         }
 
-        IList<string> GetPostImages(string html)
+        IList<ImportAsset> GetPostImages(string html)
         {
-            var links = new List<string>();
+            var links = new List<ImportAsset>();
             string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
 
             if (string.IsNullOrEmpty(html))
@@ -121,16 +125,17 @@ namespace Core.Services
             {
                 foreach (Match m in matchesImgSrc)
                 {
-                    links.Add(m.Groups[1].Value);
+                    links.Add(new ImportAsset { AssetType = AssetType.Image, Tag = m.Groups[0].Value, Src = m.Groups[1].Value });
                 }
             }
             return links;
         }
 
-        IList<string> GetAttachements(string html)
+        IList<ImportAsset> GetAttachements(string html)
         {
-            var links = new List<string>();
+            var links = new List<ImportAsset>();
             string rgx = "<(a|link).*?href=(\"|')(.+?)(\"|').*?>";
+            string[] docs = { ".xml", ".doc", ".pdf" };
 
             if (string.IsNullOrEmpty(html))
                 return links;
@@ -143,17 +148,26 @@ namespace Core.Services
                 {
                     try
                     {
-                        var link = m.Value.Replace("\">", "\"/>").ToLower();
-                        var href = XElement.Parse(link).Attribute("href").Value;
-                        links.Add(href);
+                        var tag = m.Value.Replace("\">", "\"/>").ToLower();
+                        var src = XElement.Parse(tag).Attribute("href").Value;
+                        foreach (var doc in docs)
+                        {
+                            if (src.ToLower() == doc)
+                            {
+                                links.Add(new ImportAsset { AssetType = AssetType.Attachment, Tag = tag, Src = src });
+                            }
+                        }
                     }
-                    catch { }
+                    catch(Exception ex)
+                    {
+                        _msgs.Add(new ImportMessage { ImportType = ImportType.Attachement, Status = Status.Error, Message = $"Error in GetAttachements: {m.Value}: {ex.Message}" });
+                    }
                 }
             }
             return links;
         }
 
-        async Task SaveAssets(IList<string> assets, PostItem post, bool isAttachement)
+        async Task AddPostAssets(IList<ImportAsset> assets, PostItem post)
         {
             if (assets.Any())
             {
@@ -163,7 +177,7 @@ namespace Core.Services
                     var webRoot = "/";
                     try
                     {
-                        uri = ValidateUrl(item);
+                        uri = ValidateUrl(item.Src);
 
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
@@ -177,13 +191,29 @@ namespace Core.Services
                             asset = await _ss.UploadFromWeb(new Uri(uri), webRoot, path);
                         }
 
-                        post.Content = post.Content.ReplaceIgnoreCase(uri.ToString(), asset.Url);
+                        var mdTag = $"[{asset.Title}]({webRoot}{asset.Url})";
 
-                        _db.Complete();
+                        if (item.AssetType == AssetType.Image)
+                        {
+                            mdTag = "!" + mdTag;
+                        }
+
+                        post.Content = post.Content.ReplaceIgnoreCase(item.Tag, mdTag);
+
+                        _msgs.Add(new ImportMessage
+                        {
+                            ImportType = item.AssetType == AssetType.Image ? ImportType.Image : ImportType.Attachement,
+                            Status = Status.Success,
+                            Message = $"Imported {item.Tag} as {mdTag}"
+                        });
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //_logger.LogError(string.Format("Error importing [{0}] : {1}", item, ex.Message));
+                        _msgs.Add(new ImportMessage {
+                            ImportType = item.AssetType == AssetType.Image ? ImportType.Image : ImportType.Attachement,
+                            Status = Status.Error,
+                            Message = $"Error importing {item.Src}: {ex.Message}"
+                        });
                     }
                 }
             }
@@ -230,12 +260,25 @@ namespace Core.Services
 
     public class ImportMessage
     {
+        public ImportType ImportType { get; set; }
         public Status Status { get; set; }
         public string Message { get; set; }
+    }
+
+    public class ImportAsset
+    {
+        public AssetType AssetType { get; set; }
+        public string Tag { get; set; }
+        public string Src { get; set; }
     }
 
     public enum Status
     {
         Success, Warning, Error
+    }
+
+    public enum ImportType
+    {
+        Post, Image, Attachement
     }
 }

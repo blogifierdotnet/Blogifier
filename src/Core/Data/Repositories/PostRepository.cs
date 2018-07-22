@@ -65,6 +65,7 @@ namespace Core.Data
                     Slug = item.Slug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
+                    Cover = item.Cover ?? AppSettings.Cover,
                     AuthorId = item.Author.Id,
                     Published = item.Published
                 };

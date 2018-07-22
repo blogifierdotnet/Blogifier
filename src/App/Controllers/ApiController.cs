@@ -2,7 +2,9 @@
 using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace App.Controllers
@@ -12,11 +14,13 @@ namespace App.Controllers
     {
         IUnitOfWork _db;
         IStorageService _storage;
+        IFeedImportService _feed;
 
-        public ApiController(IUnitOfWork db, IStorageService storage)
+        public ApiController(IUnitOfWork db, IStorageService storage, IFeedImportService feed)
         {
             _db = db;
             _storage = storage;
+            _feed = feed;
         }
 
         [HttpGet, Authorize, Route("[controller]/author/{id}")]
@@ -63,6 +67,17 @@ namespace App.Controllers
 
             await _db.Authors.Remove(id);
             _storage.DeleteFolder(author.AppUserName);
+        }
+
+        [HttpPost, Authorize, Route("[controller]/feedimport")]
+        public async Task<IEnumerable<ImportMessage>> ImportFeed(IFormFile file)
+        {
+            if (!IsAdmin())
+                Redirect("~/error/403");
+
+            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
+
+            return await _feed.Import(file, User.Identity.Name);
         }
 
         bool IsAdmin()

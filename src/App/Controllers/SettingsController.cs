@@ -3,7 +3,6 @@ using Core.Data;
 using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -225,20 +224,6 @@ namespace App.Controllers
 
             ViewBag.IsAdmin = IsAdmin();
 
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RssImport(IFormFile file)
-        {
-            if (!IsAdmin())
-                return Redirect("~/error/403");
-
-            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
-
-            await _feed.Import(file, User.Identity.Name);
-
-            ViewBag.IsAdmin = true;
             return View();
         }
 
