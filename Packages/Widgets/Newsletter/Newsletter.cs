@@ -13,7 +13,7 @@ namespace Blogifier.Widgets
             _db = db;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string newsletterName)
         {
             return View();
         }
