@@ -56,7 +56,7 @@
 <section class="container">
     @try
     {
-        @await Component.InvokeAsync("Newsletter")
+        @await helper.InvokeAsync(Component,"Newsletter",new {newsletterName="BOBBINS" })
     }
     catch (Exception ex)
     {
