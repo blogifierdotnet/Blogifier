@@ -1,14 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-WebApp-369A2B28-7315-4454-AED5-A00184C38B6F</UserSecretsId>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
   </ItemGroup>
@@ -27,18 +29,18 @@
     <ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" 
-          AfterTargets="PostBuildEvent" 
-          Condition="Exists('$(SolutionDir)Packages\Widgets\Newsletter\bin\Debug\netcoreapp2.0\Newsletter.dll')">
+  <ItemGroup>
+    <None Update="Data\app.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="Exists('$(SolutionDir)Packages\Widgets\Newsletter\bin\Debug\netcoreapp2.0\Newsletter.dll')">
         <PropertyGroup>
             <WidgetBaseDir>$(SolutionDir)Packages\Widgets\</WidgetBaseDir>
         </PropertyGroup>
-    <Copy SourceFiles="$(WidgetBaseDir)Newsletter\bin\$(Configuration)\$(TargetFramework)\Newsletter.dll"
-          DestinationFolder="$(TargetDir)"
-          Condition="Exists('$(WidgetBaseDir)Newsletter\bin\$(Configuration)\$(TargetFramework)\Newsletter.dll')"/>
-    <Copy SourceFiles="$(WidgetBaseDir)PostList\bin\$(Configuration)\$(TargetFramework)\PostList.dll"
-          DestinationFolder="$(TargetDir)"
-          Condition="Exists('$(WidgetBaseDir)PostList\bin\$(Configuration)\$(TargetFramework)\PostList.dll')"/>
+    <Copy SourceFiles="$(WidgetBaseDir)Newsletter\bin\$(Configuration)\$(TargetFramework)\Newsletter.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(WidgetBaseDir)Newsletter\bin\$(Configuration)\$(TargetFramework)\Newsletter.dll')" />
+    <Copy SourceFiles="$(WidgetBaseDir)PostList\bin\$(Configuration)\$(TargetFramework)\PostList.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(WidgetBaseDir)PostList\bin\$(Configuration)\$(TargetFramework)\PostList.dll')" />
   </Target>
 
 </Project>
