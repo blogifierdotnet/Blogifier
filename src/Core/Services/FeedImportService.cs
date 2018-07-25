@@ -38,20 +38,16 @@ namespace Core.Services
         public async Task<List<ImportMessage>> Import(IFormFile file, string usr)
         {
             _usr = usr;
-            var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
-            await ImportStream(reader);
-            return await Task.FromResult(_msgs);
+            return await ImportFeed(new StreamReader(file.OpenReadStream(), Encoding.UTF8));
         }
 
         public async Task<List<ImportMessage>> Import(string fileName, string usr)
         {
             _usr = usr;
-            var reader = new StreamReader(fileName, Encoding.UTF8);
-            await ImportStream(reader);
-            return await Task.FromResult(_msgs);
+            return await ImportFeed(new StreamReader(fileName, Encoding.UTF8));
         }
 
-        async Task ImportStream(StreamReader reader)
+        async Task<List<ImportMessage>> ImportFeed(StreamReader reader)
         {
             using (var xmlReader = XmlReader.Create(reader, new XmlReaderSettings() { }))
             {
@@ -93,15 +89,13 @@ namespace Core.Services
                     }
                 }
             }
+            return await Task.FromResult(_msgs);
         }
 
         async Task ImportPost(PostItem post)
         {
-            var images = GetPostImages(post.Content);
-            await AddPostAssets(images, post);
-
-            var attachements = GetAttachements(post.Content);
-            await AddPostAssets(attachements, post);
+            await ImportImages(post);
+            await ImportFiles(post);
 
             var converter = new ReverseMarkdown.Converter();
             post.Content = converter.Convert(post.Content);
@@ -111,36 +105,15 @@ namespace Core.Services
             await _db.BlogPosts.SaveItem(post);
         }
 
-        IList<ImportAsset> GetPostImages(string html)
+        async Task ImportImages(PostItem post)
         {
             var links = new List<ImportAsset>();
             string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
 
-            if (string.IsNullOrEmpty(html))
-                return links;
+            if (string.IsNullOrEmpty(post.Content))
+                return;
 
-            MatchCollection matchesImgSrc = Regex.Matches(html, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-
-            if (matchesImgSrc != null)
-            {
-                foreach (Match m in matchesImgSrc)
-                {
-                    links.Add(new ImportAsset { AssetType = AssetType.Image, Tag = m.Groups[0].Value, Src = m.Groups[1].Value });
-                }
-            }
-            return links;
-        }
-
-        IList<ImportAsset> GetAttachements(string html)
-        {
-            var links = new List<ImportAsset>();
-            string rgx = "<(a|link).*?href=(\"|')(.+?)(\"|').*?>";
-            string[] docs = { ".xml", ".doc", ".pdf" };
-
-            if (string.IsNullOrEmpty(html))
-                return links;
-
-            MatchCollection matches = Regex.Matches(html, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             if (matches != null)
             {
@@ -148,37 +121,9 @@ namespace Core.Services
                 {
                     try
                     {
-                        var tag = m.Value.Replace("\">", "\"/>").ToLower();
-                        var src = XElement.Parse(tag).Attribute("href").Value;
-                        foreach (var doc in docs)
-                        {
-                            if (src.ToLower() == doc)
-                            {
-                                links.Add(new ImportAsset { AssetType = AssetType.Attachment, Tag = tag, Src = src });
-                            }
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        _msgs.Add(new ImportMessage { ImportType = ImportType.Attachement, Status = Status.Error, Message = $"Error in GetAttachements: {m.Value}: {ex.Message}" });
-                    }
-                }
-            }
-            return links;
-        }
-
-        async Task AddPostAssets(IList<ImportAsset> assets, PostItem post)
-        {
-            if (assets.Any())
-            {
-                foreach (var item in assets)
-                {
-                    var uri = "";
-                    var webRoot = "/";
-                    try
-                    {
-                        uri = ValidateUrl(item.Src);
-
+                        var webRoot = "/";
+                        var tag = m.Groups[0].Value;
+                        var uri = ValidateUrl(m.Groups[1].Value);
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
 
                         AssetItem asset;
@@ -191,28 +136,81 @@ namespace Core.Services
                             asset = await _ss.UploadFromWeb(new Uri(uri), webRoot, path);
                         }
 
-                        var mdTag = $"[{asset.Title}]({webRoot}{asset.Url})";
+                        var mdTag = $"![{asset.Title}]({webRoot}{asset.Url})";
 
-                        if (item.AssetType == AssetType.Image)
-                        {
-                            mdTag = "!" + mdTag;
-                        }
-
-                        post.Content = post.Content.ReplaceIgnoreCase(item.Tag, mdTag);
+                        post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
 
                         _msgs.Add(new ImportMessage
                         {
-                            ImportType = item.AssetType == AssetType.Image ? ImportType.Image : ImportType.Attachement,
+                            ImportType = ImportType.Image,
                             Status = Status.Success,
-                            Message = $"Imported {item.Tag} as {mdTag}"
+                            Message = $"{tag} -> {mdTag}"
                         });
                     }
                     catch (Exception ex)
                     {
-                        _msgs.Add(new ImportMessage {
-                            ImportType = item.AssetType == AssetType.Image ? ImportType.Image : ImportType.Attachement,
+                        _msgs.Add(new ImportMessage
+                        {
+                            ImportType = ImportType.Image,
                             Status = Status.Error,
-                            Message = $"Error importing {item.Src}: {ex.Message}"
+                            Message = $"{m.Groups[0].Value} -> {ex.Message}"
+                        });
+                    }
+                }
+            }
+        }
+
+        async Task ImportFiles(PostItem post)
+        {
+            var links = new List<ImportAsset>();
+            //string rgx = "<(a|link).*?href=(\"|')(.+?)(\"|').[^>]*?>";
+            var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
+            string[] exts = { ".zip", ".xml", ".doc", ".pdf" };
+
+            if (string.IsNullOrEmpty(post.Content))
+                return;
+
+            MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+            if (matches != null)
+            {
+                foreach (Match m in matches)
+                {
+                    try
+                    {
+                        var webRoot = "/";
+                        var tag = m.Value; // m.Value.Replace("\">", "\"/>").ToLower();
+
+                        var src = XElement.Parse(tag).Attribute("href").Value;
+                        var mdTag = "";
+
+                        foreach (var ext in exts)
+                        {
+                            if (src.ToLower().EndsWith(ext))
+                            {
+                                var uri = ValidateUrl(src);
+                                var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
+                                var asset = await _ss.UploadFromWeb(new Uri(uri), webRoot, path);
+
+                                mdTag = $"[{asset.Title}]({webRoot}{asset.Url})";
+
+                                post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
+
+                                _msgs.Add(new ImportMessage
+                                {
+                                    ImportType = ImportType.Attachement,
+                                    Status = Status.Success,
+                                    Message = $"{tag} -> {mdTag}"
+                                });
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _msgs.Add(new ImportMessage {
+                            ImportType = ImportType.Attachement,
+                            Status = Status.Error,
+                            Message = $"{m.Value} -> {ex.Message}"
                         });
                     }
                 }
