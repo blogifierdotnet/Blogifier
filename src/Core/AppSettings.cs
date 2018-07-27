@@ -18,6 +18,8 @@ namespace Core
         public static string PostListType { get; set; }
         public static string DefaultCover { get; set; }
 
+        public static string ImportTypes { get; set; }
+
         public static string WebRootPath { get; set; }
         public static string ContentRootPath { get; set; }
 

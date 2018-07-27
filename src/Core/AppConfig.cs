@@ -42,6 +42,7 @@ namespace Core
             AppSettings.Theme = app.Theme;
             AppSettings.PostListType = app.PostListType;
             AppSettings.ItemsPerPage = app.ItemsPerPage;
+            AppSettings.ImportTypes = app.ImportTypes;
         }
     }
 }

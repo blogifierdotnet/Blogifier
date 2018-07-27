@@ -32,5 +32,7 @@ namespace Core.Data
         public string PostListType { get; set; }
         [Display(Name = "Items per page")]
         public int ItemsPerPage { get; set; }
+
+        public string ImportTypes { get; set; }
     }
 }

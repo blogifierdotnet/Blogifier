@@ -5,7 +5,6 @@ using Microsoft.SyndicationFeed.Rss;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -163,9 +162,8 @@ namespace Core.Services
         async Task ImportFiles(PostItem post)
         {
             var links = new List<ImportAsset>();
-            //string rgx = "<(a|link).*?href=(\"|')(.+?)(\"|').[^>]*?>";
             var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
-            string[] exts = { ".zip", ".xml", ".doc", ".pdf" };
+            string[] exts = AppSettings.ImportTypes.Split(',');
 
             if (string.IsNullOrEmpty(post.Content))
                 return;
@@ -179,14 +177,14 @@ namespace Core.Services
                     try
                     {
                         var webRoot = "/";
-                        var tag = m.Value; // m.Value.Replace("\">", "\"/>").ToLower();
+                        var tag = m.Value;
 
                         var src = XElement.Parse(tag).Attribute("href").Value;
                         var mdTag = "";
 
                         foreach (var ext in exts)
                         {
-                            if (src.ToLower().EndsWith(ext))
+                            if (src.ToLower().EndsWith($".{ext}"))
                             {
                                 var uri = ValidateUrl(src);
                                 var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
