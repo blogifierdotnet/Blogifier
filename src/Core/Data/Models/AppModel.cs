@@ -27,11 +27,11 @@ namespace Core.Data
         [StringLength(120)]
         public string Theme { get; set; }
         public IList<SelectListItem> BlogThemes { get; set; }
-        [StringLength(15)]
-        [Display(Name = "Post list type")]
-        public string PostListType { get; set; }
+
         [Display(Name = "Items per page")]
         public int ItemsPerPage { get; set; }
+
+        public bool UseDescInPostList { get; set; }
 
         public string ImportTypes { get; set; }
     }

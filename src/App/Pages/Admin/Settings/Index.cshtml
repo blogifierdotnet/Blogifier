@@ -14,8 +14,6 @@
                 <input type="hidden" asp-for="AppItem.DbProvider" />
                 <input type="hidden" asp-for="AppItem.ConnString" />
 
-                <div asp-validation-summary="All" class="text-danger"></div>
-
                 <div class="form-group">
                     <label class="form-group-label">Title</label>
                     <input type="text" asp-for="AppItem.Title" class="form-control" />
@@ -31,13 +29,12 @@
                     <input type="text" asp-for="AppItem.ItemsPerPage" class="form-control" />
                     <span asp-validation-for="AppItem.ItemsPerPage" class="text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                    <label class="form-group-label">Show in the blog list</label>
-                    <div>
-                        <input type="radio" name="app-post-list-type" value="content" @contSel> Post content
-                        <input type="radio" name="app-post-list-type" value="description" @descSel> Post description
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="checkbox" id="cbxUseDesc" asp-for="AppItem.UseDescInPostList" class="form-check-inline" />
+                        <label for="cbxUseDesc" class="form-check-label">Show only description in the post list</label>
                     </div>
-                </div>*@
+                </div>
                 <div class="form-group">
                     <label class="form-group-label">Theme</label>
                     <select asp-for="AppItem.Theme" asp-items="Model.AppItem.BlogThemes" class="form-control custom-select"></select>

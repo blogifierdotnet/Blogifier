@@ -55,7 +55,6 @@ namespace App.Controllers
                     app.Logo = model.Logo;
                     app.Cover = model.Cover;
                     app.Theme = model.Theme;
-                    app.PostListType = model.PostListType;
                     app.ItemsPerPage = model.ItemsPerPage;
                 });
 

@@ -40,9 +40,9 @@ namespace Core
             AppSettings.Avatar = app.Avatar;
             AppSettings.Cover = app.Cover;
             AppSettings.Theme = app.Theme;
-            AppSettings.PostListType = app.PostListType;
             AppSettings.ItemsPerPage = app.ItemsPerPage;
             AppSettings.ImportTypes = app.ImportTypes;
+            AppSettings.UseDescInPostList = app.UseDescInPostList;
         }
     }
 }

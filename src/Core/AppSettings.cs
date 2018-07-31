@@ -15,7 +15,7 @@ namespace Core
         public static string Cover { get; set; }
 
         public static int ItemsPerPage { get; set; }
-        public static string PostListType { get; set; }
+        public static bool UseDescInPostList { get; set; }
         public static string DefaultCover { get; set; }
 
         public static string ImportTypes { get; set; }

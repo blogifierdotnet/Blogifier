@@ -1,7 +1,6 @@
 ﻿@model AppItem
 @{
-    var contSel = AppSettings.PostListType == "content" ? "checked" : "";
-    var descSel = AppSettings.PostListType == "description" ? "checked" : "";
+
 }
 <div class="bf-main">
     <partial name="~/Views/Settings/_Taskbar.cshtml" />
@@ -30,8 +29,8 @@
                 <div class="form-group">
                     <label class="form-group-label">Show in the blog list</label>
                     <div>
-                        <input type="radio" name="app-post-list-type" value="content" @contSel> Post content
-                        <input type="radio" name="app-post-list-type" value="description" @descSel> Post description
+                        <input type="radio" name="app-post-list-type" value="content"> Post content
+                        <input type="radio" name="app-post-list-type" value="description" checked> Post description
                     </div>
                 </div>
                 <div class="form-group">

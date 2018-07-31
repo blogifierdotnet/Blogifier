@@ -12,7 +12,7 @@
             foreach (var item in Model.Posts)
             {
                 var img = string.IsNullOrEmpty(item.Cover) ? AppSettings.DefaultCover : item.Cover;
-                var cont = AppSettings.PostListType == "content" ? item.Content : item.Description;
+                var cont = AppSettings.UseDescInPostList ? item.Description : item.Content;
                 <article class="post">
                     <div class="post-cover"><img src="~/@img" alt="@item.Title"></div>
                     <h2 class="post-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
