@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Core.Services
+namespace Core.Helpers
 {
     public class SystemClock
     {

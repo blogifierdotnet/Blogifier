@@ -13,6 +13,12 @@
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\Admin\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
       <PluginBaseDir>$(SolutionDir)src\Plugins\</PluginBaseDir>

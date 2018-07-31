@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Blogifier</title>
+    <link href="~/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/admin/css/fontawesome.min.css" rel="stylesheet">
+    <link href="~/admin/css/styles.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bf">
+        <ul class="bf-taskbar d-flex flex-lg-column">
+            <li class="taskbar-item">
+                <a class="taskbar-item-link" href="~/content/edit" title="New Post">
+                    <i class="taskbar-item-icon fa fa-plus"></i>
+                </a>
+            </li>
+            <li is-active-route asp-controller="admin" asp-action="index" class="taskbar-item">
+                <a href="~/admin" class="taskbar-item-link" title="Admin">
+                    <i class="taskbar-item-icon fa fa-align-left"></i>
+                </a>
+            </li>
+            <li is-active-route asp-controller="settings" class="taskbar-item">
+                <a href="~/admin/settings" class="taskbar-item-link" title="Settings">
+                    <i class="taskbar-item-icon fa fa-gear"></i>
+                </a>
+            </li>
+            <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
+                <a class="taskbar-item-link" href="~/" return false; title="Visit Blog" target="_blank"><i class="taskbar-item-icon fa fa-globe"></i></a>
+            </li>
+            <li class="taskbar-item">
+                <a class="taskbar-item-link" href="#" onclick="document.getElementById('frmOut').submit()" title="Sign out"><i class="taskbar-item-icon fa fa-sign-out"></i></a>
+            </li>
+        </ul>
+        <form method="post" id="frmOut" name="frmOut" asp-controller="Account" asp-action="Logout"></form>
+
+        @RenderBody()
+    </div>
+    <script src="~/admin/js/lib/jquery.min.js"></script>
+    <script src="~/admin/js/lib/toastr.min.js"></script>
+    <script src="~/admin/js/lib/popper.min.js"></script>
+    <script src="~/admin/js/lib/bootstrap.min.js"></script>
+    <script src="~/admin/js/app/app.js"></script>
+    <script src="~/admin/js/app/dataService.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) {
+            return webRoot + str;
+        };
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

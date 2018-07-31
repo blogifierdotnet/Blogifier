@@ -1,4 +1,4 @@
-﻿using Core.Data.Models;
+﻿using Core.Helpers;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

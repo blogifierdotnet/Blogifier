@@ -1,6 +1,5 @@
 ﻿using Core.Data.Models;
-using Core.Services;
-using Microsoft.AspNetCore.Identity;
+using Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
 ﻿using Core.Data;
+using Core.Helpers;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;

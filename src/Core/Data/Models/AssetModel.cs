@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Helpers;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Data

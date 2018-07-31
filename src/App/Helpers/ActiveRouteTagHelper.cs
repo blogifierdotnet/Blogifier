@@ -1,37 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Services
+namespace App.Helpers
 {
     [HtmlTargetElement(Attributes = "is-active-route")]
     public class ActiveRouteTagHelper : TagHelper
     {
-        private IDictionary<string, string> _routeValues;
-
         [HtmlAttributeName("asp-action")]
         public string Action { get; set; }
 
         [HtmlAttributeName("asp-controller")]
         public string Controller { get; set; }
-
-        [HtmlAttributeName("asp-all-route-data", DictionaryAttributePrefix = "asp-route-")]
-        public IDictionary<string, string> RouteValues
-        {
-            get
-            {
-                if (_routeValues == null)
-                    _routeValues = (IDictionary<string, string>)new Dictionary<string, string>((IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase);
-                return _routeValues;
-            }
-            set
-            {
-                _routeValues = value;
-            }
-        }
 
         [HtmlAttributeNotBound]
         [ViewContext]
@@ -51,29 +32,15 @@ namespace Core.Services
 
         private bool ShouldBeActive()
         {
-            string currentController = ViewContext.RouteData.Values["Controller"].ToString();
-            string currentAction = ViewContext.RouteData.Values["Action"].ToString();
+            var url = ViewContext.RouteData.Values["page"].ToString().ToLower();
 
-            if (!string.IsNullOrWhiteSpace(Controller) && Controller.ToLower() != currentController.ToLower())
-            {
-                return false;
-            }
+            if (url.EndsWith($"{Controller}/{Action}"))
+                return true;
 
-            if (!string.IsNullOrWhiteSpace(Action) && Action.ToLower() != currentAction.ToLower())
-            {
-                return false;
-            }
+            if (url.Contains(Controller) && string.IsNullOrEmpty(Action))
+                return true;
 
-            foreach (KeyValuePair<string, string> routeValue in RouteValues)
-            {
-                if (!ViewContext.RouteData.Values.ContainsKey(routeValue.Key) ||
-                    ViewContext.RouteData.Values[routeValue.Key].ToString() != routeValue.Value)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return false;
         }
 
         private void MakeActive(TagHelperOutput output)

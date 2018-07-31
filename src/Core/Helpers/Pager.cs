@@ -1,4 +1,4 @@
-﻿namespace Core.Data
+﻿namespace Core.Helpers
 {
     public class Pager
     {

@@ -1,5 +1,5 @@
 ﻿using Core.Data;
-using Core.Data.Models;
+using Core.Helpers;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 
