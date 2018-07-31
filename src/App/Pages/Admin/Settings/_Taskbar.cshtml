@@ -1,0 +1,31 @@
+﻿
+<div class="bf-sidebar d-lg-block">
+    <div class="bf-settings-sidebar">
+        <ul class="bf-settings-sidebar-nav">
+            @if (true)
+            {
+            <li is-active-route asp-controller="settings" asp-action="index">
+                <a href="~/admin/settings">General</a>
+            </li>
+            }
+            <li is-active-route asp-controller="settings" asp-action="profile">
+                <a href="~/admin/settings/profile">Profile</a>
+            </li>
+            <li is-active-route asp-controller="settings" asp-action="password">
+                <a href="~/admin/settings/password">Password</a>
+            </li>
+            @if (true)
+            {
+            <li is-active-route asp-controller="settings" asp-action="users">
+                <a href="~/admin/settings/users">Users</a>
+            </li>
+            <li is-active-route asp-controller="settings" asp-action="register">
+                <a href="~/admin/settings/register">New user</a>
+            </li>
+            <li is-active-route asp-controller="settings" asp-action="import">
+                <a href="~/admin/settings/import">Import</a>
+            </li>  
+            }
+        </ul>
+    </div>
+</div>

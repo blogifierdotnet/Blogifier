@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Pages\Admin\Settings\_Taskbar.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\Admin\Shared\_Layout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

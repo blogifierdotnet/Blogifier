@@ -1,8 +1,77 @@
 ﻿@page
 @model App.Pages.Admin.Settings.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Settings - General";
 }
 
-<h2>Settings general</h2>
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
+    <div class="bf-body">
 
+        <form method="post" asp-antiforgery="true">
+            <div class="bf-content bf-content-boxed bf-settings">
+                <div class="bf-title d-none d-lg-block"><span>Blog settings</span></div>
+                <input type="hidden" asp-for="AppItem.DbProvider" />
+                <input type="hidden" asp-for="AppItem.ConnString" />
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label class="form-group-label">Title</label>
+                    <input type="text" asp-for="AppItem.Title" class="form-control" />
+                    <span asp-validation-for="AppItem.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">Description</label>
+                    <textarea asp-for="AppItem.Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="AppItem.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">Items per page </label>
+                    <input type="text" asp-for="AppItem.ItemsPerPage" class="form-control" />
+                    <span asp-validation-for="AppItem.ItemsPerPage" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label class="form-group-label">Show in the blog list</label>
+                    <div>
+                        <input type="radio" name="app-post-list-type" value="content" @contSel> Post content
+                        <input type="radio" name="app-post-list-type" value="description" @descSel> Post description
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <label class="form-group-label">Theme</label>
+                    <select asp-for="AppItem.Theme" asp-items="Model.AppItem.BlogThemes" class="form-control custom-select"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">Logo image</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="AppItem.Logo" class="form-control" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> Select</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">Cover image</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="AppItem.Cover" class="form-control" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> Select</button>
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-main">Save</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<partial name="~/Views/Shared/_FileMgr.cshtml" />
+
+@section Scripts{
+    @if (TempData["msg"] != null)
+    {
+        <script>toastr.success('@TempData["msg"]')</script>
+    }
+    <script src="~/admin/js/app/fileManagerController.js"></script>
+}
