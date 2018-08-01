@@ -51,7 +51,7 @@ namespace App.Pages.Admin.Settings
                 return Redirect($"~/admin/settings/profile?name={Author.AppUserName}");
         }
 
-        bool IsAdmin()
+        public bool IsAdmin()
         {
             return _db.Authors.Single(a => a.AppUserName == User.Identity.Name).IsAdmin;
         }

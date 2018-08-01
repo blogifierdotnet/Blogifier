@@ -34,7 +34,7 @@
                 <input type="hidden" asp-for="Author.Id" />
                 <input type="hidden" asp-for="Author.AppUserName" />
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
-                @if (!Model.Author.IsAdmin && ViewBag.IsAdmin)
+                @if (Model.IsAdmin() && Model.Author.AppUserName != User.Identity.Name)
                 {
                     <a asp-action="Remove" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">Delete</a>
                 }
