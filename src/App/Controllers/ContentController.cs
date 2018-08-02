@@ -23,40 +23,6 @@ namespace App.Controllers
             _ss = ss;
         }
 
-        public async Task<IActionResult> Index(int page = 1, string status = "A", string search = "")
-        {
-            var author = await GetAuthor();
-            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
-            var pager = new Pager(page);
-            IEnumerable<PostItem> posts;
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                posts = await _ss.Find(pager, search);
-            }
-            else
-            {
-                if (status == "P")
-                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
-                if (status == "D")
-                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
-
-                posts = await _db.BlogPosts.Find(predicate, pager);
-            }
-
-            return View(new PostListModel { Posts = posts, Pager = pager });
-        }
-
-        public async Task<IActionResult> Edit(string slug = "", string msg = "")
-        {
-            var post = new PostItem { Author = await GetAuthor(), Cover = AppSettings.Cover };
-
-            if (!string.IsNullOrEmpty(slug))
-                post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
-
-            return View(post);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Edit(PostItem model)
         {

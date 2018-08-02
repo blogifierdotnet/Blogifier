@@ -21,7 +21,7 @@
 
   function filter() {
     var status = $('input[name=status-filter]:checked').val();
-    var url = webRoot + "content?status=" + status;
+    var url = webRoot + "admin?status=" + status;
     window.location.href = url;
   }
 

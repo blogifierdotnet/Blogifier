@@ -16,12 +16,6 @@ namespace App.Controllers
             _feed = feed;
         }
 
-        [Route("/admin")]
-        public IActionResult Admin()
-        {
-            return RedirectToAction(nameof(Index), nameof(Content));
-        }
-
         [Route("/error/{code:int}")]
         public IActionResult Index(int code)
         {

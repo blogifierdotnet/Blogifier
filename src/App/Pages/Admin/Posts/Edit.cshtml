@@ -1,9 +1,14 @@
-﻿@model PostItem
+﻿@page
+@model App.Pages.Admin.Posts.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
 <link href="~/admin/markdown/simplemde.min.css" rel="stylesheet" />
-@{ 
-    var img = string.IsNullOrEmpty(Model.Cover) ? Core.AppSettings.DefaultCover : Model.Cover;
+@{
+    var img = string.IsNullOrEmpty(Model.PostItem.Cover) ? Core.AppSettings.DefaultCover : Model.PostItem.Cover;
     img = $"{Url.Content("~/")}{img}";
-    var btnDisabled = Model.Id == 0 ? "disabled" : "";
+    var btnDisabled = Model.PostItem.Id == 0 ? "disabled" : "";
 }
 
 <style>
@@ -35,13 +40,13 @@
     }
 </style>
 
-<form id="frmEditor" class="bf-editor-form" method="post" asp-controller="Content" asp-action="Edit" asp-antiforgery="true">
+<form id="frmEditor" class="bf-editor-form" method="post" asp-antiforgery="true">
     <div class="bf-body">
         <div id="post-edit" class="bf-editor">
             <!-- Editor Header -->
             <div class="bf-editor-header" style="background-image:url('@img');">
                 <div class="container">
-                    <textarea asp-for="Title" class="bf-editor-title" id="txtPostTitle" rows="1" tabindex="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+                    <textarea asp-for="PostItem.Title" class="bf-editor-title" id="txtPostTitle" rows="1" tabindex="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
                 </div>
             </div>
             <!--/Editor Header -->
@@ -64,7 +69,7 @@
                             <button type="button" tabindex="3" onclick="editorController.save(); return false;" class="btn btn-sm btn-primary btn-rounded">Save</button>
                             <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(97px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                @if (Model.Published > DateTime.MinValue)
+                                @if (Model.PostItem.Published > DateTime.MinValue)
                                 {
                                     <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.unpublish(); return false;">Unpublish</a>
                                 }
@@ -75,10 +80,10 @@
                                 <a class="dropdown-item" tabindex="6" href="#" onclick="editorController.remove(); return false;">Delete</a>
                             </div>
                         </div>
-                        <a href="~/blog/@Model.Slug" id="btn-view" tabindex="7" target="_blank" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="View post" title="View" data-placement="bottom">View</a>
+                        <a href="~/blog/@Model.PostItem.Slug" id="btn-view" tabindex="7" target="_blank" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="View post" title="View" data-placement="bottom">View</a>
                     </div>
 
-                    <a href="~/content" tabindex="8" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="Cancel" title="Cancel" data-placement="bottom">Cancel</a>
+                    <a href="~/admin" tabindex="8" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="Cancel" title="Cancel" data-placement="bottom">Cancel</a>
 
                     <div class="loading loading-sm ml-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
                     <div class="btn-group ml-auto d-none d-lg-flex">
@@ -105,11 +110,11 @@
             <div class="container">
                 <!-- Editor -->
                 <textarea id="mdEditor" tabindex="2" rows="4" cols="50"></textarea>
-                <input type="hidden" asp-for="Id" />
-                <input type="hidden" asp-for="Slug" />
-                <input type="hidden" asp-for="Content" />
-                <input type="hidden" asp-for="Status" />
-                <!--/Editor -->               
+                <input type="hidden" asp-for="PostItem.Id" />
+                <input type="hidden" asp-for="PostItem.Slug" />
+                <input type="hidden" asp-for="PostItem.Content" />
+                <input type="hidden" asp-for="PostItem.Status" />
+                <!--/Editor -->
             </div>
         </div>
     </div>
@@ -124,12 +129,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-group-label" asp-for="Description"></label>
-                        <textarea rows="4" asp-for="Description" class="form-control" autofocus></textarea>
+                        <label class="form-group-label" asp-for="PostItem.Description"></label>
+                        <textarea rows="4" asp-for="PostItem.Description" class="form-control" autofocus></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-group-label" asp-for="Published"></label>
-                        <input type="text" asp-for="Published" class="form-control" />
+                        <label class="form-group-label" asp-for="PostItem.Published"></label>
+                        <input type="text" asp-for="PostItem.Published" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -143,10 +148,10 @@
     <script src="~/admin/js/app/fileManagerController.js"></script>
     <script src="~/admin/markdown/simplemde.min.js"></script>
     <script>
-        editorController.loadButtons('@Model.Id');
+        editorController.loadButtons('@Model.PostItem.Id');
         var simplemde = getEditor();
     </script>
-    @if (Context.Request.Query["msg"] == "ok")
+    @if (HttpContext.Request.Query["msg"] == "ok")
     {
         <script>toastr.success('Updated')</script>
     }

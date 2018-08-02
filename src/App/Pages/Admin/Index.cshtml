@@ -1,7 +1,10 @@
-﻿@model PostListModel
-@using Core
+﻿@page
+@model App.Pages.Admin.IndexModel
 @{
-    var ftr = new PostListFilter(Context.Request);
+    ViewData["Title"] = "Index";
+}
+@{
+    var ftr = new PostListFilter(HttpContext.Request);
 
     var pgr = Model.Pager;
     var cntFrom = pgr.CurrentPage == 1 ? 1 : (pgr.CurrentPage - 1) * pgr.ItemsPerPage + 1;
@@ -47,7 +50,7 @@
                 img = $"{Url.Content("~/")}{img}";
                 <div class="post-grid-col">
                     <div class="post-grid-item">
-                        <a class="item-link" href="~/content/edit?slug=@post.Slug" style="background-image:url(@img);"><div class="item-title mt-auto">@post.Title</div></a>
+                        <a class="item-link" href="~/admin/posts/edit?id=@post.Id" style="background-image:url(@img);"><div class="item-title mt-auto">@post.Title</div></a>
                         <div class="item-info d-flex align-items-center">
                             <span class="item-date">@dt</span>
 
@@ -85,11 +88,11 @@
             <ul class="bf-pagination d-flex">
                 @if (pgr.ShowOlder)
                 {
-                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/content?page=@pgr.Older@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
+                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin?page=@pgr.Older@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
                 }
                 @if (pgr.ShowNewer)
                 {
-                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/content?page=@pgr.Newer@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
+                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin?page=@pgr.Newer@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
                 }
                 <li class="bf-pagination-item"><span class="bf-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
             </ul>
