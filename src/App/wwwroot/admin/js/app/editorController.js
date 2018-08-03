@@ -7,20 +7,20 @@
     }
 
     function publish() {
-        $('#Content').val(simplemde.value());
-        $('#Status').val(2);
+        $('#PostItem_Content').val(simplemde.value());
+        $('#PostItem_Status').val(2);
         $('#frmEditor').submit();
     }
 
     function unpublish() {
-        $('#Content').val(simplemde.value());
-        $('#Status').val(3);
+        $('#PostItem_Content').val(simplemde.value());
+        $('#PostItem_Status').val(3);
         $('#frmEditor').submit();
     }
 
     function remove() {
         $('.loading').fadeIn('fast');
-        dataService.remove("admin/remove/" + $('#Id').val(), removeCallback, fail);
+        dataService.remove("admin/removepost/" + $('#PostItem_Id').val(), removeCallback, fail);
     }
 
     function removeCallback(data) {

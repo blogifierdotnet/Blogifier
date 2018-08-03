@@ -16,6 +16,12 @@ namespace App.Controllers
             _feed = feed;
         }
 
+        [Route("/admin")]
+        public IActionResult Admin()
+        {
+            return Redirect("~/admin/posts");
+        }
+
         [Route("/error/{code:int}")]
         public IActionResult Index(int code)
         {
