@@ -141,7 +141,7 @@
         </div>
     </div>
 </form>
-<partial name="~/Views/Shared/_FileMgr.cshtml" />
+<partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
     <script src="~/admin/js/app/editorController.js"></script>
@@ -151,8 +151,12 @@
         editorController.loadButtons('@Model.PostItem.Id');
         var simplemde = getEditor();
     </script>
-    @if (HttpContext.Request.Query["msg"] == "ok")
+    @if (Model.ShowMessage)
     {
-        <script>toastr.success('Updated')</script>
+        <script>toastr.success('@Model.Message')</script>
+    }
+    @if (Model.ShowError)
+    {
+        <script>toastr.error('@Model.Error')</script>
     }
 }

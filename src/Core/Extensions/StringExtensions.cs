@@ -39,18 +39,21 @@ namespace Core
         /// </summary>
         /// <param name="str">Title</param>
         /// <returns>Slug</returns>
-		public static string ToSlug(this string str)
+		public static string ToSlug(this string title)
         {
-            if (string.IsNullOrEmpty(str))
+            if (string.IsNullOrEmpty(title))
                 return string.Empty;
 
-            str = str.ToLowerInvariant();
+            var str = title.ToLowerInvariant();
+
             var bytes = Encoding.GetEncoding("utf-8").GetBytes(str);
             str = Encoding.UTF8.GetString(bytes);
+
             str = Regex.Replace(str, @"\s", "-", RegexOptions.Compiled);
             str = Regex.Replace(str, @"^\w+$", "", RegexOptions.Compiled);
             str = str.Trim('-', '_');
             str = Regex.Replace(str, @"([-_]){2,}", "$1", RegexOptions.Compiled);
+
             return str;
         }
 

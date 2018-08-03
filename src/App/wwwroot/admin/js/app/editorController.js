@@ -1,8 +1,8 @@
 ﻿var editorController = function (dataService) {
 
     function save(publish) {
-        $('#Content').val(simplemde.value());
-        $('#Status').val(publish === 'P' ? 2 : 1);
+        $('#PostItem_Content').val(simplemde.value());
+        $('#PostItem_Status').val(publish === 'P' ? 2 : 1);
         $('#frmEditor').submit();
     }
 
@@ -121,7 +121,7 @@ function getEditor() {
         syncSideBySidePreviewScroll: false
     });
 
-    var txt = $('#Content').val();
+    var txt = $('#PostItem_Content').val();
 
     simplemde.value(txt
         .replace(/&#xA;/g, '\r\n')

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.Data;
+﻿using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace App.Pages.Admin
 {
@@ -26,6 +25,7 @@ namespace App.Pages.Admin
         {
             _db = db;
             _ss = ss;
+            Pager = new Pager(1);
         }
 
         public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A", string search = "")

@@ -1,15 +1,15 @@
 ﻿var postsController = function (dataService) {
 
   function publish(id) {
-    dataService.put("content/publish/" + id + "?flag=P", null, callback, fail);
+    dataService.put("admin/publishpost/" + id + "?flag=P", null, callback, fail);
   }
 
   function unpublish(id) {
-    dataService.put("content/publish/" + id + "?flag=U", null, callback, fail);
+    dataService.put("admin/publishpost/" + id + "?flag=U", null, callback, fail);
   }
 
   function remove(id) {
-    dataService.remove("content/remove/" + id, callback, fail);
+      dataService.remove("admin/removepost/" + id, callback, fail);
   }
 
   function callback() {
