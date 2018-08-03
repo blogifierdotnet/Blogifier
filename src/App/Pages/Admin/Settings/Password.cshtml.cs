@@ -3,14 +3,13 @@ using Core.Data;
 using Core.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
 {
-    public class PasswordModel : PageModel
+    public class PasswordModel : AdminPageModel
     {
         IUnitOfWork _db;
         UserManager<AppUser> _um;
@@ -49,7 +48,7 @@ namespace App.Pages.Admin.Settings
 
                 await _sm.SignInAsync(user, isPersistent: false);
 
-                TempData["msg"] = Resources.Updated;
+                Message = Resources.Updated;
             }
             catch (Exception ex)
             {

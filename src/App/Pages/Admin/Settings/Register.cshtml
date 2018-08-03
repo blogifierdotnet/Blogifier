@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Register";
 }
-
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
@@ -32,8 +31,8 @@
     </div>
 </div>
 @section Scripts{
-    @if (TempData["msg"] != null)
+    @if (Model.ShowMessage)
     {
-        <script>toastr.success('@TempData["msg"]')</script>
+        <script>toastr.success('@Model.Message')</script>
     }
 }

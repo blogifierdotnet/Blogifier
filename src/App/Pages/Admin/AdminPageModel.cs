@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.Pages.Admin
 {
     public class AdminPageModel : PageModel
     {
+        [BindProperty]
+        public Author Author { get; set; }
+
         [TempData]
         public string Message { get; set; }
         public bool ShowMessage => !string.IsNullOrEmpty(Message);

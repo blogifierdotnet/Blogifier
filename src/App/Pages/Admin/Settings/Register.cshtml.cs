@@ -2,13 +2,12 @@
 using Core.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
 {
-    public class RegisterModel : PageModel
+    public class RegisterModel : AdminPageModel
     {
         [Required]
         [BindProperty]
@@ -64,7 +63,7 @@ namespace App.Pages.Admin.Settings
 
                 await _db.Authors.Save(user);
 
-                TempData["msg"] = Resources.Created;
+                Message = Resources.Created;
                 return RedirectToPage("Users");
             }
             else

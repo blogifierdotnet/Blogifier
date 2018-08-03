@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace App.Pages.Admin.Settings
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminPageModel
     {
         [BindProperty]
         public AppItem AppItem { get; set; }
@@ -51,7 +51,7 @@ namespace App.Pages.Admin.Settings
 
             AppConfig.SetSettings(AppItem);
 
-            TempData["msg"] = Resources.Updated;
+            Message = Resources.Updated;
 
             return RedirectToPage("Index");
         }

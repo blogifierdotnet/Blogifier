@@ -45,9 +45,9 @@
 <partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
-    @if (TempData["msg"] != null)
+    @if (Model.ShowMessage)
     {
-        <script>toastr.success('@TempData["msg"]')</script>
+        <script>toastr.success('@Model.Message')</script>
     }
     <script src="~/admin/js/app/fileManagerController.js"></script>
 }

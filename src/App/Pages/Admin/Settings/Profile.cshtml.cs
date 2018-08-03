@@ -1,17 +1,13 @@
 ﻿using Core;
 using Core.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
 {
-    public class ProfileModel : PageModel
+    public class ProfileModel : AdminPageModel
     {
         IUnitOfWork _db;
-
-        [BindProperty]
-        public Author Author { get; set; }
 
         public ProfileModel(IUnitOfWork db)
         {
@@ -43,7 +39,7 @@ namespace App.Pages.Admin.Settings
             author.Email = Author.Email;
 
             await _db.Authors.Save(author);
-            TempData["msg"] = Resources.Updated;
+            Message = Resources.Updated;
 
             if (Author.AppUserName == User.Identity.Name)
                 return RedirectToPage("Profile");
