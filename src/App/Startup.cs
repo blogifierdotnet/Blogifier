@@ -44,6 +44,10 @@ namespace App
                     p.ApplicationParts.Add(new AssemblyPart(assembly));
                 }
             })
+            .AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Admin");
+            })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAppServices();

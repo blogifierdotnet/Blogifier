@@ -1,8 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model LoginModel
-@inject SignInManager<AppUser> SignInManager
+﻿@page
+@model App.Pages.Account.LoginModel
 @{
-    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Account/_Layout.cshtml";
 }
 <div class="container py-5">
     <div class="row">
