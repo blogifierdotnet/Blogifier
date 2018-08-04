@@ -25,8 +25,9 @@ namespace App.Pages.Admin.Settings
             _sm = sm;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             ChangePasswordModel = new ChangePasswordModel { UserName = User.Identity.Name };
         }
 

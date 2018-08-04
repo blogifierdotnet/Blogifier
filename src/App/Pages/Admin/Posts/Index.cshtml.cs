@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Posts
 {
-    public class IndexModel : PageModel
+    public class IndexModel : AdminPageModel
     {
         [BindProperty]
         public IEnumerable<PostItem> Posts { get; set; }
@@ -30,8 +30,8 @@ namespace App.Pages.Admin.Posts
 
         public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A", string search = "")
         {
-            var author = await GetAuthor();
-            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == Author.Id;
             Pager = new Pager(page);
 
             if (!string.IsNullOrEmpty(search))
@@ -41,19 +41,13 @@ namespace App.Pages.Admin.Posts
             else
             {
                 if (status == "P")
-                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
+                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == Author.Id;
                 if (status == "D")
-                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
+                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == Author.Id;
 
                 Posts = await _db.BlogPosts.Find(predicate, Pager);
             }
-
             return Page();
-        }
-
-        async Task<Author> GetAuthor()
-        {
-            return await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
         }
     }
 }

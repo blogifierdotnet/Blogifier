@@ -23,11 +23,22 @@
                     <i class="taskbar-item-icon fa fa-align-left"></i>
                 </a>
             </li>
-            <li is-active-route asp-controller="settings" class="taskbar-item">
-                <a href="~/admin/settings" class="taskbar-item-link" title="Settings">
-                    <i class="taskbar-item-icon fa fa-gear"></i>
-                </a>
-            </li>
+            @if (Model.Author.IsAdmin)
+            {
+                <li is-active-route asp-controller="settings" class="taskbar-item">
+                    <a href="~/admin/settings" class="taskbar-item-link" title="Settings">
+                        <i class="taskbar-item-icon fa fa-gear"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li is-active-route asp-controller="settings" asp-action="profile" class="taskbar-item">
+                    <a href="~/admin/settings/profile" class="taskbar-item-link" title="Settings">
+                        <i class="taskbar-item-icon fa fa-gear"></i>
+                    </a>
+                </li>
+            }
             <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
                 <a class="taskbar-item-link" href="~/" return false; title="Visit Blog" target="_blank"><i class="taskbar-item-icon fa fa-globe"></i></a>
             </li>

@@ -2,7 +2,7 @@
 <div class="bf-sidebar d-lg-block">
     <div class="bf-settings-sidebar">
         <ul class="bf-settings-sidebar-nav">
-            @if (true)
+            @if (Model.Author.IsAdmin)
             {
             <li is-active-route asp-controller="settings" asp-action="index">
                 <a href="~/admin/settings">General</a>
@@ -14,7 +14,7 @@
             <li is-active-route asp-controller="settings" asp-action="password">
                 <a href="~/admin/settings/password">Password</a>
             </li>
-            @if (true)
+            @if (Model.Author.IsAdmin)
             {
             <li is-active-route asp-controller="settings" asp-action="users">
                 <a href="~/admin/settings/users">Users</a>

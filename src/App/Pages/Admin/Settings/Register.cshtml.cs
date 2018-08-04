@@ -9,6 +9,8 @@ namespace App.Pages.Admin.Settings
 {
     public class RegisterModel : AdminPageModel
     {
+        #region Properties
+
         [Required]
         [BindProperty]
         public string UserName { get; set; }
@@ -29,6 +31,8 @@ namespace App.Pages.Admin.Settings
         [BindProperty]
         public string ConfirmPassword { get; set; }
 
+        #endregion
+
         UserManager<AppUser> _um;
         IUnitOfWork _db;
 
@@ -38,9 +42,9 @@ namespace App.Pages.Admin.Settings
             _um = um;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
         }
 
         public async Task<IActionResult> OnPostAsync()

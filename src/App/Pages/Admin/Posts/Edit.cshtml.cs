@@ -22,7 +22,8 @@ namespace App.Pages.Admin.Posts
 
         public async Task OnGetAsync(int id)
         {
-            PostItem = new PostItem { Author = await GetAuthor(), Cover = AppSettings.Cover };
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            PostItem = new PostItem { Author = Author, Cover = AppSettings.Cover };
 
             if (id > 0)
                 PostItem = await _db.BlogPosts.GetItem(p => p.Id == id);
@@ -36,7 +37,7 @@ namespace App.Pages.Admin.Posts
                 return Page();
             }             
 
-            PostItem.Author = await GetAuthor();
+            PostItem.Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
 
             if (ModelState.IsValid)
             {
@@ -57,11 +58,6 @@ namespace App.Pages.Admin.Posts
             }
 
             return Page();
-        }
-
-        async Task<Author> GetAuthor()
-        {
-            return await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
         }
 
         public async Task<string> GetSlug(int id, string title)

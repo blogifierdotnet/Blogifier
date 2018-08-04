@@ -2,9 +2,9 @@
 using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
 {
@@ -13,18 +13,25 @@ namespace App.Pages.Admin.Settings
         [BindProperty]
         public AppItem AppItem { get; set; }
 
+        IUnitOfWork _db;
         IAppSettingsService<AppItem> _app;
         IStorageService _storage;
 
-        public IndexModel(IAppSettingsService<AppItem> app, IStorageService storage)
+        public IndexModel(IUnitOfWork db, IAppSettingsService<AppItem> app, IStorageService storage)
         {
+            _db = db;
             _app = app;
             _storage = storage;
             _app.Value.BlogThemes = GetThemes();
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            if (!Author.IsAdmin)
+            {
+                Redirect("~/admin/settings/profile");
+            }
             AppItem = _app.Value;
         }
 

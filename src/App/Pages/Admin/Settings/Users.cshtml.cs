@@ -21,6 +21,7 @@ namespace App.Pages.Admin.Settings
 
         public async Task OnGet(int page = 1)
         {
+            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             var pager = new Pager(page);
             Authors = await _db.Authors.GetItems(u => u.Created > DateTime.MinValue, pager);
         }
