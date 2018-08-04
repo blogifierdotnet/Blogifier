@@ -30,8 +30,10 @@ namespace App.Pages.Admin.Posts
 
         public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A", string search = "")
         {
-            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
-            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == Author.Id;
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
+
+            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
             Pager = new Pager(page);
 
             if (!string.IsNullOrEmpty(search))
@@ -41,9 +43,9 @@ namespace App.Pages.Admin.Posts
             else
             {
                 if (status == "P")
-                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == Author.Id;
+                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
                 if (status == "D")
-                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == Author.Id;
+                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
 
                 Posts = await _db.BlogPosts.Find(predicate, Pager);
             }

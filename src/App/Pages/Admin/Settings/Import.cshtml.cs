@@ -13,11 +13,12 @@ namespace App.Pages.Admin.Settings
             _db = db;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
 
-            if (!Author.IsAdmin)
+            if (!author.IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
 
             return Page();

@@ -22,8 +22,10 @@ namespace App.Pages.Admin.Posts
 
         public async Task OnGetAsync(int id)
         {
-            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
-            PostItem = new PostItem { Author = Author, Cover = AppSettings.Cover };
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
+
+            PostItem = new PostItem { Author = author, Cover = AppSettings.Cover };
 
             if (id > 0)
                 PostItem = await _db.BlogPosts.GetItem(p => p.Id == id);

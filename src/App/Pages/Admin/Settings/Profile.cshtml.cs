@@ -9,6 +9,9 @@ namespace App.Pages.Admin.Settings
     {
         IUnitOfWork _db;
 
+        [BindProperty]
+        public Author Author { get; set; }
+
         public ProfileModel(IUnitOfWork db)
         {
             _db = db;
@@ -16,15 +19,11 @@ namespace App.Pages.Admin.Settings
 
         public async Task OnGetAsync(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                Author = await _db.Authors.GetItem(u => u.AppUserName == User.Identity.Name);
-            }
-            else
-            {
-                if (!IsAdmin())
-                    RedirectToPage("~/error/403");
+            Author = await _db.Authors.GetItem(u => u.AppUserName == User.Identity.Name);
+            IsAdmin = Author.IsAdmin;
 
+            if (!string.IsNullOrEmpty(name))
+            {
                 Author = await _db.Authors.GetItem(u => u.AppUserName == name);
             }
         }
@@ -45,11 +44,6 @@ namespace App.Pages.Admin.Settings
                 return RedirectToPage("Profile");
             else
                 return Redirect($"~/admin/settings/profile?name={Author.AppUserName}");
-        }
-
-        public bool IsAdmin()
-        {
-            return _db.Authors.Single(a => a.AppUserName == User.Identity.Name).IsAdmin;
         }
     }
 }

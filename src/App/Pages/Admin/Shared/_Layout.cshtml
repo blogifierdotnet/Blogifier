@@ -23,7 +23,7 @@
                     <i class="taskbar-item-icon fa fa-align-left"></i>
                 </a>
             </li>
-            @if (Model.Author.IsAdmin)
+            @if (Model.IsAdmin)
             {
                 <li is-active-route asp-controller="settings" class="taskbar-item">
                     <a href="~/admin/settings" class="taskbar-item-link" title="Settings">

@@ -19,11 +19,12 @@ namespace App.Pages.Admin.Settings
             _db = db;
         }
 
-        public async Task<IActionResult> OnGet(int page = 1)
+        public async Task<IActionResult> OnGetAsync(int page = 1)
         {
-            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
 
-            if (!Author.IsAdmin)
+            if (!IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
 
             var pager = new Pager(page);

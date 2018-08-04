@@ -1,6 +1,4 @@
-﻿using Core.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace App.Pages.Admin.Shared
 {
@@ -9,16 +7,8 @@ namespace App.Pages.Admin.Shared
         [BindProperty]
         public int Code { get; set; }
 
-        IUnitOfWork _db;
-
-        public _ErrorModel(IUnitOfWork db)
+        public void OnGet(int code)
         {
-            _db = db;
-        }
-
-        public async Task OnGet(int code)
-        {
-            Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             Code = code;
         }
     }

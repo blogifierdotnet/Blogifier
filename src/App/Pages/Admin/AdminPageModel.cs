@@ -6,8 +6,10 @@ namespace App.Pages.Admin
 {
     public class AdminPageModel : PageModel
     {
-        [BindProperty]
-        public Author Author { get; set; }
+        //[BindProperty]
+        //public Author Author { get; set; }
+
+        public bool IsAdmin { get; set; }
 
         [TempData]
         public string Message { get; set; }
