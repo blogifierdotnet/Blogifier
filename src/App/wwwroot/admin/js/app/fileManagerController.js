@@ -34,7 +34,7 @@
             }
             var url = 'assets/' + id;
             if (callBack.name === 'updatePostCoverCallback') {
-                url = 'assets/pick?type=postCover&asset=' + id + '&post=' + $('#Id').val();
+                url = 'assets/pick?type=postCover&asset=' + id + '&post=' + $('#PostItem_Id').val();
             }
             else if (callBack.name === 'updateAppCoverCallback') {
                 url = 'assets/pick?type=appCover&asset=' + id;
@@ -203,7 +203,7 @@ $(firstItemCheckfm).on('change', function () {
 
 // callbacks
 var updateAvatarCallback = function (data) {
-    $('#Avatar').val(data.url);
+    $('#Author_Avatar').val(data.url);
     toastr.success('Updated');
 }
 var updateAppCoverCallback = function (data) {

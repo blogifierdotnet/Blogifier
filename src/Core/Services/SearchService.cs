@@ -11,7 +11,7 @@ namespace Core.Services
 {
     public interface ISearchService
     {
-        Task<IEnumerable<PostItem>> Find(Pager pager, string term, string blogSlug = "");
+        Task<IEnumerable<PostItem>> Find(Pager pager, string term, int author = 0);
     }
 
     public class SearchService : ISearchService
@@ -27,17 +27,17 @@ namespace Core.Services
 
         // search always returns only published posts
         // for a search term and optional blog slug
-        public async Task<IEnumerable<PostItem>> Find(Pager pager, string term, string blogSlug = "")
+        public async Task<IEnumerable<PostItem>> Find(Pager pager, string term, int author = 0)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
             var results = new List<Result>();
             var list = new List<PostItem>();
 
             IEnumerable<BlogPost> posts;
-            if (string.IsNullOrEmpty(blogSlug))
+            if (author == 0)
                 posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue).ToList();
             else
-                posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.Slug == blogSlug).ToList();
+                posts = _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.AuthorId == author).ToList();
 
             foreach (var item in posts)
             {

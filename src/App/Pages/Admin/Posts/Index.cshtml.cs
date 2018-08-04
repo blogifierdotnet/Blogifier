@@ -2,7 +2,6 @@
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,7 +14,6 @@ namespace App.Pages.Admin.Posts
         [BindProperty]
         public IEnumerable<PostItem> Posts { get; set; }
 
-        [BindProperty]
         public Pager Pager { get; set; }
 
         IUnitOfWork _db;
@@ -28,7 +26,7 @@ namespace App.Pages.Admin.Posts
             Pager = new Pager(1);
         }
 
-        public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A", string search = "")
+        public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A")
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
@@ -36,19 +34,25 @@ namespace App.Pages.Admin.Posts
             Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
             Pager = new Pager(page);
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                Posts = await _ss.Find(Pager, search);
-            }
-            else
-            {
-                if (status == "P")
-                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
-                if (status == "D")
-                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
+            if (status == "P")
+                predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
+            if (status == "D")
+                predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
 
-                Posts = await _db.BlogPosts.Find(predicate, Pager);
-            }
+            Posts = await _db.BlogPosts.Find(predicate, Pager);
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            var page = int.Parse(Request.Form["page"]);
+            var term = Request.Form["search"];
+
+            Pager = new Pager(page);
+            Posts = await _ss.Find(Pager, term, author.Id);
+
             return Page();
         }
     }

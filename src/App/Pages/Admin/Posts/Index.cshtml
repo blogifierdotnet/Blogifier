@@ -12,7 +12,12 @@
 }
 <div class="bf-main">
     <div class="bf-sidebar d-lg-block">
-        <form class="bf-posts-form-search" asp-controller="Content" asp-action="Index" method="get">
+        @*<form class="bf-posts-form-search" asp-controller="Content" asp-action="Index" method="get">
+            <input type="hidden" name="page" value="1" />
+            <input type="hidden" name="status" value="@ftr.Status" />
+            <input class="form-control form-control-sm form-control-rounded" type="search" name="search" placeholder="Search..." autocomplete="off" />
+        </form>*@
+        <form class="bf-posts-form-search" method="post">
             <input type="hidden" name="page" value="1" />
             <input type="hidden" name="status" value="@ftr.Status" />
             <input class="form-control form-control-sm form-control-rounded" type="search" name="search" placeholder="Search..." autocomplete="off" />

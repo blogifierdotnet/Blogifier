@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -73,16 +74,18 @@ namespace App.Controllers
             else if (type == "appCover")
             {
                 _app.Update(opt => { opt.Cover = asset; });
+                AppSettings.Cover = asset;
             }
             else if (type == "appLogo")
             {
                 _app.Update(opt => { opt.Logo = asset; });
+                AppSettings.Logo = asset;
             }
             else if (type == "avatar")
             {
                 var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
                 user.Avatar = asset;
-                _db.Authors.Add(user);
+                _db.Complete();
             }
 
             var item = await _ss.Find(a => a.Url == asset, new Pager(1));
