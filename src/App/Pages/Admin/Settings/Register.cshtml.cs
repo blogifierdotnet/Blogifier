@@ -42,9 +42,14 @@ namespace App.Pages.Admin.Settings
             _um = um;
         }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
             Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+
+            if (!Author.IsAdmin)
+                return RedirectToPage("../Shared/_Error", new { code = 403 });
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

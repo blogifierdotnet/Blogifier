@@ -25,14 +25,16 @@ namespace App.Pages.Admin.Settings
             _app.Value.BlogThemes = GetThemes();
         }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
             Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+
             if (!Author.IsAdmin)
-            {
-                Redirect("~/admin/settings/profile");
-            }
+                return RedirectToPage("../Shared/_Error", new { code = 403 });
+
             AppItem = _app.Value;
+
+            return Page();
         }
 
         public IActionResult OnPost()
