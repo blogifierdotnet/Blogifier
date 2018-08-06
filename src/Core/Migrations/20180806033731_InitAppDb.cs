@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Core.Migrations
 {
-    public partial class InitDb : Migration
+    public partial class InitAppDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,8 @@ namespace Core.Migrations
                     AppUserId = table.Column<string>(maxLength: 160, nullable: true),
                     AppUserName = table.Column<string>(maxLength: 160, nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    DisplayName = table.Column<string>(maxLength: 160, nullable: true),
+                    DisplayName = table.Column<string>(maxLength: 160, nullable: false),
+                    Bio = table.Column<string>(nullable: true),
                     Avatar = table.Column<string>(maxLength: 160, nullable: true),
                     IsAdmin = table.Column<bool>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false)

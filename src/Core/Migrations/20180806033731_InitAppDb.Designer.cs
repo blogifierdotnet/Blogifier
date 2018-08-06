@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180704052509_InitDb")]
-    partial class InitDb
+    [Migration("20180806033731_InitAppDb")]
+    partial class InitAppDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,9 +82,12 @@ namespace Core.Migrations
                     b.Property<string>("Avatar")
                         .HasMaxLength(160);
 
+                    b.Property<string>("Bio");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasMaxLength(160);
 
                     b.Property<string>("Email");

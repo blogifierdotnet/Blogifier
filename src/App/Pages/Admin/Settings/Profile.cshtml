@@ -19,6 +19,10 @@
                     <label class="form-group-label" asp-for="Author.Email"></label>
                     <input type="text" asp-for="Author.Email" class="form-control" />
                 </div>
+                <div class="form-group">
+                    <label class="form-group-label" asp-for="Author.Bio"></label>
+                    <textarea asp-for="Author.Bio" cols="5" class="form-control"></textarea>
+                </div>
                 @if (Model.Author.AppUserName == User.Identity.Name)
                 {
                     <div class="form-group">

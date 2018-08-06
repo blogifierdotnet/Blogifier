@@ -80,9 +80,12 @@ namespace Core.Migrations
                     b.Property<string>("Avatar")
                         .HasMaxLength(160);
 
+                    b.Property<string>("Bio");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasMaxLength(160);
 
                     b.Property<string>("Email");

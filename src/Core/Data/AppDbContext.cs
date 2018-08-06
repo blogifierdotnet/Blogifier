@@ -1,5 +1,4 @@
-﻿using Core.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -37,6 +36,7 @@ namespace Core.Data
                 AppUserName = "admin",
                 Email = "admin@us.com",
                 DisplayName = "Administrator",
+                Bio = "<p>Something about <b>administrator</b>, maybe HTML or markdown formatted text goes here.</p><p>Should be customizable and editable from user profile.</p>",
                 IsAdmin = true,
                 Created = DateTime.UtcNow.AddDays(-120)
             });
@@ -45,6 +45,7 @@ namespace Core.Data
                 AppUserName = "demo",
                 Email = "demo@us.com",
                 DisplayName = "Demo user",
+                Bio = "Short description about this user and blog.",
                 Created = DateTime.UtcNow.AddDays(-110)
             });
 

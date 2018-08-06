@@ -35,6 +35,7 @@ namespace App.Pages.Admin.Settings
 
             var author = _db.Authors.Single(a => a.Id == Author.Id);
             author.DisplayName = Author.DisplayName;
+            author.Bio = Author.Bio;
             author.Email = Author.Email;
 
             await _db.Authors.Save(author);
