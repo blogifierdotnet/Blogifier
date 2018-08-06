@@ -59,5 +59,23 @@ namespace App.Controllers
 
             return View($"~/Views/Themes/{AppSettings.Theme}/Single.cshtml", post);
         }
+
+        [Route("authors/{name}")]
+        public async Task<IActionResult> Authors(string name, int page)
+        {
+            var author = await _db.Authors.GetItem(a => a.AppUserName == name);
+
+            var pager = new Pager(page);
+            var posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
+            
+            var model = new AuthorPostListModel { Author = author, Posts = posts, Pager = pager };
+
+            ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
+            ViewBag.Cover = $"{Url.Content("~/")}{AppSettings.Cover}";
+            ViewBag.Title = AppSettings.Title;
+            ViewBag.Description = AppSettings.Description;
+
+            return View($"~/Views/Themes/{AppSettings.Theme}/Author.cshtml", model);
+        }
     }
 }

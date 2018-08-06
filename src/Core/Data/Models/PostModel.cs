@@ -12,6 +12,13 @@ namespace Core.Data
         public Pager Pager { get; set; }
     }
 
+    public class AuthorPostListModel
+    {
+        public IEnumerable<PostItem> Posts { get; set; }
+        public Pager Pager { get; set; }
+        public Author Author { get; set; }
+    }
+
     public class PostListFilter
     {
         HttpRequest _req;

@@ -1,8 +1,8 @@
-﻿@page "{name}"
-@model App.Pages.AuthorsModel
-@using Core
+﻿@model AuthorPostListModel
 @{
-    Layout = $"~/Views/Themes/{Core.AppSettings.Theme}/_Layout.cshtml";
+    Layout = "~/Views/Themes/Standard/_Layout.cshtml";
+    ViewData["bodyClass"] = "home";
+    var pgr = Model.Pager;
 
     ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
     ViewBag.Cover = $"{Url.Content("~/")}{AppSettings.Cover}";
@@ -28,14 +28,14 @@
         <h4 style="line-height: 3em">Latest posts by @Model.Author.DisplayName</h4>
 
         <div class="list-group">
-            @if (Model.Posts.Posts.Any())
+            @if (Model.Posts.Any())
             {
-                foreach (var post in Model.Posts.Posts)
+                foreach (var post in Model.Posts)
                 {
-                    <a href="~/blog/@post.Slug" class="list-group-item list-group-item-action">
-                        <b>@post.Title</b>
-                        @post.Description
-                    </a>
+                <a href="~/blog/@post.Slug" class="list-group-item list-group-item-action">
+                    <b>@post.Title</b>
+                    @post.Description
+                </a>
                 }
             }
         </div>
