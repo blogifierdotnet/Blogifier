@@ -12,11 +12,6 @@
 }
 <div class="bf-main">
     <div class="bf-sidebar d-lg-block">
-        @*<form class="bf-posts-form-search" asp-controller="Content" asp-action="Index" method="get">
-            <input type="hidden" name="page" value="1" />
-            <input type="hidden" name="status" value="@ftr.Status" />
-            <input class="form-control form-control-sm form-control-rounded" type="search" name="search" placeholder="Search..." autocomplete="off" />
-        </form>*@
         <form class="bf-posts-form-search" method="post">
             <input type="hidden" name="page" value="1" />
             <input type="hidden" name="status" value="@ftr.Status" />
@@ -71,6 +66,18 @@
                                     <span class="item-status item-status-draft ml-auto" data-tooltip title="draft"><i class="fa fa-circle"></i></span>
                                 </a>
                             }
+
+                            @if (Model.IsAdmin)
+                            {
+                                <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="alert('@post.Id')" data-original-title="featured">
+                                    <i class="fa fa-star-o"></i>
+                                </button>
+                            }
+
+                            @*<button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.featured('1', this)" data-original-title="featured">
+                                <i class="fa fa-star"></i>
+                            </button>*@
+
                             <a class="item-show ml-3" href="~/blog/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="View"><i class="fa fa-external-link-square"></i></a>
                             <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="Delete"><i class="fa fa-trash" style="color: #ff6666"></i></a>
                         </div>

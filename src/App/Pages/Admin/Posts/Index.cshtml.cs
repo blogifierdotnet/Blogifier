@@ -31,13 +31,25 @@ namespace App.Pages.Admin.Posts
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
-            Expression<Func<BlogPost, bool>> predicate = p => p.AuthorId == author.Id;
+            Expression<Func<BlogPost, bool>> predicate = p => p.Id > 0;
             Pager = new Pager(page);
 
-            if (status == "P")
-                predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
-            if (status == "D")
-                predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
+            if (IsAdmin)
+            {
+                if(status == "P")
+                    predicate = p => p.Published > DateTime.MinValue;
+                else if(status == "D")
+                    predicate = p => p.Published == DateTime.MinValue;
+            }
+            else
+            {
+                if (status == "P")
+                    predicate = p => p.Published > DateTime.MinValue && p.AuthorId == author.Id;
+                else if (status == "D")
+                    predicate = p => p.Published == DateTime.MinValue && p.AuthorId == author.Id;
+                else
+                    predicate = p => p.AuthorId == author.Id;
+            }
 
             Posts = await _db.BlogPosts.Find(predicate, Pager);
 
@@ -47,11 +59,17 @@ namespace App.Pages.Admin.Posts
         public async Task<IActionResult> OnPostAsync()
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
+
             var page = int.Parse(Request.Form["page"]);
             var term = Request.Form["search"];
 
             Pager = new Pager(page);
-            Posts = await _ss.Find(Pager, term, author.Id);
+
+            if(IsAdmin)
+                Posts = await _ss.Find(Pager, term);
+            else
+                Posts = await _ss.Find(Pager, term, author.Id);
 
             return Page();
         }

@@ -37,12 +37,23 @@ namespace App.Pages.Admin.Posts
             {
                 Error = ModelHelper.GetFirstValidationError(ModelState);
                 return Page();
-            }             
+            }
 
             PostItem.Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
 
             if (ModelState.IsValid)
             {
+                if (PostItem.Id > 0)
+                {
+                    // post can be updated by admin, so use post author id
+                    // instead of identity user name
+                    var post = _db.BlogPosts.Single(p => p.Id == PostItem.Id);
+                    if(post != null)
+                    {
+                        PostItem.Author = await _db.Authors.GetItem(a => a.Id == post.AuthorId);
+                    }
+                }
+
                 if (PostItem.Status == SaveStatus.Publishing)
                     PostItem.Published = DateTime.UtcNow;
 

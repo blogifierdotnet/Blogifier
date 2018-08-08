@@ -1,5 +1,4 @@
-﻿using Core.Data.Models;
-using Core.Helpers;
+﻿using Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace Core.Data
         Task<IEnumerable<Author>> GetItems(Expression<Func<Author, bool>> predicate, Pager pager);
         Task Save(Author author);
         Task Remove(int id);
-        Task ChangePassword(ChangePasswordModel model);
     }
 
     public class AuthorRepository : Repository<Author>, IAuthorRepository
@@ -81,19 +79,6 @@ namespace Core.Data
             }
 
             await _db.SaveChangesAsync();
-        }
-
-        public async Task ChangePassword(ChangePasswordModel model)
-        {
-            //var user = _db.Users.Single(u => u.UserName == model.UserName);
-
-            //var result = await _um.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            //if (!result.Succeeded)
-            //{
-            //    throw new ApplicationException(result.Errors.First().Description);
-            //}
-
-            //await _sm.SignInAsync(user, isPersistent: false);
         }
 
         public async Task Remove(int id)
