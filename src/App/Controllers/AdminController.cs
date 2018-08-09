@@ -1,4 +1,4 @@
-﻿using Core.Data;
+﻿using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,9 +9,9 @@ namespace App.Controllers
     [Authorize]
     public class AdminController : Controller
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public AdminController(IUnitOfWork db)
+        public AdminController(IDataService db)
         {
             _db = db;
         }

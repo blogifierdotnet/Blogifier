@@ -1,5 +1,6 @@
 ﻿using Core.Data;
 using Core.Helpers;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,12 @@ namespace App.Pages.Admin.Settings
 {
     public class UsersModel : AdminPageModel
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
         [BindProperty]
         public IEnumerable<Author> Authors { get; set; }
 
-        public UsersModel(IUnitOfWork db)
+        public UsersModel(IDataService db)
         {
             _db = db;
         }

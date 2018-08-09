@@ -12,9 +12,9 @@ namespace App.Controllers
 {
     public class BlogController : Controller
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public BlogController(IUnitOfWork db)
+        public BlogController(IDataService db)
         {
             _db = db;
         }

@@ -16,9 +16,9 @@ namespace App.Pages.Admin.Posts
 
         public Pager Pager { get; set; }
 
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public IndexModel(IUnitOfWork db)
+        public IndexModel(IDataService db)
         {
             _db = db;
             Pager = new Pager(1);

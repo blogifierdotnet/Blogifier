@@ -1,5 +1,4 @@
-﻿using Core.Data;
-using Core.Helpers;
+﻿using Core.Helpers;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;
@@ -19,9 +18,9 @@ namespace Core.Services
 
     public class SyndicationService : ISyndicationService
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public SyndicationService(IUnitOfWork db, IStorageService storage)
+        public SyndicationService(IDataService db, IStorageService storage)
         {
             _db = db;
         }

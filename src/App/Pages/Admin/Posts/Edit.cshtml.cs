@@ -1,7 +1,7 @@
 ﻿using App.Helpers;
 using Core;
 using Core.Data;
-using Core.Helpers;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,9 +13,9 @@ namespace App.Pages.Admin.Posts
         [BindProperty]
         public PostItem PostItem { get; set; }
 
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public EditModel(IUnitOfWork db)
+        public EditModel(IDataService db)
         {
             _db = db;
         }

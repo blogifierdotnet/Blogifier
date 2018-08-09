@@ -13,11 +13,11 @@ namespace App.Pages.Admin.Settings
         [BindProperty]
         public AppItem AppItem { get; set; }
 
-        IUnitOfWork _db;
+        IDataService _db;
         IAppSettingsService<AppItem> _app;
         IStorageService _storage;
 
-        public IndexModel(IUnitOfWork db, IAppSettingsService<AppItem> app, IStorageService storage)
+        public IndexModel(IDataService db, IAppSettingsService<AppItem> app, IStorageService storage)
         {
             _db = db;
             _app = app;

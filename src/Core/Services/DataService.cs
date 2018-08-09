@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Core.Data;
+using System;
 
-namespace Core.Data
+namespace Core.Services
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IDataService : IDisposable
     {
         IPostRepository BlogPosts { get; }
         IAuthorRepository Authors { get; }
@@ -10,11 +11,11 @@ namespace Core.Data
         int Complete();
     }
 
-    public class UnitOfWork : IUnitOfWork
+    public class DataService : IDataService
     {
         private readonly AppDbContext _db;
 
-        public UnitOfWork(AppDbContext db)
+        public DataService(AppDbContext db)
         {
             _db = db;
 

@@ -21,7 +21,7 @@ namespace Core.Tests.Services
 {
     public class FeedImportServiceTests : IClassFixture<WebApplicationFactory<Startup>>
     {
-        private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+        private readonly Mock<IDataService> _unitOfWork = new Mock<IDataService>();
         private readonly Mock<IAuthorRepository> _authorRepository = new Mock<IAuthorRepository>();
         private readonly Mock<IPostRepository> _postsRepository = new Mock<IPostRepository>();
         private readonly Mock<IStorageService> _storageService = new Mock<IStorageService>();

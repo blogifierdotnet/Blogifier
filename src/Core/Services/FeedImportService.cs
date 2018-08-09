@@ -21,13 +21,13 @@ namespace Core.Services
 
     public class FeedImportService : IFeedImportService
     {
-        IUnitOfWork _db;
+        IDataService _db;
         IStorageService _ss;
         List<ImportMessage> _msgs;
         string _usr;
         string _url;
 
-        public FeedImportService(IUnitOfWork db, IStorageService ss)
+        public FeedImportService(IDataService db, IStorageService ss)
         {
             _db = db;
             _ss = ss;

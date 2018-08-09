@@ -12,11 +12,11 @@ namespace App.Controllers
     [Produces("application/json")]
     public class ApiController : Controller
     {
-        IUnitOfWork _db;
+        IDataService _db;
         IStorageService _storage;
         IFeedImportService _feed;
 
-        public ApiController(IUnitOfWork db, IStorageService storage, IFeedImportService feed)
+        public ApiController(IDataService db, IStorageService storage, IFeedImportService feed)
         {
             _db = db;
             _storage = storage;

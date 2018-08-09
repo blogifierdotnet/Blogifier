@@ -1,18 +1,16 @@
 ﻿using Core.Data;
-using Core.Data.Models;
 using Core.Services;
 using Moq;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Core.Tests.Services
 {
     public class SyndicationServiceTests
     {
         private readonly Mock<ISyndicationService> _syndicationService = new Mock<ISyndicationService>();
-        private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
+        private readonly Mock<IDataService> _unitOfWork = new Mock<IDataService>();
         private readonly Mock<IAuthorRepository> authorRepository = new Mock<IAuthorRepository>();
         private readonly Mock<IPostRepository> postRepository = new Mock<IPostRepository>();
         private readonly IStorageService _storage;

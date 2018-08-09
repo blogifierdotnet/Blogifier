@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Data;
+using Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -34,9 +35,9 @@ namespace App.Pages.Admin.Settings
         #endregion
 
         UserManager<AppUser> _um;
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public RegisterModel(IUnitOfWork db, UserManager<AppUser> um)
+        public RegisterModel(IDataService db, UserManager<AppUser> um)
         {
             _db = db;
             _um = um;

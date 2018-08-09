@@ -1,4 +1,4 @@
-﻿using Core.Data;
+﻿using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -6,9 +6,9 @@ namespace App.Pages.Admin.Settings
 {
     public class ImportModel : AdminPageModel
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
-        public ImportModel(IUnitOfWork db)
+        public ImportModel(IDataService db)
         {
             _db = db;
         }

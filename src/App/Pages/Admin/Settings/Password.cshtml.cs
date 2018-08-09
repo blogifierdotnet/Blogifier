@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Data;
 using Core.Data.Models;
+using Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,14 +12,14 @@ namespace App.Pages.Admin.Settings
 {
     public class PasswordModel : AdminPageModel
     {
-        IUnitOfWork _db;
+        IDataService _db;
         UserManager<AppUser> _um;
         SignInManager<AppUser> _sm;
 
         [BindProperty]
         public ChangePasswordModel ChangePasswordModel { get; set; }
 
-        public PasswordModel(IUnitOfWork db, UserManager<AppUser> um, SignInManager<AppUser> sm)
+        public PasswordModel(IDataService db, UserManager<AppUser> um, SignInManager<AppUser> sm)
         {
             _db = db;
             _um = um;

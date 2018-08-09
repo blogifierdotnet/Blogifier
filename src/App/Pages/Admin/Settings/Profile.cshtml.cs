@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Data;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,12 +8,12 @@ namespace App.Pages.Admin.Settings
 {
     public class ProfileModel : AdminPageModel
     {
-        IUnitOfWork _db;
+        IDataService _db;
 
         [BindProperty]
         public Author Author { get; set; }
 
-        public ProfileModel(IUnitOfWork db)
+        public ProfileModel(IDataService db)
         {
             _db = db;
         }

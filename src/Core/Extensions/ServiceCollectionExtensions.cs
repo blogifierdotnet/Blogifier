@@ -31,8 +31,7 @@ namespace Core.Extensions
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IDataService, DataService>();
             services.AddTransient<ISyndicationService, SyndicationService>();
             services.AddTransient<IStorageService, StorageService>();
             services.AddTransient<IFeedImportService, FeedImportService>();
