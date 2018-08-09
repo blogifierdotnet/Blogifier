@@ -17,12 +17,10 @@ namespace App.Pages.Admin.Posts
         public Pager Pager { get; set; }
 
         IUnitOfWork _db;
-        ISearchService _ss;
 
-        public IndexModel(IUnitOfWork db, ISearchService ss)
+        public IndexModel(IUnitOfWork db)
         {
             _db = db;
-            _ss = ss;
             Pager = new Pager(1);
         }
 
@@ -67,9 +65,9 @@ namespace App.Pages.Admin.Posts
             Pager = new Pager(page);
 
             if(IsAdmin)
-                Posts = await _ss.Find(Pager, term);
+                Posts = await _db.BlogPosts.Search(Pager, term);
             else
-                Posts = await _ss.Find(Pager, term, author.Id);
+                Posts = await _db.BlogPosts.Search(Pager, term, author.Id);
 
             return Page();
         }

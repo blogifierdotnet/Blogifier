@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Core.Data
@@ -10,6 +11,7 @@ namespace Core.Data
     public interface IPostRepository : IRepository<BlogPost>
     {
         Task<IEnumerable<PostItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
+        Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
@@ -42,6 +44,55 @@ namespace Core.Data
             var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
 
             return await Task.FromResult(PostListToItems(postPage));
+        }
+
+        // search always returns only published posts
+        // for a search term and optional blog author
+        public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0)
+        {
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+            var results = new List<SearchResult>();
+            var list = new List<PostItem>();
+
+            IEnumerable<BlogPost> posts;
+            if (author == 0)
+                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue).ToList();
+            else
+                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.AuthorId == author).ToList();
+
+            foreach (var item in posts)
+            {
+                var rank = 0;
+                var hits = 0;
+                term = term.ToLower();
+
+                if (item.Title.ToLower().Contains(term))
+                {
+                    hits = Regex.Matches(item.Title.ToLower(), term).Count;
+                    rank += hits * 10;
+                }
+                if (item.Description.ToLower().Contains(term))
+                {
+                    hits = Regex.Matches(item.Description.ToLower(), term).Count;
+                    rank += hits * 3;
+                }
+                if (item.Content.ToLower().Contains(term))
+                {
+                    rank += Regex.Matches(item.Content.ToLower(), term).Count;
+                }
+
+                if (rank > 0)
+                {
+                    results.Add(new SearchResult { Rank = rank, Item = PostToItem(item) });
+                }
+            }
+            results = results.OrderByDescending(r => r.Rank).ToList();
+            for (int i = 0; i < results.Count; i++)
+            {
+                list.Add(results[i].Item);
+            }
+            pager.Configure(list.Count);
+            return await Task.Run(() => list.Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
         public async Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate)
@@ -134,5 +185,11 @@ namespace Core.Data
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId)
             }).Distinct().ToList();
         }
+    }
+
+    internal class SearchResult
+    {
+        public int Rank { get; set; }
+        public PostItem Item { get; set; }
     }
 }

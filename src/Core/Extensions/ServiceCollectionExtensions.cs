@@ -4,13 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace Core.Extensions
 {
@@ -35,11 +33,9 @@ namespace Core.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<ISyndicationService, SyndicationService>();
             services.AddTransient<IStorageService, StorageService>();
             services.AddTransient<IFeedImportService, FeedImportService>();
-            //services.AddTransient<IAppSettingsServices<AppItem>, AppSettingsService<AppItem>>();
 
             services.AddTransient<UserManager<AppUser>>();
 

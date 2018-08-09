@@ -13,12 +13,10 @@ namespace App.Controllers
     public class BlogController : Controller
     {
         IUnitOfWork _db;
-        ISearchService _ss;
 
-        public BlogController(IUnitOfWork db, ISearchService ss)
+        public BlogController(IUnitOfWork db)
         {
             _db = db;
-            _ss = ss;
         }
 
         public async Task<IActionResult> Index(int page = 1, string term = "")
@@ -32,7 +30,7 @@ namespace App.Controllers
             }
             else
             {
-                posts = await _ss.Find(pager, term);
+                posts = await _db.BlogPosts.Search(pager, term);
             }
 
             var model = new PostListModel { Posts = posts, Pager = pager };
