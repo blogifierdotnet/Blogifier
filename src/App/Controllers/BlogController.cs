@@ -26,7 +26,7 @@ namespace App.Controllers
 
             if (string.IsNullOrEmpty(term))
             {
-                posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, pager);
+                posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
             }
             else
             {
@@ -64,7 +64,7 @@ namespace App.Controllers
             var author = await _db.Authors.GetItem(a => a.AppUserName == name);
 
             var pager = new Pager(page);
-            var posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
+            var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
             
             var model = new AuthorPostListModel { Author = author, Posts = posts, Pager = pager };
 

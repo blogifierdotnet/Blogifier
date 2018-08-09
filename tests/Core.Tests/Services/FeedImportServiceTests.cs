@@ -61,7 +61,7 @@ namespace Core.Tests.Services
             items.Add(postItem);
 
             _postsRepository
-                .Setup(x => x.Find(It.IsAny<Expression<Func<BlogPost, bool>>>(), It.IsAny<Pager>()))
+                .Setup(x => x.GetList(It.IsAny<Expression<Func<BlogPost, bool>>>(), It.IsAny<Pager>()))
                 .Returns(Task.FromResult(items.AsEnumerable()));
             _unitOfWork.Setup(x => x.BlogPosts).Returns(_postsRepository.Object);
 

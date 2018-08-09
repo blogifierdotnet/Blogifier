@@ -28,7 +28,7 @@ namespace App.Pages.Admin.Settings
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
 
             var pager = new Pager(page);
-            Authors = await _db.Authors.GetItems(u => u.Created > DateTime.MinValue, pager);
+            Authors = await _db.Authors.GetList(u => u.Created > DateTime.MinValue, pager);
 
             return Page();
         }

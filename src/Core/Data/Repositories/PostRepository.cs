@@ -10,7 +10,7 @@ namespace Core.Data
 {
     public interface IPostRepository : IRepository<BlogPost>
     {
-        Task<IEnumerable<PostItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager);
+        Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
         Task<PostItem> SaveItem(PostItem item);
@@ -26,7 +26,7 @@ namespace Core.Data
             _db = db;
         }
 
-        public async Task<IEnumerable<PostItem>> Find(Expression<Func<BlogPost, bool>> predicate, Pager pager)
+        public async Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 

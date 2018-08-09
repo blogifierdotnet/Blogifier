@@ -90,7 +90,7 @@ namespace Core.Tests.Repositories
             var pager = new Pager(1);
 
             // act
-            var result = await sut.GetItems(x => x.Id == 123, pager);
+            var result = await sut.GetList(x => x.Id == 123, pager);
             ClearMemoryDb(dbName);
 
             // assert
@@ -107,7 +107,7 @@ namespace Core.Tests.Repositories
             var pager = new Pager(1);
 
             // act
-            var result = await sut.GetItems(x => x.Id == 1, pager);
+            var result = await sut.GetList(x => x.Id == 1, pager);
             ClearMemoryDb(dbName);
 
             // assert
@@ -124,7 +124,7 @@ namespace Core.Tests.Repositories
             var pager = new Pager(1);
 
             // act
-            var result = await sut.GetItems(x => x.Id > 0, pager);
+            var result = await sut.GetList(x => x.Id > 0, pager);
             ClearMemoryDb(dbName);
 
             // assert

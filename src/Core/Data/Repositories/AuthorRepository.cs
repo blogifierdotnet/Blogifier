@@ -10,7 +10,7 @@ namespace Core.Data
     public interface IAuthorRepository : IRepository<Author>
     {
         Task<Author> GetItem(Expression<Func<Author, bool>> predicate);
-        Task<IEnumerable<Author>> GetItems(Expression<Func<Author, bool>> predicate, Pager pager);
+        Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager);
         Task Save(Author author);
         Task Remove(int id);
     }
@@ -43,7 +43,7 @@ namespace Core.Data
             }
         }
 
-        public async Task<IEnumerable<Author>> GetItems(Expression<Func<Author, bool>> predicate, Pager pager)
+        public async Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager)
         {
             var take = pager.ItemsPerPage == 0 ? 10 : pager.ItemsPerPage;
             var skip = pager.CurrentPage * take - take;

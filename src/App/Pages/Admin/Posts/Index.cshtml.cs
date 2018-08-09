@@ -49,7 +49,7 @@ namespace App.Pages.Admin.Posts
                     predicate = p => p.AuthorId == author.Id;
             }
 
-            Posts = await _db.BlogPosts.Find(predicate, Pager);
+            Posts = await _db.BlogPosts.GetList(predicate, Pager);
 
             return Page();
         }

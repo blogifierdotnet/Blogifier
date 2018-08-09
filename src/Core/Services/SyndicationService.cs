@@ -29,7 +29,7 @@ namespace Core.Services
         public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
         {
             var items = new List<AtomEntry>();
-            var posts = await _db.BlogPosts.Find(p => p.Published > DateTime.MinValue, new Pager(1));
+            var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
 
             //var user = _db.Authors.Find(a => a.IsAdmin).FirstOrDefault();
 
