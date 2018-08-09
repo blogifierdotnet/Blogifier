@@ -68,10 +68,10 @@
         var items = $('#fileManagerList input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
-                dataService.remove('assets/remove?id=' + items[i].url, emptyCallback, fail);
+                dataService.remove('assets/remove?url=' + items[i].id, emptyCallback, fail);
             }
             else {
-                dataService.remove('assets/remove?id=' + items[i].url, removeCallback, fail);
+                dataService.remove('assets/remove?url=' + items[i].id, removeCallback, fail);
             }
         }
     }

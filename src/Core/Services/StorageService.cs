@@ -226,6 +226,7 @@ namespace Core.Services
 
         public void DeleteFile(string path)
         {
+            path = path.Replace("/", _separator);
             path = path.Replace($"{_uploadFolder}{_separator}{_blogSlug}{_separator}", "");
             File.Delete(GetFullPath(path));
         }
