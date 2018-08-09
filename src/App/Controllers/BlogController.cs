@@ -3,20 +3,27 @@ using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Markdig;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace App.Controllers
 {
     public class BlogController : Controller
     {
         IDataService _db;
+        ISyndicationService _ss;
+        SignInManager<AppUser> _sm;
 
-        public BlogController(IDataService db)
+        public BlogController(IDataService db, ISyndicationService ss, SignInManager<AppUser> sm)
         {
             _db = db;
+            _ss = ss;
+            _sm = sm;
         }
 
         public async Task<IActionResult> Index(int page = 1, string term = "")
@@ -35,10 +42,7 @@ namespace App.Controllers
 
             var model = new PostListModel { Posts = posts, Pager = pager };
 
-            ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
-            ViewBag.Cover = $"{Url.Content("~/")}{AppSettings.Cover}";
-            ViewBag.Title = AppSettings.Title;
-            ViewBag.Description = AppSettings.Description;
+            SetViewBag();
 
             return View($"~/Views/Themes/{AppSettings.Theme}/Index.cshtml", model);
         }
@@ -68,12 +72,56 @@ namespace App.Controllers
             
             var model = new AuthorPostListModel { Author = author, Posts = posts, Pager = pager };
 
+            SetViewBag();
+
+            return View($"~/Views/Themes/{AppSettings.Theme}/Author.cshtml", model);
+        }
+
+        [Route("feed/{type}")]
+        public async Task Rss(string type)
+        {
+            Response.ContentType = "application/xml";
+            string host = Request.Scheme + "://" + Request.Host;
+
+            using (XmlWriter xmlWriter = XmlWriter.Create(Response.Body, new XmlWriterSettings() { Async = true, Indent = true }))
+            {
+                var posts = await _ss.GetEntries(type, host);
+
+                if (posts != null && posts.Count() > 0)
+                {
+                    var lastUpdated = posts.FirstOrDefault().Published;
+                    var writer = await _ss.GetWriter(type, host, xmlWriter);
+
+                    foreach (var post in posts)
+                    {
+                        post.Description = Markdown.ToHtml(post.Description);
+                        await writer.Write(post);
+                    }
+                }
+            }
+        }
+
+        [Route("error/{code:int}")]
+        public IActionResult Index(int code)
+        {
+            SetViewBag();
+
+            return View("~/Views/Shared/_Error.cshtml", code);
+        }
+
+        [HttpPost, Route("account/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _sm.SignOutAsync();
+            return Redirect("~/");
+        }
+
+        void SetViewBag()
+        {
             ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
             ViewBag.Cover = $"{Url.Content("~/")}{AppSettings.Cover}";
             ViewBag.Title = AppSettings.Title;
             ViewBag.Description = AppSettings.Description;
-
-            return View($"~/Views/Themes/{AppSettings.Theme}/Author.cshtml", model);
         }
     }
 }
