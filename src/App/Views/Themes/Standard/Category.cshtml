@@ -3,9 +3,10 @@
     Layout = "~/Views/Themes/Standard/_Layout.cshtml";
     ViewData["bodyClass"] = "home";
     var pgr = Model.Pager;
+    var cat = ViewData["category"];
 }
 <div class="page-content">
-    <div class="container">
+    <div class="container" style="padding: 40px 0">
 
         <partial name="_Shared/_List.cshtml" for="Posts" />
 
@@ -16,14 +17,15 @@
                 <ul class="pagination justify-content-center">
                     @if (pgr.ShowOlder)
                     {
-                        <li class="item item-prev"><a class="item-link" href="~/blog?page=@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
+                        <li class="item item-prev"><a class="item-link" href="~/categories/@cat?page=@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
                     }
                     @if (pgr.ShowNewer)
                     {
-                        <li class="item item-next"><a class="item-link" href="~/blog?page=@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
+                        <li class="item item-next"><a class="item-link" href="~/categories/@cat?page=@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
                     }
                 </ul>
             }
         }
+
     </div>
 </div>

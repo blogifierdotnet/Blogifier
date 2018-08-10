@@ -133,6 +133,10 @@
                         <textarea rows="4" asp-for="PostItem.Description" class="form-control" autofocus></textarea>
                     </div>
                     <div class="form-group">
+                        <label class="form-group-label" asp-for="PostItem.Categories"></label>
+                        <textarea rows="2" asp-for="PostItem.Categories" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label class="form-group-label" asp-for="PostItem.Published"></label>
                         <input type="text" asp-for="PostItem.Published" class="form-control" />
                     </div>

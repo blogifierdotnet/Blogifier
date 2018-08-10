@@ -24,6 +24,17 @@
                             <span class="post-meta-author">@Model.Author.DisplayName</span>
                         </a>
                         <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.Published)</time>
+                        @if (!string.IsNullOrEmpty(Model.Categories))
+                        {
+                            <span>/</span>
+                            var cats = Model.Categories.Split(',');
+                            foreach (var cat in cats)
+                            {
+                                <span>
+                                    <a href="~/categories/@cat">@cat</a>
+                                </span>
+                            }
+                        }
                     </div>
                 </header>
                 <div class="post-content">

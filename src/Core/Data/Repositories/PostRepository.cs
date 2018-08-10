@@ -11,6 +11,7 @@ namespace Core.Data
     public interface IPostRepository : IRepository<BlogPost>
     {
         Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager);
+        Task<IEnumerable<PostItem>> GetListByCategory(string category, Pager pager);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
         Task<PostItem> SaveItem(PostItem item);
@@ -39,6 +40,35 @@ namespace Core.Data
                 .OrderByDescending(p => p.Published).ToList();
 
             var items = drafts.Concat(pubs).ToList();
+            pager.Configure(items.Count);
+
+            var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
+
+            return await Task.FromResult(PostListToItems(postPage));
+        }
+
+        public async Task<IEnumerable<PostItem>> GetListByCategory(string category, Pager pager)
+        {
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+
+            var posts = _db.BlogPosts
+                .Where(p => p.Published > DateTime.MinValue)
+                .OrderByDescending(p => p.Published).ToList();
+
+            var items = new List<BlogPost>();
+
+            foreach (var item in posts)
+            {
+                if (!string.IsNullOrEmpty(item.Categories))
+                {
+                    var cats = item.Categories.ToLower().Split(',');
+                    if (cats.Contains(category.ToLower()))
+                    {
+                        items.Add(item);
+                    }
+                }
+            }
+
             pager.Configure(items.Count);
 
             var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
@@ -117,7 +147,7 @@ namespace Core.Data
                     Slug = item.Slug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
-                    Categories = item.Categories.Count() > 0 ? String.Join(",", item.Categories) : "",
+                    Categories = item.Categories,
                     Cover = item.Cover ?? AppSettings.Cover,
                     AuthorId = item.Author.Id,
                     Published = item.Published
@@ -136,7 +166,7 @@ namespace Core.Data
                 post.Slug = item.Slug;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
-                post.Categories = item.Categories.Count() > 0 ? String.Join(",", item.Categories) : "";
+                post.Categories = item.Categories;
                 post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
                 await _db.SaveChangesAsync();
@@ -163,7 +193,7 @@ namespace Core.Data
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
-                Categories = string.IsNullOrEmpty(p.Categories) ? new string[] { } : p.Categories.Trim().Split(','),
+                Categories = p.Categories,
                 Cover = p.Cover,
                 PostViews = p.PostViews,
                 Rating = p.Rating,
@@ -181,7 +211,7 @@ namespace Core.Data
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
-                Categories = string.IsNullOrEmpty(p.Categories) ? new string[] { } : p.Categories.Trim().Split(','),
+                Categories = p.Categories,
                 Cover = p.Cover,
                 PostViews = p.PostViews,
                 Rating = p.Rating,

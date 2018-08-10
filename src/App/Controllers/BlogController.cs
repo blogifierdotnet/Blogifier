@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -63,7 +64,7 @@ namespace App.Controllers
         }
 
         [Route("authors/{name}")]
-        public async Task<IActionResult> Authors(string name, int page)
+        public async Task<IActionResult> Authors(string name, int page = 1)
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == name);
 
@@ -75,6 +76,20 @@ namespace App.Controllers
             SetViewBag();
 
             return View($"~/Views/Themes/{AppSettings.Theme}/Author.cshtml", model);
+        }
+
+        [Route("categories/{name}")]
+        public async Task<IActionResult> Categories(string name, int page = 1)
+        {
+            var pager = new Pager(page);
+            var posts = await _db.BlogPosts.GetListByCategory(name, pager);
+
+            var model = new PostListModel { Posts = posts, Pager = pager };
+
+            SetViewBag();
+            ViewData["category"] = name;
+
+            return View($"~/Views/Themes/{AppSettings.Theme}/Category.cshtml", model);
         }
 
         [Route("feed/{type}")]
