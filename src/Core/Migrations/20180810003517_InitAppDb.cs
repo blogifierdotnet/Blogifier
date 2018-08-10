@@ -76,10 +76,12 @@ namespace Core.Migrations
                     Title = table.Column<string>(maxLength: 160, nullable: false),
                     Slug = table.Column<string>(maxLength: 160, nullable: false),
                     Description = table.Column<string>(maxLength: 450, nullable: false),
-                    Content = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: false),
+                    Categories = table.Column<string>(maxLength: 2000, nullable: true),
                     Cover = table.Column<string>(maxLength: 255, nullable: true),
                     PostViews = table.Column<int>(nullable: false),
                     Rating = table.Column<double>(nullable: false),
+                    IsFeatured = table.Column<bool>(nullable: false),
                     Published = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

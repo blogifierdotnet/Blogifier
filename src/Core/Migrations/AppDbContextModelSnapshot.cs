@@ -104,7 +104,11 @@ namespace Core.Migrations
 
                     b.Property<int>("AuthorId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Categories")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<string>("Cover")
                         .HasMaxLength(255);
@@ -112,6 +116,8 @@ namespace Core.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(450);
+
+                    b.Property<bool>("IsFeatured");
 
                     b.Property<int>("PostViews");
 

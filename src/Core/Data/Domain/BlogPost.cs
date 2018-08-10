@@ -23,13 +23,19 @@ namespace Core.Data
         [StringLength(450)]
         public string Description { get; set; }
 
+        [Required]
         public string Content { get; set; }
+
+        [StringLength(2000)]
+        public string Categories { get; set; }
 
         [StringLength(255)]
         public string Cover { get; set; }
 
         public int PostViews { get; set; }
         public double Rating { get; set; }
+
+        public bool IsFeatured { get; set; }
 
         public DateTime Published { get; set; }
     }

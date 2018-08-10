@@ -117,6 +117,7 @@ namespace Core.Data
                     Slug = item.Slug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
+                    Categories = item.Categories.Count() > 0 ? String.Join(",", item.Categories) : "",
                     Cover = item.Cover ?? AppSettings.Cover,
                     AuthorId = item.Author.Id,
                     Published = item.Published
@@ -135,6 +136,7 @@ namespace Core.Data
                 post.Slug = item.Slug;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
+                post.Categories = item.Categories.Count() > 0 ? String.Join(",", item.Categories) : "";
                 post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
                 await _db.SaveChangesAsync();
@@ -161,6 +163,7 @@ namespace Core.Data
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
+                Categories = string.IsNullOrEmpty(p.Categories) ? new string[] { } : p.Categories.Trim().Split(','),
                 Cover = p.Cover,
                 PostViews = p.PostViews,
                 Rating = p.Rating,
@@ -178,6 +181,7 @@ namespace Core.Data
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
+                Categories = string.IsNullOrEmpty(p.Categories) ? new string[] { } : p.Categories.Trim().Split(','),
                 Cover = p.Cover,
                 PostViews = p.PostViews,
                 Rating = p.Rating,

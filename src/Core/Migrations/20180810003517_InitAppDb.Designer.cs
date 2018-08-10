@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180806033731_InitAppDb")]
+    [Migration("20180810003517_InitAppDb")]
     partial class InitAppDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,7 +106,11 @@ namespace Core.Migrations
 
                     b.Property<int>("AuthorId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Categories")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<string>("Cover")
                         .HasMaxLength(255);
@@ -114,6 +118,8 @@ namespace Core.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(450);
+
+                    b.Property<bool>("IsFeatured");
 
                     b.Property<int>("PostViews");
 
