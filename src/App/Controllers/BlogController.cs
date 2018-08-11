@@ -17,10 +17,10 @@ namespace App.Controllers
     public class BlogController : Controller
     {
         IDataService _db;
-        ISyndicationService _ss;
+        IFeedService _ss;
         SignInManager<AppUser> _sm;
 
-        public BlogController(IDataService db, ISyndicationService ss, SignInManager<AppUser> sm)
+        public BlogController(IDataService db, IFeedService ss, SignInManager<AppUser> sm)
         {
             _db = db;
             _ss = ss;

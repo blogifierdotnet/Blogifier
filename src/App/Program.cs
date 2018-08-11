@@ -29,7 +29,7 @@ namespace App
                 var context = services.GetRequiredService<AppDbContext>();
 
                 // load application settings from appsettings.json
-                var app = services.GetRequiredService<IAppSettingsService<AppItem>>();
+                var app = services.GetRequiredService<IAppService<AppItem>>();
                 AppConfig.SetSettings(app.Value);
 
                 if (!context.BlogPosts.Any())

@@ -10,17 +10,17 @@ using System.Xml;
 
 namespace Core.Services
 {
-    public interface ISyndicationService
+    public interface IFeedService
     {
         Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
         Task<ISyndicationFeedWriter> GetWriter(string type, string host, XmlWriter xmlWriter);
     }
 
-    public class SyndicationService : ISyndicationService
+    public class FeedService : IFeedService
     {
         IDataService _db;
 
-        public SyndicationService(IDataService db, IStorageService storage)
+        public FeedService(IDataService db, IStorageService storage)
         {
             _db = db;
         }
@@ -42,10 +42,10 @@ namespace Core.Services
                     ContentType = "html",
                 };
 
-                //foreach (string category in post.Categories)
-                //{
-                //    item.AddCategory(new SyndicationCategory(category));
-                //}
+                foreach (string category in post.Categories.Split(','))
+                {
+                    item.AddCategory(new SyndicationCategory(category));
+                }
 
                 item.AddContributor(new SyndicationPerson(post.Author.DisplayName, post.Author.Email));
                 item.AddLink(new SyndicationLink(new Uri(item.Id)));

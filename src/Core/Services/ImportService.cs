@@ -13,13 +13,13 @@ using System.Xml.Linq;
 
 namespace Core.Services
 {
-    public interface IFeedImportService
+    public interface IImportService
     {
         Task<List<ImportMessage>> Import(IFormFile file, string user);
         Task<List<ImportMessage>> Import(string fileName, string user);
     }
 
-    public class FeedImportService : IFeedImportService
+    public class ImportService : IImportService
     {
         IDataService _db;
         IStorageService _ss;
@@ -27,7 +27,7 @@ namespace Core.Services
         string _usr;
         string _url;
 
-        public FeedImportService(IDataService db, IStorageService ss)
+        public ImportService(IDataService db, IStorageService ss)
         {
             _db = db;
             _ss = ss;

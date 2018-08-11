@@ -48,9 +48,9 @@ namespace Core.Tests.Services
             Assert.NotEmpty(result);
         }
 
-        private FeedImportService GetSut()
+        private ImportService GetSut()
         {
-            return new FeedImportService(_unitOfWork.Object, _storageService.Object);
+            return new ImportService(_unitOfWork.Object, _storageService.Object);
         }
 
         private void SetupDependencies()

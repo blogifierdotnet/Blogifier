@@ -9,7 +9,7 @@ namespace Core.Tests.Services
 {
     public class SyndicationServiceTests
     {
-        private readonly Mock<ISyndicationService> _syndicationService = new Mock<ISyndicationService>();
+        private readonly Mock<IFeedService> _syndicationService = new Mock<IFeedService>();
         private readonly Mock<IDataService> _unitOfWork = new Mock<IDataService>();
         private readonly Mock<IAuthorRepository> authorRepository = new Mock<IAuthorRepository>();
         private readonly Mock<IPostRepository> postRepository = new Mock<IPostRepository>();
@@ -22,9 +22,9 @@ namespace Core.Tests.Services
             _storage = new StorageService(null);
         }
 
-        private SyndicationService GetSut()
+        private FeedService GetSut()
         {
-            return new SyndicationService(_unitOfWork.Object, _storage); // _storageService.Object);
+            return new FeedService(_unitOfWork.Object, _storage); // _storageService.Object);
         }
 
         private void SetupDependencies()

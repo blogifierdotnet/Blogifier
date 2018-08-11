@@ -7,18 +7,18 @@ using System.IO;
 
 namespace Core.Services
 {
-    public interface IAppSettingsService<out T> : IOptionsSnapshot<T> where T : class, new()
+    public interface IAppService<out T> : IOptionsSnapshot<T> where T : class, new()
     {
         void Update(Action<T> applyChanges);
     }
 
-    public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new()
+    public class AppService<T> : IAppService<T> where T : class, new()
     {
         private readonly IHostingEnvironment _environment;
         private readonly IOptionsMonitor<T> _options;
         private readonly string _section;
 
-        public AppSettingsService(IHostingEnvironment environment, IOptionsMonitor<T> options, string section)
+        public AppService(IHostingEnvironment environment, IOptionsMonitor<T> options, string section)
         {
             _environment = environment;
             _options = options;

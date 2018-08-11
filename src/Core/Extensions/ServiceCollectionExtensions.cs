@@ -17,11 +17,11 @@ namespace Core.Extensions
         public static void AddAppSettings<T>(this IServiceCollection services, IConfigurationSection section) where T : class, new()
         {
             services.Configure<T>(section);
-            services.AddTransient<IAppSettingsService<T>>(provider =>
+            services.AddTransient<IAppService<T>>(provider =>
             {
                 var environment = provider.GetService<IHostingEnvironment>();
                 var options = provider.GetService<IOptionsMonitor<T>>();
-                return new AppSettingsService<T>(environment, options, section.Key);
+                return new AppService<T>(environment, options, section.Key);
             });
         }
 
@@ -32,9 +32,9 @@ namespace Core.Extensions
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IDataService, DataService>();
-            services.AddTransient<ISyndicationService, SyndicationService>();
+            services.AddTransient<IFeedService, FeedService>();
             services.AddTransient<IStorageService, StorageService>();
-            services.AddTransient<IFeedImportService, FeedImportService>();
+            services.AddTransient<IImportService, ImportService>();
 
             services.AddTransient<UserManager<AppUser>>();
 

@@ -14,10 +14,10 @@ namespace App.Pages.Admin.Settings
         public AppItem AppItem { get; set; }
 
         IDataService _db;
-        IAppSettingsService<AppItem> _app;
+        IAppService<AppItem> _app;
         IStorageService _storage;
 
-        public IndexModel(IDataService db, IAppSettingsService<AppItem> app, IStorageService storage)
+        public IndexModel(IDataService db, IAppService<AppItem> app, IStorageService storage)
         {
             _db = db;
             _app = app;

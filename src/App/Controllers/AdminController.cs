@@ -18,11 +18,11 @@ namespace App.Controllers
     {
         IDataService _db;
         IStorageService _ss;
-        IAppSettingsService<AppItem> _app;
+        IAppService<AppItem> _app;
         UserManager<AppUser> _um;
-        IFeedImportService _feed;
+        IImportService _feed;
 
-        public AdminController(IDataService db, IFeedImportService feed, IStorageService ss, UserManager<AppUser> um, IAppSettingsService<AppItem> app)
+        public AdminController(IDataService db, IImportService feed, IStorageService ss, UserManager<AppUser> um, IAppService<AppItem> app)
         {
             _db = db;
             _feed = feed;
