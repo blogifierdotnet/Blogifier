@@ -18,7 +18,7 @@
                 <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>
                 <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
             </div>
-            <div class="post-description">@Html.Raw(cont)</div>
+            <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(cont))</div>
             <a class="post-more btn btn-rounded btn-dark" href="~/blog/@item.Slug">Read</a>
         </article>
     }

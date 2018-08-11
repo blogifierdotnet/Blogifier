@@ -59,13 +59,14 @@ namespace Core.Data
             {
                 Title = "Welcome to Blogifier!",
                 Slug = "welcome-to-blogifier!",
-                Description = "Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.",
+                Description = SeedData.FeaturedDesc,
                 Content = SeedData.PostWhatIs,
                 Categories = "welcome,blog",
                 AuthorId = adminId,
                 Cover = "data/admin/cover-blog.png",
                 PostViews = 5,
                 Rating = 4.5,
+                IsFeatured = true,
                 Published = DateTime.UtcNow.AddDays(-100)
             });
 
@@ -102,6 +103,12 @@ namespace Core.Data
 
     public class SeedData
     {
+        public static readonly string FeaturedDesc = @"Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.
+
+#### To login:
+* User: demo
+* Pswd: Demo@pass1";
+
         public static readonly string PostWhatIs = @"## What is Blogifier
 
 Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.
@@ -109,7 +116,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 ## System Requirements
 
 * Windows, Mac or Linux
-* ASP.NET Core 2.0
+* ASP.NET Core 2.1
 * Visual Studio 2017, VS Code or other code editor (Atom, Sublime etc)
 * SQLite by default, MS SQL Server tested, EF compatible databases should work
 
@@ -118,6 +125,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
 3. Use admin/Admin@pass1 to log in as admininstrator
+4. Use demo/Demo@pass1 to log in as user
 
 ## Demo site
 
@@ -143,8 +151,6 @@ The post editor uses markdown syntax, which many writers prefer over HTML for it
 There is simple but quick and functional search in the post lists, as well as search in the image/file list in the file manager.
 
 ### Features in the work
-* Categories
-* RSS Feed
 * Plugin management";
 
         public static readonly string PostDemo = @"This demo site is a sandbox to test Blogifier features. It runs in-memory and does not save any data, so you can try everything without making any mess. Have fun!
