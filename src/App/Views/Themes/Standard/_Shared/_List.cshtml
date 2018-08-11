@@ -6,7 +6,13 @@
         var img = string.IsNullOrEmpty(item.Cover) ? AppSettings.DefaultCover : item.Cover;
         var cont = AppSettings.UseDescInPostList ? item.Description : item.Content;
         <article class="post">
-            <div class="post-cover"><img src="~/@img" alt="@item.Title"></div>
+            <div class="post-cover">
+                <img src="~/@img" alt="@item.Title">
+                @if (item.Featured)
+                {
+                <span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span>
+                }
+            </div>
             <h2 class="post-title"><a href="~/blog/@item.Slug">@item.Title</a></h2>
             <div class="post-meta">
                 <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>

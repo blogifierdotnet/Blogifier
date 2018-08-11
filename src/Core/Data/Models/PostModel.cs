@@ -71,6 +71,7 @@ namespace Core.Data
         public int PostViews { get; set; }
         public double Rating { get; set; }
         public DateTime Published { get; set; }
+        public bool Featured { get; set; }
 
         public Author Author { get; set; }
         public SaveStatus Status { get; set; }

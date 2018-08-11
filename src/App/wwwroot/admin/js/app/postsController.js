@@ -8,6 +8,14 @@
     dataService.put("admin/publishpost/" + id + "?flag=U", null, callback, fail);
   }
 
+  function feature(id) {
+      dataService.put("admin/featurepost/" + id + "?flag=F", null, callback, fail);
+  }
+
+  function unfeature(id) {
+      dataService.put("admin/featurepost/" + id + "?flag=U", null, callback, fail);
+  }
+
   function remove(id) {
       dataService.remove("admin/removepost/" + id, callback, fail);
   }
@@ -28,6 +36,8 @@
   return {
     publish: publish,
     unpublish: unpublish,
+    feature: feature,
+    unfeature: unfeature,
     remove: remove,
     filter: filter
   };

@@ -69,15 +69,19 @@
 
                             @if (Model.IsAdmin)
                             {
-                                <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="alert('@post.Id')" data-original-title="featured">
-                                    <i class="fa fa-star-o"></i>
-                                </button>
+                                if (post.Featured)
+                                {
+                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.unfeature('@post.Id')" data-original-title="featured">
+                                        <i class="fa fa-star"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.feature('@post.Id')" data-original-title="featured">
+                                        <i class="fa fa-star-o"></i>
+                                    </button>
+                                }
                             }
-
-                            @*<button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.featured('1', this)" data-original-title="featured">
-                                <i class="fa fa-star"></i>
-                            </button>*@
-
                             <a class="item-show ml-3" href="~/blog/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="View"><i class="fa fa-external-link-square"></i></a>
                             <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="Delete"><i class="fa fa-trash" style="color: #ff6666"></i></a>
                         </div>

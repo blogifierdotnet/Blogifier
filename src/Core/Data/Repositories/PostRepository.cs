@@ -37,7 +37,8 @@ namespace Core.Data
 
             var pubs = _db.BlogPosts
                 .Where(p => p.Published > DateTime.MinValue).Where(predicate)
-                .OrderByDescending(p => p.Published).ToList();
+                .OrderByDescending(p => p.IsFeatured)
+                .ThenByDescending(p => p.Published).ToList();
 
             var items = drafts.Concat(pubs).ToList();
             pager.Configure(items.Count);
@@ -150,6 +151,7 @@ namespace Core.Data
                     Categories = item.Categories,
                     Cover = item.Cover ?? AppSettings.Cover,
                     AuthorId = item.Author.Id,
+                    IsFeatured = item.Featured,
                     Published = item.Published
                 };
                 _db.BlogPosts.Add(post);
@@ -169,6 +171,7 @@ namespace Core.Data
                 post.Categories = item.Categories;
                 post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
+                post.IsFeatured = item.Featured;
                 await _db.SaveChangesAsync();
 
                 item.Slug = post.Slug;
@@ -198,6 +201,7 @@ namespace Core.Data
                 PostViews = p.PostViews,
                 Rating = p.Rating,
                 Published = p.Published,
+                Featured = p.IsFeatured,
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId)
             };
         }
@@ -216,6 +220,7 @@ namespace Core.Data
                 PostViews = p.PostViews,
                 Rating = p.Rating,
                 Published = p.Published,
+                Featured = p.IsFeatured,
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId)
             }).Distinct().ToList();
         }

@@ -58,6 +58,19 @@ namespace App.Controllers
             await Task.CompletedTask;
         }
 
+        [HttpPut]
+        public async Task FeaturePost(int id, string flag)
+        {
+            var post = _db.BlogPosts.Single(p => p.Id == id);
+            if (!string.IsNullOrEmpty(flag))
+            {
+                if (flag == "F") post.IsFeatured = true;
+                if (flag == "U") post.IsFeatured = false;
+                _db.Complete();
+            }
+            await Task.CompletedTask;
+        }
+
         [Route("assets")]
         public async Task<AssetsModel> GetAssetList(int page = 1, string filter = "", string search = "")
         {
