@@ -5,7 +5,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 ## System Requirements
 
 * Windows, Mac or Linux
-* ASP.NET Core 2.0
+* ASP.NET Core 2.1
 * Visual Studio 2017, VS Code or other code editor (Atom, Sublime etc)
 * SQLite by default, MS SQL Server tested, EF compatible databases should work
 
@@ -14,6 +14,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
 3. Use admin/Admin@pass1 to log in as admininstrator
+4. Use demo/Demo@pass1 to log in as user
 
 ## Demo site
 
