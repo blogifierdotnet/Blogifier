@@ -76,11 +76,16 @@ namespace Core
         // true if string ends with image extension
         public static bool IsImagePath(this string str)
         {
-            if(str.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                str.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                str.EndsWith(".gif", StringComparison.OrdinalIgnoreCase))
+            // todo: add to appsettings.json
+            var imageExt = "png,jpg,gif,bmp,tiff";
+            var exts = imageExt.Split(',');
+
+            foreach (var ext in exts)
             {
-                return true;
+                if(str.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
             }
             return false;
         }

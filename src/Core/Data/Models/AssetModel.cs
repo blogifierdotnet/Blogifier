@@ -12,7 +12,11 @@ namespace Core.Data
 
     public class AssetItem
     {
-        public AssetType AssetType { get; set; }
+        public AssetType AssetType {
+            get {
+                return Path.IsImagePath() ? AssetType.Image : AssetType.Attachment;
+            }
+        }
 
         [Required]
         [StringLength(160)]
