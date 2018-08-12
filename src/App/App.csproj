@@ -21,6 +21,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\admin\scss\**" />
+    <Content Remove="wwwroot\admin\emails.json" />
+    <Content Remove="wwwroot\admin\Gruntfile.js" />
+    <Content Remove="wwwroot\admin\package.json" />
+    <Content Remove="wwwroot\admin\package-lock.json" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
       <PluginBaseDir>$(SolutionDir)src\Plugins\</PluginBaseDir>
