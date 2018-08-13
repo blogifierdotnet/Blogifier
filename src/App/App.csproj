@@ -17,12 +17,11 @@
 
   <ItemGroup>
     <None Update="app.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="app.db" />
     <Content Remove="wwwroot\admin\scss\**" />
     <Content Remove="wwwroot\admin\emails.json" />
     <Content Remove="wwwroot\admin\Gruntfile.js" />
