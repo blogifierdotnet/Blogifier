@@ -34,5 +34,6 @@ namespace Core.Data
         public bool UseDescInPostList { get; set; }
 
         public string ImportTypes { get; set; }
+        public string ImageExtensions { get; set; }
     }
 }

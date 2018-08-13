@@ -54,6 +54,8 @@ namespace App.Pages.Admin.Settings
                 app.Theme = AppItem.Theme;
                 app.ItemsPerPage = AppItem.ItemsPerPage;
                 app.UseDescInPostList = AppItem.UseDescInPostList;
+                app.ImportTypes = AppItem.ImportTypes;
+                app.ImageExtensions = AppItem.ImageExtensions;
             });
 
             //TODO: find better way to wait on config rewrite

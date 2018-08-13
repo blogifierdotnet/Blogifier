@@ -76,9 +76,7 @@ namespace Core
         // true if string ends with image extension
         public static bool IsImagePath(this string str)
         {
-            // todo: add to appsettings.json
-            var imageExt = "png,jpg,gif,bmp,tiff";
-            var exts = imageExt.Split(',');
+            var exts = AppSettings.ImageExtensions.Split(',');
 
             foreach (var ext in exts)
             {
