@@ -24,13 +24,13 @@ namespace App.Pages.Admin.Posts
             Pager = new Pager(1);
         }
 
-        public async Task<IActionResult> OnGetAsync(int page = 1, string status = "A")
+        public async Task<IActionResult> OnGetAsync(int pg = 1, string status = "A")
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
             Expression<Func<BlogPost, bool>> predicate = p => p.Id > 0;
-            Pager = new Pager(page);
+            Pager = new Pager(pg);
 
             if (IsAdmin)
             {

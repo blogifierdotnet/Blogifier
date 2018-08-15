@@ -104,11 +104,11 @@
             <ul class="bf-pagination d-flex">
                 @if (pgr.ShowOlder)
                 {
-                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin?page=@pgr.Older@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
+                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin/posts?pg=@pgr.Older@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-left"></i></a></li>
                 }
                 @if (pgr.ShowNewer)
                 {
-                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin?page=@pgr.Newer@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
+                    <li class="bf-pagination-item"><a class="bf-pagination-link" href="~/admin/posts?pg=@pgr.Newer@ftr.Qstring"><i class="bf-pagination-icon fa fa-chevron-right"></i></a></li>
                 }
                 <li class="bf-pagination-item"><span class="bf-pagination-count">@cntFrom-@cntTo out of @pgr.Total</span></li>
             </ul>
