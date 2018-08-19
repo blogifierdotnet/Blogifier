@@ -118,13 +118,14 @@ namespace Core.Services
             {
                 foreach (Match m in matches)
                 {
+                    var uri = "";
                     try
                     {
                         var webRoot = "/";
                         var tag = m.Groups[0].Value;
-                        var uri = ValidateUrl(m.Groups[1].Value);
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
-
+                        uri = ValidateUrl(m.Groups[1].Value);
+                        
                         AssetItem asset;
                         if (uri.Contains("data:image"))
                         {
@@ -152,7 +153,7 @@ namespace Core.Services
                         {
                             ImportType = ImportType.Image,
                             Status = Status.Error,
-                            Message = $"{m.Groups[0].Value} -> {ex.Message}"
+                            Message = $"{m.Groups[0].Value} -> {uri} ->{ex.Message}"
                         });
                     }
                 }
@@ -241,14 +242,14 @@ namespace Core.Services
         string ValidateUrl(string link)
         {
             var url = link;
-            var domain = "";
+
             if (url.StartsWith("~"))
             {
-                url = url.Replace("~", domain);
+                url = url.Replace("~", _url);
             }
             if (url.StartsWith("/"))
             {
-                url = string.Concat(domain, url);
+                url = string.Concat(_url, url);
             }
             return url;
         }

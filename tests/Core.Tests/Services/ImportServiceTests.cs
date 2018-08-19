@@ -19,7 +19,7 @@ using Xunit;
 
 namespace Core.Tests.Services
 {
-    public class FeedImportServiceTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class ImportServiceTests : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly Mock<IDataService> _unitOfWork = new Mock<IDataService>();
         private readonly Mock<IAuthorRepository> _authorRepository = new Mock<IAuthorRepository>();
@@ -28,7 +28,7 @@ namespace Core.Tests.Services
 
         static string _separator = Path.DirectorySeparatorChar.ToString();
 
-        public FeedImportServiceTests(WebApplicationFactory<Startup> factory)
+        public ImportServiceTests(WebApplicationFactory<Startup> factory)
         {
             
         }
