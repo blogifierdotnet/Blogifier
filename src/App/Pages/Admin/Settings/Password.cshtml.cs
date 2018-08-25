@@ -39,6 +39,12 @@ namespace App.Pages.Admin.Settings
             if (!ModelState.IsValid)
                 return Page();
 
+            if (AppSettings.DemoMode)
+            {
+                ModelState.AddModelError("Custom", "Application configured to run in demo mode with change password disabled");
+                return Page();
+            }
+
             ModelState.Clear();
             try
             {

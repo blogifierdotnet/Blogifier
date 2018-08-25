@@ -35,5 +35,6 @@ namespace Core.Data
 
         public string ImportTypes { get; set; }
         public string ImageExtensions { get; set; }
+        public bool DemoMode { get; set; }
     }
 }

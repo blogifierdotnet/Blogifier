@@ -44,6 +44,7 @@ namespace Core
             AppSettings.ImportTypes = app.ImportTypes;
             AppSettings.ImageExtensions = app.ImageExtensions;
             AppSettings.UseDescInPostList = app.UseDescInPostList;
+            AppSettings.DemoMode = app.DemoMode;
         }
     }
 }
