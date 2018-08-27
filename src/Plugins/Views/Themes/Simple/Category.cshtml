@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h2 class="card-title">@post.Title</h2>
                             <p class="card-text">@Html.Raw(post.Description)</p>
-                            <a href="~/blog/@post.Slug" class="btn btn-primary">Read More &rarr;</a>
+                            <a href="~/posts/@post.Slug" class="btn btn-primary">Read More &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
                             Posted on @post.Published.ToString("M"), @post.Published.Year by

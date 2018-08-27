@@ -48,7 +48,7 @@ namespace App.Controllers
             return View($"~/Views/Themes/{AppSettings.Theme}/Index.cshtml", model);
         }
 
-        [Route("blog/{slug}")]
+        [Route("posts/{slug}")]
         public async Task<IActionResult> Single(string slug)
         {
             var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
