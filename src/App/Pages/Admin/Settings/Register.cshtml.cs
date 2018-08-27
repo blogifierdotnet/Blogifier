@@ -27,10 +27,13 @@ namespace App.Pages.Admin.Settings
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password")]
+        //[Compare("Password")]
         [DataType(DataType.Password)]
         [BindProperty]
         public string ConfirmPassword { get; set; }
+
+        [BindProperty]
+        public bool SetAsAdmin { get; set; }
 
         #endregion
 
@@ -69,7 +72,8 @@ namespace App.Pages.Admin.Settings
                 user = new Author
                 {
                     AppUserName = UserName,
-                    Email = Email
+                    Email = Email,
+                    IsAdmin = SetAsAdmin
                 };
 
                 await _db.Authors.Save(user);

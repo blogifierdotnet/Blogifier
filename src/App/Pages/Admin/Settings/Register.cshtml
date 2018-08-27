@@ -6,7 +6,7 @@
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
-        <form method="post" asp-controller="Settings" asp-action="Register" asp-antiforgery="true">
+        <form method="post" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -24,6 +24,12 @@
                 <div class="form-group">
                     <label class="form-group-label" asp-for="ConfirmPassword"></label>
                     <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="checkbox" id="cbxSetAdmin" asp-for="SetAsAdmin" class="form-check-inline" />
+                        <label for="cbxSetAdmin" class="form-check-label">Set as administrator</label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-main">Save</button>
             </div>
