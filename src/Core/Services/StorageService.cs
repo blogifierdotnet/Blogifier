@@ -17,7 +17,8 @@ namespace Core.Services
         
         void CreateFolder(string path);
         void DeleteFolder(string path);
-        
+        void DeleteAuthor(string name);
+
         Task<AssetItem> UploadFormFile(IFormFile file, string root, string path = "");
         Task<AssetItem> UploadBase64Image(string baseImg, string root, string path = "");
         Task<AssetItem> UploadFromWeb(Uri requestUri, string root, string path = "");
@@ -219,6 +220,15 @@ namespace Core.Services
         public void DeleteFolder(string path)
         {
             var dir = GetFullPath(path);
+
+            if (Directory.Exists(dir))
+                Directory.Delete(dir, true);
+        }
+
+        public void DeleteAuthor(string name)
+        {
+            var dir = Path.GetFullPath(Path.Combine(Location, @"..\"));
+            dir = Path.Combine(dir, name);
 
             if (Directory.Exists(dir))
                 Directory.Delete(dir, true);
