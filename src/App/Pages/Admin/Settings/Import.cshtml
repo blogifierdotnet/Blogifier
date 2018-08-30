@@ -35,7 +35,7 @@
             $('#file').trigger('click');
             return false;
         }
-        var importSubmit = function (data) {
+        var importSubmit = function () {
             $('.loading').fadeIn('fast');
             var data = new FormData($('#frmImport')[0]);
             DataService.upload('admin/importfeed', data, importCallback, fail);
@@ -47,8 +47,8 @@
             $.each(data, function (index) {
                 var msg = data[index];
                 var tag = '';
-                if (msg.importType == 0) {
-                    if (msg.status == 0) {
+                if (msg.importType === 0) {
+                    if (msg.status === 0) {
                         tag = '<h3>' + htmlDecode(msg.message) + '</h3>';
                     }
                     else {
@@ -56,8 +56,8 @@
                     }
                 }
                 else {
-                    if (msg.status == 0) {
-                        if (msg.importType == 1) {
+                    if (msg.status === 0) {
+                        if (msg.importType === 1) {
                             tag = '<div class="alert alert-success" role="alert">' + htmlDecode(msg.message) + '</div>';
                         }
                         else {

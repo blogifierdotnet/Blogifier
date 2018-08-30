@@ -15,8 +15,8 @@ namespace Core.Services
 {
     public interface IImportService
     {
-        Task<List<ImportMessage>> Import(IFormFile file, string user);
-        Task<List<ImportMessage>> Import(string fileName, string user);
+        Task<List<ImportMessage>> Import(IFormFile file, string user, string webRoot = "/");
+        Task<List<ImportMessage>> Import(string fileName, string user, string webRoot = "/");
     }
 
     public class ImportService : IImportService
@@ -26,6 +26,7 @@ namespace Core.Services
         List<ImportMessage> _msgs;
         string _usr;
         string _url;
+        string _webRoot;
 
         public ImportService(IDataService db, IStorageService ss)
         {
@@ -34,15 +35,17 @@ namespace Core.Services
             _msgs = new List<ImportMessage>();
         }
 
-        public async Task<List<ImportMessage>> Import(IFormFile file, string usr)
+        public async Task<List<ImportMessage>> Import(IFormFile file, string usr, string webRoot = "/")
         {
             _usr = usr;
+            _webRoot = webRoot;
             return await ImportFeed(new StreamReader(file.OpenReadStream(), Encoding.UTF8));
         }
 
-        public async Task<List<ImportMessage>> Import(string fileName, string usr)
+        public async Task<List<ImportMessage>> Import(string fileName, string usr, string webRoot = "/")
         {
             _usr = usr;
+            _webRoot = webRoot;
             return await ImportFeed(new StreamReader(fileName, Encoding.UTF8));
         }
 
@@ -121,7 +124,6 @@ namespace Core.Services
                     var uri = "";
                     try
                     {
-                        var webRoot = "/";
                         var tag = m.Groups[0].Value;
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
                         uri = ValidateUrl(m.Groups[1].Value);
@@ -129,14 +131,14 @@ namespace Core.Services
                         AssetItem asset;
                         if (uri.Contains("data:image"))
                         {
-                            asset = await _ss.UploadBase64Image(uri, webRoot, path);
+                            asset = await _ss.UploadBase64Image(uri, _webRoot, path);
                         }
                         else
                         {
-                            asset = await _ss.UploadFromWeb(new Uri(uri), webRoot, path);
+                            asset = await _ss.UploadFromWeb(new Uri(uri), _webRoot, path);
                         }
 
-                        var mdTag = $"![{asset.Title}]({webRoot}{asset.Url})";
+                        var mdTag = $"![{asset.Title}]({_webRoot}{asset.Url})";
 
                         post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
 
@@ -177,9 +179,7 @@ namespace Core.Services
                 {
                     try
                     {
-                        var webRoot = "/";
                         var tag = m.Value;
-
                         var src = XElement.Parse(tag).Attribute("href").Value;
                         var mdTag = "";
 
@@ -189,9 +189,9 @@ namespace Core.Services
                             {
                                 var uri = ValidateUrl(src);
                                 var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
-                                var asset = await _ss.UploadFromWeb(new Uri(uri), webRoot, path);
+                                var asset = await _ss.UploadFromWeb(new Uri(uri), _webRoot, path);
 
-                                mdTag = $"[{asset.Title}]({webRoot}{asset.Url})";
+                                mdTag = $"[{asset.Title}]({_webRoot}{asset.Url})";
 
                                 post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
 

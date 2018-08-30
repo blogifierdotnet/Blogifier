@@ -172,7 +172,9 @@ namespace App.Controllers
             if(!author.IsAdmin)
                 Redirect("~/pages/shared/_error/403");
 
-            return await _feed.Import(file, User.Identity.Name);
+            var webRoot = Url.Content("~/");
+
+            return await _feed.Import(file, User.Identity.Name, webRoot);
         }
     }
 }
