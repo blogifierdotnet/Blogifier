@@ -42,9 +42,12 @@ namespace Core.Services
                     ContentType = "html",
                 };
 
-                foreach (string category in post.Categories.Split(','))
+                if (!string.IsNullOrEmpty(post.Categories))
                 {
-                    item.AddCategory(new SyndicationCategory(category));
+                    foreach (string category in post.Categories.Split(','))
+                    {
+                        item.AddCategory(new SyndicationCategory(category));
+                    }
                 }
 
                 item.AddContributor(new SyndicationPerson(post.Author.DisplayName, post.Author.Email));
