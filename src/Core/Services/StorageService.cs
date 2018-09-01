@@ -381,6 +381,8 @@ namespace Core.Services
                 title = title.Substring(title.LastIndexOf("/"));
             }
 
+            title = title.Replace(" ", "-");
+
             return title.Replace("/", "");
         }
 

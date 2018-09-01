@@ -61,6 +61,12 @@ namespace Core.Services
                     {
                         var link = await feedReader.ReadLink();
                         _url = link.Uri.ToString();
+
+                        if (_url.ToLower().EndsWith("/rss"))
+                            _url = _url.Substring(0, _url.Length - 4);
+
+                        if (_url.EndsWith("/"))
+                            _url = _url.Substring(0, _url.Length - 1);
                     }
 
                     if (feedReader.ElementType == SyndicationElementType.Item)
@@ -126,7 +132,10 @@ namespace Core.Services
                     {
                         var tag = m.Groups[0].Value;
                         var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
-                        uri = ValidateUrl(m.Groups[1].Value);
+
+                        uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+
+                        uri = ValidateUrl(uri);
                         
                         AssetItem asset;
                         if (uri.Contains("data:image"))
