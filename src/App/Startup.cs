@@ -1,7 +1,6 @@
 ﻿using Core;
 using Core.Data;
 using Core.Extensions;
-using Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Events;
 
 namespace App
 {
@@ -20,6 +21,11 @@ namespace App
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+              .Enrich.FromLogContext()
+              .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
+              .CreateLogger();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -35,6 +41,9 @@ namespace App
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddLogging(loggingBuilder =>
+                loggingBuilder.AddSerilog(dispose: true));
 
             services.AddMvc()
             .ConfigureApplicationPartManager(p =>

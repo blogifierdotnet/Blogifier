@@ -1,6 +1,7 @@
 ﻿using Core.Data;
 using Core.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +40,9 @@ namespace Core.Services
         string _uploadFolder = "data";
         IHttpContextAccessor _httpContext;
 
-        public StorageService(IHttpContextAccessor httpContext)
+        private readonly ILogger _logger;
+
+        public StorageService(IHttpContextAccessor httpContext, ILogger<StorageService> logger)
         {
             if(httpContext == null || httpContext.HttpContext == null)
             {
@@ -51,6 +54,7 @@ namespace Core.Services
             }
             
             _httpContext = httpContext;
+            _logger = logger;
 
             if (!Directory.Exists(Location))
                 CreateFolder("");
@@ -393,13 +397,13 @@ namespace Core.Services
             foreach (var asset in assets)
             {
                 // Azure puts web sites under "wwwroot" folder
-                asset.Replace($"wwwroot{_separator}wwwroot", "wwwroot", StringComparison.OrdinalIgnoreCase);
+                var path = asset.Replace($"wwwroot{_separator}wwwroot", "wwwroot", StringComparison.OrdinalIgnoreCase);
 
                 items.Add(new AssetItem {
                     Path = asset,
-                    Url = pathToUrl(asset),
-                    Title = pathToTitle(asset),
-                    Image = pathToImage(asset)
+                    Url = pathToUrl(path),
+                    Title = pathToTitle(path),
+                    Image = pathToImage(path)
                 });
             }
 
