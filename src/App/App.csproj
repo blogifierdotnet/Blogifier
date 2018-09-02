@@ -31,9 +31,9 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
-      <PluginBaseDir>$(SolutionDir)src\Plugins\</PluginBaseDir>
+      <PluginBaseDir>$(SolutionDir)src\plugins\Common\</PluginBaseDir>
     </PropertyGroup>
-    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Plugins.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Plugins.dll')" />
+    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
   </Target>
 
 </Project>
