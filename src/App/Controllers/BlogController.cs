@@ -5,10 +5,10 @@ using Core.Services;
 using Markdig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -19,12 +19,15 @@ namespace App.Controllers
         IDataService _db;
         IFeedService _ss;
         SignInManager<AppUser> _sm;
+        private readonly ICompositeViewEngine _viewEngine;
+        static readonly string _listView = $"~/Views/Themes/{AppSettings.Theme}/List.cshtml";
 
-        public BlogController(IDataService db, IFeedService ss, SignInManager<AppUser> sm)
+        public BlogController(IDataService db, IFeedService ss, SignInManager<AppUser> sm, ICompositeViewEngine viewEngine)
         {
             _db = db;
             _ss = ss;
             _sm = sm;
+            _viewEngine = viewEngine;
         }
 
         public async Task<IActionResult> Index(int page = 1, string term = "")
@@ -41,26 +44,37 @@ namespace App.Controllers
                 posts = await _db.BlogPosts.Search(pager, term);
             }
 
-            var model = new PostListModel { Posts = posts, Pager = pager };
+            var model = new PostList {
+                PostListType = PostListType.Blog,
+                Posts = posts,
+                Pager = pager
+            };
 
             SetViewBag();
 
-            return View($"~/Views/Themes/{AppSettings.Theme}/Index.cshtml", model);
+            return View(_listView, model);
         }
 
         [Route("posts/{slug}")]
         public async Task<IActionResult> Single(string slug)
         {
-            var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
+            try
+            {
+                var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
+                post.Content = Markdown.ToHtml(post.Content);
 
-            post.Content = Markdown.ToHtml(post.Content);
+                ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
+                ViewBag.Cover = string.IsNullOrEmpty(post.Cover) ? $"{Url.Content("~/")}{AppSettings.DefaultCover}" : $"{Url.Content("~/")}{post.Cover}";
+                ViewBag.Title = post.Title;
+                ViewBag.Description = post.Description;
+
+                return View($"~/Views/Themes/{AppSettings.Theme}/Post.cshtml", post);
+            }
+            catch
+            {
+                return Redirect("~/error/404");
+            }
             
-            ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
-            ViewBag.Cover = string.IsNullOrEmpty(post.Cover) ? $"{Url.Content("~/")}{AppSettings.DefaultCover}" : $"{Url.Content("~/")}{post.Cover}";
-            ViewBag.Title = post.Title;
-            ViewBag.Description = post.Description;
-
-            return View($"~/Views/Themes/{AppSettings.Theme}/Single.cshtml", post);
         }
 
         [Route("authors/{name}")]
@@ -71,11 +85,16 @@ namespace App.Controllers
             var pager = new Pager(page);
             var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
             
-            var model = new AuthorPostListModel { Author = author, Posts = posts, Pager = pager };
+            var model = new PostList {
+                PostListType = PostListType.Author,
+                Author = author,
+                Posts = posts,
+                Pager = pager
+            };
 
             SetViewBag();
 
-            return View($"~/Views/Themes/{AppSettings.Theme}/Author.cshtml", model);
+            return View(_listView, model);
         }
 
         [Route("categories/{name}")]
@@ -84,12 +103,15 @@ namespace App.Controllers
             var pager = new Pager(page);
             var posts = await _db.BlogPosts.GetListByCategory(name, pager);
 
-            var model = new PostListModel { Posts = posts, Pager = pager };
+            var model = new PostList {
+                PostListType = PostListType.Category,
+                Posts = posts,
+                Pager = pager
+            };
 
             SetViewBag();
-            ViewData["category"] = name;
 
-            return View($"~/Views/Themes/{AppSettings.Theme}/Category.cshtml", model);
+            return View(_listView, model);
         }
 
         [Route("feed/{type}")]
@@ -117,11 +139,21 @@ namespace App.Controllers
         }
 
         [Route("error/{code:int}")]
-        public IActionResult Index(int code)
+        public IActionResult Error(int code)
         {
             SetViewBag();
 
-            return View("~/Views/Shared/_Error.cshtml", code);
+            var viewName = $"~/Views/Themes/{AppSettings.Theme}/Error.cshtml";
+            var result = _viewEngine.GetView("", viewName, false);
+
+            if (result.Success)
+            {
+                return View(viewName, code);
+            }
+            else
+            {
+                return View("~/Views/Shared/_Error.cshtml", code);
+            }
         }
 
         [HttpPost, Route("account/logout")]

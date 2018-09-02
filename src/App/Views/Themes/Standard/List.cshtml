@@ -1,0 +1,73 @@
+﻿@model PostList
+@{
+    ViewData["bodyClass"] = "home";
+    var pgr = Model.Pager;
+
+    var msg = (PostListType)Model.PostListType == PostListType.Author ? "post list for " + Model.Author.DisplayName
+        : (PostListType)Model.PostListType == PostListType.Category ? "post list for category " + Model.Category
+        : "the blog page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/Standard/_Shared/_Head.cshtml" />
+</head>
+<body class="@ViewData["bodyClass"]">
+    <!--[if lt IE 10]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <partial name="~/Views/Themes/Standard/_Shared/_Header.cshtml" />
+
+    <div class="page-cover" style="background-image: url('@ViewBag.Cover')">
+        <h1 class="page-cover-title"><a href="~/">@ViewBag.Title</a></h1>
+        <p class="page-cover-desc">@ViewBag.Description</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container">
+            @if (Model.Posts != null)
+            {
+                foreach (var item in Model.Posts)
+                {
+                    var img = string.IsNullOrEmpty(item.Cover) ? AppSettings.DefaultCover : item.Cover;
+                    var cont = AppSettings.UseDescInPostList ? item.Description : item.Content;
+                    <article class="post">
+                        <div class="post-cover">
+                            <img src="~/@img" alt="@item.Title">
+                            @if (item.Featured)
+                            {
+                            <span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span>
+                            }
+                        </div>
+                        <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
+                        <div class="post-meta">
+                            <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>
+                            <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
+                        </div>
+                        <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(cont))</div>
+                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@item.Slug">Read</a>
+                    </article>
+                }
+            }
+            @if (pgr != null)
+            {
+                @if (pgr.ShowOlder || pgr.ShowNewer)
+                {
+                <ul class="pagination justify-content-center">
+                    @if (pgr.ShowOlder)
+                    {
+                    <li class="item item-prev"><a class="item-link" href="~/blog?page=@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
+                    }
+                    @if (pgr.ShowNewer)
+                    {
+                    <li class="item item-next"><a class="item-link" href="~/blog?page=@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
+                    }
+                </ul>
+                }
+            }
+        </div>
+    </div>
+
+    <partial name="~/Views/Themes/Standard/_Shared/_Footer.cshtml" />
+</body>
+</html>

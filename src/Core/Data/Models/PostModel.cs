@@ -6,55 +6,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Data
 {
-    public class PostListModel
+    public class PostList
     {
         public IEnumerable<PostItem> Posts { get; set; }
         public Pager Pager { get; set; }
-    }
 
-    public class AuthorPostListModel
-    {
-        public IEnumerable<PostItem> Posts { get; set; }
-        public Pager Pager { get; set; }
-        public Author Author { get; set; }
-    }
+        public Author Author { get; set; } // posts by author
+        public string Category { get; set; } // posts by category
 
-    public class PostListFilter
-    {
-        HttpRequest _req;
-
-        public PostListFilter(HttpRequest request)
-        {
-            _req = request;
-        }
-
-        public string Page { get {
-                return string.IsNullOrEmpty(_req.Query["page"])
-                    ? "" : _req.Query["page"].ToString();
-            }
-        }
-        public string Status { get {
-                return string.IsNullOrEmpty(_req.Query["status"]) 
-                    ? "A" : _req.Query["status"].ToString();
-            }
-        }
-        public string Search { get {
-                return string.IsNullOrEmpty(_req.Query["search"])
-                    ? "" : _req.Query["search"].ToString();
-            }
-        }
-        public string Qstring { get {
-                var q = "";
-                if (!string.IsNullOrEmpty(Status)) q += $"&status={Status}";
-                if (!string.IsNullOrEmpty(Search)) q += $"&search={Search}";
-                return q;
-            }
-        }
-
-        public string IsChecked(string status)
-        {
-            return status == Status ? "checked" : "";
-        }
+        public PostListType PostListType { get; set; }
     }
 
     public class PostItem : IEquatable<PostItem>
@@ -92,6 +52,61 @@ namespace Core.Data
             return Id.GetHashCode();
         }
         #endregion
+    }
+
+    public enum PostListType
+    {
+        Blog, Category, Author
+    }
+
+    public class PostListFilter
+    {
+        HttpRequest _req;
+
+        public PostListFilter(HttpRequest request)
+        {
+            _req = request;
+        }
+
+        public string Page
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["page"])
+                    ? "" : _req.Query["page"].ToString();
+            }
+        }
+        public string Status
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["status"])
+                    ? "A" : _req.Query["status"].ToString();
+            }
+        }
+        public string Search
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["search"])
+                    ? "" : _req.Query["search"].ToString();
+            }
+        }
+        public string Qstring
+        {
+            get
+            {
+                var q = "";
+                if (!string.IsNullOrEmpty(Status)) q += $"&status={Status}";
+                if (!string.IsNullOrEmpty(Search)) q += $"&search={Search}";
+                return q;
+            }
+        }
+
+        public string IsChecked(string status)
+        {
+            return status == Status ? "checked" : "";
+        }
     }
 
     public enum SaveStatus
