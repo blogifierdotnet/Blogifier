@@ -424,7 +424,7 @@ namespace Core.Services
                 title = title.Substring(title.LastIndexOf(_separator));       
 
             if(title.IndexOf('.') > 0)
-                title = title.Substring(1, title.IndexOf('.'));
+                title = title.Substring(1, title.LastIndexOf('.') - 1);
 
             return title;
         }

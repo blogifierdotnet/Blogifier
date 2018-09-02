@@ -1,5 +1,7 @@
 ﻿using Core.Helpers;
 using Core.Services;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -13,10 +15,11 @@ namespace Core.Tests.Services
         static Uri _uri1 = new Uri("http://dnbe.net/v01/images/" + _img);
         static Uri _uri2 = new Uri("http://dnbe.net/v01/images/mp3player.png");
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
+        private readonly Mock<ILogger<StorageService>> _logger = new Mock<ILogger<StorageService>>();
 
         public StorageServiceTests()
         {
-            _storage = new StorageService(null);
+            _storage = new StorageService(null, _logger.Object);
         }
 
         [Fact]
@@ -61,6 +64,7 @@ namespace Core.Tests.Services
         public async Task CanFindAssets()
         {
             AppSettings.ItemsPerPage = 10;
+            AppSettings.ImageExtensions = "png,jpg,gif,bmp,tiff";
 
             var pager = new Pager(1);
             var assets = await _storage.Find(null, pager, "");
