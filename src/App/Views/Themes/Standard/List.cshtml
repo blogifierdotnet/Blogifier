@@ -3,9 +3,9 @@
     ViewData["bodyClass"] = "home";
     var pgr = Model.Pager;
 
-    var msg = (PostListType)Model.PostListType == PostListType.Author ? "post list for " + Model.Author.DisplayName
-        : (PostListType)Model.PostListType == PostListType.Category ? "post list for category " + Model.Category
-        : "the blog page";
+    var pgrBase = Model.PostListType == PostListType.Author ? $"authors/{Model.Author.AppUserName}?page="
+        : Model.PostListType == PostListType.Category ? $"categories/{Model.Category}?page="
+        : "blog?page=";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -56,11 +56,11 @@
                 <ul class="pagination justify-content-center">
                     @if (pgr.ShowOlder)
                     {
-                    <li class="item item-prev"><a class="item-link" href="~/blog?page=@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
+                    <li class="item item-prev"><a class="item-link" href="~/@pgrBase@pgr.Older"><i class="item-icon fa fa-angle-left"></i></a></li>
                     }
                     @if (pgr.ShowNewer)
                     {
-                    <li class="item item-next"><a class="item-link" href="~/blog?page=@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
+                    <li class="item item-next"><a class="item-link" href="~/@pgrBase@pgr.Newer"><i class="item-icon fa fa-angle-right"></i></a></li>
                     }
                 </ul>
                 }
