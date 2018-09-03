@@ -42,13 +42,13 @@
                         @if (pgr.ShowOlder)
                         {
                             <li class="page-item">
-                                <a class="page-link" href="?page=@pgr.Older">&larr; Older</a>
+                                <a class="page-link" href="~/@pgr.LinkToOlder">&larr; Older</a>
                             </li>
                         }
                         @if (pgr.ShowNewer)
                         {
                             <li class="page-item">
-                                <a class="page-link" href="?page=@pgr.Newer">Newer &rarr;</a>
+                                <a class="page-link" href="~/@pgr.LinkToNewer">Newer &rarr;</a>
                             </li>
                         }
                     </ul>

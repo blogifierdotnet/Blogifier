@@ -44,6 +44,9 @@ namespace App.Controllers
                 posts = await _db.BlogPosts.Search(pager, term);
             }
 
+            if (pager.ShowOlder) pager.LinkToOlder = $"blog?page={pager.Older}";
+            if (pager.ShowNewer) pager.LinkToNewer = $"blog?page={pager.Newer}";
+
             var model = new PostList {
                 PostListType = PostListType.Blog,
                 Posts = posts,
@@ -84,7 +87,10 @@ namespace App.Controllers
 
             var pager = new Pager(page);
             var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
-            
+
+            if (pager.ShowOlder) pager.LinkToOlder = $"authors/{name}?page={pager.Older}";
+            if (pager.ShowNewer) pager.LinkToNewer = $"authors/{name}?page={pager.Newer}";
+
             var model = new PostList {
                 PostListType = PostListType.Author,
                 Author = author,
@@ -102,6 +108,9 @@ namespace App.Controllers
         {
             var pager = new Pager(page);
             var posts = await _db.BlogPosts.GetListByCategory(name, pager);
+
+            if (pager.ShowOlder) pager.LinkToOlder = $"categories/{name}?page={pager.Older}";
+            if (pager.ShowNewer) pager.LinkToNewer = $"categories/{name}?page={pager.Newer}";
 
             var model = new PostList {
                 PostListType = PostListType.Category,
