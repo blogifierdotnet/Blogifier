@@ -86,6 +86,16 @@ namespace Core.Services
                                 Status = SaveStatus.Publishing
                             };
 
+                            if(item.Categories != null)
+                            {
+                                var blogCats = new List<string>();
+                                foreach (var cat in item.Categories)
+                                {
+                                    blogCats.Add(cat.Name);
+                                }
+                                post.Categories = string.Join(",", blogCats);
+                            }
+
                             _msgs.Add(new ImportMessage { ImportType = ImportType.Post, Status = Status.Success, Message = post.Title });
 
                             await ImportPost(post);
