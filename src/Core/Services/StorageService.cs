@@ -82,10 +82,26 @@ namespace Core.Services
             try
             {
                 var dir = string.IsNullOrEmpty(path) ? Location : Path.Combine(Location, path);
-                var items = Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
-                return new List<string>(items);
+                var info = new DirectoryInfo(dir);
+
+                FileInfo[] files = info.GetFiles("*", SearchOption.AllDirectories)
+                    .OrderByDescending(p => p.CreationTime).ToArray();
+
+                if(files != null && files.Any())
+                {
+                    var assets = new List<string>();
+
+                    foreach (FileInfo file in files)
+                    {
+                        assets.Add(file.FullName);
+                    }
+                    return assets;
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
             return null;
         }
 
