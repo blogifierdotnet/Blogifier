@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "plugins\Common\Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-988C-4A2A-8B86-EB0895E0732E}"
 	ProjectSection(SolutionItems) = preProject
-		AppSettings.md = AppSettings.md
+		docs\AppSettings.md = docs\AppSettings.md
 	EndProjectSection
 EndProject
 Global
