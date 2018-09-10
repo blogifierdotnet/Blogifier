@@ -14,6 +14,7 @@ namespace Core.Data
         Task<IEnumerable<PostItem>> GetListByCategory(string category, Pager pager);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
+        Task<PostModel> GetModel(string slug);
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
     }
@@ -134,6 +135,53 @@ namespace Core.Data
             item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? "lib/img/avatar.jpg" : item.Author.Avatar;
 
             return await Task.FromResult(item);
+        }
+
+        public async Task<PostModel> GetModel(string slug)
+        {
+            var model = new PostModel();
+
+            var all = _db.BlogPosts
+                .Where(p => p.Published > DateTime.MinValue)
+                .OrderByDescending(p => p.IsFeatured)
+                .ThenByDescending(p => p.Published).ToList();
+
+            if(all != null && all.Count > 0)
+            {
+                for (int i = 0; i < all.Count; i++)
+                {
+                    if(all[i].Slug == slug)
+                    {
+                        model.Post = PostToItem(all[i]);
+
+                        if(i > 0)
+                        {
+                            var next = all[i - 1];
+                            model.NextLink = new NavLink {
+                                Title = next.Title,
+                                Slug = next.Slug
+                            };
+                        }
+
+                        if (i + 1 < all.Count)
+                        {
+                            var prev = all[i + 1];
+                            model.PrevLink = new NavLink
+                            {
+                                Title = prev.Title,
+                                Slug = prev.Slug
+                            };
+                        }
+
+                        model.Post.Author.Avatar = string.IsNullOrEmpty(model.Post.Author.Avatar) ? 
+                            "lib/img/avatar.jpg" : model.Post.Author.Avatar;
+
+                        break;
+                    }
+                }
+            }
+
+            return await Task.FromResult(model);
         }
 
         public async Task<PostItem> SaveItem(PostItem item)

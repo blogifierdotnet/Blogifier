@@ -1,11 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@model PostModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <partial name="~/Views/Themes/Simple/Shared/_Header.cshtml" />
 </head>
 <body>
     <style>
-        .post img { max-width: 100%; }
+        .post img {
+            max-width: 100%;
+        }
     </style>
     <partial name="~/Views/Themes/Simple/Shared/_Navbar.cshtml" />
     <div class="container">
@@ -18,12 +21,12 @@
                 <div class="card mb-4">
                     <img class="card-img-top" src="@ViewBag.Cover" alt="Card image cap">
                     <div class="card-body post">
-                        <h2 class="card-title">@Model.Title</h2>
-                        @Html.Raw(Model.Content)
+                        <h2 class="card-title">@Model.Post.Title</h2>
+                        @Html.Raw(Model.Post.Content)
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on @Model.Published.ToString("M"), @Model.Published.Year by
-                        <a href="~/authors/@Model.Author.AppUserName">@Model.Author.DisplayName</a>
+                        Posted on @Model.Post.Published.ToString("M"), @Model.Post.Published.Year by
+                        <a href="~/authors/@Model.Post.Author.AppUserName">@Model.Post.Author.DisplayName</a>
                     </div>
                 </div>
             </div>

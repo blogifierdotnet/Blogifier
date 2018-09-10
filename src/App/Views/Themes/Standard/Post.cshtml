@@ -1,7 +1,4 @@
-﻿@model PostItem
-@{
-    // Layout = null;
-}
+﻿@model PostModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,18 +13,39 @@
         <div class="post-cover" style="background-image: url('@ViewBag.Cover')"></div>
         <section class="container">
             <div class=" post-body">
+                @if (Model.PrevLink != null || Model.NextLink != null)
+                {
+                    <div style="display: inline-block !important; width: 100%;">
+                        @if (Model.PrevLink != null)
+                        {
+                        <span>
+                            <a href="~/posts/@Model.PrevLink.Slug">
+                                <i class="fa fa-angle-left"></i> @Model.PrevLink.Title
+                            </a>
+                        </span>
+                        }
+                        @if (Model.NextLink != null)
+                        {
+                        <span class="pull-right">
+                            <a href="~/posts/@Model.NextLink.Slug">
+                                @Model.NextLink.Title <i class="fa fa-angle-right"></i>
+                            </a>
+                        </span>
+                        }
+                    </div>
+                }
                 <header class="post-header">
-                    <h2 class="post-title">@Model.Title</h2>
+                    <h2 class="post-title">@Model.Post.Title</h2>
                     <div class="post-meta">
-                        <a href="~/authors/@Model.Author.AppUserName">
-                            <img class="post-meta-img" src="~/@Model.Author.Avatar" alt="@Model.Author.DisplayName" />
-                            <span class="post-meta-author">@Model.Author.DisplayName</span>
+                        <a href="~/authors/@Model.Post.Author.AppUserName">
+                            <img class="post-meta-img" src="~/@Model.Post.Author.Avatar" alt="@Model.Post.Author.DisplayName" />
+                            <span class="post-meta-author">@Model.Post.Author.DisplayName</span>
                         </a>
-                        <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.Published)</time>
-                        @if (!string.IsNullOrEmpty(Model.Categories))
+                        <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.Post.Published)</time>
+                        @if (!string.IsNullOrEmpty(Model.Post.Categories))
                         {
                             <span>/</span>
-                            var cats = Model.Categories.Split(',');
+                            var cats = Model.Post.Categories.Split(',');
                             foreach (var cat in cats)
                             {
                                 <span>
@@ -38,7 +56,7 @@
                     </div>
                 </header>
                 <div class="post-content">
-                    @Html.Raw(Model.Content)
+                    @Html.Raw(Model.Post.Content)
                 </div>
             </div>
         </section>

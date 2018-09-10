@@ -63,15 +63,17 @@ namespace App.Controllers
         {
             try
             {
-                var post = await _db.BlogPosts.GetItem(p => p.Slug == slug);
-                post.Content = Markdown.ToHtml(post.Content);
+                var model = await _db.BlogPosts.GetModel(slug);
+                model.Post.Content = Markdown.ToHtml(model.Post.Content);
 
                 ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
-                ViewBag.Cover = string.IsNullOrEmpty(post.Cover) ? $"{Url.Content("~/")}{AppSettings.DefaultCover}" : $"{Url.Content("~/")}{post.Cover}";
-                ViewBag.Title = post.Title;
-                ViewBag.Description = post.Description;
+                ViewBag.Cover = string.IsNullOrEmpty(model.Post.Cover) ? 
+                    $"{Url.Content("~/")}{AppSettings.DefaultCover}" : 
+                    $"{Url.Content("~/")}{model.Post.Cover}";
+                ViewBag.Title = model.Post.Title;
+                ViewBag.Description = model.Post.Description;
 
-                return View($"~/Views/Themes/{AppSettings.Theme}/Post.cshtml", post);
+                return View($"~/Views/Themes/{AppSettings.Theme}/Post.cshtml", model);
             }
             catch
             {

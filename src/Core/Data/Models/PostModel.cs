@@ -6,6 +6,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Data
 {
+    public class PostModel
+    {
+        public PostItem Post { get; set; }
+        public NavLink NextLink { get; set; }
+        public NavLink PrevLink { get; set; }
+    }
+
     public class PostList
     {
         public IEnumerable<PostItem> Posts { get; set; }
@@ -52,6 +59,12 @@ namespace Core.Data
             return Id.GetHashCode();
         }
         #endregion
+    }
+
+    public class NavLink
+    {
+        public string Title { get; set; }
+        public string Slug { get; set; }
     }
 
     public enum PostListType
