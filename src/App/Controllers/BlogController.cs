@@ -55,6 +55,13 @@ namespace App.Controllers
 
             SetViewBag();
 
+            if (!string.IsNullOrEmpty(term))
+            {
+                ViewBag.Title = term;
+                ViewBag.Description = "";
+                model.PostListType = PostListType.Search;
+            }
+
             return View(_listView, model);
         }
 

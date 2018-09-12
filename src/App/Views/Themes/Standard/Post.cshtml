@@ -37,28 +37,32 @@
                 <div class="post-content">
                     @Html.Raw(Model.Post.Content)
                 </div>
+
+                @if (Model.PrevLink != null || Model.NextLink != null)
+                {
+                    <ul class="pagination justify-content-center">
+                        @if (Model.PrevLink != null)
+                        {
+                        <li class="item item-prev">
+                            <a class="item-link" href="~/posts/@Model.PrevLink.Slug" title="Older post">
+                                <i class="item-icon fa fa-angle-left"></i>
+                            </a>
+                            &nbsp; @Model.PrevLink.Title
+                        </li>
+                        }
+                        @if (Model.NextLink != null)
+                        {
+                        <li class="item item-next">
+                            &nbsp; &nbsp;
+                            @Model.NextLink.Title &nbsp;
+                            <a class="item-link" href="~/posts/@Model.NextLink.Slug" title="Newer post">
+                                <i class="item-icon fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                }
             </div>
-            @if (Model.PrevLink != null || Model.NextLink != null)
-            {
-                <div style="display: inline-block !important; width: 100%; padding: 10px">
-                    @if (Model.PrevLink != null)
-                    {
-                        <span>
-                            <a href="~/posts/@Model.PrevLink.Slug">
-                                <i class="fa fa-angle-left"></i> @Model.PrevLink.Title
-                            </a>
-                        </span>
-                    }
-                    @if (Model.NextLink != null)
-                    {
-                        <span class="pull-right">
-                            <a href="~/posts/@Model.NextLink.Slug">
-                                @Model.NextLink.Title <i class="fa fa-angle-right"></i>
-                            </a>
-                        </span>
-                    }
-                </div>
-            }
         </section>
     </article>
     <partial name="~/Views/Themes/Standard/_Shared/_Footer.cshtml" />

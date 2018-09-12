@@ -69,7 +69,7 @@ namespace Core.Data
 
     public enum PostListType
     {
-        Blog, Category, Author
+        Blog, Category, Author, Search
     }
 
     public class PostListFilter
