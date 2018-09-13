@@ -156,25 +156,13 @@ namespace Core.Data
 
                         if(i > 0)
                         {
-                            var next = all[i - 1];
-                            model.NextLink = new NavLink {
-                                Title = next.Title,
-                                Slug = next.Slug
-                            };
+                            model.Newer = PostToItem(all[i - 1]);
                         }
 
                         if (i + 1 < all.Count)
                         {
-                            var prev = all[i + 1];
-                            model.PrevLink = new NavLink
-                            {
-                                Title = prev.Title,
-                                Slug = prev.Slug
-                            };
+                            model.Older = PostToItem(all[i + 1]);
                         }
-
-                        model.Post.Author.Avatar = string.IsNullOrEmpty(model.Post.Author.Avatar) ? 
-                            "lib/img/avatar.jpg" : model.Post.Author.Avatar;
 
                         break;
                     }
@@ -237,7 +225,7 @@ namespace Core.Data
 
         PostItem PostToItem(BlogPost p)
         {
-            return new PostItem
+            var post = new PostItem
             {
                 Id = p.Id,
                 Slug = p.Slug,
@@ -252,6 +240,12 @@ namespace Core.Data
                 Featured = p.IsFeatured,
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId)
             };
+            if(post.Author != null)
+            {
+                post.Author.Avatar = string.IsNullOrEmpty(post.Author.Avatar) ?
+                    AppSettings.Avatar : post.Author.Avatar;
+            }
+            return post;
         }
 
         public List<PostItem> PostListToItems(List<BlogPost> posts)
