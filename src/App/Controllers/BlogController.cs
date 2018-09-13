@@ -47,7 +47,7 @@ namespace App.Controllers
             if (pager.ShowOlder) pager.LinkToOlder = $"blog?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"blog?page={pager.Newer}";
 
-            var model = new PostList {
+            var model = new ListModel {
                 PostListType = PostListType.Blog,
                 Posts = posts,
                 Pager = pager
@@ -100,7 +100,7 @@ namespace App.Controllers
             if (pager.ShowOlder) pager.LinkToOlder = $"authors/{name}?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"authors/{name}?page={pager.Newer}";
 
-            var model = new PostList {
+            var model = new ListModel {
                 PostListType = PostListType.Author,
                 Author = author,
                 Posts = posts,
@@ -121,7 +121,7 @@ namespace App.Controllers
             if (pager.ShowOlder) pager.LinkToOlder = $"categories/{name}?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"categories/{name}?page={pager.Newer}";
 
-            var model = new PostList {
+            var model = new ListModel {
                 PostListType = PostListType.Category,
                 Posts = posts,
                 Pager = pager

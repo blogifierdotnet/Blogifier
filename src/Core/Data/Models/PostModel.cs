@@ -13,7 +13,7 @@ namespace Core.Data
         public PostItem Newer { get; set; }
     }
 
-    public class PostList
+    public class ListModel
     {
         public IEnumerable<PostItem> Posts { get; set; }
         public Pager Pager { get; set; }
