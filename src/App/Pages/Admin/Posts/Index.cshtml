@@ -52,18 +52,18 @@
                     <div class="post-grid-item">
                         <a class="item-link" href="~/admin/posts/edit?id=@post.Id" style="background-image:url(@img);"><div class="item-title mt-auto">@post.Title</div></a>
                         <div class="item-info d-flex align-items-center">
-                            <span class="item-date">@dt</span>
+                            <span class="item-date mr-auto">@dt</span>
 
                             @if (post.Published > DateTime.MinValue)
                             {
-                                <a href="#" onclick="postsController.unpublish(@post.Id); return false;" class="item-show ml-5">
-                                    <span class="item-status item-status-published ml-auto" data-tooltip title="published"><i class="fa fa-circle"></i></span>
+                                <a href="#" onclick="postsController.unpublish(@post.Id); return false;" class="item-show">
+                                    <span class="item-status item-status-published ml-auto" data-tooltip title="published"><i class="fas fa-circle"></i></span>
                                 </a>
                             }
                             else
                             {
                                 <a href="#" onclick="postsController.publish(@post.Id); return false;" class="item-show ml-5">
-                                    <span class="item-status item-status-draft ml-auto" data-tooltip title="draft"><i class="fa fa-circle"></i></span>
+                                    <span class="item-status item-status-draft ml-auto" data-tooltip title="draft"><i class="fas fa-circle"></i></span>
                                 </a>
                             }
 
@@ -72,18 +72,18 @@
                                 if (post.Featured)
                                 {
                                     <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.unfeature('@post.Id')" data-original-title="featured">
-                                        <i class="fa fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                     </button>
                                 }
                                 else
                                 {
                                     <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.feature('@post.Id')" data-original-title="add to featured">
-                                        <i class="fa fa-star-o"></i>
+                                        <i class="far fa-star"></i>
                                     </button>
                                 }
                             }
-                            <a class="item-show ml-3" href="~/posts/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="View"><i class="fa fa-external-link-square"></i></a>
-                            <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="Delete"><i class="fa fa-trash" style="color: #ff6666"></i></a>
+                            <a class="item-show ml-3" href="~/posts/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="View"><i class="fas fa-external-link-square-alt"></i></a>
+                            <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="Delete"><i class="fas fa-trash" style="color: #ff6666"></i></a>
                         </div>
                     </div>
                 </div>
