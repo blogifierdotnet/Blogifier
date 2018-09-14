@@ -109,6 +109,8 @@ namespace App.Controllers
 
             SetViewBag();
 
+            ViewBag.Description = "";
+
             return View(_listView, model);
         }
 
@@ -128,6 +130,9 @@ namespace App.Controllers
             };
 
             SetViewBag();
+
+            ViewBag.Category = name;
+            ViewBag.Description = "";
 
             return View(_listView, model);
         }
