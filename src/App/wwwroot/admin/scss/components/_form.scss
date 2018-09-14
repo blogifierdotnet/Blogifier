@@ -44,6 +44,7 @@ textarea.form-control {
 }
 // custom control
 
+
 .custom-control {
   &-single {
     margin: 0;
@@ -52,14 +53,14 @@ textarea.form-control {
     width: 1rem;
     height: 1rem;
 
-    .custom-control-label {
-      &::after,
-      &::before {
-        top: 0;
-      }
-    }
   }
 
+      &-label {
+        &::after,
+        &::before {
+          top: 0 !important;
+        }
+      }
   &-input {
     &:focus~.custom-control-label::before {
       box-shadow: 0 0 0 1px #fff, 0 0 0 .2rem rgba(87, 49, 179, .25);

@@ -15,11 +15,10 @@
         <div asp-validation-summary="All" class="text-danger"></div>
         <input asp-for="UserName" class="form-control form-control form-control-top" placeholder="Username" autofocus>
         <input asp-for="Password" class="form-control form-control form-control-bottom" placeholder="Password">
-        <div style="padding: 10px 0; margin-left: -20px">
-            <label class="custom-control custom-checkbox">
-                <input asp-for="RememberMe" type="checkbox" class="form-control-input form-control-bottom">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Remember me</span>
+        <div class="my-3">
+            <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
+                <input type="checkbox" asp-for="RememberMe" class="custom-control-input">
+                <span class="custom-control-label">Remember me</span>
             </label>
         </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
