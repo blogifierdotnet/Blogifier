@@ -112,9 +112,9 @@ $(".bf-header").on("click", function() {
 
 // autofocus for modals that has "autofocus" attribute
 // http://getbootstrap.com/docs/4.0/components/modal/#how-it-works
-$('.modal').on('shown.bs.modal', function() {
-  $(this).find('[autofocus]').trigger('focus');
-})
+$('.modal').on('shown.bs.modal', function () {
+    $(this).find('[autofocus]').trigger('focus');
+});
 
 // Dropdown
 $('.dropdown-custom .dropdown-item').on('click', function() {
@@ -144,3 +144,8 @@ function fail(jqXHR, exception) {
 }
 
 function emptyCallback() { }
+
+function openNotifications() {
+    $('#notifications').modal();
+    return false;
+}
