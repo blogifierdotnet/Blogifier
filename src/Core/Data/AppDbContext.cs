@@ -13,6 +13,7 @@ namespace Core.Data
 
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
