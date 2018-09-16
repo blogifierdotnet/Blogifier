@@ -1,4 +1,3 @@
-// Select All --------
 var selectAllCheckbox = $('#selectAll');
 var actionBtns = $('#multiActionBtns .btn');
 var itemCheckbox = '.item-checkbox';
@@ -11,7 +10,7 @@ $(selectAllCheckbox).change(function() { //"select all" change
 
 $(itemCheckbox).on('change', function() { //".item-checkbox" change
   //uncheck "select all", if one of the listed checkbox item is unchecked
-  if (false == $(this).prop("checked")) { //if this item is unchecked
+  if (false === $(this).prop("checked")) { //if this item is unchecked
     $(selectAllCheckbox).prop('checked', false); //change "select all" checked status to false
   }
 
@@ -55,10 +54,10 @@ function fromQueryString(name) {
 
 function bytesToSize(bytes) {
   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return '0 Byte';
+  if (bytes === 0) return '0 Byte';
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-};
+}
 
 function getMonthName(i) {
     var m = new Array();
@@ -82,7 +81,7 @@ $(".bf-setup-form #AuthorName").keyup(function() {
   var authorUrl = $(this).val();
   authorUrl = authorUrl.replace(/\s+/g, '-').toLowerCase();
   $(".bf-setup-url").text(window.location.host + '/blog/' + authorUrl);
-  if ($(this).val() == '') {
+  if ($(this).val() === '') {
     $(".bf-setup-url").text('');
   }
 });
@@ -126,9 +125,9 @@ function fail(jqXHR, exception) {
     var msg = '';
     if (jqXHR.status === 0) {
         msg = 'Not connected.\n Verify Network.';
-    } else if (jqXHR.status == 404) {
+    } else if (jqXHR.status === 404) {
         msg = 'Requested page not found. [404]';
-    } else if (jqXHR.status == 500) {
+    } else if (jqXHR.status === 500) {
         msg = 'Internal Server Error [500].';
     } else if (exception === 'parsererror') {
         msg = 'Requested JSON parse failed.';
@@ -144,8 +143,3 @@ function fail(jqXHR, exception) {
 }
 
 function emptyCallback() { }
-
-function openNotifications() {
-    $('#notifications').modal();
-    return false;
-}

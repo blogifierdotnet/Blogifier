@@ -13,14 +13,15 @@ namespace App.Pages.Admin.Posts
     {
         [BindProperty]
         public IEnumerable<PostItem> Posts { get; set; }
-
         public Pager Pager { get; set; }
 
         IDataService _db;
+        INotificationService _ns;
 
-        public IndexModel(IDataService db)
+        public IndexModel(IDataService db, INotificationService ns)
         {
             _db = db;
+            _ns = ns;
             Pager = new Pager(1);
         }
 
@@ -50,6 +51,8 @@ namespace App.Pages.Admin.Posts
             }
 
             Posts = await _db.BlogPosts.GetList(predicate, Pager);
+
+            Notifications = await _ns.GetNotifications(author.Id);
 
             return Page();
         }

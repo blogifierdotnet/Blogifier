@@ -35,6 +35,8 @@ namespace Core.Extensions
             services.AddTransient<IFeedService, FeedService>();
             services.AddTransient<IStorageService, StorageService>();
             services.AddTransient<IImportService, ImportService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IWebService, WebService>();
 
             services.AddTransient<UserManager<AppUser>>();
 

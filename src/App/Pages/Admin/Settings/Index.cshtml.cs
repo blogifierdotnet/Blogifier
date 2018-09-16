@@ -16,12 +16,14 @@ namespace App.Pages.Admin.Settings
         IDataService _db;
         IAppService<AppItem> _app;
         IStorageService _storage;
+        INotificationService _ns;
 
-        public IndexModel(IDataService db, IAppService<AppItem> app, IStorageService storage)
+        public IndexModel(IDataService db, IAppService<AppItem> app, IStorageService storage, INotificationService ns)
         {
             _db = db;
             _app = app;
             _storage = storage;
+            _ns = ns;
             _app.Value.BlogThemes = GetThemes();
         }
 
@@ -29,6 +31,8 @@ namespace App.Pages.Admin.Settings
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
+
+            Notifications = await _ns.GetNotifications(author.Id);
 
             if (!author.IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });

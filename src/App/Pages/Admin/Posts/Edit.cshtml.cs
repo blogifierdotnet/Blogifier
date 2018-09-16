@@ -14,19 +14,21 @@ namespace App.Pages.Admin.Posts
         public PostItem PostItem { get; set; }
 
         IDataService _db;
+        INotificationService _ns;
 
-        public EditModel(IDataService db)
+        public EditModel(IDataService db, INotificationService ns)
         {
             _db = db;
+            _ns = ns;
         }
 
         public async Task OnGetAsync(int id)
         {
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
-            IsAdmin = author.IsAdmin; 
-            //?? Was this going to be used someplace? 
-            //Should this be removed   --Manuta 9-16-2018
-            
+            IsAdmin = author.IsAdmin;
+
+            Notifications = await _ns.GetNotifications(author.Id);
+
             PostItem = new PostItem { Author = author, Cover = AppSettings.Cover };
 
             if (id > 0)

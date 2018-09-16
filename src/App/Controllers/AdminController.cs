@@ -188,5 +188,14 @@ namespace App.Controllers
 
             return await _feed.Import(file, User.Identity.Name, webRoot);
         }
+
+        [HttpDelete, Route("[controller]/notifications/remove/{id}")]
+        public async Task RemoveNotification(int id)
+        {
+            var note = _db.Notifications.Single(n => n.Id == id);
+            _db.Notifications.Remove(note);
+            _db.Complete();
+            await Task.CompletedTask;
+        }
     }
 }
