@@ -14,10 +14,12 @@ namespace App.Pages.Admin.Posts
         public PostItem PostItem { get; set; }
 
         IDataService _db;
+        INotificationService _ns;
 
-        public EditModel(IDataService db)
+        public EditModel(IDataService db, INotificationService ns)
         {
             _db = db;
+            _ns = ns;
         }
 
         public async Task OnGetAsync(int id)
@@ -25,7 +27,7 @@ namespace App.Pages.Admin.Posts
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
-            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+            Notifications = await _ns.GetNotifications(author.Id);
 
             PostItem = new PostItem { Author = author, Cover = AppSettings.Cover };
 

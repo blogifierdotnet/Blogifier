@@ -11,13 +11,15 @@ namespace App.Pages.Admin.Settings
     public class UsersModel : AdminPageModel
     {
         IDataService _db;
+        INotificationService _ns;
 
         [BindProperty]
         public IEnumerable<Author> Authors { get; set; }
 
-        public UsersModel(IDataService db)
+        public UsersModel(IDataService db, INotificationService ns)
         {
             _db = db;
+            _ns = ns;
         }
 
         public async Task<IActionResult> OnGetAsync(int page = 1)
@@ -25,7 +27,7 @@ namespace App.Pages.Admin.Settings
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
-            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+            Notifications = await _ns.GetNotifications(author.Id);
 
             if (!IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });

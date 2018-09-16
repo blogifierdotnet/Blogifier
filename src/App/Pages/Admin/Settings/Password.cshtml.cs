@@ -15,15 +15,17 @@ namespace App.Pages.Admin.Settings
         IDataService _db;
         UserManager<AppUser> _um;
         SignInManager<AppUser> _sm;
+        INotificationService _ns;
 
         [BindProperty]
         public ChangePasswordModel ChangePasswordModel { get; set; }
 
-        public PasswordModel(IDataService db, UserManager<AppUser> um, SignInManager<AppUser> sm)
+        public PasswordModel(IDataService db, UserManager<AppUser> um, SignInManager<AppUser> sm, INotificationService ns)
         {
             _db = db;
             _um = um;
             _sm = sm;
+            _ns = ns;
         }
 
         public async Task OnGetAsync()
@@ -31,7 +33,7 @@ namespace App.Pages.Admin.Settings
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
-            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+            Notifications = await _ns.GetNotifications(author.Id);
 
             ChangePasswordModel = new ChangePasswordModel { UserName = User.Identity.Name };
         }

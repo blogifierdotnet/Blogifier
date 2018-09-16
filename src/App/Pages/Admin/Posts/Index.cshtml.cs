@@ -16,10 +16,12 @@ namespace App.Pages.Admin.Posts
         public Pager Pager { get; set; }
 
         IDataService _db;
+        INotificationService _ns;
 
-        public IndexModel(IDataService db)
+        public IndexModel(IDataService db, INotificationService ns)
         {
             _db = db;
+            _ns = ns;
             Pager = new Pager(1);
         }
 
@@ -50,7 +52,7 @@ namespace App.Pages.Admin.Posts
 
             Posts = await _db.BlogPosts.GetList(predicate, Pager);
 
-            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+            Notifications = await _ns.GetNotifications(author.Id);
 
             return Page();
         }

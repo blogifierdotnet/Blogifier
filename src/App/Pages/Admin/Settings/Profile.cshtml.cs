@@ -13,17 +13,19 @@ namespace App.Pages.Admin.Settings
         IDataService _db;
         IStorageService _ss;
         UserManager<AppUser> _um;
+        INotificationService _ns;
 
         public string Action { get; set; }
 
         [BindProperty]
         public Author Author { get; set; }
 
-        public ProfileModel(IDataService db, IStorageService ss, UserManager<AppUser> um)
+        public ProfileModel(IDataService db, IStorageService ss, UserManager<AppUser> um, INotificationService ns)
         {
             _db = db;
             _ss = ss;
             _um = um;
+            _ns = ns;
         }
 
         public async Task OnGetAsync(string name, string delete)
@@ -31,7 +33,7 @@ namespace App.Pages.Admin.Settings
             Author = await _db.Authors.GetItem(u => u.AppUserName == User.Identity.Name);
             IsAdmin = Author.IsAdmin;
 
-            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == Author.Id));
+            Notifications = await _ns.GetNotifications(Author.Id);
 
             if (!string.IsNullOrEmpty(name))
             {
