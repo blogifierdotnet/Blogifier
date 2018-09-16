@@ -39,9 +39,17 @@ namespace App.Controllers
         [HttpDelete]
         public async Task RemovePost(int id)
         {
+            
             var post = _db.BlogPosts.Single(p => p.Id == id);
-            _db.BlogPosts.Remove(post);
-            _db.Complete();
+            var author = _db.Authors.Single(a => a.Id == post.AuthorId);
+            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
+
+            //prevents users from removing other users posts or admin posts --manuta 9-16-2018
+            if (user.IsAdmin || author.AppUserName == User.Identity.Name)
+            {
+                _db.BlogPosts.Remove(post);
+                _db.Complete();
+            }    
             await Task.CompletedTask;
         }
 
@@ -49,7 +57,9 @@ namespace App.Controllers
         public async Task PublishPost(int id, string flag)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
-            if (!string.IsNullOrEmpty(flag))
+            var author = _db.Authors.Single(a => a.Id == post.AuthorId);
+            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
+            if (!string.IsNullOrEmpty(flag) && (user.IsAdmin || author.AppUserName == User.Identity.Name))
             {
                 if (flag == "P") post.Published = DateTime.UtcNow;
                 if (flag == "U") post.Published = DateTime.MinValue;
@@ -62,7 +72,9 @@ namespace App.Controllers
         public async Task FeaturePost(int id, string flag)
         {
             var post = _db.BlogPosts.Single(p => p.Id == id);
-            if (!string.IsNullOrEmpty(flag))
+            var author = _db.Authors.Single(a => a.Id == post.AuthorId);
+            var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
+            if (!string.IsNullOrEmpty(flag) && (user.IsAdmin || author.AppUserName == User.Identity.Name))
             {
                 if (flag == "F") post.IsFeatured = true;
                 if (flag == "U") post.IsFeatured = false;
