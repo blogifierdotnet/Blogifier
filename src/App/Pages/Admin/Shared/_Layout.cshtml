@@ -51,7 +51,7 @@
             @if (_notifications.Count() > 0)
             {
                 <li class="taskbar-item">
-                    <a class="taskbar-item-link" href="" onclick="return openNotifications();" return false; title="Notifications">
+                    <a class="taskbar-item-link" href="" onclick="return notificationsController.open();" return false; title="Notifications">
                         <i class="taskbar-item-icon fas fa-comment"></i>
                     </a>
                 </li>
@@ -79,6 +79,9 @@
                             {
                             <div class="alert alert-primary" role="alert">
                                 @Html.Raw(note.Content)
+                                <button type="button" class="close" onclick="notificationsController.remove('@note.Id')" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             }
                         }
@@ -97,6 +100,7 @@
     <script src="~/admin/js/lib/bootstrap.min.js"></script>
     <script src="~/admin/js/app/app.js"></script>
     <script src="~/admin/js/app/dataService.js"></script>
+    <script src="~/admin/js/app/notificationsController.js"></script>
     <script>
         var webRoot = '@Url.Content("~/")';
         function getUrl(str) {
