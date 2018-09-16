@@ -2,6 +2,7 @@
 using Core.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Services
@@ -27,16 +28,20 @@ namespace Core.Services
 
         public async Task<int> AddNotification(AlertType aType, int authorId, string notifier, string content)
         {
-            _db.Notifications.Add(new Notification
+            var existing = _db.Notifications.Single(n => n.Content == content);
+            if(existing == null)
             {
-                AlertType = aType,
-                AuthorId = authorId,
-                Notifier = notifier,
-                Content = content,
-                Active = true,
-                DateNotified = SystemClock.Now()
-            });
-            _db.Complete();
+                _db.Notifications.Add(new Notification
+                {
+                    AlertType = aType,
+                    AuthorId = authorId,
+                    Notifier = notifier,
+                    Content = content,
+                    Active = true,
+                    DateNotified = SystemClock.Now()
+                });
+                _db.Complete();
+            }
             return await Task.FromResult(0);
         }
 
@@ -53,7 +58,11 @@ namespace Core.Services
                 }
             }
 
-            var notes = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == authorId));
+            var notes = _db.Notifications
+                .Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == authorId))
+                .OrderByDescending(n => n.DateNotified)
+                .Take(5);
+
             return await Task.FromResult(notes);
         }
     }
