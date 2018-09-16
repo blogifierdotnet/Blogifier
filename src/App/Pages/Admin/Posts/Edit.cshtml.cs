@@ -25,6 +25,8 @@ namespace App.Pages.Admin.Posts
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
+            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+
             PostItem = new PostItem { Author = author, Cover = AppSettings.Cover };
 
             if (id > 0)

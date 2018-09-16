@@ -31,6 +31,8 @@ namespace App.Pages.Admin.Settings
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
+            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
+
             ChangePasswordModel = new ChangePasswordModel { UserName = User.Identity.Name };
         }
 

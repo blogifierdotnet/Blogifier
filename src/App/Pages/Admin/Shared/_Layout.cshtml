@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    IEnumerable<Notification> _notifications = new List<Notification>();
+
+    if (Model.Notifications != null)
+    {
+        _notifications = (IEnumerable<Notification>)Model.Notifications;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -39,7 +48,7 @@
                     </a>
                 </li>
             }
-            @if (true) // todo: call github api here
+            @if (_notifications.Count() > 0)
             {
                 <li class="taskbar-item">
                     <a class="taskbar-item-link" href="" onclick="return openNotifications();" return false; title="Notifications">
@@ -64,20 +73,15 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
                     </div>
                     <div class="modal-body">
-
-                        <div class="alert alert-primary" role="alert">
-                            A simple example primary notification message.
-                        </div>
-                        <div class="alert alert-success" role="alert">
-                            A simple example success notification message.
-                        </div>
-                        <div class="alert alert-danger" role="alert">
-                            A simple example danger notification message.
-                        </div>
-                        <div class="alert alert-warning" role="alert">
-                            A simple example warning notification with <a href="~/admin" class="alert-link">an example link</a>. Give it a click if you like.
-                        </div>
-
+                        @if (_notifications.Count() > 0)
+                        {
+                            foreach (var note in _notifications)
+                            {
+                            <div class="alert alert-primary" role="alert">
+                                @Html.Raw(note.Content)
+                            </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>

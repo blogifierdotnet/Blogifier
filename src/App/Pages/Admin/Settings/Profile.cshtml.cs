@@ -31,6 +31,8 @@ namespace App.Pages.Admin.Settings
             Author = await _db.Authors.GetItem(u => u.AppUserName == User.Identity.Name);
             IsAdmin = Author.IsAdmin;
 
+            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == Author.Id));
+
             if (!string.IsNullOrEmpty(name))
             {
                 Author = await _db.Authors.GetItem(u => u.AppUserName == name);

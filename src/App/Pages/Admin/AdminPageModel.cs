@@ -1,15 +1,15 @@
 ﻿using Core.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
 namespace App.Pages.Admin
 {
     public class AdminPageModel : PageModel
     {
-        //[BindProperty]
-        //public Author Author { get; set; }
-
         public bool IsAdmin { get; set; }
+
+        public IEnumerable<Notification> Notifications { get; set; }
 
         [TempData]
         public string Message { get; set; }

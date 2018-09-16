@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Core.Helpers;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -96,6 +97,16 @@ namespace Core.Data
                 PostViews = 25,
                 Rating = 3.5,
                 Published = DateTime.UtcNow.AddDays(-10)
+            });
+
+            Notifications.Add(new Notification
+            {
+                Notifier = "Blogifier",
+                AlertType = AlertType.Primary,
+                AuthorId = 0,
+                Content = "Welcome to Blogifier!",
+                Active = true,
+                DateNotified = SystemClock.Now()
             });
 
             SaveChanges();

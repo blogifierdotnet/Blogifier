@@ -13,7 +13,6 @@ namespace App.Pages.Admin.Posts
     {
         [BindProperty]
         public IEnumerable<PostItem> Posts { get; set; }
-
         public Pager Pager { get; set; }
 
         IDataService _db;
@@ -50,6 +49,8 @@ namespace App.Pages.Admin.Posts
             }
 
             Posts = await _db.BlogPosts.GetList(predicate, Pager);
+
+            Notifications = _db.Notifications.Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == author.Id));
 
             return Page();
         }
