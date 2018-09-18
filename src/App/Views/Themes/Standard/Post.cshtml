@@ -40,39 +40,24 @@
 
                 @if (Model.Older != null || Model.Newer != null)
                 {
-                <hr />
-                <div class="row">
-                    @if (Model.Older != null)
-                    {
-                    <div class="col-sm-6">
-                        <a href="~/posts/@Model.Older.Slug">
-                            <div class="card">
-                                <img class="card-img-top" src="@Url.Content("~/")@Model.Older.Cover" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <i class="fa fa-angle-double-left"></i> @Model.Older.Title
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    }
-                    @if (Model.Newer != null)
-                    {
-                    <div class="col-sm-6">
-                        <a href="~/posts/@Model.Newer.Slug">
-                            <div class="card">
-                                <img class="card-img-top" src="@Url.Content("~/")@Model.Newer.Cover" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text pull-right">
-                                        @Model.Newer.Title <i class="fa fa-angle-double-right"></i>
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    }
-                </div>
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Older != null)
+                        {
+                        <li class="item item-prev">
+                            <a class="item-link" href="~/posts/@Model.Older.Slug" title="@Model.Older.Title">
+                                <i class="item-icon fa fa-angle-left"></i>
+                            </a>
+                        </li>
+                        }
+                        @if (Model.Newer != null)
+                        {
+                        <li class="item item-next">
+                            <a class="item-link" href="~/posts/@Model.Newer.Slug" title="@Model.Newer.Title">
+                                <i class="item-icon fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        }
+                    </ul>
                 }
             </div>
         </section>
