@@ -4,6 +4,7 @@ using Core.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
@@ -27,6 +28,7 @@ namespace App
                 }
 
                 var context = services.GetRequiredService<AppDbContext>();
+                context.Database.Migrate();
 
                 // load application settings from appsettings.json
                 var app = services.GetRequiredService<IAppService<AppItem>>();
