@@ -94,11 +94,11 @@
                     <!-- Mobile Menu -->
                     <div class="dropdown ml-auto d-block d-lg-none">
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="11" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-cog"></i>
+                            <i class="fa fa-ellipsis-h"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <button class="dropdown-item" tabindex="12" onclick="return fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i> Cover</button>
-                            <button class="dropdown-item" tabindex="13" onclick="return editorController.settings()"><i class="fa fa-file-text"></i> Settings</button>
+                            <button @btnDisabled class="dropdown-item" tabindex="12" onclick="return fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i> Cover</button>
+                            <button @btnDisabled class="dropdown-item" tabindex="13" onclick="return editorController.settings()"><i class="fa fa-cog"></i> Settings</button>
                         </div>
                     </div>
                     <!--/Mobile Menu -->
