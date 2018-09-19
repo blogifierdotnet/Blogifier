@@ -11,38 +11,9 @@
     var btnDisabled = Model.PostItem.Id == 0 ? "disabled" : "";
 }
 
-<style>
-    .CodeMirror {
-        border: 0 !important;
-        background-color: #F6F6F6;
-    }
-
-    .editor-toolbar {
-        background-color: #FFF;
-        padding: 0;
-        margin: 0;
-        margin-top: -48px;
-        border: 0;
-    }
-
-    .editor-hdr-wrapper {
-        background-color: #FFF;
-        height: 48px;
-        overflow: hidden;
-    }
-
-    .editor-preview {
-        background-color: #F6F6F6;
-    }
-
-    body {
-        background-color: #F6F6F6;
-    }
-</style>
-
 <form id="frmEditor" class="bf-editor-form" method="post" asp-antiforgery="true">
-    <div class="bf-body">
-        <div id="post-edit" class="bf-editor">
+    <div class="bf-body bf-editor-body">
+        <div id="post-edit" class="bf-editor d-flex flex-column">
             <!-- Editor Header -->
             <div class="bf-editor-header" style="background-image:url('@img');">
                 <div class="container">
@@ -106,8 +77,7 @@
             </div>
             <!--/Editor Footer -->
 
-            <div class="editor-hdr-wrapper">&nbsp;</div>
-            <div class="container">
+            @* <div class="editor-hdr-wrapper">&nbsp;</div> *@
                 <!-- Editor -->
                 <textarea id="mdEditor" tabindex="2" rows="4" cols="50"></textarea>
                 <input type="hidden" asp-for="PostItem.Id" />
@@ -116,7 +86,6 @@
                 <input type="hidden" asp-for="PostItem.Status" />
                 <input type="hidden" asp-for="PostItem.Featured" />
                 <!--/Editor -->
-            </div>
         </div>
     </div>
 
