@@ -175,12 +175,12 @@
         remove: remove,
         check: check,
         showBtns: showBtns
-    }
+    };
 }(DataService);
 
 $('#asset-search').keypress(function (event) {
     var keycode = (event.keyCode ? event.keyCode : event.which);
-    if (keycode == '13') {
+    if (keycode ==='13') {
         fileManagerController.load(1);
         return false;
     }
@@ -205,21 +205,28 @@ $(firstItemCheckfm).on('change', function () {
 var updateAvatarCallback = function (data) {
     $('#Author_Avatar').val(data.url);
     toastr.success('Updated');
-}
+};
 var updateAppCoverCallback = function (data) {
     $('#Cover').val(data.url);
     toastr.success('Updated');
-}
+};
 var updateAppLogoCallback = function (data) {
     $('#Logo').val(data.url);
     toastr.success('Updated');
-}
+};
 
 var insertImageCallback = function (data) {
     var cm = _editor.codemirror;
     var output = data + '](' + webRoot + data + ')';
 
-    if (data.toLowerCase().match(/.(jpg|jpeg|png|gif)$/i)) {
+    if (data.toLowerCase().match(/.(mp4|ogg|webm)$/i)) {
+        var ext = 'mp4';
+        if (data.toLowerCase().match(/.(ogg)$/i)) { ext = 'ogg'; }
+        if (data.toLowerCase().match(/.(webm)$/i)) { ext = 'webm'; }
+        output = '<video width="320" height="240" controls>\r\n  <source src="' + webRoot + data;
+        output += '" type="video/' + ext + '">Your browser does not support the video tag.\r\n</video>';
+    }
+    else if (data.toLowerCase().match(/.(jpg|jpeg|png|gif)$/i)) {
         output = '\r\n![' + output;
     }
     else {
@@ -233,4 +240,4 @@ var updatePostCoverCallback = function (data) {
     $('.bf-editor-header').css('background-image', 'url(' + webRoot + data.url + ')');
     $('#hdnPostImg').val(data.url);
     toastr.success('Updated');
-}
+};

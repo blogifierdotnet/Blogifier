@@ -82,8 +82,8 @@ function getEditor() {
             {
                 name: "insertImg",
                 action: openFileMgr,
-                className: "fa fa-image",
-                title: "Insert Image"
+                className: "fa fa-html5",
+                title: "Insert Image or Video"
             },
             "|", "preview", "|", "guide"
         ],

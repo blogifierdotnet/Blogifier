@@ -43,6 +43,9 @@ namespace App.Pages.Admin.Posts
                 return Page();
             }
 
+            var user = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = user.IsAdmin;
+
             PostItem.Author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             
 
