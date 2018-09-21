@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-9
 		docs\Disqus.md = docs\Disqus.md
 		docs\Import.md = docs\Import.md
 		docs\Notifications.md = docs\Notifications.md
+		docs\VideoAudio.md = docs\VideoAudio.md
 	EndProjectSection
 EndProject
 Global
