@@ -34,9 +34,16 @@ namespace App
 
             services.AddAppSettings<AppItem>(section);
 
-            AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
-
-            services.AddDbContext<AppDbContext>(AppSettings.DbOptions);
+            if (section.GetValue<string>("DbProvider") == "SqlServer")
+            {
+                AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
+            }
+            else
+            {
+                AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
+            }
+            
+            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()

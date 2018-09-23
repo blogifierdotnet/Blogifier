@@ -19,16 +19,22 @@ namespace App
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
+                var context = services.GetRequiredService<AppDbContext>();
+                try
+                {
+                    if (context.Database.GetPendingMigrations().Any())
+                    {
+                        context.Database.Migrate();
+                    }
+                }
+                catch { }
+                
                 var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
                 if (!userMgr.Users.Any())
                 {
                     userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "Admin@pass1");
                     userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "Demo@pass1");
                 }
-
-                var context = services.GetRequiredService<AppDbContext>();
-                context.Database.Migrate();
 
                 // load application settings from appsettings.json
                 var app = services.GetRequiredService<IAppService<AppItem>>();
@@ -37,7 +43,7 @@ namespace App
                 if (!context.BlogPosts.Any())
                 {
                     services.GetRequiredService<IStorageService>().Reset();
-                    context.Seed();
+                    AppData.Seed(context);
                 }
             }
 
