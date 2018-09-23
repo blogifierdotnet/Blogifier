@@ -20,7 +20,7 @@ namespace App.Controllers
         IFeedService _ss;
         SignInManager<AppUser> _sm;
         private readonly ICompositeViewEngine _viewEngine;
-        static readonly string _listView = $"~/Views/Themes/{AppSettings.Theme}/List.cshtml";
+        static readonly string _listView = "~/Views/Themes/{0}/List.cshtml";
 
         public BlogController(IDataService db, IFeedService ss, SignInManager<AppUser> sm, ICompositeViewEngine viewEngine)
         {
@@ -62,7 +62,7 @@ namespace App.Controllers
                 model.PostListType = PostListType.Search;
             }
 
-            return View(_listView, model);
+            return View(string.Format(_listView, AppSettings.Theme), model);
         }
 
         [Route("posts/{slug}")]
@@ -111,7 +111,7 @@ namespace App.Controllers
 
             ViewBag.Description = "";
 
-            return View(_listView, model);
+            return View(string.Format(_listView, AppSettings.Theme), model);
         }
 
         [Route("categories/{name}")]
@@ -134,7 +134,7 @@ namespace App.Controllers
             ViewBag.Category = name;
             ViewBag.Description = "";
 
-            return View(_listView, model);
+            return View(string.Format(_listView, AppSettings.Theme), model);
         }
 
         [Route("feed/{type}")]
