@@ -464,12 +464,6 @@ namespace Core.Services
             if (path.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                 ext = "pdf.png";
 
-            if (path.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase))
-                ext = "mp3.png";
-
-            if (path.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
-                ext = "mp4.png";
-
             if (path.EndsWith(".doc", StringComparison.OrdinalIgnoreCase) ||
                 path.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
                 ext = "doc.png";
@@ -477,6 +471,18 @@ namespace Core.Services
             if (path.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ||
                 path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
                 ext = "xls.png";
+
+            // video/audio formats fro HTML5 tags
+
+            if (path.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase) 
+                || path.EndsWith(".webm", StringComparison.OrdinalIgnoreCase)
+                || path.EndsWith(".ogv", StringComparison.OrdinalIgnoreCase))
+                ext = "video.png";
+
+            if (path.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase)
+                || path.EndsWith(".wav", StringComparison.OrdinalIgnoreCase)
+                || path.EndsWith(".ogg", StringComparison.OrdinalIgnoreCase))
+                ext = "audio.png";
 
             return $"lib/img/doctypes/{ext}";
         }
