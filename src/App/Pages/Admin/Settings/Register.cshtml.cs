@@ -13,6 +13,7 @@ namespace App.Pages.Admin.Settings
         #region Properties
 
         [Required]
+        [RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed")]
         [BindProperty]
         public string UserName { get; set; }
 
