@@ -85,6 +85,12 @@ function getEditor() {
                 className: "fa fa-folder-open",
                 title: "File Manager"
             },
+            {
+                name: "insertYoutube",
+                action: insertYoutube,
+                className: "fa fa-youtube",
+                title: "Insert Youtube Video"
+            },
             "|", "preview", "|", "guide"
         ],
         blockStyles: {
@@ -96,7 +102,7 @@ function getEditor() {
         insertTexts: {
             horizontalRule: ["", "\n\n-----\n\n"],
             image: ["![](http://", ")"],
-            link: ["[", "](http://)"],
+            link: ["[", "](#url#)"],
             table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"]
         },
         lineWrapping: true,
@@ -138,6 +144,17 @@ var _editor = {};
 function openFileMgr(editor) {
     _editor = editor;
     fileManagerController.open(insertImageCallback);
+}
+
+function insertYoutube(editor) {
+    _editor = editor;
+    var id = prompt("Please enter video ID", "");
+
+    if (id !== null && id !== "") {
+        var tag = '<iframe width="640" height="480" src="http://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
+        var cm = _editor.codemirror;
+        cm.replaceSelection(tag);
+    }
 }
 
 // Create the measurement node for scrollbar
