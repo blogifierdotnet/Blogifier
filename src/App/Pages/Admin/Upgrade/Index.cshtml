@@ -1,0 +1,41 @@
+﻿@page
+@model App.Pages.Admin.Upgrade.UpgradeModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blogifier upgrade</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <br />
+        <form method="post" asp-antiforgery="true">
+            <div class="jumbotron">
+                <h1>Upgrade to version 2.1</h1>
+                <p>
+                    You running Blogifier version 2.0. There new version 2.1 is <a href="#">available in the repository</a>. You can upgrade to new version manually or just click button below and run in-place upgrade process.
+                </p>
+                <p>
+                    Please do <b>back up your data</b> before running upgrade, manual or automatic - if something goes wrong it's always good to have a fallback plan!
+                </p>              
+                @if (Model.IsUpgrading)
+                {
+                    <div class="alert alert-success" role="alert">
+                        Upgrade process has started and might take few minutes to run, depending on your server power and blog size. Once completed, aplication will start again.
+                    </div>
+                }
+                else
+                {
+                    <p id="action-buttons">
+                        <button type="submit" onclick="runUpgrade()" class="btn btn-lg btn-primary">Upgrade now</button>
+                        <a class="btn btn-lg btn-default" href="~/admin" role="button">Cancel</a>
+                    </p>
+                }
+            </div>
+        </form>
+    </div>
+</body>
+</html>

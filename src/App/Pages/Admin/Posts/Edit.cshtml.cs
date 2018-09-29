@@ -70,6 +70,10 @@ namespace App.Pages.Admin.Posts
                     if (PostItem.Status == SaveStatus.Unpublishing)
                         PostItem.Published = DateTime.MinValue;
 
+                    // fix for linux default datetime
+                    if (PostItem.Published == DateTime.Parse("1/1/2001"))
+                        PostItem.Published = DateTime.MinValue;
+
                     PostItem.Slug = await GetSlug(PostItem.Id, PostItem.Title);
 
                     var item = await _db.BlogPosts.SaveItem(PostItem);
