@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BE5E262F
 		build\build.ps1 = build\build.ps1
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upgrade", "src\Upgrade\Upgrade.csproj", "{CECA836F-2FFA-47DA-B846-8F44C2A4B783}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1CBAC56F-3CFB-497A-86B0-9F49CCFC78DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CBAC56F-3CFB-497A-86B0-9F49CCFC78DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CBAC56F-3CFB-497A-86B0-9F49CCFC78DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{88490336-DB30-4F9D-B737-3CA993F4EDC0} = {39614650-0D6E-4502-B87D-184366060F59}
 		{920B80AA-983C-46ED-8A19-8DC43C839237} = {39614650-0D6E-4502-B87D-184366060F59}
 		{1CBAC56F-3CFB-497A-86B0-9F49CCFC78DB} = {57BDF133-7290-40EA-8503-1BFCBBEEBB3A}
+		{CECA836F-2FFA-47DA-B846-8F44C2A4B783} = {39614650-0D6E-4502-B87D-184366060F59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D601BCCC-A1D9-415B-94B5-B3C0EF4AAF0B}

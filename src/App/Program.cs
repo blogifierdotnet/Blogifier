@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using System.Threading;
 
 namespace App
 {
     public class Program
     {
+        private static CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
@@ -52,5 +55,10 @@ namespace App
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+
+        public static void Shutdown()
+        {
+            cancelTokenSource.Cancel();
+        }
     }
 }

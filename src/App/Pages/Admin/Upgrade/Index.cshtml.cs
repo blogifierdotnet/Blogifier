@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System;
 using System.Diagnostics;
 
 namespace App.Pages.Admin.Upgrade
@@ -31,12 +32,18 @@ namespace App.Pages.Admin.Upgrade
             // start upgrade process
             //Process p = new Process();
             //p.StartInfo.FileName = "dotnet";
-            //p.StartInfo.Arguments = "upgrade.dll";
+            //p.StartInfo.Arguments = "Upgrade.dll";
             //p.StartInfo.UseShellExecute = false;
             //p.StartInfo.CreateNoWindow = false;
-
             //p.Start();
+
             ApplicationLifetime.StopApplication();
+
+            //Program.Main(null);
+
+            //Process.GetCurrentProcess().Kill();
+            //Environment.Exit(0);
+            //Program.Shutdown();
         }
     }
 }
