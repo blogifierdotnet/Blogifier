@@ -4,6 +4,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
@@ -74,20 +75,28 @@ namespace App.Pages.Admin.Settings
 
         List<SelectListItem> GetThemes()
         {
-            var themes = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Simple", Value = "Simple" }
-            };
+            var themes = new List<SelectListItem>();
+            var combined = new List<string>();
 
             var storageThemes = _storage.GetThemes();
 
-            if (storageThemes != null && storageThemes.Count > 0)
+            if(storageThemes != null)
+                combined.AddRange(storageThemes);
+
+            if(AppConfig.EmbeddedThemes != null)
+                combined.AddRange(AppConfig.EmbeddedThemes);
+
+            combined = combined.Distinct().ToList();
+            combined.Sort();
+            
+            if (combined != null && combined.Count > 0)
             {
-                foreach (var theme in storageThemes)
+                foreach (var theme in combined)
                 {
                     themes.Add(new SelectListItem { Text = theme, Value = theme });
                 }
             }
+           
             return themes;
         }
     }

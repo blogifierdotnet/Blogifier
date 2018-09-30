@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace Core.Extensions
 {
@@ -49,9 +50,31 @@ namespace Core.Extensions
             {
                 services.Configure<RazorViewEngineOptions>(options =>
                 {
-                    foreach (var assembly in AppConfig.GetAssemblies())
+                    foreach (var assembly in AppConfig.GetAssemblies(true))
                     {
-                        options.FileProviders.Add(new EmbeddedFileProvider(assembly, assembly.GetName().Name));
+                        var fileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
+
+                        // load themes from embedded provider
+                        var content = fileProvider.GetDirectoryContents("");
+                        if (content.Exists)
+                        {
+                            foreach (var item in content)
+                            {
+                                if (item.Name.StartsWith("Views.Themes"))
+                                {
+                                    if (AppConfig.EmbeddedThemes == null)
+                                        AppConfig.EmbeddedThemes = new List<string>();
+
+                                    var ar = item.Name.Split('.');
+                                    if(ar.Length > 2 && !AppConfig.EmbeddedThemes.Contains(ar[2]))
+                                    {
+                                        AppConfig.EmbeddedThemes.Add(ar[2]);
+                                    }
+                                }
+                            }
+                        }
+
+                        options.FileProviders.Add(fileProvider);
                     }
                 });
             }

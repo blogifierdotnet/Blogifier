@@ -8,7 +8,9 @@ namespace Core
 {
     public static class AppConfig
     {
-        public static IEnumerable<Assembly> GetAssemblies()
+        public static IList<string> EmbeddedThemes { get; set; }
+
+        public static IEnumerable<Assembly> GetAssemblies(bool includeApp = false)
         {
             var assemblies = new List<Assembly>();
             try
@@ -18,8 +20,14 @@ namespace Core
                     try
                     {
                         var assembly = Assembly.LoadFile(dll);
-                        var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
 
+                        if ((dll.Contains("App.dll")) && includeApp)
+                        {
+                            assemblies.Add(assembly);
+                            continue;
+                        }
+
+                        var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
                         if (product.StartsWith("Blogifier."))
                         {
                             assemblies.Add(assembly);
