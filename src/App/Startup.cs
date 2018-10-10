@@ -45,9 +45,16 @@ namespace App
             
             services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
 
-            services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<AppUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.User.AllowedUserNameCharacters = null;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddLogging(loggingBuilder =>
                 loggingBuilder.AddSerilog(dispose: true));

@@ -70,6 +70,15 @@ namespace App.Pages.Admin.Settings
             // register new app user account
             var result = await _um.CreateAsync(new AppUser { UserName = UserName, Email = Email }, Password);
 
+            if (!result.Succeeded)
+            {
+                foreach (var er in result.Errors)
+                {
+                    ModelState.AddModelError("Custom", er.Description);
+                    return Page();
+                }
+            }
+
             // add user as author to app database
             var user = _db.Authors.Single(a => a.AppUserName == UserName);
             if (user == null)
