@@ -31,6 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-9
 		docs\Disqus.md = docs\Disqus.md
 		docs\Import.md = docs\Import.md
 		docs\Notifications.md = docs\Notifications.md
+		docs\Security.md = docs\Security.md
 		docs\SqlServer.md = docs\SqlServer.md
 		docs\VideoAudio.md = docs\VideoAudio.md
 	EndProjectSection
@@ -41,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BE5E262F
 		build\build.ps1 = build\build.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Upgrade", "src\Upgrade\Upgrade.csproj", "{CECA836F-2FFA-47DA-B846-8F44C2A4B783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Upgrade", "src\Upgrade\Upgrade.csproj", "{CECA836F-2FFA-47DA-B846-8F44C2A4B783}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
