@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
-    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,8 +36,10 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
       <PluginBaseDir>$(SolutionDir)plugins\Common\</PluginBaseDir>
+      <UpgradeBaseDir>$(SolutionDir)src\Upgrade\</UpgradeBaseDir>
     </PropertyGroup>
     <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
+    <Copy SourceFiles="$(UpgradeBaseDir)\bin\$(Configuration)\$(TargetFramework)\Upgrade.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(UpgradeBaseDir)bin\$(Configuration)\$(TargetFramework)\Upgrade.dll')" />
   </Target>
 
 </Project>

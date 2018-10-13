@@ -16,7 +16,7 @@ namespace Upgrade
         static void Main(string[] args)
         {
             _appDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            _upgDir = $"{_appDir}{_slash}upgrade";
+            _upgDir = $"{_appDir}{_slash}_upgrade";
             _items = new List<string>();
 
             _items.Add($"STARTING UPGRADE IN: {_appDir}");
@@ -24,15 +24,22 @@ namespace Upgrade
             // wait for web app to stop
             System.Threading.Thread.Sleep(3000);
 
-            var files = Directory.GetFiles(_appDir);
-
-            foreach (var file in GetCoreFiles())
+            try
             {
-                ReplaceFile(file);
-            }
+                var files = Directory.GetFiles(_appDir);
 
-            ReplaceFolder($"wwwroot{_slash}admin");
-            ReplaceFolder($"wwwroot{_slash}lib");
+                foreach (var file in GetCoreFiles())
+                {
+                    ReplaceFile(file);
+                }
+
+                ReplaceFolder($"wwwroot{_slash}admin");
+                ReplaceFolder($"wwwroot{_slash}lib");
+            }
+            catch (Exception ex)
+            {
+                _items.Add(ex.Message);
+            }
 
             using (StreamWriter writer = new StreamWriter("upgrade.log"))
             {
@@ -100,8 +107,6 @@ namespace Upgrade
                 "App.deps.json",
                 "App.dll",
                 "App.pdb",
-                "App.PrecompiledViews.dll",
-                "App.PrecompiledViews.pdb",
                 "App.runtimeconfig.json",
                 "Common.dll",
                 "Core.dll",

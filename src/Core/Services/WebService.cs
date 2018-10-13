@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.IO.Compression;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Core.Services
@@ -6,12 +8,14 @@ namespace Core.Services
     public interface IWebService
     {
         Task<string> CheckForLatestRelease();
+        Task<string> DownloadLatestRelease();
     }
 
     public class WebService : IWebService
     {
         IDataService _db;
         static HttpClient client = new HttpClient();
+        static string _repoUrl = "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
 
         public WebService(IDataService db)
         {
@@ -27,9 +31,8 @@ namespace Core.Services
         public async Task<string> CheckForLatestRelease()
         {
             string result = "";
-            var url = "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
+            HttpResponseMessage response = await client.GetAsync(_repoUrl);
 
-            HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
@@ -47,6 +50,46 @@ namespace Core.Services
             }
 
             return await Task.FromResult(result);
+        }
+
+        public async Task<string> DownloadLatestRelease()
+        {
+            var uloadDir = "_upgrade";
+            var msg = "";
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(_repoUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
+                    var zipUrl = repo.assets[0].browser_download_url;
+                    var zipPath = $"{uloadDir}{Path.DirectorySeparatorChar.ToString()}{repo.tag_name}.zip";
+
+                    using (var client = new HttpClient())
+                    {
+                        using (var result = await client.GetAsync(zipUrl))
+                        {
+                            if (result.IsSuccessStatusCode)
+                            {
+                                var zipBites = await result.Content.ReadAsByteArrayAsync();
+
+                                if (!Directory.Exists(uloadDir))
+                                    Directory.CreateDirectory(uloadDir);
+
+                                File.WriteAllBytes(zipPath, zipBites);
+
+                                ZipFile.ExtractToDirectory(zipPath, uloadDir);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+            return await Task.FromResult(msg);
         }
     }
 }

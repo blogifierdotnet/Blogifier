@@ -15,7 +15,7 @@ namespace Core.Services
 
     public class NotificationService : INotificationService
     {
-        static DateTime _lastChecked;
+        static DateTime _checkPoint;
         IDataService _db;
         IWebService _web;
 
@@ -23,7 +23,6 @@ namespace Core.Services
         {
             _db = db;
             _web = web;
-            _lastChecked = SystemClock.Now();
         }
 
         public async Task<int> AddNotification(AlertType aType, int authorId, string notifier, string content)
@@ -47,9 +46,9 @@ namespace Core.Services
 
         public async Task<IEnumerable<Notification>> GetNotifications(int authorId)
         {
-            if(SystemClock.Now() >= _lastChecked)
+            if(SystemClock.Now() >= _checkPoint)
             {
-                _lastChecked = SystemClock.Now().AddMinutes(10);
+                _checkPoint = SystemClock.Now().AddMinutes(30);
                 var result = await _web.CheckForLatestRelease();
 
                 if (!string.IsNullOrEmpty(result))
