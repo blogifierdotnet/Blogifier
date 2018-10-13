@@ -13,6 +13,7 @@ namespace Core.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<HtmlWidget> HtmlWidtes { get; set; }
+        public DbSet<CustomField> CustomFields { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
