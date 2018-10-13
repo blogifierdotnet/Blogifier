@@ -60,7 +60,33 @@ namespace Core.Services
             var notes = _db.Notifications
                 .Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == authorId))
                 .OrderByDescending(n => n.DateNotified)
-                .Take(5);
+                .Take(5).ToList();
+
+            // add notification if newer version exists
+            if(authorId > 0)
+            {
+                var author = _db.Authors.Single(a => a.Id == authorId);
+                if(author != null && author.IsAdmin)
+                {
+                    var field = _db.CustomFields.Single(f => f.Name == Constants.NewestVersion && f.AuthorId == 0);
+                    if(field != null)
+                    {
+                        int current, latest;
+
+                        int.TryParse(AppSettings.Version.Replace(".", "").Substring(0, 2), out current);
+                        int.TryParse(field.Content, out latest);
+
+                        if(current < latest)
+                        {
+                            notes.Add(new Notification
+                            {
+                                AlertType = AlertType.Sticky,
+                                Content = $"Upgrade to <a href=\"upgrade\">version {field.Content.Substring(0,1)}.{field.Content.Substring(1, 1)}</a>"
+                            });   
+                        }
+                    }
+                }
+            }
 
             return await Task.FromResult(notes);
         }

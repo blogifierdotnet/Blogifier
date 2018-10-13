@@ -33,15 +33,18 @@ namespace Upgrade
                     ReplaceFile(file);
                 }
 
-                ReplaceFolder($"wwwroot{_slash}admin");
-                ReplaceFolder($"wwwroot{_slash}lib");
+                foreach (var dir in GetCoreFolders())
+                {
+                    ReplaceFolder(dir);
+                }
             }
             catch (Exception ex)
             {
                 _items.Add(ex.Message);
             }
 
-            using (StreamWriter writer = new StreamWriter("upgrade.log"))
+            var log = $"upgrade-{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.log";
+            using (StreamWriter writer = new StreamWriter(log))
             {
                 foreach (var item in _items)
                 {
@@ -49,12 +52,14 @@ namespace Upgrade
                 }
             }
 
-            Process p = new Process();
-            p.StartInfo.FileName = "dotnet";
-            p.StartInfo.Arguments = "App.dll";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.CreateNoWindow = false;
-            p.Start();
+            Directory.Delete(_upgDir, true);
+
+            //Process p = new Process();
+            //p.StartInfo.FileName = "dotnet";
+            //p.StartInfo.Arguments = "App.dll";
+            //p.StartInfo.UseShellExecute = false;
+            //p.StartInfo.CreateNoWindow = false;
+            //p.Start();
         }
 
         static void ReplaceFile(string file)
@@ -67,11 +72,11 @@ namespace Upgrade
                     File.Delete(oldFile);
                     
                 File.Copy(newFile, oldFile);
-                _items.Add($"Replacing {oldFile} with {newFile}");
+                _items.Add($"Replacing file: {oldFile} with {newFile}");
             }
             catch (Exception fe)
             {
-                _items.Add($"Error replacing {oldFile}: {fe.Message}");
+                _items.Add($"Error replacing file: {oldFile}: {fe.Message}");
             }
         }
 
@@ -85,11 +90,11 @@ namespace Upgrade
                     Directory.Delete(oldFolder, true);
 
                 Directory.Move(newFolder, oldFolder);
-                _items.Add($"Replacing {oldFolder} with {newFolder}");
+                _items.Add($"Replacing folder: {oldFolder} with {newFolder}");
             }
             catch (Exception fe)
             {
-                _items.Add($"Error replacing {oldFolder}: {fe.Message}");
+                _items.Add($"Error replacing folder: {oldFolder}: {fe.Message}");
             }
         }
 
@@ -126,6 +131,20 @@ namespace Upgrade
                 "SQLitePCLRaw.core.dll",
                 "SQLitePCLRaw.provider.e_sqlite3.dll",
                 "System.Xml.XPath.XmlDocument.dll"
+            };
+        }
+
+        static List<string> GetCoreFolders()
+        {
+            return new List<string>
+            {
+                "Pages",
+                $"Views{_slash}Shared",
+                $"Views{_slash}Themes{_slash}Standard",
+                $"wwwroot{_slash}admin",
+                $"wwwroot{_slash}lib",
+                $"wwwroot{_slash}themes{_slash}simple",
+                $"wwwroot{_slash}themes{_slash}standard"
             };
         }
     }

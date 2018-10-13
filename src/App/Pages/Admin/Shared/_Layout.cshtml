@@ -78,12 +78,21 @@
                         {
                             foreach (var note in _notifications)
                             {
-                            <div class="alert alert-primary" role="alert">
-                                @Html.Raw(note.Content)
-                                <button type="button" class="close" onclick="notificationsController.remove('@note.Id')" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                                @if (note.AlertType == AlertType.Sticky)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @Html.Raw(note.Content)
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-primary" role="alert">
+                                        @Html.Raw(note.Content)
+                                        <button type="button" class="close" onclick="notificationsController.remove('@note.Id')" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                }
                             }
                         }
                     </div>

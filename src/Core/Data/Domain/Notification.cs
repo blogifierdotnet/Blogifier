@@ -15,6 +15,6 @@ namespace Core.Data
     
     public enum AlertType
     {
-        Primary, Success, Warning, Error
+        Primary, Success, Warning, Error, Sticky
     }
 }

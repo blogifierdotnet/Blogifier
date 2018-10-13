@@ -46,6 +46,18 @@ namespace Core.Services
                 {
                     var dwnUrl = repo.assets[0].browser_download_url;
                     result = $"The new Blogifier <a href='{repo.html_url}' class='alert-link' target='_blank'>{repo.name}</a> is available for download";
+
+                    var field = _db.CustomFields.Single(f => f.Name == Constants.NewestVersion && f.AuthorId == 0);
+                    if(field == null || (field != null && int.Parse(field.Content) < latest))
+                    {
+                        _db.CustomFields.Add(new Data.CustomField
+                        {
+                            AuthorId = 0,
+                            Name = Constants.NewestVersion,
+                            Content = latest.ToString()
+                        });
+                        _db.Complete();
+                    }
                 }
             }
 

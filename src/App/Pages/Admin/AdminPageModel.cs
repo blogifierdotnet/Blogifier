@@ -8,6 +8,7 @@ namespace App.Pages.Admin
     public class AdminPageModel : PageModel
     {
         public bool IsAdmin { get; set; }
+        public bool HasNewVersion { get; set; }
 
         public IEnumerable<Notification> Notifications { get; set; }
 

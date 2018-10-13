@@ -2,6 +2,7 @@
 @model App.Pages.Admin.Upgrade.UpgradeModel
 @{
     Layout = null;
+    var repoLink = "https://github.com/blogifierdotnet/Blogifier/releases/tag/v" + Model.NewVersion;
 }
 <!DOCTYPE html>
 <html>
@@ -14,13 +15,17 @@
         <br />
         <form method="post" asp-antiforgery="true">
             <div class="jumbotron">
-                <h1>Upgrade to version 2.1</h1>
+                <h1>Upgrade to version @Model.NewVersion</h1>
                 <p>
-                    You running Blogifier version 2.0. There new version 2.1 is <a href="#">available in the repository</a>. You can upgrade to new version manually or just click button below and run in-place upgrade process.
+                    You running Blogifier version @Model.OldVersion. There new version @Model.NewVersion is <a href="@repoLink" target="_blank">available in the repository</a>. You can upgrade to new version manually or just click button below and run in-place upgrade process.
                 </p>
-                <p>
-                    Please do <b>back up your data</b> before running upgrade, manual or automatic - if something goes wrong it's always good to have a fallback plan!
-                </p>              
+                
+                <div class="alert alert-warning" role="alert">
+                    <p>
+                        Please do <b>back up your data</b> before running upgrade, manual or automatic.
+                    </p>
+                    Upgrade will turn off your web service before replacing files. You may need to manually turn it on again from your hosting admin panel.
+                </div>
                 @if (Model.IsUpgrading)
                 {
                     <div class="alert alert-success" role="alert">
