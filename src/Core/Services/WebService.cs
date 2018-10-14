@@ -15,7 +15,6 @@ namespace Core.Services
     {
         IDataService _db;
         static HttpClient client = new HttpClient();
-        static string _repoUrl = "https://api.github.com/repos/rxtur/Sandbox/releases/latest"; // "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
 
         public WebService(IDataService db)
         {
@@ -31,7 +30,7 @@ namespace Core.Services
         public async Task<string> CheckForLatestRelease()
         {
             string result = "";
-            HttpResponseMessage response = await client.GetAsync(_repoUrl);
+            HttpResponseMessage response = await client.GetAsync(Constants.RepoReleaseUrl);
 
             if (response.IsSuccessStatusCode)
             {
@@ -67,16 +66,15 @@ namespace Core.Services
 
         public async Task<string> DownloadLatestRelease()
         {
-            var uloadDir = "_upgrade";
             var msg = "";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(_repoUrl);
+                HttpResponseMessage response = await client.GetAsync(Constants.RepoReleaseUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
                     var zipUrl = repo.assets[0].browser_download_url;
-                    var zipPath = $"{uloadDir}{Path.DirectorySeparatorChar.ToString()}{repo.tag_name}.zip";
+                    var zipPath = $"{Constants.UpgradeDirectory}{Path.DirectorySeparatorChar.ToString()}{repo.tag_name}.zip";
 
                     using (var client = new HttpClient())
                     {
@@ -86,12 +84,12 @@ namespace Core.Services
                             {
                                 var zipBites = await result.Content.ReadAsByteArrayAsync();
 
-                                if (!Directory.Exists(uloadDir))
-                                    Directory.CreateDirectory(uloadDir);
+                                if (!Directory.Exists(Constants.UpgradeDirectory))
+                                    Directory.CreateDirectory(Constants.UpgradeDirectory);
 
                                 File.WriteAllBytes(zipPath, zipBites);
 
-                                ZipFile.ExtractToDirectory(zipPath, uloadDir);
+                                ZipFile.ExtractToDirectory(zipPath, Constants.UpgradeDirectory);
                             }
                         }
                     }
