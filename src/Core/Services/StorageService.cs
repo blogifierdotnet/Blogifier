@@ -410,19 +410,22 @@ namespace Core.Services
         {
             var items = new List<AssetItem>();
 
-            foreach (var asset in assets)
+            if (assets != null && assets.Any())
             {
-                // Azure puts web sites under "wwwroot" folder
-                var path = asset.Replace($"wwwroot{_separator}wwwroot", "wwwroot", StringComparison.OrdinalIgnoreCase);
+                foreach (var asset in assets)
+                {
+                    // Azure puts web sites under "wwwroot" folder
+                    var path = asset.Replace($"wwwroot{_separator}wwwroot", "wwwroot", StringComparison.OrdinalIgnoreCase);
 
-                items.Add(new AssetItem {
-                    Path = asset,
-                    Url = pathToUrl(path),
-                    Title = pathToTitle(path),
-                    Image = pathToImage(path)
-                });
+                    items.Add(new AssetItem
+                    {
+                        Path = asset,
+                        Url = pathToUrl(path),
+                        Title = pathToTitle(path),
+                        Image = pathToImage(path)
+                    });
+                }
             }
-
             return items;
         }
 

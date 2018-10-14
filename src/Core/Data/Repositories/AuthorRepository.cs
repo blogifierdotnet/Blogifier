@@ -63,6 +63,7 @@ namespace Core.Data
             if (author.Created == DateTime.MinValue)
             {
                 author.DisplayName = author.AppUserName;
+                author.Avatar = Constants.DefaultAvatar;
                 author.Created = SystemClock.Now();
                 await _db.Authors.AddAsync(author);
             }
