@@ -15,7 +15,7 @@ namespace Core.Services
     {
         IDataService _db;
         static HttpClient client = new HttpClient();
-        static string _repoUrl = "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
+        static string _repoUrl = "https://api.github.com/repos/rxtur/Sandbox/releases/latest"; // "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
 
         public WebService(IDataService db)
         {
@@ -42,7 +42,8 @@ namespace Core.Services
                 int.TryParse(AppSettings.Version.Replace(".", "").Substring(0, 2), out current);
                 int.TryParse(repo.tag_name.ReplaceIgnoreCase("v", "").Replace(".", "").Substring(0, 2), out latest);
 
-                if(current < latest)
+                // at least version 2.1.x.x for auto-upgrade
+                if(current > 20 && current < latest)
                 {
                     var dwnUrl = repo.assets[0].browser_download_url;
                     result = $"The new Blogifier <a href='{repo.html_url}' class='alert-link' target='_blank'>{repo.name}</a> is available for download";

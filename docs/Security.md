@@ -9,12 +9,12 @@ and publish posts and upload and manage files.
 ### Identity options
 Identity options defined in the `Startup.cs` and can be modified if do not fit requirements.
 By default, they pretty relaxed: you can use any characters in the user name and only password 
-restriction is to be at least six characters long.
+restriction is to be at least four characters long.
 
 ```csharp
 services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 4;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;

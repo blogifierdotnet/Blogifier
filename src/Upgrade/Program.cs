@@ -107,45 +107,28 @@ namespace Upgrade
 
         static List<string> GetCoreFiles()
         {
-            return new List<string>
+            var fileName = $"{_upgDir}{_slash}files.txt";
+            var files = new List<string>();
+
+            var lines = File.ReadAllLines(fileName);
+            for (var i = 0; i < lines.Length; i++)
             {
-                "App.deps.json",
-                "App.dll",
-                "App.pdb",
-                "App.runtimeconfig.json",
-                "Common.dll",
-                "Core.dll",
-                "Core.pdb",
-                "HtmlAgilityPack.dll",
-                "Markdig.dll",
-                "Microsoft.Data.Sqlite.dll",
-                "Microsoft.EntityFrameworkCore.Sqlite.dll",
-                "Microsoft.SyndicationFeed.ReaderWriter.dll",
-                "ReverseMarkdown.dll",
-                "Serilog.dll",
-                "Serilog.Extensions.Logging.dll",
-                "Serilog.Sinks.File.dll",
-                "Serilog.Sinks.RollingFile.dll",
-                "SQLitePCLRaw.batteries_green.dll",
-                "SQLitePCLRaw.batteries_v2.dll",
-                "SQLitePCLRaw.core.dll",
-                "SQLitePCLRaw.provider.e_sqlite3.dll",
-                "System.Xml.XPath.XmlDocument.dll"
-            };
+                files.Add(lines[i].Trim());
+            }
+            return files;
         }
 
         static List<string> GetCoreFolders()
         {
-            return new List<string>
+            var fileName = $"{_upgDir}{_slash}folders.txt";
+            var folders = new List<string>();
+
+            var lines = File.ReadAllLines(fileName);
+            for (var i = 0; i < lines.Length; i++)
             {
-                "Pages",
-                $"Views{_slash}Shared",
-                $"Views{_slash}Themes{_slash}Standard",
-                $"wwwroot{_slash}admin",
-                $"wwwroot{_slash}lib",
-                $"wwwroot{_slash}themes{_slash}simple",
-                $"wwwroot{_slash}themes{_slash}standard"
-            };
+                folders.Add(lines[i].Trim().Replace("|", _slash));
+            }
+            return folders;
         }
     }
 }

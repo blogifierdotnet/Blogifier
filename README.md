@@ -17,8 +17,8 @@ Blogifier is single blog supporting multiple authors. Administrator can manage c
 
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
-3. Use admin/Admin@pass1 to log in as admininstrator
-4. Use demo/Demo@pass1 to log in as regular user
+3. Use admin/admin to log in as admininstrator
+4. Use demo/demo to log in as regular user
 
 ## Demo site
 

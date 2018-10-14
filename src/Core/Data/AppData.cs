@@ -98,7 +98,7 @@ namespace Core.Data
 
 #### To login:
 * User: demo
-* Pswd: Demo@pass1";
+* Pswd: demo";
 
         public static readonly string PostWhatIs = @"## What is Blogifier
 
@@ -115,8 +115,8 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
-3. Use admin/Admin@pass1 to log in as admininstrator
-4. Use demo/Demo@pass1 to log in as user
+3. Use admin/admin to log in as admininstrator
+4. Use demo/demo to log in as user
 
 ## Demo site
 
@@ -148,7 +148,7 @@ There is simple but quick and functional search in the post lists, as well as se
 
 #### To login:
 * User: demo
-* Pswd: Demo@pass1";
+* Pswd: demo";
 
     }
 }
