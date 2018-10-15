@@ -8,6 +8,7 @@ namespace Core.Data
 {
     public class PostModel
     {
+        public BlogItem Blog { get; set; }
         public PostItem Post { get; set; }
         public PostItem Older { get; set; }
         public PostItem Newer { get; set; }
@@ -15,11 +16,12 @@ namespace Core.Data
 
     public class ListModel
     {
-        public IEnumerable<PostItem> Posts { get; set; }
-        public Pager Pager { get; set; }
-
+        public BlogItem Blog { get; set; }
         public Author Author { get; set; } // posts by author
         public string Category { get; set; } // posts by category
+
+        public IEnumerable<PostItem> Posts { get; set; }
+        public Pager Pager { get; set; }
 
         public PostListType PostListType { get; set; }
     }

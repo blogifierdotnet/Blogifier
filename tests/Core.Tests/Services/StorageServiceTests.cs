@@ -63,7 +63,6 @@ namespace Core.Tests.Services
         [Fact]
         public async Task CanFindAssets()
         {
-            AppSettings.ItemsPerPage = 10;
             AppSettings.ImageExtensions = "png,jpg,gif,bmp,tiff";
 
             var pager = new Pager(1);

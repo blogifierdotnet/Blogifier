@@ -118,7 +118,8 @@ namespace Core.Services
             var converter = new ReverseMarkdown.Converter();
             post.Content = converter.Convert(post.Content);
 
-            post.Cover = AppSettings.Cover;
+            var blog = await _db.CustomFields.GetBlogSettings();
+            post.Cover = blog.Cover;
 
             await _db.BlogPosts.SaveItem(post);
         }

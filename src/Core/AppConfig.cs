@@ -42,16 +42,9 @@ namespace Core
 
         public static void SetSettings(AppItem app)
         {
-            AppSettings.Title = app.Title;
-            AppSettings.Description = app.Description;
-            AppSettings.Logo = app.Logo;
             AppSettings.Avatar = app.Avatar;
-            AppSettings.Cover = app.Cover;
-            AppSettings.Theme = app.Theme;
-            AppSettings.ItemsPerPage = app.ItemsPerPage;
             AppSettings.ImportTypes = app.ImportTypes;
             AppSettings.ImageExtensions = app.ImageExtensions;
-            AppSettings.UseDescInPostList = app.UseDescInPostList;
             AppSettings.DemoMode = app.DemoMode;
         }
     }

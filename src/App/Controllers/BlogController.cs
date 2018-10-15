@@ -1,5 +1,4 @@
-﻿using Core;
-using Core.Data;
+﻿using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Markdig;
@@ -47,22 +46,23 @@ namespace App.Controllers
             if (pager.ShowOlder) pager.LinkToOlder = $"blog?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"blog?page={pager.Newer}";
 
+            var blog = await _db.CustomFields.GetBlogSettings();
+
             var model = new ListModel {
+                Blog = blog,
                 PostListType = PostListType.Blog,
                 Posts = posts,
                 Pager = pager
             };
 
-            SetViewBag();
-
             if (!string.IsNullOrEmpty(term))
             {
-                ViewBag.Title = term;
-                ViewBag.Description = "";
+                model.Blog.Title = term;
+                model.Blog.Description = "";
                 model.PostListType = PostListType.Search;
             }
 
-            return View(string.Format(_listView, AppSettings.Theme), model);
+            return View(string.Format(_listView, blog.Theme), model);
         }
 
         [Route("posts/{slug}")]
@@ -73,14 +73,14 @@ namespace App.Controllers
                 var model = await _db.BlogPosts.GetModel(slug);
                 model.Post.Content = Markdown.ToHtml(model.Post.Content);
 
-                ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
-                ViewBag.Cover = string.IsNullOrEmpty(model.Post.Cover) ? 
-                    $"{Url.Content("~/")}{AppSettings.DefaultCover}" : 
-                    $"{Url.Content("~/")}{model.Post.Cover}";
-                ViewBag.Title = model.Post.Title;
-                ViewBag.Description = model.Post.Description;
+                model.Blog = await _db.CustomFields.GetBlogSettings();
 
-                return View($"~/Views/Themes/{AppSettings.Theme}/Post.cshtml", model);
+                model.Blog.Cover = string.IsNullOrEmpty(model.Post.Cover) ? 
+                    $"{Url.Content("~/")}{model.Blog.Cover}" : 
+                    $"{Url.Content("~/")}{model.Post.Cover}";
+                model.Blog.Title = model.Post.Title;
+
+                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }
             catch
             {
@@ -107,11 +107,11 @@ namespace App.Controllers
                 Pager = pager
             };
 
-            SetViewBag();
+            model.Blog = await _db.CustomFields.GetBlogSettings();
+            model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
+            model.Blog.Description = "";
 
-            ViewBag.Description = "";
-
-            return View(string.Format(_listView, AppSettings.Theme), model);
+            return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
         [Route("categories/{name}")]
@@ -129,12 +129,13 @@ namespace App.Controllers
                 Pager = pager
             };
 
-            SetViewBag();
+            model.Blog = await _db.CustomFields.GetBlogSettings();
+            model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
 
             ViewBag.Category = name;
-            ViewBag.Description = "";
+            model.Blog.Description = "";
 
-            return View(string.Format(_listView, AppSettings.Theme), model);
+            return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
         [Route("feed/{type}")]
@@ -162,20 +163,23 @@ namespace App.Controllers
         }
 
         [Route("error/{code:int}")]
-        public IActionResult Error(int code)
+        public async Task<IActionResult> Error(int code)
         {
-            SetViewBag();
+            var model = new PostModel();
 
-            var viewName = $"~/Views/Themes/{AppSettings.Theme}/Error.cshtml";
+            model.Blog = await _db.CustomFields.GetBlogSettings();
+            model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
+
+            var viewName = $"~/Views/Themes/{model.Blog.Theme}/Error.cshtml";
             var result = _viewEngine.GetView("", viewName, false);
 
             if (result.Success)
             {
-                return View(viewName, code);
+                return View(viewName, model);
             }
             else
             {
-                return View("~/Views/Shared/_Error.cshtml", code);
+                return View("~/Views/Shared/_Error.cshtml", model);
             }
         }
 
@@ -184,14 +188,6 @@ namespace App.Controllers
         {
             await _sm.SignOutAsync();
             return Redirect("~/");
-        }
-
-        void SetViewBag()
-        {
-            ViewBag.Logo = $"{Url.Content("~/")}{AppSettings.Logo}";
-            ViewBag.Cover = $"{Url.Content("~/")}{AppSettings.Cover}";
-            ViewBag.Title = AppSettings.Title;
-            ViewBag.Description = AppSettings.Description;
         }
     }
 }

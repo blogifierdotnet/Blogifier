@@ -61,6 +61,7 @@ namespace Core.Services
         public async Task<ISyndicationFeedWriter> GetWriter(string type, string host, XmlWriter xmlWriter)
         {
             var lastPost = _db.BlogPosts.All().OrderByDescending(p => p.Published).FirstOrDefault();
+            var blog = await _db.CustomFields.GetBlogSettings();
 
             if (lastPost == null)
                 return null;
@@ -68,17 +69,17 @@ namespace Core.Services
             if (type.Equals("rss", StringComparison.OrdinalIgnoreCase))
             {
                 var rss = new RssFeedWriter(xmlWriter);
-                await rss.WriteTitle(AppSettings.Title);
-                await rss.WriteDescription(AppSettings.Description);
+                await rss.WriteTitle(blog.Title);
+                await rss.WriteDescription(blog.Description);
                 await rss.WriteGenerator("Blogifier");
                 await rss.WriteValue("link", host);
                 return rss;
             }
 
             var atom = new AtomFeedWriter(xmlWriter);
-            await atom.WriteTitle(AppSettings.Title);
+            await atom.WriteTitle(blog.Title);
             await atom.WriteId(host);
-            await atom.WriteSubtitle(AppSettings.Description);
+            await atom.WriteSubtitle(blog.Description);
             await atom.WriteGenerator("Blogifier", "https://github.com/blogifierdotnet/Blogifier", "1.0");
             await atom.WriteValue("updated", lastPost.Published.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             return atom;

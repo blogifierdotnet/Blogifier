@@ -8,7 +8,7 @@
             ItemsPerPage = itemsPerPage;
 
             if (ItemsPerPage == 0)
-                ItemsPerPage = AppSettings.ItemsPerPage;
+                ItemsPerPage = 10;
 
             Newer = CurrentPage - 1;
             ShowNewer = CurrentPage > 1 ? true : false;

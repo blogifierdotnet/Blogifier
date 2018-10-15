@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Settings - General";
 }
-
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
@@ -11,41 +10,30 @@
         <form method="post" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
                 <div class="bf-title d-none d-lg-block"><span>Blog settings</span></div>
-                <input type="hidden" asp-for="AppItem.DbProvider" />
-                <input type="hidden" asp-for="AppItem.ConnString" />
-                <input type="hidden" asp-for="AppItem.ImportTypes" />
-                <input type="hidden" asp-for="AppItem.ImageExtensions" />
-                <input type="hidden" asp-for="AppItem.DemoMode" />
 
                 <div class="form-group">
                     <label class="form-group-label">Title</label>
-                    <input type="text" asp-for="AppItem.Title" class="form-control" />
-                    <span asp-validation-for="AppItem.Title" class="text-danger"></span>
+                    <input type="text" asp-for="BlogItem.Title" class="form-control" />
+                    <span asp-validation-for="BlogItem.Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Description</label>
-                    <textarea asp-for="AppItem.Description" type="text" class="form-control"></textarea>
-                    <span asp-validation-for="AppItem.Description" class="text-danger"></span>
+                    <textarea asp-for="BlogItem.Description" type="text" class="form-control"></textarea>
+                    <span asp-validation-for="BlogItem.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Items per page </label>
-                    <input type="text" asp-for="AppItem.ItemsPerPage" class="form-control" />
-                    <span asp-validation-for="AppItem.ItemsPerPage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
-                        <input type="checkbox" id="cbxUseDesc" asp-for="AppItem.UseDescInPostList" class="custom-control-input">
-                        <span class="custom-control-label">Show only description in the post list</span>
-                    </label>
+                    <input type="text" asp-for="BlogItem.ItemsPerPage" class="form-control" />
+                    <span asp-validation-for="BlogItem.ItemsPerPage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Theme</label>
-                    <select asp-for="AppItem.Theme" asp-items="Model.AppItem.BlogThemes" class="form-control custom-select"></select>
+                    <select asp-for="BlogItem.Theme" asp-items="Model.BlogItem.BlogThemes" class="form-control custom-select"></select>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Logo image</label>
                     <div class="input-group">
-                        <input type="text" asp-for="AppItem.Logo" class="form-control" readonly />
+                        <input type="text" asp-for="BlogItem.Logo" class="form-control" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> Select</button>
                         </span>
@@ -54,7 +42,7 @@
                 <div class="form-group">
                     <label class="form-group-label">Cover image</label>
                     <div class="input-group">
-                        <input type="text" asp-for="AppItem.Cover" class="form-control" readonly />
+                        <input type="text" asp-for="BlogItem.Cover" class="form-control" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> Select</button>
                         </span>

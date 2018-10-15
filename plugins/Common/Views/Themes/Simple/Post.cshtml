@@ -15,11 +15,11 @@
         <div class="row">
             <div class="col-md-8">
                 <h1 class="my-4">
-                    @Core.AppSettings.Title
-                    <small>@Core.AppSettings.Description</small>
+                    @Model.Blog.Title
+                    <small>@Model.Blog.Description</small>
                 </h1>
                 <div class="card mb-4">
-                    <img class="card-img-top" src="@ViewBag.Cover" alt="Card image cap">
+                    <img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">
                     <div class="card-body post">
                         <h2 class="card-title">@Model.Post.Title</h2>
                         @Html.Raw(Model.Post.Content)

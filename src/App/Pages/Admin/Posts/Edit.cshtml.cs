@@ -29,7 +29,8 @@ namespace App.Pages.Admin.Posts
 
             Notifications = await _ns.GetNotifications(author.Id);
 
-            PostItem = new PostItem { Author = author, Cover = AppSettings.Cover };
+            var blog = await _db.CustomFields.GetBlogSettings();
+            PostItem = new PostItem { Author = author, Cover = blog.Cover };
 
             if (id > 0)
                 PostItem = await _db.BlogPosts.GetItem(p => p.Id == id);

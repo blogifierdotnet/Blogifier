@@ -1,10 +1,10 @@
 ﻿<header class="blog-header d-flex flex-column">
     <div class="container d-flex">
         <a href="~/" class="blog-logo my-auto d-flex">
-            <img src="~/@AppSettings.Logo" alt="@AppSettings.Title" class="my-auto" />
+            <img src="~/@Model.Blog.Logo" alt="@Model.Blog.Title" class="my-auto" />
             @if (ViewData["bodyClass"] != null && ViewData["bodyClass"].ToString() != "home")
             {
-                <span class="my-auto">@AppSettings.Title</span>
+                <span class="my-auto">@Model.Blog.Title</span>
             }
         </a>
         @*@await Component.InvokeAsync("HtmlBlock", new { id = "social-btns", theme = "Standard", author = "" })*@

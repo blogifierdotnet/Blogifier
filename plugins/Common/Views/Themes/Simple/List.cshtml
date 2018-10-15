@@ -13,14 +13,14 @@
         <div class="row">
             <div class="col-md-8">
                 <h1 class="my-4">
-                    @Core.AppSettings.Title
-                    <small>@Core.AppSettings.Description</small>
+                    @Model.Blog.Title
+                    <small>@Model.Blog.Description</small>
                 </h1>
                 @if (Model != null && Model.Posts != null && Model.Posts.Any())
                 {
                     foreach (var post in Model.Posts)
                     {
-                        var img = string.IsNullOrEmpty(post.Cover) ? Core.AppSettings.DefaultCover : post.Cover;
+                        var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
                         img = $"{Url.Content("~/")}{img}";
                         <div class="card mb-4">
                             <img class="card-img-top" src="@img" alt="Card image cap">

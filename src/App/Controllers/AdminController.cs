@@ -129,13 +129,21 @@ namespace App.Controllers
             }
             else if (type == "appCover")
             {
-                _app.Update(opt => { opt.Cover = asset; });
-                AppSettings.Cover = asset;
+                var cover = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogCover);
+                if (cover == null)
+                    _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogCover, Content = asset });
+                else
+                    cover.Content = asset;
+                _db.Complete();
             }
             else if (type == "appLogo")
             {
-                _app.Update(opt => { opt.Logo = asset; });
-                AppSettings.Logo = asset;
+                var logo = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo);
+                if (logo == null)
+                    _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogLogo, Content = asset });
+                else
+                    logo.Content = asset;
+                _db.Complete();
             }
             else if (type == "avatar")
             {

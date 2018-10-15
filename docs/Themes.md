@@ -51,14 +51,14 @@ Here is another super simple example using Bootstrap stylesheet.
 <!DOCTYPE html>
 <html>
 <head>
-  <title>@AppSettings.Title</title>
+  <title>@Model.Blog.Title</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container">
     <div class="jumbotron">
-      <h1>@AppSettings.Title</h1>
-      <p>@AppSettings.Description</p>
+      <h1>@Model.Blog.Title</h1>
+      <p>@Model.Blog.Description</p>
     </div>
     <div class="row">
       @if (Model.Posts != null)

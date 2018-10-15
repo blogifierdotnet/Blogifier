@@ -175,6 +175,8 @@ namespace Core.Data
         public async Task<PostItem> SaveItem(PostItem item)
         {
             BlogPost post;
+            var field = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogCover);
+            var cover = field == null ? "" : field.Content;
 
             if(item.Id == 0)
             {
@@ -185,7 +187,7 @@ namespace Core.Data
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
                     Categories = item.Categories,
-                    Cover = item.Cover ?? AppSettings.Cover,
+                    Cover = item.Cover ?? cover,
                     AuthorId = item.Author.Id,
                     IsFeatured = item.Featured,
                     Published = item.Published
