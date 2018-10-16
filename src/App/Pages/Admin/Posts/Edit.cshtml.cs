@@ -12,6 +12,7 @@ namespace App.Pages.Admin.Posts
     {
         [BindProperty]
         public PostItem PostItem { get; set; }
+        public BlogItem Blog { get; set; }
 
         IDataService _db;
         INotificationService _ns;
@@ -29,8 +30,8 @@ namespace App.Pages.Admin.Posts
 
             Notifications = await _ns.GetNotifications(author.Id);
 
-            var blog = await _db.CustomFields.GetBlogSettings();
-            PostItem = new PostItem { Author = author, Cover = blog.Cover };
+            Blog = await _db.CustomFields.GetBlogSettings();
+            PostItem = new PostItem { Author = author, Cover = Blog.Cover };
 
             if (id > 0)
                 PostItem = await _db.BlogPosts.GetItem(p => p.Id == id);

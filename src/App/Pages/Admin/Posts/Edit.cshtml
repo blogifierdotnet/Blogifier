@@ -6,7 +6,7 @@
 
 <link href="~/admin/markdown/simplemde.min.css" rel="stylesheet" />
 @{
-    var img = string.IsNullOrEmpty(Model.PostItem.Cover) ? Core.AppSettings.DefaultCover : Model.PostItem.Cover;
+    var img = string.IsNullOrEmpty(Model.PostItem.Cover) ? Model.Blog.Cover : Model.PostItem.Cover;
     img = $"{Url.Content("~/")}{img}";
     var btnDisabled = Model.PostItem.Id == 0 ? "disabled" : "";
 }

@@ -20,9 +20,8 @@ namespace Core.Extensions
             services.Configure<T>(section);
             services.AddTransient<IAppService<T>>(provider =>
             {
-                var environment = provider.GetService<IHostingEnvironment>();
                 var options = provider.GetService<IOptionsMonitor<T>>();
-                return new AppService<T>(environment, options, section.Key);
+                return new AppService<T>(options);
             });
         }
 

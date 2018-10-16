@@ -105,14 +105,9 @@ namespace Core.Tests.Services
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(dbName).Options;
 
-            //AppSettings.DbOptions = options => options.UseInMemoryDatabase("abc");
-
-            var context = new AppDbContext(options);
-
-            
+            var context = new AppDbContext(options);           
 
             //context.Seed()
-
             //context.Users.Add(new AppUser { Id = "admin", UserName = "admin" });
             //context.SaveChanges();
 

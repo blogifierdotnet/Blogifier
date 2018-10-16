@@ -46,7 +46,7 @@
             @foreach (var post in Model.Posts)
             {
                 var dt = post.Published == DateTime.MinValue ? "DRAFT" : post.Published.ToFriendlyShortDateString();
-                var img = string.IsNullOrEmpty(post.Cover) ? Core.AppSettings.DefaultCover : post.Cover;
+                var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
                 img = $"{Url.Content("~/")}{img}";
                 <div class="post-grid-col">
                     <div class="post-grid-item">

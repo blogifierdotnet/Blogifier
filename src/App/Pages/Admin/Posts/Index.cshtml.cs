@@ -14,6 +14,7 @@ namespace App.Pages.Admin.Posts
         [BindProperty]
         public IEnumerable<PostItem> Posts { get; set; }
         public Pager Pager { get; set; }
+        public BlogItem Blog { get; set; }
 
         IDataService _db;
         INotificationService _ns;
@@ -51,8 +52,8 @@ namespace App.Pages.Admin.Posts
             }
 
             Posts = await _db.BlogPosts.GetList(predicate, Pager);
-
             Notifications = await _ns.GetNotifications(author.Id);
+            Blog = await _db.CustomFields.GetBlogSettings();
 
             return Page();
         }

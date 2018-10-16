@@ -44,7 +44,7 @@
             {
                 foreach (var item in Model.Posts)
                 {
-                    var img = string.IsNullOrEmpty(item.Cover) ? AppSettings.DefaultCover : item.Cover;
+                    var img = string.IsNullOrEmpty(item.Cover) ? Model.Blog.Cover : item.Cover;
                     <article class="post">
                         <div class="post-cover">
                             <img src="~/@img" alt="@item.Title">
