@@ -94,4 +94,25 @@ headers and footers and so on. Please refer to `Standard` theme for examples on 
 
 ### Understanding the Models
 
-TODO: add model mappings here
+Theme authors can use models inside post lists or single post. All properties from 
+the models can be accessed within theme, for example `Model.Blog.Title`.
+
+#### ListModel
+
+Name | Data Type | Description
+--- | --- | ---
+Blog | [BlogItem](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Data/Models/AppModel.cs) | Blog settings (title, description etc.) 
+Author | [Author](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Data/Domain/Author.cs) | Author of the blog 
+Category | string | Category (when browse by category)
+Posts | IEnumerable &lt;PostItem&gt; |  List of blog posts
+Pager | [Pager](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Helpers/Pager.cs) | Pager (older/newer links)
+PostListType | PostListType | Posts type (blog, category, author, search)
+
+#### PostModel
+
+Name | Data Type | Description
+--- | --- | ---
+Blog | BlogItem | Blog settings (title, description etc.) 
+Post | PostItem | Current post
+Older | PostItem | Previous/older post
+Newer | PostItem | Next/newer post
