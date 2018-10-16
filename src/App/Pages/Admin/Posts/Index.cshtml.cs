@@ -28,11 +28,12 @@ namespace App.Pages.Admin.Posts
 
         public async Task<IActionResult> OnGetAsync(int pg = 1, string status = "A")
         {
+            Blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
             Expression<Func<BlogPost, bool>> predicate = p => p.Id > 0;
-            Pager = new Pager(pg);
+            Pager = new Pager(pg, Blog.ItemsPerPage);
 
             if (IsAdmin)
             {
@@ -53,20 +54,21 @@ namespace App.Pages.Admin.Posts
 
             Posts = await _db.BlogPosts.GetList(predicate, Pager);
             Notifications = await _ns.GetNotifications(author.Id);
-            Blog = await _db.CustomFields.GetBlogSettings();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
             var page = int.Parse(Request.Form["page"]);
             var term = Request.Form["search"];
 
-            Pager = new Pager(page);
+
+            Pager = new Pager(page, Blog.ItemsPerPage);
 
             if(IsAdmin)
                 Posts = await _db.BlogPosts.Search(Pager, term);

@@ -31,7 +31,8 @@ namespace App.Controllers
 
         public async Task<IActionResult> Index(int page = 1, string term = "")
         {
-            var pager = new Pager(page);
+            var blog = await _db.CustomFields.GetBlogSettings();
+            var pager = new Pager(page, blog.ItemsPerPage);
             IEnumerable<PostItem> posts;
 
             if (string.IsNullOrEmpty(term))
@@ -45,8 +46,6 @@ namespace App.Controllers
 
             if (pager.ShowOlder) pager.LinkToOlder = $"blog?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"blog?page={pager.Newer}";
-
-            var blog = await _db.CustomFields.GetBlogSettings();
 
             var model = new ListModel {
                 Blog = blog,
@@ -92,9 +91,10 @@ namespace App.Controllers
         [Route("authors/{name}")]
         public async Task<IActionResult> Authors(string name, int page = 1)
         {
+            var blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == name);
 
-            var pager = new Pager(page);
+            var pager = new Pager(page, blog.ItemsPerPage);
             var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
 
             if (pager.ShowOlder) pager.LinkToOlder = $"authors/{name}?page={pager.Older}";
@@ -107,7 +107,7 @@ namespace App.Controllers
                 Pager = pager
             };
 
-            model.Blog = await _db.CustomFields.GetBlogSettings();
+            model.Blog = blog;
             model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
             model.Blog.Description = "";
 
@@ -117,7 +117,8 @@ namespace App.Controllers
         [Route("categories/{name}")]
         public async Task<IActionResult> Categories(string name, int page = 1)
         {
-            var pager = new Pager(page);
+            var blog = await _db.CustomFields.GetBlogSettings();
+            var pager = new Pager(page, blog.ItemsPerPage);
             var posts = await _db.BlogPosts.GetListByCategory(name, pager);
 
             if (pager.ShowOlder) pager.LinkToOlder = $"categories/{name}?page={pager.Older}";
@@ -129,7 +130,7 @@ namespace App.Controllers
                 Pager = pager
             };
 
-            model.Blog = await _db.CustomFields.GetBlogSettings();
+            model.Blog = blog;
             model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
 
             ViewBag.Category = name;

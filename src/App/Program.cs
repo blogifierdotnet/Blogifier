@@ -45,7 +45,12 @@ namespace App
 
                 if (!context.BlogPosts.Any())
                 {
-                    services.GetRequiredService<IStorageService>().Reset();
+                    try
+                    {
+                        services.GetRequiredService<IStorageService>().Reset();
+                    }
+                    catch { }
+                    
                     AppData.Seed(context);
                 }
             }

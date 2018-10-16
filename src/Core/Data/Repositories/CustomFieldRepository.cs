@@ -21,19 +21,20 @@ namespace Core.Data
         public Task<BlogItem> GetBlogSettings()
         {
             var blog = new BlogItem();
+            CustomField title, desc, items, cover, logo, theme;
 
-            var title = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTitle);
-            var desc = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogDescription);
-            var items = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage);
-            var cover = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogCover);
-            var logo = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo);
-            var theme = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme);
+            title = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTitle).FirstOrDefault();
+            desc = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogDescription).FirstOrDefault();
+            items = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage).FirstOrDefault();
+            cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
+            logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
+            theme = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme).FirstOrDefault();
 
             blog.Title = title == null ? "Blog Title" : title.Content;
             blog.Description = desc == null ? "Short blog description" : desc.Content;
             blog.ItemsPerPage = items == null ? 10 : int.Parse(items.Content);
             blog.Cover = cover == null ? "lib/img/cover.png" : cover.Content;
-            blog.Logo = logo == null ? "lib/img/logo.png" : logo.Content;
+            blog.Logo = logo == null ? "lib/img/logo-white.png" : logo.Content;
             blog.Theme = theme == null ? "Standard" : theme.Content;
 
             return Task.FromResult(blog);
