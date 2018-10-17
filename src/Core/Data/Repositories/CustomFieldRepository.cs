@@ -42,12 +42,12 @@ namespace Core.Data
 
         public async Task SaveBlogSettings(BlogItem blog)
         {
-            var title = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTitle);
-            var desc = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogDescription);
-            var items = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage);
-            var cover = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogCover);
-            var logo = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo);
-            var theme = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme);
+            var title = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTitle).FirstOrDefault();
+            var desc = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogDescription).FirstOrDefault();
+            var items = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage).FirstOrDefault();
+            var cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
+            var logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
+            var theme = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme).FirstOrDefault();
 
             if (title == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogTitle, Content = blog.Title });
             else title.Content = blog.Title;

@@ -42,14 +42,14 @@ namespace App.Pages.Admin.Settings
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _db.CustomFields.SaveBlogSettings(BlogItem);
+            await _db.CustomFields.SaveBlogSettings(BlogItem);
 
             Message = Resources.Updated;
 
