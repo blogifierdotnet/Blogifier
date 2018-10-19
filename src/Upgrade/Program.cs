@@ -98,13 +98,6 @@ namespace Upgrade
             }
         }
 
-        static string NameFromPath(string path)
-        {
-            int x = path.LastIndexOf(_slash);
-            string name = path.Substring(x);
-            return name;
-        }
-
         static List<string> GetCoreFiles()
         {
             var fileName = $"{_upgDir}{_slash}files.txt";
