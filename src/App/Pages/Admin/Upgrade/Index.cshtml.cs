@@ -1,7 +1,6 @@
 ﻿using Core;
 using Core.Services;
 using Microsoft.AspNetCore.Hosting;
-using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -51,11 +50,6 @@ namespace App.Pages.Admin.Upgrade
                 p.Start();
 
                 _app.StopApplication();
-
-                //Program.Main(null);
-                //Process.GetCurrentProcess().Kill();
-                //Environment.Exit(0);
-                //Program.Shutdown();
             }
         }
     }
