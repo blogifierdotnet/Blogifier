@@ -142,7 +142,6 @@ namespace Core.Data
             var model = new PostModel();
 
             var all = _db.BlogPosts
-                .Where(p => p.Published > DateTime.MinValue)
                 .OrderByDescending(p => p.IsFeatured)
                 .ThenByDescending(p => p.Published).ToList();
 
@@ -154,12 +153,12 @@ namespace Core.Data
                     {
                         model.Post = PostToItem(all[i]);
 
-                        if(i > 0)
+                        if(i > 0 && all[i - 1].Published > DateTime.MinValue)
                         {
                             model.Newer = PostToItem(all[i - 1]);
                         }
 
-                        if (i + 1 < all.Count)
+                        if (i + 1 < all.Count && all[i + 1].Published > DateTime.MinValue)
                         {
                             model.Older = PostToItem(all[i + 1]);
                         }
@@ -175,7 +174,7 @@ namespace Core.Data
         public async Task<PostItem> SaveItem(PostItem item)
         {
             BlogPost post;
-            var field = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogCover);
+            var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             var cover = field == null ? "" : field.Content;
 
             if(item.Id == 0)
