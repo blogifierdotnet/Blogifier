@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Data
 {
@@ -33,6 +31,5 @@ namespace Core.Data
         [Required]
         [StringLength(120)]
         public string Theme { get; set; }
-        public IList<SelectListItem> BlogThemes { get; set; }
     }
 }

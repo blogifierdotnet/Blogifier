@@ -15,6 +15,7 @@
                     <label class="form-group-label">Title</label>
                     <input type="text" asp-for="BlogItem.Title" class="form-control" />
                     <span asp-validation-for="BlogItem.Title" class="text-danger"></span>
+                    <input type="hidden" asp-for="BlogItem.Theme" />
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Description</label>
@@ -25,10 +26,6 @@
                     <label class="form-group-label">Items per page </label>
                     <input type="text" asp-for="BlogItem.ItemsPerPage" class="form-control" />
                     <span asp-validation-for="BlogItem.ItemsPerPage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="form-group-label">Theme</label>
-                    <select asp-for="BlogItem.Theme" asp-items="Model.BlogItem.BlogThemes" class="form-control custom-select"></select>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">Logo image</label>
@@ -60,6 +57,7 @@
     @if (Model.ShowMessage)
     {
         <script>toastr.success('@Model.Message')</script>
+        Model.Message = "";
     }
     <script src="~/admin/js/app/fileManagerController.js"></script>
 }

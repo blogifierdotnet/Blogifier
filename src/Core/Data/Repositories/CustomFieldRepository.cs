@@ -47,7 +47,6 @@ namespace Core.Data
             var items = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage).FirstOrDefault();
             var cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             var logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
-            var theme = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme).FirstOrDefault();
 
             if (title == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogTitle, Content = blog.Title });
             else title.Content = blog.Title;
@@ -63,9 +62,6 @@ namespace Core.Data
 
             if (logo == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogLogo, Content = blog.Logo });
             else logo.Content = blog.Logo;
-
-            if (theme == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogTheme, Content = blog.Theme });
-            else theme.Content = blog.Theme;
 
             await _db.SaveChangesAsync();
         }
