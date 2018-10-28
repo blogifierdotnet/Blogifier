@@ -16,6 +16,9 @@
             </li>
             @if (Model.IsAdmin)
             {
+            <li is-active-route asp-controller="settings" asp-action="themes">
+                <a href="~/admin/settings/themes">Themes</a>
+            </li>
             <li is-active-route asp-controller="settings" asp-action="users">
                 <a href="~/admin/settings/users">Users</a>
             </li>
