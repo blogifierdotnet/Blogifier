@@ -26,8 +26,27 @@ namespace App.Pages.Admin.Settings
             _ns = ns;
         }
 
-        public async Task<IActionResult> OnGetAsync(string id, string act)
+        public async Task<IActionResult> OnGetAsync()
         {
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
+
+            Notifications = await _ns.GetNotifications(author.Id);
+
+            if (!IsAdmin)
+                return RedirectToPage("../Shared/_Error", new { code = 403 });
+
+            BlogItem = await _db.CustomFields.GetBlogSettings();
+            Themes = GetThemes();
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            string act = Request.Form["hdnAct"];
+            string id = Request.Form["hdnTheme"];
+
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
 
@@ -40,7 +59,7 @@ namespace App.Pages.Admin.Settings
             {
                 var theme = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme);
 
-                if(theme == null)
+                if (theme == null)
                 {
                     theme = new CustomField { AuthorId = 0, Name = Constants.BlogTheme, Content = id };
                     _db.CustomFields.Add(theme);
@@ -53,7 +72,7 @@ namespace App.Pages.Admin.Settings
                 _db.Complete();
             }
 
-            if(act == "del" && !string.IsNullOrEmpty(id))
+            if (act == "del" && !string.IsNullOrEmpty(id))
             {
                 var slash = Path.DirectorySeparatorChar.ToString();
                 var themeContent = $"{AppSettings.WebRootPath}{slash}themes{slash}{id.ToLower()}";
