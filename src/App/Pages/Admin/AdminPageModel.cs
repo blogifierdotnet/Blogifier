@@ -20,6 +20,15 @@ namespace App.Pages.Admin
         public string Error { get; set; }
         public bool ShowError => !string.IsNullOrEmpty(Error);
 
+        public string RenderMessage()
+        {
+            var msg = ShowMessage ?
+                $"<script>toastr.success('{Message}')</script>" :
+                (ShowError ? $"<script>toastr.error('{Error}')</script>" : "");
+            Clear();
+            return msg;
+        }
+
         public void Clear()
         {
             Message = "";

@@ -66,9 +66,6 @@
 <partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
-    @if (Model.ShowMessage)
-    {
-        <script>toastr.success('@Model.Message')</script>
-    }
+    @Html.Raw(Model.RenderMessage())
     <script src="~/admin/js/app/fileManagerController.js"></script>
 }

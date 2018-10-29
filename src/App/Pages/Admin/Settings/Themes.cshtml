@@ -49,14 +49,7 @@
     </div>
 </div>
 @section Scripts{
-    @if (Model.ShowMessage)
-    {
-        <script>toastr.success('@Model.Message')</script>
-    }
-    @if (Model.ShowError)
-    {
-        <script>toastr.error('@Model.Error')</script>
-    }
+    @Html.Raw(Model.RenderMessage())
     <script>
         var submitForm = function (id, act) {
             $("#hdnTheme").val(id);

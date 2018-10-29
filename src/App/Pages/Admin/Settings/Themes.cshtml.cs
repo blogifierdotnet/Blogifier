@@ -67,8 +67,8 @@ namespace App.Pages.Admin.Settings
                 else
                 {
                     theme.Content = id;
-                    Message = Resources.Updated;
                 }
+                Message = Resources.Updated;
                 _db.Complete();
             }
 

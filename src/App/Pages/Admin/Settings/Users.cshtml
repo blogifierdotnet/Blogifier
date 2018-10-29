@@ -31,8 +31,5 @@
 </div>
 
 @section Scripts{
-    @if (Model.ShowMessage)
-    {
-        <script>toastr.success('@Model.Message')</script>
-    }
+    @Html.Raw(Model.RenderMessage())
 }
