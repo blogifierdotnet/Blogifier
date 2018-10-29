@@ -2,6 +2,7 @@
 using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,17 +36,43 @@ namespace App.Pages.Admin.Settings
             if (!IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
 
-            if(act == "set" && !string.IsNullOrEmpty(id))
+            if (act == "set" && !string.IsNullOrEmpty(id))
             {
                 var theme = _db.CustomFields.Single(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme);
-                theme.Content = id;
+
+                if(theme == null)
+                {
+                    theme = new CustomField { AuthorId = 0, Name = Constants.BlogTheme, Content = id };
+                    _db.CustomFields.Add(theme);
+                }
+                else
+                {
+                    theme.Content = id;
+                    Message = Resources.Updated;
+                }
                 _db.Complete();
-                Message = Resources.Updated;
             }
 
             if(act == "del" && !string.IsNullOrEmpty(id))
             {
-                Message = Resources.Removed;
+                var slash = Path.DirectorySeparatorChar.ToString();
+                var themeContent = $"{AppSettings.WebRootPath}{slash}themes{slash}{id.ToLower()}";
+                var themeViews = $"{AppSettings.ContentRootPath}{slash}Views{slash}Themes{slash}{id}";
+
+                try
+                {
+                    if (Directory.Exists(themeContent))
+                        Directory.Delete(themeContent, true);
+
+                    if (Directory.Exists(themeViews))
+                        Directory.Delete(themeViews, true);
+
+                    Message = Resources.Removed;
+                }
+                catch (Exception ex)
+                {
+                    Error = ex.Message;
+                }
             }
 
             BlogItem = await _db.CustomFields.GetBlogSettings();

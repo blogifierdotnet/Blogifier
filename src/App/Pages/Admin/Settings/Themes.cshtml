@@ -48,6 +48,9 @@
     @if (Model.ShowMessage)
     {
         <script>toastr.success('@Model.Message')</script>
-        Model.Message = "";
+    }
+    @if (Model.ShowError)
+    {
+        <script>toastr.error('@Model.Error')</script>
     }
 }
