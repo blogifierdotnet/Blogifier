@@ -2,6 +2,7 @@
 using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,9 +16,11 @@ namespace App.Pages.Admin.Settings
         IDataService _db;
         IStorageService _storage;
         INotificationService _ns;
+        string slash = Path.DirectorySeparatorChar.ToString();
 
         public IEnumerable<ThemeItem> Themes { get; set; }
         public BlogItem BlogItem { get; set; }
+        public WidgetsModel Widgets { get; set; }
 
         public ThemesModel(IDataService db, IStorageService storage, INotificationService ns)
         {
@@ -28,16 +31,10 @@ namespace App.Pages.Admin.Settings
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
-            IsAdmin = author.IsAdmin;
-
-            Notifications = await _ns.GetNotifications(author.Id);
+            await SetModel();
 
             if (!IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
-
-            BlogItem = await _db.CustomFields.GetBlogSettings();
-            Themes = GetThemes();
 
             return Page();
         }
@@ -46,11 +43,9 @@ namespace App.Pages.Admin.Settings
         {
             string act = Request.Form["hdnAct"];
             string id = Request.Form["hdnTheme"];
-
+            
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
-
-            Notifications = await _ns.GetNotifications(author.Id);
 
             if (!IsAdmin)
                 return RedirectToPage("../Shared/_Error", new { code = 403 });
@@ -74,7 +69,7 @@ namespace App.Pages.Admin.Settings
 
             if (act == "del" && !string.IsNullOrEmpty(id))
             {
-                var slash = Path.DirectorySeparatorChar.ToString();
+                
                 var themeContent = $"{AppSettings.WebRootPath}{slash}themes{slash}{id.ToLower()}";
                 var themeViews = $"{AppSettings.ContentRootPath}{slash}Views{slash}Themes{slash}{id}";
 
@@ -94,10 +89,30 @@ namespace App.Pages.Admin.Settings
                 }
             }
 
+            await SetModel();
+
+            return Page();
+        }
+
+        async Task SetModel()
+        {
+            var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+            IsAdmin = author.IsAdmin;
+
+            Notifications = await _ns.GetNotifications(author.Id);
+
             BlogItem = await _db.CustomFields.GetBlogSettings();
             Themes = GetThemes();
 
-            return Page();
+            string jsonFile = $"{AppSettings.ContentRootPath}{slash}Views{slash}Themes{slash}{BlogItem.Theme}{slash}{BlogItem.Theme}.json";
+            if (System.IO.File.Exists(jsonFile))
+            {
+                using (StreamReader r = new StreamReader(jsonFile))
+                {
+                    string json = r.ReadToEnd();
+                    Widgets = JsonConvert.DeserializeObject<WidgetsModel>(json);
+                }
+            }
         }
 
         List<ThemeItem> GetThemes()

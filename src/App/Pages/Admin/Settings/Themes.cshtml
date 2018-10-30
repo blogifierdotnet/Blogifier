@@ -23,9 +23,12 @@
                                 <a class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="default">
                                     <i class="fas fa-star"></i>
                                 </a>
-                                <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="settings">
-                                    <i class="fas fa-sliders-h"></i>
-                                </a>
+                                @if (Model.Widgets != null && Model.Widgets.Widgets.Count > 0)
+                                {
+                                    <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="settings">
+                                        <i class="fas fa-sliders-h"></i>
+                                    </a>
+                                }
                             }
                             else
                             {
