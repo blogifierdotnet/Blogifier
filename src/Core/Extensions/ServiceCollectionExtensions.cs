@@ -67,7 +67,10 @@ namespace Core.Extensions
                                     var ar = item.Name.Split('.');
                                     if(ar.Length > 2 && !AppConfig.EmbeddedThemes.Contains(ar[2]))
                                     {
-                                        AppConfig.EmbeddedThemes.Add(ar[2]);
+                                        if(assembly.GetName().Name.ToLower() != "app")
+                                        {
+                                            AppConfig.EmbeddedThemes.Add(ar[2]);
+                                        }
                                     }
                                 }
                             }

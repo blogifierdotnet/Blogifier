@@ -23,7 +23,7 @@
                                 <a class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="default">
                                     <i class="fas fa-star"></i>
                                 </a>
-                                <a class="item-show ml-3" href="#" target="_blank" data-tooltip="" title="" data-original-title="settings">
+                                <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="settings">
                                     <i class="fas fa-sliders-h"></i>
                                 </a>
                             }
@@ -48,6 +48,40 @@
         </form>
     </div>
 </div>
+
+<div class="modal fade" id="themeSettings" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="hdrSettings"></h4>
+                <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-body">
+                    @*<nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">aaaaa</div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">bbbbb</div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">cccccc</div>
+                    </div>*@
+                </div>
+            </div>
+            <div class="modal-footer d-flex">
+                <button class="btn btn-link btn-sm btn-rounded ml-auto" type="button" data-dismiss="modal">cancel</button>
+                <button id="btnSelect" class="btn btn-primary btn-sm btn-rounded" type="button" onclick="return saveSettings()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     @Html.Raw(Model.RenderMessage())
     <script>
@@ -55,6 +89,14 @@
             $("#hdnTheme").val(id);
             $("#hdnAct").val(act);
             $('#frmThemes').submit();
+        }
+        var openSettings = function (id) {
+            $('#hdrSettings').text('Theme: ' + id);
+            $('#themeSettings').modal();
+            return false;
+        }
+        var saveSettings = function () {
+            toastr.success('Updated');
         }
     </script>
 }
