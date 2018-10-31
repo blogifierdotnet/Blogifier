@@ -1,0 +1,14 @@
+﻿@model Core.Data.Widget
+@{
+    var prop = Model.Props.Where(p => p.Id == "Title").FirstOrDefault();
+    string title = prop == null ? "HTML Widget" : prop.Value;
+}
+<h4>@title</h4>
+<form id="usrform">
+    <div class="form-group">
+        <textarea rows="4" name="txtHtml" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+</form>

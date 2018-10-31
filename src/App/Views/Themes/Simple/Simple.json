@@ -16,7 +16,12 @@
     },
     {
       "Name": "HtmlBlock",
-      "Props": []
+      "Props": [
+        {
+          "Id": "Title",
+          "Value": "Social Buttons"
+        }
+      ]
     }
   ]
 }
