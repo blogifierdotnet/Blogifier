@@ -1,12 +1,15 @@
-﻿@model Core.Data.Widget
+﻿@model Core.Data.ThemeWidget
+@inject Core.Services.IDataService _db
 @{
-    var prop = Model.Props.Where(p => p.Id == "Title").FirstOrDefault();
-    string title = prop == null ? "HTML Widget" : prop.Value;
+    var existing = _db.HtmlWidgets.Single(w => w.Name == Model.Widget.Title && w.Theme == Model.Theme && w.Author == "0");
+    var content = existing == null ? "" : existing.Content;
 }
-<h4>@title</h4>
-<form id="usrform">
+<h4>@Model.Widget.Title</h4>
+<form id="usrform" method="post" action="~/widgets/api/htmlblock/edit">
     <div class="form-group">
-        <textarea rows="4" name="txtHtml" class="form-control"></textarea>
+        <input type="hidden" id="txtWidget" name="txtWidget" value="@Model.Widget.Title" />
+        <input type="hidden" id="txtTheme" name="txtTheme" value="@Model.Theme" />
+        <textarea rows="4" id="txtHtml" name="txtHtml" class="form-control">@content</textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-main">Save</button>

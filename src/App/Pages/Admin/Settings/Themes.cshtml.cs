@@ -20,7 +20,7 @@ namespace App.Pages.Admin.Settings
 
         public IEnumerable<ThemeItem> Themes { get; set; }
         public BlogItem BlogItem { get; set; }
-        public WidgetsModel Widgets { get; set; }
+        public List<WidgetItem> Widgets { get; set; }
 
         public ThemesModel(IDataService db, IStorageService storage, INotificationService ns)
         {
@@ -110,7 +110,7 @@ namespace App.Pages.Admin.Settings
                 using (StreamReader r = new StreamReader(jsonFile))
                 {
                     string json = r.ReadToEnd();
-                    Widgets = JsonConvert.DeserializeObject<WidgetsModel>(json);
+                    Widgets = JsonConvert.DeserializeObject<List<WidgetItem>>(json);
                 }
             }
         }

@@ -13,22 +13,17 @@ namespace Common.Widgets
             _db = db;
         }
 
-        public IViewComponentResult Invoke(string id, string theme, string author)
+        public IViewComponentResult Invoke(string theme, string widget)
         {
-            string model = @"<ul class=""blog-social nav ml-auto my-auto"">
-    <li class=""blog-social-item""><a href=""#"" target=""_blank"" class=""blog-social-link""><i class=""blog-social-icon fa fa-twitter""></i></a></li>
-    <li class=""blog-social-item""><a href=""#"" target=""_blank"" class=""blog-social-link""><i class=""blog-social-icon fa fa-google-plus""></i></a></li>
-    <li class=""blog-social-item""><a href=""#"" target=""_blank"" class=""blog-social-link""><i class=""blog-social-icon fa fa-facebook-official""></i></a></li>
-</ul>";
-
-            var existing = _db.HtmlWidgets.Single(w => w.Name == id && w.Theme == theme && w.Author == author);
+            string model = "";
+            var existing = _db.HtmlWidgets.Single(w => w.Name == widget && w.Theme == theme && w.Author == "0");
 
             if (existing == null)
             {
                 _db.HtmlWidgets.Add(new Core.Data.HtmlWidget {
-                    Name = id,
+                    Name = widget,
                     Theme = theme,
-                    Author = author,
+                    Author = "0",
                     Content = model
                 });
                 _db.Complete();
@@ -39,6 +34,41 @@ namespace Common.Widgets
             } 
 
             return View("~/Views/Widgets/HtmlBlock/Index.cshtml", model);
+        }
+    }
+
+    [Route("widgets/api/htmlblock")]
+    public class HtmlBlockController : Controller
+    {
+        IDataService _db;
+
+        public HtmlBlockController(IDataService db)
+        {
+            _db = db;
+        }
+
+        [HttpPost]
+        [Route("edit")]
+        public IActionResult Edit(string txtWidget, string txtTheme, string txtHtml)
+        {
+            var existing = _db.HtmlWidgets.Single(w => w.Name == txtWidget && w.Theme == txtTheme && w.Author == "0");
+
+            if (existing == null)
+            {
+                _db.HtmlWidgets.Add(new Core.Data.HtmlWidget
+                {
+                    Name = txtWidget,
+                    Theme = txtTheme,
+                    Author = "0",
+                    Content = txtHtml
+                });
+            }
+            else
+            {
+                existing.Content = txtHtml;
+            }
+            _db.Complete();
+            return Redirect("~/admin/settings/themes");
         }
     }
 }

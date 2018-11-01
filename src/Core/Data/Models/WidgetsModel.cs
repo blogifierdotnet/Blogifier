@@ -4,19 +4,18 @@ namespace Core.Data
 {
     public class WidgetsModel
     {
-        public string Name { get; set; }
-        public List<Widget> Widgets { get; set; }
+        public List<WidgetItem> Widgets { get; set; }
     }
 
-    public class Prop
+    public class WidgetItem
     {
-        public string Id { get; set; }
-        public string Value { get; set; }
+        public string Widget { get; set; }
+        public string Title { get; set; }
     }
 
-    public class Widget
+    public class ThemeWidget
     {
-        public string Name { get; set; }
-        public List<Prop> Props { get; set; }
+        public string Theme { get; set; }
+        public WidgetItem Widget { get; set; }
     }
 }

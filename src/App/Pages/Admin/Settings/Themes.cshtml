@@ -23,7 +23,7 @@
                                 <a class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="default">
                                     <i class="fas fa-star"></i>
                                 </a>
-                                @if (Model.Widgets != null && Model.Widgets.Widgets.Count > 0)
+                                @if (Model.Widgets != null && Model.Widgets.Count > 0)
                                 {
                                     <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="settings">
                                         <i class="fas fa-sliders-h"></i>
@@ -65,16 +65,17 @@
                 <div class="settings-body">
                     @if (Model.Widgets != null)
                     {
-                        foreach (var widget in Model.Widgets.Widgets)
+                        foreach (var widget in Model.Widgets)
                         {
-                            var path = $"~/Views/Widgets/{widget.Name}/Edit.cshtml";
-                            await Html.RenderPartialAsync(path, widget);
+                            var path = $"~/Views/Widgets/{widget.Widget}/Edit.cshtml";
+                            await Html.RenderPartialAsync(path,
+                                new ThemeWidget {
+                                    Theme = Model.BlogItem.Theme,
+                                    Widget = widget
+                                });
                         }
                     }
                 </div>
-            </div>
-            <div class="modal-footer d-flex">
-                <button class="btn btn-link btn-sm btn-rounded ml-auto" type="button" data-dismiss="modal">cancel</button>
             </div>
         </div>
     </div>

@@ -1,27 +1,6 @@
-{
-  "Name": "Simple",
-  "Widgets": [
-    {
-      "Name": "PostList",
-      "Props": [
-        {
-          "Id": "one",
-          "Value": "1"
-        },
-        {
-          "Id": "two",
-          "Value": "2"
-        }
-      ]
-    },
-    {
-      "Name": "HtmlBlock",
-      "Props": [
-        {
-          "Id": "Title",
-          "Value": "Social Buttons"
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "Widget": "HtmlBlock",
+    "Title": "Sidebar"
+  }
+]
