@@ -179,8 +179,8 @@
 }(DataService);
 
 $('#asset-search').keypress(function (event) {
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    if (keycode ==='13') {
+    var keycode = event.keyCode ? event.keyCode : event.which;
+    if (keycode === 13) {
         fileManagerController.load(1);
         return false;
     }

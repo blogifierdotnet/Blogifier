@@ -4,7 +4,6 @@
     var existing = _db.HtmlWidgets.Single(w => w.Name == Model.Widget.Title && w.Theme == Model.Theme && w.Author == "0");
     var content = existing == null ? "" : existing.Content;
 }
-<h4>@Model.Widget.Title</h4>
 <form id="usrform" method="post" action="~/widgets/api/htmlblock/edit">
     <div class="form-group">
         <input type="hidden" id="txtWidget" name="txtWidget" value="@Model.Widget.Title" />
