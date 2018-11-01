@@ -26,3 +26,8 @@
         @await Component.InvokeAsync("HtmlBlock", new { theme = "Simple", widget = "Sidebar" })
     </div>
 </div>
+
+<div class="card my-4">
+    <h5 class="card-header">Post List</h5>
+    @await Component.InvokeAsync("PostList", new { theme = "Simple", widget = "Post List" })
+</div>

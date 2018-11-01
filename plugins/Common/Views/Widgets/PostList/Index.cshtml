@@ -1,3 +1,7 @@
-﻿<div>
-    This post is from PostList widget loaded from external class library.
+﻿@model IEnumerable<BlogPost>
+<div class="list-group">
+    @foreach (var post in Model)
+    {
+    <a href="~/posts/@post.Slug" class="list-group-item list-group-item-action" title="">@post.Title</a>
+    }
 </div>
