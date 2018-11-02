@@ -13,7 +13,7 @@ namespace Common.Widgets
             _db = db;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string theme, string widget)
         {
             var model = _db.BlogPosts.All();
 

@@ -1,1 +1,31 @@
 ﻿@model Core.Data.ThemeWidget
+@{ 
+    var selectedType = "All";
+    var maxRecords = "10";
+    string[] listTypes = new string[] { "All", "By author", "By category" };
+}
+<form method="post" asp-antiforgery="true">
+    <div class="form-group">
+        <label class="form-group-label">List Type</label>
+        <select id="selTypes" name="selTypes" class="form-control">
+            @foreach (var t in listTypes)
+            {
+                if (selectedType == t)
+                {
+                <option value="@t" selected>@t</option>
+                }
+                else
+                {
+                <option value="@t">@t</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Max records</label>
+        <input type="text" id="txtMaxRecords" name="txtMaxRecords" class="form-control" value="@maxRecords" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+</form>

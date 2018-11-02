@@ -2,5 +2,9 @@
   {
     "Widget": "HtmlBlock",
     "Title": "Sidebar"
+  },
+  {
+    "Widget": "PostList",
+    "Title": "Post List"
   }
 ]

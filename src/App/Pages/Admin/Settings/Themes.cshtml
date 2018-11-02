@@ -68,8 +68,9 @@
                         foreach (var widget in Model.Widgets)
                         {
                             var path = $"~/Views/Widgets/{widget.Widget}/Edit.cshtml";
-                            <h6>@widget.Title</h6>
-                            await Html.RenderPartialAsync(path, new ThemeWidget {
+                            <div class="bf-title d-none d-lg-block"><span>@widget.Title</span></div>
+                            await Html.RenderPartialAsync(path, new ThemeWidget
+                            {
                                 Theme = Model.BlogItem.Theme,
                                 Widget = widget
                             });
