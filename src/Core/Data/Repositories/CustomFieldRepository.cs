@@ -7,6 +7,9 @@ namespace Core.Data
     {
         Task<BlogItem> GetBlogSettings();
         Task SaveBlogSettings(BlogItem blog);
+
+        string GetCustomValue(string name);
+        Task SaveCustomValue(string name, string value);
     }
 
     public class CustomFieldRepository : Repository<CustomField>, ICustomFieldRepository
@@ -63,6 +66,26 @@ namespace Core.Data
             if (logo == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogLogo, Content = blog.Logo });
             else logo.Content = blog.Logo;
 
+            await _db.SaveChangesAsync();
+        }
+
+        public string GetCustomValue(string name)
+        {
+            var field = _db.CustomFields.Where(f => f.Name == name).FirstOrDefault();
+            return field == null ? "" : field.Content;
+        }
+
+        public async Task SaveCustomValue(string name, string value)
+        {
+            var field = _db.CustomFields.Where(f => f.Name == name).FirstOrDefault();
+            if(field == null)
+            {
+                _db.CustomFields.Add(new CustomField { Name = name, Content = value, AuthorId = 0 });
+            }
+            else
+            {
+                field.Content = value;
+            }
             await _db.SaveChangesAsync();
         }
     }

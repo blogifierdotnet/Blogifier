@@ -1,22 +1,57 @@
 ﻿@model Core.Data.ThemeWidget
-@{ 
-    var selectedType = "All";
-    var maxRecords = "10";
-    string[] listTypes = new string[] { "All", "By author", "By category" };
+@using System.Linq
+@inject Core.Services.IDataService _db
+@{
+    var keyAuth = $"{Model.Theme}-{Model.Widget.Title}-auth";
+    var keyCat = $"{Model.Theme}-{Model.Widget.Title}-cat";
+    var keyMax = $"{Model.Theme}-{Model.Widget.Title}-max";
+
+    var authors = _db.Authors.All().Select(a => a.DisplayName).ToArray();
+    var authorOrdered = authors.ToList().OrderBy(a => a);
+    var authorList = authorOrdered.ToList();
+    authorList.Insert(0, "All");
+
+    var cats = await _db.BlogPosts.Categories();
+    var catList = cats.ToList();
+    catList.Insert(0, "All");
+
+    var selectedAuth = _db.CustomFields.GetCustomValue(keyAuth);
+    var selectedCat = _db.CustomFields.GetCustomValue(keyCat);
+    var maxRecords = _db.CustomFields.GetCustomValue(keyMax);
+
+    if (string.IsNullOrEmpty(selectedAuth)) { selectedAuth = "All"; }
+    if (string.IsNullOrEmpty(selectedCat)) { selectedCat = "All"; }
+    if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
 }
-<form method="post" asp-antiforgery="true">
+<form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
     <div class="form-group">
-        <label class="form-group-label">List Type</label>
-        <select id="selTypes" name="selTypes" class="form-control">
-            @foreach (var t in listTypes)
+        <label class="form-group-label">Authors</label>
+        <select id="selAuthors" name="selAuthors" class="form-control">
+            @foreach (var a in authorList)
             {
-                if (selectedType == t)
+                if (selectedAuth == a)
                 {
-                <option value="@t" selected>@t</option>
+                    <option value="@a" selected>@a</option>
                 }
                 else
                 {
-                <option value="@t">@t</option>
+                    <option value="@a">@a</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Categories</label>
+        <select id="selCats" name="selCats" class="form-control">
+            @foreach (var c in catList)
+            {
+                if (selectedCat == c)
+                {
+                    <option value="@c" selected>@c</option>
+                }
+                else
+                {
+                    <option value="@c">@c</option>
                 }
             }
         </select>
@@ -28,4 +63,6 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-main">Save</button>
     </div>
+    <input type="hidden" id="hdnWidget" name="hdnWidget" value="@Model.Widget.Title" />
+    <input type="hidden" id="hdnTheme" name="hdnTheme" value="@Model.Theme" />
 </form>
