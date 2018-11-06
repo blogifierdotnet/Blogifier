@@ -4,6 +4,7 @@
 @{
     var keyAuth = $"{Model.Theme}-{Model.Widget.Title}-auth";
     var keyCat = $"{Model.Theme}-{Model.Widget.Title}-cat";
+    var keyTmpl = $"{Model.Theme}-{Model.Widget.Title}-tmpl";
     var keyMax = $"{Model.Theme}-{Model.Widget.Title}-max";
 
     var authors = _db.Authors.All().Select(a => a.DisplayName).ToArray();
@@ -18,10 +19,12 @@
     var selectedAuth = _db.CustomFields.GetCustomValue(keyAuth);
     var selectedCat = _db.CustomFields.GetCustomValue(keyCat);
     var maxRecords = _db.CustomFields.GetCustomValue(keyMax);
+    var template = _db.CustomFields.GetCustomValue(keyTmpl);
 
     if (string.IsNullOrEmpty(selectedAuth)) { selectedAuth = "All"; }
     if (string.IsNullOrEmpty(selectedCat)) { selectedCat = "All"; }
     if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
+    if (string.IsNullOrEmpty(template)) { template = "<a href=\"/posts/{0}\" class=\"list-group-item list-group-item-action\">{1}</a>"; }
 }
 <form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
     <div class="form-group">
@@ -55,6 +58,10 @@
                 }
             }
         </select>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Template ({0} = slug {1} = title)</label>
+        <textarea rows="2" id="txtTemplate" name="txtTemplate" class="form-control">@template</textarea>
     </div>
     <div class="form-group">
         <label class="form-group-label">Max records</label>
