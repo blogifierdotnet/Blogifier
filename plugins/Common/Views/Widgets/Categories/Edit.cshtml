@@ -1,0 +1,27 @@
+﻿@model Core.Data.ThemeWidget
+@inject Core.Services.IDataService _db
+@{
+    var keyTmpl = $"{Model.Theme}-{Model.Widget.Title}-tmpl";
+    var keyMax = $"{Model.Theme}-{Model.Widget.Title}-max";
+
+    var template = _db.CustomFields.GetCustomValue(keyTmpl);
+    var maxRecords = _db.CustomFields.GetCustomValue(keyMax);
+
+    if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
+    if (string.IsNullOrEmpty(template)) { template = "<a href=\"/categories/{0}\" class=\"list-group-item list-group-item-action\">{0}</a>"; }
+}
+<form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
+    <div class="form-group">
+        <label class="form-group-label">Template ({0} = slug {1} = title)</label>
+        <textarea rows="2" id="txtTemplate" name="txtTemplate" class="form-control">@template</textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Max records</label>
+        <input type="text" id="txtMaxRecords" name="txtMaxRecords" class="form-control" value="@maxRecords" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+    <input type="hidden" id="hdnWidget" name="hdnWidget" value="@Model.Widget.Title" />
+    <input type="hidden" id="hdnTheme" name="hdnTheme" value="@Model.Theme" />
+</form>
