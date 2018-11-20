@@ -24,7 +24,7 @@ Blogifier is single blog supporting multiple authors. Administrator can manage c
 
 The [demo site](http://blogifier.azurewebsites.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
 
-![github-demo](https://user-images.githubusercontent.com/1932785/47130986-eaef1d80-d261-11e8-81d4-c90ad86ff828.png)
+![demo](https://user-images.githubusercontent.com/1932785/48745555-7f69e880-ec31-11e8-9d8e-b47d7ab37895.png)
 
 ## Live blog
 
