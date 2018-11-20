@@ -38,6 +38,10 @@ namespace App
             {
                 AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
             }
+            else if (section.GetValue<string>("DbProvider") == "MySql")
+            {
+                AppSettings.DbOptions = options => options.UseMySql(section.GetValue<string>("ConnString"));
+            }
             else
             {
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));

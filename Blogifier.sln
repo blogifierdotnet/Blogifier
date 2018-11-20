@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-9
 		docs\Build.md = docs\Build.md
 		docs\Disqus.md = docs\Disqus.md
 		docs\Import.md = docs\Import.md
+		MySQL.md = MySQL.md
 		docs\Notifications.md = docs\Notifications.md
 		docs\Security.md = docs\Security.md
 		docs\SqlServer.md = docs\SqlServer.md

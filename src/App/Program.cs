@@ -35,8 +35,8 @@ namespace App
                 var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
                 if (!userMgr.Users.Any())
                 {
-                    userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "admin");
-                    userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo");
+                    userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "admin").Wait();
+                    userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
                 }
 
                 // load application settings from appsettings.json
