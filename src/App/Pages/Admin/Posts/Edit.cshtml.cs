@@ -83,7 +83,7 @@ namespace App.Pages.Admin.Posts
                     PostItem = item;
                     Message = Resources.Saved;
 
-                    return Redirect($"~/Admin/Posts/Edit?id={PostItem.Id}");
+                    return Redirect($"~/admin/posts/edit?id={PostItem.Id}");
                 }
             }
             return Page();
