@@ -2,7 +2,7 @@
 
 namespace App.Pages.Admin.Shared
 {
-    public class _ErrorModel : AdminPageModel
+    public class ErrorModel : AdminPageModel
     {
         [BindProperty]
         public int Code { get; set; }

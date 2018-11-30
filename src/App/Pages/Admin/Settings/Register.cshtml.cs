@@ -57,7 +57,7 @@ namespace App.Pages.Admin.Settings
             Notifications = await _ns.GetNotifications(author.Id);
 
             if (!IsAdmin)
-                return RedirectToPage("../Shared/_Error", new { code = 403 });
+                return RedirectToPage("../Shared/Error", new { code = 403 });
 
             return Page();
         }
