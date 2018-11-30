@@ -12,36 +12,39 @@
 
     <partial name="~/Views/Themes/moments/_Shared/_Header.cshtml" />
 
-
-
-    <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
-        <h1 class="page-cover-title">
-            @if (Model.PostListType == PostListType.Search)
-            {
-                <a href="#"><i class="fa fa-search"></i> @Model.Blog.Title</a>
-            }
-            else if (Model.PostListType == PostListType.Author)
-            {
-                <a href="~/">
-                    <img src="~/@Model.Author.Avatar" class="rounded-circle" style="width: 52px" /> @Model.Author.DisplayName
-                </a>
-            }
-            else if (Model.PostListType == PostListType.Category)
-            {
-                <a href="#"><i class="fa fa-tag"></i> @ViewBag.Category</a>
-            }
-            else
-            {
-                <a href="~/">@Model.Blog.Title</a>
-            }
-        </h1>
-        <p class="page-cover-desc">@Model.Blog.Description</p>
-    </div>
+    @if (Model.PostListType == PostListType.Search)
+    {
+        <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="#"><i class="fa fa-search"></i> @Model.Blog.Title</a>
+        </div>
+    }
+    else if (Model.PostListType == PostListType.Author)
+    {
+      <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="~/">
+              <img src="~/@Model.Author.Avatar" class="rounded-circle" style="width: 52px" />
+              @Model.Author.DisplayName
+          </a>
+      </div>
+    }
+    else if (Model.PostListType == PostListType.Category)
+    {
+      <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="#"><i class="fa fa-tag"></i> @ViewBag.Category</a>
+      </div>
+    } else {
+      <!-- <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+         Hello
+      </div> -->
+    }
 
 
 
     <div class="page-content">
         <div class="container">
+<div class="row">
+
+<div class="col-sm-8">
             @if (Model.Posts != null)
             {
                 foreach (var item in Model.Posts)
@@ -86,6 +89,59 @@
                     }
                 </ul>
             }
+
+
+            </div>
+
+            <aside class="col-sm-4">
+
+              <div class="widget">
+                <h4 class="widget-title">Follow Us</h4>
+                <div class="widget-body">
+                  <ul class="blog-social nav ml-auto my-auto">
+                      @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" })
+                  </ul>
+                </div>
+              </div>
+
+
+              <div class="widget widget-recentpost">
+                <h4 class="widget-title">Recent Posts</h4>
+                <div class="widget-body">
+                  <li><a href="#">posttitle <span>(25)</span></a></li>
+                </div>
+              </div>
+
+              <div class="widget widget-categories">
+                <h4 class="widget-title">Categories</h4>
+                <div class="widget-body">
+                  <ul>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="widget widget-tags">
+                <h4 class="widget-title">Tags</h4>
+                <div class="widget-body">
+                  <ul>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+
+
+
+
+
+            </aside>
+
+
+        </div>
         </div>
     </div>
 

@@ -1,105 +1,51 @@
 .blog-header {
-  position: absolute;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-  z-index: 1000;
-  height: 6rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: #c31432;
+  background: -webkit-linear-gradient(to right, #240b36, #c31432);
+  background: linear-gradient(to right, #240b36, #c31432);
 
-  .container {
-    height: 100%;
-  }
-}
-
-.blog-logo {
-  display: block;
-  color: #fff !important;
-
-  img {
-    max-height: 2rem;
-    font-size: 0;
+  .navbar {
+    padding: 0;
   }
 
-  span {
-    display: block;
-    margin-left: .75rem;
-    font-size: 1.25rem;
-    font-family: $font-heading;
-    font-weight: 700;
+  .nav-item {
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
-}
 
-.blog-title {
-  font-family: $font-heading;
-  font-size: 2.625rem;
-  margin-bottom: 1rem;
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 0;
+    font-weight: 400;
+  }
 
-  a {
-    color: #fff;
+  &-one {
+    border-bottom: 1px solid #ddd;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  &-two {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
 
 .blog-social {
-  &-item {
-    margin-right: 1.25rem;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  &-link {
-    color: #fff;
-    display: block;
-
-    &:hover {
-      color: #fff;
-      opacity: .5;
-    }
-  }
-
-  &-icon {
-    display: block;
-    font-size: 1.25rem;
-
-    &.fa-twitter {
-      font-size: 1.25rem;
-    }
-  }
-}
-
-.blog-search {
-  .form-control {
-    border: 0;
-  }
-  @media screen and (min-width: 576px) {
-    .modal-dialog {
-      margin-top: 5rem;
-    }
-  }
-
-  &-toggle {
-    color: #fff;
+  li {
     margin-left: 1.25rem;
-    padding-left: 1.125rem;
-    position: relative;
 
-    &:hover {
-      .fa {
-        opacity: .5;
+    &:first-child {
+      margin: 0;
+    }
+
+    a {
+      color: #666;
+      font-size: 1.125rem;
+
+      &:hover {
+        color: #222;
       }
     }
-
-    // &::before {
-    //   content: "";
-    //   display: block;
-    //   width: 1px;
-    //   height: 1.5rem;
-    //   background-color: rgba(#fff,.25);
-    //   position: absolute;
-    //   left: 0;
-    //   top: 50%;
-    //   transform: translateY(-50%);
-    // }
   }
 }

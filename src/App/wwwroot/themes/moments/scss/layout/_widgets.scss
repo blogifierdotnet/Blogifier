@@ -1,0 +1,17 @@
+.widget {
+  margin-bottom: 3rem;
+  background-color: #fff;
+  &-title {
+    background: #c31432;
+    background: -webkit-linear-gradient(to right, #240b36, #c31432);
+    background: linear-gradient(to right, #240b36, #c31432);
+    padding: 1rem;
+    color:#fff;
+    font-size: 1.25rem;
+
+  }
+
+  &-body{
+    padding: 1rem;
+  }
+}

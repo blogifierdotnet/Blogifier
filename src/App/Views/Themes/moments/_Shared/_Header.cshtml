@@ -1,14 +1,92 @@
-﻿<header class="blog-header d-flex flex-column">
+﻿<header class="blog-header">
     <div class="container d-flex">
-        <a href="~/" class="blog-logo my-auto d-flex"> <img src="~/@Model.Blog.Logo" alt="@Model.Blog.Title" class="my-auto" /> <span class="my-auto">@Model.Blog.Title</span> </a>
-
-        <button class="blog-search-toggle btn-unstyled ml-auto" type="button" data-toggle="modal" data-target="#blog-search">
-            <i class="fa fa-search"></i>
+      <a href="~/" class="blog-logo my-auto d-flex"> <img src="~/@Model.Blog.Logo" alt="@Model.Blog.Title" class="my-auto" /></a>
+      <nav class="navbar navbar-expand-lg navbar-dark ml-auto">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Example
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#blog-search"><i class="fa fa-search"></i></a></li>
+
+          </ul>
+        </div>
+      </nav>
     </div>
 </header>
 
-<!--
-<ul class="blog-social nav ml-auto my-auto">
-    @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" })
-</ul> -->
+
+<section class="blog-featured">
+  <div class="container blog-featured-grid clearfix">
+    <article class="blog-featured-item">
+      <a class="blog-featured-item-link" href="#">
+        <img class="blog-featured-item-img" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
+        <div class="blog-featured-item-inner">
+          <span class="blog-featured-item-cat">Category</span>
+          <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+          <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+        </div>
+      </a>
+    </article>
+    <article class="blog-featured-item">
+      <a class="blog-featured-item-link" href="#">
+        <img class="blog-featured-item-img" src="/data/admin/cover-desk.jpg" alt="[POSTTITLE]">
+        <div class="blog-featured-item-inner">
+          <span class="blog-featured-item-cat">Category</span>
+          <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+          <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+        </div>
+      </a>
+    </article>
+    <article class="blog-featured-item">
+      <a class="blog-featured-item-link" href="#">
+        <img class="blog-featured-item-img" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]">
+        <div class="blog-featured-item-inner">
+          <span class="blog-featured-item-cat">Category</span>
+          <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+          <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+        </div>
+      </a>
+    </article>
+    <article class="blog-featured-item">
+      <a class="blog-featured-item-link" href="#">
+        <img class="blog-featured-item-img" src="/data/admin/cover-globe.png" alt="[POSTTITLE]">
+        <div class="blog-featured-item-inner">
+          <span class="blog-featured-item-cat">Category</span>
+          <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+          <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+        </div>
+      </a>
+    </article>
+    <article class="blog-featured-item">
+      <a class="blog-featured-item-link" href="#">
+        <img class="blog-featured-item-img" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
+        <div class="blog-featured-item-inner">
+          <span class="blog-featured-item-cat">Category</span>
+          <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+          <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+        </div>
+      </a>
+    </article>
+  </div>
+</section>

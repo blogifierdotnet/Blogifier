@@ -22,43 +22,4 @@
     z-index: 0;
   }
 
-  &-desc,
-  &-title,
-  .container {
-    position: relative;
-    z-index: 1;
-  }
-
-  &-title {
-    font-family: $font-heading;
-    font-size: 2.625rem;
-    margin-bottom: 1rem;
-
-    a {
-      color: #fff;
-    }
-  }
-
-  &-desc {
-    font-size: 1rem;
-    font-weight: 300;
-    max-width: 30rem;
-    margin: 0 auto;
-  }
-  @media screen and (max-width: 991px) {
-    .page-cover-title {
-      font-size: 1.5rem;
-      margin-bottom: .25rem;
-    }
-    padding: 6rem 1rem 3rem;
-  }
-  @media screen and (max-width: 800px) {
-    text-align: left;
-
-    .page-cover-desc {
-      font-size: .87rem;
-      max-width: none;
-      margin: 0;
-    }
-  }
 }

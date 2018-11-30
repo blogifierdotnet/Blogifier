@@ -1,3 +1,5 @@
+body{
+}
 .wrapper {}
 
 .page-content {
@@ -8,11 +10,9 @@
     padding-bottom: 5rem;
   }
 }
-
 .container {
-  max-width: 46rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  width: 1200px;
+  max-width: 100%;
 }
 
 .overlay {
