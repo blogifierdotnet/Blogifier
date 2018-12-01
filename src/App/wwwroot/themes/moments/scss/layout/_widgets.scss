@@ -1,17 +1,35 @@
 .widget {
   margin-bottom: 3rem;
   background-color: #fff;
-  &-title {
-    background: #c31432;
-    background: -webkit-linear-gradient(to right, #240b36, #c31432);
-    background: linear-gradient(to right, #240b36, #c31432);
-    padding: 1rem;
-    color:#fff;
-    font-size: 1.25rem;
+  padding: 1.5rem;
 
+  &-title {
+    padding: 1rem;
+    color: #333;
+    font-size: 1rem;
+
+    span {
+      border-bottom: 2px solid $color-theme;
+      display: inline-block;
+      position: relative;
+      padding: 0 0.75rem 0.25rem 0.25rem;
+      text-transform: uppercase;
+
+      &::before {
+        display: block;
+        content: "";
+        width: 0.75rem;
+        height: 0.75rem;
+        position: absolute;
+        left: -.75rem;
+        bottom: -0.40625rem;
+        background-color: $color-theme;
+        border-radius: 100%;
+      }
+    }
   }
 
-  &-body{
+  &-body {
     padding: 1rem;
   }
 }

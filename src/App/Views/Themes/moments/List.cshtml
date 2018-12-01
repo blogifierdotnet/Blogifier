@@ -152,10 +152,15 @@
             <aside class="col-sm-4">
 
               <div class="widget">
-                <h4 class="widget-title">Follow Us</h4>
+                <h4 class="widget-title"><span>Follow Us</span></h4>
                 <div class="widget-body">
-                  <ul class="blog-social nav ml-auto my-auto">
-                      @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" })
+                  <ul class="widget-social ml-auto my-auto">
+                      <!-- @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" }) -->
+        <li><a class="widget-social-fb" target="_blank" href="#"><i class="fa fa-facebook-square"></i> <span>Like</span></a></li>
+        <li><a class="widget-social-tw" target="_blank" href="#"><i class="fa fa-twitter"></i> <span>Follow</span></a></li>
+        <li><a class="widget-social-yt" target="_blank" href="#"><i class="fa fa-youtube"></i> <span>Subscribe</span></a></li>
+        <li><a class="widget-social-gp" target="_blank" href="#"><i class="fa fa-google-plus"></i> <span>Follow</span></a></li>
+
                   </ul>
                 </div>
               </div>
