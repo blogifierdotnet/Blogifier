@@ -1,0 +1,58 @@
+.widget-newsletter {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: #c31432;
+  background: -webkit-linear-gradient(to right, #240b36, #c31432);
+  background: linear-gradient(to right, #240b36, #c31432);
+  color: #fff;
+  text-align: center;
+
+  h3 {}
+
+  p {
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+
+  form {
+    position: relative;
+    width: 25rem;
+    margin: 0 auto;
+
+    &:hover {
+      input {
+        border-color: #fff;
+      }
+    }
+  }
+
+  input {
+    border: 2px solid rgba(#fff, .5);
+    background: none;
+    padding: 1rem;
+    height: 3rem;
+    width: 25rem;
+    border-radius: 5rem;
+    color: #fff;
+
+    &:focus,
+    &:hover {
+      outline: none !important;
+      border-color: #fff;
+    }
+  }
+
+  button {
+    background-color: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 0;
+    width: 7rem;
+    color: #fff;
+    border-left: 2px solid rgba(#fff, .5);
+    text-transform: uppercase;
+    background: none;
+  }
+}
