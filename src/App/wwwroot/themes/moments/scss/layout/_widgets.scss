@@ -31,5 +31,10 @@
 
   &-body {
     padding: 1rem;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
   }
 }
