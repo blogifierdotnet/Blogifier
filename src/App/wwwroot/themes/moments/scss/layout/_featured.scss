@@ -1,70 +1,72 @@
 .blog-featured {
-  background: #c31432;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #c31432;
+  background: -webkit-linear-gradient(to right, #240b36, #c31432);
+  background: linear-gradient(to right, #240b36, #c31432);
+  padding-bottom: 3rem;
 
+  &-container {
+    height: 30rem;
+    padding-right: 20rem;
+  }
+
+  .carousel {}
+
+  .carousel-indicators {
+    right: -20rem;
+    top: 0;
+    width: 20rem;
+    margin: 0;
+    padding: 0;
+    left: auto;
+    height: 100%;
+    flex-direction: column;
+
+    li {
+      height: auto;
+      flex: 1;
+      width: auto;
+      overflow: hidden;
+      margin: 0 0 0.5rem 0.5rem;
+      opacity: 0.75;
+
+      &.active,
+      &:hover {
+        opacity: 1;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .carousel-item {
+    height: 30rem;
+  }
 
   &-grid {
     padding-bottom: 4rem;
   }
 
   &-item {
-    float: left;
-    width: 33%;
-    height: 200px;
-    overflow: hidden;
-    position: relative;
-    margin-right: 0.5%;
-    margin-bottom: 0.5%;
-
-    &:nth-child(1) {
-      width: 32%;
-      height: 406px;
-      margin-bottom: 0;
-
-      img {
-        min-height: 100%;
-        max-width: none;
-        max-height: 100%;
-      }
-    }
-
-    &:nth-child(3) {
-      margin-right: 0;
-    }
-
-    &:nth-child(4) {
-      margin-bottom: 0;
-    }
-
-    &:nth-child(5) {
-      margin-right: 0;
-      margin-bottom: 0;
-    }
-
-    &-img {
-      position: absolute;
-      max-width: 125%;
-      max-height: 125%;
-      min-height: 100%;
-      left: 50%;
-      top: 50%;
-      min-width: 100%;
-      transform: translate(-50%,-50%);
-    }
-
     &-inner {
       position: absolute;
-      top:50%;
+      top: 50%;
       left: 50%;
       z-index: 100;
-      color:#fff;
+      color: #fff;
       text-align: center;
       width: 100%;
       padding: 0 3rem;
       transform: translate(-50%,-50%);
-      
+    }
 
+    &-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      min-height: 100%;
     }
   }
 }

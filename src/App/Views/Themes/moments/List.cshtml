@@ -13,60 +13,48 @@
     <partial name="~/Views/Themes/moments/_Shared/_Header.cshtml" />
 
 
-    <section class="blog-featured">
-      <div class="container blog-featured-grid clearfix">
-        <article class="blog-featured-item">
-          <a class="blog-featured-item-link" href="#">
-            <img class="blog-featured-item-img" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
-            <div class="blog-featured-item-inner">
-              <span class="blog-featured-item-cat">Category</span>
-              <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
-              <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
-            </div>
-          </a>
-        </article>
-        <article class="blog-featured-item">
-          <a class="blog-featured-item-link" href="#">
-            <img class="blog-featured-item-img" src="/data/admin/cover-desk.jpg" alt="[POSTTITLE]">
-            <div class="blog-featured-item-inner">
-              <span class="blog-featured-item-cat">Category</span>
-              <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
-              <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
-            </div>
-          </a>
-        </article>
-        <article class="blog-featured-item">
-          <a class="blog-featured-item-link" href="#">
-            <img class="blog-featured-item-img" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]">
-            <div class="blog-featured-item-inner">
-              <span class="blog-featured-item-cat">Category</span>
-              <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
-              <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
-            </div>
-          </a>
-        </article>
-        <article class="blog-featured-item">
-          <a class="blog-featured-item-link" href="#">
-            <img class="blog-featured-item-img" src="/data/admin/cover-globe.png" alt="[POSTTITLE]">
-            <div class="blog-featured-item-inner">
-              <span class="blog-featured-item-cat">Category</span>
-              <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
-              <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
-            </div>
-          </a>
-        </article>
-        <article class="blog-featured-item">
-          <a class="blog-featured-item-link" href="#">
-            <img class="blog-featured-item-img" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
-            <div class="blog-featured-item-inner">
-              <span class="blog-featured-item-cat">Category</span>
-              <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
-              <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
-            </div>
-          </a>
-        </article>
+
+<div class="blog-featured">
+
+  <div class="container">
+    <div class="blog-featured-container">
+    <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"><img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-blog.png" alt="[POSTTITLE]"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"><img class="blog-featured-item-img d-block w-100" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"><img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-globe.png" alt="[POSTTITLE]"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="blog-featured-item-img d-block w-100" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-globe.png" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+  </div>
+</div>
+
 
     @if (Model.PostListType == PostListType.Search)
     {
