@@ -1,0 +1,233 @@
+﻿@model ListModel
+@{
+    ViewData["bodyClass"] = "home";
+    var pgr = Model.Pager;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/moments/_Shared/_Head.cshtml" />
+</head>
+<body class="@ViewData["bodyClass"]">
+
+    <partial name="~/Views/Themes/moments/_Shared/_Header.cshtml" />
+
+
+
+<div class="blog-featured">
+
+  <div class="container">
+    <div class="blog-featured-container">
+    <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"><img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-blog.png" alt="[POSTTITLE]"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"><img class="blog-featured-item-img d-block w-100" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"><img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-globe.png" alt="[POSTTITLE]"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-blog.png" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="blog-featured-item-img d-block w-100" src="/data/demo/demo-cover.jpg" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="blog-featured-item-img d-block w-100" src="/data/admin/cover-globe.png" alt="[POSTTITLE]">
+          <div class="blog-featured-item-inner">
+            <span class="blog-featured-item-cat">Category</span>
+            <h2 class="blog-featured-item-title">Here is going to be the title of the post</h2>
+            <time class="blog-featured-item-time"><i class="fa fa-clock-o"></i> June 25, 2018</time>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+    @if (Model.PostListType == PostListType.Search)
+    {
+        <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="#"><i class="fa fa-search"></i> @Model.Blog.Title</a>
+        </div>
+    }
+    else if (Model.PostListType == PostListType.Author)
+    {
+      <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="~/">
+              <img src="~/@Model.Author.Avatar" class="rounded-circle" style="width: 52px" />
+              @Model.Author.DisplayName
+          </a>
+      </div>
+    }
+    else if (Model.PostListType == PostListType.Category)
+    {
+      <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+          <a href="#"><i class="fa fa-tag"></i> @ViewBag.Category</a>
+      </div>
+    } else {
+      <!-- <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+         Hello
+      </div> -->
+    }
+
+
+
+    <div class="page-content">
+        <div class="container">
+<div class="row">
+
+<div class="col-sm-8">
+            @if (Model.Posts != null)
+            {
+                foreach (var item in Model.Posts)
+                {
+                    var img = string.IsNullOrEmpty(item.Cover) ? Model.Blog.Cover : item.Cover;
+                    <article class="post">
+                        <div class="post-cover">
+                            <img src="~/@img" alt="@item.Title">
+                            @if (item.Featured)
+                            {
+                            <span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span>
+                            }
+                        </div>
+                        <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
+                        <div class="post-meta">
+                            <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>
+                            <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
+                        </div>
+                        <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(item.Description))</div>
+                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@item.Slug">Read</a>
+                    </article>
+                }
+            }
+            @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
+            {
+                <ul class="pagination justify-content-center">
+                    @if (pgr.ShowOlder)
+                    {
+                    <li class="item item-prev">
+                        <a class="item-link" href="~/@pgr.LinkToOlder">
+                            <i class="item-icon fa fa-angle-left"></i>
+                        </a>
+                    </li>
+                    }
+                    @if (pgr.ShowNewer)
+                    {
+                    <li class="item item-next">
+                        <a class="item-link" href="~/@pgr.LinkToNewer">
+                            <i class="item-icon fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                    }
+                </ul>
+            }
+
+
+            </div>
+
+            <aside class="col-sm-4">
+
+              <div class="widget widget-social">
+                <h4 class="widget-title"><span>Follow Us</span></h4>
+                <div class="widget-body">
+                  <ul>
+                      <!-- @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" }) -->
+                    <li><a class="widget-social-fb" target="_blank" href="#"><i class="fa fa-facebook-square"></i> <span>Like</span></a></li>
+                    <li><a class="widget-social-tw" target="_blank" href="#"><i class="fa fa-twitter"></i> <span>Follow</span></a></li>
+                    <li><a class="widget-social-yt" target="_blank" href="#"><i class="fa fa-youtube"></i> <span>Subscribe</span></a></li>
+                    <li><a class="widget-social-gp" target="_blank" href="#"><i class="fa fa-google-plus"></i> <span>Follow</span></a></li>
+                  </ul>
+                </div>
+              </div>
+
+
+              <div class="widget widget-posts">
+                <h4 class="widget-title"><span>Recent Posts</span></h4>
+                <div class="widget-body">
+                  <ul class="widget-posts-list">
+                    <li class="widget-posts-item">
+                      <a href="#" class="widget-posts-link">
+                        <h5 class="widget-posts-title">Welcome to Blogifier!</h5>
+                        <span class="widget-posts-date">July 19, 2018</span>
+                        <span class="widget-posts-cat">News</span>
+                        <img class="widget-posts-img" src="~/data/admin/cover-blog.png" alt="[POSTTITLE]">
+                        <p class="widget-posts-desc">Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.</p>
+                      </a>
+                    </li>
+                    <li class="widget-posts-item">
+                      <a href="#" class="widget-posts-link">
+                        <h5 class="widget-posts-title">Welcome to Blogifier!</h5>
+                        <span class="widget-posts-date">July 19, 2018</span>
+                        <span class="widget-posts-cat">News</span>
+                        <img class="widget-posts-img" src="~/data/admin/cover-blog.png" alt="[POSTTITLE]">
+                        <p class="widget-posts-desc">Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="widget widget-categories">
+                <h4 class="widget-title"><span>Categories</span></h4>
+                <div class="widget-body">
+                  <ul>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                    <li><a href="#">catname <span>(25)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="widget widget-tags">
+                <h4 class="widget-title"><span>Tags</span></h4>
+                <div class="widget-body">
+                  <ul class="clearfix">
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Microsoft</a></li>
+                    <li><a href="#">C#</a></li>
+                    <li><a href="#">Frameworks</a></li>
+                    <li><a href="#">Developers</a></li>
+                    <li><a href="#">Windows</a></li>
+                    <li><a href="#">Tablet</a></li>
+                  </ul>
+                </div>
+              </div>
+
+
+
+
+
+            </aside>
+
+
+        </div>
+        </div>
+    </div>
+
+    <div class="widget-newsletter">
+      <div class="container">
+        <h3>Newsletter!</h3>
+        <p>Like, really social. With 12 thousands followers and counting, the topics we cover and the
+        ways readers can access our content are constantly growing.</p>
+        <form class="form-group">
+          <input type="email" placeholder="someone@example.com">
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <partial name="~/Views/Themes/moments/_Shared/_Footer.cshtml" />
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿@model Core.Data.ThemeWidget
+@using System.Linq
+@inject Core.Services.IDataService _db
+@{
+    var keyAuth = $"{Model.Theme}-{Model.Widget.Title}-auth";
+    var keyCat = $"{Model.Theme}-{Model.Widget.Title}-cat";
+    var keyTmpl = $"{Model.Theme}-{Model.Widget.Title}-tmpl";
+    var keyMax = $"{Model.Theme}-{Model.Widget.Title}-max";
+
+    var authors = _db.Authors.All().Select(a => a.DisplayName).ToArray();
+    var authorOrdered = authors.ToList().OrderBy(a => a);
+    var authorList = authorOrdered.ToList();
+    authorList.Insert(0, "All");
+
+    var cats = await _db.BlogPosts.Categories();
+    var catList = cats.ToList();
+    catList.Insert(0, "All");
+
+    var selectedAuth = _db.CustomFields.GetCustomValue(keyAuth);
+    var selectedCat = _db.CustomFields.GetCustomValue(keyCat);
+    var maxRecords = _db.CustomFields.GetCustomValue(keyMax);
+    var template = _db.CustomFields.GetCustomValue(keyTmpl);
+
+    if (string.IsNullOrEmpty(selectedAuth)) { selectedAuth = "All"; }
+    if (string.IsNullOrEmpty(selectedCat)) { selectedCat = "All"; }
+    if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
+    if (string.IsNullOrEmpty(template)) { template = "<a href=\"/posts/{0}\" class=\"list-group-item list-group-item-action\">{1}</a>"; }
+}
+<form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
+    <div class="form-group">
+        <label class="form-group-label">Authors</label>
+        <select id="selAuthors" name="selAuthors" class="form-control">
+            @foreach (var a in authorList)
+            {
+                if (selectedAuth == a)
+                {
+                    <option value="@a" selected>@a</option>
+                }
+                else
+                {
+                    <option value="@a">@a</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Categories</label>
+        <select id="selCats" name="selCats" class="form-control">
+            @foreach (var c in catList)
+            {
+                if (selectedCat == c)
+                {
+                    <option value="@c" selected>@c</option>
+                }
+                else
+                {
+                    <option value="@c">@c</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Template ({0} = slug {1} = title)</label>
+        <textarea rows="2" id="txtTemplate" name="txtTemplate" class="form-control">@template</textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Max records</label>
+        <input type="text" id="txtMaxRecords" name="txtMaxRecords" class="form-control" value="@maxRecords" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+    <input type="hidden" id="hdnWidget" name="hdnWidget" value="@Model.Widget.Title" />
+    <input type="hidden" id="hdnTheme" name="hdnTheme" value="@Model.Theme" />
+</form>

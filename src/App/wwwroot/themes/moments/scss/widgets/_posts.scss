@@ -1,0 +1,47 @@
+.widget-posts {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      border: 0;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &-link {
+    color: #000;
+  }
+
+  &-title {
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &-date {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  &-img {
+    display: block;
+  }
+
+  &-desc {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  &-cat {
+    font-size: 0.75rem;
+    color: #666;
+  }
+}

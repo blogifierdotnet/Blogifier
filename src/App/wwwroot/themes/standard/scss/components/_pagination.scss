@@ -1,0 +1,43 @@
+﻿.pagination {
+    margin-bottom: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #f8f8f8;
+
+    .item {
+        margin: 4rem 0;
+
+        &-link {
+            border: 2px solid #9c9c9c;
+            border-radius: 50%;
+            display: inline-block;
+            width: 2.75rem;
+            height: 2.75rem;
+            text-align: center;
+            text-transform: uppercase;
+            color: #888;
+            font-weight: 700;
+
+            &:hover {
+                border-color: $color-theme;
+                color: $color-theme;
+            }
+        }
+
+        &-icon {
+            display: block;
+            height: 100%;
+            line-height: 2.5rem;
+            font-size: 1.5rem;
+        }
+
+        &-prev {
+            margin-right: .5rem;
+        }
+    }
+
+    @media screen and (max-width:57rem) {
+        .item {
+            margin: 1.5rem .25rem;
+        }
+    }
+}

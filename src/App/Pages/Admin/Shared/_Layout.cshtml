@@ -1,0 +1,122 @@
+﻿@{
+    IEnumerable<Notification> _notifications = new List<Notification>();
+
+    if (Model.Notifications != null)
+    {
+        _notifications = (IEnumerable<Notification>)Model.Notifications;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Blogifier</title>
+    <link href="~/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/admin/css/fontawesome.min.css" rel="stylesheet">
+    <link href="~/admin/css/styles.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="~/lib/img/favicon.ico">
+</head>
+
+<body>
+    <div class="bf">
+        <ul class="bf-taskbar d-flex flex-lg-column">
+            <li class="taskbar-item">
+                <a class="taskbar-item-link" href="~/admin/posts/edit" title="New Post">
+                    <i class="taskbar-item-icon fas fa-plus"></i>
+                </a>
+            </li>
+            <li is-active-route asp-controller="posts" class="taskbar-item">
+                <a href="~/admin/posts" class="taskbar-item-link" title="Posts">
+                    <i class="taskbar-item-icon fas fa-align-left"></i>
+                </a>
+            </li>
+            @if (Model.IsAdmin)
+            {
+                <li is-active-route asp-controller="settings" class="taskbar-item">
+                    <a href="~/admin/settings" class="taskbar-item-link" title="Settings">
+                        <i class="taskbar-item-icon fas fa-cog"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li is-active-route asp-controller="settings" asp-action="profile" class="taskbar-item">
+                    <a href="~/admin/settings/profile" class="taskbar-item-link" title="Settings">
+                        <i class="taskbar-item-icon fas fa-cog"></i>
+                    </a>
+                </li>
+            }
+            @if (_notifications.Count() > 0)
+            {
+                <li class="taskbar-item">
+                    <a class="taskbar-item-link" href="" onclick="return notificationsController.open();" return false; title="Notifications">
+                        <i class="taskbar-item-icon fas fa-comment"></i>
+                    </a>
+                </li>
+            }
+            <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
+                <a class="taskbar-item-link" href="~/" return false; title="Visit Blog" target="_blank"><i class="taskbar-item-icon fas fa-globe"></i></a>
+            </li>
+            <li class="taskbar-item">
+                <a class="taskbar-item-link" href="#" onclick="document.getElementById('frmOut').submit()" title="Sign out"><i class="taskbar-item-icon fas fa-sign-out-alt"></i></a>
+            </li>
+        </ul>
+
+        <!-- Modal Notifications -->
+        <div class="modal fade" id="notifications" tabindex="-1" role="dialog" aria-labelledby="notificationsLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="settingsLabel">Notifications</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        @if (_notifications.Count() > 0)
+                        {
+                            foreach (var note in _notifications)
+                            {
+                                @if (note.AlertType == AlertType.Sticky)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @Html.Raw(note.Content)
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-primary" role="alert">
+                                        @Html.Raw(note.Content)
+                                        <button type="button" class="close" onclick="notificationsController.remove('@note.Id')" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" id="frmOut" name="frmOut" asp-controller="Account" asp-action="Logout"></form>
+
+        @RenderBody()
+    </div>
+    <script src="~/admin/js/lib/jquery.min.js"></script>
+    <script src="~/admin/js/lib/toastr.min.js"></script>
+    <script src="~/admin/js/lib/popper.min.js"></script>
+    <script src="~/admin/js/lib/bootstrap.min.js"></script>
+    <script src="~/admin/js/app/app.js"></script>
+    <script src="~/admin/js/app/dataService.js"></script>
+    <script src="~/admin/js/app/notificationsController.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) {
+            return webRoot + str;
+        }
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

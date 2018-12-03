@@ -1,0 +1,19 @@
+.blog-footer {
+      background-color: #191919;
+  color: #888;
+  font-size: .75rem;
+  padding: 3rem 0;
+  text-transform: uppercase;
+
+  a {
+    color: #888;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}

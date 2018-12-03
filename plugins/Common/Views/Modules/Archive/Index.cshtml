@@ -1,0 +1,24 @@
+﻿@model Core.Data.ListModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/Standard/_Shared/_Head.cshtml" />
+</head>
+<body class="@ViewData["bodyClass"]">
+    <partial name="~/Views/Themes/Standard/_Shared/_Header.cshtml" />
+
+    <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
+        <h1 class="page-cover-title">
+            <a href="~/">@Model.Blog.Title</a>
+        </h1>
+        <p class="page-cover-desc">@Model.Blog.Description</p>
+    </div>
+
+    <div class="page-content">
+        <div class="container" style="padding: 40px">
+            <h1>Archive page</h1>
+        </div>
+    </div>
+    <partial name="~/Views/Themes/Standard/_Shared/_Footer.cshtml" />
+</body>
+</html>

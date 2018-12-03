@@ -5,15 +5,14 @@
    "version": "0.2.0",
    "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Blogifier.Web/bin/Debug/netcoreapp2.0/Blogifier.Web.dll",
+            "program": "${workspaceFolder}/src/App/bin/Debug/netcoreapp2.1/App.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Blogifier.Web",
-            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+            "cwd": "${workspaceFolder}/src/App",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -34,7 +33,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Blogifier.Web/Views"
+                "/Views": "${workspaceFolder}/Views"
             }
         },
         {
@@ -43,5 +42,5 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         }
-    ]
+    ,]
 }

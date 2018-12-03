@@ -1,0 +1,71 @@
+﻿@page
+@model App.Pages.Admin.Settings.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
+    <div class="bf-body">
+        <form method="POST">
+            <div class="bf-content bf-content-boxed bf-settings">
+
+                @if (Model.Action == "Confirm")
+                {
+                    <div>This will remove user "@Model.Author.AppUserName" and all user content from the blog. Continue?</div>
+                    <button type="submit" asp-page-handler="Remove" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">
+                        Remove
+                    </button>
+                    <a asp-page="Users" class="btn btn-secondary">Cancel</a>
+                }
+                else if (Model.Action == "Remove")
+                {
+                    <div>Removed</div>
+                }
+                else
+                {
+                    <div class="bf-title d-none d-lg-block"><span>Profile</span></div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Author.DisplayName"></label>
+                        <input type="text" asp-for="Author.DisplayName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Author.Email"></label>
+                        <input type="text" asp-for="Author.Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label" asp-for="Author.Bio"></label>
+                        <textarea asp-for="Author.Bio" cols="5" class="form-control"></textarea>
+                    </div>
+                    @if (Model.Author.AppUserName == User.Identity.Name)
+                    {
+                        <div class="form-group">
+                            <label class="form-group-label" asp-for="Author.Avatar"></label>
+                            <div class="input-group">
+                                <input type="text" asp-for="Author.Avatar" class="form-control" readonly />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);"> Select</button>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    <input type="hidden" asp-for="Author.Id" />
+                    <input type="hidden" asp-for="Author.AppUserName" />
+                    <button type="submit" class="btn btn-primary btn-main">Save</button>
+
+                    @if (Model.IsAdmin && Model.Author.AppUserName != User.Identity.Name)
+                    {
+                        <button type="submit" asp-page-handler="Confirm" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">Delete</button>
+                    }
+                }
+            </div>
+        </form>
+    </div>
+</div>
+<partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
+
+@section Scripts{
+    @Html.Raw(Model.RenderMessage())
+    <script src="~/admin/js/app/fileManagerController.js"></script>
+}

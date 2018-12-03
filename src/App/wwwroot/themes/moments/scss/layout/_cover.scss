@@ -1,0 +1,25 @@
+.page-cover {
+  padding-top: 3.5rem + 6rem;
+  padding-bottom: 5rem;
+  position: relative;
+  color: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: block;
+    background: #000;
+    z-index: 700;
+    opacity: .5;
+    z-index: 0;
+  }
+
+}

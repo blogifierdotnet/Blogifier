@@ -1,0 +1,40 @@
+.widget {
+  margin-bottom: 3rem;
+  background-color: #fff;
+  padding: 1.5rem;
+
+  &-title {
+    padding: 1rem;
+    color: #333;
+    font-size: 1rem;
+
+    span {
+      border-bottom: 2px solid $color-theme;
+      display: inline-block;
+      position: relative;
+      padding: 0 0.75rem 0.25rem 0.25rem;
+      text-transform: uppercase;
+
+      &::before {
+        display: block;
+        content: "";
+        width: 0.75rem;
+        height: 0.75rem;
+        position: absolute;
+        left: -.75rem;
+        bottom: -0.40625rem;
+        background-color: $color-theme;
+        border-radius: 100%;
+      }
+    }
+  }
+
+  &-body {
+    padding: 1rem;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+}

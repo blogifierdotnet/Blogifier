@@ -1,0 +1,41 @@
+﻿@page
+@model App.Pages.Admin.Settings.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
+    <div class="bf-body">
+        <form method="post" asp-antiforgery="true">
+            <div class="bf-content bf-content-boxed bf-settings">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="form-group-label" asp-for="UserName"></label>
+                    <input type="text" asp-for="UserName" class="form-control" autofocus />
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label" asp-for="Email"></label>
+                    <input type="text" asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label" asp-for="Password"></label>
+                    <input type="password" asp-for="Password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label" asp-for="ConfirmPassword"></label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
+                        <input type="checkbox" id="cbxSetAdmin" asp-for="SetAsAdmin" class="custom-control-input">
+                        <span class="custom-control-label">Set as administrator</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-main">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @Html.Raw(Model.RenderMessage())
+}

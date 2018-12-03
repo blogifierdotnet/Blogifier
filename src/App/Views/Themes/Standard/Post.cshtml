@@ -1,0 +1,67 @@
+﻿@model PostModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/Standard/_Shared/_Head.cshtml" />
+</head>
+<body class="@ViewData["bodyClass"]">
+    <!--[if lt IE 10]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <partial name="~/Views/Themes/Standard/_Shared/_Header.cshtml" />
+    <article class="post-single">
+        <div class="post-cover" style="background-image: url('@Model.Blog.Cover')"></div>
+        <section class="container">
+            <div class=" post-body">
+                <header class="post-header">
+                    <h2 class="post-title">@Model.Post.Title</h2>
+                    <div class="post-meta">
+                        <a href="~/authors/@Model.Post.Author.AppUserName">
+                            <img class="post-meta-img" src="~/@Model.Post.Author.Avatar" alt="@Model.Post.Author.DisplayName" />
+                            <span class="post-meta-author">@Model.Post.Author.DisplayName</span>
+                        </a>
+                        <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", Model.Post.Published)</time>
+                        @if (!string.IsNullOrEmpty(Model.Post.Categories))
+                        {
+                            <span>/</span>
+                            var cats = Model.Post.Categories.Split(',');
+                            foreach (var cat in cats)
+                            {
+                                <span>
+                                    <a href="~/categories/@cat">@cat</a>
+                                </span>
+                            }
+                        }
+                    </div>
+                </header>
+                <div class="post-content">
+                    @Html.Raw(Model.Post.Content)
+                </div>
+
+                @if (Model.Older != null || Model.Newer != null)
+                {
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Older != null)
+                        {
+                        <li class="item item-prev">
+                            <a class="item-link" href="~/posts/@Model.Older.Slug" title="@Model.Older.Title">
+                                <i class="item-icon fa fa-angle-left"></i>
+                            </a>
+                        </li>
+                        }
+                        @if (Model.Newer != null)
+                        {
+                        <li class="item item-next">
+                            <a class="item-link" href="~/posts/@Model.Newer.Slug" title="@Model.Newer.Title">
+                                <i class="item-icon fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </section>
+    </article>
+    <partial name="~/Views/Themes/Standard/_Shared/_Footer.cshtml" />
+</body>
+</html>

@@ -1,0 +1,4 @@
+﻿@foreach (var item in Model.Posts)
+{
+   @Html.Raw(string.Format(Model.Template, item.Slug, item.Title))
+}

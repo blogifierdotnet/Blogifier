@@ -1,0 +1,40 @@
+﻿@model PostModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/Simple/Shared/_Header.cshtml" />
+</head>
+<body>
+    <style>
+        .post img {
+            max-width: 100%;
+        }
+    </style>
+    <partial name="~/Views/Themes/Simple/Shared/_Navbar.cshtml" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="my-4">
+                    @Model.Blog.Title
+                    <small>@Model.Blog.Description</small>
+                </h1>
+                <div class="card mb-4">
+                    <img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">
+                    <div class="card-body post">
+                        <h2 class="card-title">@Model.Post.Title</h2>
+                        @Html.Raw(Model.Post.Content)
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @Model.Post.Published.ToString("M"), @Model.Post.Published.Year by
+                        <a href="~/authors/@Model.Post.Author.AppUserName">@Model.Post.Author.DisplayName</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <partial name="~/Views/Themes/Simple/Shared/_Sidebar.cshtml" />
+            </div>
+        </div>
+    </div>
+    <partial name="~/Views/Themes/Simple/Shared/_Footer.cshtml" />
+</body>
+</html>

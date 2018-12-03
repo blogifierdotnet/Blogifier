@@ -1,0 +1,64 @@
+﻿@model Core.Data.ListModel
+@{
+    var pgr = Model.Pager;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="~/Views/Themes/Simple/Shared/_Header.cshtml" />
+</head>
+<body>
+    <partial name="~/Views/Themes/Simple/Shared/_Navbar.cshtml" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="my-4">
+                    @Model.Blog.Title
+                    <small>@Model.Blog.Description</small>
+                </h1>
+                @if (Model != null && Model.Posts != null && Model.Posts.Any())
+                {
+                    foreach (var post in Model.Posts)
+                    {
+                        var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
+                        img = $"{Url.Content("~/")}{img}";
+                        <div class="card mb-4">
+                            <img class="card-img-top" src="@img" alt="Card image cap">
+                            <div class="card-body">
+                                <h2 class="card-title">@post.Title</h2>
+                                <p class="card-text">@Html.Raw(post.Description)</p>
+                                <a href="~/posts/@post.Slug" class="btn btn-primary">Read More &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Posted on @post.Published.ToString("M"), @post.Published.Year by
+                                <a href="~/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
+                            </div>
+                        </div>
+                    }
+                }
+                @if (pgr.ShowOlder || pgr.ShowNewer)
+                {
+                    <ul class="pagination justify-content-center mb-4">
+                        @if (pgr.ShowOlder)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="~/@pgr.LinkToOlder">&larr; Older</a>
+                            </li>
+                        }
+                        @if (pgr.ShowNewer)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="~/@pgr.LinkToNewer">Newer &rarr;</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-md-4">
+                <partial name="~/Views/Themes/Simple/Shared/_Sidebar.cshtml" />
+            </div>
+        </div>
+    </div>
+    <partial name="~/Views/Themes/Simple/Shared/_Footer.cshtml" />
+</body>
+</html>

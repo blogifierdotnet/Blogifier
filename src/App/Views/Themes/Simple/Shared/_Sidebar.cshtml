@@ -1,0 +1,38 @@
+﻿<form method="get" action="~/blog">
+    <div class="card my-4">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+            <div class="input-group">
+                <input type="text" id="term" name="term" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="card my-4">
+    <h5 class="card-header">Static Widget</h5>
+    <div class="card-body">
+        This widget has static HTML that theme author put in. It is not updatable and can only display <b>static</b> HTML text. 
+        To update it, blogger would need to update theme itself.
+    </div>
+</div>
+
+<div class="card my-4">
+    <h5 class="card-header">Dynamic Widget</h5>
+    <div class="card-body">
+        @await Component.InvokeAsync("HtmlBlock", new { theme = "Simple", widget = "Sidebar" })
+    </div>
+</div>
+
+<div class="card my-4">
+    <h5 class="card-header">Post List</h5>
+    @await Component.InvokeAsync("PostList", new { theme = "Simple", widget = "Post List" })
+</div>
+
+<div class="card my-4">
+    <h5 class="card-header">Categories</h5>
+    @await Component.InvokeAsync("Categories", new { theme = "Simple", widget = "Categories" })
+</div>

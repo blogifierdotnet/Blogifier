@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Blogifier.Web/Blogifier.Web.csproj"
+                "${workspaceFolder}/src/App/App.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
