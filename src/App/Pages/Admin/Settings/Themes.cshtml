@@ -2,7 +2,13 @@
 @model App.Pages.Admin.Settings.ThemesModel
 @{
     ViewData["Title"] = "Themes";
+    var show = "show";
 }
+<style>
+    .btn-link {
+        color: #666;
+    }
+</style>
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
     <div class="bf-body">
@@ -65,16 +71,29 @@
                 <div class="settings-body">
                     @if (Model.Widgets != null)
                     {
-                        foreach (var widget in Model.Widgets)
+                    <div class="accordion" id="accordion-widgets">
+                        @foreach (var widget in Model.Widgets)
                         {
                             var path = $"~/Views/Widgets/{widget.Widget}/Edit.cshtml";
-                            <div class="bf-title d-none d-lg-block"><span>@widget.Title</span></div>
-                            await Html.RenderPartialAsync(path, new ThemeWidget
-                            {
-                                Theme = Model.BlogItem.Theme,
-                                Widget = widget
-                            });
+                            <div class="card">
+                                <div class="card-header" id="heading-@widget.Widget">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-@widget.Widget" aria-expanded="false" aria-controls="collapse-@widget.Widget">
+                                            @widget.Title
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapse-@widget.Widget" class="collapse @show" aria-labelledby="heading-@widget.Widget" data-parent="#accordion-widgets">
+                                    <div class="card-body">
+                                        @{
+                                        await Html.RenderPartialAsync(path, new ThemeWidget { Theme = Model.BlogItem.Theme, Widget = widget });
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            show = "";
                         }
+                    </div>                       
                     }
                 </div>
             </div>

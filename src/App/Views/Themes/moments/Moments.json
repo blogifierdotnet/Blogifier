@@ -2,5 +2,9 @@
   {
     "Widget": "HtmlBlock",
     "Title": "Social Buttons"
+  },
+  {
+    "Widget": "PostList",
+    "Title": "Post List"
   }
 ]
