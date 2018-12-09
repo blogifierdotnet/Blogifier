@@ -1,0 +1,13 @@
+﻿@model Core.Data.ThemeWidget
+
+<form method="post" action="~/widgets/api/newsletter/edit" asp-antiforgery="true">
+    <div class="form-group">
+        <label class="form-group-label">Max records</label>
+        <input type="text" id="txtMaxRecords" name="txtMaxRecords" class="form-control" value="" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-main">Save</button>
+    </div>
+    <input type="hidden" id="hdnWidget" name="hdnWidget" value="@Model.Widget.Title" />
+    <input type="hidden" id="hdnTheme" name="hdnTheme" value="@Model.Theme" />
+</form>

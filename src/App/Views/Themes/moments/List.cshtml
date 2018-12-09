@@ -222,10 +222,7 @@
         <h3>Newsletter!</h3>
         <p>Like, really social. With 12 thousands followers and counting, the topics we cover and the
         ways readers can access our content are constantly growing.</p>
-        <form class="form-group">
-          <input type="email" placeholder="someone@example.com">
-          <button type="submit">Subscribe</button>
-        </form>
+        @await Component.InvokeAsync("Newsletter", new { theme = "Moments", widget = "Newsletter" })
       </div>
     </div>
     <partial name="~/Views/Themes/moments/_Shared/_Footer.cshtml" />
