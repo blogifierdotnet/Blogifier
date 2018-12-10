@@ -24,7 +24,7 @@ namespace Core.Data
         public Task<BlogItem> GetBlogSettings()
         {
             var blog = new BlogItem();
-            CustomField title, desc, items, cover, logo, theme;
+            CustomField title, desc, items, cover, logo, theme, culture;
 
             title = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTitle).FirstOrDefault();
             desc = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogDescription).FirstOrDefault();
@@ -32,6 +32,7 @@ namespace Core.Data
             cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
             theme = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme).FirstOrDefault();
+            culture = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.Culture).FirstOrDefault();
 
             blog.Title = title == null ? "Blog Title" : title.Content;
             blog.Description = desc == null ? "Short blog description" : desc.Content;
@@ -39,6 +40,7 @@ namespace Core.Data
             blog.Cover = cover == null ? "lib/img/cover.png" : cover.Content;
             blog.Logo = logo == null ? "lib/img/logo-white.png" : logo.Content;
             blog.Theme = theme == null ? "Standard" : theme.Content;
+            blog.Culture = culture == null ? "en-US" : culture.Content;
 
             return Task.FromResult(blog);
         }
@@ -50,6 +52,7 @@ namespace Core.Data
             var items = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogItemsPerPage).FirstOrDefault();
             var cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             var logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
+            var culture = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.Culture).FirstOrDefault();
 
             if (title == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogTitle, Content = blog.Title });
             else title.Content = blog.Title;
@@ -65,6 +68,9 @@ namespace Core.Data
 
             if (logo == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.BlogLogo, Content = blog.Logo });
             else logo.Content = blog.Logo;
+
+            if (culture == null) _db.CustomFields.Add(new CustomField { AuthorId = 0, Name = Constants.Culture, Content = blog.Culture });
+            else culture.Content = blog.Culture;
 
             await _db.SaveChangesAsync();
         }

@@ -1,0 +1,247 @@
+[
+  {
+    "Key": "general",
+    "Values": {
+      "en-US": "General",
+      "ru-RU": "Главная"
+    }
+  },
+  {
+    "Key": "profile",
+    "Values": {
+      "en-US": "Profile",
+      "ru-RU": "Профиль"
+    }
+  },
+  {
+    "Key": "password",
+    "Values": {
+      "en-US": "Password",
+      "ru-RU": "Пароль"
+    }
+  },
+  {
+    "Key": "themes",
+    "Values": {
+      "en-US": "Themes",
+      "ru-RU": "Темы"
+    }
+  },
+  {
+    "Key": "users",
+    "Values": {
+      "en-US": "Users",
+      "ru-RU": "Пользователи"
+    }
+  },
+  {
+    "Key": "new-user",
+    "Values": {
+      "en-US": "New user",
+      "ru-RU": "Новый пользователь"
+    }
+  },
+  {
+    "Key": "import",
+    "Values": {
+      "en-US": "Import",
+      "ru-RU": "Импорт"
+    }
+  },
+  {
+    "Key": "new-post",
+    "Values": {
+      "en-US": "New Post",
+      "ru-RU": "Новое сообщение"
+    }
+  },
+  {
+    "Key": "posts",
+    "Values": {
+      "en-US": "Posts",
+      "ru-RU": "Сообщения"
+    }
+  },
+  {
+    "Key": "settings",
+    "Values": {
+      "en-US": "Settings",
+      "ru-RU": "Настройки"
+    }
+  },
+  {
+    "Key": "notifications",
+    "Values": {
+      "en-US": "Notifications",
+      "ru-RU": "Уведомления"
+    }
+  },
+  {
+    "Key": "visit-blog",
+    "Values": {
+      "en-US": "Visit Blog",
+      "ru-RU": "Посетить блог"
+    }
+  },
+  {
+    "Key": "sign-out",
+    "Values": {
+      "en-US": "Sign out",
+      "ru-RU": "Выйти"
+    }
+  },
+  {
+    "Key": "title",
+    "Values": {
+      "en-US": "Title",
+      "ru-RU": "Название"
+    }
+  },
+  {
+    "Key": "description",
+    "Values": {
+      "en-US": "Description",
+      "ru-RU": "Описание"
+    }
+  },
+  {
+    "Key": "items-per-page",
+    "Values": {
+      "en-US": "Items per page",
+      "ru-RU": "Количество сообщений на странице"
+    }
+  },
+  {
+    "Key": "logo",
+    "Values": {
+      "en-US": "Logo Image",
+      "ru-RU": "Логотип"
+    }
+  },
+  {
+    "Key": "cover",
+    "Values": {
+      "en-US": "Cover Image",
+      "ru-RU": "Обложка"
+    }
+  },
+  {
+    "Key": "language",
+    "Values": {
+      "en-US": "Language",
+      "ru-RU": "Язык"
+    }
+  },
+  {
+    "Key": "save",
+    "Values": {
+      "en-US": "Save",
+      "ru-RU": "Сохранить"
+    }
+  },
+  {
+    "Key": "select",
+    "Values": {
+      "en-US": "Select",
+      "ru-RU": "Выбрать"
+    }
+  },
+  {
+    "Key": "search",
+    "Values": {
+      "en-US": "Search",
+      "ru-RU": "Поиск"
+    }
+  },
+  {
+    "Key": "all",
+    "Values": {
+      "en-US": "All",
+      "ru-RU": "Всё"
+    }
+  },
+  {
+    "Key": "published",
+    "Values": {
+      "en-US": "Published",
+      "ru-RU": "Опубликовано"
+    }
+  },
+  {
+    "Key": "draft",
+    "Values": {
+      "en-US": "Draft",
+      "ru-RU": "Черновики"
+    }
+  },
+  {
+    "Key": "status",
+    "Values": {
+      "en-US": "Status",
+      "ru-RU": "Статус"
+    }
+  },
+  {
+    "Key": "not-found",
+    "Values": {
+      "en-US": "Not found",
+      "ru-RU": "Не найдено"
+    }
+  },
+  {
+    "Key": "publish",
+    "Values": {
+      "en-US": "Publish",
+      "ru-RU": "Опубликовать"
+    }
+  },
+  {
+    "Key": "unpublish",
+    "Values": {
+      "en-US": "Unpublish",
+      "ru-RU": "Отменить публикацию"
+    }
+  },
+  {
+    "Key": "featured",
+    "Values": {
+      "en-US": "Featured",
+      "ru-RU": "Избранное"
+    }
+  },
+  {
+    "Key": "add-to-featured",
+    "Values": {
+      "en-US": "Add to featured",
+      "ru-RU": "Добавить в избранное"
+    }
+  },
+  {
+    "Key": "cancel",
+    "Values": {
+      "en-US": "Cancel",
+      "ru-RU": "Отменить"
+    }
+  },
+  {
+    "Key": "delete",
+    "Values": {
+      "en-US": "Delete",
+      "ru-RU": "Удалить"
+    }
+  },
+  {
+    "Key": "categories",
+    "Values": {
+      "en-US": "Categories",
+      "ru-RU": "Категории"
+    }
+  },
+  {
+    "Key": "view",
+    "Values": {
+      "en-US": "View",
+      "ru-RU": "Посмотреть"
+    }
+  }
+]

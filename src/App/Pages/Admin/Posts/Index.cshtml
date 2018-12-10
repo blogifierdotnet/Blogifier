@@ -1,5 +1,6 @@
 ﻿@page
 @model App.Pages.Admin.Posts.IndexModel
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
 }
@@ -15,24 +16,24 @@
         <form class="bf-posts-form-search" method="post">
             <input type="hidden" name="page" value="1" />
             <input type="hidden" name="status" value="@ftr.Status" />
-            <input class="form-control form-control-sm form-control-rounded" type="search" name="search" placeholder="Search..." autocomplete="off" />
+            <input class="form-control form-control-sm form-control-rounded" type="search" name="search" placeholder="@Localizer["search"]..." autocomplete="off" />
         </form>
         <form id="frmPostFilter" class="bf-posts-filters">
             <div class="filter-group">
-                <div class="filter-group-title"><span>Status</span> <i class="fa fa-chevron-down d-block d-lg-none"></i></div>
+                <div class="filter-group-title"><span>@Localizer["status"]</span> <i class="fa fa-chevron-down d-block d-lg-none"></i></div>
                 <ul class="filter-group-list">
                     <li>
                         <label class="custom-control custom-radio filters-label">
                             <input class="custom-control-input" type="radio" @ftr.IsChecked("A") name="status-filter" id="status-filter" value="A" onclick="postsController.filter()">
-                            <span class="custom-control-label">All</span>
+                            <span class="custom-control-label">@Localizer["all"]</span>
                         </label>
                         <label class="custom-control custom-radio filters-label">
                             <input class="custom-control-input" type="radio" @ftr.IsChecked("P") name="status-filter" id="status-filter" value="P" onclick="postsController.filter()">
-                            <span class="custom-control-label">Published</span>
+                            <span class="custom-control-label">@Localizer["published"]</span>
                         </label>
                         <label class="custom-control custom-radio filters-label">
                             <input class="custom-control-input" type="radio" @ftr.IsChecked("D") name="status-filter" id="status-filter" value="D" onclick="postsController.filter()">
-                            <span class="custom-control-label">Draft</span>
+                            <span class="custom-control-label">@Localizer["draft"]</span>
                         </label>
                     </li>
                 </ul>
@@ -40,7 +41,6 @@
         </form>
     </div>
     <div class="bf-body">
-
         <!-- Grid -->
         <div class="bf-posts-grid d-flex" aria-label="posts">
             @foreach (var post in Model.Posts)
@@ -57,13 +57,13 @@
                             @if (post.Published > DateTime.MinValue)
                             {
                                 <a href="#" onclick="postsController.unpublish(@post.Id); return false;" class="item-show">
-                                    <span class="item-status item-status-published ml-auto" data-tooltip title="published"><i class="fas fa-circle"></i></span>
+                                    <span class="item-status item-status-published ml-auto" data-tooltip title="@Localizer["published"]"><i class="fas fa-circle"></i></span>
                                 </a>
                             }
                             else
                             {
                                 <a href="#" onclick="postsController.publish(@post.Id); return false;" class="item-show ml-5">
-                                    <span class="item-status item-status-draft ml-auto" data-tooltip title="draft"><i class="fas fa-circle"></i></span>
+                                    <span class="item-status item-status-draft ml-auto" data-tooltip title="@Localizer["draft"]"><i class="fas fa-circle"></i></span>
                                 </a>
                             }
 
@@ -71,19 +71,19 @@
                             {
                                 if (post.Featured)
                                 {
-                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.unfeature('@post.Id')" data-original-title="featured">
+                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.unfeature('@post.Id')" data-original-title="@Localizer["featured"]">
                                         <i class="fas fa-star"></i>
                                     </button>
                                 }
                                 else
                                 {
-                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.feature('@post.Id')" data-original-title="add to featured">
+                                    <button class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" onclick="postsController.feature('@post.Id')" data-original-title="@Localizer["add-to-featured"]">
                                         <i class="far fa-star"></i>
                                     </button>
                                 }
                             }
-                            <a class="item-show ml-3" href="~/posts/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="View"><i class="fas fa-external-link-square-alt"></i></a>
-                            <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="Delete"><i class="fas fa-trash" style="color: #ff6666"></i></a>
+                            <a class="item-show ml-3" href="~/posts/@post.Slug" target="_blank" data-tooltip="" title="" data-original-title="@Localizer["view"]"><i class="fas fa-external-link-square-alt"></i></a>
+                            <a class="item-show ml-4" href="#" onclick="postsController.remove(@post.Id); return false;" data-tooltip="" title="" data-original-title="@Localizer["delete"]"><i class="fas fa-trash" style="color: #ff6666"></i></a>
                         </div>
                     </div>
                 </div>
@@ -93,9 +93,9 @@
         <!-- Empty -->
         @if (Model.Posts.Count() == 0)
         {
-            <div class="bf-list-empty">
-                No posts found!
-            </div>
+        <div class="bf-list-empty">
+            @Localizer["not-found"]!
+        </div>
         }
         <!--/Empty -->
         <!-- Pagination -->
@@ -114,7 +114,6 @@
             </ul>
         }
         <!--/Pagination -->
-
     </div>
 </div>
 

@@ -31,5 +31,8 @@ namespace Core.Data
         [Required]
         [StringLength(120)]
         public string Theme { get; set; }
+        [Required]
+        [StringLength(15)]
+        public string Culture { get; set; }
     }
 }
