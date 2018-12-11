@@ -1,4 +1,5 @@
-﻿<div class="modal fade bf-filemanager" id="fileManager" tabindex="-1" role="dialog" aria-labelledby="fileManagerLabel" aria-hidden="true">
+﻿@inject IViewLocalizer Localizer
+<div class="modal fade bf-filemanager" id="fileManager" tabindex="-1" role="dialog" aria-labelledby="fileManagerLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -8,30 +9,30 @@
                         <span class="custom-control-label"></span>
                     </label>
 
-                    <button class="btn btn-primary btn-sm btn-rounded mr-2" type="button" onclick="return fileManagerController.uploadClick()">upload</button>
-                    <button id="btnDelete" class="btn btn-outline-secondary btn-icon btn-rounded btn-sm mr-2" type="button" data-placement="bottom" data-tooltip title="Delete" onclick="return fileManagerController.remove()"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-primary btn-sm btn-rounded mr-2" type="button" onclick="return fileManagerController.uploadClick()">@Localizer["upload"]</button>
+                    <button id="btnDelete" class="btn btn-outline-secondary btn-icon btn-rounded btn-sm mr-2" type="button" data-placement="bottom" data-tooltip title="@Localizer["delete"]" onclick="return fileManagerController.remove()"><i class="fa fa-trash"></i></button>
                     <div class="loading loading-white loading-sm"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
                     <div class="dropdown ml-auto">
-                        <button class="btn btn-outline-secondary btn-icon btn-rounded btn-sm" type="button" data-placement="bottom" data-tooltip title="Filters" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
+                        <button class="btn btn-outline-secondary btn-icon btn-rounded btn-sm" type="button" data-placement="bottom" data-tooltip title="@Localizer["filters"]" id="filterFileManager" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter"></i></button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filterFileManager">
                             <form class="bf-filemanager-search">
-                                <input type="search" id="asset-search" name="asset-search" class="form-control" placeholder="Search..." autofocus />
+                                <input type="search" id="asset-search" name="asset-search" class="form-control" placeholder="@Localizer["search"]..." autofocus />
                             </form>
                             <label class="custom-control custom-radio d-block">
                                 <input id="filterAll" value="filterAll" name="filter" type="radio" checked class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-label">All</span>
+                                <span class="custom-control-label">@Localizer["all"]</span>
                             </label>
                             <label class="custom-control custom-radio d-block">
                                 <input id="filterImages" value="filterImages" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-label">Images</span>
+                                <span class="custom-control-label">@Localizer["images"]</span>
                             </label>
                             <label class="custom-control custom-radio d-block">
                                 <input id="filterAttachments" value="filterAttachments" name="filter" type="radio" class="custom-control-input" onchange="return fileManagerController.load(1)">
-                                <span class="custom-control-label">Attachments</span>
+                                <span class="custom-control-label">@Localizer["attachements"]</span>
                             </label>
                         </div>
                     </div>
-                    <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close ml-2" title="@Localizer["close"]" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
@@ -41,8 +42,8 @@
             </div>
             <div class="modal-footer d-flex">
                 <div id="file-pagination" class="file-pagination" role="group"></div>
-                <button class="btn btn-link btn-sm btn-rounded ml-auto" type="button" data-dismiss="modal">cancel</button>
-                <button id="btnSelect" class="btn btn-primary btn-sm btn-rounded" type="button" onclick="return fileManagerController.pick('')">select</button>
+                <button class="btn btn-link btn-sm btn-rounded ml-auto" type="button" data-dismiss="modal">@Localizer["cancel"]</button>
+                <button id="btnSelect" class="btn btn-primary btn-sm btn-rounded" type="button" onclick="return fileManagerController.pick('')">@Localizer["select"]</button>
             </div>
         </div>
     </div>

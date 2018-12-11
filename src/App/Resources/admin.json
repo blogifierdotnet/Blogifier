@@ -147,6 +147,13 @@
     }
   },
   {
+    "Key": "selected",
+    "Values": {
+      "en-US": "Selected",
+      "ru-RU": "Выбранный"
+    }
+  },
+  {
     "Key": "search",
     "Values": {
       "en-US": "Search",
@@ -242,6 +249,111 @@
     "Values": {
       "en-US": "View",
       "ru-RU": "Посмотреть"
+    }
+  },
+  {
+    "Key": "user-name",
+    "Values": {
+      "en-US": "User name",
+      "ru-RU": "Имя пользователя"
+    }
+  },
+  {
+    "Key": "email",
+    "Values": {
+      "en-US": "Email",
+      "ru-RU": "Почта"
+    }
+  },
+  {
+    "Key": "user-bio",
+    "Values": {
+      "en-US": "User bio",
+      "ru-RU": "Краткая биография"
+    }
+  },
+  {
+    "Key": "avatar",
+    "Values": {
+      "en-US": "Avatar",
+      "ru-RU": "Аватар"
+    }
+  },
+  {
+    "Key": "remove",
+    "Values": {
+      "en-US": "Remove",
+      "ru-RU": "Удалить"
+    }
+  },
+  {
+    "Key": "removed",
+    "Values": {
+      "en-US": "Removed",
+      "ru-RU": "Удалено"
+    }
+  },
+  {
+    "Key": "new-password",
+    "Values": {
+      "en-US": "New password",
+      "ru-RU": "Новый пароль"
+    }
+  },
+  {
+    "Key": "confirm-password",
+    "Values": {
+      "en-US": "Confirm password",
+      "ru-RU": "Подтвердить пароль"
+    }
+  },
+  {
+    "Key": "close",
+    "Values": {
+      "en-US": "Close",
+      "ru-RU": "Закрыть"
+    }
+  },
+  {
+    "Key": "set-as-admin",
+    "Values": {
+      "en-US": "Set as administrator",
+      "ru-RU": "Сделать администратором"
+    }
+  },
+  {
+    "Key": "select-rss-file",
+    "Values": {
+      "en-US": "Select RSS (.xml) file to import posts from",
+      "ru-RU": "Выберите RSS (.xml) файл для импорта"
+    }
+  },
+  {
+    "Key": "images",
+    "Values": {
+      "en-US": "Images",
+      "ru-RU": "Изображения"
+    }
+  },
+  {
+    "Key": "attachements",
+    "Values": {
+      "en-US": "Attachements",
+      "ru-RU": "Вложения"
+    }
+  },
+  {
+    "Key": "upload",
+    "Values": {
+      "en-US": "Upload",
+      "ru-RU": "Загрузить"
+    }
+  },
+  {
+    "Key": "filters",
+    "Values": {
+      "en-US": "Filters",
+      "ru-RU": "Фильтры"
     }
   }
 ]
