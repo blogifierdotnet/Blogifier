@@ -1,0 +1,30 @@
+﻿<form class="form-group">
+    <div id="newsletter-form">
+        <input id="txtSubscriberEmail" type="email" placeholder="someone@example.com">
+        <button type="button" onclick="newsletter.subscribe()">Subscribe</button>
+    </div>
+    <div id="newsletter-msg" style="display: none">
+        Thank you!
+    </div> 
+</form>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var newsletter = function () {
+
+        function subscribe() {
+            var email = document.getElementById("txtSubscriberEmail");
+
+            var frm = document.getElementById("newsletter-form");
+            var msg = document.getElementById("newsletter-msg");
+
+            frm.style.display = "none";
+            msg.style.display = "";
+        }
+
+        return {
+            subscribe: subscribe
+        }
+    }();
+    //]]>
+</script>

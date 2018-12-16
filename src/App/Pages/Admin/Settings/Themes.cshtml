@@ -1,5 +1,6 @@
 ﻿@page
 @model App.Pages.Admin.Settings.ThemesModel
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Themes";
     var show = "show";
@@ -26,22 +27,22 @@
                             <span class="item-date mr-auto">@theme.Title</span>
                             @if (theme.IsCurrent)
                             {
-                                <a class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="default">
+                                <a class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="@Localizer["selected"]">
                                     <i class="fas fa-star"></i>
                                 </a>
                                 @if (Model.Widgets != null && Model.Widgets.Count > 0)
                                 {
-                                    <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="settings">
+                                    <a class="item-show ml-3" href="#" onclick="return openSettings('@theme.Title')" data-tooltip="" title="" data-original-title="@Localizer["settings"]">
                                         <i class="fas fa-sliders-h"></i>
                                     </a>
                                 }
                             }
                             else
                             {
-                                <button class="btn-unstyled item-favorite ml-3" onclick="submitForm('@theme.Title', 'set')" data-tooltip="" title="" data-original-title="set as default">
+                                <button class="btn-unstyled item-favorite ml-3" onclick="submitForm('@theme.Title', 'set')" data-tooltip="" title="" data-original-title="@Localizer["select"]">
                                     <i class="far fa-star"></i>
                                 </button>
-                                <a class="item-show ml-4" href="" onclick="submitForm('@theme.Title', 'del'); return false" data-tooltip="" title="" data-original-title="Delete">
+                                <a class="item-show ml-4" href="" onclick="submitForm('@theme.Title', 'del'); return false" data-tooltip="" title="" data-original-title="@Localizer["delete"]">
                                     <i class="fas fa-trash" style="color: #ff6666"></i>
                                 </a>
                             }
@@ -63,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="hdrSettings"></h4>
-                <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -71,29 +72,29 @@
                 <div class="settings-body">
                     @if (Model.Widgets != null)
                     {
-                    <div class="accordion" id="accordion-widgets">
-                        @foreach (var widget in Model.Widgets)
-                        {
-                            var path = $"~/Views/Widgets/{widget.Widget}/Edit.cshtml";
-                            <div class="card">
-                                <div class="card-header" id="heading-@widget.Widget">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-@widget.Widget" aria-expanded="false" aria-controls="collapse-@widget.Widget">
-                                            @widget.Title
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse-@widget.Widget" class="collapse @show" aria-labelledby="heading-@widget.Widget" data-parent="#accordion-widgets">
-                                    <div class="card-body">
-                                        @{
-                                        await Html.RenderPartialAsync(path, new ThemeWidget { Theme = Model.BlogItem.Theme, Widget = widget });
-                                        }
+                        <div class="accordion" id="accordion-widgets">
+                            @foreach (var widget in Model.Widgets)
+                            {
+                                var path = $"~/Views/Widgets/{widget.Widget}/Edit.cshtml";
+                                <div class="card">
+                                    <div class="card-header" id="heading-@widget.Widget">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-@widget.Widget" aria-expanded="false" aria-controls="collapse-@widget.Widget">
+                                                @widget.Title
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapse-@widget.Widget" class="collapse @show" aria-labelledby="heading-@widget.Widget" data-parent="#accordion-widgets">
+                                        <div class="card-body">
+                                            @{
+                                                await Html.RenderPartialAsync(path, new ThemeWidget { Theme = Model.BlogItem.Theme, Widget = widget });
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            show = "";
-                        }
-                    </div>                       
+                                show = "";
+                            }
+                        </div>
                     }
                 </div>
             </div>

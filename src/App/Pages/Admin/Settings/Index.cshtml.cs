@@ -1,7 +1,10 @@
 ﻿using Core;
 using Core.Data;
 using Core.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Settings
@@ -37,6 +40,13 @@ namespace App.Pages.Admin.Settings
 
             await _db.CustomFields.SaveBlogSettings(BlogItem);
             Message = Resources.Updated;
+
+            // set language culture here
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(BlogItem.Culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
 
             await SetModel();
             if (!IsAdmin)

@@ -1,7 +1,18 @@
 ﻿@page
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Builder
 @model App.Pages.Admin.Settings.IndexModel
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
 @{
     ViewData["Title"] = "Settings - General";
+
+    var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
 }
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
@@ -9,43 +20,45 @@
 
         <form method="post" asp-antiforgery="true">
             <div class="bf-content bf-content-boxed bf-settings">
-                <div class="bf-title d-none d-lg-block"><span>Blog settings</span></div>
-
                 <div class="form-group">
-                    <label class="form-group-label">Title</label>
+                    <label class="form-group-label">@Localizer["title"]</label>
                     <input type="text" asp-for="BlogItem.Title" class="form-control" />
                     <span asp-validation-for="BlogItem.Title" class="text-danger"></span>
                     <input type="hidden" asp-for="BlogItem.Theme" />
                 </div>
                 <div class="form-group">
-                    <label class="form-group-label">Description</label>
+                    <label class="form-group-label">@Localizer["description"]</label>
                     <textarea asp-for="BlogItem.Description" type="text" class="form-control"></textarea>
                     <span asp-validation-for="BlogItem.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="form-group-label">Items per page </label>
+                    <label class="form-group-label">@Localizer["items-per-page"]</label>
                     <input type="text" asp-for="BlogItem.ItemsPerPage" class="form-control" />
                     <span asp-validation-for="BlogItem.ItemsPerPage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="form-group-label">Logo image</label>
+                    <label class="form-group-label">@Localizer["logo"]</label>
                     <div class="input-group">
                         <input type="text" asp-for="BlogItem.Logo" class="form-control" readonly />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> Select</button>
+                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> @Localizer["select"]</button>
                         </span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-group-label">Cover image</label>
+                    <label class="form-group-label">@Localizer["cover"]</label>
                     <div class="input-group">
                         <input type="text" asp-for="BlogItem.Cover" class="form-control" readonly />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> Select</button>
+                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> @Localizer["select"]</button>
                         </span>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-main">Save</button>
+                <div class="form-group">
+                    <label class="form-group-label">@Localizer["language"]</label>
+                    <select class="form-control" asp-for="BlogItem.Culture" asp-items="cultureItems"></select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
             </div>
         </form>
 

@@ -1,9 +1,11 @@
-﻿using Core;
+﻿using Askmethat.Aspnet.JsonLocalizer.Extensions;
+using Core;
 using Core.Data;
 using Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
+using System.Globalization;
 
 namespace App
 {
@@ -63,9 +66,25 @@ namespace App
             services.AddLogging(loggingBuilder =>
                 loggingBuilder.AddSerilog(dispose: true));
 
+            services.AddJsonLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddMvc()
+            .AddViewLocalization()
             .ConfigureApplicationPartManager(p =>
             {
                 foreach (var assembly in AppConfig.GetAssemblies())
@@ -92,6 +111,7 @@ namespace App
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseStaticFiles();
+            app.UseRequestLocalization();
 
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;

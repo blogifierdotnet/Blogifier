@@ -1,5 +1,6 @@
 ﻿@page
 @model App.Pages.Admin.Settings.UsersModel
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Users";
 }
@@ -8,7 +9,10 @@
         line-height: 2.5em;
         border-bottom: 1px solid #efefef;
     }
-    .post-grid-col { max-width: 200px !important }
+
+    .post-grid-col {
+        max-width: 200px !important
+    }
 </style>
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
@@ -24,7 +28,7 @@
                         <a class="item-link" style="background-image:url(@img);"><div class="item-title mt-auto">&nbsp;</div></a>
                         <div class="item-info d-flex align-items-center">
                             <span class="item-date mr-auto">@user.DisplayName</span>
-                            <a href="~/admin/settings/profile?name=@user.AppUserName" class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="Profile">
+                            <a href="~/admin/settings/profile?name=@user.AppUserName" class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="@Localizer["profile"]">
                                 <i class="fas fa-external-link-square-alt"></i>
                             </a>
                         </div>
