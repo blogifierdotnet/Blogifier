@@ -133,7 +133,7 @@
     "Values": {
       "en-US": "Logo Image",
       "ru-RU": "Логотип",
-      "zh-cn": "徽标图像"
+      "zh-cn": "徽标图片"
     }
   },
   {
@@ -141,7 +141,7 @@
     "Values": {
       "en-US": "Cover Image",
       "ru-RU": "Обложка",
-      "zh-cn": "封面图像"
+      "zh-cn": "封面图片"
     }
   },
   {
@@ -351,7 +351,7 @@
     "Values": {
       "en-US": "Confirm password",
       "ru-RU": "Подтвердить пароль",
-      "zh-cn": "密码确认"
+      "zh-cn": "确认密码"
     }
   },
   {
@@ -375,7 +375,7 @@
     "Values": {
       "en-US": "Select RSS (.xml) file to import posts from",
       "ru-RU": "Выберите RSS (.xml) файл для импорта",
-      "zh-cn": "选择rss文件"
+      "zh-cn": "选择RSS（.xml）文件以便导入文章"
     }
   },
   {
