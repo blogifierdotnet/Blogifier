@@ -74,7 +74,8 @@ namespace App
                 {
                     new CultureInfo("en-US"),
                     new CultureInfo("ru-RU"),
-                    new CultureInfo("zh-cn")
+                    new CultureInfo("zh-cn"),
+                    new CultureInfo("zh-tw")
                 };
 
                 options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
