@@ -4,7 +4,8 @@
     "Values": {
       "en-US": "General",
       "ru-RU": "Главная",
-      "zh-cn": "常规"
+      "zh-cn": "常规",
+      "zh-tw": "一般"
     }
   },
   {
@@ -12,7 +13,8 @@
     "Values": {
       "en-US": "Profile",
       "ru-RU": "Профиль",
-      "zh-cn":"个人资料"
+      "zh-cn":"个人资料",
+      "zh-tw":"個人資料"
     }
   },
   {
@@ -20,7 +22,8 @@
     "Values": {
       "en-US": "Password",
       "ru-RU": "Пароль",
-      "zh-cn": "密码"
+      "zh-cn": "密码",
+      "zh-tw": "密码"
     }
   },
   {
@@ -28,7 +31,8 @@
     "Values": {
       "en-US": "Themes",
       "ru-RU": "Темы",
-      "zh-cn": "主题"
+      "zh-cn": "主题",
+      "zh-tw": "部落格主题"
     }
   },
   {
@@ -36,7 +40,8 @@
     "Values": {
       "en-US": "Users",
       "ru-RU": "Пользователи",
-      "zh-cn": "用户"
+      "zh-cn": "用户",
+      "zh-tw": "使用者"
     }
   },
   {
@@ -44,7 +49,8 @@
     "Values": {
       "en-US": "New user",
       "ru-RU": "Новый пользователь",
-      "zh-cn": "新增用户"
+      "zh-cn": "新增用户",
+      "zh-tw": "新增使用者"
     }
   },
   {
@@ -52,7 +58,8 @@
     "Values": {
       "en-US": "Import",
       "ru-RU": "Импорт",
-      "zh-cn": "导入"
+      "zh-cn": "导入",
+      "zh-tw": "匯入"
     }
   },
   {
@@ -60,7 +67,8 @@
     "Values": {
       "en-US": "New Post",
       "ru-RU": "Новое сообщение",
-      "zh-cn": "写文章"
+      "zh-cn": "写文章",
+      "zh-tw": "建立文章"
     }
   },
   {
@@ -68,7 +76,8 @@
     "Values": {
       "en-US": "Posts",
       "ru-RU": "Сообщения",
-      "zh-cn":"文章列表"
+      "zh-cn":"文章列表",
+      "zh-tw":"文章清單"
     }
   },
   {
@@ -76,7 +85,8 @@
     "Values": {
       "en-US": "Settings",
       "ru-RU": "Настройки",
-      "zh-cn":"设置"
+      "zh-cn":"设置",
+      "zh-tw":"設定"
     }
   },
   {
@@ -84,7 +94,8 @@
     "Values": {
       "en-US": "Notifications",
       "ru-RU": "Уведомления",
-      "zh-cn":"通知"
+      "zh-cn":"通知",
+      "zh-tw":"通知"
     }
   },
   {
@@ -92,8 +103,8 @@
     "Values": {
       "en-US": "Visit Blog",
       "ru-RU": "Посетить блог",
-      "zh-cn": " 访问博客"
-
+      "zh-cn": "访问博客",
+      "zh-tw": "參訪部落格"
     }
   },
   {
@@ -101,7 +112,8 @@
     "Values": {
       "en-US": "Sign out",
       "ru-RU": "Выйти",
-      "zh-cn": "退出"
+      "zh-cn": "退出",
+      "zh-tw": "登出"
     }
   },
   {
@@ -109,7 +121,8 @@
     "Values": {
       "en-US": "Title",
       "ru-RU": "Название",
-      "zh-cn": "标题"
+      "zh-cn": "标题",
+      "zh-tw": "標題"
     }
   },
   {
@@ -117,7 +130,8 @@
     "Values": {
       "en-US": "Description",
       "ru-RU": "Описание",
-      "zh-cn": "描述"
+      "zh-cn": "描述",
+      "zh-tw": "敘述"
     }
   },
   {
@@ -125,7 +139,8 @@
     "Values": {
       "en-US": "Items per page",
       "ru-RU": "Количество сообщений на странице",
-      "zh-cn": "每页的文章数量"
+      "zh-cn": "每页的文章数量",
+      "zh-tw": "每頁文章數量"
     }
   },
   {
@@ -133,7 +148,8 @@
     "Values": {
       "en-US": "Logo Image",
       "ru-RU": "Логотип",
-      "zh-cn": "徽标图片"
+      "zh-cn": "徽标图片",
+      "zh-tw": "圖標"
     }
   },
   {
@@ -141,7 +157,8 @@
     "Values": {
       "en-US": "Cover Image",
       "ru-RU": "Обложка",
-      "zh-cn": "封面图片"
+      "zh-cn": "封面图片",
+      "zh-tw": "封面圖片"
     }
   },
   {
@@ -149,7 +166,8 @@
     "Values": {
       "en-US": "Language",
       "ru-RU": "Язык",
-      "zh-cn": "语言"
+      "zh-cn": "语言",
+      "zh-tw": "語言"
     }
   },
   {
@@ -157,7 +175,8 @@
     "Values": {
       "en-US": "Save",
       "ru-RU": "Сохранить",
-      "zh-cn": "保存"
+      "zh-cn": "保存",
+      "zh-tw": "儲存"
     }
   },
   {
@@ -165,7 +184,8 @@
     "Values": {
       "en-US": "Select",
       "ru-RU": "Выбрать",
-      "zh-cn": "选择"
+      "zh-cn": "选择",
+      "zh-tw": "選擇"
     }
   },
   {
@@ -173,7 +193,8 @@
     "Values": {
       "en-US": "Selected",
       "ru-RU": "Выбранный",
-      "zh-cn": "已选择"
+      "zh-cn": "已选择",
+      "zh-tw": "已選擇"
     }
   },
   {
@@ -181,7 +202,8 @@
     "Values": {
       "en-US": "Search",
       "ru-RU": "Поиск",
-      "zh-cn": "搜索"
+      "zh-cn": "搜索",
+      "zh-tw": "搜尋"
     }
   },
   {
@@ -189,7 +211,8 @@
     "Values": {
       "en-US": "All",
       "ru-RU": "Всё",
-      "zh-cn": "所有"
+      "zh-cn": "所有",
+      "zh-tw": "全部"
     }
   },
   {
@@ -197,7 +220,8 @@
     "Values": {
       "en-US": "Published",
       "ru-RU": "Опубликовано",
-      "zh-cn": "已发布"
+      "zh-cn": "已发布",
+      "zh-tw": "已發布"
     }
   },
   {
@@ -205,7 +229,8 @@
     "Values": {
       "en-US": "Draft",
       "ru-RU": "Черновики",
-      "zh-cn": "草稿"
+      "zh-cn": "草稿",
+      "zh-tw": "草稿"
     }
   },
   {
@@ -213,7 +238,8 @@
     "Values": {
       "en-US": "Status",
       "ru-RU": "Статус",
-      "zh-cn": "状态"
+      "zh-cn": "状态",
+      "zh-tw": "狀態"
     }
   },
   {
@@ -221,7 +247,8 @@
     "Values": {
       "en-US": "Not found",
       "ru-RU": "Не найдено",
-      "zh-cn": "未找到"
+      "zh-cn": "未找到",
+      "zh-tw": "沒有找到資料"
     }
   },
   {
@@ -229,7 +256,8 @@
     "Values": {
       "en-US": "Publish",
       "ru-RU": "Опубликовать",
-      "zh-cn": "发布"
+      "zh-cn": "发布",
+      "zh-tw": "發佈"
     }
   },
   {
@@ -237,7 +265,8 @@
     "Values": {
       "en-US": "Unpublish",
       "ru-RU": "Отменить публикацию",
-      "zh-cn": "取消发布"
+      "zh-cn": "取消发布",
+      "zh-tw": "取消發佈"
     }
   },
   {
@@ -245,7 +274,8 @@
     "Values": {
       "en-US": "Featured",
       "ru-RU": "Избранное",
-      "zh-cn": "已顶置"
+      "zh-cn": "已顶置",
+      "zh-tw": "已置頂"
     }
   },
   {
@@ -253,8 +283,8 @@
     "Values": {
       "en-US": "Add to featured",
       "ru-RU": "Добавить в избранное",
-      "zh-cn": "添加顶置"
-
+      "zh-cn": "添加顶置",
+      "zh-tw": "置頂"
     }
   },
   {
@@ -262,7 +292,8 @@
     "Values": {
       "en-US": "Cancel",
       "ru-RU": "Отменить",
-      "zh-cn": "取消"
+      "zh-cn": "取消",
+      "zh-tw": "取消"
     }
   },
   {
@@ -270,7 +301,8 @@
     "Values": {
       "en-US": "Delete",
       "ru-RU": "Удалить",
-      "zh-cn": "删除"
+      "zh-cn": "删除",
+      "zh-tw": "删除"
     }
   },
   {
@@ -278,7 +310,8 @@
     "Values": {
       "en-US": "Categories",
       "ru-RU": "Категории",
-      "zh-cn": "分类"
+      "zh-cn": "分类",
+      "zh-tw": "類別"
     }
   },
   {
@@ -286,7 +319,8 @@
     "Values": {
       "en-US": "View",
       "ru-RU": "Посмотреть",
-      "zh-cn": "查看"
+      "zh-cn": "查看",
+      "zh-tw": "察看"
     }
   },
   {
@@ -294,7 +328,8 @@
     "Values": {
       "en-US": "User name",
       "ru-RU": "Имя пользователя",
-      "zh-cn": "用户名"
+      "zh-cn": "用户名",
+      "zh-tw": "帳號名稱"
     }
   },
   {
@@ -302,7 +337,8 @@
     "Values": {
       "en-US": "Email",
       "ru-RU": "Почта",
-      "zh-cn": "电子邮箱"
+      "zh-cn": "电子邮箱",
+      "zh-tw": "信箱"
     }
   },
   {
@@ -310,7 +346,8 @@
     "Values": {
       "en-US": "User bio",
       "ru-RU": "Краткая биография",
-      "zh-cn": "用户简介"
+      "zh-cn": "用户简介",
+      "zh-tw": "部落格作者介紹"
     }
   },
   {
@@ -318,7 +355,8 @@
     "Values": {
       "en-US": "Avatar",
       "ru-RU": "Аватар",
-      "zh-cn": "头像"
+      "zh-cn": "头像",
+      "zh-tw": "頭像"
     }
   },
   {
@@ -326,8 +364,8 @@
     "Values": {
       "en-US": "Remove",
       "ru-RU": "Удалить",
-      "zh-cn": "移除"
-
+      "zh-cn": "移除",
+      "zh-tw": "刪除"
     }
   },
   {
@@ -335,7 +373,8 @@
     "Values": {
       "en-US": "Removed",
       "ru-RU": "Удалено",
-      "zh-cn": "已移除"
+      "zh-cn": "已移除",
+      "zh-tw": "已刪除"
     }
   },
   {
@@ -343,7 +382,8 @@
     "Values": {
       "en-US": "New password",
       "ru-RU": "Новый пароль",
-      "zh-cn": "新密码"
+      "zh-cn": "新密码",
+      "zh-tw": "新密碼"
     }
   },
   {
@@ -351,7 +391,8 @@
     "Values": {
       "en-US": "Confirm password",
       "ru-RU": "Подтвердить пароль",
-      "zh-cn": "确认密码"
+      "zh-cn": "确认密码",
+      "zh-tw": "確認密碼"
     }
   },
   {
@@ -359,7 +400,8 @@
     "Values": {
       "en-US": "Close",
       "ru-RU": "Закрыть",
-      "zh-cn": "关闭"
+      "zh-cn": "关闭",
+      "zh-tw": "關閉"
     }
   },
   {
@@ -367,7 +409,8 @@
     "Values": {
       "en-US": "Set as administrator",
       "ru-RU": "Сделать администратором",
-      "zh-cn": "设置为管理员"
+      "zh-cn": "设置为管理员",
+      "zh-tw": "設置為管理員"
     }
   },
   {
@@ -375,7 +418,8 @@
     "Values": {
       "en-US": "Select RSS (.xml) file to import posts from",
       "ru-RU": "Выберите RSS (.xml) файл для импорта",
-      "zh-cn": "选择RSS（.xml）文件以便导入文章"
+      "zh-cn": "选择RSS（.xml）文件以便导入文章",
+      "zh-tw": "選擇RSS（.xml）檔案匯入文章"
     }
   },
   {
@@ -383,7 +427,8 @@
     "Values": {
       "en-US": "Images",
       "ru-RU": "Изображения",
-      "zh-cn": "图像"
+      "zh-cn": "图像",
+      "zh-tw": "圖片"
     }
   },
   {
@@ -391,7 +436,8 @@
     "Values": {
       "en-US": "Attachements",
       "ru-RU": "Вложения",
-      "zh-cn": "附件"
+      "zh-cn": "附件",
+      "zh-tw": "附件"
     }
   },
   {
@@ -399,7 +445,8 @@
     "Values": {
       "en-US": "Upload",
       "ru-RU": "Загрузить",
-      "zh-cn": "上传"
+      "zh-cn": "上传",
+      "zh-tw": "上傳"
     }
   },
   {
@@ -407,7 +454,8 @@
     "Values": {
       "en-US": "Filters",
       "ru-RU": "Фильтры",
-      "zh-cn": "筛选"
+      "zh-cn": "筛选",
+      "zh-tw": "篩選"
     }
   }
 ]
