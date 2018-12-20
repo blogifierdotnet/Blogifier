@@ -29,5 +29,18 @@ namespace Common.Widgets
             _db = db;
         }
 
+        [HttpPut]
+        [Route("subscribe")]
+        public IActionResult Subscribe([FromBody]string email)
+        {
+            var existing = _db.Newsletters.Single(n => n.Email == email);
+
+            if(existing == null)
+            {
+                _db.Newsletters.Add(new Core.Data.Newsletter { Email = email });
+                _db.Complete();
+            }
+            return Ok("Thank you!");
+        }
     }
 }

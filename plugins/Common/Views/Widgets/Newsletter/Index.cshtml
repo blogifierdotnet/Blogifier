@@ -1,7 +1,7 @@
 ﻿<form class="form-group">
     <div id="newsletter-form">
         <input id="txtSubscriberEmail" type="email" placeholder="someone@example.com">
-        <button type="button" onclick="newsletter.subscribe()">Subscribe</button>
+        <button type="button" onclick="return newsletter.subscribe()">Subscribe</button>
     </div>
     <div id="newsletter-msg" style="display: none">
         Thank you!
@@ -11,20 +11,34 @@
 <script type="text/javascript">
     //<![CDATA[
     var newsletter = function () {
-
         function subscribe() {
             var email = document.getElementById("txtSubscriberEmail");
-
-            var frm = document.getElementById("newsletter-form");
-            var msg = document.getElementById("newsletter-msg");
-
-            frm.style.display = "none";
-            msg.style.display = "";
+            $.ajax({
+                url: '/widgets/api/newsletter/subscribe',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(email.value),
+                success: function (data) {
+                    var frm = document.getElementById("newsletter-form");
+                    var msg = document.getElementById("newsletter-msg");
+                    frm.style.display = "none";
+                    msg.innerHTML = data;
+                    msg.style.display = "";
+                    return false;
+                }
+            });
         }
-
         return {
             subscribe: subscribe
         }
     }();
+    document.getElementById('txtSubscriberEmail').onkeypress = function (e) {
+        if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == '13') {
+            newsletter.subscribe();
+        }
+        return false;
+    }
     //]]>
 </script>

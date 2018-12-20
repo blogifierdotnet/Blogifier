@@ -3,14 +3,16 @@ using System;
 using Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181220174710_Newsletters")]
+    partial class Newsletters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,24 +154,6 @@ namespace Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomFields");
-                });
-
-            modelBuilder.Entity("Core.Data.HtmlWidget", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Author");
-
-                    b.Property<string>("Content");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Theme");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HtmlWidgets");
                 });
 
             modelBuilder.Entity("Core.Data.Newsletter", b =>
