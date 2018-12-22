@@ -1,11 +1,12 @@
-﻿<form class="form-group">
+﻿@Html.Raw(Model.Header)
+<form class="form-group">
     <div id="newsletter-form">
         <input id="txtSubscriberEmail" type="email" placeholder="someone@example.com">
         <button type="button" onclick="return newsletter.subscribe()">Subscribe</button>
     </div>
     <div id="newsletter-msg" style="display: none">
-        Thank you!
-    </div> 
+        @Html.Raw(Model.ThankYou)
+    </div>
 </form>
 
 <script type="text/javascript">
@@ -13,8 +14,11 @@
     var newsletter = function () {
         function subscribe() {
             var email = document.getElementById("txtSubscriberEmail");
+            if (email.value.length === 0) {
+                return false;
+            }
             $.ajax({
-                url: '/widgets/api/newsletter/subscribe',
+                url: '/widgets/newsletter/subscribe',
                 type: 'PUT',
                 contentType: 'application/json',
                 data: JSON.stringify(email.value),
@@ -22,7 +26,9 @@
                     var frm = document.getElementById("newsletter-form");
                     var msg = document.getElementById("newsletter-msg");
                     frm.style.display = "none";
-                    msg.innerHTML = data;
+                    if (data.length > 0) {
+                        msg.innerHTML = data;
+                    }
                     msg.style.display = "";
                     return false;
                 }
@@ -37,8 +43,8 @@
         var keyCode = e.keyCode || e.which;
         if (keyCode == '13') {
             newsletter.subscribe();
+            return false;
         }
-        return false;
     }
     //]]>
 </script>

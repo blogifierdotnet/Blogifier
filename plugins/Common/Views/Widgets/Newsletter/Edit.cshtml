@@ -1,9 +1,25 @@
 ﻿@model Core.Data.ThemeWidget
+@inject Core.Services.IDataService _db
+@{
+    var keyHeader = $"{Model.Theme}-{Model.Widget.Title}-header";
+    var keyThankyou = $"{Model.Theme}-{Model.Widget.Title}-thankyou";
 
+    var txtHeader = _db.CustomFields.GetCustomValue(keyHeader);
+    var txtThankyou = _db.CustomFields.GetCustomValue(keyThankyou);
+
+    if (string.IsNullOrEmpty(txtHeader)) { txtHeader = "<p>Like, really social. With 12 thousands followers and counting, the topics we cover and the ways readers can access our content are constantly growing.</p>"; }
+    if (string.IsNullOrEmpty(txtThankyou)) { txtThankyou = "Thank you!"; }
+
+    var items = _db.Newsletters.All();
+    }
 <form method="post" action="~/widgets/api/newsletter/edit" asp-antiforgery="true">
     <div class="form-group">
-        <label class="form-group-label">Max records</label>
-        <input type="text" id="txtMaxRecords" name="txtMaxRecords" class="form-control" value="" />
+        <label class="form-group-label">Newsletter Header</label>
+        <textarea id="txtHeader" name="txtHeader" cols="5" class="form-control">@txtHeader</textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-group-label">Thank you message</label>
+        <textarea id="txtThankYou" name="txtThankYou" cols="5" class="form-control">@txtThankyou</textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary btn-main">Save</button>
@@ -11,3 +27,49 @@
     <input type="hidden" id="hdnWidget" name="hdnWidget" value="@Model.Widget.Title" />
     <input type="hidden" id="hdnTheme" name="hdnTheme" value="@Model.Theme" />
 </form>
+
+@if (items != null && items.Any())
+{
+    <ul class="list-group">
+    @foreach (var item in items)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @item.Email
+            <a class="btn btn-sm btn-light btn-danger" href="" onclick="removeEmail('@item.Email')">Remove</a>
+        </li>
+    }
+    </ul>
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">
+                    2
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+}
+
+<script type="text/javascript">
+    //<![CDATA[
+    var removeEmail = function(email) {
+        $.ajax({
+            url: '/widgets/newsletter/unsubscribe',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(email),
+            success: function (data) {
+                //alert('done ' + data);
+                //return false;
+            }
+        });
+    }
+    //]]>
+</script>
