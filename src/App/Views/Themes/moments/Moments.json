@@ -6,5 +6,9 @@
   {
     "Widget": "PostList",
     "Title": "Post List"
+  },
+  {
+    "Widget": "Newsletter",
+    "Title": "Newsletter"
   }
 ]

@@ -10,6 +10,7 @@ namespace Core.Services
         INotificationRepository Notifications { get; }
         IHtmlWidgetRepository HtmlWidgets { get; }
         ICustomFieldRepository CustomFields { get; }
+        INewsletterRepository Newsletters { get; }
 
         int Complete();
     }
@@ -27,6 +28,7 @@ namespace Core.Services
             Notifications = new NotificationRepository(_db);
             HtmlWidgets = new HtmlWidgetRepository(_db);
             CustomFields = new CustomFieldRepository(_db);
+            Newsletters = new NewsletterRepository(_db);
         }
 
         public IPostRepository BlogPosts { get; private set; }
@@ -34,6 +36,7 @@ namespace Core.Services
         public INotificationRepository Notifications { get; private set; }
         public IHtmlWidgetRepository HtmlWidgets { get; private set; }
         public ICustomFieldRepository CustomFields { get; private set; }
+        public INewsletterRepository Newsletters { get; private set; }
 
         public int Complete()
         {

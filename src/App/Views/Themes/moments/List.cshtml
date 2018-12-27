@@ -220,9 +220,7 @@
     <div class="widget-newsletter">
       <div class="container">
         <h3>Newsletter!</h3>
-        <p>Like, really social. With 12 thousands followers and counting, the topics we cover and the
-        ways readers can access our content are constantly growing.</p>
-        @await Component.InvokeAsync("Newsletter", new { theme = "Moments", widget = "Newsletter" })
+        @await Component.InvokeAsync("Newsletter", new { theme = "moments", widget = "Newsletter" })
       </div>
     </div>
     <partial name="~/Views/Themes/moments/_Shared/_Footer.cshtml" />

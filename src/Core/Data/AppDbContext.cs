@@ -12,8 +12,9 @@ namespace Core.Data
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<HtmlWidget> HtmlWidtes { get; set; }
         public DbSet<CustomField> CustomFields { get; set; }
+        public DbSet<HtmlWidget> HtmlWidgets { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
