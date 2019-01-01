@@ -1,6 +1,8 @@
-﻿using Core.Services;
+﻿using Core.Helpers;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Common.Widgets
 {
@@ -39,6 +41,24 @@ namespace Common.Widgets
         public NewsletterController(IDataService db)
         {
             _db = db;
+        }
+
+        [Route("load")]
+        public async Task<NewsletterModel> Load(int page = 1)
+        {
+            var pager = new Pager(page);
+            IEnumerable<Core.Data.Newsletter> items;
+
+            items = await _db.Newsletters.GetList(e => e.Id > 0, pager);
+
+            if (page < 1 || page > pager.LastPage)
+                return null;
+
+            return new NewsletterModel
+            {
+                Emails = items,
+                Pager = pager
+            };
         }
 
         [HttpPut]
@@ -95,6 +115,7 @@ namespace Common.Widgets
     {
         public string Header { get; set; }
         public string ThankYou { get; set; }
-        public List<Core.Data.Newsletter> Emails { get; set; }
+        public IEnumerable<Core.Data.Newsletter> Emails { get; set; }
+        public Pager Pager { get; set; }
     }
 }
