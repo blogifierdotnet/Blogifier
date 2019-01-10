@@ -17,9 +17,10 @@ required is to update `appsettings.json`:
 }
 ```
 
-Currently, SendGrid only used by Newsletter widget. When guest subscribles to the blog via Newsletter,
-every time new post gets published, Blogifier goes over list of subscribers and sends notification
-about new publicatoin to every subscriber.
+Currently, SendGrid only used by Newsletter widget. When guest subscribes to the blog via Newsletter, 
+every time new post gets published, Blogifier goes over list of subscribers and sends notification 
+about new publication to every subscriber.
+
 
 ### Why not SMTP?
 Plain SMTP client routes calls to actual SMTP email server, like Gmail or HotMail.
