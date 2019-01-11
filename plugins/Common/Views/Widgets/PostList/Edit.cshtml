@@ -13,7 +13,11 @@
     authorList.Insert(0, "All");
 
     var cats = await _db.BlogPosts.Categories();
-    var catList = cats.ToList();
+    var catList = new List<string>();
+    foreach (var cat in cats)
+    {
+        catList.Add(cat.Category);
+    }
     catList.Insert(0, "All");
 
     var selectedAuth = _db.CustomFields.GetCustomValue(keyAuth);

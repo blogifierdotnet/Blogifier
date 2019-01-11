@@ -149,9 +149,7 @@
                         <h4 class="widget-title"><span>Categories</span></h4>
                         <div class="widget-body">
                             <ul>
-                                <li><a href="#">catname <span>(25)</span></a></li>
-                                <li><a href="#">catname <span>(25)</span></a></li>
-                                <li><a href="#">catname <span>(25)</span></a></li>
+                                @await Component.InvokeAsync("Categories", new { theme = "moments", widget = "Categories" })
                             </ul>
                         </div>
                     </div>
@@ -160,7 +158,7 @@
                         <h4 class="widget-title"><span>Tags</span></h4>
                         <div class="widget-body">
                             <ul class="clearfix">
-                                @await Component.InvokeAsync("Categories", new { theme = "moments", widget = "Categories" })
+                                @await Component.InvokeAsync("Categories", new { theme = "moments", widget = "Tags" })
                             </ul>
                         </div>
                     </div>

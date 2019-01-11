@@ -1,6 +1,7 @@
 ﻿@{
-    foreach (var cat in Model)
+    foreach (var item in Model.Categories)
     {
-        @Html.Raw(string.Format(cat))
+        var cat = (Core.Data.CategoryItem)item;
+        @Html.Raw(string.Format(Model.Template, cat.Category, cat.PostCount))
     }
 }
