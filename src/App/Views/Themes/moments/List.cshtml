@@ -160,14 +160,7 @@
                         <h4 class="widget-title"><span>Tags</span></h4>
                         <div class="widget-body">
                             <ul class="clearfix">
-                                <li><a href="#">News</a></li>
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Microsoft</a></li>
-                                <li><a href="#">C#</a></li>
-                                <li><a href="#">Frameworks</a></li>
-                                <li><a href="#">Developers</a></li>
-                                <li><a href="#">Windows</a></li>
-                                <li><a href="#">Tablet</a></li>
+                                @await Component.InvokeAsync("Categories", new { theme = "moments", widget = "Categories" })
                             </ul>
                         </div>
                     </div>

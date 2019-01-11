@@ -10,5 +10,9 @@
   {
     "Widget": "Newsletter",
     "Title": "Newsletter"
+  },
+  {
+    "Widget": "Categories",
+    "Title": "Categories"
   }
 ]
