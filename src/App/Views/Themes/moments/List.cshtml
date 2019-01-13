@@ -17,23 +17,28 @@
 
     @if (Model.PostListType == PostListType.Search)
     {
-        <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
-            <a href="#"><i class="fa fa-search"></i> @Model.Blog.Title</a>
+        <div class="row">
+            <div class="col-sm-8" style="text-align: center; margin: 50px 0 -40px 0">
+                <h4><i class="fa fa-search"></i> @Model.Blog.Title</h4>
+            </div>
         </div>
     }
     else if (Model.PostListType == PostListType.Author)
     {
-        <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
-            <a href="~/">
-                <img src="~/@Model.Author.Avatar" class="rounded-circle" style="width: 52px" />
-                @Model.Author.DisplayName
-            </a>
+        <div class="row">
+            <div class="col-sm-8" style="text-align: center; margin: 50px 0 -40px 0">
+                <h4>
+                    <img src="~/@Model.Author.Avatar" class="rounded-circle" style="width: 52px" /> @Model.Author.DisplayName
+                </h4>
+            </div>
         </div>
     }
     else if (Model.PostListType == PostListType.Category)
     {
-        <div class="page-cover" style="background-image: url('@Model.Blog.Cover')">
-            <a href="#"><i class="fa fa-tag"></i> @ViewBag.Category</a>
+        <div class="row">
+            <div class="col-sm-8" style="text-align: center; margin: 50px 0 -40px 0">
+                <h4><i class="fa fa-tag"></i> @ViewBag.Category</h4>
+            </div>
         </div>
     }
     else
@@ -126,7 +131,6 @@
                 </div>
 
                 <aside class="col-sm-4">
-
                     <div class="widget widget-social">
                         <h4 class="widget-title"><span>Follow Us</span></h4>
                         <div class="widget-body">
@@ -135,7 +139,6 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="widget widget-posts">
                         <h4 class="widget-title"><span>Recent Posts</span></h4>
                         <div class="widget-body">
@@ -144,7 +147,6 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="widget widget-categories">
                         <h4 class="widget-title"><span>Categories</span></h4>
                         <div class="widget-body">
@@ -153,7 +155,6 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="widget widget-tags">
                         <h4 class="widget-title"><span>Tags</span></h4>
                         <div class="widget-body">
@@ -162,7 +163,6 @@
                             </ul>
                         </div>
                     </div>
-
                 </aside>
 
             </div>
