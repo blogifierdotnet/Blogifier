@@ -5,10 +5,18 @@
   },
   {
     "Widget": "PostList",
-    "Title": "Post List"
+    "Title": "Recent Posts"
   },
   {
     "Widget": "Newsletter",
     "Title": "Newsletter"
+  },
+  {
+    "Widget": "Categories",
+    "Title": "Categories"
+  },
+  {
+    "Widget": "Categories",
+    "Title": "Tags"
   }
 ]

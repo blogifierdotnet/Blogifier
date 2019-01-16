@@ -1,4 +1,5 @@
-﻿using Core.Services;
+﻿using Core.Data;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,14 @@ namespace Common.Widgets
             if (string.IsNullOrEmpty(tmpl)) tmpl = "<a href=\"/categories/{0}\" class=\"list-group-item list-group-item-action\">{0}</a>";
 
             var cats = await _db.BlogPosts.Categories();
-            var model = new List<string>();
+            var model = new CategoryWidgetModel { Template = tmpl, Categories = new List<CategoryItem>() };
 
-            foreach (var cat in cats.Take(int.Parse(max)))
+            var catList = cats.Cast<CategoryItem>().ToList();
+
+            foreach (var cat in catList.Take(int.Parse(max)))
             {
-                model.Add(string.Format(tmpl, cat));
+                model.Categories.Add(cat);
             }
-
             return View("~/Views/Widgets/Categories/Index.cshtml", model);
         }
     }
@@ -61,5 +63,11 @@ namespace Common.Widgets
 
             return Redirect("~/admin/settings/themes");
         }
+    }
+
+    public class CategoryWidgetModel
+    {
+        public string Template { get; set; }
+        public List<CategoryItem> Categories { get; set; }
     }
 }

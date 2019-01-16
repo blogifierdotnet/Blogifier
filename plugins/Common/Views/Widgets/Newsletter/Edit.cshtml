@@ -7,10 +7,10 @@
     var txtHeader = _db.CustomFields.GetCustomValue(keyHeader);
     var txtThankyou = _db.CustomFields.GetCustomValue(keyThankyou);
 
-    if (string.IsNullOrEmpty(txtHeader)) { txtHeader = "<p>Like, really social. With 12 thousands followers and counting, the topics we cover and the ways readers can access our content are constantly growing.</p>"; }
+    if (string.IsNullOrEmpty(txtHeader)) { txtHeader = "<p>Subscribe to our newsletter to get latest posts delivered directly to your inbox.</p>"; }
     if (string.IsNullOrEmpty(txtThankyou)) { txtThankyou = "Thank you!"; }
 }
-<form method="post" action="~/widgets/api/newsletter/edit" asp-antiforgery="true">
+<form method="post" action="~/widgets/newsletter/edit" asp-antiforgery="true">
     <div class="form-group">
         <label class="form-group-label">Newsletter Header</label>
         <textarea id="txtHeader" name="txtHeader" cols="5" class="form-control">@txtHeader</textarea>

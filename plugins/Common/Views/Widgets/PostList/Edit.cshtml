@@ -13,7 +13,11 @@
     authorList.Insert(0, "All");
 
     var cats = await _db.BlogPosts.Categories();
-    var catList = cats.ToList();
+    var catList = new List<string>();
+    foreach (var cat in cats)
+    {
+        catList.Add(cat.Category);
+    }
     catList.Insert(0, "All");
 
     var selectedAuth = _db.CustomFields.GetCustomValue(keyAuth);
@@ -60,7 +64,11 @@
         </select>
     </div>
     <div class="form-group">
-        <label class="form-group-label">Template ({0} = slug {1} = title)</label>
+        <label class="form-group-label">{0} = slug</label>
+        <label class="form-group-label">{1} = title</label>
+        <label class="form-group-label">{2} = published date</label>
+        <label class="form-group-label">{3} = cover</label>
+        <label class="form-group-label">{4} = description</label>
         <textarea rows="2" id="txtTemplate" name="txtTemplate" class="form-control">@template</textarea>
     </div>
     <div class="form-group">

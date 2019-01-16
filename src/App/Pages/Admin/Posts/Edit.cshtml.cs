@@ -4,6 +4,8 @@ using Core.Data;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App.Pages.Admin.Posts
@@ -16,11 +18,13 @@ namespace App.Pages.Admin.Posts
 
         IDataService _db;
         INotificationService _ns;
+        ISendGridService _sg;
 
-        public EditModel(IDataService db, INotificationService ns)
+        public EditModel(IDataService db, INotificationService ns, ISendGridService sg)
         {
             _db = db;
             _ns = ns;
+            _sg = sg;
         }
 
         public async Task OnGetAsync(int id)
@@ -82,6 +86,12 @@ namespace App.Pages.Admin.Posts
 
                     PostItem = item;
                     Message = Resources.Saved;
+
+                    if(PostItem.Status == SaveStatus.Publishing)
+                    {
+                        List<string> emails = _db.Newsletters.All().Select(n => n.Email).ToList();
+                        await _sg.SendNewsletters(PostItem, emails);
+                    }
 
                     return Redirect($"~/admin/posts/edit?id={PostItem.Id}");
                 }

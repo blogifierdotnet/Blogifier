@@ -118,6 +118,17 @@ namespace Core.Data
         }
     }
 
+    public class CategoryItem: IComparable<CategoryItem>
+    {
+        public string Category { get; set; }
+        public int PostCount { get; set; }
+
+        public int CompareTo(CategoryItem other)
+        {
+            return Category.CompareTo(other.Category);
+        }
+    }
+
     public enum SaveStatus
     {
         Saving = 1, Publishing = 2, Unpublishing = 3

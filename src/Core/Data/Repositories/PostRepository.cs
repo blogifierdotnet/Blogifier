@@ -17,7 +17,7 @@ namespace Core.Data
         Task<PostModel> GetModel(string slug);
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
-        Task<IEnumerable<string>> Categories();
+        Task<IEnumerable<CategoryItem>> Categories();
     }
 
     public class PostRepository : Repository<BlogPost>, IPostRepository
@@ -225,9 +225,9 @@ namespace Core.Data
             await _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<string>> Categories()
+        public async Task<IEnumerable<CategoryItem>> Categories()
         {
-            var cats = new List<string>();
+            var cats = new List<CategoryItem>();
 
             if (_db.BlogPosts.Any())
             {
@@ -238,9 +238,15 @@ namespace Core.Data
                     {
                         foreach (var pc in postcats)
                         {
-                            if (!cats.Exists(c => c == pc))
+                            if (!cats.Exists(c => c.Category == pc))
                             {
-                                cats.Add(pc);
+                                cats.Add(new CategoryItem { Category = pc, PostCount = 1 });
+                            }
+                            else
+                            {
+                                // updae post count
+                                var tmp = cats.Where(c => c.Category == pc).FirstOrDefault();
+                                tmp.PostCount++;
                             }
                         }
                     }

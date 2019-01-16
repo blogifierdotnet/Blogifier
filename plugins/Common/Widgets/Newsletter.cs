@@ -24,7 +24,7 @@ namespace Common.Widgets
             var header = _db.CustomFields.GetCustomValue(keyHeader);
             var thankyou = _db.CustomFields.GetCustomValue(keyThankyou);
 
-            if (string.IsNullOrEmpty(header)) { header = "<p>Like, really social. With 12 thousands followers and counting, the topics we cover and the ways readers can access our content are constantly growing.</p>"; }
+            if (string.IsNullOrEmpty(header)) { header = "<p>Subscribe to our newsletter to get latest posts delivered directly to your inbox.</p>"; }
             if (string.IsNullOrEmpty(thankyou)) { thankyou = "Thank you!"; }
 
             var model = new NewsletterModel { Header = header, ThankYou = thankyou };
