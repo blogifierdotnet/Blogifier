@@ -13,7 +13,7 @@ Blogifier is simple, beautiful, light-weight open source blog written in .NET Co
 
 ## Getting Started
 
-Blogifier is single blog supporting multiple authors. Administrator can manage common blog settings and create/remove regular users. Blog author can create and publish pots.
+Blogifier is single blog supporting multiple authors. Administrator can manage common blog settings and create/remove regular users. Blog author can create and publish posts.
 
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
