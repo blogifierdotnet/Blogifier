@@ -2,10 +2,12 @@
 {
     public class Constants
     {
+        public static string ConfigSectionKey = "Blogifier";
+        public static string ConfigRepoKey = "GithubRepoUrl";
+
         public static string NewestVersion = "last-version";
         public static string UpgradeDirectory = "_upgrade";
-        public static string RepoReleaseUrl = "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
-
+        
         // blog settings in custom fields
         public static string BlogTitle = "blog-title";
         public static string BlogDescription = "blog-description";

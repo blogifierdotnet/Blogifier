@@ -28,6 +28,8 @@ namespace Core.Services
         IList<string> GetAssets(string path);
         IList<string> GetThemes();
 
+        string GetHtmlTemplate(string template);
+
         Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "");
 
         Task Reset();
@@ -116,6 +118,27 @@ namespace Core.Services
             }
             catch { }
             return items;
+        }
+
+        public string GetHtmlTemplate(string template)
+        {
+            string content = "<p>Not found</p>";
+            try
+            {
+                var path = AppSettings.WebRootPath ?? Path.Combine(GetAppRoot(), "wwwroot");
+                path = Path.Combine(path, "templates");
+                path = Path.Combine(path, $"{template}.html");
+
+                if (File.Exists(path))
+                {
+                    content = File.ReadAllText(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return content;
         }
 
         public async Task<AssetItem> UploadFormFile(IFormFile file, string root, string path = "")

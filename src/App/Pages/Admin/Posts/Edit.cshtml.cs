@@ -18,13 +18,13 @@ namespace App.Pages.Admin.Posts
 
         IDataService _db;
         INotificationService _ns;
-        ISendGridService _sg;
+        IEmailService _es;
 
-        public EditModel(IDataService db, INotificationService ns, ISendGridService sg)
+        public EditModel(IDataService db, INotificationService ns, IEmailService es)
         {
             _db = db;
             _ns = ns;
-            _sg = sg;
+            _es = es;
         }
 
         public async Task OnGetAsync(int id)
@@ -70,10 +70,12 @@ namespace App.Pages.Admin.Posts
                 //This is to prevent users from modifiyng other users or admin posts. -- manuta  9-16-2018
                 if (IsAdmin || _db.Authors.Single(a => a.Id == PostItem.Author.Id).AppUserName == User.Identity.Name)
                 {
-                    if (PostItem.Status == SaveStatus.Publishing)
+                    var status = PostItem.Status;
+
+                    if (status == SaveStatus.Publishing)
                         PostItem.Published = DateTime.UtcNow;
 
-                    if (PostItem.Status == SaveStatus.Unpublishing)
+                    if (status == SaveStatus.Unpublishing)
                         PostItem.Published = DateTime.MinValue;
 
                     // fix for linux default datetime
@@ -87,10 +89,11 @@ namespace App.Pages.Admin.Posts
                     PostItem = item;
                     Message = Resources.Saved;
 
-                    if(PostItem.Status == SaveStatus.Publishing)
+                    if(status == SaveStatus.Publishing)
                     {
+                        var siteUrl = $"{Request.Scheme}://{Request.Host}";
                         List<string> emails = _db.Newsletters.All().Select(n => n.Email).ToList();
-                        await _sg.SendNewsletters(PostItem, emails);
+                        await _es.SendNewsletters(PostItem, emails, siteUrl);
                     }
 
                     return Redirect($"~/admin/posts/edit?id={PostItem.Id}");

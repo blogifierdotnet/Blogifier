@@ -37,7 +37,7 @@ namespace Core.Extensions
             services.AddTransient<IImportService, ImportService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IWebService, WebService>();
-            services.AddTransient<ISendGridService, SendGridService>();
+            services.AddTransient<IEmailService, SendGridService>();
 
             services.AddTransient<UserManager<AppUser>>();
 
