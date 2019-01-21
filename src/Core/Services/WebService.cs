@@ -52,7 +52,8 @@ namespace Core.Services
                     result = $"The new Blogifier <a href='{repo.html_url}' class='alert-link' target='_blank'>{repo.name}</a> is available for download";
 
                     var field = _db.CustomFields.Single(f => f.Name == Constants.NewestVersion && f.AuthorId == 0);
-                    if(field == null || (field != null && int.Parse(field.Content) < latest))
+
+                    if (field == null)
                     {
                         _db.CustomFields.Add(new Data.CustomField
                         {
@@ -61,6 +62,13 @@ namespace Core.Services
                             Content = latest.ToString()
                         });
                         _db.Complete();
+                    }
+                    else
+                    {
+                        if (int.Parse(field.Content) < latest)
+                        {
+                            await _db.CustomFields.SaveCustomValue(Constants.NewestVersion, latest.ToString());
+                        }
                     }
                 }
             }
