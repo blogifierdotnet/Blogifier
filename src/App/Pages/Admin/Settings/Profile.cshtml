@@ -53,18 +53,43 @@
                     <input type="hidden" asp-for="Author.AppUserName" />
                     <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
 
+                    @if (Model.Author.AppUserName == User.Identity.Name)
+                    {
+                        <button type="button" class="btn btn-secondary" onclick="return openChangePwd();">@Localizer["change-password"]</button>
+                    }
                     @if (Model.IsAdmin && Model.Author.AppUserName != User.Identity.Name)
                     {
-                    <button type="submit" asp-page-handler="Confirm" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">@Localizer["delete"]</button>
+                        <button type="submit" asp-page-handler="Confirm" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">@Localizer["delete"]</button>
                     }
                 }
             </div>
         </form>
     </div>
 </div>
+
+<div class="modal fade" id="dlgChangePwd" tabindex="-1" role="dialog" aria-hidden="true">
+    <partial name="~/Pages/Admin/Settings/_ChangePwd.cshtml" model="new ChangePasswordModel { UserName = User.Identity.Name }" />
+</div>
+
 <partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
     @Html.Raw(Model.RenderMessage())
     <script src="~/admin/js/app/fileManagerController.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.min.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        var openChangePwd = function () {
+            $('#frmChangePwd').validate().resetForm();
+            $('#dlgChangePwd').modal();
+            return false;
+        }
+        var changePwd = function () {
+            $("#frmChangePwd").validate();
+            if ($("#frmChangePwd").valid()) {
+                return true;
+            }
+            return false;
+        }
+    </script>
 }
