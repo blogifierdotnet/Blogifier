@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace Core.Services
     public class WebService : IWebService
     {
         IDataService _db;
+        IConfiguration _config;
         static HttpClient client = new HttpClient();
 
-        public WebService(IDataService db)
+        public WebService(IDataService db, IConfiguration config)
         {
             _db = db;
+            _config = config;
 
             // required by Github
             if (!client.DefaultRequestHeaders.Contains("User-Agent"))
@@ -30,7 +33,8 @@ namespace Core.Services
         public async Task<string> CheckForLatestRelease()
         {
             string result = "";
-            HttpResponseMessage response = await client.GetAsync(Constants.RepoReleaseUrl);
+
+            HttpResponseMessage response = await client.GetAsync(getGithubUrl());
 
             if (response.IsSuccessStatusCode)
             {
@@ -48,7 +52,8 @@ namespace Core.Services
                     result = $"The new Blogifier <a href='{repo.html_url}' class='alert-link' target='_blank'>{repo.name}</a> is available for download";
 
                     var field = _db.CustomFields.Single(f => f.Name == Constants.NewestVersion && f.AuthorId == 0);
-                    if(field == null || (field != null && int.Parse(field.Content) < latest))
+
+                    if (field == null)
                     {
                         _db.CustomFields.Add(new Data.CustomField
                         {
@@ -57,6 +62,13 @@ namespace Core.Services
                             Content = latest.ToString()
                         });
                         _db.Complete();
+                    }
+                    else
+                    {
+                        if (int.Parse(field.Content) < latest)
+                        {
+                            await _db.CustomFields.SaveCustomValue(Constants.NewestVersion, latest.ToString());
+                        }
                     }
                 }
             }
@@ -69,7 +81,7 @@ namespace Core.Services
             var msg = "";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(Constants.RepoReleaseUrl);
+                HttpResponseMessage response = await client.GetAsync(getGithubUrl());
                 if (response.IsSuccessStatusCode)
                 {
                     var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
@@ -101,6 +113,15 @@ namespace Core.Services
             }
 
             return await Task.FromResult(msg);
+        }
+
+        string getGithubUrl()
+        {
+            var section = _config.GetSection(Constants.ConfigSectionKey);
+
+            return (section != null && !string.IsNullOrEmpty(section.GetValue<string>(Constants.ConfigRepoKey))) ?
+                section.GetValue<string>(Constants.ConfigRepoKey) :
+                "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
         }
     }
 }

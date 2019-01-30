@@ -1,8 +1,10 @@
 ﻿using Core;
 using Core.Data;
+using Core.Data.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +15,7 @@ namespace App.Pages.Admin.Settings
         IDataService _db;
         IStorageService _ss;
         UserManager<AppUser> _um;
+        SignInManager<AppUser> _sm;
         INotificationService _ns;
 
         public string Action { get; set; }
@@ -20,11 +23,12 @@ namespace App.Pages.Admin.Settings
         [BindProperty]
         public Author Author { get; set; }
 
-        public ProfileModel(IDataService db, IStorageService ss, UserManager<AppUser> um, INotificationService ns)
+        public ProfileModel(IDataService db, IStorageService ss, UserManager<AppUser> um, SignInManager<AppUser> sm, INotificationService ns)
         {
             _db = db;
             _ss = ss;
             _um = um;
+            _sm = sm;
             _ns = ns;
         }
 
@@ -91,6 +95,38 @@ namespace App.Pages.Admin.Settings
             Action = "Remove";
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostChangePwd(ChangePasswordModel model)
+        {
+            if (AppSettings.DemoMode)
+            {
+                ModelState.AddModelError("Custom", "Application configured to run in demo mode with change password disabled");
+                return Page();
+            }
+
+            ModelState.Clear();
+            try
+            {
+                var user = await _um.GetUserAsync(User);
+                var result = await _um.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException(result.Errors.First().Description);
+                }
+
+                await _sm.SignInAsync(user, isPersistent: false);
+
+                Message = Resources.Updated;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Custom", ex.Message);
+                return Page();
+            }
+
+            return RedirectToPage("Profile");
         }
 
     }

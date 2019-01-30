@@ -457,5 +457,12 @@
       "zh-cn": "筛选",
       "zh-tw": "篩選"
     }
+  },
+  {
+    "Key": "change-password",
+    "Values": {
+      "en-US": "Change password",
+      "ru-RU": "Изменить пароль"
+    }
   }
 ]

@@ -11,9 +11,6 @@
             <li is-active-route asp-controller="settings" asp-action="profile">
                 <a href="~/admin/settings/profile">@Localizer["profile"]</a>
             </li>
-            <li is-active-route asp-controller="settings" asp-action="password">
-                <a href="~/admin/settings/password">@Localizer["password"]</a>
-            </li>
             @if (Model.IsAdmin)
             {
                 <li is-active-route asp-controller="settings" asp-action="themes">

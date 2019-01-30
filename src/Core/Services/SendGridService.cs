@@ -8,29 +8,48 @@ using System.Threading.Tasks;
 
 namespace Core.Services
 {
-    public interface ISendGridService
+    public interface IEmailService
     {
-        Task SendNewsletters(PostItem postItem, List<string> emails);
+        Task SendNewsletters(PostItem postItem, List<string> emails, string siteUrl);
         Task SendEmail(string to, string subject, string content);
     }
 
-    public class SendGridService : ISendGridService
+    public class SendGridService : IEmailService
     {
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
+        IStorageService _storage;
+        IDataService _db;
+        BlogItem _blog;
 
-        public SendGridService(IConfiguration config, ILogger<SendGridService> logger)
+        public SendGridService(IDataService db, IConfiguration config, ILogger<SendGridService> logger, IStorageService storage)
         {
+            _db = db;
             _config = config;
             _logger = logger;
+            _storage = storage;
         }
 
-        public async Task SendNewsletters(PostItem postItem, List<string> emails)
+        public async Task SendNewsletters(PostItem post, List<string> emails, string siteUrl)
         {
+            var blog = await _db.CustomFields.GetBlogSettings();
             foreach (var email in emails)
             {
-                var subject = "Newsletter: " + postItem.Title;
-                var htmlContent = postItem.Description;
+                var subject = post.Title;
+                var content = _storage.GetHtmlTemplate("newsletter");
+
+                var htmlContent = string.Format(content,
+                    blog.Title, // 0
+                    blog.Logo,  // 1
+                    blog.Cover, // 2
+                    post.Title, // 3
+                    post.Description, // 4 
+                    post.Content, // 5
+                    post.Slug, // 6
+                    post.Published, // 7 
+                    post.Cover, // 8
+                    post.Author, // 9
+                    siteUrl); // 10
 
                 await SendEmail(email, subject, htmlContent);
             }
@@ -38,7 +57,7 @@ namespace Core.Services
 
         public async Task SendEmail(string to, string subject, string content)
         {
-            var section = _config.GetSection("Blogifier");
+            var section = _config.GetSection(Constants.ConfigSectionKey);
 
             if(section != null)
             {
