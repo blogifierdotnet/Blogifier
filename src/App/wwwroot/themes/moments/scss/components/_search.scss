@@ -1,0 +1,23 @@
+.blog-search-form {
+  .form-control {
+    background: none;
+    border: 2px solid rgba(255,255,255,.25);
+    width: 13rem;
+    color: #fff;
+    outline: none !important;
+
+    &::placeholder {
+      color: rgba(255,255,255,.25);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    &:focus {
+      border-color: rgba(255,255,255,.75);
+      outline: none !important
+      ;
+      box-shadow: none;
+    }
+  }
+}
