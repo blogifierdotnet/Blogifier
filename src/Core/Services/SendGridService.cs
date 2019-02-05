@@ -20,7 +20,6 @@ namespace Core.Services
         private readonly ILogger _logger;
         IStorageService _storage;
         IDataService _db;
-        BlogItem _blog;
 
         public SendGridService(IDataService db, IConfiguration config, ILogger<SendGridService> logger, IStorageService storage)
         {
