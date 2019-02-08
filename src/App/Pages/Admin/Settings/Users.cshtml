@@ -37,9 +37,32 @@
             }
         </div>
         <!--/Grid -->
+        <div style="margin-left: 30px">
+            <button type="button" class="btn btn-primary" onclick="return openRegister();">@Localizer["new-user"]</button>
+        </div>
     </div>
+</div>
+
+<div class="modal fade" id="dlgRegister" tabindex="-1" role="dialog" aria-hidden="true">
+    <partial name="~/Pages/Admin/Settings/_Register.cshtml" model="new RegisterModel()" />
 </div>
 
 @section Scripts{
     @Html.Raw(Model.RenderMessage())
+    <script src="~/admin/js/lib/jquery.validate.min.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        var openRegister = function () {
+            $('#frmRegister').validate().resetForm();
+            $('#dlgRegister').modal();
+            return false;
+        }
+        var register = function () {
+            $("#frmRegister").validate();
+            if ($("#frmRegister").valid()) {
+                return true;
+            }
+            return false;
+        }
+    </script>
 }

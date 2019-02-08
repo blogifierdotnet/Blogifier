@@ -1,0 +1,44 @@
+﻿@model RegisterModel
+@inject IViewLocalizer Localizer
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="hdrSettings">@Localizer["new-user"]</h4>
+            <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="settings-body">
+                <form id="frmRegister" method="post" asp-page-handler="Register" asp-antiforgery="true">
+                    <div class="bf-content bf-content-boxed bf-settings">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="form-group-label">@Localizer["user-name"]</label>
+                            <input type="text" asp-for="UserName" class="form-control" autofocus />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group-label">@Localizer["email"]</label>
+                            <input type="text" asp-for="Email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group-label">@Localizer["password"]</label>
+                            <input type="password" asp-for="Password" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group-label">@Localizer["confirm-password"]</label>
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
+                                <input type="checkbox" id="cbxSetAdmin" asp-for="SetAsAdmin" class="custom-control-input">
+                                <span class="custom-control-label">@Localizer["set-as-admin"]</span>
+                            </label>
+                        </div>
+                        <button type="submit" onclick="return register()" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

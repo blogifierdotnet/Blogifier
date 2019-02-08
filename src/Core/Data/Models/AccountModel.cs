@@ -19,6 +19,8 @@ namespace Core.Data.Models
         [Compare("Password")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
+        public bool SetAsAdmin { get; set; }
     }
 
     public class ChangePasswordModel

@@ -16,20 +16,42 @@
 
   .navbar-expand-lg .navbar-nav .nav-link {
     padding: 0;
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.0625rem;
   }
 
-  &-one {
-    border-bottom: 1px solid #ddd;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
+  .dropdown-menu {
+    background: #3a0d36;
+    padding: 0;
+    border: 0;
 
-  &-two {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    .dropdown-item {
+      color: rgba(255,255,255,.4);
+      padding: 0.75rem 1rem;
+      font-weight: 400;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+
+      &:focus,
+      &:hover {
+        background: rgba(255,255,255,.05);
+      }
+    }
+
+    .dropdown-divider {
+      margin: 0;
+      border-top: 1px solid #222;
+    }
   }
 }
+
+.blog-search {
+  
+
+}
+
 
 .blog-social {
   li {
