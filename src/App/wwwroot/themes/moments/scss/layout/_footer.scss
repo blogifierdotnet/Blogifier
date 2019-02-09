@@ -1,19 +1,26 @@
 .blog-footer {
-      background-color: #191919;
-  color: #888;
-  font-size: .75rem;
-  padding: 3rem 0;
-  text-transform: uppercase;
+    color: #b3b3b3;
+    font-size: 1rem;
+    padding: 3rem 0;
 
-  a {
-    color: #888;
-
-    &:hover {
-      color: #fff;
+    &-wrap {
+        border-top: 3px solid #25242B;
+        padding-top:3rem;
     }
-  }
 
-  p {
-    margin: 0;
-  }
+    .blog-copyright {
+        font-size: .875rem;
+    }
+
+    a {
+        color: #888;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    p {
+        margin: 0;
+    }
 }

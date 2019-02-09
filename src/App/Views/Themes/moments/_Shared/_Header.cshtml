@@ -1,7 +1,7 @@
 ﻿<header class="blog-header">
     <div class="container d-flex">
-      <a href="~/" class="blog-logo my-auto d-flex mr-3"> <img src="~/@Model.Blog.Logo" alt="@Model.Blog.Title" class="my-auto" height="30" /></a>
-      <nav class="navbar navbar-expand-lg navbar-dark w-100">
+      <a href="~/" class="blog-logo"> <img src="~/themes/moments/img/logo.png" alt="@Model.Blog.Title" /></a>
+      <nav class="navbar navbar-expand-lg navbar-dark ml-auto">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,8 +30,9 @@
           </ul>
         </div>
       </nav>
-      <form class="blog-search-form" role="search" asp-controller="Blog" asp-action="Index" method="post">
+      <form class="blog-search-form my-auto" role="search" asp-controller="Blog" asp-action="Index" method="post">
           <input type="search" id="term" name="term" class="form-control" placeholder="Search..." autocomplete="off">
+          <button type="submit"><i class="fa fa-search"></i></button>
       </form>
     </div>
 </header>

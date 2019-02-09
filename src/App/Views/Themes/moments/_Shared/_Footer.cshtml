@@ -1,28 +1,53 @@
-﻿@{
-    var returnUrl = Url.Action("Index", "Admin");
-}
-
-
-
+﻿
 <footer class="blog-footer">
-    <div class="container d-lg-flex text-center text-lg-left">
-        <p>Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
-        <div class="ml-auto">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <a href="~/admin">Admin</a>
-            }
-            else
-            {
-                <a href="~/account/login?ReturnUrl=@returnUrl">Login</a>
-            }
+    <div class="container">
+        <div class="blog-footer-wrap">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="~/" class="blog-logo"><img src="~/themes/moments/img/logo.png" width="200" alt="@Model.Blog.Title" /></a>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
+                    <br />
+                    <p class="blog-copyright">Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="widget widget-newsletter">
+                        <h4 class="widget-title"><i class="widget-icon fa fa-telegram"></i><span>Newsletter</span></h4>
+                        <div class="widget-body">
+                            <ul>
+                                @await Component.InvokeAsync("Newsletter", new { theme = "moments", widget = "Newsletter" })
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="widget widget-social">
+                        <h4 class="widget-title"><i class="widget-icon fa fa-share-alt"></i><span>Follow Us</span></h4>
+                        <div class="widget-body">
+                            <ul>
+                                @await Component.InvokeAsync("HtmlBlock", new { theme = "moments", widget = "Social Buttons" })
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </footer>
+
 @*<a href="#" onclick="profileLogOut(); return false;">Logoff</a>
-<form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>*@
+    <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>*@
 <script src="~/themes/moments/js/jquery.min.js"></script>
 <script src="~/themes/moments/js/popper.min.js"></script>
 <script src="~/themes/moments/js/bootstrap.min.js"></script>
 <script src="~/themes/moments/js/prism.js"></script>
 <script src="~/themes/moments/js/blog.js" asp-append-version="true"></script>
+
+
+
+

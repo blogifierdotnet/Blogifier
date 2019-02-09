@@ -1,40 +1,37 @@
 .widget {
-  margin-bottom: 3rem;
-  background-color: #fff;
-  padding: 1.5rem;
+    margin-bottom: 5rem;
 
-  &-title {
-    padding: 1rem;
-    color: #333;
-    font-size: 1rem;
-
-    span {
-      border-bottom: 2px solid $color-theme;
-      display: inline-block;
-      position: relative;
-      padding: 0 0.75rem 0.25rem 0.25rem;
-      text-transform: uppercase;
-
-      &::before {
-        display: block;
-        content: "";
-        width: 0.75rem;
-        height: 0.75rem;
-        position: absolute;
-        left: -.75rem;
-        bottom: -0.40625rem;
-        background-color: $color-theme;
-        border-radius: 100%;
-      }
+    &-title {
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
     }
-  }
 
-  &-body {
-    padding: 1rem;
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
+    &-icon {
+        font-size: 1rem;
+        color: $color-theme;
+        margin-right: .5rem;
     }
-  }
+
+    &-body {
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: inside;
+
+            li {
+                color: #8c8c8c;
+                margin-bottom: .25rem;
+            }
+        }
+
+        a {
+            color: #8c8c8c;
+
+            &:hover {
+                color: $color-theme;
+            }
+        }
+    }
 }
