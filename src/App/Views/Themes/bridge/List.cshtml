@@ -89,12 +89,12 @@
 
         @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
                     {
-        <ul class="pagination justify-content-between">
+        <ul class="pagination justify-content-center">
             @if (pgr.ShowOlder)
                             {
             <li class="item item-prev">
                 <a class="item-link" href="~/@pgr.LinkToOlder">
-                    Previous Page
+                    <i class="fa fa-chevron-left"></i>
                 </a>
             </li>
                             }
@@ -102,7 +102,8 @@
                             {
             <li class="item item-next">
                 <a class="item-link" href="~/@pgr.LinkToNewer">
-                    Next Page
+                    <i class="fa fa-chevron-right"></i>
+
                 </a>
             </li>
                             }
