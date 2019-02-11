@@ -1,7 +1,9 @@
 .post {
     position: relative;
     padding-bottom: 5rem;
-
+    .container {
+        width:1080px;
+    }
     &-body {
     }
 
@@ -82,11 +84,6 @@
     .post-cover {
         position: relative;
 
-        &:hover {
-            img {
-                opacity: 0.7;
-            }
-        }
 
         img {
             font-size: 0;
@@ -116,17 +113,62 @@
 
 
     .post-meta {
-        &-auhtor{
-            display:block;
-            img {
+        &-author {
 
+            &-avatar {
+                border-radius: .25rem;
+                width: 6.25rem;
+                height: 6.25rem;
+                margin-right: auto;
+                box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+                margin-bottom: 1.25rem;
+                transition: all ease .25s;
+
+                &:hover {
+                    opacity: .75;
+                }
+            }
+
+            &-name {
+                color: #000;
+                font-size: 1.25rem;
+                transition: all ease .25s;
+                margin-bottom: .75rem;
+                font-weight:500;
+                &:hover {
+                    color: #555;
+                }
+            }
+
+
+            &:hover {
+                color: #555;
             }
         }
 
         &-category {
+            color: #333;
+            text-transform: uppercase;
+
+            a {
+                color: #333;
+                font-weight: 500;
+                transition: all ease .25s;
+                font-size: .875rem;
+
+                &:hover {
+                    color: #555;
+                }
+            }
         }
 
         &-time {
+            margin-top: .875rem;
+            display: block;
+            text-transform: uppercase;
+            font-size: .875rem;
+            font-weight: 500;
+            color: #888;
         }
     }
 }
