@@ -7,9 +7,6 @@
     .blog-logo {
         margin: 5rem auto;
         width: 12rem;
-
-        img {
-        }
     }
 
 
@@ -27,11 +24,11 @@
         font-weight: 500;
         font-size: 1rem;
         letter-spacing: 0.0625rem;
-        color: #fff;
+        color: #aaa;
     }
 
     .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link {
-        color: $color-theme;
+        color: #fff;
     }
 
     .dropdown-menu {

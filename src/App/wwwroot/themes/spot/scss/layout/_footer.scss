@@ -1,7 +1,14 @@
 .blog-footer {
+    background: #0d0d0d;
     color: #b3b3b3;
     font-size: 1rem;
     padding: 3rem 0;
+    text-align:center;
+
+    .blog-logo {
+        margin:0 auto 1rem;
+        width: 8rem;
+    }
 
     &-wrap {
         border-top: 3px solid #25242B;
@@ -21,6 +28,6 @@
     }
 
     p {
-        margin: 0;
+        margin: 0 0 1rem;
     }
 }

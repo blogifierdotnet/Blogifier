@@ -15,7 +15,6 @@
         background: #000;
         width: 100%;
         border: none;
-        border-radius: 10rem;
         color: #fff;
         outline: none !important;
         height: 3.25rem;
@@ -41,11 +40,12 @@
         top: 0;
         bottom: 0;
         border: 0;
-        width: 7.5rem;
+        width: 6rem;
         color: #fff;
         text-transform: uppercase;
         background: none;
-        font-size: .875rem;
+        font-size: .75rem;
         border-left: 1px solid #212529;
+        background: #000;
     }
 }
