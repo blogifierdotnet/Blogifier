@@ -12,22 +12,19 @@
     }
 
     input {
-        background: #000;
+        background: #fff;
         width: 100%;
         border: none;
         color: #fff;
         outline: none !important;
-        height: 3.25rem;
-        padding: 0 1.5rem;
+        height: 3rem;
+        padding: 0 1rem;
 
-        &::placeholder {
-            color: rgba(255,255,255,.3);
-            font-size: 1rem;
-            font-weight: 400;
-        }
+        font-size:.75rem;
+
+     
 
         &:focus {
-            border-color: rgba(255,255,255,.75);
             outline: none !important;
             box-shadow: none;
         }

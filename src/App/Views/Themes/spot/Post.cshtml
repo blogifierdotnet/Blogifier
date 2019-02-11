@@ -112,6 +112,14 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="widget widget-newsletter">
+                        <h4 class="widget-title"><i class="widget-icon fa fa-telegram"></i><span>Newsletter</span></h4>
+                        <div class="widget-body">
+                            <ul>
+                                @await Component.InvokeAsync("Newsletter", new { theme = "spot", widget = "Newsletter" })
+                            </ul>
+                        </div>
+                    </div>
                 </aside>
             </div>
         </div>
