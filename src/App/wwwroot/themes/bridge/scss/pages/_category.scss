@@ -1,7 +1,14 @@
+.page-category{
+    background:$color-theme;
+    
+}
 .page-category-title {
-    font-size:1.5rem;
-    color:$color-theme;
+    padding: 4rem 0;
+    margin:0;
+    font-size: 1.5rem;
+    color:#fff;
+
     .fa {
-        margin-right:1rem;
+        margin-right: 1rem;
     }
 }

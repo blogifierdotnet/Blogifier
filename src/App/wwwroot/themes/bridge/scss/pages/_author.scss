@@ -1,10 +1,13 @@
 .page-author {
+    background: $color-theme;
+    padding: 4rem 0;
+    margin: 0;
 
     &-title {
         padding-left: 4rem;
         position: relative;
         font-size: .75rem;
-        color: #888;
+        color: #fff;
         line-height: 1;
     }
 
@@ -14,7 +17,7 @@
         display: block;
         font-size: 1.5rem;
         margin-bottom: .125rem;
-        color:$color-theme;
+        color: #fff;
     }
 
     &-avatar {
@@ -25,5 +28,4 @@
         height: 3rem;
         border-radius: 50%;
     }
-
 }

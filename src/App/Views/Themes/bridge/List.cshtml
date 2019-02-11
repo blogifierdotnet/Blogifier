@@ -19,28 +19,38 @@
 
     <div class="page-content">
 
+
         @if (Model.PostListType == PostListType.Search)
                     {
-        <h2 class="page-search-title"><i class="fa fa-search"></i> @Model.Blog.Title</h2>
-        <hr class="my-5" />
+        <div class="page-search">
+            <div class="container">
+                <h2 class="page-search-title"><i class="fa fa-search"></i> @Model.Blog.Title</h2>
+            </div>
+        </div>
                     }
                     else if (Model.PostListType == PostListType.Author)
                     {
-        <h2 class="page-author-title">
-            <img src="~/@Model.Author.Avatar" class="page-author-avatar" />
-            <span class="page-author-name">@Model.Author.DisplayName</span>
-        </h2>
-        <hr class="my-5" />
+        <div class="page-author">
+            <div class="container">
+                <h2 class="page-author-title">
+                    <img src="~/@Model.Author.Avatar" class="page-author-avatar" />
+                    <span class="page-author-name">@Model.Author.DisplayName</span>
+                </h2>
+            </div>
+        </div>
                     }
                     else if (Model.PostListType == PostListType.Category)
                     {
-        <h2 class="page-category-title"><i class="fa fa-tag"></i> @ViewBag.Category</h2>
-        <hr class="my-5" />
-                    }
-                    else
-                    {
+        <div class="page-category">
+            <div class="container">
+                <h2 class="page-category-title"><i class="fa fa-tag"></i> @ViewBag.Category</h2>
+            </div>
+        </div>
+            }
+            else
+            {
+            }
 
-                    }
 
         @if (Model.Posts != null)
                     {
@@ -114,6 +124,6 @@
 
     <partial name="~/Views/Themes/bridge/_Shared/_Footer.cshtml" />
 
-   
+
 </body>
 </html>
