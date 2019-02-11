@@ -1,0 +1,22 @@
+[
+  {
+    "Widget": "HtmlBlock",
+    "Title": "Social Buttons"
+  },
+  {
+    "Widget": "PostList",
+    "Title": "Recent Posts"
+  },
+  {
+    "Widget": "Newsletter",
+    "Title": "Newsletter"
+  },
+  {
+    "Widget": "Categories",
+    "Title": "Categories"
+  },
+  {
+    "Widget": "Categories",
+    "Title": "Tags"
+  }
+]
