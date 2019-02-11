@@ -61,13 +61,45 @@ pre {
 
 
 blockquote {
-  background: #eee;
-  padding: 2rem;
-  border-radius: 3px;
+    background: #25242B;
+    padding: 3.5rem ;
+    border-radius: .5rem;
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: #fff;
+    position: relative;
 
-  p {
-    &:last-child {
-      margin-bottom: 0 !important;
+    p {
+        &:last-child {
+            margin-bottom: 0 !important;
+        }
     }
-  }
+
+
+    &::before, &::after {
+        display: block;
+        content: '\201C';
+        font-size: 80px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        position: absolute;
+        left: 10px;
+        top: 35px;
+        color: $color-theme;
+    }
+
+    &::after {
+        content: "\201D";
+        left: auto;
+        top: auto;
+        right: 10px;
+        bottom: -10px;
+    }
+}
+
+
+hr {
+    border-color: #383642;
 }

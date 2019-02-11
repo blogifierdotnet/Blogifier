@@ -9,7 +9,7 @@
     .post-cover {
         position: relative;
         margin-bottom: 1rem;
-
+        border-radius:.5rem;
         &:hover {
             img {
                 opacity: 0.7;
@@ -19,6 +19,7 @@
         img {
             font-size: 0;
             transition: all ease .25s;
+
         }
 
         .post-featrued-label {
@@ -33,12 +34,12 @@
             font-weight: bold;
             text-transform: uppercase;
             border-radius: .25rem;
+            color:#000;
         }
 
         @media screen and (min-width:992px) {
             overflow: hidden;
             min-height: 18rem;
-            border-radius: .25rem;
 
             img {
                 width: auto;
@@ -72,7 +73,7 @@
         a {
             background: $color-theme;
             border: 3px solid $color-theme;
-            padding: .5rem .75rem;
+            padding: .5rem 1rem;
             font-size: .75rem;
             color: #000;
             font-weight: 500;
