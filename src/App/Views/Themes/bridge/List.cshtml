@@ -6,7 +6,6 @@
 
     var first3 = _db.BlogPosts.All().OrderByDescending(p => p.Published).Take(3).ToList();
 
-    var returnUrl = Url.Action("Index", "Admin");
 
 }
 <!DOCTYPE html>
@@ -115,15 +114,6 @@
 
     <partial name="~/Views/Themes/bridge/_Shared/_Footer.cshtml" />
 
-    <div class="blog-admin">
-        @if (User.Identity.IsAuthenticated)
-            {
-        <a href="~/admin"><i class="fa fa-user"></i></a>
-            }
-            else
-            {
-        <a href="~/account/login?ReturnUrl=@returnUrl"><i class="fa fa-login"></i></a>
-            }
-    </div>
+   
 </body>
 </html>

@@ -10,15 +10,17 @@
 
     .blog-copyright {
         font-size: .875rem;
-    }
 
-    a {
-        color: #b3b3b3;
+        a {
+            color: #b3b3b3;
 
-        &:hover {
-            color: $color-theme;
+            &:hover {
+                color: $color-theme;
+            }
         }
     }
+
+
 
     p {
         margin: 0;

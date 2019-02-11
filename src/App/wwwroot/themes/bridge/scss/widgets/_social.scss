@@ -1,53 +1,61 @@
 .widget-social {
-   
-        a {
-            margin-bottom:2rem;
-            color: #fff !important;
-            display: block;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10rem;
-            font-weight: 500 !important;
-            font-size:1rem;
-        }
+    ul {
+        list-style: none;
+    }
 
-        i {
-            display: inline-block;
-            width: 1.25rem;
-            margin-right: .625rem;
-            font-size: 1.25rem;
-            position: relative;
-            top: .125rem;
-        }
+    li {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+
+    a {
+        color: #b3b3b3;
+        display: block;
+        border-radius: 10rem;
+        font-weight: 500 !important;
+        font-size: 1rem;
+    }
+
+    i {
+        display: inline-block;
+        width: 1.25rem;
+        font-size: 1.25rem;
+        position: relative;
+        top: .125rem;
+    }
 
     &-fb {
-        background-color: $color-fb;
+
 
         &:hover {
-            background-color: lighten($color-fb,5%);
+            color: $color-fb;
         }
     }
 
     &-tw {
-        background-color: $color-tw;
-
         &:hover {
-            background-color: lighten($color-tw,5%);
+            color: $color-tw;
         }
     }
 
     &-in {
-        background-color: $color-in;
-
         &:hover {
-            background-color: lighten($color-in,5%);
+            color: $color-in;
         }
     }
 
     &-rss {
-        background-color: $color-rss;
 
         &:hover {
-            background-color: lighten($color-rss,5%);
+            color: $color-rss;
+        }
+    }
+
+
+    &-admin {
+
+        &:hover {
+            color: $color-theme;
         }
     }
 }

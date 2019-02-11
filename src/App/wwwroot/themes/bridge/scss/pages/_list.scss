@@ -1,9 +1,11 @@
 .post {
     position: relative;
     padding-bottom: 5rem;
+
     .container {
-        width:1080px;
+        width: 1080px;
     }
+
     &-body {
     }
 
@@ -35,6 +37,17 @@
     .post-description {
         padding: 0 7.5rem 7.5rem;
         font-size: 1.5rem;
+        font-weight: 300;
+
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+
+
+    .post-content {
+        padding: 0 7.5rem 7.5rem;
+        font-size: 1.25rem;
         font-weight: 300;
 
         p {
@@ -134,7 +147,8 @@
                 font-size: 1.25rem;
                 transition: all ease .25s;
                 margin-bottom: .75rem;
-                font-weight:500;
+                font-weight: 500;
+
                 &:hover {
                     color: #555;
                 }
