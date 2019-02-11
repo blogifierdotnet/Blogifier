@@ -5,12 +5,6 @@ body{
 .wrapper {}
 
 .page-content {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  @media screen and (min-width:992px) {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
 }
 .container {
   width: 1300px;

@@ -1,6 +1,7 @@
 .post {
     position: relative;
     padding-bottom: 3rem;
+    background: #fff;
 
     &:last-child {
         margin-bottom: 0;
@@ -9,7 +10,7 @@
     .post-cover {
         position: relative;
         margin-bottom: 1rem;
-        border-radius:.5rem;
+
         &:hover {
             img {
                 opacity: 0.7;
@@ -19,7 +20,6 @@
         img {
             font-size: 0;
             transition: all ease .25s;
-
         }
 
         .post-featrued-label {
@@ -34,12 +34,12 @@
             font-weight: bold;
             text-transform: uppercase;
             border-radius: .25rem;
-            color:#000;
+            color: #000;
         }
 
         @media screen and (min-width:992px) {
             overflow: hidden;
-            min-height: 18rem;
+            min-height: 26rem;
 
             img {
                 width: auto;
@@ -56,28 +56,29 @@
         }
     }
 
+    .post-body{
+        padding:3rem;
+    }
+
     .post-categories {
         list-style: none;
         margin: 0;
         padding: 0;
-        position: absolute;
-        right: 1rem;
-        top: 1.5rem;
-        z-index: 100;
+        text-align:center;
 
         li {
-            float: right;
-            margin-left: .5rem;
+            display: inline-block;
+            margin: 0 .25rem;
         }
 
         a {
-            background: $color-theme;
-            border: 3px solid $color-theme;
+            background: #0d0d0d;
             padding: .5rem 1rem;
             font-size: .75rem;
-            color: #000;
+            color: #fff;
             font-weight: 500;
-            border-radius: 10rem;
+            border-radius: .125rem;
+            text-transform:uppercase;
 
             &:hover {
                 background: none;
