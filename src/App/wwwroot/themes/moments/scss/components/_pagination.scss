@@ -3,11 +3,11 @@
     .item {
 
         &-link {
-            background: #04ffb0;
-            border: 3px solid #04ffb0;
+            background: #000;
+            border: 3px solid #000;
             padding: .5rem 1.5rem;
             font-size: 1rem;
-            color: #000;
+            color: #b2b2b2;
             font-weight: 500;
             border-radius: 10rem;
             display: block;
@@ -15,6 +15,7 @@
             &:hover {
                 background: none;
                 color: $color-theme;
+                border-color:$color-theme;
             }
         }
 
