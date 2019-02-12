@@ -1,0 +1,37 @@
+.blog-footer {
+    background-color: #162232;
+    color: #b3b3b3;
+    font-size: 1rem;
+    padding: 5rem 0 3rem;
+
+
+    .blog-copyright {
+        color: #64768e;
+        margin-top: 3rem;
+        font-size: .875rem;
+        padding-top: 3rem;
+        border-top: 1px solid rgba(255,255,255,.05);
+        text-transform: uppercase;
+
+        a {
+            color: #64768e;
+
+            &:hover {
+                color: $color-theme;
+            }
+        }
+    }
+
+    a {
+        color: #b3b3b3;
+
+        &:hover {
+            color: $color-theme;
+        }
+    }
+
+
+    p {
+        margin: 0;
+    }
+}
