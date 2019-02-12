@@ -20,9 +20,9 @@
 
 
 
-    <div class="page-content">
-        <div class="container">
-
+    
+    <div class="container">
+        <div class="page-content">
 
             @if (Model.PostListType == PostListType.Search)
                     {
@@ -47,7 +47,7 @@
 
                     }
 
-            <div class="row">
+            <div class="row no-gutters">
                 @if (Model.Posts != null)
                     {
                         foreach (var item in Model.Posts)
@@ -83,12 +83,12 @@
 
             @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
                     {
-            <ul class="pagination justify-content-between">
+            <ul class="pagination justify-content-center">
                 @if (pgr.ShowOlder)
                             {
                 <li class="item item-prev">
                     <a class="item-link" href="~/@pgr.LinkToOlder">
-                        Previous Page
+                        <i class="fa fa-angle-left"></i>   Previous Page
                     </a>
                 </li>
                             }
@@ -96,7 +96,7 @@
                             {
                 <li class="item item-next">
                     <a class="item-link" href="~/@pgr.LinkToNewer">
-                        Next Page
+                        Next Page  <i class="fa fa-angle-right"></i>
                     </a>
                 </li>
                             }

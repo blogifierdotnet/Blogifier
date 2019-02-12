@@ -5,15 +5,13 @@ body{
 .wrapper {}
 
 .page-content {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  @media screen and (min-width:992px) {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
+    background: #fff;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    overflow:hidden;
 }
 .container {
-  width: 1300px;
+  width: 1280px;
   max-width: 100%;
 }
 

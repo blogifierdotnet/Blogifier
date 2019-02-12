@@ -1,5 +1,8 @@
 ﻿.pagination {
-    margin:4rem 0;
+    padding:4rem 0;
+    margin:0;
+    border-top:1px solid #eee;
+    margin-top:-1px;
     .item {
 
         &-link {
