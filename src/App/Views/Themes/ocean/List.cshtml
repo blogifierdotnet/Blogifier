@@ -27,20 +27,19 @@
             @if (Model.PostListType == PostListType.Search)
                     {
             <h2 class="page-search-title"><i class="fa fa-search"></i> @Model.Blog.Title</h2>
-            <hr class="my-5" />
                     }
                     else if (Model.PostListType == PostListType.Author)
                     {
-            <h2 class="page-author-title">
-                <img src="~/@Model.Author.Avatar" class="page-author-avatar" />
-                <span class="page-author-name">@Model.Author.DisplayName</span>
-            </h2>
-            <hr class="my-5" />
+            <div class="page-author">
+                <h2 class="page-author-title">
+                    <img src="~/@Model.Author.Avatar" class="page-author-avatar" />
+                    <span class="page-author-name">@Model.Author.DisplayName</span>
+                </h2>
+            </div>
                     }
                     else if (Model.PostListType == PostListType.Category)
                     {
             <h2 class="page-category-title"><i class="fa fa-tag"></i> @ViewBag.Category</h2>
-            <hr class="my-5" />
                     }
                     else
                     {
