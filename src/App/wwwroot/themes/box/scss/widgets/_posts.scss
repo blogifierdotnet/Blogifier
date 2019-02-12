@@ -1,3 +1,15 @@
+.widget-aside {
+    .widget-posts {
+        &-title {
+            color: #000;
+
+            &:hover {
+                color: $color-theme !important;
+            }
+        }
+    }
+}
+
 .widget-posts {
     ul {
         list-style: none;

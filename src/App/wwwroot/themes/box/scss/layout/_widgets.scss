@@ -1,6 +1,10 @@
 .widget {
     margin-bottom: 2rem;
-
+    &-aside{
+        .widget-title {
+            color:#000;
+        }
+    }
     &-title {
         color: #fff;
         font-size: 1.25rem;
