@@ -1,36 +1,44 @@
 .widget-newsletter {
-    background-color:#000;
-    padding:4rem;
-    margin:0;
-    h3 {
+    background-color: #000;
+    padding: 4rem;
+    margin: 0;
+    text-align: center;
+
+    .widget-title {
+        text-transform: uppercase;
+        font-size: 2rem;
+        margin-bottom: 1rem;
     }
 
     p {
         margin-bottom: 2rem;
+        font-weight: 300;
+        font-size: 1.5rem;
+        color: #ddd;
     }
 
     form {
         position: relative;
+        width: 30rem;
+        margin: 0 auto;
     }
 
     input {
-        background: #000;
+        background: #fff;
         width: 100%;
         border: none;
         border-radius: 10rem;
-        color: #fff;
+        color: #000;
         outline: none !important;
         height: 3.25rem;
         padding: 0 1.5rem;
 
         &::placeholder {
-            color: rgba(255,255,255,.3);
             font-size: 1rem;
             font-weight: 400;
         }
 
         &:focus {
-            border-color: rgba(255,255,255,.75);
             outline: none !important;
             box-shadow: none;
         }
@@ -44,10 +52,15 @@
         bottom: 0;
         border: 0;
         width: 7.5rem;
-        color: #fff;
+        color: #000;
         text-transform: uppercase;
         background: none;
         font-size: .875rem;
-        border-left: 1px solid #212529;
+        border-left: 1px solid #ddd;
+        font-weight: 500;
+
+        &:hover {
+            color: #FF3152;
+        }
     }
 }

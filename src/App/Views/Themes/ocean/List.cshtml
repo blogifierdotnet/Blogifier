@@ -70,11 +70,12 @@
                             <span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span>
                                     }
                         </div>
-                        <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
                         <div class="post-meta">
-                            @*<a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>*@
-                            <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
+                            By <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">@item.Author.DisplayName</a>
+                            On <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
                         </div>
+                        <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
+
                     </article>
                 </div>
                             }
@@ -88,7 +89,7 @@
                             {
                 <li class="item item-prev">
                     <a class="item-link" href="~/@pgr.LinkToOlder">
-                        <i class="fa fa-angle-left"></i>   Previous Page
+                        <i class="fa fa-chevron-left mr-3"></i>   Previous Page
                     </a>
                 </li>
                             }
@@ -96,7 +97,7 @@
                             {
                 <li class="item item-next">
                     <a class="item-link" href="~/@pgr.LinkToNewer">
-                        Next Page  <i class="fa fa-angle-right"></i>
+                        Next Page  <i class="fa fa-chevron-right  ml-3"></i>
                     </a>
                 </li>
                             }
