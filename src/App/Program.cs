@@ -23,6 +23,7 @@ namespace App
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<AppDbContext>();
+
                 try
                 {
                     if (context.Database.GetPendingMigrations().Any())
@@ -31,27 +32,30 @@ namespace App
                     }
                 }
                 catch { }
-                
-                var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
-                if (!userMgr.Users.Any())
-                {
-                    userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "admin").Wait();
-                    userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
-                }
 
                 // load application settings from appsettings.json
                 var app = services.GetRequiredService<IAppService<AppItem>>();
                 AppConfig.SetSettings(app.Value);
 
-                if (!context.BlogPosts.Any())
+                if (app.Value.SeedData)
                 {
-                    try
+                    var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
+                    if (!userMgr.Users.Any())
                     {
-                        services.GetRequiredService<IStorageService>().Reset();
+                        userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "admin").Wait();
+                        userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
                     }
-                    catch { }
-                    
-                    AppData.Seed(context);
+
+                    if (!context.BlogPosts.Any())
+                    {
+                        try
+                        {
+                            services.GetRequiredService<IStorageService>().Reset();
+                        }
+                        catch { }
+
+                        AppData.Seed(context);
+                    }
                 }
             }
 
