@@ -1,12 +1,20 @@
-﻿@{
+﻿@inject IViewLocalizer Localizer
+@inject Core.Services.IDataService _data;
+@{
     IEnumerable<Notification> _notifications = new List<Notification>();
+    bool _isAdmin = false;
 
-    if (Model.Notifications != null)
+    try
     {
+        var user = _data.Authors.Single(a => a.AppUserName == User.Identity.Name);
+        if(user != null)
+        {
+            _isAdmin = user.IsAdmin;
+        }
         _notifications = (IEnumerable<Notification>)Model.Notifications;
     }
+    catch { }
 }
-@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,11 +41,16 @@
                     <i class="taskbar-item-icon fas fa-align-left"></i>
                 </a>
             </li>
-            @if (Model.IsAdmin)
+            @if (_isAdmin)
             {
                 <li is-active-route asp-controller="settings" class="taskbar-item">
                     <a href="~/admin/settings" class="taskbar-item-link" title="@Localizer["settings"]">
                         <i class="taskbar-item-icon fas fa-cog"></i>
+                    </a>
+                </li>
+                <li is-active-route asp-controller="themes" class="taskbar-item">
+                    <a href="~/admin/themes" class="taskbar-item-link" title="@Localizer["themes"]">
+                        <i class="taskbar-item-icon fas fa-palette"></i>
                     </a>
                 </li>
             }

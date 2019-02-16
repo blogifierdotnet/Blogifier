@@ -1,0 +1,16 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Themes";
+}
+
+<div class="bf-content">
+    <div id="themesList" class="bf-posts-grid d-flex"></div>
+</div>
+
+@section Scripts{
+    <script src="~/admin/js/app/themesController.js"></script>
+    <script>
+        themesController.load(1);
+    </script>
+}

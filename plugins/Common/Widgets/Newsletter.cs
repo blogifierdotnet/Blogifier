@@ -107,7 +107,7 @@ namespace Common.Widgets
             _db.CustomFields.SaveCustomValue(keyHeader, txtHeader);
             _db.CustomFields.SaveCustomValue(keyThankyou, txtThankYou);
 
-            return Redirect("~/admin/settings/themes");
+            return Redirect(Core.Constants.ThemeEditReturnUrl);
         }
     }
 

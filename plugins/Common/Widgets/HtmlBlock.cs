@@ -68,7 +68,7 @@ namespace Common.Widgets
                 existing.Content = txtHtml;
             }
             _db.Complete();
-            return Redirect("~/admin/settings/themes");
+            return Redirect(Core.Constants.ThemeEditReturnUrl);
         }
     }
 }

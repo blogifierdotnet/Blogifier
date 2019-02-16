@@ -61,7 +61,7 @@ namespace Common.Widgets
             _db.CustomFields.SaveCustomValue(keyMax, txtMaxRecords);
             _db.CustomFields.SaveCustomValue(keyTmpl, txtTemplate);
 
-            return Redirect("~/admin/settings/themes");
+            return Redirect(Core.Constants.ThemeEditReturnUrl);
         }
     }
 
