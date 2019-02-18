@@ -11,7 +11,10 @@
         {
             _isAdmin = user.IsAdmin;
         }
-        _notifications = (IEnumerable<Notification>)Model.Notifications;
+        if(Model.Notifications != null)
+        {
+            _notifications = (IEnumerable<Notification>)Model.Notifications;
+        }
     }
     catch { }
 }
