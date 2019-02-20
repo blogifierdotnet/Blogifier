@@ -43,9 +43,10 @@ namespace Core
         public static void SetSettings(AppItem app)
         {
             AppSettings.Avatar = app.Avatar;
-            AppSettings.ImportTypes = app.ImportTypes;
-            AppSettings.ImageExtensions = app.ImageExtensions;
             AppSettings.DemoMode = app.DemoMode;
+            AppSettings.ImageExtensions = app.ImageExtensions;
+            AppSettings.ImportTypes = app.ImportTypes;
+            AppSettings.SeedData = app.SeedData;
         }
     }
 }

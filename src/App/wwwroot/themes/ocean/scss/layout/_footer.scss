@@ -1,0 +1,32 @@
+.blog-footer {
+    margin-bottom: 5rem;
+    color: #fff;
+    font-size: 1rem;
+
+    .widget {
+        margin: 0;
+    }
+
+    &-wrap {
+        padding: 3rem;
+        background-color: #FF3152;
+        border-bottom-left-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+    }
+
+    .blog-copyright {
+        font-size: .875rem;
+    }
+
+    a {
+        color: #fafafa;
+
+        &:hover {
+            color: $color-theme;
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+}

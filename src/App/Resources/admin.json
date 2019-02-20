@@ -13,8 +13,8 @@
     "Values": {
       "en-US": "Profile",
       "ru-RU": "Профиль",
-      "zh-cn":"个人资料",
-      "zh-tw":"個人資料"
+      "zh-cn": "个人资料",
+      "zh-tw": "個人資料"
     }
   },
   {
@@ -76,8 +76,8 @@
     "Values": {
       "en-US": "Posts",
       "ru-RU": "Сообщения",
-      "zh-cn":"文章列表",
-      "zh-tw":"文章清單"
+      "zh-cn": "文章列表",
+      "zh-tw": "文章清單"
     }
   },
   {
@@ -85,8 +85,8 @@
     "Values": {
       "en-US": "Settings",
       "ru-RU": "Настройки",
-      "zh-cn":"设置",
-      "zh-tw":"設定"
+      "zh-cn": "设置",
+      "zh-tw": "設定"
     }
   },
   {
@@ -94,8 +94,8 @@
     "Values": {
       "en-US": "Notifications",
       "ru-RU": "Уведомления",
-      "zh-cn":"通知",
-      "zh-tw":"通知"
+      "zh-cn": "通知",
+      "zh-tw": "通知"
     }
   },
   {
@@ -463,6 +463,13 @@
     "Values": {
       "en-US": "Change password",
       "ru-RU": "Изменить пароль"
+    }
+  },
+  {
+    "Key": "theme",
+    "Values": {
+      "en-US": "Theme",
+      "ru-RU": "Тема"
     }
   }
 ]

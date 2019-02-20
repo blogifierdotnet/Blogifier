@@ -1,0 +1,50 @@
+﻿@{
+    var returnUrl = Url.Action("Index", "Admin");
+}
+<footer class="blog-footer">
+    <div class="widget widget-newsletter">
+        <h4 class="widget-title">Newsletter</h4>
+        <div class="widget-body">
+            @await Component.InvokeAsync("Newsletter", new { theme = "bridge", widget = "Newsletter" })
+        </div>
+    </div>
+    <div class="container">
+        <div class="d-flex">
+            <p class="blog-copyright">Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
+            <div class="widget-social ml-auto">
+                @*@await Component.InvokeAsync("HtmlBlock", new { theme = "bridge", widget = "Social Buttons" })*@
+                <ul>
+                    <li><a class="widget-social-fb" target="_blank" href="https://facebook.com/blogifierdotnet"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="widget-social-tw" target="_blank" href="https://twitter.com/blogifierdotnet"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="widget-social-in" target="_blank" href="https://instagram.com/blogifierdotnet"><i class="fa fa-instagram"></i></a></li>
+                    <li><a class="widget-social-rss" target="_blank" href="/feed/rss"><i class="fa fa-rss"></i></a></li>
+
+                    @if (User.Identity.IsAuthenticated)
+            {
+                    <li>
+                        <a class="widget-social-admin" href="~/admin"><i class="fa fa-user"></i></a>
+                    </li>
+            }
+            else
+            {
+                    <li>
+                        <a class="widget-social-admin" href="~/account/login?ReturnUrl=@returnUrl"><i class="fa fa-login"></i></a>
+                    </li>
+            }
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@*<a href="#" onclick="profileLogOut(); return false;">Logoff</a>
+    <form method="post" id="frmLogOut" asp-controller="Account" asp-action="Logout" asp-antiforgery="true"></form>*@
+<script src="~/themes/bridge/js/jquery.min.js"></script>
+<script src="~/themes/bridge/js/popper.min.js"></script>
+<script src="~/themes/bridge/js/bootstrap.min.js"></script>
+<script src="~/themes/bridge/js/prism.js"></script>
+<script src="~/themes/bridge/js/blog.js" asp-append-version="true"></script>
+
+
+
+

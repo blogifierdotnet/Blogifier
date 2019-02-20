@@ -1,8 +1,21 @@
 ﻿@inject IViewLocalizer Localizer
+@inject Core.Services.IDataService _data;
+@{
+    bool _isAdmin = false;
+    try
+    {
+        var user = _data.Authors.Single(a => a.AppUserName == User.Identity.Name);
+        if (user != null)
+        {
+            _isAdmin = user.IsAdmin;
+        }
+    }
+    catch { }
+}
 <div class="bf-sidebar d-lg-block">
     <div class="bf-settings-sidebar">
         <ul class="bf-settings-sidebar-nav">
-            @if (Model.IsAdmin)
+            @if (_isAdmin)
             {
                 <li is-active-route asp-controller="settings" asp-action="index">
                     <a href="~/admin/settings">@Localizer["general"]</a>
@@ -11,10 +24,10 @@
             <li is-active-route asp-controller="settings" asp-action="profile">
                 <a href="~/admin/settings/profile">@Localizer["profile"]</a>
             </li>
-            @if (Model.IsAdmin)
+            @if (_isAdmin)
             {
-                <li is-active-route asp-controller="settings" asp-action="themes">
-                    <a href="~/admin/settings/themes">@Localizer["themes"] </a>
+                <li is-active-route asp-controller="settings" asp-action="theme">
+                    <a href="~/admin/settings/theme">@Localizer["theme"] </a>
                 </li>
                 <li is-active-route asp-controller="settings" asp-action="users">
                     <a href="~/admin/settings/users">@Localizer["users"]</a>

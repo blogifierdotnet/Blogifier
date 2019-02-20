@@ -1,0 +1,22 @@
+﻿.pagination {
+    margin:4rem 0;
+    .item {
+
+        &-link {
+            background: none;
+            border: 1px solid #000;
+            padding: .5rem 1.5rem;
+            font-size: 1rem;
+            color: #000;
+            font-weight: 500;
+            display: block;
+
+            &:hover {
+                background: #000;
+                color: #fff;
+                border-color:#000;
+            }
+        }
+
+    }
+}

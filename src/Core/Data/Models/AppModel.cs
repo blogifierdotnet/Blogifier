@@ -4,12 +4,11 @@ namespace Core.Data
 {
     public class AppItem
     {
-        public string DbProvider { get; set; }
-        public string ConnString { get; set; }
         public string Avatar { get; set; }
-        public string ImportTypes { get; set; }
-        public string ImageExtensions { get; set; }
         public bool DemoMode { get; set; }
+        public string ImageExtensions { get; set; }
+        public string ImportTypes { get; set; }
+        public bool SeedData { get; set; }
     }
 
     public class BlogItem

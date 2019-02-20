@@ -1,0 +1,188 @@
+.post {
+    position: relative;
+    padding-bottom: 5rem;
+
+    .container {
+        width: 1080px;
+    }
+
+    &-body {
+    }
+
+    &-header {
+        background-image: linear-gradient(180deg,hsla(0,0%,100%,.8) 0,#fff 106px,#fff);
+        box-shadow: 0 -4px 4px 0 rgba(41,47,54,.08), 0 -20px 26px 0 rgba(41,47,54,.07);
+        padding: 7.5rem 7.5rem 3.5rem;
+        border-top-right-radius: .25rem;
+        border-top-left-radius: .25rem;
+        margin-top: -8rem;
+        position: relative;
+    }
+
+
+    &-title {
+        font-size: 3.75rem;
+        line-height: 1.1;
+
+        a {
+            color: #333;
+            display: block;
+
+            &:hover {
+                color: $color-theme;
+            }
+        }
+    }
+
+    .post-description {
+        padding: 0 7.5rem 7.5rem;
+        font-size: 1.5rem;
+        font-weight: 300;
+
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+
+
+    .post-content {
+        padding: 0 7.5rem 7.5rem;
+        font-size: 1.25rem;
+        font-weight: 300;
+
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .post-featrued-label {
+        position: absolute;
+        right: 5rem;
+        top: -8rem;
+        display: block;
+
+        i {
+            display: block;
+            background: gold;
+            width: 2px;
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        &::after {
+            content: "";
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            width: 0;
+            height: 20px;
+            border: 20px solid gold;
+            border-top: 0 solid;
+            border-bottom: 20px solid transparent;
+            font: normal 100%/normal Arial, Helvetica, sans-serif;
+            color: rgba(0,0,0,1);
+            -o-text-overflow: clip;
+            text-overflow: clip;
+            margin-top: -5px;
+            display: block;
+        }
+    }
+
+    .post-cover {
+        position: relative;
+
+
+        img {
+            font-size: 0;
+            transition: all ease .25s;
+        }
+
+
+        @media screen and (min-width:992px) {
+            overflow: hidden;
+            min-height: 32rem;
+
+            img {
+                width: auto;
+                min-height: 100%;
+                min-width: 100%;
+                max-width: 150%;
+                max-height: none;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                display: block;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+
+
+    .post-meta {
+        &-author {
+
+            &-avatar {
+                border-radius: .25rem;
+                width: 6.25rem;
+                height: 6.25rem;
+                margin-right: auto;
+                box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+                margin-bottom: 1.25rem;
+                transition: all ease .25s;
+
+                &:hover {
+                    opacity: .75;
+                }
+            }
+
+            &-name {
+                color: #000;
+                font-size: 1.25rem;
+                transition: all ease .25s;
+                margin-bottom: .75rem;
+                font-weight: 500;
+
+                &:hover {
+                    color: #555;
+                }
+            }
+
+
+            &:hover {
+                color: #555;
+            }
+        }
+
+        &-category {
+            color: #333;
+            text-transform: uppercase;
+
+            a {
+                color: #333;
+                font-weight: 500;
+                transition: all ease .25s;
+                font-size: .875rem;
+
+                &:hover {
+                    color: #555;
+                }
+            }
+        }
+
+        &-time {
+            margin-top: .875rem;
+            display: block;
+            text-transform: uppercase;
+            font-size: .875rem;
+            font-weight: 500;
+            color: #888;
+        }
+    }
+}
