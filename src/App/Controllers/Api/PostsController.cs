@@ -26,7 +26,7 @@ namespace App.Controllers.Api
                 var results = author == 0 ? 
                     _data.BlogPosts.All() : _data.BlogPosts.Find(p => p.AuthorId == author);
 
-                return Ok(results);
+                return Ok(await Task.FromResult(results));
             }
             catch (Exception)
             {

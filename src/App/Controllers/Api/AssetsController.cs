@@ -27,7 +27,7 @@ namespace App.Controllers.Api
                 var results = _store.GetAssets(path);
 
                 return results == null || results.Count > 0 ? 
-                    Ok(results) : StatusCode(StatusCodes.Status404NotFound, "Not found");
+                    Ok(await Task.FromResult(results)) : StatusCode(StatusCodes.Status404NotFound, "Not found");
             }
             catch (Exception)
             {

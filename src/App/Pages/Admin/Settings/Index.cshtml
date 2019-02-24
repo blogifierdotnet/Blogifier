@@ -1,45 +1,36 @@
 ﻿@page
-@using Microsoft.AspNetCore.Localization
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.Extensions.Options
-@using Microsoft.AspNetCore.Builder
-@model App.Pages.Admin.Settings.IndexModel
 @inject IViewLocalizer Localizer
-@inject IOptions<RequestLocalizationOptions> LocOptions
 @{
     ViewData["Title"] = "Settings - General";
-
-    var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
-    var cultureItems = LocOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
-        .ToList();
 }
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
-    <div class="bf-body">
-
-        <form method="post" asp-antiforgery="true">
+    <div id="app" class="bf-body">
+        <form>
             <div class="bf-content bf-content-boxed bf-settings">
+
+                <p v-if="errors.length">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </p>
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["title"]</label>
-                    <input type="text" asp-for="BlogItem.Title" class="form-control" />
-                    <span asp-validation-for="BlogItem.Title" class="text-danger"></span>
-                    <input type="hidden" asp-for="BlogItem.Theme" />
+                    <input v-model="blog.title" type="text" id="txtTitle" name="txtTitle" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["description"]</label>
-                    <textarea asp-for="BlogItem.Description" type="text" class="form-control"></textarea>
-                    <span asp-validation-for="BlogItem.Description" class="text-danger"></span>
+                    <textarea v-model="blog.description" id="txtDescription" name="txtDescription" type="text" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["items-per-page"]</label>
-                    <input type="text" asp-for="BlogItem.ItemsPerPage" class="form-control" />
-                    <span asp-validation-for="BlogItem.ItemsPerPage" class="text-danger"></span>
+                    <input v-model.number="blog.itemsPerPage" type="text" id="txtItemsPerPage" name="txtItemsPerPage" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["logo"]</label>
                     <div class="input-group">
-                        <input type="text" asp-for="BlogItem.Logo" class="form-control" readonly />
+                        <input v-model="blog.logo" type="text" id="txtLogo" name="txtLogo" class="form-control" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppLogoCallback);"> @Localizer["select"]</button>
                         </span>
@@ -48,7 +39,7 @@
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["cover"]</label>
                     <div class="input-group">
-                        <input type="text" asp-for="BlogItem.Cover" class="form-control" readonly />
+                        <input v-model="blog.cover" type="text" id="txtCover" name="txtCover" class="form-control" readonly />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAppCoverCallback);"> @Localizer["select"]</button>
                         </span>
@@ -56,17 +47,68 @@
                 </div>
                 <div class="form-group">
                     <label class="form-group-label">@Localizer["language"]</label>
-                    <select class="form-control" asp-for="BlogItem.Culture" asp-items="cultureItems"></select>
+                    <select class="form-control" v-model="blog.culture">
+                        <option v-for="option in cultures" v-bind:value="option.value">
+                            {{ option.text }}
+                        </option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                <button type="button" v-on:click="save" class="btn btn-primary btn-main">@Localizer["save"]</button>
+
             </div>
         </form>
-
     </div>
 </div>
 <partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
-    @Html.Raw(Model.RenderMessage())
     <script src="~/admin/js/app/fileManagerController.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                errors: [],
+                blog: {},
+                cultures: {}
+            },
+            methods: {
+                load: function () {
+                    axios.get(webRoot + 'api/settings')
+                        .then(response => { this.blog = response.data; this.loadCultures() })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                loadCultures: function () {
+                    axios.get(webRoot + 'api/settings/cultures')
+                        .then(response => { this.cultures = response.data })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                save: function () {
+                    this.errors = [];
+
+                    if (!this.blog.title) {
+                        this.errors.push('Title is required.');
+                    }
+                    if (!this.blog.description) {
+                        this.errors.push('Description is required.');
+                    }
+                    if (!Number.isInteger(this.blog.itemsPerPage)) {
+                        this.errors.push('Items per page must be a number.');
+                    }
+
+                    if (this.errors.length === 0) {
+                        axios.post(webRoot + 'api/settings', this.blog)
+                            .then(function (response) {
+                                toastr.success('Updated');
+                            })
+                            .catch(function (error) {
+                                toastr.error(error);
+                            });
+                    }
+                }
+            },
+            beforeMount() {
+                this.load()
+            }
+        })
+    </script>
 }
