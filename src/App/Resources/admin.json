@@ -463,8 +463,8 @@
     "Values": {
       "en-US": "Change password",
       "ru-RU": "Изменить пароль",
-	  "zh-cn": "更改密码",
-	  "zh-tw": "更改密碼"
+	    "zh-cn": "更改密码",
+	    "zh-tw": "更改密碼"
     }
   },
   {
@@ -472,8 +472,8 @@
     "Values": {
       "en-US": "Theme",
       "ru-RU": "Тема",
-	  "zh-cn": "主题",
-	  "zh-tw": "主題"
+	    "zh-cn": "主题",
+	    "zh-tw": "主題"
     }
   }
 ]
