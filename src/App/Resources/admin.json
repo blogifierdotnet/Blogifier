@@ -462,14 +462,18 @@
     "Key": "change-password",
     "Values": {
       "en-US": "Change password",
-      "ru-RU": "Изменить пароль"
+      "ru-RU": "Изменить пароль",
+      "zh-cn": "更改密码",
+      "zh-tw": "更改密碼"
     }
   },
   {
     "Key": "theme",
     "Values": {
       "en-US": "Theme",
-      "ru-RU": "Тема"
+      "ru-RU": "Тема",
+      "zh-cn": "主题",
+      "zh-tw": "主題"
     }
   }
 ]
