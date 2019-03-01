@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Version>2.3.0.7</Version>
   </PropertyGroup>
