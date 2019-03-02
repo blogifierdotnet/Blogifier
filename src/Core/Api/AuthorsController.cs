@@ -1,5 +1,4 @@
-﻿using Core;
-using Core.Data;
+﻿using Core.Data;
 using Core.Data.Models;
 using Core.Helpers;
 using Core.Services;
@@ -11,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace App.Controllers.Api
+namespace Core.Api
 {
     [Route("api/[controller]")]
     [ApiController]

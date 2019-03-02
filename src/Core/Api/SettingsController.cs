@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using System.Linq;
 using Core.Helpers;
 
-namespace App.Controllers.Api
+namespace Core.Api
 {
     [Route("api/[controller]")]
     [ApiController]

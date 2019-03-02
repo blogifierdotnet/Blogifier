@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace App.Controllers.Api
+namespace Core.Api
 {
     [Route("api/[controller]")]
     [ApiController]
