@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Builder;
 using System.Linq;
+using Core.Helpers;
 
 namespace App.Controllers.Api
 {
@@ -44,6 +45,7 @@ namespace App.Controllers.Api
         }
 
         [HttpGet]
+        [Administrator]
         public async Task<ActionResult<BlogItem>> Get()
         {
             try
@@ -58,6 +60,7 @@ namespace App.Controllers.Api
         }
 
         [HttpPost]
+        [Administrator]
         public async Task<ActionResult<BlogItem>> Post(BlogItem model)
         {
             try

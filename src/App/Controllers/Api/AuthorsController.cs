@@ -1,7 +1,9 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Data.Models;
 using Core.Helpers;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +19,13 @@ namespace App.Controllers.Api
     {
         IDataService _data;
         UserManager<AppUser> _umgr;
+        SignInManager<AppUser> _smgr;
 
-        public AuthorsController(IDataService data, UserManager<AppUser> umgr)
+        public AuthorsController(IDataService data, UserManager<AppUser> umgr, SignInManager<AppUser> smgr)
         {
             _data = data;
             _umgr = umgr;
+            _smgr = smgr;
         }
 
         [HttpGet]
@@ -55,6 +59,8 @@ namespace App.Controllers.Api
             }
         }
 
+        [HttpPost]
+        [Administrator]
         public async Task<ActionResult<Author>> Post(RegisterModel model)
         {
             try
@@ -83,6 +89,51 @@ namespace App.Controllers.Api
                 var created = _data.Authors.Single(a => a.AppUserName == model.UserName);
 
                 return Created($"/api/authors/{user.AppUserName}", created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("update")]
+        [Administrator]
+        public async Task<ActionResult> Update(Author model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest("Invalid data");
+
+                await _data.Authors.Save(model);
+
+                return Ok(Resources.Updated);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("changepwd")]
+        [Authorize]
+        public async Task<ActionResult> ChangePwd(ChangePasswordModel model)
+        {
+            try
+            {
+                if (AppSettings.DemoMode)
+                {
+                    return Ok(Resources.Updated);
+                }
+                var user = await _umgr.GetUserAsync(User);
+                var result = await _umgr.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+
+                if (!result.Succeeded)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error changing password");
+                }
+                await _smgr.SignInAsync(user, isPersistent: false);
+                return Ok(Resources.Updated);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 ﻿using Core;
 using Core.Data;
+using Core.Helpers;
 using Core.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,7 +42,7 @@ namespace App.Controllers.Api
             }
         }
 
-        [Authorize]
+        [Administrator]
         [HttpPut("select/{id}")]
         public ActionResult Put(string id)
         {
@@ -68,7 +68,7 @@ namespace App.Controllers.Api
             }
         }
 
-        [Authorize]
+        [Administrator]
         [HttpDelete("remove/{id}")]
         public IActionResult Delete(string id)
         {
