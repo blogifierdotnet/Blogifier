@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,14 +18,16 @@ namespace Core.Api
     public class AuthorsController : ControllerBase
     {
         IDataService _data;
+        IStorageService _store;
         UserManager<AppUser> _umgr;
         SignInManager<AppUser> _smgr;
 
-        public AuthorsController(IDataService data, UserManager<AppUser> umgr, SignInManager<AppUser> smgr)
+        public AuthorsController(IDataService data, IStorageService store, UserManager<AppUser> umgr, SignInManager<AppUser> smgr)
         {
             _data = data;
             _umgr = umgr;
             _smgr = smgr;
+            _store = store;
         }
 
         [HttpGet]
@@ -133,6 +136,37 @@ namespace Core.Api
                 }
                 await _smgr.SignInAsync(user, isPersistent: false);
                 return Ok(Resources.Updated);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [Administrator]
+        [HttpDelete("remove/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                var author = await _data.Authors.GetItem(u => u.AppUserName == id);
+
+                // remove posts
+                var posts = _data.BlogPosts.All().Where(p => p.AuthorId == author.Id).ToList();
+                _data.BlogPosts.RemoveRange(posts);
+
+                // remove author
+                _data.Authors.Remove(author);
+                _data.Complete();
+
+                // remove files
+                _store.DeleteAuthor(id);
+
+                // remove user
+                var user = await _umgr.FindByNameAsync(author.AppUserName);
+                await _umgr.DeleteAsync(user);
+
+                return Ok(Resources.Removed);
             }
             catch (Exception ex)
             {

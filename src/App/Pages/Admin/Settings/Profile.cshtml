@@ -33,9 +33,9 @@
                         </span>
                     </div>
                 </div>
-                <button v-on:click="save($v)" type="button" class="btn btn-primary btn-main">@Localizer["save"]</button>
-                <button v-if="author.appUserName == '@User.Identity.Name'" v-on:click="open()" type="button" class="btn btn-secondary">@Localizer["change-password"]</button>
-                <button v-if="author.isAdmin && author.appUserName != '@User.Identity.Name'" type="submit" class="btn btn-danger">@Localizer["delete"]</button>
+                <button v-on:click="save($v)" :disabled="$v.author.$invalid" type="button" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                <button v-if="author.appUserName == '@User.Identity.Name'" v-on:click="open" type="button" class="btn btn-secondary">@Localizer["change-password"]</button>
+                <button v-if="showDelete()" v-on:click="remove" type="button" class="btn btn-danger">@Localizer["delete"]</button>
             </div>
         </form>
 
@@ -71,7 +71,7 @@
                                         <label v-if="!$v.password.confirmPassword.minLength" class="val-error">At least 4 characters</label>
                                         <label v-if="!$v.password.confirmPassword.sameAsPassword" class="val-error">New and confirm passwords do not match</label>
                                     </div>
-                                    <button type="button" v-on:click="change($v)" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                                    <button type="button" :disabled="$v.password.$invalid" v-on:click="change($v)" class="btn btn-primary btn-main">@Localizer["save"]</button>
                                 </div>
                             </form>
                         </div>
@@ -95,8 +95,9 @@
             el: "#app",
             data: {
                 author: {},
+                appUser: {},
                 password: {
-                    userName: '',
+                    userName: '@userName',
                     oldPassword: '',
                     newPassword: '',
                     confirmPassword: ''
@@ -119,6 +120,14 @@
                     axios.get(webRoot + 'api/authors/@userName')
                         .then(response => {
                             this.author = response.data;
+                            this.getAppUser();
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                getAppUser: function(){
+                    axios.get(webRoot + 'api/authors/@User.Identity.Name')
+                        .then(response => {
+                            this.appUser = response.data;
                             $('#app').css('display', '');
                         })
                         .catch(function (error) { toastr.error(error); });
@@ -165,6 +174,21 @@
                                 toastr.error(error);
                             });
                     }
+                },
+                remove: function(){
+                    var result = confirm("Please confirm removing this user and all user data");
+                    if (result) {
+                        axios.delete(webRoot + 'api/authors/remove/' + this.author.appUserName)
+                        .then(response => {
+                            toastr.success('Removed');
+                            window.location.href = webRoot + 'admin/settings/users';
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                    }
+                },
+                showDelete: function(){
+                    return (this.appUser.isAdmin && this.author.appUserName != '@User.Identity.Name' && !this.author.isAdmin) 
+                    ? true : false;
                 }
             },
             beforeMount() {
