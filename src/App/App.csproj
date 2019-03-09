@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="1.1.6" />
+    <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.0.0-preview2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" PrivateAssets="All" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
@@ -33,14 +33,24 @@
     <Content Remove="wwwroot\admin\package.json" />
     <Content Remove="wwwroot\admin\package-lock.json" />
   </ItemGroup>
+ 
+  <ItemGroup>
+    <Content Update="Resources\admin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <PropertyGroup>
       <PluginBaseDir>$(SolutionDir)plugins\Common\</PluginBaseDir>
       <UpgradeBaseDir>$(SolutionDir)src\Upgrade\</UpgradeBaseDir>
     </PropertyGroup>
-    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
-    <Copy SourceFiles="$(UpgradeBaseDir)\bin\$(Configuration)\$(TargetFramework)\Upgrade.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(UpgradeBaseDir)bin\$(Configuration)\$(TargetFramework)\Upgrade.dll')" />
+    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" 
+          DestinationFolder="$(TargetDir)" 
+          Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
+    <Copy SourceFiles="$(UpgradeBaseDir)\bin\$(Configuration)\$(TargetFramework)\Upgrade.dll" 
+          DestinationFolder="$(TargetDir)" 
+          Condition="Exists('$(UpgradeBaseDir)bin\$(Configuration)\$(TargetFramework)\Upgrade.dll')" />
   </Target>
 
 </Project>
