@@ -1,11 +1,12 @@
 .blog-header {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding: 1rem;
+    background: #000;
 
     .blog-logo {
-        width: 12rem;
+        height: 2rem;
 
         img {
+            max-height: 100%;
         }
     }
 
@@ -22,9 +23,9 @@
     .navbar-expand-lg .navbar-nav .nav-link {
         padding: 0;
         font-weight: 500;
-        font-size: 1.25rem;
+        font-size: 1rem;
         letter-spacing: 0.0625rem;
-        color: #444;
+        color: #fff;
     }
 
     .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link {
@@ -57,26 +58,67 @@
 }
 
 .blog-search {
-
-
 }
 
 
+.blog-cover {
+    width: 100%;
+    height: 750px;
+    position: relative;
+    background-color: #000;
+    background-image: url(/themes/star/img/cover.jpg);
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 10rem;
+
+
+    &-wrap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    &-content {
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 760px;
+        max-height: 100%;
+        padding: 3rem;
+
+        h1 {
+            font-weight: 300;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            text-align: justify;
+            font-weight: 300;
+        }
+    }
+}
+
 .blog-social {
-  li {
-    margin-left: 1.25rem;
+    li {
+        margin-left: 1.25rem;
 
-    &:first-child {
-      margin: 0;
+        &:first-child {
+            margin: 0;
+        }
+
+        a {
+            color: #666;
+            font-size: 1.125rem;
+
+            &:hover {
+                color: #222;
+            }
+        }
     }
-
-    a {
-      color: #666;
-      font-size: 1.125rem;
-
-      &:hover {
-        color: #222;
-      }
-    }
-  }
 }
