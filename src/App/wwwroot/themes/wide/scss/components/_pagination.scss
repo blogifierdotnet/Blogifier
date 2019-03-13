@@ -1,0 +1,18 @@
+﻿.pagination {
+    margin:4rem 0;
+    .item {
+        margin:0 1rem;
+
+        &-link {
+            font-size: 1rem;
+            color: #111;
+            font-weight: 500;
+            display: block;
+
+            &:hover {
+                color: $color-theme;
+            }
+        }
+
+    }
+}
