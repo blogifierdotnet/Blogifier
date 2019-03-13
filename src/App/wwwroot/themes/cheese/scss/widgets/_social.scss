@@ -8,10 +8,9 @@
         border-radius: 10rem;
         font-weight: 500 !important;
         font-size: 1rem;
-        background-color: rgba(0, 0, 0, 0.1);
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.20);
         }
     }
 
@@ -22,5 +21,42 @@
         font-size: 1.25rem;
         position: relative;
         top: .125rem;
+    }
+
+    &-fb {
+        background-color: $color-fb;
+
+
+        &:hover {
+        }
+    }
+
+    &-tw {
+        background-color: $color-tw;
+
+        &:hover {
+        }
+    }
+
+    &-in {
+        background-color: $color-in;
+
+        &:hover {
+        }
+    }
+
+    &-rss {
+        background-color: $color-rss;
+
+        &:hover {
+        }
+    }
+
+
+    &-admin {
+        background-color: $color-theme;
+
+        &:hover {
+        }
     }
 }
