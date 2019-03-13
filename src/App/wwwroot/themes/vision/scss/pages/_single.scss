@@ -70,7 +70,7 @@
             border: 3px solid $color-theme;
             padding: .375rem 1rem;
             font-size: .75rem;
-            color: #000;
+            color: #fff;
             font-weight: 500;
             border-radius: 10rem;
             display: block;
@@ -85,7 +85,10 @@
 
 
     .post-content {
-        color: #b3b3b3;
+        color: #444;
+        font-size:1.25rem;
+
+        font-weight:300;
 
         p {
             margin-bottom: 1.5rem;

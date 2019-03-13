@@ -1,6 +1,9 @@
 .blog-header {
-    padding-top: 5rem;
-    padding-bottom: 3rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background: #fff;
+    box-shadow: 1px 5px 6rem 0px rgba(0, 0, 0, 0.17);
+    margin-bottom: 5rem;
 
     .blog-logo {
         width: 12rem;
@@ -24,7 +27,7 @@
         font-weight: 500;
         font-size: 1.25rem;
         letter-spacing: 0.0625rem;
-        color: #fff;
+        color: #000;
     }
 
     .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link {
@@ -57,26 +60,24 @@
 }
 
 .blog-search {
-
-
 }
 
 
 .blog-social {
-  li {
-    margin-left: 1.25rem;
+    li {
+        margin-left: 1.25rem;
 
-    &:first-child {
-      margin: 0;
+        &:first-child {
+            margin: 0;
+        }
+
+        a {
+            color: #666;
+            font-size: 1.125rem;
+
+            &:hover {
+                color: #222;
+            }
+        }
     }
-
-    a {
-      color: #666;
-      font-size: 1.125rem;
-
-      &:hover {
-        color: #222;
-      }
-    }
-  }
 }
