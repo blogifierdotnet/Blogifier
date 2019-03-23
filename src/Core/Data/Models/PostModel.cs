@@ -26,6 +26,12 @@ namespace Core.Data
         public PostListType PostListType { get; set; }
     }
 
+    public class PageListModel
+    {
+        public IEnumerable<PostItem> Posts { get; set; }
+        public Pager Pager { get; set; }
+    }
+
     public class PostItem : IEquatable<PostItem>
     {
         public int Id { get; set; }
@@ -40,6 +46,7 @@ namespace Core.Data
         public int PostViews { get; set; }
         public double Rating { get; set; }
         public DateTime Published { get; set; }
+        public bool IsPublished { get { return Published > DateTime.MinValue; } }
         public bool Featured { get; set; }
 
         public Author Author { get; set; }

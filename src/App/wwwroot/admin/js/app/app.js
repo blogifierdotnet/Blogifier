@@ -121,6 +121,11 @@ $('.dropdown-custom .dropdown-item').on('click', function() {
   $(this).parent().parent().find(".dropdown-toggle .dropdown-value").text(thisValue);
 });
 
+function reload(msg){
+  toastr.success(msg);
+  setTimeout(function(){ location.reload(); }, 1000);
+}
+
 function fail(jqXHR, exception) {
     var msg = '';
     if (jqXHR.status === 0) {

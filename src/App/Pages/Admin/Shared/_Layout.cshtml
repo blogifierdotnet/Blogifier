@@ -158,6 +158,9 @@
     <script src="~/admin/js/app/notificationsController.js"></script>
     <script>
         var webRoot = '@Url.Content("~/")';
+        function isAdmin(){
+            return '@_isAdmin' === 'True' ? true : false;
+        }
         function getUrl(str) {
             return webRoot + str;
         }
