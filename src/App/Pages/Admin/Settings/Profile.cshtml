@@ -5,7 +5,7 @@
     var userName = Request.Query["name"].Count > 0 ? Request.Query["name"].ToString() : User.Identity.Name;
 }
 <div class="bf-main">
-    <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
+    <partial name="~/Pages/Admin/Shared/_Taskbar.cshtml" />
     <div id="app" style="display: none" class="bf-body">
         <form>
             <div id="app-container" class="bf-app bf-content bf-content-boxed bf-settings">
