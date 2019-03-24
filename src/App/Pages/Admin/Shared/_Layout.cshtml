@@ -1,5 +1,6 @@
 ﻿@inject IViewLocalizer Localizer
 @inject Core.Services.IDataService _data;
+@inject Core.Services.INotificationService _notes;
 @{
     IEnumerable<Notification> _notifications = new List<Notification>();
     bool _isAdmin = false;
@@ -10,10 +11,7 @@
         if(user != null)
         {
             _isAdmin = user.IsAdmin;
-        }
-        if(Model.Notifications != null)
-        {
-            _notifications = (IEnumerable<Notification>)Model.Notifications;
+            _notifications = await _notes.GetNotifications(user.Id);
         }
     }
     catch { }

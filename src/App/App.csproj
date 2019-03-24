@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\plugins\Common\Common.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
@@ -45,12 +46,8 @@
       <PluginBaseDir>$(SolutionDir)plugins\Common\</PluginBaseDir>
       <UpgradeBaseDir>$(SolutionDir)src\Upgrade\</UpgradeBaseDir>
     </PropertyGroup>
-    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" 
-          DestinationFolder="$(TargetDir)" 
-          Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
-    <Copy SourceFiles="$(UpgradeBaseDir)\bin\$(Configuration)\$(TargetFramework)\Upgrade.dll" 
-          DestinationFolder="$(TargetDir)" 
-          Condition="Exists('$(UpgradeBaseDir)bin\$(Configuration)\$(TargetFramework)\Upgrade.dll')" />
+    <Copy SourceFiles="$(PluginBaseDir)\bin\$(Configuration)\$(TargetFramework)\Common.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(PluginBaseDir)bin\$(Configuration)\$(TargetFramework)\Common.dll')" />
+    <Copy SourceFiles="$(UpgradeBaseDir)\bin\$(Configuration)\$(TargetFramework)\Upgrade.dll" DestinationFolder="$(TargetDir)" Condition="Exists('$(UpgradeBaseDir)bin\$(Configuration)\$(TargetFramework)\Upgrade.dll')" />
   </Target>
 
 </Project>
