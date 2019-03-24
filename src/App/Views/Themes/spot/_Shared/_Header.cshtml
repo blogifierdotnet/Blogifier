@@ -11,14 +11,21 @@
                             <a class="nav-link" href="~/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <a class="nav-link" href="~/admin">Admin</a>
-                            }
-                            else
-                            {
-                                <a class="nav-link" href="~/account/login?ReturnUrl=/admin">Login</a>
-                            }
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Example
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -30,4 +37,5 @@
         </div>
     </div>
     <a href="~/" class="blog-logo d-block"> <img src="~/themes/spot/img/logo.png" alt="@Model.Blog.Title" /></a>
+
 </header>

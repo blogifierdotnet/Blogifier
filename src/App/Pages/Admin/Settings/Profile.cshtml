@@ -1,199 +1,95 @@
 ﻿@page
+@model App.Pages.Admin.Settings.ProfileModel
 @inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = Localizer["Profile"];
-    var userName = Request.Query["name"].Count > 0 ? Request.Query["name"].ToString() : User.Identity.Name;
+    ViewData["Title"] = "Profile";
 }
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
-    <div id="app" style="display: none" class="bf-body">
-        <form>
-            <div id="app-container" class="bf-app bf-content bf-content-boxed bf-settings">
-                <div class="form-group">
-                    <label class="form-group-label">@Localizer["user-name"]</label>
-                    <input v-model.trim="$v.author.displayName.$model" :class="['form-control', status($v.author.displayName)]" type="text" />
-                    <label v-if="!$v.author.displayName.required" class="val-error">Required</label>
-                </div>
-                <div class="form-group">
-                    <label class="form-group-label">@Localizer["email"]</label>
-                    <input v-model.trim="$v.author.email.$model" :class="['form-control', status($v.author.email)]" type="text" />
-                    <label v-if="!$v.author.email.required" class="val-error">Required</label>
-                    <label v-if="!$v.author.email.email" class="val-error">Must be valid email</label>
-                </div>
-                <div class="form-group">
-                    <label class="form-group-label">@Localizer["user-bio"]</label>
-                    <textarea v-model="author.bio" cols="5" class="form-control"></textarea>
-                </div>
-                <div v-if="author.appUserName == '@User.Identity.Name'" class="form-group">
-                    <label class="form-group-label">@Localizer["avatar"]</label>
-                    <div class="input-group">
-                        <input type="text" id="author-avatar" name="author-avatar" v-model="author.avatar" class="form-control" readonly />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);"> @Localizer["select"]</button>
-                        </span>
+    <div class="bf-body">
+        <form method="POST">
+            <div class="bf-content bf-content-boxed bf-settings">
+
+                @if (Model.Action == "Confirm")
+                {
+                    <div>This will remove user "@Model.Author.AppUserName" and all user content from the blog. Continue?</div>
+                    <button type="submit" asp-page-handler="Remove" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">
+                        @Localizer["remove"]
+                    </button>
+                    <a asp-page="Users" class="btn btn-secondary">Cancel</a>
+                }
+                else if (Model.Action == "Remove")
+                {
+                    <div>@Localizer["removed"]</div>
+                }
+                else
+                {
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="form-group-label">@Localizer["user-name"]</label>
+                        <input type="text" asp-for="Author.DisplayName" class="form-control" />
                     </div>
-                </div>
-                <button v-on:click="save($v)" :disabled="$v.author.$invalid" type="button" class="btn btn-primary btn-main">@Localizer["save"]</button>
-                <button v-if="author.appUserName == '@User.Identity.Name'" v-on:click="open" type="button" class="btn btn-secondary">@Localizer["change-password"]</button>
-                <button v-if="showDelete()" v-on:click="remove" type="button" class="btn btn-danger">@Localizer["delete"]</button>
+                    <div class="form-group">
+                        <label class="form-group-label">@Localizer["email"]</label>
+                        <input type="text" asp-for="Author.Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label">@Localizer["user-bio"]</label>
+                        <textarea asp-for="Author.Bio" cols="5" class="form-control"></textarea>
+                    </div>
+                    @if (Model.Author.AppUserName == User.Identity.Name)
+                    {
+                        <div class="form-group">
+                            <label class="form-group-label">@Localizer["avatar"]</label>
+                            <div class="input-group">
+                                <input type="text" asp-for="Author.Avatar" class="form-control" readonly />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-secondary btn-upload" onclick="return fileManagerController.open(updateAvatarCallback);"> @Localizer["select"]</button>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    <input type="hidden" asp-for="Author.Id" />
+                    <input type="hidden" asp-for="Author.AppUserName" />
+                    <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+
+                    @if (Model.Author.AppUserName == User.Identity.Name)
+                    {
+                        <button type="button" class="btn btn-secondary" onclick="return openChangePwd();">@Localizer["change-password"]</button>
+                    }
+                    @if (Model.IsAdmin && Model.Author.AppUserName != User.Identity.Name)
+                    {
+                        <button type="submit" asp-page-handler="Confirm" asp-route-name="@Model.Author.AppUserName" class="btn btn-danger">@Localizer["delete"]</button>
+                    }
+                }
             </div>
         </form>
-
-        <div class="modal fade" id="dlgChangePwd" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="hdrSettings">@Localizer["change-password"]</h4>
-                        <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="settings-body">
-                            <form>
-                                <div class="bf-content bf-content-boxed bf-settings">
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["password"]</label>
-                                        <input id="txtOldPwd" name="txtOldPwd" v-model.trim="$v.password.oldPassword.$model" :class="['form-control', status($v.password.oldPassword)]" type="password" />
-                                        <label v-if="!$v.password.oldPassword.required" class="val-error">Required</label>
-                                        <label v-if="!$v.password.oldPassword.minLength" class="val-error">At least 4 characters</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["new-password"]</label>
-                                        <input v-model.trim="$v.password.newPassword.$model" :class="['form-control', status($v.password.newPassword)]" type="password" />
-                                        <label v-if="!$v.password.newPassword.required" class="val-error">Required</label>
-                                        <label v-if="!$v.password.newPassword.minLength" class="val-error">At least 4 characters</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["confirm-password"]</label>
-                                        <input v-model.trim="$v.password.confirmPassword.$model" :class="['form-control', status($v.password.confirmPassword)]" type="password" />
-                                        <label v-if="!$v.password.confirmPassword.required" class="val-error">Required</label>
-                                        <label v-if="!$v.password.confirmPassword.minLength" class="val-error">At least 4 characters</label>
-                                        <label v-if="!$v.password.confirmPassword.sameAsPassword" class="val-error">New and confirm passwords do not match</label>
-                                    </div>
-                                    <button type="button" :disabled="$v.password.$invalid" v-on:click="change($v)" class="btn btn-primary btn-main">@Localizer["save"]</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+</div>
+
+<div class="modal fade" id="dlgChangePwd" tabindex="-1" role="dialog" aria-hidden="true">
+    <partial name="~/Pages/Admin/Settings/_ChangePwd.cshtml" model="new ChangePasswordModel { UserName = User.Identity.Name }" />
 </div>
 
 <partial name="~/Pages/Admin/Shared/_FileMgr.cshtml" />
 
 @section Scripts{
+    @Html.Raw(Model.RenderMessage())
     <script src="~/admin/js/app/fileManagerController.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.min.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.unobtrusive.min.js"></script>
     <script>
-        Vue.use(window.vuelidate.default)
-        const { required, minLength, email, sameAs } = window.validators
-
-        new Vue({
-            el: "#app",
-            data: {
-                author: {},
-                appUser: {},
-                password: {
-                    userName: '@userName',
-                    oldPassword: '',
-                    newPassword: '',
-                    confirmPassword: ''
-                }
-            },
-            validations: {
-                author: {
-                    displayName: { required },
-                    email: { required, email }
-                },
-                password: {
-                    userName: { required },
-                    oldPassword: { required, minLength: minLength(4) },
-                    newPassword: { required, minLength: minLength(4) },
-                    confirmPassword: { required, minLength: minLength(4), sameAsPassword: sameAs('newPassword') }
-                }
-            },
-            methods: {
-                load: function () {
-                    axios.get(webRoot + 'api/authors/@userName')
-                        .then(response => {
-                            this.author = response.data;
-                            this.getAppUser();
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                },
-                getAppUser: function(){
-                    axios.get(webRoot + 'api/authors/@User.Identity.Name')
-                        .then(response => {
-                            this.appUser = response.data;
-                            $('#app').css('display', '');
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                },
-                open: function () {
-                    $('#dlgChangePwd').modal();
-                    setTimeout(
-                        function () {
-                            $('#txtOldPwd').focus();
-                        }, 500);
-                },
-                status(v) {
-                    return {
-                        error: v.$error,
-                        dirty: v.$dirty
-                    }
-                },
-                save(v) {
-                    if (v.author.$invalid) {
-                        toastr.error('Invalid');
-                    }
-                    else {
-                        axios.put(webRoot + 'api/authors/update', this.author)
-                            .then(function (response) {
-                                toastr.success('Updated');
-                            })
-                            .catch(function (error) {
-                                toastr.error(error);
-                            });
-                    }
-                },
-                change: function (v) {
-                    this.password.userName = this.author.appUserName;
-                    if (v.password.$invalid) {
-                        toastr.error('Invalid');
-                    }
-                    else {
-                        axios.put(webRoot + 'api/authors/changepwd', this.password)
-                            .then(function (response) {
-                                toastr.success('Updated');
-                                $('#dlgChangePwd').modal('hide');
-                            })
-                            .catch(function (error) {
-                                toastr.error(error);
-                            });
-                    }
-                },
-                remove: function(){
-                    var result = confirm("Please confirm removing this user and all user data");
-                    if (result) {
-                        axios.delete(webRoot + 'api/authors/remove/' + this.author.appUserName)
-                        .then(response => {
-                            toastr.success('Removed');
-                            window.location.href = webRoot + 'admin/settings/users';
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                    }
-                },
-                showDelete: function(){
-                    return (this.appUser.isAdmin && this.author.appUserName != '@User.Identity.Name' && !this.author.isAdmin) 
-                    ? true : false;
-                }
-            },
-            beforeMount() {
-                this.load()
+        var openChangePwd = function () {
+            $('#frmChangePwd').validate().resetForm();
+            $('#dlgChangePwd').modal();
+            return false;
+        }
+        var changePwd = function () {
+            $("#frmChangePwd").validate();
+            if ($("#frmChangePwd").valid()) {
+                return true;
             }
-        })
+            return false;
+        }
     </script>
 }

@@ -1,6 +1,4 @@
 ﻿@model ListModel
-@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
 @{
     ViewData["bodyClass"] = "home";
     var pgr = Model.Pager;
@@ -52,7 +50,7 @@
                             <img src="~/@img" alt="@item.Title">
                             @if (item.Featured)
                             {
-                                <span class="post-featrued-label"><i class="fa fa-star"></i> @Localizer["featured"]</span>
+                            <span class="post-featrued-label"><i class="fa fa-star"></i> Featured</span>
                             }
                         </div>
                         <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
@@ -61,7 +59,7 @@
                             <time class="post-meta-time">/ @item.Published.ToFriendlyDateString()</time>
                         </div>
                         <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(item.Description))</div>
-                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@item.Slug">@Localizer["read"]</a>
+                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@item.Slug">Read</a>
                     </article>
                 }
             }
@@ -70,19 +68,19 @@
                 <ul class="pagination justify-content-center">
                     @if (pgr.ShowOlder)
                     {
-                        <li class="item item-prev">
-                            <a class="item-link" href="~/@pgr.LinkToOlder">
-                                <i class="item-icon fa fa-angle-left"></i>
-                            </a>
-                        </li>
+                    <li class="item item-prev">
+                        <a class="item-link" href="~/@pgr.LinkToOlder">
+                            <i class="item-icon fa fa-angle-left"></i>
+                        </a>
+                    </li>
                     }
                     @if (pgr.ShowNewer)
                     {
-                        <li class="item item-next">
-                            <a class="item-link" href="~/@pgr.LinkToNewer">
-                                <i class="item-icon fa fa-angle-right"></i>
-                            </a>
-                        </li>
+                    <li class="item item-next">
+                        <a class="item-link" href="~/@pgr.LinkToNewer">
+                            <i class="item-icon fa fa-angle-right"></i>
+                        </a>
+                    </li>
                     }
                 </ul>
             }

@@ -1,5 +1,6 @@
-{
-  "general": {
+[
+  {
+    "Key": "general",
     "Values": {
       "en-US": "General",
       "ru-RU": "Главная",
@@ -7,7 +8,8 @@
       "zh-tw": "一般"
     }
   },
-  "profile": {
+  {
+    "Key": "profile",
     "Values": {
       "en-US": "Profile",
       "ru-RU": "Профиль",
@@ -15,7 +17,8 @@
       "zh-tw": "個人資料"
     }
   },
-  "password": {
+  {
+    "Key": "password",
     "Values": {
       "en-US": "Password",
       "ru-RU": "Пароль",
@@ -23,7 +26,8 @@
       "zh-tw": "密码"
     }
   },
-  "themes": {
+  {
+    "Key": "themes",
     "Values": {
       "en-US": "Themes",
       "ru-RU": "Темы",
@@ -31,7 +35,8 @@
       "zh-tw": "部落格主题"
     }
   },
-  "users": {
+  {
+    "Key": "users",
     "Values": {
       "en-US": "Users",
       "ru-RU": "Пользователи",
@@ -39,7 +44,8 @@
       "zh-tw": "使用者"
     }
   },
-  "new-user": {
+  {
+    "Key": "new-user",
     "Values": {
       "en-US": "New user",
       "ru-RU": "Новый пользователь",
@@ -47,7 +53,8 @@
       "zh-tw": "新增使用者"
     }
   },
-  "import": {
+  {
+    "Key": "import",
     "Values": {
       "en-US": "Import",
       "ru-RU": "Импорт",
@@ -55,7 +62,8 @@
       "zh-tw": "匯入"
     }
   },
-  "new-post": {
+  {
+    "Key": "new-post",
     "Values": {
       "en-US": "New Post",
       "ru-RU": "Новое сообщение",
@@ -63,7 +71,8 @@
       "zh-tw": "建立文章"
     }
   },
-  "posts": {
+  {
+    "Key": "posts",
     "Values": {
       "en-US": "Posts",
       "ru-RU": "Сообщения",
@@ -71,7 +80,8 @@
       "zh-tw": "文章清單"
     }
   },
-  "settings": {
+  {
+    "Key": "settings",
     "Values": {
       "en-US": "Settings",
       "ru-RU": "Настройки",
@@ -79,7 +89,8 @@
       "zh-tw": "設定"
     }
   },
-  "notifications": {
+  {
+    "Key": "notifications",
     "Values": {
       "en-US": "Notifications",
       "ru-RU": "Уведомления",
@@ -87,7 +98,8 @@
       "zh-tw": "通知"
     }
   },
-  "visit-blog": {
+  {
+    "Key": "visit-blog",
     "Values": {
       "en-US": "Visit Blog",
       "ru-RU": "Посетить блог",
@@ -95,7 +107,8 @@
       "zh-tw": "參訪部落格"
     }
   },
-  "sign-out": {
+  {
+    "Key": "sign-out",
     "Values": {
       "en-US": "Sign out",
       "ru-RU": "Выйти",
@@ -103,7 +116,8 @@
       "zh-tw": "登出"
     }
   },
-  "title": {
+  {
+    "Key": "title",
     "Values": {
       "en-US": "Title",
       "ru-RU": "Название",
@@ -111,7 +125,8 @@
       "zh-tw": "標題"
     }
   },
-  "description": {
+  {
+    "Key": "description",
     "Values": {
       "en-US": "Description",
       "ru-RU": "Описание",
@@ -119,7 +134,8 @@
       "zh-tw": "敘述"
     }
   },
-  "items-per-page": {
+  {
+    "Key": "items-per-page",
     "Values": {
       "en-US": "Items per page",
       "ru-RU": "Количество сообщений на странице",
@@ -127,7 +143,8 @@
       "zh-tw": "每頁文章數量"
     }
   },
-  "logo": {
+  {
+    "Key": "logo",
     "Values": {
       "en-US": "Logo Image",
       "ru-RU": "Логотип",
@@ -135,7 +152,8 @@
       "zh-tw": "圖標"
     }
   },
-  "cover": {
+  {
+    "Key": "cover",
     "Values": {
       "en-US": "Cover Image",
       "ru-RU": "Обложка",
@@ -143,7 +161,8 @@
       "zh-tw": "封面圖片"
     }
   },
-  "language": {
+  {
+    "Key": "language",
     "Values": {
       "en-US": "Language",
       "ru-RU": "Язык",
@@ -151,7 +170,8 @@
       "zh-tw": "語言"
     }
   },
-  "save": {
+  {
+    "Key": "save",
     "Values": {
       "en-US": "Save",
       "ru-RU": "Сохранить",
@@ -159,7 +179,8 @@
       "zh-tw": "儲存"
     }
   },
-  "select": {
+  {
+    "Key": "select",
     "Values": {
       "en-US": "Select",
       "ru-RU": "Выбрать",
@@ -167,7 +188,8 @@
       "zh-tw": "選擇"
     }
   },
-  "selected": {
+  {
+    "Key": "selected",
     "Values": {
       "en-US": "Selected",
       "ru-RU": "Выбранный",
@@ -175,7 +197,8 @@
       "zh-tw": "已選擇"
     }
   },
-  "search": {
+  {
+    "Key": "search",
     "Values": {
       "en-US": "Search",
       "ru-RU": "Поиск",
@@ -183,7 +206,8 @@
       "zh-tw": "搜尋"
     }
   },
-  "all": {
+  {
+    "Key": "all",
     "Values": {
       "en-US": "All",
       "ru-RU": "Всё",
@@ -191,7 +215,8 @@
       "zh-tw": "全部"
     }
   },
-  "published": {
+  {
+    "Key": "published",
     "Values": {
       "en-US": "Published",
       "ru-RU": "Опубликовано",
@@ -199,7 +224,8 @@
       "zh-tw": "已發布"
     }
   },
-  "draft": {
+  {
+    "Key": "draft",
     "Values": {
       "en-US": "Draft",
       "ru-RU": "Черновики",
@@ -207,7 +233,8 @@
       "zh-tw": "草稿"
     }
   },
-  "status": {
+  {
+    "Key": "status",
     "Values": {
       "en-US": "Status",
       "ru-RU": "Статус",
@@ -215,7 +242,8 @@
       "zh-tw": "狀態"
     }
   },
-  "not-found": {
+  {
+    "Key": "not-found",
     "Values": {
       "en-US": "Not found",
       "ru-RU": "Не найдено",
@@ -223,7 +251,8 @@
       "zh-tw": "沒有找到資料"
     }
   },
-  "publish": {
+  {
+    "Key": "publish",
     "Values": {
       "en-US": "Publish",
       "ru-RU": "Опубликовать",
@@ -231,7 +260,8 @@
       "zh-tw": "發佈"
     }
   },
-  "unpublish": {
+  {
+    "Key": "unpublish",
     "Values": {
       "en-US": "Unpublish",
       "ru-RU": "Отменить публикацию",
@@ -239,7 +269,8 @@
       "zh-tw": "取消發佈"
     }
   },
-  "featured": {
+  {
+    "Key": "featured",
     "Values": {
       "en-US": "Featured",
       "ru-RU": "Избранное",
@@ -247,7 +278,8 @@
       "zh-tw": "已置頂"
     }
   },
-  "add-to-featured": {
+  {
+    "Key": "add-to-featured",
     "Values": {
       "en-US": "Add to featured",
       "ru-RU": "Добавить в избранное",
@@ -255,7 +287,8 @@
       "zh-tw": "置頂"
     }
   },
-  "cancel": {
+  {
+    "Key": "cancel",
     "Values": {
       "en-US": "Cancel",
       "ru-RU": "Отменить",
@@ -263,7 +296,8 @@
       "zh-tw": "取消"
     }
   },
-  "delete": {
+  {
+    "Key": "delete",
     "Values": {
       "en-US": "Delete",
       "ru-RU": "Удалить",
@@ -271,7 +305,8 @@
       "zh-tw": "删除"
     }
   },
-  "categories": {
+  {
+    "Key": "categories",
     "Values": {
       "en-US": "Categories",
       "ru-RU": "Категории",
@@ -279,7 +314,8 @@
       "zh-tw": "類別"
     }
   },
-  "view": {
+  {
+    "Key": "view",
     "Values": {
       "en-US": "View",
       "ru-RU": "Посмотреть",
@@ -287,7 +323,8 @@
       "zh-tw": "察看"
     }
   },
-  "user-name": {
+  {
+    "Key": "user-name",
     "Values": {
       "en-US": "User name",
       "ru-RU": "Имя пользователя",
@@ -295,7 +332,8 @@
       "zh-tw": "帳號名稱"
     }
   },
-  "email": {
+  {
+    "Key": "email",
     "Values": {
       "en-US": "Email",
       "ru-RU": "Почта",
@@ -303,7 +341,8 @@
       "zh-tw": "信箱"
     }
   },
-  "user-bio": {
+  {
+    "Key": "user-bio",
     "Values": {
       "en-US": "User bio",
       "ru-RU": "Краткая биография",
@@ -311,7 +350,8 @@
       "zh-tw": "部落格作者介紹"
     }
   },
-  "avatar": {
+  {
+    "Key": "avatar",
     "Values": {
       "en-US": "Avatar",
       "ru-RU": "Аватар",
@@ -319,7 +359,8 @@
       "zh-tw": "頭像"
     }
   },
-  "remove": {
+  {
+    "Key": "remove",
     "Values": {
       "en-US": "Remove",
       "ru-RU": "Удалить",
@@ -327,7 +368,8 @@
       "zh-tw": "刪除"
     }
   },
-  "removed": {
+  {
+    "Key": "removed",
     "Values": {
       "en-US": "Removed",
       "ru-RU": "Удалено",
@@ -335,7 +377,8 @@
       "zh-tw": "已刪除"
     }
   },
-  "new-password": {
+  {
+    "Key": "new-password",
     "Values": {
       "en-US": "New password",
       "ru-RU": "Новый пароль",
@@ -343,7 +386,8 @@
       "zh-tw": "新密碼"
     }
   },
-  "confirm-password": {
+  {
+    "Key": "confirm-password",
     "Values": {
       "en-US": "Confirm password",
       "ru-RU": "Подтвердить пароль",
@@ -351,7 +395,8 @@
       "zh-tw": "確認密碼"
     }
   },
-  "close": {
+  {
+    "Key": "close",
     "Values": {
       "en-US": "Close",
       "ru-RU": "Закрыть",
@@ -359,7 +404,8 @@
       "zh-tw": "關閉"
     }
   },
-  "set-as-admin": {
+  {
+    "Key": "set-as-admin",
     "Values": {
       "en-US": "Set as administrator",
       "ru-RU": "Сделать администратором",
@@ -367,7 +413,8 @@
       "zh-tw": "設置為管理員"
     }
   },
-  "select-rss-file": {
+  {
+    "Key": "select-rss-file",
     "Values": {
       "en-US": "Select RSS (.xml) file to import posts from",
       "ru-RU": "Выберите RSS (.xml) файл для импорта",
@@ -375,7 +422,8 @@
       "zh-tw": "選擇RSS（.xml）檔案匯入文章"
     }
   },
-  "images": {
+  {
+    "Key": "images",
     "Values": {
       "en-US": "Images",
       "ru-RU": "Изображения",
@@ -383,7 +431,8 @@
       "zh-tw": "圖片"
     }
   },
-  "attachements": {
+  {
+    "Key": "attachements",
     "Values": {
       "en-US": "Attachements",
       "ru-RU": "Вложения",
@@ -391,7 +440,8 @@
       "zh-tw": "附件"
     }
   },
-  "upload": {
+  {
+    "Key": "upload",
     "Values": {
       "en-US": "Upload",
       "ru-RU": "Загрузить",
@@ -399,7 +449,8 @@
       "zh-tw": "上傳"
     }
   },
-  "filters": {
+  {
+    "Key": "filters",
     "Values": {
       "en-US": "Filters",
       "ru-RU": "Фильтры",
@@ -407,7 +458,8 @@
       "zh-tw": "篩選"
     }
   },
-  "change-password": {
+  {
+    "Key": "change-password",
     "Values": {
       "en-US": "Change password",
       "ru-RU": "Изменить пароль",
@@ -415,18 +467,13 @@
       "zh-tw": "更改密碼"
     }
   },
-  "theme": {
+  {
+    "Key": "theme",
     "Values": {
       "en-US": "Theme",
       "ru-RU": "Тема",
       "zh-cn": "主题",
       "zh-tw": "主題"
     }
-  },
-  "read": {
-    "Values": {
-      "en-US": "Read",
-      "ru-RU": "Читать"
-    }
   }
-}
+]

@@ -3,7 +3,10 @@
 @{
     ViewData["bodyClass"] = "home";
     var pgr = Model.Pager;
+
     var first3 = _db.BlogPosts.All().OrderByDescending(p => p.Published).Take(3).ToList();
+
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,16 +19,17 @@
 
     <div class="page-content">
 
+
         @if (Model.PostListType == PostListType.Search)
-        {
+                    {
         <div class="page-search">
             <div class="container">
                 <h2 class="page-search-title"><i class="fa fa-search"></i> @Model.Blog.Title</h2>
             </div>
         </div>
-        }
-        else if (Model.PostListType == PostListType.Author)
-        {
+                    }
+                    else if (Model.PostListType == PostListType.Author)
+                    {
         <div class="page-author">
             <div class="container">
                 <h2 class="page-author-title">
@@ -34,83 +38,92 @@
                 </h2>
             </div>
         </div>
-        }
-        else if (Model.PostListType == PostListType.Category)
-        {
+                    }
+                    else if (Model.PostListType == PostListType.Category)
+                    {
         <div class="page-category">
             <div class="container">
                 <h2 class="page-category-title"><i class="fa fa-tag"></i> @ViewBag.Category</h2>
             </div>
         </div>
-        }
+            }
+            else
+            {
+            }
+
 
         @if (Model.Posts != null)
-        {
-            foreach (var item in Model.Posts)
-            {
-                var img = string.IsNullOrEmpty(item.Cover) ? Model.Blog.Cover : item.Cover;
-                var avatar = string.IsNullOrEmpty(item.Author.Avatar) ? "lib/img/avatar.jpg" : item.Author.Avatar;
-                <article class="post">
-                    <div class="post-cover">
-                        <img src="~/@img" alt="@item.Title">
+                    {
+                        foreach (var item in Model.Posts)
+                        {
+                            var img = string.IsNullOrEmpty(item.Cover) ? Model.Blog.Cover : item.Cover;
+        <article class="post">
+            <div class="post-cover">
+                <img src="~/@img" alt="@item.Title">
+
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <header class="post-header">
+                            <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
+                        </header>
+                        @if (item.Featured)
+                                            {
+                        <span class="post-featrued-label" title="Featured" data-toggle="tooltip"><i class="fa fa-star"></i></span>
+                                            }
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-10">
-                                <header class="post-header">
-                                    <h2 class="post-title"><a href="~/posts/@item.Slug">@item.Title</a></h2>
-                                </header>
-                                @if (item.Featured)
-                                {
-                                    <span class="post-featrued-label" title="Featured" data-toggle="tooltip"><i class="fa fa-star"></i></span>
-                                }
+                    <div class="col-sm-2">
+                        <div class="post-meta">
+                            <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">
+                                <img class="post-meta-author-avatar" src="~/@item.Author.Avatar" alt="Author: @item.Author.DisplayName" />
+                                <div class="post-meta-author-name">@item.Author.DisplayName</div>
+                            </a>
+                            <div class="post-meta-category">
+                                <a href="#">Technology</a>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="post-meta">
-                                    <a class="post-meta-author" href="~/authors/@item.Author.AppUserName">
-                                        <img class="post-meta-author-avatar" src="~/@avatar" alt="Author: @item.Author.DisplayName" />
-                                        <div class="post-meta-author-name">@item.Author.DisplayName</div>
-                                    </a>
-                                    <div class="post-meta-category">
-                                        <a href="#">Technology</a>
-                                    </div>
-                                    <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
-                                </div>
-                            </div>
-                            <div class="col-sm-10">
-                                <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(item.Description))</div>
-                            </div>
+                            <time class="post-meta-time">@item.Published.ToFriendlyDateString()</time>
                         </div>
                     </div>
-                </article>
-            }
-        }
+                    <div class="col-sm-10">
+                        <div class="post-description">@Html.Raw(Markdig.Markdown.ToHtml(item.Description))</div>
+
+                    </div>
+                </div>
+            </div>
+        </article>
+                            }
+                            }
 
         @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
-        {
+                    {
         <ul class="pagination justify-content-center">
             @if (pgr.ShowOlder)
-            {
+                            {
             <li class="item item-prev">
                 <a class="item-link" href="~/@pgr.LinkToOlder">
                     <i class="fa fa-chevron-left"></i>
                 </a>
             </li>
-            }
+                            }
             @if (pgr.ShowNewer)
-            {
+                            {
             <li class="item item-next">
                 <a class="item-link" href="~/@pgr.LinkToNewer">
                     <i class="fa fa-chevron-right"></i>
+
                 </a>
             </li>
-            }
+                            }
         </ul>
-        }
+                    }
+
     </div>
 
+
     <partial name="~/Views/Themes/bridge/_Shared/_Footer.cshtml" />
+
 
 </body>
 </html>

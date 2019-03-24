@@ -22,11 +22,11 @@ Task("Build").IsDependentOn("Clean").Does(() =>
 		);
 	}
 	
-	CopyFileToDirectory("../plugins/Common/bin/Release/netcoreapp2.2/Common.dll", "./publish");
+	CopyFileToDirectory("../plugins/Common/bin/Release/netcoreapp2.1/Common.dll", "./publish");
 
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.dll", "./publish");
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.deps.json", "./publish");
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.runtimeconfig.json", "./publish");
+	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.1/Upgrade.dll", "./publish");
+	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.1/Upgrade.deps.json", "./publish");
+	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.1/Upgrade.runtimeconfig.json", "./publish");
 });
 
 Task("Test").IsDependentOn("Build").Does(() =>
@@ -42,7 +42,7 @@ Task("Default").IsDependentOn("Test").Does(() =>
 {
 	var settings = new DotNetCorePublishSettings
     {
-        Framework = "netcoreapp2.2",
+        Framework = "netcoreapp2.1",
         Configuration = "Release",
         OutputDirectory = "./publish/"
     };

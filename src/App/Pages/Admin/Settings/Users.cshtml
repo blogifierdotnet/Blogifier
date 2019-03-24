@@ -11,152 +11,87 @@
     .post-grid-col {
         max-width: 200px !important
     }
+    .error{ color: red; }
 </style>
-
 <div class="bf-main">
     <partial name="~/Pages/Admin/Settings/_Taskbar.cshtml" />
-    <div id="app" class="bf-body">
-        <div id="usersList" class="bf-posts-grid d-flex" aria-label="posts">
-            <div v-for="(user, index) in authors" class="post-grid-col">
-	            <div  class="post-grid-item">
-                    <a class="item-link" v-bind:style="{ backgroundImage: 'url(' + getImg(user) + ')' }"><div class="item-title mt-auto">&nbsp;</div></a>
-                    <div class="item-info d-flex align-items-center">
-                        <span class="item-date mr-auto">{{user.displayName}}</span>
-                        <a :href="getProfileLink(user)" class="btn-unstyled item-favorite ml-3" data-tooltip="" title="" data-original-title="profile">
-                            <i class="fas fa-external-link-square-alt"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="bf-body">
+        <div id="usersList" class="bf-posts-grid d-flex" aria-label="posts"></div>
         <div style="margin-left: 30px">
-            <button type="button" class="btn btn-primary" v-on:click="register">@Localizer["new-user"]</button>
+            <button type="button" class="btn btn-primary" onclick="return openRegister();">@Localizer["new-user"]</button>
         </div>
+    </div>
+</div>
 
-        <div class="modal fade" id="dlgRegister" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="hdrSettings">@Localizer["new-user"]</h4>
-                        <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="settings-body">
-                            <form>
-                                <div class="bf-content bf-content-boxed bf-settings">
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["user-name"]</label>
-                                        <input v-model.trim="$v.user.userName.$model" :class="['form-control', status($v.user.userName)]" type="text" />
-                                        <label v-if="!$v.user.userName.required" class="val-error">Required</label>
-                                        <label v-if="!$v.user.userName.minLength" class="val-error">At least 4 characters long</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["email"]</label>
-                                        <input v-model.trim="$v.user.email.$model" :class="['form-control', status($v.user.email)]" type="text" />
-                                        <label v-if="!$v.user.email.required" class="val-error">Required</label>
-                                        <label v-if="!$v.user.email.minLength" class="val-error">At least 4 characters long</label>
-                                        <label v-if="!$v.user.email.email" class="val-error">Must be valid email</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["password"]</label>
-                                        <input v-model.trim="$v.user.password.$model" :class="['form-control', status($v.user.password)]" type="password" />
-                                        <label v-if="!$v.user.password.required" class="val-error">Required</label>
-                                        <label v-if="!$v.user.password.minLength" class="val-error">At least 4 characters long</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-group-label">@Localizer["confirm-password"]</label>
-                                        <input v-model.trim="$v.user.confirmPassword.$model" :class="['form-control', status($v.user.confirmPassword)]" type="password" />
-                                        <label v-if="!$v.user.confirmPassword.required" class="val-error">Required</label>
-                                        <label v-if="!$v.user.confirmPassword.minLength" class="val-error">At least 4 characters long</label>
-                                        <label v-if="!$v.user.confirmPassword.sameAsPassword" class="val-error">Passwords do not match</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
-                                            <input type="checkbox" v-model="user.setAsAdmin" class="custom-control-input">
-                                            <span class="custom-control-label">@Localizer["set-as-admin"]</span>
-                                        </label>
-                                    </div>
-                                    <button type="button" v-on:click="save($v)" :disabled="$v.user.$invalid" class="btn btn-primary btn-main">@Localizer["save"]</button>
-                                </div>
-                            </form>
+<div class="modal fade" id="dlgRegister" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="hdrSettings">@Localizer["new-user"]</h4>
+                <button type="button" class="close ml-2" title="Close" data-placement="bottom" data-tooltip data-dismiss="modal" aria-label="@Localizer["close"]">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-body">
+                    <form id="frmRegister" method="post">
+                        <div class="bf-content bf-content-boxed bf-settings">
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["user-name"]</label>
+                                <input type="text" id="txtUserName" name="txtUserName" value="" class="form-control" required autofocus />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["email"]</label>
+                                <input type="text" id="txtEmail" name="txtEmail" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["password"]</label>
+                                <input type="password" id="txtPassword" name="txtPassword" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["confirm-password"]</label>
+                                <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox my-auto pr-0 mr-2">
+                                    <input type="checkbox" id="cbxSetAdmin" name="cbxSetAdmin" class="custom-control-input">
+                                    <span class="custom-control-label">@Localizer["set-as-admin"]</span>
+                                </label>
+                            </div>
+                            <button type="button" onclick="return usersController.add();" class="btn btn-primary btn-main">@Localizer["save"]</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 @section Scripts{
+    <script src="~/admin/js/lib/jquery.validate.min.js"></script>
+    <script src="~/admin/js/lib/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/admin/js/app/usersController.js"></script>
     <script>
-        Vue.use(window.vuelidate.default)
-        const { required, minLength, email, sameAs } = window.validators
-        
-        new Vue({
-            el: '#app',
-            data: {
-                authors: [],
-                user: {
-                    userName: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
-                    setAsAdmin: false
+        var openRegister = function () {
+            $('#frmRegister').validate().resetForm();
+            $('#dlgRegister').modal();
+            return false;
+        }
+        $("#frmRegister").validate({
+            rules: {
+                txtPassword: {
+                    minlength: 4
+                },
+                txtConfirmPassword: {
+                    minlength: 4,
+                    equalTo: "#txtPassword"
+                },
+                txtEmail: {
+                    required: true,
+                    email: true
                 }
-            },
-            validations: {
-                user: {
-                    userName: { required, minLength: minLength(4) },
-                    email: { required, email, minLength: minLength(4) },
-                    password: { required, minLength: minLength(4) },
-                    confirmPassword: { required, minLength: minLength(4), sameAsPassword: sameAs('password') }
-                }
-            },
-            methods: {
-                load: function () {
-                    axios.get(webRoot + 'api/authors')
-                        .then(response => {
-                            this.authors = response.data;
-                            $('#app').css('display', '');
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                },
-                register: function(){
-                    $('#dlgRegister').modal();
-                },
-                save: function(v){
-                    axios.post(webRoot + 'api/authors', this.user)
-                        .then(function (response) {
-                            toastr.success('Created');
-                            location.reload();
-                        })
-                        .catch(function (error) {
-                            toastr.error(error);
-                        });                   
-                },
-                status(v) {
-                    return {
-                        error: v.$error,
-                        dirty: v.$dirty
-                    }
-                },
-                getImg: function(user){
-                    var img = webRoot + 'lib/img/avatar.jpg';
-                    if (user.avatar) {
-                        img = webRoot + user.avatar;
-                    }
-                    return img;
-                },
-                getProfileLink: function(user){
-                    return webRoot + 'admin/settings/profile?name=' + user.appUserName;
-                }
-            },
-            beforeMount() {
-                this.load()
             }
         });
+        usersController.load(1);
     </script>
 }

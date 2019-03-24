@@ -203,7 +203,7 @@ $(firstItemCheckfm).on('change', function () {
 
 // callbacks
 var updateAvatarCallback = function (data) {
-    $('#author-avatar').val(data.url);
+    $('#Author_Avatar').val(data.url);
     toastr.success('Updated');
 };
 var updateAppCoverCallback = function (data) {

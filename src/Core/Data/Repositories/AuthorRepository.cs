@@ -74,7 +74,6 @@ namespace Core.Data
                 dbAuthor.DisplayName = author.DisplayName;
                 dbAuthor.Avatar = author.Avatar;
                 dbAuthor.Email = author.Email;
-                dbAuthor.Bio = author.Bio;
                 dbAuthor.IsAdmin = author.IsAdmin;
                 dbAuthor.Created = SystemClock.Now();
 

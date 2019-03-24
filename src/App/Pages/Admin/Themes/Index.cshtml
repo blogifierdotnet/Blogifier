@@ -1,76 +1,16 @@
 ﻿@page
 @inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = Localizer["themes"];
+    ViewData["Title"] = "Themes";
 }
 
-<div id="app" class="bf-content">
-    <div id="themesList" class="bf-posts-grid d-flex">
-
-        <div v-for="(theme, index) in themes" class="post-grid-col">
-            <div class="post-grid-item">
-                <a class="item-link" v-bind:style="{ backgroundImage: 'url(' + webRoot + theme.cover + ')' }">
-                    <div class="item-title mt-auto">&nbsp;</div>
-                </a>
-                <div class="item-info d-flex align-items-center">
-                    <span class="item-date mr-auto">
-                        {{ theme.title }}
-                    </span>
-                    <i v-if="theme.isCurrent" class="fas fa-star" style="color: #ffbe00; font-size: 1.3em"></i>
-                    <button v-if="!theme.isCurrent" class="btn-unstyled item-favorite ml-3" v-on:click="select(theme.title)" data-tooltip="" title="" data-original-title="select">
-                        <i class="far fa-star"></i>
-                    </button>
-                    <a v-if="!theme.isCurrent" class="item-show ml-4" href="#" v-on:click="return remove(theme.title)" data-tooltip="" title="" data-original-title="delete">
-                        <i class="fas fa-trash" style="color: #ff6666"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-    </div>
+<div class="bf-content">
+    <div id="themesList" class="bf-posts-grid d-flex"></div>
 </div>
 
 @section Scripts{
+    <script src="~/admin/js/app/themesController.js"></script>
     <script>
-        new Vue({
-            el: "#app",
-            data: {
-                themes: []
-            },
-            methods: {
-                load: function (page) {
-                    axios.get(webRoot + 'api/themes?page=' + page)
-                        .then(response => {
-                            this.themes = response.data;
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                },
-                select: function(title){
-                    axios.put(webRoot + 'api/themes/select/' + title)
-                        .then(function (response) {
-                            toastr.success('Updated');
-                            setTimeout(function(){ location.reload(); }, 1000);
-                        })
-                        .catch(function (error) {
-                            toastr.error(error);
-                        });  
-                },
-                remove: function(title){
-                    var result = confirm("Please confirm removing this theme");
-                    if (result) {
-                        axios.delete(webRoot + 'api/themes/remove/' + title)
-                        .then(response => {
-                            toastr.success('Removed');
-                            setTimeout(function(){ location.reload(); }, 1000);
-                        })
-                        .catch(function (error) { toastr.error(error); });
-                    }
-                    return false;
-                }
-            },
-            beforeMount() {
-                this.load(1)
-            }
-        })
+        themesController.load(1);
     </script>
 }

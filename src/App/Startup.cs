@@ -14,7 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using System.Globalization;
-using System.Reflection;
 
 namespace App
 {
@@ -99,7 +98,6 @@ namespace App
             {
                 options.Conventions.AuthorizeFolder("/Admin");
             })
-            .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly).AddControllersAsServices()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAppServices();
