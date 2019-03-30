@@ -65,6 +65,21 @@ namespace Core.Api
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<PostItem> GetPost(int id)
+        {
+            if (id > 0)
+            {
+                return await _data.BlogPosts.GetItem(p => p.Id == id);
+            }
+            else
+            {
+                var author = await _data.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+                var blog = await _data.CustomFields.GetBlogSettings();
+                return new PostItem { Author = author, Cover = blog.Cover };
+            }               
+        }
+
         [HttpPut("publish")]
         [Authorize]
         public async Task<ActionResult> Publish(int id, string flag)
@@ -107,7 +122,23 @@ namespace Core.Api
                 }
                 await Task.CompletedTask;
 
-                return Ok(Resources.Updated);
+                return Ok("Updated");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<PostItem>> Post(PostItem post)
+        {
+            try
+            {
+                post.Slug = await GetSlug(post.Id, post.Title);
+                var saved = await _data.BlogPosts.SaveItem(post);
+                return Created($"admin/posts/edit?id={saved.Id}", saved);
             }
             catch (Exception ex)
             {
@@ -138,6 +169,35 @@ namespace Core.Api
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        async Task<string> GetSlug(int id, string title)
+        {
+            string slug = title.ToSlug();
+            BlogPost post;
+
+            if (id == 0)
+                post = _data.BlogPosts.Single(p => p.Slug == slug);
+            else
+                post = _data.BlogPosts.Single(p => p.Slug == slug && p.Id != id);
+
+            if (post == null)
+                return await Task.FromResult(slug);
+
+            for (int i = 2; i < 100; i++)
+            {
+                if (id == 0)
+                    post = _data.BlogPosts.Single(p => p.Slug == $"{slug}{i}");
+                else
+                    post = _data.BlogPosts.Single(p => p.Slug == $"{slug}{i}" && p.Id != id);
+
+                if (post == null)
+                {
+                    return await Task.FromResult(slug + i.ToString());
+                }
+            }
+
+            return await Task.FromResult(slug);
         }
     }
 }

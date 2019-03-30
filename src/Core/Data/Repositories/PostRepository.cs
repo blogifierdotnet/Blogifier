@@ -178,7 +178,7 @@ namespace Core.Data
             var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             var cover = field == null ? "" : field.Content;
 
-            if(item.Id == 0)
+            if (item.Id == 0)
             {
                 post = new BlogPost
                 {
@@ -202,8 +202,8 @@ namespace Core.Data
             {
                 post = _db.BlogPosts.Single(p => p.Id == item.Id);
 
-                post.Title = item.Title;
                 post.Slug = item.Slug;
+                post.Title = item.Title;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
                 post.Categories = item.Categories;
@@ -211,8 +211,6 @@ namespace Core.Data
                 post.Published = item.Published;
                 post.IsFeatured = item.Featured;
                 await _db.SaveChangesAsync();
-
-                item.Slug = post.Slug;
             }
             return await Task.FromResult(item);
         }

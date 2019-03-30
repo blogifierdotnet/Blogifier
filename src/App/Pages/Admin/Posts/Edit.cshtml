@@ -1,24 +1,18 @@
 ﻿@page
-@model App.Pages.Admin.Posts.EditModel
 @inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Localizer["Edit"];
+    var user = User.Identity.Name;
 }
-
 <link href="~/admin/markdown/simplemde.min.css" rel="stylesheet" />
-@{
-    var img = string.IsNullOrEmpty(Model.PostItem.Cover) ? Model.Blog.Cover : Model.PostItem.Cover;
-    img = $"{Url.Content("~/")}{img}";
-    var btnDisabled = Model.PostItem.Id == 0 ? "disabled" : "";
-}
 
-<form id="frmEditor" class="bf-editor-form" method="post" asp-antiforgery="true">
-    <div class="bf-body bf-editor-body">
+<form id="frmEditor" class="bf-editor-form">
+    <div id="app" class="bf-body bf-editor-body">
         <div id="post-edit" class="bf-editor d-flex flex-column">
             <!-- Editor Header -->
-            <div class="bf-editor-header" style="background-image:url('@img');">
+            <div class="bf-editor-header" v-bind:style="{ backgroundImage: 'url(' + this.getCover() + ')' }">
                 <div class="container">
-                    <textarea asp-for="PostItem.Title" class="bf-editor-title" id="txtPostTitle" rows="1" tabindex="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+                    <textarea class="bf-editor-title" v-model="post.title" rows="1" tabindex="1" placeholder="Post title..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
                 </div>
             </div>
             <!--/Editor Header -->
@@ -26,92 +20,82 @@
             <div class="bf-editor-footer">
                 <div class="container d-flex">
 
-                    <div id="action-buttons" class="mr-2 act-new">
+                    <div v-if="post.id === 0" id="action-buttons" class="mr-2">
                         <div class="btn-group">
-                            <button type="button" tabindex="3" onclick="editorController.save('P'); return false;" class="btn btn-sm btn-primary btn-rounded">@Localizer["publish"]</button>
+                            <button type="button" tabindex="3" v-on:click="save('P')" class="btn btn-sm btn-primary btn-rounded">@Localizer["publish"]</button>
                             <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.save(); return false;">@Localizer["save"]</a>
+                                <a class="dropdown-item" tabindex="5" href="#" v-on:click="save('S')">@Localizer["save"]</a>
                             </div>
                         </div>
                     </div>
 
-                    <div id="action-buttons" style="display: none" class="mr-2 act-upd">
+                    <div v-if="post.id > 0" id="action-buttons" class="mr-2">
                         <div class="btn-group">
-                            <button type="button" tabindex="3" onclick="editorController.save(); return false;" class="btn btn-sm btn-primary btn-rounded">@Localizer["save"]</button>
+                            <button type="button" tabindex="3" v-on:click="save('S')" class="btn btn-sm btn-primary btn-rounded">@Localizer["save"]</button>
                             <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(97px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                @if (Model.PostItem.Published > DateTime.MinValue)
-                                {
-                                <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.unpublish(); return false;">@Localizer["unpublish"]</a>
-                                }
-                                else
-                                {
-                                <a class="dropdown-item" tabindex="5" href="#" onclick="editorController.publish(); return false;">@Localizer["publish"]</a>
-                                }
-                                <a class="dropdown-item" tabindex="6" href="#" onclick="editorController.remove(); return false;">@Localizer["delete"]</a>
+                                <a v-if="post.isPublished === false" class="dropdown-item" tabindex="5" href="#" v-on:click="publish()">@Localizer["publish"]</a>
+                                <a v-if="post.isPublished === true" class="dropdown-item" tabindex="5" href="#" v-on:click="unpublish()">@Localizer["unpublish"]</a>
+                                <a class="dropdown-item" tabindex="6" href="#" v-on:click="remove()">@Localizer["delete"]</a>
                             </div>
                         </div>
-                        <a href="~/posts/@Model.PostItem.Slug" id="btn-view" tabindex="7" target="_blank" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="View post" title="View" data-placement="bottom">@Localizer["view"]</a>
+                        <a :href="getPostLink()" id="btn-view" tabindex="7" target="_blank" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="View post" title="View" data-placement="bottom">@Localizer["view"]</a>
                     </div>
 
                     <a href="~/admin" tabindex="8" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="Cancel" title="Cancel" data-placement="bottom">@Localizer["cancel"]</a>
 
                     <div class="loading loading-sm ml-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
-                    <div class="btn-group ml-auto d-none d-lg-flex">
-                        <button @btnDisabled class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="9" data-tooltip title="@Localizer["cover"]" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i></button>
-                        <button @btnDisabled class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="10" data-tooltip title="@Localizer["settings"]" onclick="return editorController.settings()"><i class="fa fa-cog"></i></button>
+                    <div v-if="post.id > 0" class="btn-group ml-auto d-none d-lg-flex">
+                        <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="9" data-tooltip title="@Localizer["cover"]" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i></button>
+                        <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="10" data-tooltip title="@Localizer["settings"]" onclick="return settings()"><i class="fa fa-cog"></i></button>
                     </div>
 
                     <!-- Mobile Menu -->
-                    <div class="dropdown ml-auto d-block d-lg-none">
+                    <div v-if="post.id > 0" class="dropdown ml-auto d-block d-lg-none">
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="11" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-ellipsis-h"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <button @btnDisabled class="dropdown-item" tabindex="12" onclick="return fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i> @Localizer["cover"]</button>
-                            <button @btnDisabled class="dropdown-item" tabindex="13" onclick="return editorController.settings()"><i class="fa fa-cog"></i> @Localizer["settings"]</button>
+                            <button class="dropdown-item" tabindex="12" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i> @Localizer["cover"]</button>
+                            <button class="dropdown-item" tabindex="13" onclick="return settings()"><i class="fa fa-cog"></i> @Localizer["settings"]</button>
                         </div>
                     </div>
                     <!--/Mobile Menu -->
                 </div>
             </div>
             <!--/Editor Footer -->
-            @* <div class="editor-hdr-wrapper">&nbsp;</div> *@
             <!-- Editor -->
             <textarea id="mdEditor" tabindex="2" rows="4" cols="50"></textarea>
-            <input type="hidden" asp-for="PostItem.Id" />
-            <input type="hidden" asp-for="PostItem.Slug" />
-            <input type="hidden" asp-for="PostItem.Content" />
-            <input type="hidden" asp-for="PostItem.Status" />
-            <input type="hidden" asp-for="PostItem.Featured" />
+            <input type="hidden" id="PostItem_Content" v-model="post.content" />
+            <input type="hidden" id="Post_Id" />
             <!--/Editor -->
-        </div>
-    </div>
-
-    <!-- Modal Description -->
-    <div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="settingsLabel">@Localizer["settings"]</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-group-label">@Localizer["description"]</label>
-                        <textarea rows="4" asp-for="PostItem.Description" class="form-control" autofocus></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-group-label">@Localizer["categories"]</label>
-                        <textarea rows="2" asp-for="PostItem.Categories" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-group-label">@Localizer["published"]</label>
-                        <input type="text" asp-for="PostItem.Published" class="form-control" />
+            <!-- Modal Settingls -->
+            <div class="modal fade" id="postSettings" tabindex="-1" role="dialog" aria-labelledby="settingsLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="settingsLabel">@Localizer["settings"]</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["description"]</label>
+                                <textarea rows="4" v-model="post.description" class="form-control" autofocus></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["categories"]</label>
+                                <textarea rows="2" v-model="post.categories" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["published"]</label>
+                                <input type="datetime" v-model="post.published" class="form-control" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- /Modal Settingls -->
         </div>
     </div>
 </form>
@@ -121,16 +105,107 @@
     <script src="~/admin/js/app/editorController.js"></script>
     <script src="~/admin/js/app/fileManagerController.js"></script>
     <script src="~/admin/markdown/simplemde.min.js"></script>
-    <script>
-        editorController.loadButtons('@Model.PostItem.Id');
-        var simplemde = getEditor();
+    <script>     
+        var simplemde = {};
+        var settings = function () {
+            $('#postSettings').modal();
+            return false;
+        }
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                isAdmin: isAdmin(),
+                id: "0",
+                post: {
+                    id: 0,
+                    categories: "",
+                    content: "",
+                    description: "",
+                    slug: ""
+                }
+            },
+            methods: {
+                load: function () {
+                    axios.get(getUrl('api/posts/' + this.id))
+                        .then(response => {
+                            this.post = response.data;
+                            simplemde = getEditor(this.post);
+                            $('#Post_Id').val(fromQueryString('id'));
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                save: function (flag) {
+                    if (flag === 'P') {
+                        this.post.published = (new Date()).toUTCString();
+                    }
+                    else if (flag === 'U') {
+                        this.post.published = new Date('0001-01-01T00:00:00Z');
+                    }
+
+                    this.post.content = simplemde.value();
+                    if (this.post.slug === null) {
+                        this.post.slug = "";
+                    }
+
+                    if (!this.post.title || this.post.title.length < 4) {
+                        $('.bf-editor-title').focus();
+                        toastr.error('Title required, 3 or more characters length');
+                        return false;
+                    }
+                    if (!this.post.content || this.post.content.length < 4) {
+                        _editor.setCursor({ line: 1, ch: 1 });
+                        toastr.error('Content required, 3 or more characters length');
+                        return false;
+                    }
+                    if (!this.isDate(this.post.published)) {
+                        toastr.error('Published date is invalid');
+                        $('#postSettings').modal();
+                        return false;
+                    }
+                    
+                    axios.post(webRoot + 'api/posts', this.post)
+                        .then(function (response) {
+                            toastr.success('Created');
+                            setTimeout(function () { location.href = getUrl(response.headers.location); }, 1000);
+                        })
+                        .catch(function (error) {
+                            toastr.error(error);
+                        });   
+                },
+                publish: function () {
+                    this.save('P');
+                },
+                unpublish: function () {
+                    this.save('U');   
+                },
+                remove: function () {
+                    var result = confirm("Please confirm removing this theme");
+                    if (result) {
+                        axios.delete(webRoot + 'api/posts/remove/' + this.post.id)
+                            .then(response => {
+                                toastr.success('Removed');
+                                setTimeout(function () { location.href = getUrl('admin/posts'); }, 1000);
+                            })
+                            .catch(function (error) { toastr.error(error); });
+                    }
+                    return false;                   
+                },
+                getPostLink: function () {
+                    return getUrl('posts/' + this.post.slug);
+                },
+                getCover: function () {
+                    return this.post.cover && this.post.cover !== null ? getUrl(this.post.cover) : getUrl('lib/img/cover.png');
+                },
+                isDate: function (date) {
+                    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
+                }
+            },
+            beforeMount() {
+                if (fromQueryString('id')) {
+                    this.id = fromQueryString('id');
+                }
+                this.load();
+            }
+        })
     </script>
-    @if (Model.ShowMessage)
-    {
-        <script>toastr.success('@Model.Message')</script>
-    }
-    @if (Model.ShowError)
-    {
-        <script>toastr.error('@Model.Error')</script>
-    }
 }

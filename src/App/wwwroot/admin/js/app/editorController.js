@@ -1,79 +1,4 @@
-﻿var editorController = function (dataService) {
-
-    function save(publish) {
-        $('#PostItem_Content').val(simplemde.value());
-        $('#PostItem_Status').val(publish === 'P' ? 2 : 1);
-        $('#frmEditor').submit();
-    }
-
-    function publish() {
-        $('#PostItem_Content').val(simplemde.value());
-        $('#PostItem_Status').val(2);
-        $('#frmEditor').submit();
-    }
-
-    function unpublish() {
-        $('#PostItem_Content').val(simplemde.value());
-        $('#PostItem_Status').val(3);
-        $('#frmEditor').submit();
-    }
-
-    function remove() {
-        $('.loading').fadeIn('fast');
-        dataService.remove("admin/removepost/" + $('#PostItem_Id').val(), removeCallback, fail);
-    }
-
-    function removeCallback(data) {
-        toastr.success('Deleted');
-        setTimeout(function () {
-            $('.loading').fadeOut('fast');
-            window.location.href = webRoot + 'admin';
-        }, 1000);
-    }
-
-    function loadCover() {
-        var postId = $('#hdnPostId').val();
-        var postImg = $('#hdnPostImg').val();
-        $('#post-image').empty();
-        if (!postImg.length > 0) {
-            var btn = '<button type="button" title="Add Cover" class="btn btn-secondary btn-block" data-placement="bottom" onclick="return editorController.openFilePicker(' + postId + ');">Upload Post Cover</button >';
-        }
-        $('#post-image').append(btn);
-        if (postImg.length > 0) {
-            var dd = '<div class="admin-editor-cover-image"><img src="' + postImg + '" /></div>';
-            dd += '<button type="button" class="btn btn-danger btn-block" onclick="return editorController.resetPostImage();">Remove Cover</button>';
-        }
-        $('#post-image').append(dd);
-    }
-
-    function loadButtons(id) {
-        if (id > 0) {
-            $('.act-upd').css('display', 'inline-block');
-            $('.act-new').css('display', 'none');
-        }
-        else {
-            $('.act-new').css('display', 'inline-block');
-            $('.act-upd').css('display', 'none');
-        }
-    }
-
-    function settings() {
-        $('#postSettings').modal();
-        return false;
-    }
-
-    return {
-        save: save,
-        publish: publish,
-        unpublish: unpublish,
-        remove: remove,
-        loadCover: loadCover,
-        loadButtons: loadButtons,
-        settings: settings
-    };
-}(DataService);
-
-function getEditor() {
+﻿function getEditor(post) {
     var simplemde = new SimpleMDE({
         toolbar: [
             "bold", "italic", "heading-2", "|",
@@ -127,7 +52,7 @@ function getEditor() {
         syncSideBySidePreviewScroll: false
     });
 
-    var txt = $('#PostItem_Content').val();
+    var txt = post.content ? post.content : '';
 
     simplemde.value(txt
         .replace(/&#xA;/g, '\r\n')

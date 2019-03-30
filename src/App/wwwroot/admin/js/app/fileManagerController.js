@@ -34,7 +34,7 @@
             }
             var url = 'assets/' + id;
             if (callBack.name === 'updatePostCoverCallback') {
-                url = 'assets/pick?type=postCover&asset=' + id + '&post=' + $('#PostItem_Id').val();
+                url = 'assets/pick?type=postCover&asset=' + id + '&post=' + $('#Post_Id').val();
             }
             else if (callBack.name === 'updateAppCoverCallback') {
                 url = 'assets/pick?type=appCover&asset=' + id;

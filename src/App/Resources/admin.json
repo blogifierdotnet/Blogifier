@@ -428,5 +428,17 @@
       "en-US": "Read",
       "ru-RU": "Читать"
     }
+  },
+  "updated": {
+    "Values": {
+      "en-US": "Updated",
+      "ru-RU": "Запись обновлена"
+    }
+  },
+  "created": {
+    "Values": {
+      "en-US": "Created",
+      "ru-RU": "Запись создана"
+    }
   }
 }
