@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace App.Controllers
 {
     [Authorize]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class AdminController : Controller
     {
         IDataService _db;

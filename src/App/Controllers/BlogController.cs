@@ -13,6 +13,7 @@ using System.Xml;
 
 namespace App.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class BlogController : Controller
     {
         IDataService _db;
@@ -64,7 +65,7 @@ namespace App.Controllers
             return View(string.Format(_listView, blog.Theme), model);
         }
 
-        [Route("posts/{slug}")]
+        [HttpGet("posts/{slug}")]
         public async Task<IActionResult> Single(string slug)
         {
             try
@@ -88,7 +89,7 @@ namespace App.Controllers
             
         }
 
-        [Route("authors/{name}")]
+        [HttpGet("authors/{name}")]
         public async Task<IActionResult> Authors(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
@@ -114,7 +115,7 @@ namespace App.Controllers
             return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
-        [Route("categories/{name}")]
+        [HttpGet("categories/{name}")]
         public async Task<IActionResult> Categories(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
@@ -139,7 +140,7 @@ namespace App.Controllers
             return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
-        [Route("feed/{type}")]
+        [HttpGet("feed/{type}")]
         public async Task Rss(string type)
         {
             Response.ContentType = "application/xml";
@@ -163,7 +164,7 @@ namespace App.Controllers
             }
         }
 
-        [Route("error/{code:int}")]
+        [HttpGet("error/{code:int}")]
         public async Task<IActionResult> Error(int code)
         {
             var model = new PostModel();

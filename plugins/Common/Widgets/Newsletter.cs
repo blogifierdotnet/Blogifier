@@ -33,17 +33,18 @@ namespace Common.Widgets
         }
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("widgets/newsletter")]
     public class NewsletterController : Controller
     {
-        IDataService _db;
+        readonly IDataService _db;
 
         public NewsletterController(IDataService db)
         {
             _db = db;
         }
 
-        [Route("load")]
+        [HttpGet("load")]
         public async Task<NewsletterModel> Load(int page = 1)
         {
             var pager = new Pager(page);

@@ -27,7 +27,7 @@ namespace Core.Api
             _options = options;
         }
 
-        [HttpGet("{cultures}")]
+        [HttpGet("cultures")]
         public async Task<ActionResult<List<SelectListItem>>> GetCultures()
         {
             try

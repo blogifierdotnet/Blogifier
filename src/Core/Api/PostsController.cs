@@ -21,6 +21,7 @@ namespace Core.Api
             _data = data;
         }
 
+        [HttpGet]
         public async Task<ActionResult<PageListModel>> Get([FromQuery]string term = "", [FromQuery]string status = "", [FromQuery]int page = 1)
         {
             try

@@ -41,6 +41,7 @@ namespace Common.Widgets
         }
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("widgets/api/categories")]
     public class CategoriesController : Controller
     {

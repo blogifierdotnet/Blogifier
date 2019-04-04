@@ -102,6 +102,15 @@ namespace App
             .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly).AddControllersAsServices()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSwaggerGen(setupAction => {
+                setupAction.SwaggerDoc("spec",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "Blogifier API",
+                        Version = "1"
+                    });
+            });
+
             services.AddAppServices();
         }
 
@@ -116,6 +125,15 @@ namespace App
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseRequestLocalization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint(
+                    "/swagger/spec/swagger.json",
+                    "Blogifier API"
+                );
+            });
 
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;

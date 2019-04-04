@@ -26,6 +26,7 @@ namespace Core.Api
             _store = store;
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<ThemeItem>>> Get(int page = 1)
         {
             try

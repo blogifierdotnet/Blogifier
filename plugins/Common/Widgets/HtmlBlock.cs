@@ -37,6 +37,7 @@ namespace Common.Widgets
         }
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("widgets/api/htmlblock")]
     public class HtmlBlockController : Controller
     {

@@ -66,6 +66,7 @@ namespace Common.Widgets
         }
     }
 
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("widgets/api/postlist")]
     public class PostListController : Controller
     {
