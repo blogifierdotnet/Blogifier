@@ -34,16 +34,16 @@
             }
             var url = 'assets/' + id;
             if (callBack.name === 'updatePostCoverCallback') {
-                url = 'assets/pick?type=postCover&asset=' + id + '&post=' + $('#Post_Id').val();
+                url = 'api/assets/pick?type=postCover&asset=' + id + '&post=' + $('#Post_Id').val();
             }
             else if (callBack.name === 'updateAppCoverCallback') {
-                url = 'assets/pick?type=appCover&asset=' + id;
+                url = 'api/assets/pick?type=appCover&asset=' + id;
             }
             else if (callBack.name === 'updateAppLogoCallback') {
-                url = 'assets/pick?type=appLogo&asset=' + id;
+                url = 'api/assets/pick?type=appLogo&asset=' + id;
             }
             else if(callBack.name === 'updateAvatarCallback'){
-                url = 'assets/pick?type=avatar&asset=' + id; 
+                url = 'api/assets/pick?type=avatar&asset=' + id; 
             }
             dataService.get(url, callBack, fail);
         }
@@ -57,7 +57,7 @@
     function uploadSubmit() {
         var data = new FormData($('#frmUpload')[0]);
 
-        dataService.upload('assets/upload', data, submitCallback, fail);
+        dataService.upload('api/assets/upload', data, submitCallback, fail);
     }
     function submitCallback() {
         load(1);
@@ -68,10 +68,10 @@
         var items = $('#fileManagerList input:checked');
         for (i = 0; i < items.length; i++) {
             if (i + 1 < items.length) {
-                dataService.remove('assets/remove?url=' + items[i].id, emptyCallback, fail);
+                dataService.remove('api/assets/remove?url=' + items[i].id, emptyCallback, fail);
             }
             else {
-                dataService.remove('assets/remove?url=' + items[i].id, removeCallback, fail);
+                dataService.remove('api/assets/remove?url=' + items[i].id, removeCallback, fail);
             }
         }
     }
@@ -89,10 +89,10 @@
         }
         var search = $('#asset-search').val();
         if (search && search.length > 0) {
-            dataService.get('assets?page=' + page + '&filter=' + filter + '&search=' + search, loadCallback, fail);
+            dataService.get('api/assets?page=' + page + '&filter=' + filter + '&search=' + search, loadCallback, fail);
         }
         else {
-            dataService.get('assets?page=' + page + '&filter=' + filter, loadCallback, fail);
+            dataService.get('api/assets?page=' + page + '&filter=' + filter, loadCallback, fail);
         }
         return false;
     }
