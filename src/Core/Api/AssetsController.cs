@@ -23,6 +23,13 @@ namespace Core.Api
             _store = store;
         }
 
+        /// <summary>
+        /// Get list of assets - user saved images and files
+        /// </summary>
+        /// <param name="page">Page number</param>
+        /// <param name="filter">filterImages or filterAttachments</param>
+        /// <param name="search">Search term</param>
+        /// <returns>Model containing collection of assets and Pager object</returns>
         [HttpGet]
         public async Task<AssetsModel> Get(int page = 1, string filter = "", string search = "")
         {
@@ -59,6 +66,13 @@ namespace Core.Api
             };
         }
 
+        /// <summary>
+        /// Select an asset in the File Manager to include in the post
+        /// </summary>
+        /// <param name="type">Type of asset (post cover, logo, avatar or post image/attachment)</param>
+        /// <param name="asset">Selected asset</param>
+        /// <param name="post">Post ID</param>
+        /// <returns>Asset Item</returns>
         [HttpGet("pick")]
         public async Task<AssetItem> Pick(string type, string asset, string post)
         {
@@ -95,6 +109,11 @@ namespace Core.Api
             return item.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Upload file(s) to user data store
+        /// </summary>
+        /// <param name="files">Selected files</param>
+        /// <returns>Success or internal error</returns>
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files)
         {
@@ -112,6 +131,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Remove file from user data store, authentication required
+        /// </summary>
+        /// <param name="url">Relative URL of the file to remove</param>
+        /// <returns></returns>
         [HttpDelete("remove")]
         public IActionResult Remove(string url)
         {

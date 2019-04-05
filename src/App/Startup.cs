@@ -13,7 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
+using System;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 
 namespace App
@@ -109,6 +111,7 @@ namespace App
                         Title = "Blogifier API",
                         Version = "1"
                     });
+                setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
             });
 
             services.AddAppServices();

@@ -7,6 +7,9 @@ namespace Core.Data
     {
         public Author() { }
 
+        /// <summary>
+        /// Author ID
+        /// </summary>
         public int Id { get; set; }
 
         [StringLength(160)]

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Core</name>
+    </assembly>
+    <members>
+        <member name="M:Core.Api.AssetsController.Get(System.Int32,System.String,System.String)">
+            <summary>
+            Get list of assets - user saved images and files
+            </summary>
+            <param name="page">Page number</param>
+            <param name="filter">filterImages or filterAttachments</param>
+            <param name="search">Search term</param>
+            <returns>Model containing collection of assets and Pager object</returns>
+        </member>
+        <member name="M:Core.Api.AssetsController.Pick(System.String,System.String,System.String)">
+            <summary>
+            Select an asset in the File Manager to include in the post
+            </summary>
+            <param name="type">Type of asset (post cover, logo, avatar or post image/attachment)</param>
+            <param name="asset">Selected asset</param>
+            <param name="post">Post ID</param>
+            <returns>Asset Item</returns>
+        </member>
+        <member name="M:Core.Api.AssetsController.Upload(System.Collections.Generic.ICollection{Microsoft.AspNetCore.Http.IFormFile})">
+            <summary>
+            Upload file(s) to user data store
+            </summary>
+            <param name="files">Selected files</param>
+            <returns>Success or internal error</returns>
+        </member>
+        <member name="M:Core.Api.AssetsController.Remove(System.String)">
+            <summary>
+            Remove file from user data store, authentication required
+            </summary>
+            <param name="url">Relative URL of the file to remove</param>
+            <returns></returns>
+        </member>
+        <member name="P:Core.Data.Author.Id">
+            <summary>
+            Author ID
+            </summary>
+        </member>
+        <member name="M:Core.StringExtensions.ExtractTitle(System.String)">
+            <summary>
+            Should extract title (file name) from file path or Url
+            </summary>
+            <param name="str">c:\foo\test.png</param>
+            <returns>test.png</returns>
+        </member>
+        <member name="M:Core.StringExtensions.ToSlug(System.String)">
+            <summary>
+            Converts title to valid URL slug
+            </summary>
+            <param name="str">Title</param>
+            <returns>Slug</returns>
+        </member>
+        <member name="M:Core.StringExtensions.ToDescription(System.String)">
+            <summary>
+            Converts post body to post description
+            </summary>
+            <param name="str">HTML post body</param>
+            <returns>Post decription as plain text</returns>
+        </member>
+    </members>
+</doc>
