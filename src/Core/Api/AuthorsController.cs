@@ -30,6 +30,11 @@ namespace Core.Api
             _store = store;
         }
 
+        /// <summary>
+        /// Get list of blog authors
+        /// </summary>
+        /// <param name="page">Page number</param>
+        /// <returns>List of authors</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> Get(int page = 1)
         {
@@ -45,6 +50,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Get single author by name
+        /// </summary>
+        /// <param name="author">Author name used during registration</param>
+        /// <returns>Author object</returns>
         [HttpGet("{author}")]
         public async Task<ActionResult<Author>> Get(string author)
         {
@@ -61,6 +71,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Register new author. Authorized admins only.
+        /// </summary>
+        /// <param name="model">Author model</param>
+        /// <returns>Created Author object</returns>
         [HttpPost]
         [Administrator]
         public async Task<ActionResult<Author>> Post(RegisterModel model)
@@ -98,6 +113,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Update author
+        /// </summary>
+        /// <param name="model">Author model</param>
+        /// <returns>Success or 500 error</returns>
         [HttpPut("update")]
         [Administrator]
         public async Task<ActionResult> Update(Author model)
@@ -117,6 +137,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Change author password. Authorized users only.
+        /// </summary>
+        /// <param name="model">Author model</param>
+        /// <returns>Success or 500 error</returns>
         [HttpPut("changepwd")]
         [Authorize]
         public async Task<ActionResult> ChangePwd(ChangePasswordModel model)
@@ -143,6 +168,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Delete author, from membership, database and file system. Admin only.
+        /// </summary>
+        /// <param name="id">Author ID</param>
+        /// <returns>Success or 500 error</returns>
         [Administrator]
         [HttpDelete("remove/{id}")]
         public async Task<IActionResult> Delete(string id)

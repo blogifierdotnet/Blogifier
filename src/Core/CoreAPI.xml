@@ -36,6 +36,134 @@
             <param name="url">Relative URL of the file to remove</param>
             <returns></returns>
         </member>
+        <member name="M:Core.Api.AuthorsController.Get(System.Int32)">
+            <summary>
+            Get list of blog authors
+            </summary>
+            <param name="page">Page number</param>
+            <returns>List of authors</returns>
+        </member>
+        <member name="M:Core.Api.AuthorsController.Get(System.String)">
+            <summary>
+            Get single author by name
+            </summary>
+            <param name="author">Author name used during registration</param>
+            <returns>Author object</returns>
+        </member>
+        <member name="M:Core.Api.AuthorsController.Post(Core.Data.Models.RegisterModel)">
+            <summary>
+            Register new author. Authorized admins only.
+            </summary>
+            <param name="model">Author model</param>
+            <returns>Created Author object</returns>
+        </member>
+        <member name="M:Core.Api.AuthorsController.Update(Core.Data.Author)">
+            <summary>
+            Update author
+            </summary>
+            <param name="model">Author model</param>
+            <returns>Success or 500 error</returns>
+        </member>
+        <member name="M:Core.Api.AuthorsController.ChangePwd(Core.Data.Models.ChangePasswordModel)">
+            <summary>
+            Change author password. Authorized users only.
+            </summary>
+            <param name="model">Author model</param>
+            <returns>Success or 500 error</returns>
+        </member>
+        <member name="M:Core.Api.AuthorsController.Delete(System.String)">
+            <summary>
+            Delete author, from membership, database and file system. Admin only.
+            </summary>
+            <param name="id">Author ID</param>
+            <returns>Success or 500 error</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.Int32)">
+            <summary>
+            Get list of blog posts
+            </summary>
+            <param name="term">Search term</param>
+            <param name="status">Status; P - published, D - drafts</param>
+            <param name="page">Page number</param>
+            <returns>Model with list of posts and pager</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.GetPost(System.Int32)">
+            <summary>
+            Get single post by ID
+            </summary>
+            <param name="id">Post ID</param>
+            <returns>Post item</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Publish(System.Int32,System.String)">
+            <summary>
+            Set post as published or draft
+            </summary>
+            <param name="id">Post ID</param>
+            <param name="flag">Flag; P - publish, U - unpublish</param>
+            <returns>Success of failure</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Feature(System.Int32,System.String)">
+            <summary>
+            Set post as featured
+            </summary>
+            <param name="id">Post ID</param>
+            <param name="flag">Flag; F - featured, U - remove from featured</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Post(Core.Data.PostItem)">
+            <summary>
+            Save blog post
+            </summary>
+            <param name="post">Post item</param>
+            <returns>Saved post item</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Remove(System.Int32)">
+            <summary>
+            Remove post item
+            </summary>
+            <param name="id">Post ID</param>
+            <returns>Success or failure</returns>
+        </member>
+        <member name="M:Core.Api.SettingsController.GetCultures">
+            <summary>
+            Get list of cultures
+            </summary>
+            <returns>List of supported languages</returns>
+        </member>
+        <member name="M:Core.Api.SettingsController.Get">
+            <summary>
+            Get blog settings
+            </summary>
+            <returns>Blog settings</returns>
+        </member>
+        <member name="M:Core.Api.SettingsController.Post(Core.Data.BlogItem)">
+            <summary>
+            Save blog settings
+            </summary>
+            <param name="model">Blog settings item</param>
+            <returns>Saved blog item</returns>
+        </member>
+        <member name="M:Core.Api.ThemesController.Get(System.Int32)">
+            <summary>
+            Get list of themes
+            </summary>
+            <param name="page">Page number</param>
+            <returns>List of themes</returns>
+        </member>
+        <member name="M:Core.Api.ThemesController.Put(System.String)">
+            <summary>
+            Set theme as current for a blog
+            </summary>
+            <param name="id">Theme ID</param>
+            <returns>Success or failure</returns>
+        </member>
+        <member name="M:Core.Api.ThemesController.Delete(System.String)">
+            <summary>
+            Remove and unistall theme from the blog
+            </summary>
+            <param name="id">Theme ID</param>
+            <returns>Success or failure</returns>
+        </member>
         <member name="P:Core.Data.Author.Id">
             <summary>
             Author ID

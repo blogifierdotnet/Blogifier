@@ -26,6 +26,11 @@ namespace Core.Api
             _store = store;
         }
 
+        /// <summary>
+        /// Get list of themes
+        /// </summary>
+        /// <param name="page">Page number</param>
+        /// <returns>List of themes</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ThemeItem>>> Get(int page = 1)
         {
@@ -42,6 +47,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Set theme as current for a blog
+        /// </summary>
+        /// <param name="id">Theme ID</param>
+        /// <returns>Success or failure</returns>
         [Administrator]
         [HttpPut("select/{id}")]
         public ActionResult Put(string id)
@@ -68,6 +78,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Remove and unistall theme from the blog
+        /// </summary>
+        /// <param name="id">Theme ID</param>
+        /// <returns>Success or failure</returns>
         [Administrator]
         [HttpDelete("remove/{id}")]
         public IActionResult Delete(string id)

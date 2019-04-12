@@ -27,6 +27,10 @@ namespace Core.Api
             _options = options;
         }
 
+        /// <summary>
+        /// Get list of cultures
+        /// </summary>
+        /// <returns>List of supported languages</returns>
         [HttpGet("cultures")]
         public async Task<ActionResult<List<SelectListItem>>> GetCultures()
         {
@@ -44,6 +48,10 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Get blog settings
+        /// </summary>
+        /// <returns>Blog settings</returns>
         [HttpGet]
         [Administrator]
         public async Task<ActionResult<BlogItem>> Get()
@@ -59,6 +67,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Save blog settings
+        /// </summary>
+        /// <param name="model">Blog settings item</param>
+        /// <returns>Saved blog item</returns>
         [HttpPost]
         [Administrator]
         public async Task<ActionResult<BlogItem>> Post(BlogItem model)

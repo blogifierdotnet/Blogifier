@@ -21,6 +21,13 @@ namespace Core.Api
             _data = data;
         }
 
+        /// <summary>
+        /// Get list of blog posts
+        /// </summary>
+        /// <param name="term">Search term</param>
+        /// <param name="status">Status; P - published, D - drafts</param>
+        /// <param name="page">Page number</param>
+        /// <returns>Model with list of posts and pager</returns>
         [HttpGet]
         public async Task<ActionResult<PageListModel>> Get([FromQuery]string term = "", [FromQuery]string status = "", [FromQuery]int page = 1)
         {
@@ -66,6 +73,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Get single post by ID
+        /// </summary>
+        /// <param name="id">Post ID</param>
+        /// <returns>Post item</returns>
         [HttpGet("{id}")]
         public async Task<PostItem> GetPost(int id)
         {
@@ -81,6 +93,12 @@ namespace Core.Api
             }               
         }
 
+        /// <summary>
+        /// Set post as published or draft
+        /// </summary>
+        /// <param name="id">Post ID</param>
+        /// <param name="flag">Flag; P - publish, U - unpublish</param>
+        /// <returns>Success of failure</returns>
         [HttpPut("publish")]
         [Authorize]
         public async Task<ActionResult> Publish(int id, string flag)
@@ -106,6 +124,12 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Set post as featured
+        /// </summary>
+        /// <param name="id">Post ID</param>
+        /// <param name="flag">Flag; F - featured, U - remove from featured</param>
+        /// <returns></returns>
         [HttpPut("feature")]
         [Administrator]
         public async Task<ActionResult> Feature(int id, string flag)
@@ -131,6 +155,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Save blog post
+        /// </summary>
+        /// <param name="post">Post item</param>
+        /// <returns>Saved post item</returns>
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<PostItem>> Post(PostItem post)
@@ -147,6 +176,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Remove post item
+        /// </summary>
+        /// <param name="id">Post ID</param>
+        /// <returns>Success or failure</returns>
         [HttpDelete("remove/{id}")]
         [Authorize]
         public async Task<IActionResult> Remove(int id)
