@@ -1,0 +1,191 @@
+﻿@model ListModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@Html.Raw(Model.Blog.Title)</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link href="~/themes/material/css/material-kit.min.css" rel="stylesheet" />
+    <style>
+        .entry-meta a { color: #333; padding: 0 5px; font-size: 0.9em }
+    </style>
+</head>
+
+<body class="landing-page sidebar-collapse">
+
+    <div id="app">
+        <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+            <div class="container">
+                <div class="navbar-translate">
+                    <a class="navbar-brand" href="~/">
+                        <img src="~/@Model.Blog.Logo" width="36" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/">
+                                <i class="material-icons">home</i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link" href="~/admin">
+                                    <i class="material-icons">apps</i> Admin
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" href="~/account/login?ReturnUrl=/admin">
+                                    <i class="material-icons">person</i> Login
+                                </a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/blogifierdotnet" target="_blank" data-original-title="Follow us on Twitter">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/blogifierdotnet" target="_blank" data-original-title="Like us on Facebook">
+                                <i class="fa fa-facebook-square"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="~/feed/rss" target="_blank" data-original-title="Subscribe to RSS feed">
+                                <i class="fa fa-rss"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="page-header header-filter" data-parallax="true" style="background-image: url('@Model.Blog.Cover')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="title">@Model.Blog.Title</h1>
+                        <h4>@Model.Blog.Description</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row" style="padding-top: 40px">
+                            <div class="col-md-5">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-5">
+                                <input type="search" name="txtSearch" id="txtSearch" class="form-control" placeholder="Search...">
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-round btn-raised">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main main-raised">
+
+            <div class="container">
+                <div class="section text-center">
+                    <div v-for="(post, index) in vm.posts" class="row">
+                        <div class="col-md-8 ml-auto mr-auto">
+                            <h2 class="title">{{post.title}}</h2>
+                            <div class="entry-meta">
+                                <span class="posted-on">
+                                    <i class="fa fa-calendar"></i>
+                                    <a href="#" rel="bookmark">
+                                        <time class="entry-date published" datetime="2019-03-24T17:52:26+00:00">{{getDate(post.published)}}</time>
+                                    </a>
+                                </span>
+                                <span class="byline">
+                                    <i class="fa fa-user"></i>
+                                    <span class="author vcard">
+                                        <a class="url fn n" href="#">{{post.author.displayName}}</a>
+                                    </span>
+                                </span>
+                                <span v-if="post.categories" class="cat-links">
+                                    <i class="fa fa-folder-open-o"></i>
+                                    <template v-for="(cat, index) in post.categories.split(',')">
+                                        <a href="#" rel="category tag">{{cat}}</a>
+                                    </template>
+                                </span>
+                            </div>
+                            <h5 class="description">{{post.description}}</h5>
+                            <img v-bind:src="webRoot + post.cover" class="thumbnail col-sm-12 wp-post-image" alt="">
+                            <a href="#" class="btn btn-round btn-lg" style="margin-top: 25px">
+                                Read More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <footer class="footer footer-default">
+        <div class="container">
+            <nav class="copyright float-left">
+                @Model.Blog.Title © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>.
+            </nav>
+            <div class="copyright float-right">
+                Designed with <i class="material-icons">favorite</i> by
+                <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </div>
+        </div>
+    </footer>
+    <!--   Core JS Files   -->
+    <script src="~/themes/material/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="~/themes/material/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="~/themes/material/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="~/themes/material/js/plugins/moment.min.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="~/themes/material/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+    <script src="~/themes/material/js/material-kit.js?v=2.0.5" type="text/javascript"></script>
+
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getDate(date) {
+          var d = new Date(Date.parse(date));
+          var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+        }
+        new Vue({
+            el: "#app",
+            data: {
+                vm: {}
+            },
+            methods: {
+                load: function () {
+                    axios.get(webRoot + 'api/posts')
+                        .then(response => {
+                            this.vm = response.data;
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                }
+            },
+            beforeMount() {
+                this.load()
+            }
+        })
+    </script>
+</body>
+</html>
