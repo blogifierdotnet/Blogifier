@@ -426,19 +426,25 @@
   "read": {
     "Values": {
       "en-US": "Read",
-      "ru-RU": "Читать"
+      "ru-RU": "Читать",
+      "zh-cn": "阅读",
+      "zh-tw": "閱讀"
     }
   },
   "updated": {
     "Values": {
       "en-US": "Updated",
-      "ru-RU": "Запись обновлена"
+      "ru-RU": "Запись обновлена",
+      "zh-cn": "已更新",
+      "zh-tw": "已更新"
     }
   },
   "created": {
     "Values": {
       "en-US": "Created",
-      "ru-RU": "Запись создана"
+      "ru-RU": "Запись создана",
+      "zh-cn": "已创建",
+      "zh-tw": "已創建"
     }
   }
 }
