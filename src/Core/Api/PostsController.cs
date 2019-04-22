@@ -22,49 +22,61 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get list of blog posts
+        /// Search blog posts by term
         /// </summary>
         /// <param name="term">Search term</param>
-        /// <param name="status">Status; P - published, D - drafts</param>
+        /// <param name="author">Author</param>
+        /// <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
         /// <param name="page">Page number</param>
         /// <returns>Model with list of posts and pager</returns>
-        [HttpGet]
-        public async Task<ActionResult<PageListModel>> Get([FromQuery]string term = "", [FromQuery]string status = "", [FromQuery]int page = 1)
+        [HttpGet("search/{term}")]
+        public async Task<ActionResult<PageListModel>> Search(
+            string term, 
+            [FromQuery]string author = "",
+            [FromQuery]string include = "",
+            [FromQuery]int page = 1)
         {
             try
             {
                 var blog = await _data.CustomFields.GetBlogSettings();
-                var pager = new Pager(page, blog.ItemsPerPage);
-                var author = _data.Authors.Single(a => a.AppUserName == User.Identity.Name);
                 IEnumerable<PostItem> results;
+                var pager = new Pager(page, blog.ItemsPerPage);
+                var authorId = GetUserId(author);
 
-                if(!string.IsNullOrEmpty(term))
-                {
-                    results = author.IsAdmin ? 
-                        await _data.BlogPosts.Search(pager, term) :
-                        await _data.BlogPosts.Search(pager, term, author.Id);
-                }
-                else
-                {
-                    if(!author.IsAdmin)
-                    {
-                        if(status == "P")
-                            results = await _data.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
-                        else if(status == "D")
-                            results = await _data.BlogPosts.GetList(p => p.Published == DateTime.MinValue && p.AuthorId == author.Id, pager);
-                        else
-                            results = await _data.BlogPosts.GetList(p => p.AuthorId == author.Id, pager);  
-                    }
-                    else
-                    {
-                        if(status == "P")
-                            results = await _data.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
-                        else if(status == "D")
-                            results = await _data.BlogPosts.GetList(p => p.Published == DateTime.MinValue, pager);
-                        else
-                            results = await _data.BlogPosts.GetList(p => p.Id > 0, pager);
-                    }                
-                }
+                results = await _data.BlogPosts.Search(pager, term, authorId, include, !User.Identity.IsAuthenticated);
+
+                return Ok(new PageListModel { Posts = results, Pager = pager });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+        /// <summary>
+        /// Get list of blog posts
+        /// </summary>
+        /// <param name="author">Post author</param>
+        /// <param name="category">Post category</param>
+        /// <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
+        /// <param name="page">Page number</param>
+        /// <returns>Model with list of posts and pager</returns>
+        [HttpGet]
+        public async Task<ActionResult<PageListModel>> Get(
+            [FromQuery]string author = "",
+            [FromQuery]string category = "",
+            [FromQuery]string include = "",
+            [FromQuery]int page = 1)
+        {
+            try
+            {
+                var blog = await _data.CustomFields.GetBlogSettings();
+                IEnumerable<PostItem> results;
+                var pager = new Pager(page, blog.ItemsPerPage);
+                int authorId = GetUserId(author);
+
+                results = await _data.BlogPosts.GetList(pager, authorId, category, include, !User.Identity.IsAuthenticated);
+
                 return Ok(new PageListModel { Posts = results, Pager = pager });
             }
             catch (Exception)
@@ -233,6 +245,18 @@ namespace Core.Api
             }
 
             return await Task.FromResult(slug);
+        }
+
+        int GetUserId(string author)
+        {
+            int id = 0;
+            if (!string.IsNullOrEmpty(author))
+            {
+                var objAuthor = _data.Authors.Single(a => a.AppUserName == author);
+                if (objAuthor != null)
+                    id = objAuthor.Id;
+            }
+            return id;
         }
     }
 }

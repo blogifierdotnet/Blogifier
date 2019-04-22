@@ -78,12 +78,23 @@
             <param name="id">Author ID</param>
             <returns>Success or 500 error</returns>
         </member>
-        <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.Int32)">
+        <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Search blog posts by term
+            </summary>
+            <param name="term">Search term</param>
+            <param name="author">Author</param>
+            <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
+            <param name="page">Page number</param>
+            <returns>Model with list of posts and pager</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.String,System.Int32)">
             <summary>
             Get list of blog posts
             </summary>
-            <param name="term">Search term</param>
-            <param name="status">Status; P - published, D - drafts</param>
+            <param name="author">Post author</param>
+            <param name="category">Post category</param>
+            <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
             <param name="page">Page number</param>
             <returns>Model with list of posts and pager</returns>
         </member>

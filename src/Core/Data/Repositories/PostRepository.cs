@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ namespace Core.Data
     public interface IPostRepository : IRepository<BlogPost>
     {
         Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager);
-        Task<IEnumerable<PostItem>> GetListByCategory(string category, Pager pager);
-        Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0);
+        Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = false);
+        Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
         Task<PostModel> GetModel(string slug);
         Task<PostItem> SaveItem(PostItem item);
@@ -50,82 +51,80 @@ namespace Core.Data
             return await Task.FromResult(PostListToItems(postPage));
         }
 
-        public async Task<IEnumerable<PostItem>> GetListByCategory(string category, Pager pager)
+        public async Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
-            var posts = _db.BlogPosts
-                .Where(p => p.Published > DateTime.MinValue)
-                .OrderByDescending(p => p.Published).ToList();
-
-            var items = new List<BlogPost>();
-
-            foreach (var item in posts)
+            var posts = new List<BlogPost>();
+            foreach (var p in GetPosts(include, author))
             {
-                if (!string.IsNullOrEmpty(item.Categories))
+                if (string.IsNullOrEmpty(category))
                 {
-                    var cats = item.Categories.ToLower().Split(',');
-                    if (cats.Contains(category.ToLower()))
+                    posts.Add(p);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(p.Categories))
                     {
-                        items.Add(item);
+                        var cats = p.Categories.ToLower().Split(',');
+                        if (cats.Contains(category.ToLower()))
+                        {
+                            posts.Add(p);
+                        }
                     }
                 }
             }
+            pager.Configure(posts.Count);
 
-            pager.Configure(items.Count);
-
-            var postPage = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
-
-            return await Task.FromResult(PostListToItems(postPage));
+            var items = new List<PostItem>();
+            foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
+            {
+                items.Add(PostToItem(p, sanitize));
+            }
+            return await Task.FromResult(items);
         }
 
-        // search always returns only published posts
-        // for a search term and optional blog author
-        public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0)
+        public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+                       
             var results = new List<SearchResult>();
-            var list = new List<PostItem>();
-
-            IEnumerable<BlogPost> posts;
-            if (author == 0)
-                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue).ToList();
-            else
-                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.AuthorId == author).ToList();
-
-            foreach (var item in posts)
+            foreach (var p in GetPosts(include, author))
             {
                 var rank = 0;
                 var hits = 0;
                 term = term.ToLower();
 
-                if (item.Title.ToLower().Contains(term))
+                if (p.Title.ToLower().Contains(term))
                 {
-                    hits = Regex.Matches(item.Title.ToLower(), term).Count;
+                    hits = Regex.Matches(p.Title.ToLower(), term).Count;
                     rank += hits * 10;
                 }
-                if (item.Description.ToLower().Contains(term))
+                if (p.Description.ToLower().Contains(term))
                 {
-                    hits = Regex.Matches(item.Description.ToLower(), term).Count;
+                    hits = Regex.Matches(p.Description.ToLower(), term).Count;
                     rank += hits * 3;
                 }
-                if (item.Content.ToLower().Contains(term))
+                if (p.Content.ToLower().Contains(term))
                 {
-                    rank += Regex.Matches(item.Content.ToLower(), term).Count;
+                    rank += Regex.Matches(p.Content.ToLower(), term).Count;
                 }
 
                 if (rank > 0)
                 {
-                    results.Add(new SearchResult { Rank = rank, Item = PostToItem(item) });
+                    results.Add(new SearchResult { Rank = rank, Item = PostToItem(p, sanitize) });
                 }
             }
+
             results = results.OrderByDescending(r => r.Rank).ToList();
+
+            var posts = new List<PostItem>();
             for (int i = 0; i < results.Count; i++)
             {
-                list.Add(results[i].Item);
+                posts.Add(results[i].Item);
             }
-            pager.Configure(list.Count);
-            return await Task.Run(() => list.Skip(skip).Take(pager.ItemsPerPage).ToList());
+            pager.Configure(posts.Count);
+            return await Task.Run(() => posts.Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
         public async Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate)
@@ -253,7 +252,7 @@ namespace Core.Data
             return await Task.FromResult(cats.OrderBy(c => c));
         }
 
-        PostItem PostToItem(BlogPost p)
+        PostItem PostToItem(BlogPost p, bool sanitize = false)
         {
             var post = new PostItem
             {
@@ -274,6 +273,7 @@ namespace Core.Data
             {
                 post.Author.Avatar = string.IsNullOrEmpty(post.Author.Avatar) ?
                     AppSettings.Avatar : post.Author.Avatar;
+                post.Author.Email = sanitize ? "" : post.Author.Email;
             }
             return post;
         }
@@ -295,6 +295,37 @@ namespace Core.Data
                 Featured = p.IsFeatured,
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId)
             }).Distinct().ToList();
+        }
+
+        List<BlogPost> GetPosts(string include, int author)
+        {
+            var items = new List<BlogPost>();
+
+            if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
+            {
+                var drafts = author > 0 ?
+                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).ToList() :
+                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue && !p.IsFeatured).ToList();
+                items = items.Concat(drafts).ToList();
+            }
+
+            if (include.ToUpper().Contains("F") || string.IsNullOrEmpty(include))
+            {
+                var featured = author > 0 ?
+                    _db.BlogPosts.Where(p => p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
+                    _db.BlogPosts.Where(p => p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+                items = items.Concat(featured).ToList();
+            }
+
+            if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
+            {
+                var published = author > 0 ?
+                    _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
+                    _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+                items = items.Concat(published).ToList();
+            }
+
+            return items;
         }
     }
 

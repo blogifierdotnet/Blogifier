@@ -62,6 +62,8 @@ namespace App.Controllers
                 model.PostListType = PostListType.Search;
             }
 
+            model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
+
             return View(string.Format(_listView, blog.Theme), model);
         }
 
@@ -120,12 +122,13 @@ namespace App.Controllers
         {
             var blog = await _db.CustomFields.GetBlogSettings();
             var pager = new Pager(page, blog.ItemsPerPage);
-            var posts = await _db.BlogPosts.GetListByCategory(name, pager);
+            var posts = await _db.BlogPosts.GetList(pager, 0, name);
 
             if (pager.ShowOlder) pager.LinkToOlder = $"categories/{name}?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"categories/{name}?page={pager.Newer}";
 
-            var model = new ListModel {
+            var model = new ListModel
+            {
                 PostListType = PostListType.Category,
                 Posts = posts,
                 Pager = pager
