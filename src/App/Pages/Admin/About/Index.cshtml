@@ -1,0 +1,45 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@inject Core.Services.IDataService _data
+@inject Core.Data.AppDbContext _context
+@{
+    ViewData["Title"] = Localizer["about"];
+    var blog = await _data.CustomFields.GetBlogSettings();
+}
+
+<div id="app" class="bf-content">
+    <div id="about-page" class="bf-posts-grid d-flex">
+
+        <h4>Blogifier v.@AppSettings.Version</h4>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td width="20%">Language</td>
+                    <td width="80%">@blog.Culture</td>
+                </tr>
+                <tr>
+                    <td>Theme</td>
+                    <td>@blog.Theme</td>
+                </tr>
+                <tr>
+                    <td>Database</td>
+                    <td>@_context.Database.ProviderName</td>
+                </tr>
+                <tr>
+                    <td>Root</td>
+                    <td>@AppSettings.ContentRootPath</td>
+                </tr>
+                <tr>
+                    <td>OS</td>
+                    <td>@AppSettings.OSDescription</td>
+                </tr>
+                <tr>
+                    <td>APIs</td>
+                    <td><a href="~/swagger" target="_blank">Swagger API page</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

@@ -191,7 +191,6 @@
             <summary>
             Converts title to valid URL slug
             </summary>
-            <param name="str">Title</param>
             <returns>Slug</returns>
         </member>
         <member name="M:Core.StringExtensions.ToDescription(System.String)">

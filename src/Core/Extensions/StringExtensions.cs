@@ -40,7 +40,6 @@ namespace Core
         /// <summary>
         /// Converts title to valid URL slug
         /// </summary>
-        /// <param name="str">Title</param>
         /// <returns>Slug</returns>
 		public static string ToSlug(this string title)
         {
