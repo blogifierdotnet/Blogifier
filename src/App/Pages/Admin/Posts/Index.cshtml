@@ -71,14 +71,14 @@
         <!--/Empty -->
 
         <!-- Pagination -->
-        <ul v-if="pageList && pageList.pager && pageList.pager.total > 0" class="bf-pagination d-flex">
+        <ul v-if="pageList.posts && pageList.posts.length > 0" class="bf-pagination d-flex">
             <li v-if="pageList.pager.showOlder" class="bf-pagination-item">
-                <a class="bf-pagination-link" :href="'posts?page=' + pageList.pager.older">
+                <a class="bf-pagination-link" title="older" :href="pagelink('older')">
                     <i class="bf-pagination-icon fa fa-chevron-left"></i>
                 </a>
             </li>
             <li v-if="pageList.pager.showNewer" class="bf-pagination-item">
-                <a class="bf-pagination-link" :href="'posts?page=' + pageList.pager.newer">
+                <a class="bf-pagination-link" title="newer" :href="pagelink('newer')">
                     <i class="bf-pagination-icon fa fa-chevron-right"></i>
                 </a>
             </li>
@@ -150,9 +150,9 @@
                     return false;
 
                 var url = getUrl('admin/posts?term=' + term + '&page=' + this.page);
-                if(this.status == "D") { url += '&include=d'; }
-                if(this.status == "P"){ url += '&include=fp'; }
-
+                if (this.status !== 'A') {
+                    url += '&status=' + this.status;
+                }
                 window.location.href = url;
             },
             filter: function (status) {
@@ -172,6 +172,19 @@
                     .catch(function (error) { toastr.error(error); });
                 }
                 return false;
+            },
+            pagelink: function (direction) {
+                var link = 'posts?page=';
+                if (direction === 'older') {
+                    link += this.pageList.pager.older;
+                }
+                else {
+                    link += this.pageList.pager.newer;
+                }
+                if (this.status !== 'A') {
+                    link += '&status=' + this.status;
+                }
+                return link;
             }
         },
         beforeMount() {
