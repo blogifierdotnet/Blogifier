@@ -30,6 +30,7 @@ namespace App.Controllers
             _viewEngine = viewEngine;
         }
 
+        //[Route("blog")]
         public async Task<IActionResult> Index(int page = 1, string term = "")
         {
             var blog = await _db.CustomFields.GetBlogSettings();
