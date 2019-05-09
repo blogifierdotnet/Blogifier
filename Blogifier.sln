@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2011
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E0164ED-2249-4973-B3FD-180172EBCD0A}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-9
 		docs\SendGrid.md = docs\SendGrid.md
 		docs\SqlServer.md = docs\SqlServer.md
 		docs\Themes.md = docs\Themes.md
+		docs\Troubleshooting.md = docs\Troubleshooting.md
 		docs\VideoAudio.md = docs\VideoAudio.md
 	EndProjectSection
 EndProject
