@@ -9,8 +9,8 @@ namespace Core.Data
 {
     public interface IAuthorRepository : IRepository<Author>
     {
-        Task<Author> GetItem(Expression<Func<Author, bool>> predicate);
-        Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager);
+        Task<Author> GetItem(Expression<Func<Author, bool>> predicate, bool sanitized = false);
+        Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager, bool sanitize = false);
         Task Save(Author author);
         Task Remove(int id);
     }
@@ -24,7 +24,7 @@ namespace Core.Data
             _db = db;
         }
 
-        public async Task<Author> GetItem(Expression<Func<Author, bool>> predicate)
+        public async Task<Author> GetItem(Expression<Func<Author, bool>> predicate, bool sanitized = false)
         {
             try
             {
@@ -33,6 +33,7 @@ namespace Core.Data
                 if (author != null)
                 {
                     author.Avatar = author.Avatar ?? AppSettings.Avatar;
+                    author.Email = sanitized ? Constants.DummyEmail : author.Email;
                 }
 
                 return await Task.FromResult(author);
@@ -43,7 +44,7 @@ namespace Core.Data
             }
         }
 
-        public async Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager)
+        public async Task<IEnumerable<Author>> GetList(Expression<Func<Author, bool>> predicate, Pager pager, bool sanitize = false)
         {
             var take = pager.ItemsPerPage == 0 ? 10 : pager.ItemsPerPage;
             var skip = pager.CurrentPage * take - take;
@@ -54,6 +55,14 @@ namespace Core.Data
             pager.Configure(users.Count);
 
             var list = users.Skip(skip).Take(take).ToList();
+
+            if (sanitize)
+            {
+                foreach (var item in list)
+                {
+                    item.Email = Constants.DummyEmail;
+                }
+            }
 
             return await Task.FromResult(list);
         }

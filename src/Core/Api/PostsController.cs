@@ -95,18 +95,18 @@ namespace Core.Api
         {
             if (id > 0)
             {
-                return await _data.BlogPosts.GetItem(p => p.Id == id);
+                return await _data.BlogPosts.GetItem(p => p.Id == id, !User.Identity.IsAuthenticated);
             }
             else
             {
-                var author = await _data.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
+                var author = await _data.Authors.GetItem(a => a.AppUserName == User.Identity.Name, !User.Identity.IsAuthenticated);
                 var blog = await _data.CustomFields.GetBlogSettings();
                 return new PostItem { Author = author, Cover = blog.Cover };
             }               
         }
 
         /// <summary>
-        /// Set post as published or draft
+        /// Set post as published or draft (authentication required)
         /// </summary>
         /// <param name="id">Post ID</param>
         /// <param name="flag">Flag; P - publish, U - unpublish</param>
@@ -137,7 +137,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Set post as featured
+        /// Set post as featured (admins only)
         /// </summary>
         /// <param name="id">Post ID</param>
         /// <param name="flag">Flag; F - featured, U - remove from featured</param>
@@ -168,7 +168,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Save blog post
+        /// Save blog post (authentication required)
         /// </summary>
         /// <param name="post">Post item</param>
         /// <returns>Saved post item</returns>
@@ -189,7 +189,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Remove post item
+        /// Remove post item (authentication required)
         /// </summary>
         /// <param name="id">Post ID</param>
         /// <returns>Success or failure</returns>

@@ -271,7 +271,7 @@ namespace Core.Services
             {
                 foreach (var p in page)
                 {
-                    p.Path = "";
+                    p.Path = p.Path.Replace(Location, "");
                 }
             }
 

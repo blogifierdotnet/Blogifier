@@ -14,7 +14,7 @@ namespace Core.Data
         Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = false);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
-        Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate);
+        Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate, bool sanitize = false);
         Task<PostModel> GetModel(string slug);
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
@@ -127,12 +127,13 @@ namespace Core.Data
             return await Task.Run(() => posts.Skip(skip).Take(pager.ItemsPerPage).ToList());
         }
 
-        public async Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate)
+        public async Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate, bool sanitize = false)
         {
             var post = _db.BlogPosts.Single(predicate);
             var item = PostToItem(post);
 
             item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? "lib/img/avatar.jpg" : item.Author.Avatar;
+            item.Author.Email = sanitize ? Constants.DummyEmail : item.Author.Email;
 
             return await Task.FromResult(item);
         }
@@ -273,7 +274,7 @@ namespace Core.Data
             {
                 post.Author.Avatar = string.IsNullOrEmpty(post.Author.Avatar) ?
                     AppSettings.Avatar : post.Author.Avatar;
-                post.Author.Email = sanitize ? "" : post.Author.Email;
+                post.Author.Email = sanitize ? Constants.DummyEmail : post.Author.Email;
             }
             return post;
         }

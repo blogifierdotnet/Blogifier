@@ -41,7 +41,7 @@ namespace Core.Api
             try
             {
                 var pager = new Pager(page);
-                var authors = await _data.Authors.GetList(u => u.Created > DateTime.MinValue, pager);
+                var authors = await _data.Authors.GetList(u => u.Created > DateTime.MinValue, pager, !User.Identity.IsAuthenticated);
                 return Ok(authors);
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace Core.Api
         {
             try
             {
-                var result = _data.Authors.Single(a => a.AppUserName == author);
+                var result = _data.Authors.GetItem(a => a.AppUserName == author, !User.Identity.IsAuthenticated);
                 if (result == null) return NotFound();
 
                 return Ok(await Task.FromResult(result));
@@ -72,7 +72,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Register new author. Authorized admins only.
+        /// Register new author (admins only)
         /// </summary>
         /// <param name="model">Author model</param>
         /// <returns>Created Author object</returns>
@@ -114,7 +114,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Update author
+        /// Update author (admins only)
         /// </summary>
         /// <param name="model">Author model</param>
         /// <returns>Success or 500 error</returns>
@@ -138,7 +138,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Change author password. Authorized users only.
+        /// Change author password (authentication required)
         /// </summary>
         /// <param name="model">Author model</param>
         /// <returns>Success or 500 error</returns>
@@ -169,7 +169,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Delete author, from membership, database and file system. Admin only.
+        /// Delete author, from membership, database and file system (admins only)
         /// </summary>
         /// <param name="id">Author ID</param>
         /// <returns>Success or 500 error</returns>
