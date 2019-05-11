@@ -60,10 +60,10 @@ namespace Core.Api
         {
             try
             {
-                var result = _data.Authors.GetItem(a => a.AppUserName == author, !User.Identity.IsAuthenticated);
+                var result = await _data.Authors.GetItem(a => a.AppUserName == author, !User.Identity.IsAuthenticated);
                 if (result == null) return NotFound();
 
-                return Ok(await Task.FromResult(result));
+                return Ok(result);
             }
             catch (Exception)
             {

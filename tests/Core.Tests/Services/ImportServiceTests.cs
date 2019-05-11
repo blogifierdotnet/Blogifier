@@ -66,7 +66,7 @@ namespace Core.Tests.Services
             _unitOfWork.Setup(x => x.BlogPosts).Returns(_postsRepository.Object);
 
             _authorRepository
-                .Setup(x => x.GetItem(It.IsAny<Expression<Func<Author, bool>>>()))
+                .Setup(x => x.GetItem(It.IsAny<Expression<Func<Author, bool>>>(), false))
                 .Returns(Task.FromResult(new Author
                 {
                     Id = 1,

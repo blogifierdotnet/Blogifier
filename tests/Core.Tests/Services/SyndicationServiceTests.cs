@@ -32,7 +32,7 @@ namespace Core.Tests.Services
         private void SetupDependencies()
         {
             authorRepository
-                .Setup(x => x.GetItem(It.IsAny<Expression<Func<Author, bool>>>()))
+                .Setup(x => x.GetItem(It.IsAny<Expression<Func<Author, bool>>>(), false))
                 .Returns(Task.FromResult(new Author
                 {
                     Id = 1,
