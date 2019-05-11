@@ -32,7 +32,7 @@ namespace Core.Services
 
         string GetHtmlTemplate(string template);
 
-        Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "");
+        Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "", bool sanitize = false);
 
         Task Reset();
     }
@@ -254,7 +254,7 @@ namespace Core.Services
             }
         }
 
-        public async Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "")
+        public async Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "", bool sanitize = false)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
             var files = GetAssets(path);
@@ -266,6 +266,14 @@ namespace Core.Services
             pager.Configure(items.Count);
 
             var page = items.Skip(skip).Take(pager.ItemsPerPage).ToList();
+
+            if (sanitize)
+            {
+                foreach (var p in page)
+                {
+                    p.Path = "";
+                }
+            }
 
             return await Task.FromResult(page);
         }
@@ -331,6 +339,8 @@ namespace Core.Services
 
         void VerifyPath(string path)
         {
+            path = path.SanitizePath();
+
             if (!string.IsNullOrEmpty(path))
             {
                 var dir = Path.Combine(Location, path);
@@ -373,7 +383,7 @@ namespace Core.Services
                 Random rnd = new Random();
                 fileName = fileName.Replace("mceclip0", rnd.Next(100000, 999999).ToString());
             }
-            return fileName;
+            return fileName.SanitizeFileName();
         }
 
         string GetUrl(string path, string root)
@@ -444,7 +454,7 @@ namespace Core.Services
 
             title = title.Replace(" ", "-");
 
-            return title.Replace("/", "");
+            return title.Replace("/", "").SanitizeFileName();
         }
 
         List<AssetItem> MapFilesToAssets(IList<string> assets)

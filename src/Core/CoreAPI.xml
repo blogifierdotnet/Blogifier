@@ -24,7 +24,7 @@
         </member>
         <member name="M:Core.Api.AssetsController.Upload(System.Collections.Generic.ICollection{Microsoft.AspNetCore.Http.IFormFile})">
             <summary>
-            Upload file(s) to user data store
+            Upload file(s) to user data store, authentication required
             </summary>
             <param name="files">Selected files</param>
             <returns>Success or internal error</returns>
