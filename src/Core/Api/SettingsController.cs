@@ -49,7 +49,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get blog settings
+        /// Get blog settings (admins only)
         /// </summary>
         /// <returns>Blog settings</returns>
         [HttpGet]
@@ -68,7 +68,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Save blog settings
+        /// Save blog settings (admins only)
         /// </summary>
         /// <param name="model">Blog settings item</param>
         /// <returns>Saved blog item</returns>

@@ -1,6 +1,7 @@
 ﻿using Core.Data;
 using Core.Helpers;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,10 +28,11 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get list of themes
+        /// Get list of themes (authentication required)
         /// </summary>
         /// <param name="page">Page number</param>
         /// <returns>List of themes</returns>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ThemeItem>>> Get(int page = 1)
         {
@@ -48,7 +50,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Set theme as current for a blog
+        /// Set theme as current for a blog (admins only)
         /// </summary>
         /// <param name="id">Theme ID</param>
         /// <returns>Success or failure</returns>
@@ -79,7 +81,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Remove and unistall theme from the blog
+        /// Remove and unistall theme from the blog (admins only)
         /// </summary>
         /// <param name="id">Theme ID</param>
         /// <returns>Success or failure</returns>
