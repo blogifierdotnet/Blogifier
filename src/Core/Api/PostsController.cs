@@ -1,6 +1,7 @@
 ﻿using Core.Data;
 using Core.Helpers;
 using Core.Services;
+using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +29,15 @@ namespace Core.Api
         /// <param name="author">Author</param>
         /// <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
         /// <param name="page">Page number</param>
+        /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Model with list of posts and pager</returns>
         [HttpGet("search/{term}")]
         public async Task<ActionResult<PageListModel>> Search(
             string term, 
             [FromQuery]string author = "",
             [FromQuery]string include = "",
-            [FromQuery]int page = 1)
+            [FromQuery]int page = 1,
+            [FromQuery]string format = "html")
         {
             try
             {
@@ -44,6 +47,15 @@ namespace Core.Api
                 var authorId = GetUserId(author);
 
                 results = await _data.BlogPosts.Search(pager, term, authorId, include, !User.Identity.IsAuthenticated);
+
+                if(format.ToUpper() == "HTML")
+                {
+                    foreach (var p in results)
+                    {
+                        p.Description = Markdown.ToHtml(p.Description);
+                        p.Content = Markdown.ToHtml(p.Content);
+                    }
+                }
 
                 return Ok(new PageListModel { Posts = results, Pager = pager });
             }
@@ -60,13 +72,15 @@ namespace Core.Api
         /// <param name="category">Post category</param>
         /// <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
         /// <param name="page">Page number</param>
+        /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Model with list of posts and pager</returns>
         [HttpGet]
         public async Task<ActionResult<PageListModel>> Get(
             [FromQuery]string author = "",
             [FromQuery]string category = "",
             [FromQuery]string include = "",
-            [FromQuery]int page = 1)
+            [FromQuery]int page = 1,
+            [FromQuery]string format = "html")
         {
             try
             {
@@ -76,6 +90,15 @@ namespace Core.Api
                 int authorId = GetUserId(author);
 
                 results = await _data.BlogPosts.GetList(pager, authorId, category, include, !User.Identity.IsAuthenticated);
+
+                if (format.ToUpper() == "HTML")
+                {
+                    foreach (var p in results)
+                    {
+                        p.Description = Markdown.ToHtml(p.Description);
+                        p.Content = Markdown.ToHtml(p.Content);
+                    }
+                }
 
                 return Ok(new PageListModel { Posts = results, Pager = pager });
             }
@@ -89,13 +112,20 @@ namespace Core.Api
         /// Get single post by ID
         /// </summary>
         /// <param name="id">Post ID</param>
+        /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Post item</returns>
         [HttpGet("{id}")]
-        public async Task<PostItem> GetPost(int id)
+        public async Task<PostItem> GetPost(int id, [FromQuery]string format = "html")
         {
             if (id > 0)
             {
-                return await _data.BlogPosts.GetItem(p => p.Id == id, !User.Identity.IsAuthenticated);
+                var post = await _data.BlogPosts.GetItem(p => p.Id == id, !User.Identity.IsAuthenticated);
+                if (format.ToUpper() == "HTML")
+                {
+                    post.Description = Markdown.ToHtml(post.Description);
+                    post.Content = Markdown.ToHtml(post.Content);
+                }
+                return post;
             }
             else
             {

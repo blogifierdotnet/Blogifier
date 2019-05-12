@@ -78,7 +78,7 @@
             <param name="id">Author ID</param>
             <returns>Success or 500 error</returns>
         </member>
-        <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32)">
+        <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
             Search blog posts by term
             </summary>
@@ -86,9 +86,10 @@
             <param name="author">Author</param>
             <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
             <param name="page">Page number</param>
+            <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Model with list of posts and pager</returns>
         </member>
-        <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.String,System.Int32)">
+        <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
             Get list of blog posts
             </summary>
@@ -96,13 +97,15 @@
             <param name="category">Post category</param>
             <param name="include">Posts to include: all by default; F - featured, D - drafts, P - published</param>
             <param name="page">Page number</param>
+            <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Model with list of posts and pager</returns>
         </member>
-        <member name="M:Core.Api.PostsController.GetPost(System.Int32)">
+        <member name="M:Core.Api.PostsController.GetPost(System.Int32,System.String)">
             <summary>
             Get single post by ID
             </summary>
             <param name="id">Post ID</param>
+            <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Post item</returns>
         </member>
         <member name="M:Core.Api.PostsController.Publish(System.Int32,System.String)">

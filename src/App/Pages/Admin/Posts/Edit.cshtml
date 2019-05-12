@@ -126,7 +126,7 @@
             },
             methods: {
                 load: function () {
-                    axios.get(getUrl('api/posts/' + this.id))
+                    axios.get(getUrl('api/posts/' + this.id + '?format=markdown'))
                         .then(response => {
                             this.post = response.data;
                             simplemde = getEditor(this.post);
