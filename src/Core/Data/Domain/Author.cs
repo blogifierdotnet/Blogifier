@@ -13,8 +13,6 @@ namespace Core.Data
         public int Id { get; set; }
 
         [StringLength(160)]
-        public string AppUserId { get; set; }
-        [StringLength(160)]
         public string AppUserName { get; set; }
         [EmailAddress]
         public string Email { get; set; }

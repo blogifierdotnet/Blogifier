@@ -7,7 +7,7 @@
 <div class="form-login">
     @if (!User.Identity.IsAuthenticated)
     {
-    <form asp-route-returnurl="@ViewData["ReturnUrl"]" class="form" method="POST">
+    <form asp-route-returnurl="@HttpContext.Request.Query["ReturnUrl"]" class="form" method="POST">
         <div class="bf-account-header">
             <h1>Welcome!</h1>
             <p>You can sign in or go <a href="~/">back to blog</a>.</p>

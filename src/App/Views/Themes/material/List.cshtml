@@ -124,7 +124,7 @@
                                     </template>
                                 </span>
                             </div>
-                            <h5 class="description">{{post.description}}</h5>
+                            <h5 class="description" v-html="post.description"></h5>
                             <img v-bind:src="webRoot + post.cover" class="thumbnail col-sm-12 wp-post-image" alt="">
                             <a href="#" class="btn btn-round btn-lg" style="margin-top: 25px">
                                 Read More

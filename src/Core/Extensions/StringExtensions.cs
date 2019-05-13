@@ -214,6 +214,8 @@ namespace Core
 
         public static string SanitizePath(this string str)
         {
+            str = str.Replace("%2E", ".").Replace("%2F", "/");
+
             if (str.Contains("..") || str.Contains("//"))
                 throw new ApplicationException("Invalid directory path");
 
@@ -222,7 +224,9 @@ namespace Core
 
         public static string SanitizeFileName(this string str)
         {
-            if (str.Contains("..") || str.Contains("//") || str.Count(x => x == '.') > 1)
+            str = str.SanitizePath();
+
+            if (str.Count(x => x == '.') > 1)
                 throw new ApplicationException("Invalid file name");
 
             return str;

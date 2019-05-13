@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -33,9 +34,8 @@ namespace App.Pages.Account
         {
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync([FromQuery]string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var result = await _sm.PasswordSignInAsync(UserName, Password, RememberMe, lockoutOnFailure: false);
@@ -54,6 +54,7 @@ namespace App.Pages.Account
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
+            returnUrl = returnUrl.SanitizePath();
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
