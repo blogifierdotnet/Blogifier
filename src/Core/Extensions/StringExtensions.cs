@@ -226,8 +226,7 @@ namespace Core
         {
             str = str.SanitizePath();
 
-            if (str.Count(x => x == '.') > 1)
-                throw new ApplicationException("Invalid file name");
+            //TODO: add filename specific validation here
 
             return str;
         }

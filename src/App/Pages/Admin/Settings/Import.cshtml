@@ -38,7 +38,7 @@
         var importSubmit = function () {
             $('.loading').fadeIn('fast');
             var data = new FormData($('#frmImport')[0]);
-            DataService.upload('admin/importfeed', data, importCallback, fail);
+            DataService.upload('api/settings/importfeed', data, importCallback, fail);
         }
         var importCallback = function (data) {
 

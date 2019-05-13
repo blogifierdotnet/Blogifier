@@ -19,11 +19,13 @@ namespace Core.Api
     public class SettingsController : ControllerBase
     {
         IDataService _data;
+        IImportService _feed;
         IOptions<RequestLocalizationOptions> _options;
 
-        public SettingsController(IDataService data, IOptions<RequestLocalizationOptions> options)
+        public SettingsController(IDataService data, IImportService feed, IOptions<RequestLocalizationOptions> options)
         {
             _data = data;
+            _feed = feed;
             _options = options;
         }
 
@@ -96,6 +98,30 @@ namespace Core.Api
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        [HttpPost("importfeed")]
+        [Administrator]
+        public async Task<IEnumerable<ImportMessage>> ImportFeed(IFormFile file)
+        {
+            var author = _data.Authors.Single(a => a.AppUserName == User.Identity.Name);
+
+            if (!author.IsAdmin)
+                Redirect("~/pages/shared/_error/403");
+
+            var webRoot = Url.Content("~/");
+
+            return await _feed.Import(file, User.Identity.Name, webRoot);
+        }
+
+        [HttpDelete("removenotification/{id}")]
+        [Administrator]
+        public async Task RemoveNotification(int id)
+        {
+            var note = _data.Notifications.Single(n => n.Id == id);
+            _data.Notifications.Remove(note);
+            _data.Complete();
+            await Task.CompletedTask;
         }
     }
 }

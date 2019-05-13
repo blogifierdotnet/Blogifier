@@ -4,7 +4,7 @@
         return false;
     }
     function remove(id) {
-        dataService.remove("admin/notifications/remove/" + id, removeCallback, fail);
+        dataService.remove("api/settings/removenotification/" + id, removeCallback, fail);
     }
     function removeCallback() {
         toastr.success('Removed');
