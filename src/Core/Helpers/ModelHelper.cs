@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
 
-namespace App.Helpers
+namespace Core.Helpers
 {
     public class ModelHelper
     {
