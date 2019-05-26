@@ -34,7 +34,8 @@ namespace Core.Api
         [HttpGet]
         public async Task<AssetsModel> Get(int page = 1, string filter = "", string search = "")
         {
-            var pager = new Pager(page);
+            var blog = await _data.CustomFields.GetBlogSettings();
+            var pager = new Pager(page, blog.ItemsPerPage);
             IEnumerable<AssetItem> items;
 
             if (string.IsNullOrEmpty(search))

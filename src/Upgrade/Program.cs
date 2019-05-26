@@ -70,7 +70,7 @@ namespace Upgrade
             {
                 if (File.Exists(oldFile))
                     File.Delete(oldFile);
-                    
+
                 File.Copy(newFile, oldFile);
                 _items.Add($"Replacing file: {oldFile} with {newFile}");
             }
@@ -100,28 +100,24 @@ namespace Upgrade
 
         static List<string> GetCoreFiles()
         {
-            var fileName = $"{_upgDir}{_slash}files.txt";
-            var files = new List<string>();
-
-            var lines = File.ReadAllLines(fileName);
-            for (var i = 0; i < lines.Length; i++)
-            {
-                files.Add(lines[i].Trim());
-            }
-            return files;
+            return ReadFile($"{_upgDir}{_slash}files.txt");
         }
 
         static List<string> GetCoreFolders()
         {
-            var fileName = $"{_upgDir}{_slash}folders.txt";
-            var folders = new List<string>();
+            return ReadFile($"{_upgDir}{_slash}folders.txt");
+        }
 
+        static List<string> ReadFile(string fileName)
+        {
+            var items = new List<string>();
             var lines = File.ReadAllLines(fileName);
+
             for (var i = 0; i < lines.Length; i++)
             {
-                folders.Add(lines[i].Trim().Replace("|", _slash));
+                items.Add(lines[i].Trim().Replace("|", _slash));
             }
-            return folders;
+            return items;
         }
     }
 }
