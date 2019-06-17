@@ -107,7 +107,7 @@
         methods: {
             load: function () {
                 var term = fromQueryString('term');
-                var url = term ? getUrl('api/posts/search/' + term + '?page=' + this.page) : getUrl('api/posts?page=' + this.page);
+                var url = term ? getUrl('api/posts/search/' + term + '?author=@user&page=' + this.page) : getUrl('api/posts?author=@user&page=' + this.page);
                 if(this.status == "D") { url += '&include=d'; }
                 if(this.status == "P"){ url += '&include=fp'; }
 
@@ -149,14 +149,14 @@
                 if(!term)
                     return false;
 
-                var url = getUrl('admin/posts?term=' + term + '&page=' + this.page);
+                var url = getUrl('admin/posts?author=@user&term=' + term + '&page=' + this.page);
                 if (this.status !== 'A') {
                     url += '&status=' + this.status;
                 }
                 window.location.href = url;
             },
             filter: function (status) {
-                window.location.href = getUrl('admin/posts?status=' + status);
+                window.location.href = getUrl('admin/posts?author=@user&status=' + status);
             },
             toDate: function(dt){
                 return dt.startsWith('0001-01-01') || dt.startsWith('01-01-01') ? 'DRAFT' : getDate(dt);
@@ -174,7 +174,7 @@
                 return false;
             },
             pagelink: function (direction) {
-                var link = 'posts?page=';
+                var link = 'posts?author=@user&page=';
                 if (direction === 'older') {
                     link += this.pageList.pager.older;
                 }
