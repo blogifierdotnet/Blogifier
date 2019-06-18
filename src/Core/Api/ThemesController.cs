@@ -132,18 +132,19 @@ namespace Core.Api
             if (combined != null && combined.Count > 0)
             {
                 var current = new ThemeItem();
-                foreach (var theme in combined)
+                foreach (var themeTitle in combined)
                 {
+                    var theme = themeTitle.ToLower();
                     var slash = Path.DirectorySeparatorChar.ToString();
                     var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}{theme}.png";
                     var item = new ThemeItem
                     {
-                        Title = theme,
+                        Title = themeTitle,
                         Cover = System.IO.File.Exists(file) ? $"themes/{theme}/{theme}.png" : "lib/img/img-placeholder.png",
-                        IsCurrent = theme == _blog.Theme
+                        IsCurrent = theme == _blog.Theme.ToLower()
                     };
 
-                    if (theme == _blog.Theme)
+                    if (theme == _blog.Theme.ToLower())
                         current = item;
                     else
                         themes.Add(item);
