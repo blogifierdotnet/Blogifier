@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Builder;
 using System.Linq;
 using Core.Helpers;
+using Microsoft.AspNetCore.Cors;
 
 namespace Core.Api
 {
@@ -55,7 +56,7 @@ namespace Core.Api
         /// </summary>
         /// <returns>Blog settings</returns>
         [HttpGet]
-        [Administrator]
+        [EnableCors("AllowOrigin")]
         public async Task<ActionResult<BlogItem>> Get()
         {
             try

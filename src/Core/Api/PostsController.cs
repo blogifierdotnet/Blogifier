@@ -3,6 +3,7 @@ using Core.Helpers;
 using Core.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -32,6 +33,7 @@ namespace Core.Api
         /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Model with list of posts and pager</returns>
         [HttpGet("search/{term}")]
+        [EnableCors("AllowOrigin")]
         public async Task<ActionResult<PageListModel>> Search(
             string term, 
             [FromQuery]string author = "",
@@ -75,6 +77,7 @@ namespace Core.Api
         /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Model with list of posts and pager</returns>
         [HttpGet]
+        [EnableCors("AllowOrigin")]
         public async Task<ActionResult<PageListModel>> Get(
             [FromQuery]string author = "",
             [FromQuery]string category = "",
@@ -115,6 +118,7 @@ namespace Core.Api
         /// <param name="format">Otput format: html or markdown; default = html;</param>
         /// <returns>Post item</returns>
         [HttpGet("{id}")]
+        [EnableCors("AllowOrigin")]
         public async Task<PostItem> GetPost(int id, [FromQuery]string format = "html")
         {
             if (id > 0)

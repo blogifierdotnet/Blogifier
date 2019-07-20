@@ -114,6 +114,15 @@ namespace App
                 setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
             });
 
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "Custom/themes/simple";
+            //});
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddAppServices();
         }
 
@@ -127,6 +136,7 @@ namespace App
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
             app.UseRequestLocalization();
 
             app.UseSwagger();
@@ -147,6 +157,9 @@ namespace App
                     name: "default",
                     template: "{controller=Blog}/{action=Index}/{id?}");
             });
+
+            //app.UseSpa(spa => { });
+            app.UseCors(options => options.AllowAnyOrigin());
         }
     }
 }
