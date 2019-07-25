@@ -52,7 +52,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get blog settings (admins only)
+        /// Get blog settings (CORS enabled)
         /// </summary>
         /// <returns>Blog settings</returns>
         [HttpGet]

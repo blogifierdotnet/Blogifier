@@ -80,7 +80,7 @@
         </member>
         <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
-            Search blog posts by term
+            Search blog posts by term (CORS enabled)
             </summary>
             <param name="term">Search term</param>
             <param name="author">Author</param>
@@ -91,7 +91,7 @@
         </member>
         <member name="M:Core.Api.PostsController.Get(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
-            Get list of blog posts
+            Get list of blog posts (CORS enabled)
             </summary>
             <param name="author">Post author</param>
             <param name="category">Post category</param>
@@ -102,11 +102,19 @@
         </member>
         <member name="M:Core.Api.PostsController.GetPost(System.Int32,System.String)">
             <summary>
-            Get single post by ID
+            Get single post by ID (CORS enabled)
             </summary>
             <param name="id">Post ID</param>
             <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Post item</returns>
+        </member>
+        <member name="M:Core.Api.PostsController.GetBySlug(System.String,System.String)">
+            <summary>
+            Get single post by Slug (CORS enabled)
+            </summary>
+            <param name="slug">Post Slug</param>
+            <param name="format">Otput format: html or markdown; default = html;</param>
+            <returns>Post model</returns>
         </member>
         <member name="M:Core.Api.PostsController.Publish(System.Int32,System.String)">
             <summary>
@@ -146,7 +154,7 @@
         </member>
         <member name="M:Core.Api.SettingsController.Get">
             <summary>
-            Get blog settings (admins only)
+            Get blog settings (CORS enabled)
             </summary>
             <returns>Blog settings</returns>
         </member>
