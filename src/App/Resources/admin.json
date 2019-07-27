@@ -2,6 +2,7 @@
   "general": {
     "Values": {
       "en-US": "General",
+      "es-ES": "General",
       "ru-RU": "Главная",
       "zh-cn": "常规",
       "zh-tw": "一般"
@@ -10,6 +11,7 @@
   "profile": {
     "Values": {
       "en-US": "Profile",
+      "es-ES": "Perfil",
       "ru-RU": "Профиль",
       "zh-cn": "个人资料",
       "zh-tw": "個人資料"
@@ -18,6 +20,7 @@
   "password": {
     "Values": {
       "en-US": "Password",
+      "es-ES": "Contraseña",
       "ru-RU": "Пароль",
       "zh-cn": "密码",
       "zh-tw": "密码"
@@ -26,6 +29,7 @@
   "themes": {
     "Values": {
       "en-US": "Themes",
+      "es-ES": "Temas",
       "ru-RU": "Темы",
       "zh-cn": "主题",
       "zh-tw": "部落格主题"
@@ -34,6 +38,7 @@
   "users": {
     "Values": {
       "en-US": "Users",
+      "es-ES": "Usuarios",
       "ru-RU": "Пользователи",
       "zh-cn": "用户",
       "zh-tw": "使用者"
@@ -42,6 +47,7 @@
   "new-user": {
     "Values": {
       "en-US": "New user",
+      "es-ES": "Nuevo usuario",
       "ru-RU": "Новый пользователь",
       "zh-cn": "新增用户",
       "zh-tw": "新增使用者"
@@ -50,6 +56,7 @@
   "import": {
     "Values": {
       "en-US": "Import",
+      "es-ES": "Importar",
       "ru-RU": "Импорт",
       "zh-cn": "导入",
       "zh-tw": "匯入"
@@ -58,6 +65,7 @@
   "new-post": {
     "Values": {
       "en-US": "New Post",
+      "es-ES": "Nueva Entrada",
       "ru-RU": "Новое сообщение",
       "zh-cn": "写文章",
       "zh-tw": "建立文章"
@@ -66,6 +74,7 @@
   "posts": {
     "Values": {
       "en-US": "Posts",
+      "es-ES": "Entradas",
       "ru-RU": "Сообщения",
       "zh-cn": "文章列表",
       "zh-tw": "文章清單"
@@ -74,6 +83,7 @@
   "settings": {
     "Values": {
       "en-US": "Settings",
+      "es-ES": "Ajustes",
       "ru-RU": "Настройки",
       "zh-cn": "设置",
       "zh-tw": "設定"
@@ -82,6 +92,7 @@
   "notifications": {
     "Values": {
       "en-US": "Notifications",
+      "es-ES": "Notificationes",
       "ru-RU": "Уведомления",
       "zh-cn": "通知",
       "zh-tw": "通知"
@@ -90,6 +101,7 @@
   "visit-blog": {
     "Values": {
       "en-US": "Visit Blog",
+      "es-ES": "Visitar Blog",
       "ru-RU": "Посетить блог",
       "zh-cn": "访问博客",
       "zh-tw": "參訪部落格"
@@ -98,6 +110,7 @@
   "sign-out": {
     "Values": {
       "en-US": "Sign out",
+      "es-ES": "Cerrar sesión",
       "ru-RU": "Выйти",
       "zh-cn": "退出",
       "zh-tw": "登出"
@@ -106,6 +119,7 @@
   "title": {
     "Values": {
       "en-US": "Title",
+      "es-ES": "Título",
       "ru-RU": "Название",
       "zh-cn": "标题",
       "zh-tw": "標題"
@@ -114,6 +128,7 @@
   "description": {
     "Values": {
       "en-US": "Description",
+      "es-ES": "Descripción",
       "ru-RU": "Описание",
       "zh-cn": "描述",
       "zh-tw": "敘述"
@@ -122,6 +137,7 @@
   "items-per-page": {
     "Values": {
       "en-US": "Items per page",
+      "es-ES": "Elementos por página",
       "ru-RU": "Количество сообщений на странице",
       "zh-cn": "每页的文章数量",
       "zh-tw": "每頁文章數量"
@@ -130,6 +146,7 @@
   "logo": {
     "Values": {
       "en-US": "Logo Image",
+      "es-ES": "Logotipo",
       "ru-RU": "Логотип",
       "zh-cn": "徽标图片",
       "zh-tw": "圖標"
@@ -138,6 +155,7 @@
   "cover": {
     "Values": {
       "en-US": "Cover Image",
+      "es-ES": "Imagen de cabecera",
       "ru-RU": "Обложка",
       "zh-cn": "封面图片",
       "zh-tw": "封面圖片"
@@ -146,6 +164,7 @@
   "language": {
     "Values": {
       "en-US": "Language",
+      "es-ES": "Idioma",
       "ru-RU": "Язык",
       "zh-cn": "语言",
       "zh-tw": "語言"
@@ -154,6 +173,7 @@
   "save": {
     "Values": {
       "en-US": "Save",
+      "es-ES": "Guardar",
       "ru-RU": "Сохранить",
       "zh-cn": "保存",
       "zh-tw": "儲存"
@@ -162,6 +182,7 @@
   "select": {
     "Values": {
       "en-US": "Select",
+      "es-ES": "Seleccionar",
       "ru-RU": "Выбрать",
       "zh-cn": "选择",
       "zh-tw": "選擇"
@@ -170,6 +191,7 @@
   "selected": {
     "Values": {
       "en-US": "Selected",
+      "es-ES": "Seleccionado",
       "ru-RU": "Выбранный",
       "zh-cn": "已选择",
       "zh-tw": "已選擇"
@@ -178,6 +200,7 @@
   "search": {
     "Values": {
       "en-US": "Search",
+      "es-ES": "Buscar",
       "ru-RU": "Поиск",
       "zh-cn": "搜索",
       "zh-tw": "搜尋"
@@ -186,6 +209,7 @@
   "all": {
     "Values": {
       "en-US": "All",
+      "es-ES": "Todo",
       "ru-RU": "Всё",
       "zh-cn": "所有",
       "zh-tw": "全部"
@@ -194,6 +218,7 @@
   "published": {
     "Values": {
       "en-US": "Published",
+      "es-ES": "Publicada",
       "ru-RU": "Опубликовано",
       "zh-cn": "已发布",
       "zh-tw": "已發布"
@@ -202,6 +227,7 @@
   "draft": {
     "Values": {
       "en-US": "Draft",
+      "es-ES": "Borrador",
       "ru-RU": "Черновики",
       "zh-cn": "草稿",
       "zh-tw": "草稿"
@@ -210,6 +236,7 @@
   "status": {
     "Values": {
       "en-US": "Status",
+      "es-ES": "Estado",
       "ru-RU": "Статус",
       "zh-cn": "状态",
       "zh-tw": "狀態"
@@ -218,6 +245,7 @@
   "not-found": {
     "Values": {
       "en-US": "Not found",
+      "es-ES": "No encontrado",
       "ru-RU": "Не найдено",
       "zh-cn": "未找到",
       "zh-tw": "沒有找到資料"
@@ -226,6 +254,7 @@
   "publish": {
     "Values": {
       "en-US": "Publish",
+      "es-ES": "Publicar",
       "ru-RU": "Опубликовать",
       "zh-cn": "发布",
       "zh-tw": "發佈"
@@ -234,6 +263,7 @@
   "unpublish": {
     "Values": {
       "en-US": "Unpublish",
+      "es-ES": "Desactivar",
       "ru-RU": "Отменить публикацию",
       "zh-cn": "取消发布",
       "zh-tw": "取消發佈"
@@ -242,6 +272,7 @@
   "featured": {
     "Values": {
       "en-US": "Featured",
+      "es-ES": "Destacada",
       "ru-RU": "Избранное",
       "zh-cn": "已顶置",
       "zh-tw": "已置頂"
@@ -250,6 +281,7 @@
   "add-to-featured": {
     "Values": {
       "en-US": "Add to featured",
+      "es-ES": "Añadir a destacado",
       "ru-RU": "Добавить в избранное",
       "zh-cn": "添加顶置",
       "zh-tw": "置頂"
@@ -258,6 +290,7 @@
   "cancel": {
     "Values": {
       "en-US": "Cancel",
+      "es-ES": "Cancelar",
       "ru-RU": "Отменить",
       "zh-cn": "取消",
       "zh-tw": "取消"
@@ -266,6 +299,7 @@
   "delete": {
     "Values": {
       "en-US": "Delete",
+      "es-ES": "Eliminar",
       "ru-RU": "Удалить",
       "zh-cn": "删除",
       "zh-tw": "删除"
@@ -274,6 +308,7 @@
   "categories": {
     "Values": {
       "en-US": "Categories",
+      "es-ES": "Categorías",
       "ru-RU": "Категории",
       "zh-cn": "分类",
       "zh-tw": "類別"
@@ -282,6 +317,7 @@
   "view": {
     "Values": {
       "en-US": "View",
+      "es-ES": "Ver",
       "ru-RU": "Посмотреть",
       "zh-cn": "查看",
       "zh-tw": "察看"
@@ -290,6 +326,7 @@
   "user-name": {
     "Values": {
       "en-US": "User name",
+      "es-ES": "Nombre de usuario",
       "ru-RU": "Имя пользователя",
       "zh-cn": "用户名",
       "zh-tw": "帳號名稱"
@@ -298,6 +335,7 @@
   "email": {
     "Values": {
       "en-US": "Email",
+      "es-ES": "Correo electrónico",
       "ru-RU": "Почта",
       "zh-cn": "电子邮箱",
       "zh-tw": "信箱"
@@ -306,6 +344,7 @@
   "user-bio": {
     "Values": {
       "en-US": "User bio",
+      "es-ES": "Información biográfica",
       "ru-RU": "Краткая биография",
       "zh-cn": "用户简介",
       "zh-tw": "部落格作者介紹"
@@ -314,6 +353,7 @@
   "avatar": {
     "Values": {
       "en-US": "Avatar",
+      "es-ES": "Imagen de perfil",
       "ru-RU": "Аватар",
       "zh-cn": "头像",
       "zh-tw": "頭像"
@@ -322,6 +362,7 @@
   "remove": {
     "Values": {
       "en-US": "Remove",
+      "es-ES": "Eliminar",
       "ru-RU": "Удалить",
       "zh-cn": "移除",
       "zh-tw": "刪除"
@@ -330,6 +371,7 @@
   "removed": {
     "Values": {
       "en-US": "Removed",
+      "es-ES": "Eliminado",
       "ru-RU": "Удалено",
       "zh-cn": "已移除",
       "zh-tw": "已刪除"
@@ -338,6 +380,7 @@
   "new-password": {
     "Values": {
       "en-US": "New password",
+      "es-ES": "Nueva contraseña",
       "ru-RU": "Новый пароль",
       "zh-cn": "新密码",
       "zh-tw": "新密碼"
@@ -346,6 +389,7 @@
   "confirm-password": {
     "Values": {
       "en-US": "Confirm password",
+      "es-ES": "Confirmar contraseña",
       "ru-RU": "Подтвердить пароль",
       "zh-cn": "确认密码",
       "zh-tw": "確認密碼"
@@ -354,6 +398,7 @@
   "close": {
     "Values": {
       "en-US": "Close",
+      "es-ES": "Cerrar",
       "ru-RU": "Закрыть",
       "zh-cn": "关闭",
       "zh-tw": "關閉"
@@ -362,6 +407,7 @@
   "set-as-admin": {
     "Values": {
       "en-US": "Set as administrator",
+      "es-ES": "Establecer como administrador",
       "ru-RU": "Сделать администратором",
       "zh-cn": "设置为管理员",
       "zh-tw": "設置為管理員"
@@ -370,6 +416,7 @@
   "select-rss-file": {
     "Values": {
       "en-US": "Select RSS (.xml) file to import posts from",
+      "es-ES": "Seleccionar archivo RSS (.xml) del que importar entradas",
       "ru-RU": "Выберите RSS (.xml) файл для импорта",
       "zh-cn": "选择RSS（.xml）文件以便导入文章",
       "zh-tw": "選擇RSS（.xml）檔案匯入文章"
@@ -378,6 +425,7 @@
   "images": {
     "Values": {
       "en-US": "Images",
+      "es-ES": "Imágenes",
       "ru-RU": "Изображения",
       "zh-cn": "图像",
       "zh-tw": "圖片"
@@ -386,6 +434,7 @@
   "attachements": {
     "Values": {
       "en-US": "Attachements",
+      "es-ES": "Archivos adjuntos",
       "ru-RU": "Вложения",
       "zh-cn": "附件",
       "zh-tw": "附件"
@@ -394,6 +443,7 @@
   "upload": {
     "Values": {
       "en-US": "Upload",
+      "es-ES": "Subir",
       "ru-RU": "Загрузить",
       "zh-cn": "上传",
       "zh-tw": "上傳"
@@ -402,6 +452,7 @@
   "filters": {
     "Values": {
       "en-US": "Filters",
+      "es-ES": "Filtros",
       "ru-RU": "Фильтры",
       "zh-cn": "筛选",
       "zh-tw": "篩選"
@@ -410,6 +461,7 @@
   "change-password": {
     "Values": {
       "en-US": "Change password",
+      "es-ES": "Cambiar contraseña",
       "ru-RU": "Изменить пароль",
       "zh-cn": "更改密码",
       "zh-tw": "更改密碼"
@@ -418,6 +470,7 @@
   "theme": {
     "Values": {
       "en-US": "Theme",
+      "es-ES": "Tema",
       "ru-RU": "Тема",
       "zh-cn": "主题",
       "zh-tw": "主題"
@@ -426,6 +479,7 @@
   "read": {
     "Values": {
       "en-US": "Read",
+      "es-ES": "Leer",
       "ru-RU": "Читать",
       "zh-cn": "阅读",
       "zh-tw": "閱讀"
@@ -434,6 +488,7 @@
   "updated": {
     "Values": {
       "en-US": "Updated",
+      "es-ES": "Actualizado",
       "ru-RU": "Запись обновлена",
       "zh-cn": "已更新",
       "zh-tw": "已更新"
@@ -442,6 +497,7 @@
   "created": {
     "Values": {
       "en-US": "Created",
+      "es-ES": "Creado",
       "ru-RU": "Запись создана",
       "zh-cn": "已创建",
       "zh-tw": "已創建"
@@ -450,6 +506,7 @@
   "about": {
     "Values": {
       "en-US": "About",
+      "es-ES": "Acerca de",
       "ru-RU": "Информация",
       "zh-cn": "关于",
       "zh-tw": "關於"
