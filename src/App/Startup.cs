@@ -76,6 +76,7 @@ namespace App
                 var supportedCultures = new[]
                 {
                     new CultureInfo("en-US"),
+                    new CultureInfo("es-ES"),
                     new CultureInfo("ru-RU"),
                     new CultureInfo("zh-cn"),
                     new CultureInfo("zh-tw")
