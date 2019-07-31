@@ -26,10 +26,3 @@ Running build with `demo` flag will publish output with demo option turned on
 ```cmd
 .\build.ps1 -ScriptArgs '-demo="true"'
 ```
-
-Optionally passing `home` flag will set application to run blog under `/blog` route 
-and use `\Pages\Index.cshtml` as landing home page.
-
-```cmd
-.\build.ps1 -ScriptArgs '-demo="true" -home="true"'
-```
