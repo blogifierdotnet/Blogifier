@@ -165,6 +165,20 @@
             <param name="model">Blog settings item</param>
             <returns>Saved blog item</returns>
         </member>
+        <member name="M:Core.Api.SettingsController.ImportFeed(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Import posts from RSS feed (admins only)
+            </summary>
+            <param name="file">XML file</param>
+            <returns>List of messages</returns>
+        </member>
+        <member name="M:Core.Api.SettingsController.RemoveNotification(System.Int32)">
+            <summary>
+            Remove notification (admins only)
+            </summary>
+            <param name="id">Id</param>
+            <returns>Completed task</returns>
+        </member>
         <member name="M:Core.Api.ThemesController.Get(System.Int32)">
             <summary>
             Get list of themes (authentication required)

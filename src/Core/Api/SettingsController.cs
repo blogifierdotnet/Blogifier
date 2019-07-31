@@ -101,6 +101,11 @@ namespace Core.Api
             }
         }
 
+        /// <summary>
+        /// Import posts from RSS feed (admins only)
+        /// </summary>
+        /// <param name="file">XML file</param>
+        /// <returns>List of messages</returns>
         [HttpPost("importfeed")]
         [Administrator]
         public async Task<IEnumerable<ImportMessage>> ImportFeed(IFormFile file)
@@ -115,6 +120,11 @@ namespace Core.Api
             return await _feed.Import(file, User.Identity.Name, webRoot);
         }
 
+        /// <summary>
+        /// Remove notification (admins only)
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>Completed task</returns>
         [HttpDelete("removenotification/{id}")]
         [Administrator]
         public async Task RemoveNotification(int id)
