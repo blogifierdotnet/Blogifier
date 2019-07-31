@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>2.4.0.1</Version>
+    <Version>2.4.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,16 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.15.7" />
+    <PackageReference Include="Markdig" Version="0.17.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.2.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.2.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
-    <PackageReference Include="ReverseMarkdown" Version="3.0.0" />
-    <PackageReference Include="Sendgrid" Version="9.10.0" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.12" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="ReverseMarkdown" Version="3.8.0" />
+    <PackageReference Include="Sendgrid" Version="9.11.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18" />
   </ItemGroup>
 
   <ItemGroup>
