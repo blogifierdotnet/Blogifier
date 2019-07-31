@@ -70,9 +70,16 @@ namespace Core.Api
                 {
                     theme.Content = id;
                 }
-                _data.Complete();
 
-                return Ok(Resources.Updated);
+                if (_store.SelectTheme(theme.Content))
+                {
+                    _data.Complete();
+                    return Ok(Resources.Updated);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "File Storage Failure");
+                }
             }
             catch (Exception)
             {
@@ -92,14 +99,10 @@ namespace Core.Api
             try
             {
                 var themeContent = $"{AppSettings.WebRootPath}{slash}themes{slash}{id.ToLower()}";
-                var themeViews = $"{AppSettings.ContentRootPath}{slash}Views{slash}Themes{slash}{id}";
                 try
                 {
                     if (Directory.Exists(themeContent))
                         Directory.Delete(themeContent, true);
-
-                    if (Directory.Exists(themeViews))
-                        Directory.Delete(themeViews, true);
                 }
                 catch (Exception ex)
                 {
@@ -136,11 +139,11 @@ namespace Core.Api
                 {
                     var theme = themeTitle.ToLower();
                     var slash = Path.DirectorySeparatorChar.ToString();
-                    var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}{theme}.png";
+                    var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}theme.png";
                     var item = new ThemeItem
                     {
                         Title = themeTitle,
-                        Cover = System.IO.File.Exists(file) ? $"themes/{theme}/{theme}.png" : "lib/img/img-placeholder.png",
+                        Cover = System.IO.File.Exists(file) ? $"themes/{theme}/theme.png" : "lib/img/img-placeholder.png",
                         IsCurrent = theme == _blog.Theme.ToLower()
                     };
 

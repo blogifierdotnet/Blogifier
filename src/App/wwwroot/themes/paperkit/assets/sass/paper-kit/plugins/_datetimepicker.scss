@@ -1,0 +1,119 @@
+ngb-datepicker{
+    border: 0 none !important;
+    border-radius: 12px !important;
+    display: block !important;
+    margin-top: 10px !important;
+    padding: 0px !important;
+    position: absolute !important;
+    -webkit-box-shadow: 0 2px rgba(17, 16, 15, 0.1), 0 2px 10px rgba(17, 16, 15, 0.1);
+    box-shadow: 0 2px rgba(17, 16, 15, 0.1), 0 2px 10px rgba(17, 16, 15, 0.1);
+    & *:focus{
+        outline: none !important;
+    }
+    .ngb-dp-header{
+        border-bottom: none !important;
+        background-color: $white-color !important;
+        ngb-datepicker-navigation{
+            button{
+                padding: 1px;
+                text-align: center;
+                z-index: 1;
+                line-height: 31px;
+                .ngb-dp-navigation-chevron{
+                    border-radius: 4px;
+                    height: unset !important;
+                    width: unset !important;
+                    font-size: 12px;
+                    margin-left: 0.15rem;
+                    border-radius: 50%;
+                    text-align: center;
+                    border-width: 0px;
+                    transform: none !important;
+                    &:before{
+                        content: "\f053"!important;
+                        border: none !important;
+                        font: normal normal normal 14px/1 FontAwesome;
+                        font-size: inherit;
+                        text-rendering: auto;
+                        -webkit-font-smoothing: anitialised;
+                        transform: none!important;
+                        color: black;
+                    }
+                }
+            }
+            .right{
+              .ngb-dp-navigation-chevron{
+                &:before{
+                    content: "\f054"!important;
+                  }
+              }
+            }
+            ngb-datepicker-navigation-select{
+                .custom-select{
+                    border: none !important;
+                    background: transparent!important;
+                    -webkit-appearance: menulist !important;
+                }
+            }
+
+        }
+    }
+    .ngb-dp-months{
+        ngb-datepicker-month-view{
+            .ngb-dp-week{
+                .ngb-dp-weekday{
+                    border-bottom: 1px solid #E3E3E3;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    color: #9A9A9A !important;
+                    font-weight: 400;
+                    padding-top: 0px;
+                    font-style: normal !important;
+                }
+                .ngb-dp-day{
+                    padding: 1px;
+                    text-align: center;
+                    z-index: 1;
+                    cursor: pointer;
+                    -webkit-font-smoothing: antialiased;
+                    font-family: "Montserrat", "Helvetica", Arial, sans-serif;
+                    font-weight: 300;
+                    .btn-light{
+                        border-radius: 50% !important;
+                        &:hover{
+                            @include transition(150ms, linear);
+                        }
+                    }
+                    div[ng-reflect-selected="true"]{
+                        background-color: $primary-color !important;
+                    }
+                    &:focus{
+
+                    }
+                }
+            }
+        }
+    }
+    &:before{
+        border-bottom: 11px solid #F1EAE0;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+        content: "";
+        display: inline-block;
+        position: absolute;
+        left: 12px;
+        right: auto;
+        top: -12px;
+    }
+    &:after{
+        border-bottom: 11px solid #FFFFFF;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+        content: "";
+        display: inline-block;
+        position: absolute;
+        left: 12px;
+        right: auto;
+        top: -11px;
+    }
+}

@@ -32,7 +32,7 @@ namespace App.Controllers
         }
 
         //[Route("blog")]
-        public async Task<IActionResult> Index(int page = 1, string term = "")
+        private async Task<IActionResult> Index(int page = 1, string term = "")
         {
             var blog = await _db.CustomFields.GetBlogSettings();
             var pager = new Pager(page, blog.ItemsPerPage);
@@ -70,7 +70,7 @@ namespace App.Controllers
         }
 
         [HttpGet("posts/{slug}")]
-        public async Task<IActionResult> Single(string slug)
+        private async Task<IActionResult> Single(string slug)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace App.Controllers
         }
 
         [HttpGet("authors/{name}")]
-        public async Task<IActionResult> Authors(string name, int page = 1)
+        private async Task<IActionResult> Authors(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == name);
@@ -120,7 +120,7 @@ namespace App.Controllers
         }
 
         [HttpGet("categories/{name}")]
-        public async Task<IActionResult> Categories(string name, int page = 1)
+        private async Task<IActionResult> Categories(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
             var pager = new Pager(page, blog.ItemsPerPage);

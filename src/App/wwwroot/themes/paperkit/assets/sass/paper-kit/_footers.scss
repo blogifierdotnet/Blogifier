@@ -1,0 +1,229 @@
+.footer{
+    background-attachment: fixed;
+    position: relative;
+    line-height: 20px;
+}
+.footer nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+.footer nav > ul > li{
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 15px 3px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.footer nav > ul a:not(.btn) {
+    color: #777777;
+    display: block;
+    margin-bottom: 3px;
+    line-height: 1.6;
+    opacity: .8;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.footer nav > ul a:not(.btn):hover,
+.footer nav > ul a:not(.btn):focus {
+  color: #777777;
+  opacity: 1;
+}
+.footer .copyright {
+  color: #777777;
+  padding: 10px 0px;
+  font-size: 14px;
+  margin: 15px 3px;
+  line-height: 20px;
+  text-align: center;
+}
+.footer .heart{
+    color: #EB5E28;
+}
+.footer{
+    background-color: $white-color;
+    line-height: $line-height;
+
+    &.footer-black{
+        h4{
+            color: $white-color;
+        }
+    }
+
+    .links{
+        display: inline-block;
+
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-weight: $font-weight-bold;
+
+            > li{
+                display: inline-block;
+                padding-right: 20px;
+            }
+            > li:last-child{
+                padding-right: 0px;
+            }
+
+            a:not(.btn){
+                color: $font-color;
+                display: block;
+                font-size: $font-size-h6;
+                margin-bottom: 3px;
+                &:hover,
+                &:focus{
+                    color: $default-states-color;
+                }
+            }
+
+            &.uppercase-links{
+                text-transform: uppercase;
+            }
+            &.stacked-links{
+                margin-top: 10px;
+
+                > li{
+                    display: block;
+                    line-height: 26px;
+                }
+                h4{
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+
+    hr{
+        border-color: $medium-gray;
+        border-width: 1px 0 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .copyright{
+        color: $brown-font-color;
+        font-size: 0.9em;
+        ul > li{
+            padding-right: 0px;
+        }
+    }
+    .title{
+        color: $default-states-color;
+    }
+}
+
+.footer-black,
+.footer-transparent{
+    background-color: $black-footer-bg;
+    color: $medium-gray;
+
+    .links ul{
+        a:not(.btn){
+            color: $brown-font-color;
+            &:hover,
+            &:focus{
+                color: $brown-font-color-hover;
+            }
+        }
+    }
+    .copyright {
+        color: $font-color;
+        ul > li{
+            a:not(.btn){
+                color: $font-color;
+            }
+        }
+    }
+
+    hr{
+        border-color: $font-color;
+    }
+}
+.footer-transparent{
+    background-size: cover;
+    position: relative;
+
+    .container{
+        z-index: 2;
+        position: relative;
+    }
+    hr{
+        border-color: $brown-font-color;
+    }
+    .copyright {
+        color: $brown-font-color;
+        ul > li a:not(.btn){
+                color: $brown-font-color;
+        }
+    }
+
+    &::after{
+        @include black-filter(.5);
+    }
+}
+.footer-gray{
+    background-color: #F3F2EE;
+}
+.footer-big{
+    padding: 30px 0;
+    hr{
+        margin-top: 20px;
+    }
+    .copyright{
+        margin: 10px 0px 20px;
+    }
+    .form-group{
+        margin-top: 15px;
+    }
+}
+
+// pre-footers lines
+.subscribe-line{
+    background-color: $pale-bg;
+    padding: 35px 0;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    margin-top: 0;
+
+    .form-group{
+        margin: $none;
+    }
+    .form-control{
+         height: auto;
+         font-size: $font-size-h3;
+         border: $none;
+         padding: $none;
+         font-weight: $font-weight-light;
+         line-height: $line-height-lg;
+         background-color: $transparent-bg;
+    }
+
+    .btn:not(.btn-lg){
+        margin-top: 7px;
+    }
+}
+
+.subscribe-line-black{
+    background-color: $black-footer-bg;
+    .form-control{
+        color: $white-color;
+    }
+}
+
+.subscribe-line-transparent{
+    @extend .footer-transparent;
+    .form-control{
+        color: $white-color;
+    }
+}
+
+
+.social-line-black{
+    background-color: $black-footer-bg;
+    color: $white-color;
+}

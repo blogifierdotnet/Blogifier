@@ -28,6 +28,7 @@ namespace Core.Services
 
         IList<string> GetAssets(string path);
         IList<string> GetThemes();
+        bool SelectTheme(string theme);
         IList<WidgetItem> GetWidgets(string theme);
 
         string GetHtmlTemplate(string template);
@@ -112,14 +113,66 @@ namespace Core.Services
         public IList<string> GetThemes()
         {
             var items = new List<string>();
-            var dir = Path.Combine(GetAppRoot(), $"Views{_separator}Themes");
+            var dir = Path.Combine(GetAppRoot(), $"wwwroot{_separator}themes");
             try
             {
                 foreach (string d in Directory.GetDirectories(dir))
-                    items.Add(Path.GetFileName(d));
+                {
+                    if(!d.EndsWith("_active"))
+                        items.Add(Path.GetFileName(d));
+                }
             }
             catch { }
             return items;
+        }
+
+        public bool SelectTheme(string theme)
+        {
+            var dir = Path.Combine(GetAppRoot(), $"wwwroot{_separator}themes");
+            string temp = $"{dir}{_separator}_temp";
+            string active = $"{dir}{_separator}_active";
+            string source = $"{dir}{_separator}{theme}";
+
+            try
+            {
+                // backup
+                if (Directory.Exists(active))
+                    Directory.Move(active, temp);
+
+                Directory.CreateDirectory(active);
+
+                CopyFilesRecursively(new DirectoryInfo(source), new DirectoryInfo(active));
+
+                Directory.Delete(temp, true);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    // restore and cleanup
+                    if (Directory.Exists(temp))
+                    {
+                        if (Directory.Exists(active))
+                            Directory.Delete(active, true);
+
+                        Directory.Move(temp, active);
+                    }
+                }
+                catch { }
+                
+                _logger.LogError($"Error replacing theme in the file system: {ex.Message}");
+                return false;
+            }
+        }
+
+        static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
+        {
+            foreach (DirectoryInfo dir in source.GetDirectories())
+                CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
+            foreach (FileInfo file in source.GetFiles())
+                file.CopyTo(Path.Combine(target.FullName, file.Name));
         }
 
         public IList<WidgetItem> GetWidgets(string theme)

@@ -1,0 +1,6 @@
+{
+  "socialButtons": [
+    {"link": "https://www.facebook.com/blogifierdotnet", "icon": "fa-facebook-official"},
+    {"link": "/feed/rss", "icon": "fa-rss-square"}
+  ]
+}

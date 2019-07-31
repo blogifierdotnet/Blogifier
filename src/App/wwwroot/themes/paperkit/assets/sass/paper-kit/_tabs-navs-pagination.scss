@@ -1,0 +1,405 @@
+/*             Navigation menu                */
+
+/*             Navigation Tabs                 */
+.nav-tabs-navigation{
+    text-align: center;
+    border-bottom: 1px solid $medium-pale-bg;
+
+
+    .nav > .nav-item > .nav-link{
+        padding-bottom: 20px;
+    }
+}
+.nav-tabs-wrapper{
+    display: inline-block;
+    margin-bottom: -6px;
+    margin-left: 1.25%;
+    margin-right: 1.25%;
+    position: relative;
+    width: 100%;
+}
+.nav-tabs {
+        font-size: $font-size-medium;
+        font-weight: $font-weight-bold;
+        border-bottom: 1px solid #F1EAE0;
+        margin-bottom: 30px;
+        .nav-item{
+            .nav-link{
+                border: 0 none;
+                color: $other-medium-gray;
+                background-color: transparent;
+            }
+            .nav-link:hover{
+                color: $font-color;
+            }
+            .nav-link.active{
+                color: $font-color;
+            }
+        }
+
+        .nav-item{
+            color: $font-color;
+            position: relative;
+
+
+            .nav-link.active,
+            .nav-link.active:hover,
+            .nav-link.active:focus{
+                background-color: transparent;
+                border: 0 none;
+                //height: 50px;
+                &:after{
+                    border-bottom: 11px solid $white-color;
+                    border-left: 11px solid rgba(0, 0, 0, 0);
+                    border-right: 11px solid rgba(0, 0, 0, 0);
+                    content: "";
+                    display: inline-block;
+                    position: absolute;
+                    right: 40%;
+                    bottom: 0px;
+                }
+
+                &:before{
+                    border-bottom: 11px solid $medium-pale-bg;
+                    border-left: 11px solid rgba(0, 0, 0, 0);
+                    border-right: 11px solid rgba(0, 0, 0, 0);
+                    content: "";
+                    display: inline-block;
+                    position: absolute;
+                    right: 40%;
+                    bottom: 1px;
+                }
+            }
+
+        }
+        .nav-item.show .nav-link{
+            background-color: transparent;
+        }
+        .dropdown-menu{
+            margin-top: -6px;
+            margin-left: -46px;
+            border-radius: 8px;
+
+            .dropdown-item:hover,
+            .dropdown-item.active{
+                color: #FFFFFF;
+                background-color: #68B3C8;
+            }
+            :before{
+                border-bottom: 11px solid $medium-pale-bg;
+                border-left: 11px solid rgba(0, 0, 0, 0);
+                border-right: 11px solid rgba(0, 0, 0, 0);
+                content: "";
+                display: inline-block;
+                position: absolute;
+                right: 12px;
+                top: -11px;
+            }
+            :after{
+                border-bottom: 11px solid $pale-bg;
+                border-left: 11px solid rgba(0, 0, 0, 0);
+                border-right: 11px solid rgba(0, 0, 0, 0);
+                content: "";
+                display: inline-block;
+                position: absolute;
+                right: 12px;
+                top: -10px;
+            }
+        }
+}
+.profile-content{
+    & .tab-content{
+        & .tab-pane{
+            min-height: 200px;
+        }
+        & #tweets, #connections, #media{
+            height: 100%;
+        }
+    }
+}
+/*             Navigation Pills               */
+
+.nav-pills {
+    .nav-item + .nav-link {
+        margin-left: 0;
+    }
+    .nav-item .nav-link {
+        border: 1px solid $default-color;
+        border-radius: 0;
+        color: $default-color;
+        font-weight: $font-weight-bold;
+        margin-left: -1px;
+        padding: 10px 25px;
+
+    }
+    .nav-item.active .nav-link,
+    .nav-item.active .nav-link:hover,
+    .nav-item.active .nav-link:focus {
+        background-color: $default-color;
+        color: #FFFFFF;
+    }
+    .nav-item:first-child .nav-link{
+        border-radius: 30px 0 0 30px !important;
+        margin: 0;
+    }
+    .nav-item:last-child .nav-link{
+        border-radius: 0 30px 30px 0 !important;
+    }
+    .nav-item .nav-link.active{
+        background-color: $default-color;
+        color: $white-color;
+    }
+
+}
+.nav-pills-primary{
+    .nav-item{
+        .nav-link{
+            border: 1px solid $primary-color !important;
+            color: $primary-color !important;
+            &.active{
+                border: 1px solid $primary-color !important;
+                color: $white-color !important;
+            }
+        }
+    }
+}
+.nav-pills-danger{
+    .nav-item{
+        .nav-link{
+            border: 1px solid $danger-color !important;
+            color: $danger-color !important;
+            &.active{
+                border: 1px solid $danger-color !important;
+                color: $white-color !important;
+            }
+        }
+    }
+}
+.nav-pills-info{
+    .nav-item{
+        .nav-link{
+            border: 1px solid $info-color !important;
+            color: $info-color !important;
+            &.active{
+                border: 1px solid $info-color !important;
+                color: $white-color !important;
+            }
+        }
+    }
+}
+.nav-pills-success{
+    .nav-item{
+        .nav-link{
+            border: 1px solid $success-color !important;
+            color: $success-color !important;
+            &.active{
+                border: 1px solid $success-color !important;
+                color: $white-color !important;
+            }
+        }
+    }
+}
+.nav-pills-warning{
+    .nav-item{
+        .nav-link{
+            border: 1px solid $warning-color !important;
+            color: $warning-color !important;
+            &.active{
+                border: 1px solid $warning-color !important;
+                color: $white-color !important;
+            }
+        }
+    }
+}
+
+.pagination > .page-item > .page-link,
+.pagination > .page-item > span,
+.pagination > .page-item:first-child > .page-link,
+.pagination > .page-item:first-child > span,
+.pagination > .page-item:last-child > .page-link,
+.pagination > .page-item:last-child > span{
+    background-color: transparent;
+    border: 2px solid $danger-color;
+    border-radius: 20px;
+    color: $danger-color;
+    height: $line-height;
+    margin: 0 2px;
+    min-width: 36px;
+    font-weight: $font-weight-bold;
+}
+
+.nav-pills-danger > .page-item > .page-link,
+.pagination-danger > .page-item > .page-link,
+.pagination-danger > .page-item > span,
+.pagination-danger > .page-item:first-child > .page-link,
+.pagination-danger > .page-item:first-child > span,
+.pagination-danger > .page-item:last-child > .page-link,
+.pagination-danger > .page-item:last-child > span{
+    border: 2px solid $danger-color;
+    color: $danger-color;
+}
+
+.nav-pills-danger > .page-item.active > .page-link,
+.nav-pills-danger > .page-item.active > .page-link:hover,
+.nav-pills-danger > .page-item.active > .page-link:focus,
+.pagination-danger > .page-item > .page-link:hover,
+.pagination-danger > .page-item > .page-link:focus,
+.pagination-danger > .page-item > .page-link:active,
+.pagination-danger > .page-item.active > .page-link,
+.pagination-danger > .page-item.active > span,
+.pagination-danger > .page-item.active > .page-link:hover,
+.pagination-danger > .page-item.active > span:hover,
+.pagination-danger > .page-item.active > .page-link:focus,
+.pagination-danger > .page-item.active > span:focus{
+   background-color: $danger-color !important;
+   border-color: $danger-color !important;
+   color: $white-color;
+}
+
+.nav-text, .nav-icons{
+    margin: $margin-bottom;
+
+    > li > a{
+        display: block;
+        padding: 0px $padding-base-horizontal;
+        color: $dark-gray;
+        text-align: center;
+        @include opacity(0.8);
+
+        &:hover,
+        &:focus{
+            background-color: $transparent-bg;
+            @include opacity(1);
+        }
+    }
+    > li:first-child a{
+        padding-left: 0;
+    }
+    > li.active a{
+       color: $info-color;
+    }
+}
+.nav-icons > li{
+    display: inline-block;
+     > a{
+        padding: 0 10px;
+        margin-bottom: 10px;
+    }
+    > a i{
+        font-size: $font-size-h4;
+        margin-bottom: 10px;
+        width: $font-size-h4;
+    }
+}
+.nav-icons.nav-stacked > li{
+    display: block;
+    > a {
+        margin-bottom: 20px;
+    }
+}
+.nav-blue > li.active a{
+    color: $primary-color;
+}
+.nav-azure > li.active a{
+    color: $info-color;
+}
+.nav-green > li.active a{
+    color: $success-color;
+}
+.nav-orange > li.active a{
+    color: $warning-color;
+}
+.nav-red > li.active a{
+    color: $danger-color;
+}
+
+.nav-text{
+    margin: $margin-bottom;
+
+    > li > a{
+        font-size: $font-size-h6;
+        text-transform: uppercase;
+        padding: 3px 0;
+        text-align: left;
+        font-weight: $font-weight-semi;
+
+    }
+    > li:first-child > a{
+        padding-top: 0;
+    }
+    h4{
+        margin-top: 0;
+    }
+}
+
+.nav-text:not(.nav-stacked){
+    > li{
+        display: inline-block;
+    }
+    > li > a{
+        margin-right: 15px;
+    }
+}
+
+// Stefan making edits
+
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link{
+    border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.nav-pills-default .nav-item.show .nav-link,
+.nav-pills-default .nav-link.active{
+    background-color: $default-color !important;
+}
+.nav-pills-primary .nav-item.show .nav-link,
+.nav-pills-primary .nav-link.active{
+    background-color: $primary-color !important;
+}
+.nav-pills-info .nav-item.show .nav-link,
+.nav-pills-info .nav-link.active{
+    background-color: $info-color !important;
+}
+.nav-pills-warning .nav-item.show .nav-link,
+.nav-pills-warning .nav-link.active{
+    background-color: $warning-color !important;
+}
+.nav-pills-success .nav-item.show .nav-link,
+.nav-pills-success .nav-link.active{
+    background-color: $success-color !important;
+}
+.nav-pills-danger .nav-item.show .nav-link,
+.nav-pills-danger .nav-link.active{
+    background-color: $danger-color !important;
+}
+.pagination > li > a:hover,
+.pagination > li > a:focus,
+.pagination > li > a:active,
+.pagination > li.active > a,
+.pagination > li.active > span,
+.pagination > li.active > a:hover,
+.pagination > li.active > span:hover,
+.pagination > li.active > a:focus,
+.pagination > li.active > span:focus{
+    background-color: $danger-color;
+    border-color: $danger-color;
+    color: $white-color;
+}
+
+.page-item.active .page-link{
+    background-color: $danger-color;
+    color: white;
+    border-color: $danger-color;
+}
+.nav-pills .nav-link{
+    border-radius: 0;
+}
+.pagination{
+    display: inline-block;
+    .page-item{
+        display: inline-block;
+    }
+}

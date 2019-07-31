@@ -1,0 +1,183 @@
+.form-control::-moz-placeholder{
+   @include placeholder($placeholder-gray,1);
+}
+.form-control:-moz-placeholder{
+   @include placeholder($placeholder-gray,1);
+}
+.form-control::-webkit-input-placeholder{
+   @include placeholder($placeholder-gray,1);
+}
+.form-control:-ms-input-placeholder{
+   @include placeholder($placeholder-gray,1);
+}
+
+.form-control {
+    background-color: $white-bg;
+    border: 1px solid $medium-gray;
+    border-radius: $border-radius-base;
+    color: $font-color;
+    font-size: $font-size-base;
+    @include input-size($padding-base-vertical, $padding-label-horizontal, $height-base);
+    @include box-shadow(none);
+    &:focus{
+           background-color: $white-bg;
+           border: 1px solid $dark-gray;
+           @include box-shadow(none);
+           outline: 0 !important;
+    }
+
+    &.no-border{
+        border: medium none !important;
+    }
+
+    .has-success &,
+    .has-error &,
+    .has-success &:focus,
+    .has-error &:focus{
+        @include box-shadow(none);
+    }
+
+    .has-success &{
+        border: 1px solid $table-line-color;
+        color: $font-color;
+    }
+    .has-success &:focus{
+        border: 1px solid $success-color;
+        color: $success-color;
+    }
+    .has-danger &{
+        background-color: $danger-input-bg;
+        border: 1px solid $danger-color;
+        color: $danger-color;
+    }
+    .has-danger &:focus{
+        background-color: $white-color;
+        border: 1px solid $danger-color;
+    }
+
+    & + .form-control-feedback{
+        border-radius: $border-radius-large;
+        font-size: $font-size-base;
+        color: $danger-color;
+        font-size: .8rem;
+        position: absolute;
+        top: 100%;
+        padding-left: $padding-label-horizontal;
+        vertical-align: middle;
+    }
+
+    .open &{
+        border-radius: $border-radius-base $border-radius-base 0 0;
+        border-bottom-color: transparent;
+    }
+}
+
+.input-lg{
+    height: 55px;
+    padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+.has-error{
+    .form-control-feedback, .control-label{
+        color: $danger-color;
+    }
+}
+.has-success{
+    .form-control-feedback, .control-label{
+        color: $success-color;
+    }
+}
+
+.input-group .form-control:first-child,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-right: 0 none;
+    padding-right: 0;
+}
+.input-group .form-control:last-child,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child) {
+    border-left: 0 none;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: $light-gray;
+    color: $default-color;
+    cursor: not-allowed;
+}
+
+.input-group-btn .btn{
+    border-width: $border-thin;
+    padding: $padding-round-vertical $padding-base-horizontal;
+}
+.input-group-btn .btn-default:not(.btn-fill){
+    border-color: $medium-gray;
+}
+
+.input-group-btn:last-child > .btn{
+    margin-left: 0;
+}
+
+textarea.form-control{
+    padding: 10px 18px;
+    height: auto;
+}
+.form-group{
+    position: relative;
+}
+
+.register-form .form-control{
+    border: 1px solid transparent !important;
+}
+#inputs {
+
+    .input-group{
+        margin-bottom: 1rem;
+    }
+}
+
+.card-form-horizontal{
+    .card-block{
+        .form-group{
+            margin-bottom: 0;
+        }
+    }
+}
+.input-group{
+  background: $white-color;
+  .input-group-append .input-group-text{
+    background: transparent;
+    border: 1px solid #DDDDDD;
+    border-left: none;
+    @include transition(300ms, linear);
+
+  }
+  .input-group-prepend .input-group-text{
+    margin-right: 0;
+    background: transparent;
+    border: 1px solid #DDDDDD;
+    @include transition(300ms, linear);
+  }
+  &.input-group-focus {
+    .input-group-prepend .input-group-text {
+      border: 1px solid $dark-gray !important;
+    }
+    .input-group-append .input-group-text {
+      border: 1px solid $dark-gray !important;
+    }
+  }
+  &.form-group-no-border{
+
+    .input-group-prepend .input-group-text{
+      border-right: transparent !important;
+      background: $white-color !important;
+        border: 1px solid $white-color !important;
+      @include transition(300ms, linear);
+    }
+    .input-group-append .input-group-text{
+      border-left: transparent !important;
+      background: $white-color !important;
+        border: 1px solid $white-color !important;
+      @include transition(300ms, linear);
+    }
+  }
+}
