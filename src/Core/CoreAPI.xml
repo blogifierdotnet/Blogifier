@@ -38,7 +38,7 @@
         </member>
         <member name="M:Core.Api.AuthorsController.Get(System.Int32)">
             <summary>
-            Get list of blog authors
+            Get list of blog authors (CORS enabled)
             </summary>
             <param name="page">Page number</param>
             <returns>List of authors</returns>
@@ -77,6 +77,27 @@
             </summary>
             <param name="id">Author ID</param>
             <returns>Success or 500 error</returns>
+        </member>
+        <member name="M:Core.Api.NotificationsController.GetSubscriptions(System.Int32)">
+            <summary>
+            List of newsletter subscriptions (admins only)
+            </summary>
+            <param name="page">Page number</param>
+            <returns>List of subscribers</returns>
+        </member>
+        <member name="M:Core.Api.NotificationsController.Subscribe(System.String)">
+            <summary>
+            Subscribe to newsletter (CORS enabled)
+            </summary>
+            <param name="email">Subscriber email</param>
+            <returns>Error message or empty string if successful</returns>
+        </member>
+        <member name="M:Core.Api.NotificationsController.Unsubscribe(System.String)">
+            <summary>
+            Unsubscribe from newsletter (admins only)
+            </summary>
+            <param name="email">Subscriber email</param>
+            <returns>Ok on success</returns>
         </member>
         <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>

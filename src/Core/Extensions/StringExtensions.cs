@@ -92,6 +92,20 @@ namespace Core
             return false;
         }
 
+        // true if string is valid email address
+        public static bool IsEmail(this string str)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(str);
+                return addr.Address == str;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static string ReplaceIgnoreCase(this string str, string search, string replacement)
         {
             string result = Regex.Replace(

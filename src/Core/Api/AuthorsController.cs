@@ -3,12 +3,13 @@ using Core.Data.Models;
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Api
@@ -31,11 +32,12 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get list of blog authors
+        /// Get list of blog authors (CORS enabled)
         /// </summary>
         /// <param name="page">Page number</param>
         /// <returns>List of authors</returns>
         [HttpGet]
+        [EnableCors("AllowOrigin")]
         public async Task<ActionResult<IEnumerable<Author>>> Get(int page = 1)
         {
             try

@@ -12,7 +12,13 @@ namespace Core.Data
         public string Notifier { get; set; }
         public bool Active { get; set; }
     }
-    
+
+    public class Newsletter
+    {
+        public int Id { get; set; }
+        public string Email { get; set; }
+    }
+
     public enum AlertType
     {
         Primary, Success, Warning, Error, Sticky
