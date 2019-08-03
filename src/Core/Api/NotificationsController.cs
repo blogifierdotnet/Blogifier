@@ -29,7 +29,7 @@ namespace Core.Api
         [Administrator]
         public async Task<NewsletterModel> GetSubscriptions(int page = 1)
         {
-            var pager = new Pager(page);
+            var pager = new Pager(page, 20);
             IEnumerable<Newsletter> items;
 
             items = await _data.Newsletters.GetList(e => e.Id > 0, pager);

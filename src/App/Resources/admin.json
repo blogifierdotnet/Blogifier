@@ -511,5 +511,17 @@
       "zh-cn": "关于",
       "zh-tw": "關於"
     }
+  },
+  "newsletter": {
+    "Values": {
+      "en-US": "Newsletter",
+      "ru-RU": "Рассылка"
+    }
+  },
+  "newsletter-subscribers": {
+    "Values": {
+      "en-US": "List of email subscribers",
+      "ru-RU": "Список подписчиков электронной почты"
+    }
   }
 }
