@@ -132,7 +132,7 @@ namespace Core.Data
             var post = _db.BlogPosts.Single(predicate);
             var item = PostToItem(post);
 
-            item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? "lib/img/avatar.jpg" : item.Author.Avatar;
+            item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? Constants.DefaultAvatar : item.Author.Avatar;
             item.Author.Email = sanitize ? Constants.DummyEmail : item.Author.Email;
 
             return await Task.FromResult(item);

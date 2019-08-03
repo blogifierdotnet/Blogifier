@@ -18,6 +18,7 @@
         public static string Culture = "culture";
 
         public static string DummyEmail = "dummy@blog.com";
+        public static string DefaultAvatar = "lib/img/avatar.jpg";
 
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
     }

@@ -56,6 +56,15 @@ namespace Core.Data
 
             var list = users.Skip(skip).Take(take).ToList();
 
+            foreach (var item in list)
+            {
+                if (string.IsNullOrEmpty(item.Avatar))
+                    item.Avatar = Constants.DefaultAvatar;
+
+                if (sanitize)
+                    item.Email = Constants.DummyEmail;
+            }
+
             if (sanitize)
             {
                 foreach (var item in list)
