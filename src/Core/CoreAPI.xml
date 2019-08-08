@@ -214,6 +214,20 @@
             <param name="id">Theme ID</param>
             <returns>Success or failure</returns>
         </member>
+        <member name="M:Core.Api.ThemesController.GetThemeData(System.String)">
+            <summary>
+            Get theme settings from data.json (admins only)
+            </summary>
+            <param name="theme">Theme name</param>
+            <returns>Json data</returns>
+        </member>
+        <member name="M:Core.Api.ThemesController.SaveThemeData(Core.Data.ThemeDataModel)">
+            <summary>
+            Saves theme data (theme/assets/data.json file, admins only)
+            </summary>
+            <param name="model">Theme data model</param>
+            <returns>Ok or error</returns>
+        </member>
         <member name="M:Core.Api.ThemesController.Delete(System.String)">
             <summary>
             Remove and unistall theme from the blog (admins only)

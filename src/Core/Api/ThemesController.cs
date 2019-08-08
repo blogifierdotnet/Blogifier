@@ -88,6 +88,47 @@ namespace Core.Api
         }
 
         /// <summary>
+        /// Get theme settings from data.json (admins only)
+        /// </summary>
+        /// <param name="theme">Theme name</param>
+        /// <returns>Json data</returns>
+        [Administrator]
+        [HttpGet("data")]
+        public ActionResult<string> GetThemeData(string theme)
+        {
+            try
+            {
+                var results = _store.GetThemeData(theme);
+
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "File System Failure");
+            }
+        }
+
+        /// <summary>
+        /// Saves theme data (theme/assets/data.json file, admins only)
+        /// </summary>
+        /// <param name="model">Theme data model</param>
+        /// <returns>Ok or error</returns>
+        [Administrator]
+        [HttpPost("data")]
+        public async Task<IActionResult> SaveThemeData(ThemeDataModel model)
+        {
+            try
+            {
+                await _store.SaveThemeData(model);
+                return Ok("Created");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "File save error");
+            }
+        }
+
+        /// <summary>
         /// Remove and unistall theme from the blog (admins only)
         /// </summary>
         /// <param name="id">Theme ID</param>
@@ -140,11 +181,13 @@ namespace Core.Api
                     var theme = themeTitle.ToLower();
                     var slash = Path.DirectorySeparatorChar.ToString();
                     var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}{Constants.ThemeScreenshot}";
+                    var data = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}assets{slash}{Constants.ThemeDataFile}";
                     var item = new ThemeItem
                     {
                         Title = themeTitle,
                         Cover = System.IO.File.Exists(file) ? $"themes/{theme}/{Constants.ThemeScreenshot}" : Constants.ImagePlaceholder,
-                        IsCurrent = theme == _blog.Theme.ToLower()
+                        IsCurrent = theme == _blog.Theme.ToLower(),
+                        HasSettings = System.IO.File.Exists(data)
                     };
 
                     if (theme == _blog.Theme.ToLower())
@@ -164,5 +207,6 @@ namespace Core.Api
         public string Title { get; set; }
         public string Cover { get; set; }
         public bool IsCurrent { get; set; }
+        public bool HasSettings { get; set; }
     }
 }

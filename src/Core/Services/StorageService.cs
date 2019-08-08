@@ -33,6 +33,9 @@ namespace Core.Services
 
         string GetHtmlTemplate(string template);
 
+        string GetThemeData(string theme);
+        Task SaveThemeData(ThemeDataModel model);
+
         Task<IEnumerable<AssetItem>> Find(Func<AssetItem, bool> predicate, Pager pager, string path = "", bool sanitize = false);
 
         Task Reset();
@@ -189,6 +192,30 @@ namespace Core.Services
                 }
             }
             return widgets;
+        }
+
+        public string GetThemeData(string theme)
+        {
+            string jsonFile = $"{AppSettings.WebRootPath}{_separator}themes{_separator}{theme}{_separator}assets{_separator}{Constants.ThemeDataFile}";
+            if (File.Exists(jsonFile))
+            {
+                using (StreamReader r = new StreamReader(jsonFile))
+                {
+                    return r.ReadToEnd();
+                }
+            }
+            return "";
+        }
+
+        public async Task SaveThemeData(ThemeDataModel model)
+        {
+            string jsonFile = $"{AppSettings.WebRootPath}{_separator}themes{_separator}{model.Theme}{_separator}assets{_separator}{Constants.ThemeDataFile}";
+            if (File.Exists(jsonFile))
+            {
+                File.Delete(jsonFile);
+                File.WriteAllText(jsonFile, model.Data);
+            }
+            await Task.CompletedTask;
         }
 
         public string GetHtmlTemplate(string template)

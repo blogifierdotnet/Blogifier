@@ -23,5 +23,6 @@
         public static string ImagePlaceholder = "lib/img/img-placeholder.png";
         public static string ThemeScreenshot = "screenshot.png";
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
+        public static string ThemeDataFile = "data.json";
     }
 }
