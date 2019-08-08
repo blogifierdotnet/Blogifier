@@ -139,11 +139,11 @@ namespace Core.Api
                 {
                     var theme = themeTitle.ToLower();
                     var slash = Path.DirectorySeparatorChar.ToString();
-                    var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}theme.png";
+                    var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}{Constants.ThemeScreenshot}";
                     var item = new ThemeItem
                     {
                         Title = themeTitle,
-                        Cover = System.IO.File.Exists(file) ? $"themes/{theme}/theme.png" : "lib/img/img-placeholder.png",
+                        Cover = System.IO.File.Exists(file) ? $"themes/{theme}/{Constants.ThemeScreenshot}" : Constants.ImagePlaceholder,
                         IsCurrent = theme == _blog.Theme.ToLower()
                     };
 

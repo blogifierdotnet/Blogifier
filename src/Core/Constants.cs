@@ -18,8 +18,10 @@
         public static string Culture = "culture";
 
         public static string DummyEmail = "dummy@blog.com";
-        public static string DefaultAvatar = "lib/img/avatar.jpg";
 
+        public static string DefaultAvatar = "lib/img/avatar.jpg";
+        public static string ImagePlaceholder = "lib/img/img-placeholder.png";
+        public static string ThemeScreenshot = "screenshot.png";
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
     }
 }
