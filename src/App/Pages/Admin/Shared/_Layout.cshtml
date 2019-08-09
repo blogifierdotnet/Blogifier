@@ -77,11 +77,6 @@
                         <i class="taskbar-item-icon fas fa-palette"></i>
                     </a>
                 </li>
-                <li is-active-route asp-controller="about" class="taskbar-item">
-                    <a href="~/admin/about" class="taskbar-item-link" title="About">
-                        <i class="taskbar-item-icon fas fa-info-circle"></i>
-                    </a>
-                </li>
             }
             else
             {
@@ -96,6 +91,14 @@
                 <li class="taskbar-item">
                     <a class="taskbar-item-link" href="" onclick="return notificationsController.open();" return false; title="@Localizer["notifications"]">
                         <i class="taskbar-item-icon fas fa-envelope"></i>
+                    </a>
+                </li>
+            }
+            @if (_isAdmin)
+            {
+                <li is-active-route asp-controller="about" class="taskbar-item">
+                    <a href="~/admin/about" class="taskbar-item-link" title="About">
+                        <i class="taskbar-item-icon fas fa-info-circle"></i>
                     </a>
                 </li>
             }

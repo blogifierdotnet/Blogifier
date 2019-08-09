@@ -1,118 +1,81 @@
-### Getting Started
+### Quick Summary
 
-To start with new theme, create a folder, for example `Views/Themes/Custom` and add two files,
-`List.cshtml` and `Post.cshtml`.
+- Any folder added to Blogifier under  `src/App/wwwroot/themes` will show up in admin as a theme
+- When selected as active theme in admin, Blogifier will copy files from theme folder to `_active`
 
-The list declares a model and, for each post in the `Model.Posts` displays title and description.
-The title is a link pointing to post detail and description is converted from Markdown to HTML.
+Blogifier uses `_active` folder as Angular application root, so any Angular application deployed there will be available at "/".
 
-```html
-<!-- Views/Themes/Custom/List.cshtml -->
-@model ListModel
-<!DOCTYPE html>
-<html>
-<head></head>
-<body>
-  @if (Model.Posts != null)
-  {
-    foreach (var item in Model.Posts)
-    {
-      <h2><a href="~/posts/@item.Slug">@item.Title</a></h2>
-      <div>@Html.Raw(Markdig.Markdown.ToHtml(item.Description))</div>
-    }
+```csharp
+services.AddSpaStaticFiles(configuration =>
+{
+  configuration.RootPath = "wwwroot/themes/_active";
+});
+```
+
+In the box Blogifier themes are prebuilt Angular CLI applications with source code hosted at `https://github.com/blogifierdotnet/themes`.
+Every time theme source updated, it is build to distribution folder and deployed to Blogifier.
+
+> [Angular Theme for Blogifier - Jump Start](http://rtur.net/posts/angular-theme-for-blogifier-jump-start)
+
+### Routing
+
+Blogifier set up with both MVC and Angular routes, so theme can use normal Angular techniques
+to navigate within application as long as it does not clash with existing Blogifeir routes
+(like `/admin`, `/account` etc.). Here is simple example with `/` and `/posts/post-slug` routes.
+
+```javascript
+const routes: Routes = [
+  { path: '', component: HomeComponent }, 
+  { path: 'posts/:slug', component: PostsComponent }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ]
+})
+```
+
+### Pulling the Data
+
+Blogifier exposes data to the theme via APIs. Documentation available at `/swagger`.
+Some APIs require authentication or admin rights and can't be used in the theme.
+All public APIs, including CORS enabled, can be used in the theme to pull data.
+
+```javascript
+export class BlogService {
+  constructor(private http: HttpClient) { }
+  getPosts(): Observable<IPostList> {
+    return this.http.get<IPostList>('/api/posts');
   }
-</body>
-</html>
+}
 ```
 
-The post detail just outputs content of the post on the page.
+Then client, like HomeController, can call this service.
 
-```xml
-<!-- Views/Themes/Custom/Post.cshtml -->
-@model PostModel
-<!DOCTYPE html>
-<html>
-<head></head>
-<body>
-  <div>@Html.Raw(Markdig.Markdown.ToHtml(Model.Post.Content))</div>
-</body>
-</html>
+```javascript
+import { BlogService, IPostList } from '../core/blog.service';
+export class HomeComponent implements OnInit {
+  postList: IPostList;
+  constructor(private blogService: BlogService) { }
+  ngOnInit(): void {
+    this.blogService.getPosts().subscribe(
+      result => { this.postList = result; }
+    );
+  }
+}
 ```
 
-Now load your blog, navigate to admin settings and select `Custom` theme. Save and view your blog.
-It will use your newly created theme - congratulations, all done!
+And output posts in the HTML page
 
-### Improving on Design
-
-Here is another super simple example using Bootstrap stylesheet.
-
-```html
-@model ListModel
-<!DOCTYPE html>
-<html>
-<head>
-  <title>@Model.Blog.Title</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container">
-    <div class="jumbotron">
-      <h1>@Model.Blog.Title</h1>
-      <p>@Model.Blog.Description</p>
-    </div>
-    <div class="row">
-      @if (Model.Posts != null)
-      {
-        foreach (var item in Model.Posts)
-        {
-        <div class="col-lg-4">
-          <h2>@item.Title</h2>
-          @Html.Raw(Markdig.Markdown.ToHtml(item.Description))
-          <p><a class="btn btn-primary" href="~/posts/@item.Slug" role="button">View details &raquo;</a></p>
-        </div>
-        }
-      }
-    </div>
-    <footer class="footer">
-      <p>&copy; @DateTime.Now.Year Company, Inc.</p>
-    </footer>
-  </div>
-</body>
-</html>
+```javascript
+<div *ngFor="let post of postList.posts">
+  <h4>{{ post.title }}</h4>
+</div>
 ```
 
-For your own styles, create folder under `wwwroot/themes/theme-name` and reference it from the page header.
-Same goes for JavaScript or any custom images you want to use in the custom theme. 
+Because data service might be commonly used in many themes, 
+it is [implemented as single file](https://github.com/blogifierdotnet/themes/blob/master/simple/src/app/core/blog.service.ts) 
+and included in every built-in theme. It can be copied into new theme to speed up development.
 
-```html
-<link href="~/themes/custom/style.css" rel="stylesheet">
-<script src="~/themes/custom/script.js"></script>
-```
-
-Anything available in ASP.NET layouts can be used for the theme without any restrictions, like partial views for 
-headers and footers and so on. Please refer to `Standard` theme for examples on using some of the more complex elements.
-
-### Understanding the Models
-
-Theme authors can use models inside post lists or single post. All properties from 
-the models can be accessed within theme, for example `Model.Blog.Title`.
-
-#### ListModel
-
-Name | Data Type | Description
---- | --- | ---
-Blog | [BlogItem](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Data/Models/AppModel.cs) | Blog settings (title, description etc.) 
-Author | [Author](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Data/Domain/Author.cs) | Author of the blog 
-Category | string | Category (when browse by category)
-Posts | IEnumerable &lt;PostItem&gt; |  List of blog posts
-Pager | [Pager](https://github.com/blogifierdotnet/Blogifier/blob/master/src/Core/Helpers/Pager.cs) | Pager (older/newer links)
-PostListType | PostListType | Posts type (blog, category, author, search)
-
-#### PostModel
-
-Name | Data Type | Description
---- | --- | ---
-Blog | BlogItem | Blog settings (title, description etc.) 
-Post | PostItem | Current post
-Older | PostItem | Previous/older post
-Newer | PostItem | Next/newer post
+(Later it can become external package distributed via `npm install`)
