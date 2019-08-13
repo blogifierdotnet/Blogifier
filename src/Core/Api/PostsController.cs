@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Api
@@ -17,10 +18,12 @@ namespace Core.Api
     public class PostsController : ControllerBase
     {
         IDataService _data;
+        IEmailService _email;
 
-        public PostsController(IDataService data)
+        public PostsController(IDataService data, IEmailService email)
         {
             _data = data;
+            _email = email;
         }
 
         /// <summary>
@@ -202,6 +205,10 @@ namespace Core.Api
                 }
                 await Task.CompletedTask;
 
+                if(flag == "P")
+                {
+                    await SendNewsletters(post);
+                }
                 return Ok(Resources.Updated);
             }
             catch (Exception ex)
@@ -252,8 +259,21 @@ namespace Core.Api
         {
             try
             {
+                bool alreadyPublished = false;
+                if (post.Id > 0)
+                {
+                    var existing = _data.BlogPosts.Single(p => p.Id == post.Id);
+                    alreadyPublished = existing.Published > DateTime.MinValue;
+                }
                 post.Slug = await GetSlug(post.Id, post.Title);
                 var saved = await _data.BlogPosts.SaveItem(post);
+
+                if(post.IsPublished && !alreadyPublished)
+                {
+                    var savedPost = _data.BlogPosts.Single(p => p.Id == saved.Id);
+                    await SendNewsletters(savedPost);
+                }
+
                 return Created($"admin/posts/edit?id={saved.Id}", saved);
             }
             catch (Exception ex)
@@ -319,6 +339,20 @@ namespace Core.Api
             }
 
             return await Task.FromResult(slug);
+        }
+
+        async Task SendNewsletters(BlogPost post)
+        {
+            var pager = new Pager(1, 1000);
+            IEnumerable<Newsletter> newsletters;
+            newsletters = await _data.Newsletters.GetList(e => e.Id > 0, pager);
+
+            var emails = newsletters.Select(i => i.Email).ToList();
+            if (emails != null && emails.Count > 0)
+            {
+                var siteUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+                await _email.SendNewsletters(post, emails, siteUrl);
+            }
         }
 
         int GetUserId(string author)

@@ -10,7 +10,7 @@ namespace Core.Services
 {
     public interface IEmailService
     {
-        Task SendNewsletters(PostItem postItem, List<string> emails, string siteUrl);
+        Task SendNewsletters(BlogPost postItem, List<string> emails, string siteUrl);
         Task SendEmail(string to, string subject, string content);
     }
 
@@ -29,9 +29,10 @@ namespace Core.Services
             _storage = storage;
         }
 
-        public async Task SendNewsletters(PostItem post, List<string> emails, string siteUrl)
+        public async Task SendNewsletters(BlogPost post, List<string> emails, string siteUrl)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
+            var author = _db.Authors.Single(a => a.Id == post.AuthorId);
             foreach (var email in emails)
             {
                 var subject = post.Title;
@@ -47,7 +48,7 @@ namespace Core.Services
                     post.Slug, // 6
                     post.Published, // 7 
                     post.Cover, // 8
-                    post.Author, // 9
+                    author.DisplayName, // 9
                     siteUrl); // 10
 
                 await SendEmail(email, subject, htmlContent);
@@ -62,7 +63,7 @@ namespace Core.Services
             {
                 var apiKey = section.GetValue<string>("SendGridApiKey");
 
-                if (!string.IsNullOrEmpty(apiKey))
+                if (!string.IsNullOrEmpty(apiKey) && apiKey != "YOUR-SENDGRID-API-KEY")
                 {
                     try
                     {
