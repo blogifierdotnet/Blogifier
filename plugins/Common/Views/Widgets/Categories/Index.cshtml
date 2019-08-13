@@ -1,7 +1,0 @@
-﻿@{
-    foreach (var item in Model.Categories)
-    {
-        var cat = (Core.Data.CategoryItem)item;
-        @Html.Raw(string.Format(Model.Template, cat.Category, cat.PostCount))
-    }
-}

@@ -55,7 +55,7 @@ namespace Core.Data
             {
                 Title = "Blogifier Features",
                 Slug = "blogifier-features",
-                Description = "List of the main features supported by Blogifier, includes user management, content management, plugin system, markdown editor, simple search and others. This is not the full list and work in progress.",
+                Description = "List of the main features supported by Blogifier, includes user management, content management, markdown editor, simple search and others. This is not the full list and work in progress.",
                 Content = SeedData.PostFeatures,
                 Categories = "blog",
                 AuthorId = adminId,
@@ -133,16 +133,14 @@ Built-in file manager allows upload images and files and use them as links in th
 ![file-mgr.png](/data/admin/admin-files.png)
 
 ### Plugin System
-Blogifier built as highly extendable application allowing themes, widgets and modules to be side-loaded and added to blog at runtime.
+Blogifier built as highly extendable application allowing modules to be side-loaded and added to blog at runtime.
 
 ### Markdown Editor
 The post editor uses markdown syntax, which many writers prefer over HTML for its simplicity.
 
 ### Simple Search
 There is simple but quick and functional search in the post lists, as well as search in the image/file list in the file manager.
-
-### Features in the work
-* Plugin management";
+";
 
         public static readonly string PostDemo = @"This demo site is a sandbox to test Blogifier features. It runs in-memory and does not save any data, so you can try everything without making any mess. Have fun!
 

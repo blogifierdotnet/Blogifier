@@ -22,8 +22,6 @@ Task("Build").IsDependentOn("Clean").Does(() =>
 		);
 	}
 	
-	CopyFileToDirectory("../plugins/Common/bin/Release/netcoreapp2.2/Common.dll", "./publish");
-
 	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.dll", "./publish");
 	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.deps.json", "./publish");
 	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp2.2/Upgrade.runtimeconfig.json", "./publish");
