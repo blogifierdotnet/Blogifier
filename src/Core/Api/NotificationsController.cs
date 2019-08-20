@@ -5,6 +5,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Api
@@ -14,10 +15,12 @@ namespace Core.Api
     public class NotificationsController : ControllerBase
     {
         IDataService _data;
+        INotificationService _notes;
 
-        public NotificationsController(IDataService data)
+        public NotificationsController(IDataService data, INotificationService notes)
         {
             _data = data;
+            _notes = notes;
         }
 
         /// <summary>
@@ -86,6 +89,27 @@ namespace Core.Api
             {
                 _data.Newsletters.Remove(existing);
                 _data.Complete();
+            }
+            return Ok();
+        }
+
+        /// <summary>
+        /// "Contact us" form notifications (CORS enabled)
+        /// </summary>
+        /// <param name="model">Contact model</param>
+        /// <returns>Ok</returns>
+        [HttpPost("contact")]
+        [EnableCors("AllowOrigin")]
+        public async Task<IActionResult> Contact([FromBody]ContactModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _notes.AddNotification(
+                    AlertType.Contact,
+                    0,
+                    $"{model.Name}|{model.Email}",
+                    model.Content.StripHtml()
+                );
             }
             return Ok();
         }

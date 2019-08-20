@@ -99,6 +99,13 @@
             <param name="email">Subscriber email</param>
             <returns>Ok on success</returns>
         </member>
+        <member name="M:Core.Api.NotificationsController.Contact(Core.Data.Models.ContactModel)">
+            <summary>
+            "Contact us" form notifications (CORS enabled)
+            </summary>
+            <param name="model">Contact model</param>
+            <returns>Ok</returns>
+        </member>
         <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
             Search blog posts by term (CORS enabled)
