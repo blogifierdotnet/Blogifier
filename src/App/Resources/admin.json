@@ -515,13 +515,17 @@
   "newsletter": {
     "Values": {
       "en-US": "Newsletter",
-      "ru-RU": "Рассылка"
+      "ru-RU": "Рассылка",
+      "zh-cn": "内容订阅",
+      "zh-tw": "內容訂閱"
     }
   },
   "newsletter-subscribers": {
     "Values": {
       "en-US": "List of email subscribers",
-      "ru-RU": "Список подписчиков электронной почты"
+      "ru-RU": "Список подписчиков электронной почты",
+      "zh-cn": "电子邮件订阅列表",
+      "zh-tw": "電子郵件訂閱列表"
     }
   }
 }
