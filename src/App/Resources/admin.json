@@ -5,7 +5,8 @@
       "es-ES": "General",
       "ru-RU": "Главная",
       "zh-cn": "常规",
-      "zh-tw": "一般"
+      "zh-tw": "一般",
+      "pt-BR": "Geral"
     }
   },
   "profile": {
@@ -14,7 +15,8 @@
       "es-ES": "Perfil",
       "ru-RU": "Профиль",
       "zh-cn": "个人资料",
-      "zh-tw": "個人資料"
+      "zh-tw": "個人資料",
+      "pt-BR": "Perfil"
     }
   },
   "password": {
@@ -23,7 +25,8 @@
       "es-ES": "Contraseña",
       "ru-RU": "Пароль",
       "zh-cn": "密码",
-      "zh-tw": "密码"
+      "zh-tw": "密码",
+      "pt-BR": "Senha"
     }
   },
   "themes": {
@@ -32,7 +35,8 @@
       "es-ES": "Temas",
       "ru-RU": "Темы",
       "zh-cn": "主题",
-      "zh-tw": "部落格主题"
+      "zh-tw": "部落格主题",
+      "pt-BR": "Temas"
     }
   },
   "users": {
@@ -41,7 +45,8 @@
       "es-ES": "Usuarios",
       "ru-RU": "Пользователи",
       "zh-cn": "用户",
-      "zh-tw": "使用者"
+      "zh-tw": "使用者",
+      "pt-BR": "Usuários"
     }
   },
   "new-user": {
@@ -50,7 +55,8 @@
       "es-ES": "Nuevo usuario",
       "ru-RU": "Новый пользователь",
       "zh-cn": "新增用户",
-      "zh-tw": "新增使用者"
+      "zh-tw": "新增使用者",
+      "pt-BR": "Novo usuário"
     }
   },
   "import": {
@@ -59,7 +65,8 @@
       "es-ES": "Importar",
       "ru-RU": "Импорт",
       "zh-cn": "导入",
-      "zh-tw": "匯入"
+      "zh-tw": "匯入",
+      "pt-BR": "Importar"
     }
   },
   "new-post": {
@@ -68,7 +75,8 @@
       "es-ES": "Nueva Entrada",
       "ru-RU": "Новое сообщение",
       "zh-cn": "写文章",
-      "zh-tw": "建立文章"
+      "zh-tw": "建立文章",
+      "pt-BR": "Nova Postagem"
     }
   },
   "posts": {
@@ -77,7 +85,8 @@
       "es-ES": "Entradas",
       "ru-RU": "Сообщения",
       "zh-cn": "文章列表",
-      "zh-tw": "文章清單"
+      "zh-tw": "文章清單",
+      "pt-BR": "Postagens"
     }
   },
   "settings": {
@@ -86,7 +95,8 @@
       "es-ES": "Ajustes",
       "ru-RU": "Настройки",
       "zh-cn": "设置",
-      "zh-tw": "設定"
+      "zh-tw": "設定",
+      "pt-BR": "Configurações"
     }
   },
   "notifications": {
@@ -95,7 +105,8 @@
       "es-ES": "Notificationes",
       "ru-RU": "Уведомления",
       "zh-cn": "通知",
-      "zh-tw": "通知"
+      "zh-tw": "通知",
+      "pt-BR": "Notificações"
     }
   },
   "visit-blog": {
@@ -104,7 +115,8 @@
       "es-ES": "Visitar Blog",
       "ru-RU": "Посетить блог",
       "zh-cn": "访问博客",
-      "zh-tw": "參訪部落格"
+      "zh-tw": "參訪部落格",
+      "pt-BR": "Visitar Blog"
     }
   },
   "sign-out": {
@@ -113,7 +125,8 @@
       "es-ES": "Cerrar sesión",
       "ru-RU": "Выйти",
       "zh-cn": "退出",
-      "zh-tw": "登出"
+      "zh-tw": "登出",
+      "pt-BR": "Encerrar sessão"
     }
   },
   "title": {
@@ -122,7 +135,8 @@
       "es-ES": "Título",
       "ru-RU": "Название",
       "zh-cn": "标题",
-      "zh-tw": "標題"
+      "zh-tw": "標題",
+      "pt-BR": "Título"
     }
   },
   "description": {
@@ -131,7 +145,8 @@
       "es-ES": "Descripción",
       "ru-RU": "Описание",
       "zh-cn": "描述",
-      "zh-tw": "敘述"
+      "zh-tw": "敘述",
+      "pt-BR": "Descrição"
     }
   },
   "items-per-page": {
@@ -140,7 +155,8 @@
       "es-ES": "Elementos por página",
       "ru-RU": "Количество сообщений на странице",
       "zh-cn": "每页的文章数量",
-      "zh-tw": "每頁文章數量"
+      "zh-tw": "每頁文章數量",
+      "pt-BR": "Itens por página"
     }
   },
   "logo": {
@@ -149,7 +165,8 @@
       "es-ES": "Logotipo",
       "ru-RU": "Логотип",
       "zh-cn": "徽标图片",
-      "zh-tw": "圖標"
+      "zh-tw": "圖標",
+      "pt-BR": "Logotipo"
     }
   },
   "cover": {
@@ -158,7 +175,8 @@
       "es-ES": "Imagen de cabecera",
       "ru-RU": "Обложка",
       "zh-cn": "封面图片",
-      "zh-tw": "封面圖片"
+      "zh-tw": "封面圖片",
+      "pt-BR": "Imagem de Capa"
     }
   },
   "language": {
@@ -167,7 +185,8 @@
       "es-ES": "Idioma",
       "ru-RU": "Язык",
       "zh-cn": "语言",
-      "zh-tw": "語言"
+      "zh-tw": "語言",
+      "pt-BR": "Idioma"
     }
   },
   "save": {
@@ -176,7 +195,8 @@
       "es-ES": "Guardar",
       "ru-RU": "Сохранить",
       "zh-cn": "保存",
-      "zh-tw": "儲存"
+      "zh-tw": "儲存",
+      "pt-BR": "Salvar"
     }
   },
   "select": {
@@ -185,7 +205,8 @@
       "es-ES": "Seleccionar",
       "ru-RU": "Выбрать",
       "zh-cn": "选择",
-      "zh-tw": "選擇"
+      "zh-tw": "選擇",
+      "pt-BR": "Selecionar"
     }
   },
   "selected": {
@@ -194,7 +215,8 @@
       "es-ES": "Seleccionado",
       "ru-RU": "Выбранный",
       "zh-cn": "已选择",
-      "zh-tw": "已選擇"
+      "zh-tw": "已選擇",
+      "pt-BR": "Selecionado"
     }
   },
   "search": {
@@ -212,7 +234,8 @@
       "es-ES": "Todo",
       "ru-RU": "Всё",
       "zh-cn": "所有",
-      "zh-tw": "全部"
+      "zh-tw": "全部",
+      "pt-BR": "Tudo"
     }
   },
   "published": {
@@ -221,7 +244,8 @@
       "es-ES": "Publicada",
       "ru-RU": "Опубликовано",
       "zh-cn": "已发布",
-      "zh-tw": "已發布"
+      "zh-tw": "已發布",
+      "pt-BR": "Publicado"
     }
   },
   "draft": {
@@ -230,7 +254,8 @@
       "es-ES": "Borrador",
       "ru-RU": "Черновики",
       "zh-cn": "草稿",
-      "zh-tw": "草稿"
+      "zh-tw": "草稿",
+      "pt-BR": "Rascunho"
     }
   },
   "status": {
@@ -239,7 +264,8 @@
       "es-ES": "Estado",
       "ru-RU": "Статус",
       "zh-cn": "状态",
-      "zh-tw": "狀態"
+      "zh-tw": "狀態",
+      "pt-BR": "Status"
     }
   },
   "not-found": {
@@ -248,7 +274,8 @@
       "es-ES": "No encontrado",
       "ru-RU": "Не найдено",
       "zh-cn": "未找到",
-      "zh-tw": "沒有找到資料"
+      "zh-tw": "沒有找到資料",
+      "pt-BR": "Não encontrado"
     }
   },
   "publish": {
@@ -257,7 +284,8 @@
       "es-ES": "Publicar",
       "ru-RU": "Опубликовать",
       "zh-cn": "发布",
-      "zh-tw": "發佈"
+      "zh-tw": "發佈",
+      "pt-BR": "Publicar"
     }
   },
   "unpublish": {
@@ -266,7 +294,8 @@
       "es-ES": "Desactivar",
       "ru-RU": "Отменить публикацию",
       "zh-cn": "取消发布",
-      "zh-tw": "取消發佈"
+      "zh-tw": "取消發佈",
+      "pt-BR": "Cancelar publicação"
     }
   },
   "featured": {
@@ -275,7 +304,8 @@
       "es-ES": "Destacada",
       "ru-RU": "Избранное",
       "zh-cn": "已顶置",
-      "zh-tw": "已置頂"
+      "zh-tw": "已置頂",
+      "pt-BR": "Destacada"
     }
   },
   "add-to-featured": {
@@ -284,7 +314,8 @@
       "es-ES": "Añadir a destacado",
       "ru-RU": "Добавить в избранное",
       "zh-cn": "添加顶置",
-      "zh-tw": "置頂"
+      "zh-tw": "置頂",
+      "pt-BR": "Destacar"
     }
   },
   "cancel": {
@@ -293,7 +324,8 @@
       "es-ES": "Cancelar",
       "ru-RU": "Отменить",
       "zh-cn": "取消",
-      "zh-tw": "取消"
+      "zh-tw": "取消",
+      "pt-BR": "Cancelar"
     }
   },
   "delete": {
@@ -302,7 +334,8 @@
       "es-ES": "Eliminar",
       "ru-RU": "Удалить",
       "zh-cn": "删除",
-      "zh-tw": "删除"
+      "zh-tw": "删除",
+      "pt-BR": "Apagar"
     }
   },
   "categories": {
@@ -311,7 +344,8 @@
       "es-ES": "Categorías",
       "ru-RU": "Категории",
       "zh-cn": "分类",
-      "zh-tw": "類別"
+      "zh-tw": "類別",
+      "pt-BR": "Categorias"
     }
   },
   "view": {
@@ -320,7 +354,8 @@
       "es-ES": "Ver",
       "ru-RU": "Посмотреть",
       "zh-cn": "查看",
-      "zh-tw": "察看"
+      "zh-tw": "察看",
+      "pt-BR": "Visualizar"
     }
   },
   "user-name": {
@@ -329,7 +364,8 @@
       "es-ES": "Nombre de usuario",
       "ru-RU": "Имя пользователя",
       "zh-cn": "用户名",
-      "zh-tw": "帳號名稱"
+      "zh-tw": "帳號名稱",
+      "pt-BR": "Nome de usuário"
     }
   },
   "email": {
@@ -338,7 +374,8 @@
       "es-ES": "Correo electrónico",
       "ru-RU": "Почта",
       "zh-cn": "电子邮箱",
-      "zh-tw": "信箱"
+      "zh-tw": "信箱",
+      "pt-BR": "Email"
     }
   },
   "user-bio": {
@@ -347,7 +384,8 @@
       "es-ES": "Información biográfica",
       "ru-RU": "Краткая биография",
       "zh-cn": "用户简介",
-      "zh-tw": "部落格作者介紹"
+      "zh-tw": "部落格作者介紹",
+      "pt-BR": "Informação biográfica"
     }
   },
   "avatar": {
@@ -356,7 +394,8 @@
       "es-ES": "Imagen de perfil",
       "ru-RU": "Аватар",
       "zh-cn": "头像",
-      "zh-tw": "頭像"
+      "zh-tw": "頭像",
+      "pt-BR": "Imagem do perfil"
     }
   },
   "remove": {
@@ -365,7 +404,8 @@
       "es-ES": "Eliminar",
       "ru-RU": "Удалить",
       "zh-cn": "移除",
-      "zh-tw": "刪除"
+      "zh-tw": "刪除",
+      "pt-BR": "Remover"
     }
   },
   "removed": {
@@ -374,7 +414,8 @@
       "es-ES": "Eliminado",
       "ru-RU": "Удалено",
       "zh-cn": "已移除",
-      "zh-tw": "已刪除"
+      "zh-tw": "已刪除",
+      "pt-BR": "Removido"
     }
   },
   "new-password": {
@@ -383,7 +424,8 @@
       "es-ES": "Nueva contraseña",
       "ru-RU": "Новый пароль",
       "zh-cn": "新密码",
-      "zh-tw": "新密碼"
+      "zh-tw": "新密碼",
+      "pt-BR": "Nova senha"
     }
   },
   "confirm-password": {
@@ -392,7 +434,8 @@
       "es-ES": "Confirmar contraseña",
       "ru-RU": "Подтвердить пароль",
       "zh-cn": "确认密码",
-      "zh-tw": "確認密碼"
+      "zh-tw": "確認密碼",
+      "pt-BR": "Confirmar senha"
     }
   },
   "close": {
@@ -401,7 +444,8 @@
       "es-ES": "Cerrar",
       "ru-RU": "Закрыть",
       "zh-cn": "关闭",
-      "zh-tw": "關閉"
+      "zh-tw": "關閉",
+      "pt-BR": "Fechar"
     }
   },
   "set-as-admin": {
@@ -410,7 +454,8 @@
       "es-ES": "Establecer como administrador",
       "ru-RU": "Сделать администратором",
       "zh-cn": "设置为管理员",
-      "zh-tw": "設置為管理員"
+      "zh-tw": "設置為管理員",
+      "pt-BR": "Definir como administrador"
     }
   },
   "select-rss-file": {
@@ -419,7 +464,8 @@
       "es-ES": "Seleccionar archivo RSS (.xml) del que importar entradas",
       "ru-RU": "Выберите RSS (.xml) файл для импорта",
       "zh-cn": "选择RSS（.xml）文件以便导入文章",
-      "zh-tw": "選擇RSS（.xml）檔案匯入文章"
+      "zh-tw": "選擇RSS（.xml）檔案匯入文章",
+      "pt-BR": "Selecionar arquivo RSS (.xml) para importar postagens"
     }
   },
   "images": {
@@ -428,7 +474,8 @@
       "es-ES": "Imágenes",
       "ru-RU": "Изображения",
       "zh-cn": "图像",
-      "zh-tw": "圖片"
+      "zh-tw": "圖片",
+      "pt-BR": "Imagens"
     }
   },
   "attachements": {
@@ -437,7 +484,8 @@
       "es-ES": "Archivos adjuntos",
       "ru-RU": "Вложения",
       "zh-cn": "附件",
-      "zh-tw": "附件"
+      "zh-tw": "附件",
+      "pt-BR": "Anexos"
     }
   },
   "upload": {
@@ -446,7 +494,8 @@
       "es-ES": "Subir",
       "ru-RU": "Загрузить",
       "zh-cn": "上传",
-      "zh-tw": "上傳"
+      "zh-tw": "上傳",
+      "pt-BR": "Enviar"
     }
   },
   "filters": {
@@ -455,7 +504,8 @@
       "es-ES": "Filtros",
       "ru-RU": "Фильтры",
       "zh-cn": "筛选",
-      "zh-tw": "篩選"
+      "zh-tw": "篩選",
+      "pt-BR": "Filtros"
     }
   },
   "change-password": {
@@ -464,7 +514,8 @@
       "es-ES": "Cambiar contraseña",
       "ru-RU": "Изменить пароль",
       "zh-cn": "更改密码",
-      "zh-tw": "更改密碼"
+      "zh-tw": "更改密碼",
+      "pt-BR": "Alterar senha"
     }
   },
   "theme": {
@@ -473,7 +524,8 @@
       "es-ES": "Tema",
       "ru-RU": "Тема",
       "zh-cn": "主题",
-      "zh-tw": "主題"
+      "zh-tw": "主題",
+      "pt-BR": "Tema"
     }
   },
   "read": {
@@ -482,7 +534,8 @@
       "es-ES": "Leer",
       "ru-RU": "Читать",
       "zh-cn": "阅读",
-      "zh-tw": "閱讀"
+      "zh-tw": "閱讀",
+      "pt-BR": "Ler"
     }
   },
   "updated": {
@@ -491,7 +544,8 @@
       "es-ES": "Actualizado",
       "ru-RU": "Запись обновлена",
       "zh-cn": "已更新",
-      "zh-tw": "已更新"
+      "zh-tw": "已更新",
+      "pt-BR": "Atualizado"
     }
   },
   "created": {
@@ -500,7 +554,8 @@
       "es-ES": "Creado",
       "ru-RU": "Запись создана",
       "zh-cn": "已创建",
-      "zh-tw": "已創建"
+      "zh-tw": "已創建",
+      "pt-BR": "Criado"
     }
   },
   "about": {
@@ -509,19 +564,26 @@
       "es-ES": "Acerca de",
       "ru-RU": "Информация",
       "zh-cn": "关于",
-      "zh-tw": "關於"
+      "zh-tw": "關於",
+      "pt-BR": "Sobre"
     }
   },
   "newsletter": {
     "Values": {
       "en-US": "Newsletter",
-      "ru-RU": "Рассылка"
+      "ru-RU": "Рассылка",
+      "zh-cn": "内容订阅",
+      "zh-tw": "內容訂閱",
+      "pt-BR": "Boletim de Notícias"
     }
   },
   "newsletter-subscribers": {
     "Values": {
       "en-US": "List of email subscribers",
-      "ru-RU": "Список подписчиков электронной почты"
+      "ru-RU": "Список подписчиков электронной почты",
+      "zh-cn": "电子邮件订阅列表",
+      "zh-tw": "電子郵件訂閱列表",
+      "pt-BR": "Lista de assinantes de e-mail"
     }
   }
 }
