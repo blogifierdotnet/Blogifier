@@ -585,5 +585,11 @@
       "zh-tw": "電子郵件訂閱列表",
       "pt-BR": "Lista de assinantes de e-mail"
     }
+  },
+  "contact": {
+    "Values": {
+      "en-US": "Contact",
+      "ru-RU": "Контакт"
+    }
   }
 }

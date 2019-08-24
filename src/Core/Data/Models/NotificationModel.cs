@@ -10,6 +10,12 @@ namespace Core.Data.Models
         public Pager Pager { get; set; }
     }
 
+    public class NotificationModel
+    {
+        public IEnumerable<Notification> Notifications { get; set; }
+        public Pager Pager { get; set; }
+    }
+
     public class ContactModel
     {
         [Required]

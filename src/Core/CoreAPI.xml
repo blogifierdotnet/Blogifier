@@ -106,6 +106,21 @@
             <param name="model">Contact model</param>
             <returns>Ok</returns>
         </member>
+        <member name="M:Core.Api.NotificationsController.GetNotifications(System.String,System.Int32)">
+            <summary>
+            Get notifications by type (admins only)
+            </summary>
+            <param name="type">Notification type, like contact, newsletter etc</param>
+            <param name="page">Page number</param>
+            <returns>List of notifications</returns>
+        </member>
+        <member name="M:Core.Api.NotificationsController.Delete(System.Int32)">
+            <summary>
+            Remove notification (admins only)
+            </summary>
+            <param name="id">Notification ID</param>
+            <returns>Ok on success</returns>
+        </member>
         <member name="M:Core.Api.PostsController.Search(System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
             Search blog posts by term (CORS enabled)
