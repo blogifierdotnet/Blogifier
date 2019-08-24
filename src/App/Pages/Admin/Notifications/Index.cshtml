@@ -1,0 +1,33 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["notifications"];
+}
+
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Shared/_Notifybar.cshtml" />
+    <div id="app" class="bf-body">
+        <div class="bf-content">
+            <label class="form-group-label">@Localizer["notifications"] placeholder</label>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+            },
+            methods: {
+                load: function (page) {
+
+                }
+            },
+            beforeMount() {
+                this.load(1)
+            }
+        })
+    </script>
+}

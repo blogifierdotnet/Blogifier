@@ -17,24 +17,21 @@
         <ul class="bf-settings-sidebar-nav">
             @if (_isAdmin)
             {
-                <li is-active-route asp-controller="settings" asp-action="index">
-                    <a href="~/admin/settings">@Localizer["general"]</a>
-                </li>
+            <li is-active-route asp-controller="settings" asp-action="index">
+                <a href="~/admin/settings">@Localizer["general"]</a>
+            </li>
             }
             <li is-active-route asp-controller="settings" asp-action="profile">
                 <a href="~/admin/settings/profile">@Localizer["profile"]</a>
             </li>
             @if (_isAdmin)
             {
-                <li is-active-route asp-controller="settings" asp-action="newsletter">
-                    <a href="~/admin/settings/newsletter">@Localizer["newsletter"] </a>
-                </li>
-                <li is-active-route asp-controller="settings" asp-action="users">
-                    <a href="~/admin/settings/users">@Localizer["users"]</a>
-                </li>
-                <li is-active-route asp-controller="settings" asp-action="import">
-                    <a href="~/admin/settings/import">@Localizer["import"]</a>
-                </li>
+            <li is-active-route asp-controller="settings" asp-action="users">
+                <a href="~/admin/settings/users">@Localizer["users"]</a>
+            </li>
+            <li is-active-route asp-controller="settings" asp-action="import">
+                <a href="~/admin/settings/import">@Localizer["import"]</a>
+            </li>
             }
         </ul>
     </div>

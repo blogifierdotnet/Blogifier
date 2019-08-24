@@ -77,20 +77,17 @@
                         <i class="taskbar-item-icon fas fa-palette"></i>
                     </a>
                 </li>
+                <li is-active-route asp-controller="notifications" class="taskbar-item">
+                    <a href="~/admin/notifications" class="taskbar-item-link" title="@Localizer["notifications"]">
+                        <i class="taskbar-item-icon fas fa-envelope"></i>
+                    </a>
+                </li>
             }
             else
             {
                 <li is-active-route asp-controller="settings" asp-action="profile" class="taskbar-item">
                     <a href="~/admin/settings/profile" class="taskbar-item-link" title="@Localizer["settings"]">
                         <i class="taskbar-item-icon fas fa-cog"></i>
-                    </a>
-                </li>
-            }
-            @if (_notifications.Count() > 0)
-            {
-                <li class="taskbar-item">
-                    <a class="taskbar-item-link" href="" onclick="return notificationsController.open();" return false; title="@Localizer["notifications"]">
-                        <i class="taskbar-item-icon fas fa-envelope"></i>
                     </a>
                 </li>
             }

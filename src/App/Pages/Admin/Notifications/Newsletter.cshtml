@@ -3,8 +3,14 @@
 @{
     ViewData["Title"] = Localizer["newsletter"];
 }
-
 <style>
+    .modal-body .row {
+        line-height: 2.5em;
+        border-bottom: 1px solid #efefef;
+    }
+    .post-grid-col {
+        max-width: 200px !important
+    }
     .card-email a {
         float: right;
     }
@@ -12,9 +18,10 @@
         margin: 2px;
     }
 </style>
-<div id="app" class="bf-main" style="display:none">
-    <partial name="~/Pages/Admin/Shared/_Taskbar.cshtml" />
-    <div class="bf-body">
+
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Shared/_Notifybar.cshtml" />
+    <div id="app" class="bf-body">
         <div class="bf-content">
 
             <label class="form-group-label">@Localizer["newsletter-subscribers"]</label>
@@ -104,7 +111,7 @@
             },
             beforeMount() {
                 this.page = 1;
-                if(fromQueryString('page')){ this.page = fromQueryString('page'); }
+                if (fromQueryString('page')) { this.page = fromQueryString('page'); }
                 this.load(this.page)
             }
         })
