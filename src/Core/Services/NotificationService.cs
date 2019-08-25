@@ -9,7 +9,7 @@ namespace Core.Services
 {
     public interface INotificationService
     {
-        Task<IEnumerable<Notification>> GetNotifications(int authorId);
+        Task PullSystemNotifications();
         Task<int> AddNotification(AlertType aType, int authorId, string notifier, string content);
     }
 
@@ -27,7 +27,12 @@ namespace Core.Services
 
         public async Task<int> AddNotification(AlertType aType, int authorId, string notifier, string content)
         {
-            var existing = _db.Notifications.Single(n => n.Content == content);
+            var existing = _db.Notifications.Single(n => 
+                n.AlertType == aType && 
+                n.Notifier == notifier && 
+                n.Content == content
+            );
+
             if(existing == null)
             {
                 _db.Notifications.Add(new Notification
@@ -44,51 +49,21 @@ namespace Core.Services
             return await Task.FromResult(0);
         }
 
-        public async Task<IEnumerable<Notification>> GetNotifications(int authorId)
+        public async Task PullSystemNotifications()
         {
-            if(SystemClock.Now() >= _checkPoint)
+            if (SystemClock.Now() >= _checkPoint)
             {
                 _checkPoint = SystemClock.Now().AddMinutes(30);
-                var result = await _web.CheckForLatestRelease();
+                var messages = await _web.GetNotifications();
 
-                if (!string.IsNullOrEmpty(result))
+                if(messages != null && messages.Count > 0)
                 {
-                    await AddNotification(AlertType.Primary, 0, "Github", result);
-                }
-            }
-
-            var notes = _db.Notifications
-                .Find(n => n.Active && (n.AuthorId == 0 || n.AuthorId == authorId))
-                .OrderByDescending(n => n.DateNotified)
-                .Take(5).ToList();
-
-            // add notification if newer version exists
-            if(authorId > 0)
-            {
-                var author = _db.Authors.Single(a => a.Id == authorId);
-                if(author != null && author.IsAdmin)
-                {
-                    var field = _db.CustomFields.Single(f => f.Name == Constants.NewestVersion && f.AuthorId == 0);
-                    if(field != null)
+                    foreach (var msg in messages)
                     {
-                        int current, latest;
-
-                        int.TryParse(AppSettings.Version.Replace(".", "").Substring(0, 2), out current);
-                        int.TryParse(field.Content, out latest);
-
-                        if(current < latest)
-                        {
-                            notes.Add(new Notification
-                            {
-                                AlertType = AlertType.Sticky,
-                                Content = $"Upgrade to <a href=\"upgrade\">version {field.Content.Substring(0,1)}.{field.Content.Substring(1, 1)}</a>"
-                            });   
-                        }
+                        await AddNotification(AlertType.System, 0, "Blogifier", msg);
                     }
                 }
             }
-
-            return await Task.FromResult(notes);
         }
     }
 }

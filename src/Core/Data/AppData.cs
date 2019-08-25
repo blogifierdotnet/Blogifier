@@ -81,7 +81,7 @@ namespace Core.Data
             context.Notifications.Add(new Notification
             {
                 Notifier = "Blogifier",
-                AlertType = AlertType.Primary,
+                AlertType = AlertType.System,
                 AuthorId = 0,
                 Content = "Welcome to Blogifier!",
                 Active = true,

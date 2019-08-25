@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -10,6 +12,7 @@ namespace Core.Services
     {
         Task<string> CheckForLatestRelease();
         Task<string> DownloadLatestRelease();
+        Task<List<string>> GetNotifications();
     }
 
     public class WebService : IWebService
@@ -34,7 +37,7 @@ namespace Core.Services
         {
             string result = "";
 
-            HttpResponseMessage response = await client.GetAsync(getGithubUrl());
+            HttpResponseMessage response = await client.GetAsync(getGithubRepoUrl());
 
             if (response.IsSuccessStatusCode)
             {
@@ -81,7 +84,7 @@ namespace Core.Services
             var msg = "";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(getGithubUrl());
+                HttpResponseMessage response = await client.GetAsync(getGithubRepoUrl());
                 if (response.IsSuccessStatusCode)
                 {
                     var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
@@ -115,13 +118,54 @@ namespace Core.Services
             return await Task.FromResult(msg);
         }
 
-        string getGithubUrl()
+        public async Task<List<string>> GetNotifications()
+        {
+            var notifications = new List<string>();
+            HttpResponseMessage response = await client.GetAsync(getGithubNotificationsUrl());
+
+            if (response.IsSuccessStatusCode)
+            {
+                var folder = await response.Content.ReadAsAsync<List<Data.Github.GithubFile>>();
+                if(folder != null && folder.Count > 0)
+                {
+                    foreach (var file in folder)
+                    {
+                        var message = ReadFileFromUrl(file.download_url);
+                        notifications.Add(message);
+                    }
+                }
+            }
+            return await Task.FromResult(notifications);
+        }
+
+        string ReadFileFromUrl(string url)
+        {
+            var webRequest = WebRequest.Create(url);
+
+            using (var response = webRequest.GetResponse())
+            using (var content = response.GetResponseStream())
+            using (var reader = new StreamReader(content))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        string getGithubRepoUrl()
         {
             var section = _config.GetSection(Constants.ConfigSectionKey);
 
             return (section != null && !string.IsNullOrEmpty(section.GetValue<string>(Constants.ConfigRepoKey))) ?
                 section.GetValue<string>(Constants.ConfigRepoKey) :
                 "https://api.github.com/repos/blogifierdotnet/Blogifier/releases/latest";
+        }
+
+        string getGithubNotificationsUrl()
+        {
+            var section = _config.GetSection(Constants.ConfigSectionKey);
+
+            return (section != null && !string.IsNullOrEmpty(section.GetValue<string>(Constants.ConfigNotificationsKey))) ?
+                section.GetValue<string>(Constants.ConfigNotificationsKey) :
+                "https://api.github.com/repos/blogifierdotnet/Upgrade/contents/Notifications";
         }
     }
 }

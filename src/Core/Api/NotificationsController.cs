@@ -2,6 +2,7 @@
 using Core.Data.Models;
 using Core.Helpers;
 using Core.Services;
+using Markdig;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -128,12 +129,22 @@ namespace Core.Api
         {
             var pager = new Pager(page);
             IEnumerable<Notification> items;
-            AlertType noteType = AlertType.Primary;
+            AlertType noteType = AlertType.System;
 
             if (type.ToUpper() == "CONTACT")
+            {
                 noteType = AlertType.Contact;
-
-            items = await _data.Notifications.GetList(n => n.AlertType == noteType, pager);
+                items = await _data.Notifications.GetList(n => n.AlertType == noteType, pager);
+            }
+            else
+            {
+                await _notes.PullSystemNotifications();
+                items = await _data.Notifications.GetList(n => n.AlertType == noteType && n.Active == true, pager);
+                foreach (var item in items)
+                {
+                    item.Content = Markdown.ToHtml(item.Content);
+                }
+            }
 
             if (page < 1 || page > pager.LastPage)
                 return null;
@@ -159,7 +170,17 @@ namespace Core.Api
                 var notification = _data.Notifications.Single(n => n.Id == id);
                 if (notification != null)
                 {
-                    _data.Notifications.Remove(notification);
+                    if(notification.AlertType == AlertType.System)
+                    {
+                        // system notifications pulled from external sources
+                        // if just remove it, it will be pulled again
+                        // so just mark it as inactive instead
+                        notification.Active = false;
+                    }
+                    else
+                    {
+                        _data.Notifications.Remove(notification);
+                    }
                     _data.Complete();
                 }
                 return Ok(Resources.Removed);

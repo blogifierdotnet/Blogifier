@@ -21,6 +21,6 @@ namespace Core.Data
 
     public enum AlertType
     {
-        Primary, Sticky, Contact
+        System, User, Contact
     }
 }

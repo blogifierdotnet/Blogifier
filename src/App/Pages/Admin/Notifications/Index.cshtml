@@ -3,13 +3,43 @@
 @{
     ViewData["Title"] = Localizer["notifications"];
 }
-
+<style>
+    .modal-body .row {
+        line-height: 2.5em;
+        border-bottom: 1px solid #efefef;
+    }
+    .card-contact {
+        margin-bottom: 10px;
+    }
+    .btn-group {
+        margin-top: 15px;
+    }
+    .form-group-label a {
+        float: right;
+        color: red;
+    }
+    h1 {
+        font-size: 1.2em;
+    }
+</style>
 <div class="bf-main">
     <partial name="~/Pages/Admin/Shared/_Notifybar.cshtml" />
     <div id="app" class="bf-body">
-        <div class="bf-content">
-            <label class="form-group-label">@Localizer["notifications"] placeholder</label>
-
+        <div class="bf-content" style="display:none">
+            <div class="row">
+                <div v-for="(item, index) in messages" class="col-md-6 card-contact">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group-label">
+                                {{getDate(item.dateNotified)}} / {{item.notifier}}
+                                <a href="#" v-on:click="remove(item.id)"><i class="fa fa-times"></i></a>
+                            </div>
+                            <hr />
+                            <div v-html="item.content"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -19,10 +49,36 @@
         new Vue({
             el: "#app",
             data: {
+                messages: [],
+                pager: {},
+                page: 1,
+                cntFrom: 0,
+                cntTo: 0
             },
             methods: {
                 load: function (page) {
+                    axios.get(webRoot + 'api/notifications/system?page=' + page)
+                        .then(response => {
+                            this.messages = response.data.notifications;
+                            this.pager = response.data.pager;
 
+                            this.cntFrom = this.pager.currentPage == 1 ? 1 : (this.pager.currentPage - 1) * this.pager.itemsPerPage + 1;
+                            this.cntTo = this.pager.currentPage * this.pager.itemsPerPage < this.pager.total ? this.pager.currentPage * this.pager.itemsPerPage : this.pager.total;
+                            $('.bf-content').fadeIn();
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                remove: function (id) {
+                    var result = confirm("Please confirm removing this message");
+                    if (result) {
+                        axios.delete(webRoot + 'api/notifications/remove/' + id)
+                            .then(response => {
+                                toastr.success('Removed');
+                                setTimeout(function () { location.reload(); }, 1000);
+                            })
+                            .catch(function (error) { toastr.error(error); });
+                    }
+                    return false;
                 }
             },
             beforeMount() {
