@@ -2,7 +2,6 @@
 using Core.Data.Models;
 using Core.Helpers;
 using Core.Services;
-using Markdig;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -142,7 +141,7 @@ namespace Core.Api
                 items = await _data.Notifications.GetList(n => n.AlertType == noteType && n.Active == true, pager);
                 foreach (var item in items)
                 {
-                    item.Content = Markdown.ToHtml(item.Content);
+                    item.Content = item.Content.MdToHtml();
                 }
             }
 

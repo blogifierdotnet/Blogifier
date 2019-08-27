@@ -1,6 +1,6 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Services;
-using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +44,7 @@ namespace App.Controllers
 
                     foreach (var post in posts)
                     {
-                        post.Description = Markdown.ToHtml(post.Description);
+                        post.Description = post.Description.MdToHtml();
                         await writer.Write(post);
                     }
                 }

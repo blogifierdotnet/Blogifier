@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Markdig;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -70,6 +71,16 @@ namespace Core
         {
             str = str.StripHtml();
             return str.Length > 300 ? str.Substring(0, 300) : str;
+        }
+
+        public static string MdToHtml(this string str)
+        {
+            var mpl = new MarkdownPipelineBuilder()
+                .UsePipeTables()
+                .UseAdvancedExtensions()
+                .Build();
+
+            return Markdown.ToHtml(str, mpl);
         }
 
         public static bool Contains(this string source, string toCheck, StringComparison comp)

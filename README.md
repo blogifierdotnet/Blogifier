@@ -1,6 +1,6 @@
 ## What is Blogifier
 
-Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.
+Blogifier is multi-user, lightweight blog written in .NET Core with Angular front-end. For programmers, it is easy maintain and extend and for designers, it is simple to customize using familiar tools.
 
 [![Build Status](https://dev.azure.com/rtur/Blogifier/_apis/build/status/blogifierdotnet.Blogifier)](https://dev.azure.com/rtur/Blogifier/_build/latest?definitionId=3)
 
