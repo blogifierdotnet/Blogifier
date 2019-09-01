@@ -114,6 +114,17 @@ namespace Core.Api
         }
 
         /// <summary>
+        /// Get blog categories (CORS enabled)
+        /// </summary>
+        /// <returns>List of all blog categories</returns>
+        [HttpGet("categories")]
+        [EnableCors("AllowOrigin")]
+        public async Task<IEnumerable<CategoryItem>> Categories()
+        {
+            return await _data.BlogPosts.Categories();
+        }
+
+        /// <summary>
         /// Get single post by ID (CORS enabled)
         /// </summary>
         /// <param name="id">Post ID</param>

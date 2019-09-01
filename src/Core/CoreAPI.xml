@@ -143,6 +143,12 @@
             <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Model with list of posts and pager</returns>
         </member>
+        <member name="M:Core.Api.PostsController.Categories">
+            <summary>
+            Get blog categories (CORS enabled)
+            </summary>
+            <returns>List of all blog categories</returns>
+        </member>
         <member name="M:Core.Api.PostsController.GetPost(System.Int32,System.String)">
             <summary>
             Get single post by ID (CORS enabled)

@@ -242,7 +242,7 @@ namespace Core.Data
                             }
                             else
                             {
-                                // updae post count
+                                // update post count
                                 var tmp = cats.Where(c => c.Category == pc).FirstOrDefault();
                                 tmp.PostCount++;
                             }
