@@ -589,7 +589,9 @@
   "contact": {
     "Values": {
       "en-US": "Contact",
-      "ru-RU": "Контакт"
+      "ru-RU": "Контакт",
+      "zh-cn": "联系",
+      "zh-tw": "聯系"
     }
   }
 }
