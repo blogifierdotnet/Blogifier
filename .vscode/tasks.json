@@ -13,18 +13,7 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "dependsOn":["common"]
-        },
-        {
-            "label": "common",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/plugins/Common/Common.csproj"
-            ],
-            "group": "build"
+            }
         }
     ]
 }
