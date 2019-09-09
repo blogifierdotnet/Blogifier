@@ -48,6 +48,10 @@ namespace App
             {
                 AppSettings.DbOptions = options => options.UseMySql(section.GetValue<string>("ConnString"));
             }
+            else if (section.GetValue<string>("DbProvider") == "Postgres")
+            {
+                AppSettings.DbOptions = options => options.UseNpgsql(section.GetValue<string>("ConnString"));
+            }
             else
             {
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));

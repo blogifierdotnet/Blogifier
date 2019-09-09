@@ -9,7 +9,7 @@ Blogifier is multi-user, lightweight blog written in .NET Core with Angular fron
 * Windows, Mac or Linux
 * ASP.NET Core 2.2
 * Visual Studio 2019, VS Code or other code editor (Atom, Sublime etc)
-* SQLite by default, MS SQL Server and MySQL out of the box, EF compatible databases should work
+* SQLite by default, MS SQL Server, Postgres and MySQL out of the box, EF compatible databases should work
 
 ## Getting Started
 
