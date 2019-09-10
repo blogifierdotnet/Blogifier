@@ -29,7 +29,6 @@ namespace Core.Services
         IList<string> GetAssets(string path);
         IList<string> GetThemes();
         bool SelectTheme(string theme);
-        IList<WidgetItem> GetWidgets(string theme);
 
         string GetHtmlTemplate(string template);
 
@@ -176,22 +175,6 @@ namespace Core.Services
                 CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
             foreach (FileInfo file in source.GetFiles())
                 file.CopyTo(Path.Combine(target.FullName, file.Name));
-        }
-
-        public IList<WidgetItem> GetWidgets(string theme)
-        {
-            var widgets = new List<WidgetItem>();
-            string jsonFile = $"{AppSettings.ContentRootPath}{_separator}Views{_separator}Themes{_separator}{theme}{_separator}{theme}.json";
-
-            if (File.Exists(jsonFile))
-            {
-                using (StreamReader r = new StreamReader(jsonFile))
-                {
-                    string json = r.ReadToEnd();
-                    widgets = JsonConvert.DeserializeObject<List<WidgetItem>>(json);
-                }
-            }
-            return widgets;
         }
 
         public string GetThemeData(string theme)
