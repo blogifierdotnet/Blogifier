@@ -53,30 +53,6 @@ namespace Core.Extensions
                     foreach (var assembly in AppConfig.GetAssemblies(true))
                     {
                         var fileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
-
-                        // load themes from embedded provider
-                        var content = fileProvider.GetDirectoryContents("");
-                        if (content.Exists)
-                        {
-                            foreach (var item in content)
-                            {
-                                if (item.Name.StartsWith("Views.Themes"))
-                                {
-                                    if (AppConfig.EmbeddedThemes == null)
-                                        AppConfig.EmbeddedThemes = new List<string>();
-
-                                    var ar = item.Name.Split('.');
-                                    if(ar.Length > 2 && !AppConfig.EmbeddedThemes.Contains(ar[2]))
-                                    {
-                                        if(assembly.GetName().Name.ToLower() != "app")
-                                        {
-                                            AppConfig.EmbeddedThemes.Add(ar[2]);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
                         options.FileProviders.Add(fileProvider);
                     }
                 });

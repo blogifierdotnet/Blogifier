@@ -8,8 +8,6 @@ namespace Core
 {
     public static class AppConfig
     {
-        public static IList<string> EmbeddedThemes { get; set; }
-
         public static IEnumerable<Assembly> GetAssemblies(bool includeApp = false)
         {
             var assemblies = new List<Assembly>();

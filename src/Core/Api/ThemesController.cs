@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Api
@@ -160,23 +159,12 @@ namespace Core.Api
         List<ThemeItem> GetThemes()
         {
             var themes = new List<ThemeItem>();
-            var combined = new List<string>();
+            var themeList = _store.GetThemes();
 
-            var storageThemes = _store.GetThemes();
-
-            if (storageThemes != null)
-                combined.AddRange(storageThemes);
-
-            if (AppConfig.EmbeddedThemes != null)
-                combined.AddRange(AppConfig.EmbeddedThemes);
-
-            combined = combined.Distinct().ToList();
-            combined.Sort();
-
-            if (combined != null && combined.Count > 0)
+            if (themeList != null && themeList.Count > 0)
             {
                 var current = new ThemeItem();
-                foreach (var themeTitle in combined)
+                foreach (var themeTitle in themeList)
                 {
                     var theme = themeTitle.ToLower();
                     var slash = Path.DirectorySeparatorChar.ToString();
