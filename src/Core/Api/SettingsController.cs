@@ -113,7 +113,7 @@ namespace Core.Api
             var author = _data.Authors.Single(a => a.AppUserName == User.Identity.Name);
 
             if (!author.IsAdmin)
-                Redirect("~/pages/shared/_error/403");
+                throw new ApplicationException("Unauthorized");
 
             var webRoot = Url.Content("~/");
 
