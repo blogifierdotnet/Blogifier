@@ -229,7 +229,7 @@ namespace Core.Data
 
             if (_db.BlogPosts.Any())
             {
-                foreach (var p in _db.BlogPosts.Where(p => p.Categories != null))
+                foreach (var p in _db.BlogPosts.Where(p => p.Categories != null && p.Published > DateTime.MinValue))
                 {
                     var postcats = p.Categories.Split(',');
                     if (postcats.Any())
