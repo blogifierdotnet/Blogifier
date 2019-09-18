@@ -23,10 +23,12 @@ namespace App
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
 
             Log.Logger = new LoggerConfiguration()
               .Enrich.FromLogContext()
@@ -110,16 +112,19 @@ namespace App
             .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly).AddControllersAsServices()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSwaggerGen(setupAction => {
-                setupAction.SwaggerDoc("spec",
+            if (Environment.IsDevelopment())
+            {
+                services.AddSwaggerGen(setupAction => {
+                    setupAction.SwaggerDoc("spec",
                     new Microsoft.OpenApi.Models.OpenApiInfo()
                     {
                         Title = "Blogifier API",
                         Version = "1"
                     });
-                setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
-            });
-
+                    setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
+                });
+            }
+            
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/themes/_active";
@@ -136,30 +141,30 @@ namespace App
             services.AddAppServices();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(setupAction =>
+                {
+                    setupAction.SwaggerEndpoint(
+                        "/swagger/spec/swagger.json",
+                        "Blogifier API"
+                    );
+                });
             }
 
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseRequestLocalization();
+            app.UseRequestLocalization();        
 
-            app.UseSwagger();
-            app.UseSwaggerUI(setupAction =>
-            {
-                setupAction.SwaggerEndpoint(
-                    "/swagger/spec/swagger.json",
-                    "Blogifier API"
-                );
-            });
-
-            AppSettings.WebRootPath = env.WebRootPath;
-            AppSettings.ContentRootPath = env.ContentRootPath;
+            AppSettings.WebRootPath = Environment.WebRootPath;
+            AppSettings.ContentRootPath = Environment.ContentRootPath;
 
             app.UseMvc(routes =>
             {
