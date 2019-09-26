@@ -13,6 +13,7 @@ namespace Core.Data
     {
         Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager);
         Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = false);
+        Task<IEnumerable<PostItem>> GetPopular(Pager pager, int author = 0);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate, bool sanitize = false);
         Task<PostModel> GetModel(string slug);
@@ -84,6 +85,33 @@ namespace Core.Data
             return await Task.FromResult(items);
         }
 
+        public async Task<IEnumerable<PostItem>> GetPopular(Pager pager, int author = 0)
+        {
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+
+            var posts = new List<BlogPost>();
+
+            if(author > 0)
+            {
+                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.AuthorId == author)
+                    .OrderByDescending(p => p.PostViews).ThenByDescending(p => p.Published).ToList();
+            }
+            else
+            {
+                posts = _db.BlogPosts.Where(p => p.Published > DateTime.MinValue)
+                    .OrderByDescending(p => p.PostViews).ThenByDescending(p => p.Published).ToList();
+            }
+
+            pager.Configure(posts.Count);
+
+            var items = new List<PostItem>();
+            foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
+            {
+                items.Add(PostToItem(p, true));
+            }
+            return await Task.FromResult(items);
+        }
+
         public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
@@ -135,6 +163,9 @@ namespace Core.Data
             item.Author.Avatar = string.IsNullOrEmpty(item.Author.Avatar) ? Constants.DefaultAvatar : item.Author.Avatar;
             item.Author.Email = sanitize ? Constants.DummyEmail : item.Author.Email;
 
+            post.PostViews++;
+            await _db.SaveChangesAsync();
+
             return await Task.FromResult(item);
         }
 
@@ -168,6 +199,10 @@ namespace Core.Data
                     }
                 }
             }
+
+            var post = _db.BlogPosts.Single(p => p.Slug == slug);
+            post.PostViews++;
+            await _db.SaveChangesAsync();
 
             return await Task.FromResult(model);
         }
@@ -305,16 +340,16 @@ namespace Core.Data
             if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
             {
                 var drafts = author > 0 ?
-                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).ToList() :
-                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue && !p.IsFeatured).ToList();
+                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue && p.AuthorId == author).ToList() :
+                    _db.BlogPosts.Where(p => p.Published == DateTime.MinValue).ToList();
                 items = items.Concat(drafts).ToList();
             }
 
             if (include.ToUpper().Contains("F") || string.IsNullOrEmpty(include))
             {
                 var featured = author > 0 ?
-                    _db.BlogPosts.Where(p => p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
-                    _db.BlogPosts.Where(p => p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+                    _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
+                    _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
                 items = items.Concat(featured).ToList();
             }
 

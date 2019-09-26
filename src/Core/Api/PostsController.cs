@@ -114,6 +114,46 @@ namespace Core.Api
         }
 
         /// <summary>
+        /// Get list of popular, most viewed blog posts (CORS enabled)
+        /// </summary>
+        /// <param name="author">Post author</param>
+        /// <param name="page">Page number</param>
+        /// <param name="format">Otput format: html or markdown; default = html;</param>
+        /// <returns>Model with list of posts and pager</returns>
+        [HttpGet("popular")]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult<PageListModel>> GetPopular(
+            [FromQuery]string author = "",
+            [FromQuery]int page = 1,
+            [FromQuery]string format = "html")
+        {
+            try
+            {
+                var blog = await _data.CustomFields.GetBlogSettings();
+                IEnumerable<PostItem> results;
+                var pager = new Pager(page, blog.ItemsPerPage);
+                int authorId = GetUserId(author);
+
+                results = await _data.BlogPosts.GetPopular(pager, authorId);
+
+                if (format.ToUpper() == "HTML")
+                {
+                    foreach (var p in results)
+                    {
+                        p.Description = p.Description.MdToHtml();
+                        p.Content = p.Content.MdToHtml();
+                    }
+                }
+
+                return Ok(new PageListModel { Posts = results, Pager = pager });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+        /// <summary>
         /// Get blog categories (CORS enabled)
         /// </summary>
         /// <returns>List of all blog categories</returns>

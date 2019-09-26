@@ -143,6 +143,15 @@
             <param name="format">Otput format: html or markdown; default = html;</param>
             <returns>Model with list of posts and pager</returns>
         </member>
+        <member name="M:Core.Api.PostsController.GetPopular(System.String,System.Int32,System.String)">
+            <summary>
+            Get list of popular, most viewed blog posts (CORS enabled)
+            </summary>
+            <param name="author">Post author</param>
+            <param name="page">Page number</param>
+            <param name="format">Otput format: html or markdown; default = html;</param>
+            <returns>Model with list of posts and pager</returns>
+        </member>
         <member name="M:Core.Api.PostsController.Categories">
             <summary>
             Get blog categories (CORS enabled)
