@@ -207,11 +207,11 @@ var updateAvatarCallback = function (data) {
     toastr.success('Updated');
 };
 var updateAppCoverCallback = function (data) {
-    $('#BlogItem_Cover').val(data.url);
+    $('#txtCover').val(data.url);
     toastr.success('Updated');
 };
 var updateAppLogoCallback = function (data) {
-    $('#BlogItem_Logo').val(data.url);
+    $('#txtLogo').val(data.url);
     toastr.success('Updated');
 };
 
