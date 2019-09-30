@@ -118,7 +118,10 @@ namespace Core.Api
         {
             try
             {
-                await _store.SaveThemeData(model);
+                var settings = await _data.CustomFields.GetBlogSettings();
+                var isActive = settings.Theme == model.Theme;
+
+                await _store.SaveThemeData(model, isActive);
                 return Ok("Created");
             }
             catch (Exception)
