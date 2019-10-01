@@ -29,7 +29,7 @@ Themes are Angular CLI applications and developed independently.
 
 ## Demo site
 
-The [demo site](http://blogifier.net/blog) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
+The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
 
 ![demo](https://user-images.githubusercontent.com/1932785/60846983-d6afcf80-a1a6-11e9-9f45-2d747900e395.jpg)
 

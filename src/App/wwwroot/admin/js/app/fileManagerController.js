@@ -202,20 +202,20 @@ $(firstItemCheckfm).on('change', function () {
 });
 
 // callbacks
-var updateAvatarCallback = function (data) {
+function updateAvatarCallback(data) {
     $('#author-avatar').val(data.url);
     toastr.success('Updated');
-};
-var updateAppCoverCallback = function (data) {
+}
+function updateAppCoverCallback(data) {
     $('#txtCover').val(data.url);
     toastr.success('Updated');
-};
-var updateAppLogoCallback = function (data) {
+}
+function updateAppLogoCallback(data) {
     $('#txtLogo').val(data.url);
     toastr.success('Updated');
-};
+}
 
-var insertImageCallback = function (data) {
+function insertImageCallback(data) {
     var cm = _editor.codemirror;
     var output = data + '](' + webRoot + data + ')';
 
@@ -241,10 +241,10 @@ var insertImageCallback = function (data) {
     }
     var selectedText = cm.getSelection();
     cm.replaceSelection(output);
-};
+}
 
-var updatePostCoverCallback = function (data) {
+function updatePostCoverCallback(data) {
     $('.bf-editor-header').css('background-image', 'url(' + webRoot + data.url + ')');
     $('#hdnPostImg').val(data.url);
     toastr.success('Updated');
-};
+}
