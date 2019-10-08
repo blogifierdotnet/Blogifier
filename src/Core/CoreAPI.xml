@@ -204,6 +204,12 @@
             <param name="id">Post ID</param>
             <returns>Success or failure</returns>
         </member>
+        <member name="M:Core.Api.SecurityController.GetUser">
+            <summary>
+            Get user authentication info
+            </summary>
+            <returns>User authentication object</returns>
+        </member>
         <member name="M:Core.Api.SettingsController.GetCultures">
             <summary>
             Get list of cultures
