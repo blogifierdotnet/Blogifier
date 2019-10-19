@@ -2,7 +2,7 @@
 using Core.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -192,6 +192,21 @@ namespace Core.Services
 
         public async Task SaveThemeData(ThemeDataModel model, bool isActive)
         {
+            if (!GetThemes().Contains(model.Theme))
+            {
+                var msg = $"Theme \"{model.Theme}\" does not exist";
+                _logger.LogError(msg);
+                throw new ApplicationException(msg);
+            }
+            try
+            {
+                var tmpObj = JContainer.Parse(model.Data);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new ApplicationException(ex.Message);
+            }
             string jsonFile = $"{AppSettings.WebRootPath}{_separator}themes{_separator}{model.Theme}{_separator}assets{_separator}{Constants.ThemeDataFile}";
             if (File.Exists(jsonFile))
             {
