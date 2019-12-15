@@ -6,26 +6,25 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 
 namespace App
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -96,39 +95,6 @@ namespace App
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
-            services.AddMvc()
-            .AddViewLocalization()
-            .ConfigureApplicationPartManager(p =>
-            {
-                foreach (var assembly in AppConfig.GetAssemblies())
-                {
-                    p.ApplicationParts.Add(new AssemblyPart(assembly));
-                }
-            })
-            .AddRazorPagesOptions(options =>
-            {
-                options.Conventions.AuthorizeFolder("/Admin");
-            })
-            .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly).AddControllersAsServices()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            if (Environment.IsDevelopment())
-            {
-                services.AddSwaggerGen(setupAction => {
-                    setupAction.SwaggerDoc("spec",
-                    new Microsoft.OpenApi.Models.OpenApiInfo()
-                    {
-                        Title = "Blogifier API",
-                        Version = "1"
-                    });
-                    setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
-                });
-            }
-            
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "wwwroot/themes/_active";
-            });
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options
@@ -136,6 +102,39 @@ namespace App
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                 );
+            });
+
+            services.AddControllersWithViews()
+                .AddViewLocalization()
+                .ConfigureApplicationPartManager(p =>
+                {
+                    foreach (var assembly in AppConfig.GetAssemblies())
+                    {
+                        p.ApplicationParts.Add(new AssemblyPart(assembly));
+                    }
+                });
+
+            if (Environment.IsDevelopment())
+            {
+                services.AddSwaggerGen(setupAction =>
+                {
+                    setupAction.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "Blogifier API",
+                        Version = "v1"
+                    });
+                    setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
+                });
+            }
+
+            services.AddRazorPages(
+                options => options.Conventions.AuthorizeFolder("/Admin")
+            );
+                                    
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "wwwroot/themes/_active";
             });
 
             services.AddAppServices();
@@ -151,7 +150,7 @@ namespace App
                 app.UseSwaggerUI(setupAction =>
                 {
                     setupAction.SwaggerEndpoint(
-                        "/swagger/spec/swagger.json",
+                        "/swagger/v1/swagger.json",
                         "Blogifier API"
                     );
                 });
@@ -166,15 +165,23 @@ namespace App
             AppSettings.WebRootPath = Environment.WebRootPath;
             AppSettings.ContentRootPath = Environment.ContentRootPath;
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseCors("AllowOrigin");
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Blog}/{action=Index}/{id?}");
+                    pattern: "{controller=Blog}/{action=Index}/{id?}"
+                );
+                endpoints.MapRazorPages();
             });
 
-            app.UseSpa(spa => { });
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+            });
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -48,7 +49,7 @@ namespace Core.Extensions
         {
             try
             {
-                services.Configure<RazorViewEngineOptions>(options =>
+                services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
                 {
                     foreach (var assembly in AppConfig.GetAssemblies(true))
                     {
