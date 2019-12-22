@@ -58,7 +58,7 @@ namespace App
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
             }
             
-            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
+            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Scoped);
 
             services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
