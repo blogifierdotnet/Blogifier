@@ -1,6 +1,6 @@
 ﻿using Core;
 using Core.Services;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -8,7 +8,7 @@ namespace App.Pages.Admin.Upgrade
 {
     public class UpgradeModel : AdminPageModel
     {
-        private IApplicationLifetime _app;
+        private IHostApplicationLifetime _app;
         private IWebService _ws;
         private IDataService _db;
 
@@ -16,7 +16,7 @@ namespace App.Pages.Admin.Upgrade
         public string OldVersion;
         public string NewVersion;
 
-        public UpgradeModel(IApplicationLifetime app, IWebService ws, IDataService db)
+        public UpgradeModel(IHostApplicationLifetime app, IWebService ws, IDataService db)
         {
             _app = app;
             _ws = ws;

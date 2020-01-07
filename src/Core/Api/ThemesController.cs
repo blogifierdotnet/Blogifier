@@ -18,7 +18,6 @@ namespace Core.Api
         IDataService _data;
         IStorageService _store;
         BlogItem _blog;
-        string slash = Path.DirectorySeparatorChar.ToString();
 
         public ThemesController(IDataService data, IStorageService store)
         {
@@ -141,7 +140,7 @@ namespace Core.Api
         {
             try
             {
-                var themeContent = $"{AppSettings.WebRootPath}{slash}themes{slash}{id.ToLower()}";
+                var themeContent = Path.Join(AppSettings.WebRootPath, "themes", id.ToLower());
                 try
                 {
                     if (Directory.Exists(themeContent))
@@ -170,9 +169,8 @@ namespace Core.Api
                 foreach (var themeTitle in themeList)
                 {
                     var theme = themeTitle.ToLower();
-                    var slash = Path.DirectorySeparatorChar.ToString();
-                    var file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}{Constants.ThemeScreenshot}";
-                    var data = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}assets{slash}{Constants.ThemeDataFile}";
+                    var file = Path.Join(AppSettings.WebRootPath, "themes", theme, Constants.ThemeScreenshot);
+                    var data = Path.Join(AppSettings.WebRootPath, "themes", theme, "assets", Constants.ThemeDataFile);
                     var item = new ThemeItem
                     {
                         Title = themeTitle,

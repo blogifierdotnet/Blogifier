@@ -16,7 +16,13 @@ namespace Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("SqlServer:ValueGenerationStrategy", 
+                               SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", 
+                                MySqlValueGenerationStrategy.IdentityColumn)
+                        .Annotation("Npgsql:ValueGenerationStrategy",
+                                NpgsqlValueGenerationStrategy.SerialColumn),
                     Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
