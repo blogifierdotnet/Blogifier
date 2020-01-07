@@ -42,6 +42,8 @@ namespace Core.Extensions
 
             services.AddTransient<UserManager<AppUser>>();
 
+            AddAppRepositories(services);
+
             return services;
         }
 
@@ -59,6 +61,18 @@ namespace Core.Extensions
                 });
             }
             catch { }
+        }
+
+        private static void AddAppRepositories(IServiceCollection services)
+        {
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
+            services.AddScoped<IHtmlWidgetRepository, HtmlWidgetRepository>();
+            services.AddScoped<INewsletterRepository, NewsletterRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
+            services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
         }
     }
 }

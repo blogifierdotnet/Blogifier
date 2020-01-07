@@ -19,16 +19,23 @@ namespace Core.Services
     {
         private readonly AppDbContext _db;
 
-        public DataService(AppDbContext db)
+        public DataService(
+            AppDbContext db,
+            IPostRepository postRepository,
+            IAuthorRepository authorRepository,
+            INotificationRepository notificationRepository,
+            IHtmlWidgetRepository htmlWidgetRepository,
+            ICustomFieldRepository customFieldRepository,
+            INewsletterRepository newsletterRepository)
         {
             _db = db;
 
-            BlogPosts = new PostRepository(_db);
-            Authors = new AuthorRepository(_db);
-            Notifications = new NotificationRepository(_db);
-            HtmlWidgets = new HtmlWidgetRepository(_db);
-            CustomFields = new CustomFieldRepository(_db);
-            Newsletters = new NewsletterRepository(_db);
+            BlogPosts = postRepository;
+            Authors = authorRepository;
+            Notifications = notificationRepository;
+            HtmlWidgets = htmlWidgetRepository;
+            CustomFields = customFieldRepository;
+            Newsletters = newsletterRepository;
         }
 
         public IPostRepository BlogPosts { get; private set; }
