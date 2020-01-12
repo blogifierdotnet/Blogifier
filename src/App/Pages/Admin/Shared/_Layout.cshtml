@@ -23,6 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Blogifier</title>
+    <base href="~/" />
     <link href="~/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/admin/css/fontawesome.min.css" rel="stylesheet">
     <link href="~/admin/css/styles.min.css" rel="stylesheet">
@@ -32,20 +33,25 @@
             border-color: #5A5;
             background: #EFE !important;
         }
-        .dirty:focus {
-            outline-color: #8E8;
-        }
+
+            .dirty:focus {
+                outline-color: #8E8;
+            }
+
         .error {
             border-color: red;
             background: #FDD !important;
         }
-        .error:focus {
-            outline-color: #F99;
-        }
-        .val-error { 
+
+            .error:focus {
+                outline-color: #F99;
+            }
+
+        .val-error {
             color: red;
             padding-top: 5px;
         }
+
         [v-cloak] {
             display: none;
         }
@@ -56,54 +62,54 @@
     <div class="bf">
         <ul class="bf-taskbar d-flex flex-lg-column">
             <li class="taskbar-item">
-                <a class="taskbar-item-link" href="~/admin/posts/edit" title="@Localizer["new-post"]">
+                <a class="taskbar-item-link" href="~/admin/posts/edit" title="@Localizer[" new-post"]">
                     <i class="taskbar-item-icon fas fa-plus"></i>
                 </a>
             </li>
             <li is-active-route asp-controller="posts" class="taskbar-item">
-                <a href="~/admin/posts" class="taskbar-item-link" title="@Localizer["posts"]">
+                <a href="~/admin/posts" class="taskbar-item-link" title="@Localizer[" posts"]">
                     <i class="taskbar-item-icon fas fa-align-left"></i>
                 </a>
             </li>
             @if (_isAdmin)
             {
-                <li is-active-route asp-controller="settings" class="taskbar-item">
-                    <a href="~/admin/settings" class="taskbar-item-link" title="@Localizer["settings"]">
-                        <i class="taskbar-item-icon fas fa-cog"></i>
-                    </a>
-                </li>
-                <li is-active-route asp-controller="themes" class="taskbar-item">
-                    <a href="~/admin/themes" class="taskbar-item-link" title="@Localizer["themes"]">
-                        <i class="taskbar-item-icon fas fa-palette"></i>
-                    </a>
-                </li>
-                <li is-active-route asp-controller="notifications" class="taskbar-item">
-                    <a href="~/admin/notifications" class="taskbar-item-link" title="@Localizer["notifications"]">
-                        <i class="taskbar-item-icon fas fa-envelope"></i>
-                    </a>
-                </li>
+            <li is-active-route asp-controller="settings" class="taskbar-item">
+                <a href="~/admin/settings" class="taskbar-item-link" title="@Localizer[" settings"]">
+                    <i class="taskbar-item-icon fas fa-cog"></i>
+                </a>
+            </li>
+            <li is-active-route asp-controller="themes" class="taskbar-item">
+                <a href="~/admin/themes" class="taskbar-item-link" title="@Localizer[" themes"]">
+                    <i class="taskbar-item-icon fas fa-palette"></i>
+                </a>
+            </li>
+            <li is-active-route asp-controller="notifications" class="taskbar-item">
+                <a href="~/admin/notifications" class="taskbar-item-link" title="@Localizer[" notifications"]">
+                    <i class="taskbar-item-icon fas fa-envelope"></i>
+                </a>
+            </li>
             }
             else
             {
-                <li is-active-route asp-controller="settings" asp-action="profile" class="taskbar-item">
-                    <a href="~/admin/settings/profile" class="taskbar-item-link" title="@Localizer["settings"]">
-                        <i class="taskbar-item-icon fas fa-cog"></i>
-                    </a>
-                </li>
+            <li is-active-route asp-controller="settings" asp-action="profile" class="taskbar-item">
+                <a href="~/admin/settings/profile" class="taskbar-item-link" title="@Localizer[" settings"]">
+                    <i class="taskbar-item-icon fas fa-cog"></i>
+                </a>
+            </li>
             }
             @if (_isAdmin)
             {
-                <li is-active-route asp-controller="about" class="taskbar-item">
-                    <a href="~/admin/about" class="taskbar-item-link" title="About">
-                        <i class="taskbar-item-icon fas fa-info-circle"></i>
-                    </a>
-                </li>
+            <li is-active-route asp-controller="about" class="taskbar-item">
+                <a href="~/admin/about" class="taskbar-item-link" title="About">
+                    <i class="taskbar-item-icon fas fa-info-circle"></i>
+                </a>
+            </li>
             }
             <li class="taskbar-item ml-auto ml-lg-0 mt-lg-auto">
-                <a class="taskbar-item-link" href="~/" return false; title="@Localizer["visit-blog"]" target="_blank"><i class="taskbar-item-icon fas fa-globe"></i></a>
+                <a class="taskbar-item-link" href="~/" return false; title="@Localizer[" visit-blog"]" target="_blank"><i class="taskbar-item-icon fas fa-globe"></i></a>
             </li>
             <li class="taskbar-item">
-                <a class="taskbar-item-link" href="#" onclick="document.getElementById('frmOut').submit()" title="@Localizer["sign-out"]"><i class="taskbar-item-icon fas fa-sign-out-alt"></i></a>
+                <a class="taskbar-item-link" href="#" onclick="document.getElementById('frmOut').submit()" title="@Localizer[" sign-out"]"><i class="taskbar-item-icon fas fa-sign-out-alt"></i></a>
             </li>
         </ul>
         <form method="post" id="frmOut" name="frmOut" asp-controller="Account" asp-action="Logout"></form>
@@ -123,6 +129,7 @@
     <script src="~/admin/js/app/app.js"></script>
     <script src="~/admin/js/app/dataService.js"></script>
     <script src="~/admin/js/app/notificationsController.js"></script>
+    <script src="_framework/blazor.server.js"></script>
     <script>
         var webRoot = '@Url.Content("~/")';
         function isAdmin(){

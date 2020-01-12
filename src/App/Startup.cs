@@ -127,11 +127,13 @@ namespace App
                     setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
                 });
             }
-
+                        
             services.AddRazorPages(
                 options => options.Conventions.AuthorizeFolder("/Admin")
             );
-                                    
+
+            services.AddServerSideBlazor();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/themes/_active";
@@ -176,6 +178,7 @@ namespace App
                     pattern: "{controller=Blog}/{action=Index}/{id?}"
                 );
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
 
             app.UseSpa(spa =>

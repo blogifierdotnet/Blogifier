@@ -1,0 +1,13 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@inject Core.Services.IDataService _data
+@{
+    ViewData["Title"] = Localizer["about"];
+    var blog = await _data.CustomFields.GetBlogSettings();
+}
+
+<div id="app" class="bf-content">
+    <div id="about-page" class="bf-posts-grid d-flex">
+        <component type="typeof(App.Components.Counter)" render-mode="ServerPrerendered" />
+    </div>
+</div>
