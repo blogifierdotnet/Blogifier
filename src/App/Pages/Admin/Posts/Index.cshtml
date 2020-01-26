@@ -36,7 +36,7 @@
         <div class="bf-posts-grid d-flex" aria-label="posts">
             <div v-for="post in pageList.posts" :key="post.id" class="post-grid-col">
                 <div class="post-grid-item">
-                    <a class="item-link" :href="'posts/edit?id=' + post.id" v-bind:style="{ backgroundImage: 'url(' + webRoot + post.cover + ')' }">
+                    <a class="item-link" :href="'admin/posts/edit?id=' + post.id" v-bind:style="{ backgroundImage: 'url(' + webRoot + post.cover + ')' }">
                         <div class="item-title mt-auto">{{post.title}}</div>
                     </a>
                     <div class="item-info d-flex align-items-center">
