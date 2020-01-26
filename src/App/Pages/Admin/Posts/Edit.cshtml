@@ -22,21 +22,21 @@
 
                     <div v-if="post.id === 0" id="action-buttons" class="mr-2">
                         <div class="btn-group">
-                            <button type="button" tabindex="3" v-on:click="save('P')" class="btn btn-sm btn-primary btn-rounded">@Localizer["publish"]</button>
+                            <button type="button" tabindex="3" v-on:click.prevent="save('P')" class="btn btn-sm btn-primary btn-rounded">@Localizer["publish"]</button>
                             <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" tabindex="5" href="#" v-on:click="save('S')">@Localizer["save"]</a>
+                                <a class="dropdown-item" tabindex="5" href="#" v-on:click.prevent="save('S')">@Localizer["save"]</a>
                             </div>
                         </div>
                     </div>
 
                     <div v-if="post.id > 0" id="action-buttons" class="mr-2">
                         <div class="btn-group">
-                            <button type="button" tabindex="3" v-on:click="save('S')" class="btn btn-sm btn-primary btn-rounded">@Localizer["save"]</button>
+                            <button type="button" tabindex="3" v-on:click.prevent="save('S')" class="btn btn-sm btn-primary btn-rounded">@Localizer["save"]</button>
                             <button type="button" tabindex="4" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(97px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a v-if="post.isPublished === false" class="dropdown-item" tabindex="5" href="#" v-on:click="publish()">@Localizer["publish"]</a>
-                                <a v-if="post.isPublished === true" class="dropdown-item" tabindex="5" href="#" v-on:click="unpublish()">@Localizer["unpublish"]</a>
+                                <a v-if="post.isPublished === false" class="dropdown-item" tabindex="5" href="#" v-on:click.prevent="publish()">@Localizer["publish"]</a>
+                                <a v-if="post.isPublished === true" class="dropdown-item" tabindex="5" href="#" v-on:click.prevent="unpublish()">@Localizer["unpublish"]</a>
                                 <a class="dropdown-item" tabindex="6" href="#" v-on:click="remove()">@Localizer["delete"]</a>
                             </div>
                         </div>

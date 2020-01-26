@@ -132,7 +132,7 @@ namespace App
                 options => options.Conventions.AuthorizeFolder("/Admin")
             );
 
-            services.AddServerSideBlazor();
+            //services.AddServerSideBlazor();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -178,7 +178,7 @@ namespace App
                     pattern: "{controller=Blog}/{action=Index}/{id?}"
                 );
                 endpoints.MapRazorPages();
-                endpoints.MapBlazorHub();
+                //endpoints.MapBlazorHub();
             });
 
             app.UseSpa(spa =>
