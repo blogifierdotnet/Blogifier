@@ -1,13 +1,20 @@
-﻿using Core.Data;
+﻿using Askmethat.Aspnet.JsonLocalizer.Extensions;
+using Core.Data;
 using Core.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
+using System;
+using System.Globalization;
+using System.IO;
 
 namespace Core.Extensions
 {
@@ -41,6 +48,87 @@ namespace Core.Extensions
 
             AddAppRepositories(services);
 
+            return services;
+        }
+
+        public static IServiceCollection AddDbProvider(this IServiceCollection services, IConfiguration configuration)
+        {
+            var section = configuration.GetSection("Blogifier");
+
+            services.AddAppSettings<AppItem>(section);
+
+            if (section.GetValue<string>("DbProvider") == "SqlServer")
+            {
+                AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
+            }
+            else if (section.GetValue<string>("DbProvider") == "MySql")
+            {
+                AppSettings.DbOptions = options => options.UseMySql(section.GetValue<string>("ConnString"));
+            }
+            else if (section.GetValue<string>("DbProvider") == "Postgres")
+            {
+                AppSettings.DbOptions = options => options.UseNpgsql(section.GetValue<string>("ConnString"));
+            }
+            else
+            {
+                AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
+            }
+
+            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Scoped);
+
+            return services;
+        }
+
+        public static IServiceCollection AddAppLocalization(this IServiceCollection services)
+        {
+            services.AddJsonLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("es-ES"),
+                    new CultureInfo("pt-BR"),
+                    new CultureInfo("ru-RU"),
+                    new CultureInfo("zh-cn"),
+                    new CultureInfo("zh-tw")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+            return services;
+        }
+
+        public static IServiceCollection AddSecurity(this IServiceCollection services)
+        {
+            services.AddIdentity<AppUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.User.AllowedUserNameCharacters = null;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+            return services;
+        }
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("v1",
+                new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Blogifier API",
+                    Version = "v1"
+                });
+                setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
+            });
             return services;
         }
 
