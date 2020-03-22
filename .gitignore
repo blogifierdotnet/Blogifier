@@ -233,7 +233,7 @@ _Pvt_Extensions
 
 PublishProfiles/
 
-**/Logs/*
+src/App/Logs
 
 package-lock.json
 

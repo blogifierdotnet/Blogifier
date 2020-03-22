@@ -15,15 +15,15 @@
                 <ul class="filter-group-list">
                     <li>
                         <label class="custom-control custom-radio filters-label">
-                            <input class="custom-control-input" type="radio" name="status-filter" id="status-filter" value="A" v-model="status" v-on:click="filter('A')">
+                            <input class="custom-control-input" type="radio" name="status-filter1" id="status-filter1" value="A" v-model="status" v-on:click="filter('A')">
                             <span class="custom-control-label">@Localizer["all"]</span>
                         </label>
                         <label class="custom-control custom-radio filters-label">
-                            <input class="custom-control-input" type="radio" name="status-filter" id="status-filter" value="P" v-model="status" v-on:click="filter('P')">
+                            <input class="custom-control-input" type="radio" name="status-filter2" id="status-filter2" value="P" v-model="status" v-on:click="filter('P')">
                             <span class="custom-control-label">@Localizer["published"]</span>
                         </label>
                         <label class="custom-control custom-radio filters-label">
-                            <input class="custom-control-input" type="radio" name="status-filter" id="status-filter" value="D" v-model="status" v-on:click="filter('D')">
+                            <input class="custom-control-input" type="radio" name="status-filter3" id="status-filter3" value="D" v-model="status" v-on:click="filter('D')">
                             <span class="custom-control-label">@Localizer["draft"]</span>
                         </label>
                     </li>
@@ -36,7 +36,7 @@
         <div class="bf-posts-grid d-flex" aria-label="posts">
             <div v-for="post in pageList.posts" :key="post.id" class="post-grid-col">
                 <div class="post-grid-item">
-                    <a class="item-link" :href="'posts/edit?id=' + post.id" v-bind:style="{ backgroundImage: 'url(' + webRoot + post.cover + ')' }">
+                    <a class="item-link" :href="'admin/posts/edit?id=' + post.id" v-bind:style="{ backgroundImage: 'url(' + webRoot + post.cover + ')' }">
                         <div class="item-title mt-auto">{{post.title}}</div>
                     </a>
                     <div class="item-info d-flex align-items-center">

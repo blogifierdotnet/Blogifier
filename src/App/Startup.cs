@@ -1,21 +1,13 @@
-﻿using Askmethat.Aspnet.JsonLocalizer.Extensions;
-using Core;
-using Core.Data;
+﻿using Core;
 using Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using System;
-using System.Globalization;
-using System.IO;
 
 namespace App
 {
@@ -37,61 +29,14 @@ namespace App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var section = Configuration.GetSection("Blogifier");
+            services.AddDbProvider(Configuration);
 
-            services.AddAppSettings<AppItem>(section);
-
-            if (section.GetValue<string>("DbProvider") == "SqlServer")
-            {
-                AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
-            }
-            else if (section.GetValue<string>("DbProvider") == "MySql")
-            {
-                AppSettings.DbOptions = options => options.UseMySql(section.GetValue<string>("ConnString"));
-            }
-            else if (section.GetValue<string>("DbProvider") == "Postgres")
-            {
-                AppSettings.DbOptions = options => options.UseNpgsql(section.GetValue<string>("ConnString"));
-            }
-            else
-            {
-                AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
-            }
-            
-            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
-
-            services.AddIdentity<AppUser, IdentityRole>(options => {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.User.AllowedUserNameCharacters = null;
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
+            services.AddSecurity();
 
             services.AddLogging(loggingBuilder =>
                 loggingBuilder.AddSerilog(dispose: true));
 
-            services.AddJsonLocalization();
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("es-ES"),
-                    new CultureInfo("pt-BR"),
-                    new CultureInfo("ru-RU"),
-                    new CultureInfo("zh-cn"),
-                    new CultureInfo("zh-tw")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
+            services.AddAppLocalization();
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -116,22 +61,15 @@ namespace App
 
             if (Environment.IsDevelopment())
             {
-                services.AddSwaggerGen(setupAction =>
-                {
-                    setupAction.SwaggerDoc("v1",
-                    new Microsoft.OpenApi.Models.OpenApiInfo()
-                    {
-                        Title = "Blogifier API",
-                        Version = "v1"
-                    });
-                    setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "CoreAPI.xml"));
-                });
+                services.AddSwagger();
             }
-
+                        
             services.AddRazorPages(
                 options => options.Conventions.AuthorizeFolder("/Admin")
             );
-                                    
+
+            //services.AddServerSideBlazor();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot/themes/_active";
@@ -176,6 +114,7 @@ namespace App
                     pattern: "{controller=Blog}/{action=Index}/{id?}"
                 );
                 endpoints.MapRazorPages();
+                //endpoints.MapBlazorHub();
             });
 
             app.UseSpa(spa =>
