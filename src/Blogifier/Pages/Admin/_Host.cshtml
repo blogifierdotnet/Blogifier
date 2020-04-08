@@ -1,0 +1,67 @@
+﻿@page "/admin"
+@namespace Blogifier.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogifier</title>
+    <base href="~/" />
+
+    <link href="~/admin/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/admin/css/admin.css" rel="stylesheet" />
+    <link href="~/admin/markdown/simplemde.min.css" rel="stylesheet" />
+    <link href="~/admin/css/prism.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="_content/Sotsera.Blazor.Toaster/toastr.min.css" rel="stylesheet" />
+    <link href="_content/Demo.BlazorChartist/chartist.min.css" rel="stylesheet" />
+    <link href="_content/Blogifier.Widgets/widgets.css" rel="stylesheet" />
+    <script src="~/admin/js/jquery.min.js"></script>
+    <script src="~/admin/js/popper.min.js"></script>
+    <script src="~/admin/js/bootstrap.min.js"></script>
+    <script src="~/admin/js/prism.js"></script>
+    <link rel="shortcut icon" href="~/admin/img/favicon.ico">
+</head>
+<body>
+
+    <app>
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </app>
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">??</a>
+    </div>
+
+    <div style="display:none;">
+        <form method="post" name="frmUpload" id="frmUpload" action="upload" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" onchange="fileManager.uploadSubmit(); return false;" />
+            <input type="submit" value="Upload" />
+        </form>
+    </div>
+
+    <script src="_content/Demo.BlazorChartist/BlazorChartist.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Blogifier.Widgets/widgets.js"></script>
+    <script src="~/admin/markdown/simplemde.min.js"></script>
+
+    <script src="~/admin/js/dataService.js"></script>
+    <script src="~/admin/js/fileManager.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function getUrl(str) { return webRoot + str; };
+    </script>
+
+</body>
+</html>

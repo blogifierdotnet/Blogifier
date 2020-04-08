@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="container-fluid">
+    <div class="row bf-row">
+        <div class="col-lg-3 order-lg-1 col-md-6 order-md-1 col-sm-12 bf-col"></div>
+        <div class="col-lg-6 order-lg-2 col-md-12 order-md-3 col-sm-12 bf-col">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 text-center">
+                        <span class="display-1 d-block">404</span>
+                        <div class="mb-4 lead">
+                            @Body
+                        </div>
+                        <a href="blog" class="btn btn-primary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 order-lg-3 col-md-6 order-md-2  col-sm-12 bf-col"></div>
+    </div>
+</div>
+<ToastContainer />

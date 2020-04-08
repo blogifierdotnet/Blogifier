@@ -1,10 +1,9 @@
-## What is Blogifier
+# Blogifier
+Blogifier is a single-user personal blog written in ASP.NET Core MVC and Blazor. It is small, easy to use and highly customizable 
+via theming engine and Blazor components.
 
-Blogifier is multi-user, lightweight blog written in .NET Core with Angular front-end. For programmers, it is easy maintain and extend and for designers, it is simple to customize using familiar tools.
-
-<!--- commented out until azure pipelines work with .net core 3.1
-[![Build Status](https://dev.azure.com/rtur/Blogifier/_apis/build/status/blogifierdotnet.Blogifier)](https://dev.azure.com/rtur/Blogifier/_build/latest?definitionId=3)
--->
+> If you are looking for a multi-user Angular version of Blogifier, please find it under [Blogifier.SPA](https://github.com/blogifierdotnet/Blogifier.SPA) repository.
+> Both versions are fully supported.
 
 ## System Requirements
 
@@ -15,26 +14,19 @@ Blogifier is multi-user, lightweight blog written in .NET Core with Angular fron
 
 ## Getting Started
 
-Blogifier is single blog supporting multiple authors. Administrator can manage common blog settings and create/remove regular users. Blog author can create and publish posts.
-
 1. Clone or download source code
 2. Run application in Visual Studio or using your code editor
-3. Use admin/admin to log in as admininstrator
-4. Use demo/demo to log in as regular user
+3. Use admin/admin to log in
 
-## Themes
+## Other Projects
 
-Source code for themes distributed with Blogifier  is in the [themes](https://github.com/blogifierdotnet/themes) project. 
-Themes are Angular CLI applications and developed independently.
+Blogifier uses `Blogifier.Widgets` and `Blogifier.Core` libraries hosted in this same 
+repository and published to `Nuget.org` package gallery.
 
-> Blogifier requires write permissions on `wwwroot/themes` folder to be able to switch themes in the admin panel.
+![blogifier-diagram](https://user-images.githubusercontent.com/1932785/78736463-d483c880-7912-11ea-93cd-ab75e6ee75a6.png)
 
 ## Demo site
 
-The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install. And no worries, it is just a sandbox and will clean itself.
+The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install.
 
-![demo](https://user-images.githubusercontent.com/1932785/60846983-d6afcf80-a1a6-11e9-9f45-2d747900e395.jpg)
-
-## Live blog
-
-Can also check out [developer's blog](http://rtur.net) running on Blogifier.
+![dashboard-3](https://user-images.githubusercontent.com/1932785/77836549-1481c900-7125-11ea-812f-9bd5343274f9.png)

@@ -21,19 +21,15 @@ Task("Build").IsDependentOn("Clean").Does(() =>
 			}
 		);
 	}
-	
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp3.1/Upgrade.dll", "./publish");
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp3.1/Upgrade.deps.json", "./publish");
-	CopyFileToDirectory("../src/Upgrade/bin/Release/netcoreapp3.1/Upgrade.runtimeconfig.json", "./publish");
 });
 
 Task("Test").IsDependentOn("Build").Does(() =>
 {
-	var projects = GetFiles("../tests/**/*.csproj");
-	foreach(var project in projects)
-	{
-		DotNetCoreTest(project.ToString());
-	}
+	//var projects = GetFiles("../tests/**/*.csproj");
+	//foreach(var project in projects)
+	//{
+	//	DotNetCoreTest(project.ToString());
+	//}
 });
 
 Task("Default").IsDependentOn("Test").Does(() =>
@@ -44,15 +40,15 @@ Task("Default").IsDependentOn("Test").Does(() =>
         Configuration = "Release",
         OutputDirectory = "./publish/"
     };
-    DotNetCorePublish("../src/App/App.csproj", settings);
+    DotNetCorePublish("../src/Blogifier/Blogifier.csproj", settings);
 
-	if(demo == "true")
-	{
-		var appjson = File("./publish/appsettings.json");
-		var fileContent = System.IO.File.ReadAllText(appjson);
-		fileContent = fileContent.Replace("\"DemoMode\": false", "\"DemoMode\": true"); 
-		System.IO.File.WriteAllText(appjson, fileContent);
-	}
+	//if(demo == "true")
+	//{
+	//	var appjson = File("./publish/appsettings.json");
+	//	var fileContent = System.IO.File.ReadAllText(appjson);
+	//	fileContent = fileContent.Replace("\"DemoMode\": false", "\"DemoMode\": true"); 
+	//	System.IO.File.WriteAllText(appjson, fileContent);
+	//}
 });
 
 RunTarget(target);

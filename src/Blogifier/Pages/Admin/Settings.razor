@@ -1,0 +1,117 @@
+﻿@page "/admin/settings"
+
+@inject IJsonStringLocalizer<Settings> Localizer
+
+<div class="container-fluid">
+
+    <div class="row bf-row">
+        <div class="col-lg-6 col-md-12 col-sm-12 bf-col">
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Settings</h4>
+                    <EditForm Model="@Model" OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <fieldset>
+                            <div>
+                                <label>@Localizer["title"]</label>
+                                <input type="text" @bind="Model.Title" name="title" />
+                            </div>
+                            <div>
+                                <label>@Localizer["description"]</label>
+                                <input type="text" @bind="Model.Description" name="description" />
+                            </div>
+                            <div>
+                                <label>@Localizer["items-per-page"]</label>
+                                <input type="text" @bind="Model.ItemsPerPage" name="pageitems" />
+                            </div>
+                            <div class="input-group">
+                                <label>@Localizer["logo"]</label>
+                                <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> Select</button>
+                                </span>
+                            </div>
+                            <div class="input-group">
+                                <label>@Localizer["cover"]</label>
+                                <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> Select</button>
+                                </span>
+                            </div>
+                            <div class="input-group">
+                                <label>@Localizer["language"]</label>
+                                <select @bind="Model.Culture">
+                                    @if (Cultures != null)
+                                    {
+                                        @foreach (var culture in Cultures)
+                                        {
+                                            <option value="@culture.Value">@culture.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>@Localizer["theme"]</label>
+                                <select @bind="Model.Theme">
+                                    @if (Themes != null)
+                                    {
+                                        @foreach (var theme in Themes)
+                                        {
+                                            <option value="@theme.Value">@theme.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>&nbsp;</label>
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </fieldset>
+                    </EditForm>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 bf-col">
+
+            <Disqus />
+
+            @*<SocialButtons />*@
+
+            <div class="card">
+                <div class="card-body">
+                    <h4>Information</h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><label>Blogifier.Blazor</label></td>
+                                <td>v.@BlazorVersion</td>
+                            </tr>
+                            <tr>
+                                <td><label>Blogifier.Core</label></td>
+                                <td>v.@AppSettings.Version</td>
+                            </tr>
+                            <tr>
+                                <td><label>Database</label></td>
+                                <td>@DbProviderName</td>
+                            </tr>
+                            <tr>
+                                <td><label>Root</label></td>
+                                <td>@AppSettings.ContentRootPath</td>
+                            </tr>
+                            <tr>
+                                <td><label>OS</label></td>
+                                <td>@AppSettings.OSDescription</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,35 @@
+﻿<header class="blog-header d-flex flex-column">
+    <div class="container d-flex">
+        <a href="~/blog" class="blog-logo my-auto d-flex">
+            <img src="~/themes/standard/img/logo-white.png" alt="Blog Title" class="my-auto" />
+        </a>
+        <ul class="blog-social nav ml-auto my-auto">
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://facebook.com/blogifierdotnet">
+                    <i class="blog-social-icon fa fa-facebook"></i>
+                </a>
+            </li>
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://twitter.com/blogifierdotnet">
+                    <i class="blog-social-icon fa fa-twitter"></i>
+                </a>
+            </li>
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://github.com/blogifierdotnet/Blogifier">
+                    <i class="blog-social-icon fa fa-github"></i>
+                </a>
+            </li>
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="feed/rss">
+                    <i class="blog-social-icon fa fa-rss"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="blog-search-toggle btn-unstyled" type="button" data-toggle="modal" data-target="#blog-search">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</header>
+@{
+    AppSettings.SiteRoot = Url.Content("~/");
+}
