@@ -1,0 +1,78 @@
+﻿<div class="card">
+    <div class="card-body">
+
+@if (Posts == null)
+{
+    <div class="loading">Loading...</div>
+}
+else
+{
+    <div class="input-group search">
+        <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="search">
+        <span class="input-group-append">
+            <button @onclick="(async () => await SearchPosts())" class="btn btn-secondary btn-search" type="button">
+                <span class="oi oi-magnifying-glass"></span>
+            </button>
+        </span>
+    </div>
+
+    @if(Posts == null || Posts.Count() == 0)
+    {
+        <div class="notfound">@Localizer["empty"]</div>
+    }
+
+    <ul class="bf-list bf-posts-list d-block" aria-label="posts">
+        @foreach (var post in Posts)
+        {
+            <li class="bf-list-item d-flex align-items-center">
+                @{
+                    string title = post.Title.Length < 60 ? post.Title : post.Title.Substring(0, 57) + "...";
+                    string pubStatus = post.IsPublished ? "published" : "draft";
+                    string pubDate = post.IsPublished ? post.Published.ToFriendlyShortDateString() : "Draft";
+                    string featured = post.Featured ? "fa-star" : "fa-star-o";
+                }
+                <a class="bf-list-item-link" href="" @onclick="(() => EditPost(post.Id))" @onclick:preventDefault>@title</a>
+                <span class="bf-list-item-date ml-3 d-none d-lg-block">@pubDate</span>
+                <span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" @onclick="(async () => await Publish(post.Id, post.IsPublished))" data-tooltip="" title="" data-original-title="published">
+                    <i class="fa fa-circle"></i>
+                </span>
+                <button class="btn-unstyled bf-list-item-favorite ml-3" @onclick="(async () => await Feature(post.Id, post.Featured))" data-tooltip="" title="" data-original-title="featured">
+                    <i class="fa @featured"></i>
+                </button>
+                <a href="posts/@post.Slug" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto" data-tooltip="" title="" data-original-title="link">
+                    <i class="fa fa-external-link"></i>
+                </a>              
+            </li>
+        }
+    </ul>
+
+    @if (Pager != null && (Pager.ShowOlder || Pager.ShowNewer))
+    {
+        <ul class="pagination justify-content-center">
+            @if (Pager.ShowOlder)
+            {
+                <li class="item item-prev">
+                    <a class="item-link" href="" @onclick="(async () => await LoadPosts(Pager.Older))" @onclick:preventDefault>
+                        <span class="item-icon oi oi-chevron-left" title="Older"></span>
+                    </a>
+                </li>
+            }
+            @if (Pager.ShowNewer)
+            {
+                <li class="item item-next">
+                    <a class="item-link" href="" @onclick="(async () => await LoadPosts(Pager.Newer))" @onclick:preventDefault>
+                        <span class="item-icon oi oi-chevron-right" title="Newer"></span>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+}
+
+    </div>
+</div>
+
+@if (Edit)
+{
+    <PostEditor PostId="@PostId" HideCallback="HideEditor" />
+}

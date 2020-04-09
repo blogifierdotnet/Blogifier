@@ -1,0 +1,38 @@
+﻿<div class="card welcome h-100">
+    <div class="card-body">
+        <div class="row">
+            <div class="col col-md-8 dash-cnt">
+                <div class="dash-clock">
+                    <span id="clock"></span><span id="ampm"></span>
+                </div>
+                <div>
+                    <span id="clock-day"></span>, <span id="clock-month"></span>
+                </div>
+            </div>
+            <div class="col col-md-4 dash-cnt">
+                <div class="add-new-container">
+                    <button class="btn add-new" @onclick="@(() => EditPost(0))"><span class="oi oi-plus"></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="row stats">
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@PostCount</h3>
+                <small>Posts</small>
+            </div>
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@ViewsCount</h3>
+                <small>Views</small>
+            </div>
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@DraftCount</h3>
+                <small>Drafts</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Edit)
+{
+    <PostEditor PostId="0" HideCallback="HideEditor" />
+}

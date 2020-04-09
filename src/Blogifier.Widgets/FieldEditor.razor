@@ -1,0 +1,12 @@
+﻿<div class="editor-modal-bg">
+    <div class="editor-modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">@FieldTitle</h4>
+            <div class="btn-group post-options" role="group" aria-label="Post options">
+                <button class="btn btn-secondary btn-rounded" @onclick="Save"><span class="oi oi-check"></span></button>
+                <button class="btn btn-secondary btn-rounded" @onclick="HideEditor"><span class="oi oi-x"></span></button>
+            </div>
+        </div>
+        <MdEditor Content="@FieldValue" />
+    </div>
+</div>

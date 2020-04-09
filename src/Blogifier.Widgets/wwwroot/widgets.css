@@ -1,0 +1,122 @@
+﻿
+.dash-cnt img {
+    width: 72px;
+}
+
+.dash-clock {
+    padding: 0 !important;
+    margin: 15px 0 3px 0 !important;
+    line-height: 1rem;
+}
+
+#clock {
+    font-size: 3.5em;
+    letter-spacing: -3px;
+    color: #666;
+    margin-left: 5px;
+}
+
+#ampm {
+    margin-left: 5px;
+}
+
+#clock-day, #clock-month {
+    font-size: .9em;
+    color: #666;
+}
+
+.dash-1 .card {
+    min-height: 190px;
+}
+
+.dash-1 h3 {
+    font-size: 1.3em;
+}
+
+#clock-date {
+    font-size: 1em;
+    font-weight: 600;
+    display: block;
+    margin: 10px 0;
+}
+
+.welcome h3 {
+    margin: 15px 0 0 0;
+}
+
+.dash-cnt {
+    text-align: center;
+}
+
+.dash-3 .card {
+    min-height: 300px !important;
+}
+
+.add-new-container {
+    padding: 5px;
+}
+
+.add-new-container .btn.add-new {
+    color: #fff;
+    background-color: #5731b3;
+    border-color: #1861ac;
+    padding: 10px 5px;
+    float: right;
+}
+
+.add-new-container .btn.add-new:hover {
+    border-color: #492997;
+    background-color: #492997;
+}
+
+
+.modal-profile {
+    padding: 20px;
+}
+
+.profile img {
+    width: 100px !important;
+    float: left;
+    margin-right: 10px;
+}
+
+.card.profile {
+    padding-top: 20px;
+}
+
+.card.profile h4 {
+    font-size: 1em;
+}
+
+.card.dash .btn.primary {
+    background-color: #666;
+    opacity: 0.7;
+    color: #FFF;
+    border: 1px solid #666;
+}
+
+.card.dash .btn.primary:hover {
+    opacity: 0.6;
+}
+
+.card.dash .btn.secondary {
+    color: #666;
+    border: 1px solid #888;
+}
+
+.card.dash .btn.secondary:hover {
+    background-color: #f8f2f2;
+}
+
+.profile p {
+    font-size: .8em;
+}
+
+.settings-table td {
+    font-size: .8em;
+    color: #666;
+}
+
+.settings-table label {
+    color: #333;
+}

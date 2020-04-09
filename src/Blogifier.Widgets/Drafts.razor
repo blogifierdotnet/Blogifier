@@ -1,0 +1,35 @@
+﻿@using Blogifier.Widgets
+
+<div class="card dash draft">
+    <div class="card-header">
+        @Localizer["draft"] 
+    </div>
+    <div class="card-body">
+        @if(Posts == null || Posts.Count() == 0)
+        {
+            <div class="notfound">@Localizer["empty"]</div>
+        }
+        <ul class="bf-list bf-posts-list d-block" aria-label="drafts">
+            @foreach (var post in Posts)
+            {
+                <li class="bf-list-item d-flex align-items-center">
+                    @{
+                        string title = post.Title.Length < 60 ? post.Title : post.Title.Substring(0, 57) + "...";
+                    }
+                    <a class="bf-list-item-link" href="" @onclick="@(() => EditPost(post.Id))" @onclick:preventDefault>@title</a>
+                    <span class="bf-list-item-status bf-list-item-status-draft ml-auto" @onclick="@(() => Publish(post.Id))" data-tooltip="" title="" data-original-title="draft">
+                        <i class="fa fa-circle"></i>
+                    </span>
+                    <a href="posts/@post.Slug" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto" data-tooltip="" title="" data-original-title="link">
+                        <i class="fa fa-external-link"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@if (Edit)
+{
+   <PostEditor PostId="@PostId" HideCallback="HideEditor" />
+}

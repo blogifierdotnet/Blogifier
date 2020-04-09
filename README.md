@@ -20,11 +20,10 @@ via theming engine and Blazor components.
 
 ## Other Projects
 
-Blogifier uses `Blogifier.Widgets` and `Blogifier.Core` libraries hosted in this same 
+Blogifier uses `Blogifier.Core` library hosted in this same 
 repository and published to `Nuget.org` package gallery.
 
-![blogifier-diagram](https://user-images.githubusercontent.com/1932785/78736463-d483c880-7912-11ea-93cd-ab75e6ee75a6.png)
-
+![blogifier-diagram](https://user-images.githubusercontent.com/1932785/78852494-1465b100-79e2-11ea-81f4-2d7c51f89702.png)
 ## Demo site
 
 The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install.
