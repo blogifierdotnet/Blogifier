@@ -177,6 +177,11 @@ app {
     margin-left: 5px;
 }
 
+.btn-remove .fa {
+    color: red;
+    font-size: 1.2em;
+}
+
 .bf-posts-list {
     padding-left: 0;
 }

@@ -67,6 +67,27 @@ namespace Blogifier.Controllers
             return View($"~/Views/Themes/{blog.Theme}/List.cshtml", model);
         }
 
+        [HttpGet("categories/{name}")]
+        public async Task<IActionResult> Categories(string name, int page = 1)
+        {
+            var blog = await DataService.CustomFields.GetBlogSettings();
+            var model = new ListModel
+            {
+                Blog = blog,
+                PostListType = PostListType.Category
+            };
+            var pgr = new Pager(page, blog.ItemsPerPage);
+
+            model.Posts = await DataService.BlogPosts.GetList(p => p.Categories.Contains(name), pgr);
+
+            if (pgr.ShowOlder) pgr.LinkToOlder = $"?page={pgr.Older}";
+            if (pgr.ShowNewer) pgr.LinkToNewer = $"?page={pgr.Newer}";
+
+            model.Pager = pgr;
+
+            return View($"~/Views/Themes/{blog.Theme}/List.cshtml", model);
+        }
+
         [HttpPost]
         public IActionResult Search(string term)
         {
@@ -185,6 +206,28 @@ namespace Blogifier.Controllers
             }
 
             return Json(new { asset.Url });
+        }
+
+        [HttpPost]
+        public IActionResult Subscribe(string email)
+        {
+            if (!string.IsNullOrEmpty(email) && email.IsEmail())
+            {
+                try
+                {
+                    var existing = DataService.Newsletters.Single(n => n.Email == email);
+                    if (existing == null)
+                    {
+                        DataService.Newsletters.Add(new Newsletter { Email = email });
+                        DataService.Complete();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Ok(ex.Message);
+                }
+            }
+            return Ok();
         }
 
         [HttpGet("account/logout")]

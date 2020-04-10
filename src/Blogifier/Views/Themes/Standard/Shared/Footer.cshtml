@@ -10,6 +10,26 @@
     </div>
 </div>
 
+<div class="page-content">
+    <div class="container" id="newsletter">
+        <div class="jumbotron" id="newsletter-form">
+            <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">Thank you!</h2>
+            <form id="frmNewsletter">
+                <div class="form-group">
+                    <h2 class="newsletter-title">Newsletter</h2>
+                    <div class="form-group">
+                        <input class="form-control" id="txtEmail" name="txtEmail" placeholder="Enter Email" type="text">
+                    </div>
+                    <small class="form-text text-muted" id="emailHelp">
+                        Join our subscribers list to get the latest news and updates directly in your inbox.
+                    </small>
+                </div>
+                <button id="blog-subscribe" class="btn btn-subscribe btn-rounded btn-dark">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <footer class="blog-footer">
     <div class="container d-lg-flex text-center text-lg-left">
         <p>Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
@@ -31,3 +51,4 @@
 <script src="~/themes/standard/js/bootstrap.min.js"></script>
 <script src="~/themes/standard/js/prism.js"></script>
 <script src="~/themes/standard/js/blog.js" asp-append-version="true"></script>
+<script src="~/admin/js/newsletter.js" asp-append-version="true"></script>
