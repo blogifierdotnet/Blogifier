@@ -53,7 +53,7 @@ namespace Blogifier.Widgets
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
                 Pager = new Pager(1, blog.ItemsPerPage);
-                Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, "P");
+                Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, "F,P");
 
                 if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
                 if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";
@@ -66,7 +66,7 @@ namespace Blogifier.Widgets
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
                 Pager = new Pager(page, blog.ItemsPerPage);
-                Posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue && !p.IsFeatured, Pager);
+                Posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, Pager);
 
                 if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
                 if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";

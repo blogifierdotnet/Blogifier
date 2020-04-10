@@ -437,6 +437,17 @@ select {
 .modal-actions .btn-secondary {
     background-color: transparent !important;
     border: none !important;
+    font-weight: 600;
+    font-size: 1em !important;
+}
+
+.btn-post-group {
+    margin-top: 5px;
+}
+
+.btn-post-group a {
+    font-size: .9em;
+    font-weight: 600;
 }
 
 .modal-actions .btn-secondary span.oi {

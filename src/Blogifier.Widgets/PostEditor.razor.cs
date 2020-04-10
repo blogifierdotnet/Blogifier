@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core;
 using Blogifier.Core.Data;
+using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -89,12 +90,27 @@ namespace Blogifier.Widgets
                         await DataService.BlogPosts.SaveItem(item);
                     }
                     Toaster.Success("Saved");
+                    StateHasChanged();
                 }               
             }
             catch (Exception ex)
             {
                 Toaster.Error(ex.Message);
             }
+        }
+
+        protected async Task Publish()
+        {
+            Post.Published = SystemClock.Now();
+            await OnUpdate.InvokeAsync("publish");
+            await Save();
+        }
+
+        protected async Task Unpublish()
+        {
+            Post.Published = DateTime.MinValue;
+            await OnUpdate.InvokeAsync("unpublish");
+            await Save();
         }
 
         protected async Task Remove(int id)
