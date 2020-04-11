@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sotsera.Blazor.Toaster.Core.Models;
+using Serilog;
+using Serilog.Events;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Blogifier
 {
@@ -14,6 +17,10 @@ namespace Blogifier
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+              .Enrich.FromLogContext()
+              .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
+              .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -24,9 +31,11 @@ namespace Blogifier
             services.AddBlogSecurity();
             services.AddBlogLocalization();
 
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllersWithViews()
-                .AddViewLocalization(); 
+            services.AddControllersWithViews().AddViewLocalization(); 
             
             services.AddRazorPages(options => 
                 options.Conventions.AuthorizeFolder("/Admin")

@@ -42,13 +42,13 @@ Task("Default").IsDependentOn("Test").Does(() =>
     };
     DotNetCorePublish("../src/Blogifier/Blogifier.csproj", settings);
 
-	//if(demo == "true")
-	//{
-	//	var appjson = File("./publish/appsettings.json");
-	//	var fileContent = System.IO.File.ReadAllText(appjson);
-	//	fileContent = fileContent.Replace("\"DemoMode\": false", "\"DemoMode\": true"); 
-	//	System.IO.File.WriteAllText(appjson, fileContent);
-	//}
+	if(demo == "true")
+	{
+		var appjson = File("./publish/appsettings.json");
+		var fileContent = System.IO.File.ReadAllText(appjson);
+		fileContent = fileContent.Replace("\"DemoMode\": false", "\"DemoMode\": true"); 
+		System.IO.File.WriteAllText(appjson, fileContent);
+	}
 });
 
 RunTarget(target);

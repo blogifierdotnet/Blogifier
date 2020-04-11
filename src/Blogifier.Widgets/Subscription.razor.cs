@@ -5,9 +5,7 @@ using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Sotsera.Blazor.Toaster;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
@@ -31,7 +29,7 @@ namespace Blogifier.Widgets
 
         public async Task GetSubscriptions(int page = 1)
         {
-            var pager = new Pager(page, 5);
+            var pager = new Pager(page);
             IEnumerable<Newsletter> items;
 
             items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
@@ -60,7 +58,7 @@ namespace Blogifier.Widgets
             }
             else
             {
-                var pager = new Pager(page, 5);
+                var pager = new Pager(page);
                 IEnumerable<Newsletter> items;
 
                 items = await DataService.Newsletters.GetList(e => e.Email.Contains(SearchTerm), pager);

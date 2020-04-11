@@ -1,7 +1,10 @@
 ﻿using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace Blogifier.Controllers
@@ -9,10 +12,14 @@ namespace Blogifier.Controllers
     public class NewsletterController : Controller
     {
         protected IDataService DataService;
+        protected ILogger Logger;
+        protected IHttpContextAccessor Accessor;
 
-        public NewsletterController(IDataService dataService)
+        public NewsletterController(IDataService dataService, ILogger<NewsletterController> logger, IHttpContextAccessor accessor)
         {
             DataService = dataService;
+            Logger = logger;
+            Accessor = accessor;
         }
 
         [HttpPost]
@@ -25,6 +32,8 @@ namespace Blogifier.Controllers
                     var existing = DataService.Newsletters.Single(n => n.Email == letter.Email);
                     if (existing == null)
                     {
+                        //var ip = Accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                        //Logger.LogWarning($"User ip: {ip}");
                         DataService.Newsletters.Add(new Newsletter { Email = letter.Email });
                         DataService.Complete();
                     }

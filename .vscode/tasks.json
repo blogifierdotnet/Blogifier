@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/App/App.csproj"
+                "${workspaceFolder}/src/Blogifier/Blogifier.csproj"
             ],
             "problemMatcher": "$msCompile",
             "group": {
