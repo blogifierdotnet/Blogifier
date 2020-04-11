@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <None Include="wwwroot\icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

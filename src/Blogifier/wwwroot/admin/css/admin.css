@@ -487,6 +487,41 @@ select {
     border: none !important;
 }
 
+/* newsletter */
+
+#newsletter-tab {
+    margin-bottom: 1px;
+    margin-left: 10px;
+    border-bottom: none;
+}
+
+#newsletter-tab a {
+    color: #888;
+    font-weight: 600;
+    font-size: .9em;
+    text-transform: uppercase;
+}
+
+#newsletter-tab .nav-link {
+    border: none;
+    border-bottom: 3px solid #FFF;
+}
+
+#newsletter-tab .nav-link.active {
+    color: #666;
+    margin-bottom: 0;
+    border-bottom: 3px solid #5731b3;
+}
+
+#newsletter-tab .nav-link:hover {
+    color: #666;
+    border-bottom: 3px solid #5731b3;
+}
+
+.tab-subscription .card-body {
+    margin: 20px;
+}
+
 /* text editor */
 
 .editor-toolbar.fullscreen {

@@ -635,5 +635,41 @@
       "en-US": "Sorry, something went wrong or there's nothing at this address.",
       "ru-RU": "Страница не найдена или произошла ошибка."
     }
+  },
+  "send": {
+    "Values": {
+      "en-US": "Send",
+      "ru-RU": "Отправить"
+    }
+  },
+  "send-to": {
+    "Values": {
+      "en-US": "Send to",
+      "ru-RU": "Получатель"
+    }
+  },
+  "subject": {
+    "Values": {
+      "en-US": "Subject",
+      "ru-RU": "Тема"
+    }
+  },
+  "content": {
+    "Values": {
+      "en-US": "Content",
+      "ru-RU": "Содержание"
+    }
+  },
+  "completed": {
+    "Values": {
+      "en-US": "Completed",
+      "ru-RU": "Закончил"
+    }
+  },
+  "email-test-msg": {
+    "Values": {
+      "en-US": "Here you can verify newsletter settings by sending test email",
+      "ru-RU": "Здесь можно протестировать работу почтового сервиса"
+    }
   }
 }
