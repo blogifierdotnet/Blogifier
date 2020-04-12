@@ -30,9 +30,7 @@ namespace Blogifier.Widgets
         public async Task GetSubscriptions(int page = 1)
         {
             var pager = new Pager(page);
-            IEnumerable<Newsletter> items;
-
-            items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+            var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
 
             Model = new NewsletterModel
             {

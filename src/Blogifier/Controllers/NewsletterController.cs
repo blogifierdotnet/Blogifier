@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core;
 using Blogifier.Core.Data;
+using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,9 +33,13 @@ namespace Blogifier.Controllers
                     var existing = DataService.Newsletters.Single(n => n.Email == letter.Email);
                     if (existing == null)
                     {
-                        //var ip = Accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-                        //Logger.LogWarning($"User ip: {ip}");
-                        DataService.Newsletters.Add(new Newsletter { Email = letter.Email });
+                        var newLetter = new Newsletter
+                        {
+                            Email = letter.Email,
+                            Ip = Accessor.HttpContext.Connection.RemoteIpAddress.ToString(),
+                            Created = SystemClock.Now()
+                        };
+                        DataService.Newsletters.Add(newLetter);
                         DataService.Complete();
                     }
                 }
