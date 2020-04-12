@@ -21,19 +21,42 @@
             <div class="btn-group post-options" role="group" aria-label="Post options">
 
                 <div class="btn-group btn-post-group">
-                    <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Save">@Localizer["save"]</button>
+                    @if (Post.Id == 0)
+                    {
+                        <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Publish">@Localizer["publish"]</button>
+                    }
+                    else
+                    {
+                        if (Post.Published > DateTime.MinValue)
+                        {
+                            <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Save">@Localizer["save"]</button>
+                        }
+                        else
+                        {
+                            <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Publish">@Localizer["publish"]</button>
+                        }
+                    }
                     <button type="button" tabindex="4" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                    @if (Post.Published > DateTime.MinValue)
+                    @if (Post.Id == 0)
                     {
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" tabindex="5" href="" @onclick="Unpublish" @onclick:preventDefault>@Localizer["unpublish"]</a>
+                            <a class="dropdown-item" tabindex="5" href="" @onclick="Save" @onclick:preventDefault>@Localizer["save"]</a>
                         </div>
                     }
                     else
                     {
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" tabindex="5" href="" @onclick="Publish" @onclick:preventDefault>@Localizer["publish"]</a>
-                        </div>
+                        if (Post.Published > DateTime.MinValue)
+                        {
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" tabindex="5" href="" @onclick="Unpublish" @onclick:preventDefault>@Localizer["unpublish"]</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" tabindex="5" href="" @onclick="Save" @onclick:preventDefault>@Localizer["save"]</a>
+                            </div>
+                        }
                     }
                 </div>
 

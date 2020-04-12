@@ -36,7 +36,9 @@ namespace Blogifier.Controllers
                         var newLetter = new Newsletter
                         {
                             Email = letter.Email,
-                            Ip = Accessor.HttpContext.Connection.RemoteIpAddress.ToString(),
+                            Ip = string.IsNullOrEmpty(letter.Ip) 
+                                ? Accessor.HttpContext.Connection.RemoteIpAddress.ToString() 
+                                : letter.Ip,
                             Created = SystemClock.Now()
                         };
                         DataService.Newsletters.Add(newLetter);
