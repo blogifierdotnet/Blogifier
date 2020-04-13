@@ -666,10 +666,16 @@
       "ru-RU": "Закончил"
     }
   },
-  "email-test-msg": {
+  "email-info": {
     "Values": {
       "en-US": "Here you can verify newsletter settings by sending test email",
       "ru-RU": "Здесь можно протестировать работу почтового сервиса"
+    }
+  },
+  "disqus-info": {
+    "Values": {
+      "en-US": "Here you can enter or update script to add Disqus comments",
+      "ru-RU": "Скрипт для подключения Disqus комментариев"
     }
   }
 }

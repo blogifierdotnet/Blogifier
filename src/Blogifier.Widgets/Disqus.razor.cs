@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Services;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Sotsera.Blazor.Toaster;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace Blogifier.Widgets
     {
         [Inject]
         protected IDataService DataService { get; set; }
+        [Inject]
+        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 

@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sotsera.Blazor.Toaster.Core.Models;
 using Serilog;
 using Serilog.Events;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.HttpOverrides;
+using Sotsera.Blazor.Toaster.Core.Models;
 
 namespace Blogifier
 {
@@ -28,14 +26,11 @@ namespace Blogifier
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ForwardedHeadersOptions>(options => { options.ForwardedHeaders = ForwardedHeaders.All; });
-
             services.AddBlogDatabase(Configuration);
             services.AddBlogSecurity();
             services.AddBlogLocalization();
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews().AddViewLocalization(); 
@@ -47,7 +42,7 @@ namespace Blogifier
 
             services.AddServerSideBlazor();
 
-            services.AddHttpContextAccessor();
+            //services.AddHttpContextAccessor();
             
             services.AddToaster(config =>
             {
@@ -72,11 +67,6 @@ namespace Blogifier
 
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;
-
-            var forwardOpts = new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All };
-            forwardOpts.KnownNetworks.Clear();
-            forwardOpts.KnownProxies.Clear();
-            app.UseForwardedHeaders(forwardOpts);
 
             app.UseCookiePolicy();
             app.UseAuthentication();

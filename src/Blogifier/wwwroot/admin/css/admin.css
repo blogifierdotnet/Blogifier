@@ -15,6 +15,10 @@ app {
     flex-direction: column;
 }
 
+.components-reconnect-show, .components-reconnect-failed, .components-reconnect-rejected {
+    display: none;
+}
+
 /* layout */
 
 .bf-row {
@@ -385,6 +389,10 @@ select {
     height: 2.5rem;
 }
 
+.txt-upload {
+    margin-bottom: 1rem !important;
+}
+
 .save-profile {
     margin-top: 20px;
 }
@@ -518,8 +526,8 @@ select {
     border-bottom: 3px solid #5731b3;
 }
 
-.tab-subscription .card-body {
-    margin: 20px;
+.tab-subscription fieldset {
+    padding: 5px !important;
 }
 
 /* text editor */

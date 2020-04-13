@@ -62,11 +62,11 @@
 
                 @if (Post.Id > 0)
                 {
-                    <button class="btn btn-secondary btn-danger" @onclick="(() => Remove(Post.Id))">
+                    <button tabindex="5" class="btn btn-secondary btn-danger" @onclick="(() => Remove(Post.Id))">
                         <span class="oi oi-trash"></span>
                     </button>
                 }
-                <button class="btn btn-secondary btn-close" @onclick="() => HideCallback.InvokeAsync(string.Empty)">
+                <button tabindex="6" class="btn btn-secondary btn-close" @onclick="() => HideCallback.InvokeAsync(string.Empty)">
                     <span class="oi oi-x"></span>
                 </button>
             </div>

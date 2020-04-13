@@ -2,3 +2,10 @@ body,html{height:100%}a{color:#5731b3}a:focus,a:hover{color:#704acd;text-decorat
 .jumbotron {
     padding: 2rem 4rem !important;
 }
+#newsletter-form {
+    height: 240px;
+}
+#ttlNewsletter {
+    position: relative;
+    top: 60px;
+}

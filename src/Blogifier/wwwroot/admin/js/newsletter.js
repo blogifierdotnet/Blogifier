@@ -29,7 +29,7 @@ var subscribe = function (url, email) {
     }); 
 }
 
-var done = function (data) {   
-    $('#frmNewsletter').fadeOut();
-    $('#ttlNewsletter').fadeIn();
+var done = function (data) {
+    $('#frmNewsletter').slideUp();
+    $('#ttlNewsletter').slideDown();
 }

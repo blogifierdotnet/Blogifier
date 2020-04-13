@@ -12,10 +12,27 @@
     {
         <li class="bf-list-item d-flex align-items-center">
             @{
+                string title = letter.Email;
+                var ipAr = letter.Ip.Split('|');
+                if(ipAr.Length == 3)
+                {
+                    if (AppSettings.DemoMode)
+                    {
+                        title = $"{title} - {ipAr[1]}, {ipAr[2]}";
+                    }
+                    else
+                    {
+                        title = $"{title} - {ipAr[0]} - {ipAr[1]}, {ipAr[2]}";
+                    }
+                }
+                else
+                {
+                    title = $"{title} {letter.Ip}";
+                }
                 string pubStatus = "published";
                 string pubDate = letter.Created > DateTime.MinValue ? letter.Created.ToFriendlyShortDateString() : "n/a";
             }
-            <span class="bf-list-item-link">@letter.Email</span>
+            <span class="bf-list-item-link">@title</span>
             <span class="bf-list-item-date ml-3 d-none d-lg-block">@pubDate</span>
             <span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" title="" data-original-title="published">
                 <i class="fa fa-circle"></i>
