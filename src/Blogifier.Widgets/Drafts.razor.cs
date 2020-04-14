@@ -27,6 +27,8 @@ namespace Blogifier.Widgets
         [Inject]
         protected IConfiguration Configuration { get; set; }
         [Inject]
+        public NavigationManager NavigationManager { get; set; }
+        [Inject]
         protected IToaster Toaster { get; set; }
 
         protected int PostId { get; set; }
@@ -68,10 +70,11 @@ namespace Blogifier.Widgets
                             var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
                             var emails = items.Select(i => i.Email).ToList();
                             var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
-                            int count = await EmailService.SendNewsletters(blogPost, emails, "http://blogifier.net");
+
+                            int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
                             if (count > 0)
                             {
-                                Toaster.Success($"Sent {count} newsletters");
+                                Toaster.Success(string.Format(Localizer["email-sent-count"], count));
                             }
                         }
                     }

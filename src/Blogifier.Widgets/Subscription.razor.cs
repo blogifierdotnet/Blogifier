@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Data;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core.Data;
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
@@ -13,9 +14,9 @@ namespace Blogifier.Widgets
     public partial class Subscription : ComponentBase
     {
         [Inject]
-        protected AppDbContext DbContext { get; set; }
-        [Inject]
         protected IDataService DataService { get; set; }
+        [Inject]
+        protected IJsonStringLocalizer<Subscription> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 

@@ -35,8 +35,16 @@ namespace Blogifier.Widgets
 
         protected async Task Send()
         {
-            await EmailService.SendEmail(Model.SendTo, Model.Subject, Model.Content);
-            Toaster.Success(Localizer["completed"]);
+            if (AppSettings.DemoMode)
+            {
+                Toaster.Info(Localizer["demo-disabled"]);
+            }
+            else
+            {
+                bool result = await EmailService.SendEmail(Model.SendTo, Model.Subject, Model.Content);
+                if (result) Toaster.Success(Localizer["email-sent-success"]);
+                else Toaster.Error(Localizer["email-sent-error"]);
+            }
         }
     }
 

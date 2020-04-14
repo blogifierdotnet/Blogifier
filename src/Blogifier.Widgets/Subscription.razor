@@ -8,6 +8,10 @@
 </div>
 
 <ul class="bf-list bf-posts-list d-block" aria-label="posts">
+    @if (!Model.Emails.Any())
+    {
+        <li class="bf-list-item d-flex align-items-center">@Localizer["not-found"]</li>
+    }
     @foreach (var letter in Model.Emails)
     {
         <li class="bf-list-item d-flex align-items-center">

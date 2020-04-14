@@ -26,6 +26,6 @@
             <label>@Localizer["content"]</label>
             <input class="form-control" type="text" @bind="Model.Content" />
         </div>
-        <button @onclick="(async () => await Send())" class="btn btn-primary btn-main">@Localizer["send"]</button>
+        <button type="submit" class="btn btn-primary btn-main">@Localizer["send"]</button>
     </fieldset>
 </EditForm>

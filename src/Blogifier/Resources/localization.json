@@ -677,5 +677,29 @@
       "en-US": "Here you can enter or update script to add Disqus comments",
       "ru-RU": "Скрипт для подключения Disqus комментариев"
     }
+  },
+  "demo-disabled": {
+    "Values": {
+      "en-US": "Disabled in the demo mode",
+      "ru-RU": "Функция отключена в режиме демонстрации"
+    }
+  },
+  "email-sent-success": {
+    "Values": {
+      "en-US": "Email sent successfully",
+      "ru-RU": "Почта отправлена успешно"
+    }
+  },
+  "email-sent-error": {
+    "Values": {
+      "en-US": "Error sending email, check logs for details",
+      "ru-RU": "Ошибка при отправке почты, подробности в логе"
+    }
+  },
+  "email-sent-count": {
+    "Values": {
+      "en-US": "Sent {0} newsletters",
+      "ru-RU": "Отправлено {0} сообщений"
+    }
   }
 }
