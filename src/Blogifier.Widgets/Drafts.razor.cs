@@ -4,6 +4,7 @@ using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using Sotsera.Blazor.Toaster;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Blogifier.Widgets
         protected IEmailService EmailService { get; set; }
         [Inject]
         IJsonStringLocalizer<Drafts> Localizer { get; set; }
+        [Inject]
+        protected IConfiguration Configuration { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 
@@ -55,17 +58,25 @@ namespace Blogifier.Widgets
                 if (!AppSettings.DemoMode)
                 {
                     // send newsletters on post publish
-                    var pager = new Pager(1, 10000);
-                    var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
-                    var emails = items.Select(i => i.Email).ToList();
-                    var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
-                    await EmailService.SendNewsletters(blogPost, emails, "http://blogifier.net");
-                    Toaster.Success("Published, sending newsletters");
+                    var section = Configuration.GetSection(Constants.ConfigSectionKey);
+                    if (section != null)
+                    {
+                        var apiKey = section.GetValue<string>("SendGridApiKey");
+                        if (!string.IsNullOrEmpty(apiKey) && apiKey != "YOUR-SENDGRID-API-KEY")
+                        {
+                            var pager = new Pager(1, 10000);
+                            var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+                            var emails = items.Select(i => i.Email).ToList();
+                            var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+                            int count = await EmailService.SendNewsletters(blogPost, emails, "http://blogifier.net");
+                            if (count > 0)
+                            {
+                                Toaster.Success($"Sent {count} newsletters");
+                            }
+                        }
+                    }
                 }
-                else
-                {
-                    Toaster.Success("Saved");
-                }
+                Toaster.Success("Saved");
 
                 await OnUpdate.InvokeAsync("publish");
                 StateHasChanged();
