@@ -26,23 +26,26 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
+        protected IEmailService EmailService { get; set; }
+        [Inject]
         protected IJSRuntime JSRuntime { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 
         protected string Cover { get; set; }
-        protected BlogPost Post { get; set; }
+        protected PostItem Post { get; set; }
+        private PostAction Action = PostAction.Save;
 
         protected override async Task OnInitializedAsync()
         {
             if (PostId > 0)
             {
-                Post = DataService.BlogPosts.Find(p => p.Id == PostId).FirstOrDefault();
+                Post = await DataService.BlogPosts.GetItem(p => p.Id == PostId);
             }
             else
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
-                Post = new BlogPost { Cover = blog.Cover, Content = "", Title = "" };
+                Post = new PostItem { Cover = blog.Cover, Content = "", Title = "" };
             }
             Cover = $"background-image: url({AppSettings.SiteRoot}{Post.Cover})";
             StateHasChanged();
@@ -65,20 +68,19 @@ namespace Blogifier.Widgets
                 }
                 else
                 {
+                    PostItem saved;
                     if (Post.Id == 0)
                     {
                         var authState = await AuthenticationStateTask;
                         var author = await DataService.Authors.GetItem(
                             a => a.AppUserName == authState.User.Identity.Name);
 
-                        Post.AuthorId = author.Id;
+                        Post.Author = author;
                         Post.Slug = Post.Title.ToSlug();
                         Post.Description = Post.Title;
 
-                        await OnUpdate.InvokeAsync("add");
-
-                        DataService.BlogPosts.Add(Post);
-                        DataService.Complete();
+                        saved = await DataService.BlogPosts.SaveItem(Post);
+                        await OnUpdate.InvokeAsync("add"); 
                     }
                     else
                     {
@@ -86,15 +88,39 @@ namespace Blogifier.Widgets
 
                         item.Content = Post.Content;
                         item.Title = Post.Title;
+                        item.Description = Post.Description;
+                        item.Categories = Post.Categories;
 
-                        await DataService.BlogPosts.SaveItem(item);
+                        if(Action == PostAction.Unpublish)
+                            item.Published = DateTime.MinValue;
+
+                        saved = await DataService.BlogPosts.SaveItem(item);
                     }
-                    Toaster.Success("Saved");
+                    DataService.Complete();
+
+                    if (Action == PostAction.Publish && !AppSettings.DemoMode)
+                    {
+                        // send newsletters on post publish
+                        var pager = new Pager(1, 10000);
+                        var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+                        var emails = items.Select(i => i.Email).ToList();
+                        var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+                        await EmailService.SendNewsletters(blogPost, emails, "http://blogifier.net");
+                        Toaster.Success("Published, sending newsletters");
+                    }
+                    else
+                    {
+                        Toaster.Success("Saved");
+                    }
+
+                    Action = PostAction.Save;
+                    Post = saved;
                     StateHasChanged();
                 }               
             }
             catch (Exception ex)
             {
+                Action = PostAction.Save;
                 Toaster.Error(ex.Message);
             }
         }
@@ -102,13 +128,14 @@ namespace Blogifier.Widgets
         protected async Task Publish()
         {
             Post.Published = SystemClock.Now();
+            Action = PostAction.Publish;
             await OnUpdate.InvokeAsync("publish");
             await Save();
         }
 
         protected async Task Unpublish()
         {
-            Post.Published = DateTime.MinValue;
+            Action = PostAction.Unpublish;
             await OnUpdate.InvokeAsync("unpublish");
             await Save();
         }
@@ -131,5 +158,10 @@ namespace Blogifier.Widgets
                 Toaster.Error(ex.Message);
             }
         }
+    }
+
+    public enum PostAction
+    {
+        Save, Publish, Unpublish
     }
 }

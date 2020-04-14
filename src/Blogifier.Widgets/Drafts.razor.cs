@@ -1,5 +1,7 @@
 ﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core;
 using Blogifier.Core.Data;
+using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Sotsera.Blazor.Toaster;
@@ -17,6 +19,8 @@ namespace Blogifier.Widgets
 
         [Inject]
         protected IDataService DataService { get; set; }
+        [Inject]
+        protected IEmailService EmailService { get; set; }
         [Inject]
         IJsonStringLocalizer<Drafts> Localizer { get; set; }
         [Inject]
@@ -39,18 +43,32 @@ namespace Blogifier.Widgets
             StateHasChanged();
         }
 
-        protected void Publish(int id)
+        protected async Task Publish(int id)
         {
             try
             {
-                var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
+                var post = await DataService.BlogPosts.GetItem(p => p.Id == id);
                 post.Published = DateTime.UtcNow;
+                var saved = await DataService.BlogPosts.SaveItem(post);
                 DataService.Complete();
 
-                OnUpdate.InvokeAsync("publish");
+                if (!AppSettings.DemoMode)
+                {
+                    // send newsletters on post publish
+                    var pager = new Pager(1, 10000);
+                    var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+                    var emails = items.Select(i => i.Email).ToList();
+                    var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+                    await EmailService.SendNewsletters(blogPost, emails, "http://blogifier.net");
+                    Toaster.Success("Published, sending newsletters");
+                }
+                else
+                {
+                    Toaster.Success("Saved");
+                }
 
+                await OnUpdate.InvokeAsync("publish");
                 StateHasChanged();
-                Toaster.Success("Saved");
             }
             catch (Exception ex)
             {

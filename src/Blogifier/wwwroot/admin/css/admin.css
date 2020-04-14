@@ -344,7 +344,7 @@ a, .btn-link {
     border-bottom-left-radius: 0px;
     text-transform: uppercase;
     font-size: .8rem;
-    height: 100%;
+    height: 36px;
 }
 
 /* form controls */
@@ -636,7 +636,7 @@ select {
         color: white !important;
     }
 
-    .nav-link:hover {
+    .sidebar .nav-link:hover {
         background-color: #492997;
     }
 
