@@ -1,4 +1,5 @@
-﻿using Blogifier.Core;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
@@ -29,6 +30,8 @@ namespace Blogifier.Widgets
         [Inject]
         protected IEmailService EmailService { get; set; }
         [Inject]
+        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+        [Inject]
         protected IConfiguration Configuration { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -39,7 +42,6 @@ namespace Blogifier.Widgets
 
         protected string Cover { get; set; }
         protected PostItem Post { get; set; }
-        private PostAction Action = PostAction.Save;
 
         protected override async Task OnInitializedAsync()
         {
@@ -56,7 +58,7 @@ namespace Blogifier.Widgets
             StateHasChanged();
         }
 
-        protected async Task Save()
+        protected async Task SavePost(PostAction postAction)
         {
             try
             {
@@ -85,7 +87,6 @@ namespace Blogifier.Widgets
                         Post.Description = Post.Title;
 
                         saved = await DataService.BlogPosts.SaveItem(Post);
-                        await OnUpdate.InvokeAsync("add"); 
                     }
                     else
                     {
@@ -96,14 +97,14 @@ namespace Blogifier.Widgets
                         item.Description = Post.Description;
                         item.Categories = Post.Categories;
 
-                        if(Action == PostAction.Unpublish)
+                        if(postAction == PostAction.Unpublish)
                             item.Published = DateTime.MinValue;
 
                         saved = await DataService.BlogPosts.SaveItem(item);
                     }
                     DataService.Complete();
 
-                    if (Action == PostAction.Publish && !AppSettings.DemoMode)
+                    if (postAction == PostAction.Publish && !AppSettings.DemoMode)
                     {
                         var section = Configuration.GetSection(Constants.ConfigSectionKey);
                         if(section != null)
@@ -126,14 +127,13 @@ namespace Blogifier.Widgets
                     }
                     
                     Toaster.Success("Saved");
-                    Action = PostAction.Save;
                     Post = saved;
+                    PostId = Post.Id;
                     StateHasChanged();
                 }               
             }
             catch (Exception ex)
             {
-                Action = PostAction.Save;
                 Toaster.Error(ex.Message);
             }
         }
@@ -141,16 +141,20 @@ namespace Blogifier.Widgets
         protected async Task Publish()
         {
             Post.Published = SystemClock.Now();
-            Action = PostAction.Publish;
             await OnUpdate.InvokeAsync("publish");
-            await Save();
+            await SavePost(PostAction.Publish);
         }
 
         protected async Task Unpublish()
         {
-            Action = PostAction.Unpublish;
             await OnUpdate.InvokeAsync("unpublish");
-            await Save();
+            await SavePost(PostAction.Unpublish);
+        }
+
+        protected async Task Save()
+        {
+            await OnUpdate.InvokeAsync("save");
+            await SavePost(PostAction.Save);
         }
 
         protected async Task Remove(int id)

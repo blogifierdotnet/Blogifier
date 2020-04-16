@@ -701,5 +701,17 @@
       "en-US": "Sent {0} newsletters",
       "ru-RU": "Отправлено {0} сообщений"
     }
+  },
+  "social-accounts": {
+    "Values": {
+      "en-US": "Social accounts",
+      "ru-RU": "Соцсети"
+    }
+  },
+  "name": {
+    "Values": {
+      "en-US": "Name",
+      "ru-RU": "Название"
+    }
   }
 }

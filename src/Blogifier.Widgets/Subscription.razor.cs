@@ -60,7 +60,7 @@ namespace Blogifier.Widgets
                 var pager = new Pager(page);
                 IEnumerable<Newsletter> items;
 
-                items = await DataService.Newsletters.GetList(e => e.Email.Contains(SearchTerm), pager);
+                items = await DataService.Newsletters.GetList(e => e.Email.Contains(SearchTerm) || e.Ip.Contains(SearchTerm), pager);
 
                 Model = new NewsletterModel
                 {

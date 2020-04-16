@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Sotsera.Blazor.Toaster;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
@@ -23,9 +24,13 @@ namespace Blogifier.Widgets
         [Inject]
         protected SignInManager<AppUser> SignInManager { get; set; }
         [Inject]
-        protected UserManager<AppUser> UserManager { get; set; }      
+        protected UserManager<AppUser> UserManager { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         protected Author Author { get; set; }
+        protected IEnumerable<CustomField> UserFields { get; set; }
+        protected CustomField CurrentField { get; set; }
         protected bool Edit { get; set; }
         
         protected ChangePasswordModel PwdModel { get; set; }
@@ -39,12 +44,20 @@ namespace Blogifier.Widgets
         {
             var authState = await AuthenticationStateTask;
 
+            if(authState == null || !authState.User.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+            }
+
             Author = await DataService.Authors.GetItem(
                 a => a.AppUserName == authState.User.Identity.Name);
 
             PwdModel = new ChangePasswordModel {
                 UserName = authState.User.Identity.Name
             };
+
+            CurrentField = new CustomField { AuthorId = Author.Id, Name = "", Content = "" };
+            UserFields = DataService.CustomFields.Find(f => f.AuthorId == Author.Id);
         }
 
         protected async Task Save()
@@ -57,6 +70,51 @@ namespace Blogifier.Widgets
             catch (Exception ex)
             {
                 Toaster.Error(ex.Message);
+            }
+        }
+
+        protected void SaveCustom()
+        {
+            if(string.IsNullOrEmpty(CurrentField.Name) || string.IsNullOrEmpty(CurrentField.Content))
+            {
+                Toaster.Error("Name and content required");
+            }
+            else
+            {
+                try
+                {
+                    var existing = DataService.CustomFields.Single(
+                        f => f.AuthorId == Author.Id && f.Name == CurrentField.Name);
+
+                    if (existing == null)
+                    {
+                        DataService.CustomFields.Add(CurrentField);
+                        DataService.Complete();
+                        CurrentField = new CustomField { AuthorId = Author.Id, Name = "", Content = "" };
+                    }
+                    Toaster.Success(Localizer["completed"]);
+                }
+                catch (Exception ex)
+                {
+                    Toaster.Error(ex.Message);
+                }
+            }
+        }
+
+        protected void RemoveField(int id)
+        {
+            var existing = DataService.CustomFields.Single(f => f.Id == id);
+            if(existing != null)
+            {
+                DataService.CustomFields.Remove(existing);
+                DataService.Complete();
+                Toaster.Success(Localizer["completed"]);
+                CurrentField = new CustomField { AuthorId = Author.Id, Name = "", Content = "" };
+                UserFields = DataService.CustomFields.Find(f => f.AuthorId == Author.Id);
+            }
+            else
+            {
+                Toaster.Error($"Error removing field #{id}");
             }
         }
 

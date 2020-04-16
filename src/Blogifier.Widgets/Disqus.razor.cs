@@ -16,7 +16,7 @@ namespace Blogifier.Widgets
         protected IToaster Toaster { get; set; }
 
         protected string DisqusValue { get; set; }
-        private string DisqusKey = "disqus-key";
+        private readonly string DisqusKey = "disqus-key";
 
         protected override void OnInitialized()
         {
