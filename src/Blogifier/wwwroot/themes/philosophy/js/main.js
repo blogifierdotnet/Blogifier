@@ -204,9 +204,13 @@
 
 
         // layout Masonry after each image loads
-        containerBricks.imagesLoaded().progress( function() {
-            containerBricks.masonry('layout');
-        });
+        // delay for server-side page load
+        setTimeout(function () {
+            containerBricks.imagesLoaded().progress(function () {
+                containerBricks.masonry('layout');
+            });
+        }, 3000);
+
     };
 
 

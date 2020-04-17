@@ -3395,12 +3395,15 @@ footer h4::after {
    padding-right: 6px;
 }
 
+.newsletter-title {
+    color: #FFF;
+}
 
 /* -------------------------------------------------------------------
  * ## copyright
  * ------------------------------------------------------------------- */
 .s-footer__bottom .s-footer__copyright span {
-   display: inline-block;
+    display: inline-block;
 }
 
 .s-footer__bottom .s-footer__copyright span::after {
@@ -4212,5 +4215,3 @@ footer h4::after {
 #cForm {
    margin-top: 3.6rem;
 }
-
-/*# sourceMappingURL=main.css.map */

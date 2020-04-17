@@ -32,6 +32,7 @@
     ================================================== -->
     <script src="~/themes/philosophy/js/modernizr.js"></script>
     <script src="~/themes/philosophy/js/pace.min.js"></script>
+
     <!-- favicons
     ================================================== -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -108,11 +109,11 @@
                                 ? null : posts[0].Categories.Split(',').ToList();
                             <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[0].Cover');">
                                 <div class="entry__content">
-                                    @if(cats0 != null)
+                                    @if (cats0 != null)
                                     {
                                         foreach (var cat in cats0)
                                         {
-                                        <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
+                                            <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
                                     }
                                     <h1><a href="~/posts/@posts[0].Slug" title="">@posts[0].Title</a></h1>
@@ -248,6 +249,7 @@
                         </div>
                     </article>
                 }
+
             </div>
         </div>
 
