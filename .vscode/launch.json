@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/App/bin/Debug/netcoreapp2.2/App.dll",
+            "program": "${workspaceFolder}/src/Blogifier/bin/Debug/netcoreapp3.1/Blogifier.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/App",
+            "cwd": "${workspaceFolder}/src/Blogifier",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

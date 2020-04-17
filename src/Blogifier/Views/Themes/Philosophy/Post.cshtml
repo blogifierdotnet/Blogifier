@@ -1,0 +1,253 @@
+﻿@inject IDataService DataService
+@{
+    AppSettings.SiteRoot = Url.Content("~/");
+    var img = $"{AppSettings.SiteRoot}themes/philosophy/images";
+    PostModel postModel = (PostModel)Model;
+    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
+    var catUrl = Url.Content("~/categories");
+
+    var facebook = DataService.CustomFields.GetCustomValue("facebook");
+    var twitter = DataService.CustomFields.GetCustomValue("twitter");
+    var instagram = DataService.CustomFields.GetCustomValue("instagram");
+    var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
+    var github = DataService.CustomFields.GetCustomValue("github");
+
+    var cats = string.IsNullOrEmpty(postModel.Post.Categories) 
+        ? null : postModel.Post.Categories.Split(',').ToList();
+}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>@postModel.Post.Title - @postModel.Blog.Title</title>
+    <meta name="description" content="@postModel.Post.Description">
+    <meta name="author" content="@postModel.Post.Author.DisplayName">
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="~/themes/philosophy/css/base.css">
+    <link rel="stylesheet" href="~/themes/philosophy/css/vendor.css">
+    <link rel="stylesheet" href="~/themes/philosophy/css/main.css">
+    <!-- script
+    ================================================== -->
+    <script src="~/themes/philosophy/js/modernizr.js"></script>
+    <script src="~/themes/philosophy/js/pace.min.js"></script>
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body id="top">
+
+    <!-- pageheader
+    ================================================== -->
+    <div class="s-pageheader">
+
+        <header class="header">
+            <div class="header__content row">
+
+                <div class="header__logo">
+                    <a class="logo" href="~/blog">
+                        <h2 class="blog-header">@postModel.Blog.Title</h2>
+                    </a>
+                </div> <!-- end header__logo -->
+
+                <ul class="header__social">
+                    @if (!string.IsNullOrEmpty(facebook))
+                    {
+                        <li><a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(twitter))
+                    {
+                        <li><a href="https://twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(instagram))
+                    {
+                        <li><a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(pinterest))
+                    {
+                        <li><a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(github))
+                    {
+                        <li><a href="https://github.com/@github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                    }
+                    <li><a href="~/feed/rss"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                </ul> <!-- end header__social -->
+
+                <a class="header__search-trigger" href="#0"></a>
+
+                <div class="header__search">
+
+                    <form role="search" method="get" class="header__search-form" action="#">
+                        <label>
+                            <span class="hide-content">Search for:</span>
+                            <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                        </label>
+                        <input type="submit" class="search-submit" value="Search">
+                    </form>
+
+                    <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+                </div>  <!-- end header__search -->
+
+
+                <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+                <nav class="header__nav-wrap">
+
+                    <h2 class="header__nav-heading h6">Site Navigation</h2>
+
+                    <ul class="header__nav">
+                        <li><a href="~/" title="">Home</a></li>
+                        <li><a href="~/blog" title="">Blog</a></li>
+                        <li><a href="~/admin" title="">Admin</a></li>
+                    </ul> <!-- end header__nav -->
+
+                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+
+                </nav> <!-- end header__nav-wrap -->
+
+            </div> <!-- header-content -->
+        </header> <!-- header -->
+
+    </div> <!-- end s-pageheader -->
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content s-content--narrow s-content--no-padding-bottom">
+
+        <article class="row format-standard">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    @postModel.Post.Title
+                </h1>
+                <ul class="s-content__header-meta">
+                    <li class="date">@postModel.Post.Published.ToFriendlyDateString()</li>
+                    @if (cats != null)
+                    {
+                        <li class="cat">
+                            In
+                            @foreach (var cat in cats)
+                            {
+                                <a href="~/categories/@cat">@cat</a>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div> <!-- end s-content__header -->
+
+            <div class="s-content__media col-full">
+                <div class="s-content__post-thumb">
+                    <img src="@cover" alt="">
+                </div>
+            </div> <!-- end s-content__media -->
+
+            <div class="col-full s-content__main">
+
+                @Html.Raw(postModel.Post.Content)
+
+                @if (cats != null)
+                {
+                    <p class="s-content__tags">
+                        <span>Post Tags</span>
+
+                        <span class="s-content__tag-list">
+                            @foreach (var cat in cats)
+                            {
+                                <a href="~/categories/@cat">@cat</a>
+                            }
+                        </span>
+                    </p> <!-- end s-content__tags -->
+                }
+
+                <div class="s-content__author">
+                    <img src="~/@postModel.Post.Author.Avatar" alt="">
+
+                    <div class="s-content__author-about">
+                        <h4 class="s-content__author-name">
+                            <a href="#">@postModel.Post.Author.DisplayName</a>
+                        </h4>
+
+                        <p>
+                            @postModel.Post.Author.Bio
+                        </p>
+
+                        <ul class="s-content__author-social">
+                            @if (!string.IsNullOrEmpty(facebook))
+                            {
+                                <li><a href="https://www.facebook.com/@facebook">Facebook</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(twitter))
+                            {
+                                <li><a href="https://twitter.com/@twitter">Twitter</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(instagram))
+                            {
+                                <li><a href="https://www.instagram.com/@instagram">Instagram</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(pinterest))
+                            {
+                                <li><a href="https://www.pinterest.com/@pinterest">Pinterest</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(github))
+                            {
+                                <li><a href="https://github.com/@github">Github</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                @if (postModel.Older != null || postModel.Newer != null)
+                {
+                    <div class="s-content__pagenav">
+                        <div class="s-content__nav">
+                            @if (postModel.Older != null)
+                            {
+                                <div class="s-content__prev">
+                                    <a href="@postModel.Older.Slug" rel="prev">
+                                        <span>Previous Post</span>
+                                        @postModel.Older.Title
+                                    </a>
+                                </div>
+                            }
+                            @if (postModel.Newer != null)
+                            {
+                                <div class="s-content__next">
+                                    <a href="@postModel.Newer.Slug" rel="next">
+                                        <span>Next Post</span>
+                                        @postModel.Newer.Title
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div> <!-- end s-content__main -->
+
+        </article>
+
+
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+            <div id="comments" class="row">
+                <div class="col-full">
+                    <div id="disqus_thread"></div>
+                    @Html.Raw(postModel.Disqus)
+                </div>
+            </div>
+        </div>
+
+    </section> <!-- s-content -->
+
+    <partial name="~/Views/Themes/Philosophy/Shared/Footer.cshtml" />
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿<div class="input-group search">
+    <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="search">
+    <span class="input-group-append">
+        <button @onclick="(async () => await SearchSubscriptions(1))" class="btn btn-secondary btn-search" type="button">
+            <span class="oi oi-magnifying-glass"></span>
+        </button>
+    </span>
+</div>
+
+<ul class="bf-list bf-posts-list d-block" aria-label="posts">
+    @if (!Model.Emails.Any())
+    {
+        <li class="bf-list-item d-flex align-items-center">@Localizer["not-found"]</li>
+    }
+    @foreach (var letter in Model.Emails)
+    {
+        <li class="bf-list-item d-flex align-items-center">
+            @{
+                string title = letter.Email;
+                var ipAr = letter.Ip.Split('|');
+                if(ipAr.Length == 3)
+                {
+                    if (AppSettings.DemoMode)
+                    {
+                        title = $"{title} - {ipAr[1]}, {ipAr[2]}";
+                    }
+                    else
+                    {
+                        title = $"{title} - {ipAr[0]} - {ipAr[1]}, {ipAr[2]}";
+                    }
+                }
+                else
+                {
+                    title = $"{title} {letter.Ip}";
+                }
+                string pubStatus = "published";
+                string pubDate = letter.Created > DateTime.MinValue ? letter.Created.ToFriendlyShortDateString() : "n/a";
+            }
+            <span class="bf-list-item-link">@title</span>
+            <span class="bf-list-item-date ml-3 d-none d-lg-block">@pubDate</span>
+            <span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" title="" data-original-title="published">
+                <i class="fa fa-circle"></i>
+            </span>
+            <a href="#" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto btn-remove" @onclick="(async () => await RemoveSubscription(letter.Id))" @onclick:preventDefault>
+                <i class="fa fa-times"></i>
+            </a>
+        </li>
+    }
+</ul>
+
+@if (Model.Pager != null && (Model.Pager.ShowOlder || Model.Pager.ShowNewer))
+{
+    <ul class="pagination justify-content-center">
+        @if (Model.Pager.ShowOlder)
+        {
+            <li class="item item-prev">
+                <a class="item-link" href="" @onclick="(async () => await GetSubscriptions(Model.Pager.Older))" @onclick:preventDefault>
+                    <span class="item-icon oi oi-chevron-left" title="Older"></span>
+                </a>
+            </li>
+        }
+        @if (Model.Pager.ShowNewer)
+        {
+            <li class="item item-next">
+                <a class="item-link" href="" @onclick="(async () => await GetSubscriptions(Model.Pager.Newer))" @onclick:preventDefault>
+                    <span class="item-icon oi oi-chevron-right" title="Newer"></span>
+                </a>
+            </li>
+        }
+    </ul>
+}

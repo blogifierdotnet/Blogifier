@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="@Model" OnValidSubmit="Send">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset>
+        <div class="alert alert-info" role="alert">
+            <a href="https://github.com/blogifierdotnet/Blogifier/blob/master/docs/SendGrid.md" target="_blank">
+                <i class="fa fa-info-circle"></i>
+            </a> 
+            @Localizer["email-info"]
+        </div>
+        <div>
+            <label>SendGrid Key</label>
+            <input class="form-control" type="text" @bind="Model.ApiKey" disabled />
+        </div>
+        <div>
+            <label>@Localizer["send-to"]</label>
+            <input class="form-control" type="text" @bind="Model.SendTo" />
+        </div>
+        <div>
+            <label>@Localizer["subject"]</label>
+            <input class="form-control" type="text" @bind="Model.Subject" />
+        </div>
+        <div>
+            <label>@Localizer["content"]</label>
+            <input class="form-control" type="text" @bind="Model.Content" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-main">@Localizer["send"]</button>
+    </fieldset>
+</EditForm>

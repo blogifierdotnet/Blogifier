@@ -1,0 +1,63 @@
+﻿@page "/admin"
+
+<div class="container-fluid">
+
+    <div class="row bf-row">
+        <div class="col-lg-3 order-lg-1 col-md-6 order-md-1 col-sm-12 bf-col">
+            <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
+        </div>
+        <div class="col-lg-6 order-lg-2 col-md-12 order-md-3 col-sm-12 bf-col">
+            <MainChart />
+        </div>
+        <div class="col-lg-3 order-lg-3 col-md-6 order-md-2  col-sm-12 bf-col">
+            <Profile />
+        </div>
+    </div>
+    <div class="row bf-row">
+        <div class="col-lg-3 order-lg-1 col-md-6 order-md-2 col-sm-12 bf-col">
+            <Drafts @ref="DraftsInstance" OnUpdate="UpdateHandler" />
+        </div>
+        <div class="col-lg-6 order-lg-2 col-md-12 order-md-1 col-sm-12 bf-col">
+            <Published @ref="PublishedInstance" OnUpdate="UpdateHandler" />
+        </div>
+        <div class="col-lg-3 order-lg-3 col-md-6 order-md-3  col-sm-12 bf-col">
+            <Custom />
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    Drafts DraftsInstance;
+    Published PublishedInstance;
+    Welcome WelcomeInstance;
+
+    async Task UpdateHandler(string msg)
+    {
+        //if(msg == "publish" || msg == "unfeature")
+        //{
+        //    await DraftsInstance.Load();
+        //    await PublishedInstance.LoadPosts(1);
+        //}
+        //if(msg == "unpublish" || msg == "add")
+        //{
+        //    await DraftsInstance.Load();
+        //    await PublishedInstance.LoadPosts(1);
+        //}
+        //if(msg == "feature")
+        //{
+        //    await PublishedInstance.LoadPosts(1);
+        //}
+        //if(msg == "remove")
+        //{
+        //    await PublishedInstance.LoadPosts(1);
+        //    await DraftsInstance.Load();
+        //}
+
+        await DraftsInstance.Load();
+        await PublishedInstance.LoadPosts(1);
+
+        await WelcomeInstance.Load();
+    }
+}

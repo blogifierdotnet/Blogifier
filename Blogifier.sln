@@ -10,15 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A720BC3C-C526-4C18-9B8D-4A885BB03CE9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "tests\Core.Tests\Core.Tests.csproj", "{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{39614650-0D6E-4502-B87D-184366060F59}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{88490336-DB30-4F9D-B737-3CA993F4EDC0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "src\App\App.csproj", "{920B80AA-983C-46ED-8A19-8DC43C839237}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-988C-4A2A-8B86-EB0895E0732E}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,10 +20,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6015AFDB-9
 		docs\Import.md = docs\Import.md
 		docs\Localization.md = docs\Localization.md
 		docs\MySQL.md = docs\MySQL.md
+		docs\Newsletter.md = docs\Newsletter.md
 		docs\Notifications.md = docs\Notifications.md
 		docs\PostgreSQL.md = docs\PostgreSQL.md
 		docs\Security.md = docs\Security.md
 		docs\SendGrid.md = docs\SendGrid.md
+		docs\SocialAccounts.md = docs\SocialAccounts.md
 		docs\SqlServer.md = docs\SqlServer.md
 		docs\Themes.md = docs\Themes.md
 		docs\Troubleshooting.md = docs\Troubleshooting.md
@@ -44,7 +38,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BE5E262F
 		build\build.ps1 = build\build.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Upgrade", "src\Upgrade\Upgrade.csproj", "{CECA836F-2FFA-47DA-B846-8F44C2A4B783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier", "src\Blogifier\Blogifier.csproj", "{0DC52C2B-3803-4BB3-A5A2-6371E94700D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Widgets", "src\Blogifier.Widgets\Blogifier.Widgets.csproj", "{19384C5F-D421-4A41-AD66-8812B48F48AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,31 +48,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88490336-DB30-4F9D-B737-3CA993F4EDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88490336-DB30-4F9D-B737-3CA993F4EDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88490336-DB30-4F9D-B737-3CA993F4EDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88490336-DB30-4F9D-B737-3CA993F4EDC0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{920B80AA-983C-46ED-8A19-8DC43C839237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{920B80AA-983C-46ED-8A19-8DC43C839237}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{920B80AA-983C-46ED-8A19-8DC43C839237}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{920B80AA-983C-46ED-8A19-8DC43C839237}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4A3F7E34-5D42-45E1-AF62-D6B2691D0BC7} = {A720BC3C-C526-4C18-9B8D-4A885BB03CE9}
-		{88490336-DB30-4F9D-B737-3CA993F4EDC0} = {39614650-0D6E-4502-B87D-184366060F59}
-		{920B80AA-983C-46ED-8A19-8DC43C839237} = {39614650-0D6E-4502-B87D-184366060F59}
-		{CECA836F-2FFA-47DA-B846-8F44C2A4B783} = {39614650-0D6E-4502-B87D-184366060F59}
+		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7} = {39614650-0D6E-4502-B87D-184366060F59}
+		{19384C5F-D421-4A41-AD66-8812B48F48AC} = {39614650-0D6E-4502-B87D-184366060F59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D601BCCC-A1D9-415B-94B5-B3C0EF4AAF0B}

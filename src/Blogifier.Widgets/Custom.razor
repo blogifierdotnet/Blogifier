@@ -1,0 +1,35 @@
+﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@inject IJsonStringLocalizer<Profile> Localizer
+
+<div class="card dash custom">
+    <div class="card-body">
+        @((MarkupString)@FieldValue.MdToHtml())
+        <button class="btn primary" style="float:right" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>
+    </div>
+</div>
+
+@if (Visible)
+{
+    <div class="editor-modal-bg">
+        <div class="editor-modal-content">
+            <div class="modal-actions">
+                <ul class="nav nav-tabs" id="post-edit-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">@Localizer["custom-field"]</a>
+                    </li>
+                </ul>
+                <div class="btn-group post-options" role="group" aria-label="Post options">
+                    <button class="btn btn-secondary" @onclick="Save" @onclick:preventDefault>
+                        <span class="oi oi-check"></span> @Localizer["save"]
+                    </button>
+                    <button class="btn btn-secondary btn-close" @onclick="HideEditor">
+                        <span class="oi oi-x"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="profile-outer">
+                <MdEditor Content="@FieldValue" />
+            </div>
+        </div>
+    </div>
+}

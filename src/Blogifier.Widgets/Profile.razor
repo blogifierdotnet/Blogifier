@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Askmethat.Aspnet.JsonLocalizer.Localizer
+
+@inject IJsonStringLocalizer<Profile> Localizer
+
+<div class="card dash profile h-100">
+    <div class="card-body">
+        <img id="profile-avatar" src="@Author.Avatar" class="rounded-circle" alt="Avatar">
+        <div class="container">
+            <h4><b>@Author.DisplayName</b></h4>
+            <p>@Author.Email</p>
+        </div>
+        <div class="btn-group-dash">
+            <button class="btn primary" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>
+        </div>
+    </div>
+</div>
+
+@if (Edit)
+{
+    <div class="editor-modal-bg">
+        <div class="editor-modal-content">
+
+            <div class="modal-actions">
+                <ul class="nav nav-tabs" id="post-edit-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["profile"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">@Localizer["social-accounts"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">@Localizer["change-password"]</a>
+                    </li>
+                </ul>
+                <div class="btn-group post-options" role="group" aria-label="Post options">
+                    <button class="btn btn-secondary" @onclick="HideEditor">
+                        <span class="oi oi-x"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-profile">
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <EditForm Model="@Author" OnValidSubmit="Save">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <fieldset>
+                                <div>
+                                    <label>@Localizer["user-name"]</label>
+                                    <input type="text" @bind="Author.DisplayName" name="display-name" />
+                                </div>
+                                <div>
+                                    <label>@Localizer["email"]</label>
+                                    <input type="text" @bind="Author.Email" name="e-mail" />
+                                </div>
+                                <div>
+                                    <label>@Localizer["user-bio"]</label>
+                                    <textarea class="form-control" rows="3" @bind="Author.Bio" name="bio" />
+                                </div>
+                                <div class="input-group">
+                                    <label>@Localizer["avatar"]</label>
+                                    <input type="text" class="form-control txt-upload" @bind="Author.Avatar" name="avatar" id="avatar" readonly="" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> Select</button>
+                                    </span>
+                                </div>
+                                <div class="input-group save-profile">
+                                    <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                                </div>
+                            </fieldset>
+                        </EditForm>
+                    </div>
+
+                    <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
+                        <EditForm Model="@CurrentField" OnValidSubmit="SaveCustom">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <fieldset>
+                                <div>
+                                    <label>@Localizer["name"]</label>
+                                    <input type="text" @bind="CurrentField.Name" />
+                                </div>
+                                <div>
+                                    <label>@Localizer["content"]</label>
+                                    <input type="text" @bind="CurrentField.Content" />
+                                </div>
+                                <div class="input-group save-profile">
+                                    <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                                </div>
+                            </fieldset>
+                        </EditForm>
+
+                        @if (UserFields == null || UserFields.Count() == 0)
+                        {
+                            <div class="notfound">@Localizer["empty"]</div>
+                        }
+                        <ul class="bf-list bf-posts-list d-block" aria-label="drafts">
+                            @foreach (var field in UserFields)
+                            {
+                            <li class="bf-list-item d-flex align-items-center">
+                                <span class="bf-list-item-link">@field.Name - @field.Content</span>
+                                <a href="#" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto btn-remove" @onclick="(() => RemoveField(field.Id))" @onclick:preventDefault>
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </li>
+                            }
+                        </ul>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <EditForm Model="@PwdModel" OnValidSubmit="ChangePwd">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <fieldset>
+                                <div>
+                                    <label>@Localizer["password"]</label>
+                                    <input class="form-control" type="password" @bind="PwdModel.OldPassword" />
+                                </div>
+                                <div>
+                                    <label>@Localizer["new-password"]</label>
+                                    <input class="form-control" type="password" @bind="PwdModel.NewPassword" />
+                                </div>
+                                <div>
+                                    <label>@Localizer["confirm-password"]</label>
+                                    <input class="form-control" type="password" @bind="PwdModel.ConfirmPassword" />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+                            </fieldset>
+                        </EditForm>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}

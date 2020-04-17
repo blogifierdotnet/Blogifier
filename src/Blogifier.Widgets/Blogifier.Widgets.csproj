@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.0.2.0</Version>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <Authors>blogifierdotnet</Authors>
+    <Company>Blogifier.Net</Company>
+    <Description>Blogifier.Widgets provides shared Blazor widgets comonents to Blogifier blog</Description>
+    <Copyright>Blogifier.net</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>http://blogifier.net</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/blogifierdotnet/Blogifier.Widgets</RepositoryUrl>
+    <PackageTags>blogifier,blog,blazor,asp.net,asp.core,widgets</PackageTags>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blogifier.Core" Version="2.6.1" />
+    <PackageReference Include="Demo.BlazorChartist" Version="0.1.0-20200124.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.3" />
+    <PackageReference Include="Markdig" Version="0.18.3" />
+    <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
+    <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

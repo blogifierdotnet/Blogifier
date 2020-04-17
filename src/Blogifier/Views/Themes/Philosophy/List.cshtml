@@ -1,0 +1,306 @@
+﻿@using Blogifier.Core.Data
+@inject IDataService DataService
+@{
+    AppSettings.SiteRoot = Url.Content("~/");
+    var img = $"{AppSettings.SiteRoot}themes/philosophy/images";
+    var imgPlaceholder = $"{AppSettings.SiteRoot}admin/img/img-placeholder.png";
+    var m = Model as ListModel;
+    var pgr = m.Pager;
+
+    var facebook = DataService.CustomFields.GetCustomValue("facebook");
+    var twitter = DataService.CustomFields.GetCustomValue("twitter");
+    var instagram = DataService.CustomFields.GetCustomValue("instagram");
+    var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
+    var github = DataService.CustomFields.GetCustomValue("github");
+
+    var pager = new Pager(1);
+    var allPosts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
+    var posts = allPosts.ToList();
+}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>@m.Blog.Title</title>
+    <meta name="description" content="@m.Blog.Description">
+    <meta name="author" content="">
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="~/themes/philosophy/css/base.css">
+    <link rel="stylesheet" href="~/themes/philosophy/css/vendor.css">
+    <link rel="stylesheet" href="~/themes/philosophy/css/main.css">
+    <!-- script
+    ================================================== -->
+    <script src="~/themes/philosophy/js/modernizr.js"></script>
+    <script src="~/themes/philosophy/js/pace.min.js"></script>
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body id="top">
+
+    <!-- pageheader
+    ================================================== -->
+    <section class="s-pageheader s-pageheader--home">
+
+        <header class="header">
+            <div class="header__content row">
+
+                <div class="header__logo">
+                    <a class="logo" href="~/blog">
+                        <h2 class="blog-header">@m.Blog.Title</h2>
+                    </a>
+                </div> <!-- end header__logo -->
+
+                <ul class="header__social">
+                    @if (!string.IsNullOrEmpty(facebook))
+                    {
+                        <li><a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(twitter))
+                    {
+                        <li><a href="https://twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(instagram))
+                    {
+                        <li><a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(pinterest))
+                    {
+                        <li><a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(github))
+                    {
+                        <li><a href="https://github.com/@github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                    }
+                    <li><a href="~/feed/rss"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                </ul> <!-- end header__social -->
+
+                <a class="header__search-trigger" href="#0"></a>
+
+                <div class="header__search">
+
+                    <form role="search" method="get" class="header__search-form" action="#">
+                        <label>
+                            <span class="hide-content">Search for:</span>
+                            <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                        </label>
+                        <input type="submit" class="search-submit" value="Search">
+                    </form>
+
+                    <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+                </div>  <!-- end header__search -->
+
+                <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+                <nav class="header__nav-wrap">
+                    <h2 class="header__nav-heading h6">Site Navigation</h2>
+                    <ul class="header__nav">
+                        <li><a href="~/" title="">Home</a></li>
+                        <li><a href="~/blog" title="">Blog</a></li>
+                        <li><a href="~/admin" title="">Admin</a></li>
+                    </ul> <!-- end header__nav -->
+                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+                </nav> <!-- end header__nav-wrap -->
+
+            </div> <!-- header-content -->
+        </header> <!-- header -->
+
+
+        <div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        @if (posts == null || posts.Count == 0)
+                        {
+                            <div class="entry" style="background-image:url('@imgPlaceholder');">
+                                <div class="entry__content">&nbsp;</div>
+                            </div>
+                        }
+                        else
+                        {
+                            var cats0 = string.IsNullOrEmpty(posts[0].Categories)
+                                ? null : posts[0].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[0].Cover');">
+                                <div class="entry__content">
+                                    @if(cats0 != null)
+                                    {
+                                        foreach (var cat in cats0)
+                                        {
+                                        <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
+                                        }
+                                    }
+                                    <h1><a href="~/posts/@posts[0].Slug" title="">@posts[0].Title</a></h1>
+                                    <div class="entry__info">
+                                        <a href="#" class="entry__profile-pic">
+                                            <img class="avatar" src="~/@posts[0].Author.Avatar" alt="">
+                                        </a>
+
+                                        <ul class="entry__meta">
+                                            <li><a href="#">@posts[0].Author.DisplayName</a></li>
+                                            <li>@posts[0].Published.ToFriendlyDateString()</li>
+                                        </ul>
+                                    </div>
+                                </div> <!-- end entry__content -->
+                            </div> <!-- end entry -->
+                        }
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        @if (posts != null && posts.Count > 1)
+                        {
+                            var cats1 = string.IsNullOrEmpty(posts[1].Categories)
+                                ? null : posts[1].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[1].Cover');">
+                                <div class="entry__content">
+                                    @if (cats1 != null)
+                                    {
+                                        foreach (var cat in cats1)
+                                        {
+                                            <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
+                                        }
+                                    }
+                                    <h1><a href="~/posts/@posts[1].Slug" title="">@posts[1].Title</a></h1>
+                                    <div class="entry__info">
+                                        <a href="#" class="entry__profile-pic">
+                                            <img class="avatar" src="~/@posts[1].Author.Avatar" alt="">
+                                        </a>
+
+                                        <ul class="entry__meta">
+                                            <li><a href="#">@posts[1].Author.DisplayName</a></li>
+                                            <li>@posts[1].Published.ToFriendlyDateString()</li>
+                                        </ul>
+                                    </div>
+                                </div> <!-- end entry__content -->
+
+                            </div> <!-- end entry -->
+                        }
+                        else
+                        {
+                            <div class="entry" style="background-image:url('@imgPlaceholder');"></div>
+                        }
+                        @if (posts != null && posts.Count > 2)
+                        {
+                            var cats2 = string.IsNullOrEmpty(posts[2].Categories)
+                                ? null : posts[2].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[2].Cover');">
+                                <div class="entry__content">
+                                    @if (cats2 != null)
+                                    {
+                                        foreach (var cat in cats2)
+                                        {
+                                            <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
+                                        }
+                                    }
+                                    <h1><a href="~/posts/@posts[2].Slug" title="">@posts[2].Title</a></h1>
+                                    <div class="entry__info">
+                                        <a href="#" class="entry__profile-pic">
+                                            <img class="avatar" src="~/@posts[2].Author.Avatar" alt="">
+                                        </a>
+                                        <ul class="entry__meta">
+                                            <li><a href="#">@posts[2].Author.DisplayName</a></li>
+                                            <li>@posts[2].Published.ToFriendlyDateString()</li>
+                                        </ul>
+                                    </div>
+                                </div> <!-- end entry__content -->
+                            </div> <!-- end entry -->
+                        }
+                        else
+                        {
+                            <div class="entry" style="background-image:url('@imgPlaceholder');"></div>
+                        }
+
+                    </div> <!-- end featured__small -->
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+
+    </section> <!-- end s-pageheader -->
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+
+                @foreach (var post in m.Posts)
+                {
+                    <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        <div class="entry__thumb">
+                            <a href="~/posts/@post.Slug" class="entry__thumb-link">
+                                <img src="~/@post.Cover" alt="">
+                            </a>
+                        </div>
+                        <div class="entry__text">
+                            <div class="entry__header">
+                                <div class="entry__date">
+                                    <a href="~/posts/@post.Slug">@post.Published.ToFriendlyDateString()</a>
+                                </div>
+                                <h1 class="entry__title"><a href="~/posts/@post.Slug">@post.Title</a></h1>
+                            </div>
+                            <div class="entry__excerpt">
+                                @Html.Raw(post.Description)
+                            </div>
+                            @if (!string.IsNullOrEmpty(post.Categories))
+                            {
+                                var cats = post.Categories.Split(',').ToList();
+                                <div class="entry__meta">
+                                    <span class="entry__meta-links">
+                                        @foreach (var cat in cats)
+                                        {
+                                            if (!string.IsNullOrEmpty(cat))
+                                            {
+                                                <a href="~/categories/@cat">@cat</a>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        </div>
+
+        @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
+        {
+            <div class="row">
+                <div class="col-full">
+                    <nav class="pgn">
+                        <ul>
+                            @if (pgr.ShowOlder)
+                            {
+                                <li><a class="pgn__prev" href="@pgr.LinkToOlder">Prev</a></li>
+                            }
+                            <li><span class="pgn__num current">@pgr.CurrentPage</span></li>
+                            @if (pgr.ShowNewer)
+                            {
+                                <li><a class="pgn__next" href="@pgr.LinkToNewer">Next</a></li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
+
+    </section> <!-- s-content -->
+
+    <partial name="~/Views/Themes/Philosophy/Shared/Footer.cshtml" />
+
+</body>
+
+</html>

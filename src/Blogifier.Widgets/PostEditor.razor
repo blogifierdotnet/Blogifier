@@ -1,0 +1,107 @@
+<div class="editor-modal-bg">
+    <div class="editor-modal-content">
+
+        <div class="modal-actions">
+
+            <ul class="nav nav-tabs" id="post-edit-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">@Localizer["edit"]</a>
+                </li>
+                @if (Post.Id > 0)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">@Localizer["details"]</a>
+                    </li>
+                }
+            </ul>
+
+            <div class="btn-group post-options" role="group" aria-label="Post options">
+
+                <div class="btn-group btn-post-group">
+                    @if (Post.Id == 0)
+                    {
+                        <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Publish">@Localizer["publish"]</button>
+                    }
+                    else
+                    {
+                        if (Post.Published > DateTime.MinValue)
+                        {
+                            <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Save">@Localizer["save"]</button>
+                        }
+                        else
+                        {
+                            <button type="button" tabindex="3" class="btn btn-sm btn-secondary" @onclick="Publish">@Localizer["publish"]</button>
+                        }
+                    }
+                    <button type="button" tabindex="4" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    @if (Post.Id == 0)
+                    {
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" tabindex="5" href="" @onclick="Save" @onclick:preventDefault>@Localizer["save"]</a>
+                        </div>
+                    }
+                    else
+                    {
+                        if (Post.Published > DateTime.MinValue)
+                        {
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" tabindex="5" href="" @onclick="Unpublish" @onclick:preventDefault>@Localizer["unpublish"]</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" tabindex="5" href="" @onclick="Save" @onclick:preventDefault>@Localizer["save"]</a>
+                            </div>
+                        }
+                    }
+                </div>
+
+                @if (Post.Id > 0)
+                {
+                    <button tabindex="5" class="btn btn-secondary btn-danger" @onclick="(() => Remove(Post.Id))">
+                        <span class="oi oi-trash"></span>
+                    </button>
+                }
+                <button tabindex="6" class="btn btn-secondary btn-close" @onclick="() => HideCallback.InvokeAsync(string.Empty)">
+                    <span class="oi oi-x"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="editor-tab">
+            <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+                <div class="modal-header">
+                    <input type="text" tabindex="1" class="editor-title" @bind="Post.Title" name="title" placeholder="Post title..." autofocus />
+                </div>
+                <div class="editor-outer">
+                    <MdEditor Content="@Post.Content" />
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                <fieldset>
+                    <div>
+                        <label>@Localizer["description"]</label>
+                        <textarea @bind="Post.Description" class="form-control" rows="3" name="description" />
+                    </div>
+                    <div>
+                        <label>@Localizer["categories"]</label>
+                        <input @bind="Post.Categories" type="text" name="e-mail" />
+                    </div>
+                    @if (Post.Id > 0)
+                    {
+                    <div class="input-group">
+                        <label>@Localizer["cover"]</label>
+                        <input type="text" class="form-control txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly="" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button"> Select</button>
+                        </span>
+                    </div>
+                    }
+                </fieldset>          
+            </div>
+        </div>
+
+    </div>
+</div>

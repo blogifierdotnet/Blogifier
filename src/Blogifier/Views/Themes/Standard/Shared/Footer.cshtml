@@ -1,0 +1,52 @@
+﻿<div class="modal fade blog-search" id="blog-search" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <form role="search" asp-controller="Blog" asp-action="Search" method="post">
+                    <input type="search" id="term" name="term" class="form-control form-control-lg" placeholder="Search..." autocomplete="off">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="newsletter">
+    <div class="jumbotron" id="newsletter-form">
+        <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">Thank you!</h2>
+        <form id="frmNewsletter">
+            <div class="form-group">
+                <h2 class="newsletter-title">Newsletter</h2>
+                <div class="form-group">
+                    <input class="form-control" id="txtEmail" name="txtEmail" placeholder="Enter Email" type="text">
+                </div>
+                <small class="form-text text-muted" id="emailHelp">
+                    Join our subscribers list to get the latest news and updates directly in your inbox.
+                </small>
+            </div>
+            <button id="blog-subscribe" class="btn btn-subscribe btn-rounded btn-dark">Subscribe</button>
+        </form>
+    </div>
+</div>
+
+<footer class="blog-footer">
+    <div class="container d-lg-flex text-center text-lg-left">
+        <p>Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
+        <div class="ml-auto">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="~/admin">Admin</a>
+            }
+            else
+            {
+                <a href="~/account/login?ReturnUrl=/admin">Login</a>
+            }
+        </div>
+    </div>
+</footer>
+
+<script src="~/themes/standard/js/jquery.min.js"></script>
+<script src="~/themes/standard/js/popper.min.js"></script>
+<script src="~/themes/standard/js/bootstrap.min.js"></script>
+<script src="~/themes/standard/js/prism.js"></script>
+<script src="~/themes/standard/js/blog.js" asp-append-version="true"></script>
+<script src="~/admin/js/newsletter.js" asp-append-version="true"></script>

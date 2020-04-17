@@ -1,0 +1,22 @@
+﻿<div class="card">
+    <div class="card-header">@Localizer["popular"]</div>
+    <div class="card-body">
+        <ul class="bf-list bf-posts-list d-block" aria-label="featured">
+            @foreach (var post in Posts)
+            {
+                <li class="bf-list-item d-flex align-items-center">
+                    @{
+                        string title = post.Title.Length < 60 ? post.Title : post.Title.Substring(0, 57) + "...";
+                    }
+                    <a class="bf-list-item-link" href="" @onclick="@(() => EditPost(post.Id))" @onclick:preventDefault>@title</a>
+                    <span class="badge badge-primary badge-pill">@post.PostViews</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@if (Edit)
+{
+    <PostEditor PostId="@PostId" HideCallback="HideEditor" />
+}

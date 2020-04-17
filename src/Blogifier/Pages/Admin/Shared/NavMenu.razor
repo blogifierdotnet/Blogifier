@@ -1,0 +1,59 @@
+﻿@inject IJsonStringLocalizer<Settings> Localizer
+@inject IJSRuntime JSRuntime
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="blog" target="_blank">
+        <img src="admin/img/logo-light.png" class="img-logo" />
+    </a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" style="height: auto">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="admin" Match="NavLinkMatch.All" data-toggle="tooltip" data-placement="right" title="@Localizer["dashboard"]">
+                <span class="oi oi-grid-three-up" aria-hidden="true"></span>
+                <span class="nal-label">@Localizer["dashboard"]</span>
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="admin/settings" data-toggle="tooltip" data-placement="right" title="@Localizer["settings"]">
+                <span class="oi oi-cog" aria-hidden="true"></span>
+                <span class="nal-label">@Localizer["settings"]</span>
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="admin/newsletter" data-toggle="tooltip" data-placement="right" title="@Localizer["newsletter"]">
+                <span class="oi oi-envelope-closed" aria-hidden="true"></span>
+                <span class="nal-label">@Localizer["newsletter"]</span>
+            </NavLink>
+        </li>
+    </ul>
+    <ul class="nav flex-column btm-ul">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="account/logout" data-toggle="tooltip" data-placement="right" title="@Localizer["sign-out"]">
+                <span class="oi oi-account-logout" aria-hidden="true"></span>
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
+        }
+    }
+}

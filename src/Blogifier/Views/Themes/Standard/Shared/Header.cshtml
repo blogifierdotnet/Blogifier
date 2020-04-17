@@ -1,0 +1,50 @@
+﻿@inject IDataService DataService
+@{ 
+    var facebook = DataService.CustomFields.GetCustomValue("facebook");
+    var twitter = DataService.CustomFields.GetCustomValue("twitter");
+    var github = DataService.CustomFields.GetCustomValue("github");
+}
+<header class="blog-header d-flex flex-column">
+    <div class="container d-flex">
+        <a href="~/blog" class="blog-logo my-auto d-flex">
+            <img src="~/themes/standard/img/logo-white.png" alt="Blog Title" class="my-auto" />
+        </a>
+        <ul class="blog-social nav ml-auto my-auto">
+            @if (!string.IsNullOrEmpty(facebook))
+            {
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://facebook.com/@facebook">
+                    <i class="blog-social-icon fa fa-facebook"></i>
+                </a>
+            </li>
+            }
+            @if (!string.IsNullOrEmpty(twitter))
+            {
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://twitter.com/@twitter">
+                    <i class="blog-social-icon fa fa-twitter"></i>
+                </a>
+            </li>
+            }
+            @if (!string.IsNullOrEmpty(github))
+            {
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="https://github.com/@github">
+                    <i class="blog-social-icon fa fa-github"></i>
+                </a>
+            </li>
+            }
+            <li class="blog-social-item">
+                <a class="blog-social-link" target="_blank" href="feed/rss">
+                    <i class="blog-social-icon fa fa-rss"></i>
+                </a>
+            </li>
+        </ul>
+        <button class="blog-search-toggle btn-unstyled" type="button" data-toggle="modal" data-target="#blog-search">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</header>
+@{
+    AppSettings.SiteRoot = Url.Content("~/");
+}

@@ -1,0 +1,14 @@
+﻿<div class="card">
+    <div class="card-body">
+        <div class="alert alert-info" role="alert">
+            <a href="https://github.com/blogifierdotnet/Blogifier/blob/master/docs/Disqus.md" target="_blank">
+                <i class="fa fa-info-circle"></i>
+            </a>
+            @Localizer["disqus-info"]
+        </div>
+        <textarea class="form-control txt-disqus" rows="10" @bind="DisqusValue" name="disqus" placeholder="Disqus script" />
+        <div class="btn-group" role="group" aria-label="Disqus">
+            <button class="btn btn-primary" @onclick="Save">Save</button>
+        </div>
+    </div>
+</div>

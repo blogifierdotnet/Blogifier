@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Login</title>
+    <link rel="stylesheet" href="~/account/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/account/css/styles.min.css" />
+</head>
+
+<body class="bf-account">
+    <div class="container">
+        <div class="bf-account-inner">
+            @RenderBody()
+        </div>
+        <div class="bf-account-footer">
+            <a href="http://blogifier.net/" target="_blank" rel="nofollow external" title="Blogifier">
+                <img src="~/account/img/logo-sm.png" alt="Blogifier">
+            </a>
+        </div>
+    </div>
+    <script src="~/account/js/jquery.min.js"></script>
+    <script src="~/account/js/jquery.validate.min.js"></script>
+    <script src="~/account/js/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        var webRoot = '@Url.Content("~/")';
+        function goHome() {
+            window.location.href = webRoot;
+        };
+    </script>
+</body>
+</html>

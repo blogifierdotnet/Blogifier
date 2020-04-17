@@ -1,0 +1,78 @@
+﻿@{
+    PostModel postModel = (PostModel)Model;
+    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
+    var catUrl = Url.Content("~/categories");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <partial name="~/Views/Themes/Standard/Shared/Head.cshtml" />
+</head>
+<body class="home">
+    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" />
+
+    <article class="post-single">
+        <div class="post-cover" style="background-image: url('@cover')"></div>
+        <section class="container">
+            <div class=" post-body">
+
+                <header class="post-header">
+                    <h2 class="post-title">@postModel.Post.Title</h2>
+                    <div class="post-meta">
+
+                        <img class="post-meta-img" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
+                        <span class="post-meta-author">@postModel.Post.Author.DisplayName</span>
+
+                        <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", postModel.Post.Published)</time>
+                        @if (!string.IsNullOrEmpty(postModel.Post.Categories))
+                        {
+                            <span>/</span>
+                            var cats = postModel.Post.Categories.Split(',');
+                            foreach (var cat in cats)
+                            {
+                                <span>
+                                    <a href="@catUrl/@cat">@cat</a>
+                                </span>
+                            }
+                        }
+                    </div>
+                </header>
+
+                <div class="post-content">
+                    @Html.Raw(postModel.Post.Content)
+                </div>
+
+                @if (postModel.Older != null || postModel.Newer != null)
+                {
+                    <ul class="pagination justify-content-center">
+                        @if (postModel.Older != null)
+                        {
+                            <li class="item item-prev">
+                                <a class="item-link" href="@postModel.Older.Slug" title="@postModel.Older.Title">
+                                    <i class="item-icon fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                        }
+                        @if (postModel.Newer != null)
+                        {
+                            <li class="item item-next">
+                                <a class="item-link" href="@postModel.Newer.Slug" title="@postModel.Newer.Title">
+                                    <i class="item-icon fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+
+                <div id="disqus_thread"></div>
+                @Html.Raw(postModel.Disqus)
+
+            </div>
+        </section>
+    </article>
+
+    <partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
+</body>
+</html>
