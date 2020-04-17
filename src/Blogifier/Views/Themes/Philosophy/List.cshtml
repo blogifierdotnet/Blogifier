@@ -7,12 +7,6 @@
     var m = Model as ListModel;
     var pgr = m.Pager;
 
-    var facebook = DataService.CustomFields.GetCustomValue("facebook");
-    var twitter = DataService.CustomFields.GetCustomValue("twitter");
-    var instagram = DataService.CustomFields.GetCustomValue("instagram");
-    var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
-    var github = DataService.CustomFields.GetCustomValue("github");
-
     var pager = new Pager(1);
     var allPosts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
     var posts = allPosts.ToList();
@@ -60,26 +54,7 @@
                 </div> <!-- end header__logo -->
 
                 <ul class="header__social">
-                    @if (!string.IsNullOrEmpty(facebook))
-                    {
-                        <li><a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    }
-                    @if (!string.IsNullOrEmpty(twitter))
-                    {
-                        <li><a href="https://twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    }
-                    @if (!string.IsNullOrEmpty(instagram))
-                    {
-                        <li><a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                    }
-                    @if (!string.IsNullOrEmpty(pinterest))
-                    {
-                        <li><a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                    }
-                    @if (!string.IsNullOrEmpty(github))
-                    {
-                        <li><a href="https://github.com/@github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
-                    }
+                    <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" />
                     <li><a href="~/feed/rss"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
                 </ul> <!-- end header__social -->
 

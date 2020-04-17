@@ -62,8 +62,6 @@ namespace Blogifier.Controllers
                 model.PostListType = PostListType.Search;
             }
 
-            // model.Blog.Cover = "themes/standard/img/cover.png";
-
             return View($"~/Views/Themes/{blog.Theme}/List.cshtml", model);
         }
 
