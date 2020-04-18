@@ -5,12 +5,7 @@
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-
-    var facebook = DataService.CustomFields.GetCustomValue("facebook");
-    var twitter = DataService.CustomFields.GetCustomValue("twitter");
-    var instagram = DataService.CustomFields.GetCustomValue("instagram");
-    var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
-    var github = DataService.CustomFields.GetCustomValue("github");
+    string socialLinks = "links";
 
     var cats = string.IsNullOrEmpty(postModel.Post.Categories) 
         ? null : postModel.Post.Categories.Split(',').ToList();
@@ -48,55 +43,7 @@
     ================================================== -->
     <div class="s-pageheader">
 
-        <header class="header">
-            <div class="header__content row">
-
-                <div class="header__logo">
-                    <a class="logo" href="~/blog">
-                        <h2 class="blog-header">@postModel.Blog.Title</h2>
-                    </a>
-                </div> <!-- end header__logo -->
-
-                <ul class="header__social">
-                    <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" />
-                    <li><a href="~/feed/rss"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                </ul> <!-- end header__social -->
-
-                <a class="header__search-trigger" href="#0"></a>
-
-                <div class="header__search">
-
-                    <form role="search" method="get" class="header__search-form" action="#">
-                        <label>
-                            <span class="hide-content">Search for:</span>
-                            <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
-                        </label>
-                        <input type="submit" class="search-submit" value="Search">
-                    </form>
-
-                    <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
-
-                </div>  <!-- end header__search -->
-
-
-                <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
-
-                <nav class="header__nav-wrap">
-
-                    <h2 class="header__nav-heading h6">Site Navigation</h2>
-
-                    <ul class="header__nav">
-                        <li><a href="~/" title="">Home</a></li>
-                        <li><a href="~/blog" title="">Blog</a></li>
-                        <li><a href="~/admin" title="">Admin</a></li>
-                    </ul> <!-- end header__nav -->
-
-                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
-
-                </nav> <!-- end header__nav-wrap -->
-
-            </div> <!-- header-content -->
-        </header> <!-- header -->
+        <partial name="~/Views/Themes/Philosophy/Shared/Header.cshtml" />
 
     </div> <!-- end s-pageheader -->
     <!-- s-content
@@ -161,26 +108,7 @@
                         </p>
 
                         <ul class="s-content__author-social">
-                            @if (!string.IsNullOrEmpty(facebook))
-                            {
-                                <li><a href="https://www.facebook.com/@facebook">Facebook</a></li>
-                            }
-                            @if (!string.IsNullOrEmpty(twitter))
-                            {
-                                <li><a href="https://twitter.com/@twitter">Twitter</a></li>
-                            }
-                            @if (!string.IsNullOrEmpty(instagram))
-                            {
-                                <li><a href="https://www.instagram.com/@instagram">Instagram</a></li>
-                            }
-                            @if (!string.IsNullOrEmpty(pinterest))
-                            {
-                                <li><a href="https://www.pinterest.com/@pinterest">Pinterest</a></li>
-                            }
-                            @if (!string.IsNullOrEmpty(github))
-                            {
-                                <li><a href="https://github.com/@github">Github</a></li>
-                            }
+                            <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialLinks" />
                         </ul>
                     </div>
                 </div>

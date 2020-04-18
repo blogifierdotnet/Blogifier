@@ -5,24 +5,52 @@
     var instagram = DataService.CustomFields.GetCustomValue("instagram");
     var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
     var github = DataService.CustomFields.GetCustomValue("github");
+    var SocialStyle = Model;
 }
-@if (!string.IsNullOrEmpty(facebook))
+
+@if (SocialStyle == "links")
 {
-    <li><a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+    @if (!string.IsNullOrEmpty(facebook))
+    {
+        <li><a href="https://www.facebook.com/@facebook">Facebook</a></li>
+    }
+    @if (!string.IsNullOrEmpty(twitter))
+    {
+        <li><a href="https://twitter.com/@twitter">Twitter</a></li>
+    }
+    @if (!string.IsNullOrEmpty(instagram))
+    {
+        <li><a href="https://www.instagram.com/@instagram">Instagram</a></li>
+    }
+    @if (!string.IsNullOrEmpty(pinterest))
+    {
+        <li><a href="https://www.pinterest.com/@pinterest">Pinterest</a></li>
+    }
+    @if (!string.IsNullOrEmpty(github))
+    {
+        <li><a href="https://github.com/@github">Github</a></li>
+    }
 }
-@if (!string.IsNullOrEmpty(twitter))
+else
 {
-    <li><a href="https://twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-}
-@if (!string.IsNullOrEmpty(instagram))
-{
-    <li><a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-}
-@if (!string.IsNullOrEmpty(pinterest))
-{
-    <li><a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-}
-@if (!string.IsNullOrEmpty(github))
-{
-    <li><a href="https://github.com/@github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+    @if (!string.IsNullOrEmpty(facebook))
+    {
+        <li><a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+    }
+    @if (!string.IsNullOrEmpty(twitter))
+    {
+        <li><a href="https://twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+    }
+    @if (!string.IsNullOrEmpty(instagram))
+    {
+        <li><a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+    }
+    @if (!string.IsNullOrEmpty(pinterest))
+    {
+        <li><a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+    }
+    @if (!string.IsNullOrEmpty(github))
+    {
+        <li><a href="https://github.com/@github"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+    }
 }

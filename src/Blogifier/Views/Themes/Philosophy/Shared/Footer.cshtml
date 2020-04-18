@@ -8,6 +8,9 @@
     var popular = await DataService.BlogPosts.GetPopular(pgr);
     var cats = await DataService.BlogPosts.Categories();
     var blog = await DataService.CustomFields.GetBlogSettings();
+
+    string socialLinks = "links";
+    string socialIcons = "icons";
 }
 <!-- s-extra
 ================================================== -->
@@ -33,15 +36,15 @@
                             </section>
                         </article>
                     }
-                </div> <!-- end popular_posts -->
-            </div> <!-- end popular -->
+                </div>
+            </div>
         }
 
         <div class="col-four md-six tab-full about">
             <h3>About @blog.Title</h3>
             <p>@blog.Description</p>
             <ul class="about__social">
-                <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" />
+                <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialIcons" />
             </ul>
         </div>
 
@@ -57,10 +60,10 @@
                     {
                         <a href="~/categories/@cat.Category">@cat.Category</a>
                     }
-                </div> <!-- end tagcloud -->
-            </div> <!-- end tags -->
+                </div>
+            </div>
         }
-    </div> <!-- end tags-wrap -->
+    </div>
 
 </section> <!-- end s-extra -->
 <!-- s-footer
@@ -71,52 +74,38 @@
         <div class="row">
 
             <div class="col-two md-four mob-full s-footer__sitelinks">
-
                 <h4>Quick Links</h4>
-
                 <ul class="s-footer__linklist">
-                    <li><a href="#0">Home</a></li>
-                    <li><a href="#0">Blog</a></li>
-                    <li><a href="#0">Styles</a></li>
-                    <li><a href="#0">About</a></li>
-                    <li><a href="#0">Contact</a></li>
-                    <li><a href="#0">Privacy Policy</a></li>
+                    <li><a href="~/">Home</a></li>
+                    <li><a href="~/blog">Blog</a></li>
+                    <li><a href="~/admin">Admin</a></li>
                 </ul>
-
             </div> <!-- end s-footer__sitelinks -->
 
             <div class="col-two md-four mob-full s-footer__archives">
-
-                <h4>Archives</h4>
-
+                <h4>Categories</h4>
                 <ul class="s-footer__linklist">
-                    <li><a href="#0">January 2018</a></li>
-                    <li><a href="#0">December 2017</a></li>
-                    <li><a href="#0">November 2017</a></li>
-                    <li><a href="#0">October 2017</a></li>
-                    <li><a href="#0">September 2017</a></li>
-                    <li><a href="#0">August 2017</a></li>
+                    @if (cats.Any())
+                    {
+                        var cnt = 1;
+                        foreach (var cat in cats)
+                        {
+                            if (cnt < 6)
+                            {
+                                <li><a href="~/categories/@cat.Category">@cat.Category (@cat.PostCount)</a></li>
+                            }
+                            cnt++;
+                        }
+                    }
                 </ul>
-
             </div> <!-- end s-footer__archives -->
 
             <div class="col-two md-four mob-full s-footer__social">
-
                 <h4>Social</h4>
-
                 <ul class="s-footer__linklist">
-                    <li><a href="#0">Facebook</a></li>
-                    <li><a href="#0">Instagram</a></li>
-                    <li><a href="#0">Twitter</a></li>
-                    <li><a href="#0">Pinterest</a></li>
-                    <li><a href="#0">Google+</a></li>
-                    <li><a href="#0">LinkedIn</a></li>
+                    <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialLinks" />
                 </ul>
-
-            </div> <!-- end s-footer__social -->
-
-
-            
+            </div> <!-- end s-footer__social -->         
 
             <div class="col-five md-full end s-footer__subscribe">
 
