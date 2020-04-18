@@ -597,121 +597,161 @@
   "dashboard": {
     "Values": {
       "en-US": "Dashboard",
-      "ru-RU": "Панель Управления"
+      "ru-RU": "Панель Управления",
+      "zh-cn": "仪表盘",
+      "zh-tw": "儀表盤"
     }
   },
   "popular": {
     "Values": {
       "en-US": "Popular",
-      "ru-RU": "Популярные"
+      "ru-RU": "Популярные",
+      "zh-cn": "热门",
+      "zh-tw": "熱門"
     }
   },
   "empty": {
     "Values": {
       "en-US": "Empty",
-      "ru-RU": "Пустой лист"
+      "ru-RU": "Пустой лист",
+      "zh-cn": "空的",
+      "zh-tw": "空的"
     }
   },
   "edit": {
     "Values": {
       "en-US": "Edit",
-      "ru-RU": "Редактировать"
+      "ru-RU": "Редактировать",
+      "zh-cn": "编辑",
+      "zh-tw": "編輯"
     }
   },
   "details": {
     "Values": {
       "en-US": "Details",
-      "ru-RU": "Детали"
+      "ru-RU": "Детали",
+      "zh-cn": "详情",
+      "zh-tw": "詳情"
     }
   },
   "custom-field": {
     "Values": {
       "en-US": "Custom field",
-      "ru-RU": "Пользовательский виджет"
+      "ru-RU": "Пользовательский виджет",
+      "zh-cn": "自定义字段",
+      "zh-tw": "自定義字段"
     }
   },
   "error-msg": {
     "Values": {
       "en-US": "Sorry, something went wrong or there's nothing at this address.",
-      "ru-RU": "Страница не найдена или произошла ошибка."
+      "ru-RU": "Страница не найдена или произошла ошибка.",
+      "zh-cn": "抱歉，出现了一些错误或者这个地址什么都没有。",
+      "zh-tw": "抱歉，出現了壹些錯誤或者這個地址什麽都沒有。"
     }
   },
   "send": {
     "Values": {
       "en-US": "Send",
-      "ru-RU": "Отправить"
+      "ru-RU": "Отправить",
+      "zh-cn": "发送",
+      "zh-tw": "發送"
     }
   },
   "send-to": {
     "Values": {
       "en-US": "Send to",
-      "ru-RU": "Получатель"
+      "ru-RU": "Получатель",
+      "zh-cn": "发送到",
+      "zh-tw": "發送到"
     }
   },
   "subject": {
     "Values": {
       "en-US": "Subject",
-      "ru-RU": "Тема"
+      "ru-RU": "Тема",
+      "zh-cn": "主题",
+      "zh-tw": "主題"
     }
   },
   "content": {
     "Values": {
       "en-US": "Content",
-      "ru-RU": "Содержание"
+      "ru-RU": "Содержание",
+      "zh-cn": "内容",
+      "zh-tw": "內容"
     }
   },
   "completed": {
     "Values": {
       "en-US": "Completed",
-      "ru-RU": "Закончил"
+      "ru-RU": "Закончил",
+      "zh-cn": "完成",
+      "zh-tw": "完成"
     }
   },
   "email-info": {
     "Values": {
       "en-US": "Here you can verify newsletter settings by sending test email",
-      "ru-RU": "Здесь можно протестировать работу почтового сервиса"
+      "ru-RU": "Здесь можно протестировать работу почтового сервиса",
+      "zh-cn": "在这里，您可以通过发送测试电子邮件来验证新闻稿设置",
+      "zh-tw": "在這裏，您可以通過發送測試電子郵件來驗證新聞稿設置"
     }
   },
   "disqus-info": {
     "Values": {
       "en-US": "Here you can enter or update script to add Disqus comments",
-      "ru-RU": "Скрипт для подключения Disqus комментариев"
+      "ru-RU": "Скрипт для подключения Disqus комментариев",
+      "zh-cn": "在这里您可以输入或更新脚本以添加Disqus评论",
+      "zh-tw": "在這裏您可以輸入或更新腳本以添加Disqus評論"
     }
   },
   "demo-disabled": {
     "Values": {
       "en-US": "Disabled in the demo mode",
-      "ru-RU": "Функция отключена в режиме демонстрации"
+      "ru-RU": "Функция отключена в режиме демонстрации",
+      "zh-cn": "在演示模式下禁用",
+      "zh-tw": "在演示模式下禁用"
     }
   },
   "email-sent-success": {
     "Values": {
       "en-US": "Email sent successfully",
-      "ru-RU": "Почта отправлена успешно"
+      "ru-RU": "Почта отправлена успешно",
+      "zh-cn": "电子邮件发送成功",
+      "zh-tw": "電子郵件發送成功"
     }
   },
   "email-sent-error": {
     "Values": {
       "en-US": "Error sending email, check logs for details",
-      "ru-RU": "Ошибка при отправке почты, подробности в логе"
+      "ru-RU": "Ошибка при отправке почты, подробности в логе",
+      "zh-cn": "发送电子邮件时出错，请查看日志以了解详细信息",
+      "zh-tw": "發送電子郵件時出錯，請查看日誌以了解詳細信息"
     }
   },
   "email-sent-count": {
     "Values": {
       "en-US": "Sent {0} newsletters",
-      "ru-RU": "Отправлено {0} сообщений"
+      "ru-RU": "Отправлено {0} сообщений",
+      "zh-cn": "已发送{0}封新闻稿",
+      "zh-tw": "已發送{0}封新聞稿"
     }
   },
   "social-accounts": {
     "Values": {
       "en-US": "Social accounts",
-      "ru-RU": "Соцсети"
+      "ru-RU": "Соцсети",
+      "zh-cn": "社交账户",
+      "zh-tw": "社交賬戶"
     }
   },
   "name": {
     "Values": {
       "en-US": "Name",
-      "ru-RU": "Название"
+      "ru-RU": "Название",
+      "zh-cn": "姓名",
+      "zh-tw": "姓名"
     }
   }
 }
