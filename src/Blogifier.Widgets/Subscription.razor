@@ -22,7 +22,8 @@
                 {
                     if (AppSettings.DemoMode)
                     {
-                        title = $"{title} - {ipAr[1]}, {ipAr[2]}";
+                        var emAr = title.Split('@');
+                        title = $"demo@{emAr[1]} - {ipAr[1]}, {ipAr[2]}";
                     }
                     else
                     {

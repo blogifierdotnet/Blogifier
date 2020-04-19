@@ -7,9 +7,9 @@
     var m = Model as ListModel;
     var pgr = m.Pager;
 
-    var pager = new Pager(1);
-    var allPosts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
-    var posts = allPosts.ToList();
+    var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
+    var flist = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "F");
+    var featured = flist.ToList();
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -53,7 +53,7 @@
                 <div class="featured">
 
                     <div class="featured__column featured__column--big">
-                        @if (posts == null || posts.Count == 0)
+                        @if (featured == null || featured.Count == 0)
                         {
                             <div class="entry" style="background-image:url('@imgPlaceholder');">
                                 <div class="entry__content">&nbsp;</div>
@@ -61,9 +61,9 @@
                         }
                         else
                         {
-                            var cats0 = string.IsNullOrEmpty(posts[0].Categories)
-                                ? null : posts[0].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[0].Cover');">
+                            var cats0 = string.IsNullOrEmpty(featured[0].Categories)
+                                ? null : featured[0].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[0].Cover');">
                                 <div class="entry__content">
                                     @if (cats0 != null)
                                     {
@@ -72,15 +72,15 @@
                                             <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
                                     }
-                                    <h1><a href="~/posts/@posts[0].Slug" title="">@posts[0].Title</a></h1>
+                                    <h1><a href="~/posts/@featured[0].Slug" title="">@featured[0].Title</a></h1>
                                     <div class="entry__info">
                                         <a href="#" class="entry__profile-pic">
-                                            <img class="avatar" src="~/@posts[0].Author.Avatar" alt="">
+                                            <img class="avatar" src="~/@featured[0].Author.Avatar" alt="">
                                         </a>
 
                                         <ul class="entry__meta">
-                                            <li><a href="#">@posts[0].Author.DisplayName</a></li>
-                                            <li>@posts[0].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#">@featured[0].Author.DisplayName</a></li>
+                                            <li>@featured[0].Published.ToFriendlyDateString()</li>
                                         </ul>
                                     </div>
                                 </div> <!-- end entry__content -->
@@ -90,11 +90,11 @@
 
                     <div class="featured__column featured__column--small">
 
-                        @if (posts != null && posts.Count > 1)
+                        @if (featured != null && featured.Count > 1)
                         {
-                            var cats1 = string.IsNullOrEmpty(posts[1].Categories)
-                                ? null : posts[1].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[1].Cover');">
+                            var cats1 = string.IsNullOrEmpty(featured[1].Categories)
+                                ? null : featured[1].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[1].Cover');">
                                 <div class="entry__content">
                                     @if (cats1 != null)
                                     {
@@ -103,15 +103,15 @@
                                             <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
                                     }
-                                    <h1><a href="~/posts/@posts[1].Slug" title="">@posts[1].Title</a></h1>
+                                    <h1><a href="~/posts/@featured[1].Slug" title="">@featured[1].Title</a></h1>
                                     <div class="entry__info">
                                         <a href="#" class="entry__profile-pic">
-                                            <img class="avatar" src="~/@posts[1].Author.Avatar" alt="">
+                                            <img class="avatar" src="~/@featured[1].Author.Avatar" alt="">
                                         </a>
 
                                         <ul class="entry__meta">
-                                            <li><a href="#">@posts[1].Author.DisplayName</a></li>
-                                            <li>@posts[1].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#">@featured[1].Author.DisplayName</a></li>
+                                            <li>@featured[1].Published.ToFriendlyDateString()</li>
                                         </ul>
                                     </div>
                                 </div> <!-- end entry__content -->
@@ -122,11 +122,11 @@
                         {
                             <div class="entry" style="background-image:url('@imgPlaceholder');"></div>
                         }
-                        @if (posts != null && posts.Count > 2)
+                        @if (featured != null && featured.Count > 2)
                         {
-                            var cats2 = string.IsNullOrEmpty(posts[2].Categories)
-                                ? null : posts[2].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@posts[2].Cover');">
+                            var cats2 = string.IsNullOrEmpty(featured[2].Categories)
+                                ? null : featured[2].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[2].Cover');">
                                 <div class="entry__content">
                                     @if (cats2 != null)
                                     {
@@ -135,14 +135,14 @@
                                             <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
                                     }
-                                    <h1><a href="~/posts/@posts[2].Slug" title="">@posts[2].Title</a></h1>
+                                    <h1><a href="~/posts/@featured[2].Slug" title="">@featured[2].Title</a></h1>
                                     <div class="entry__info">
                                         <a href="#" class="entry__profile-pic">
-                                            <img class="avatar" src="~/@posts[2].Author.Avatar" alt="">
+                                            <img class="avatar" src="~/@featured[2].Author.Avatar" alt="">
                                         </a>
                                         <ul class="entry__meta">
-                                            <li><a href="#">@posts[2].Author.DisplayName</a></li>
-                                            <li>@posts[2].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#">@featured[2].Author.DisplayName</a></li>
+                                            <li>@featured[2].Published.ToFriendlyDateString()</li>
                                         </ul>
                                     </div>
                                 </div> <!-- end entry__content -->
@@ -220,6 +220,7 @@
                                 <li><a class="pgn__prev" href="@pgr.LinkToOlder">Prev</a></li>
                             }
                             <li><span class="pgn__num current">@pgr.CurrentPage</span></li>
+                            <li><span class="pgn__num dots">out of @pgr.LastPage</span></li>
                             @if (pgr.ShowNewer)
                             {
                                 <li><a class="pgn__next" href="@pgr.LinkToNewer">Next</a></li>

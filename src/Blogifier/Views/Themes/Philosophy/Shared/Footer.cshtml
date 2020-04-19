@@ -4,9 +4,12 @@
     var img = $"{AppSettings.SiteRoot}themes/philosophy/images";
     var imgPlaceholder = $"{AppSettings.SiteRoot}admin/img/img-placeholder.png";
 
-    var pgr = new Pager(1, 4);
-    var popular = await DataService.BlogPosts.GetPopular(pgr);
-    var cats = await DataService.BlogPosts.Categories();
+    var popular = await DataService.BlogPosts.GetPopular(new Pager(1, 4));
+
+    var catsUnordered = await DataService.BlogPosts.Categories();
+
+    var cats = catsUnordered.OrderByDescending(c => c.PostCount);
+
     var blog = await DataService.CustomFields.GetBlogSettings();
 
     string socialLinks = "links";
@@ -51,12 +54,12 @@
     </div> <!-- end row -->
 
     <div class="row bottom tags-wrap">
-        @if (cats.Any())
+        @if (catsUnordered.Any())
         {
             <div class="col-full tags">
                 <h3>Tags</h3>
                 <div class="tagcloud">
-                    @foreach (var cat in cats)
+                    @foreach (var cat in catsUnordered)
                     {
                         <a href="~/categories/@cat.Category">@cat.Category</a>
                     }

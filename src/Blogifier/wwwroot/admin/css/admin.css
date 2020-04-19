@@ -598,6 +598,21 @@ select {
     font-size: 1rem;
 }
 
+li.item.item-text {
+    margin-top: 24px;
+    height: 32px;
+    font-size: .8em;
+    margin-right: 10px;
+    color: #888;
+}
+
+li.item.item-text span.text-active {  
+    padding-right: 5px;
+    margin: 0 5px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
 /* blazor ui */
 
 #blazor-error-ui {
