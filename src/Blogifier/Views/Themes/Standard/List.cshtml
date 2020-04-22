@@ -1,8 +1,10 @@
-﻿@{
+﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@{
     ListModel listModel = (ListModel)Model;
     Pager pgr = listModel.Pager;
     string cover = $"{Url.Content("~/")}{listModel.Blog.Cover}";
 }
+@inject IJsonStringLocalizer<ListModel> Localizer
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +34,7 @@
                             <img src="~/@post.Cover" alt="@post.Title">
                             @if (post.Featured)
                             {
-                            <span class="post-featrued-label"><i class="fa fa-star"></i>Featured</span>
+                                <span class="post-featrued-label"><i class="fa fa-star"></i>@Localizer["featured"]</span>
                             }
                         </div>
                         <h2 class="post-title"><a href="posts/@post.Slug">@post.Title</a></h2>
@@ -41,7 +43,7 @@
                             <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time>
                         </div>
                         <div class="post-description">@Html.Raw(post.Description)</div>
-                        <a class="post-more btn btn-rounded btn-dark" href="posts/@post.Slug">Read</a>
+                        <a class="post-more btn btn-rounded btn-dark" href="posts/@post.Slug">@Localizer["read"]</a>
                     </article>
                 }
                 @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
@@ -68,7 +70,7 @@
             }
             else
             {
-                <div class="notfound">Empty</div>
+                <div class="notfound">@Localizer["empty"]</div>
             }
 
         </div>

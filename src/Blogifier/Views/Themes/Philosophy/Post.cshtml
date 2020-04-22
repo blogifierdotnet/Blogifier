@@ -1,4 +1,6 @@
-﻿@inject IDataService DataService
+﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@inject IDataService DataService
+@inject IJsonStringLocalizer<ListModel> Localizer
 @{
     AppSettings.SiteRoot = Url.Content("~/");
     var img = $"{AppSettings.SiteRoot}themes/philosophy/images";
@@ -7,7 +9,7 @@
     var catUrl = Url.Content("~/categories");
     string socialLinks = "links";
 
-    var cats = string.IsNullOrEmpty(postModel.Post.Categories) 
+    var cats = string.IsNullOrEmpty(postModel.Post.Categories)
         ? null : postModel.Post.Categories.Split(',').ToList();
 }
 <!DOCTYPE html>
@@ -84,7 +86,7 @@
                 @if (cats != null)
                 {
                     <p class="s-content__tags">
-                        <span>Post Tags</span>
+                        <span>@Localizer["tag", true]</span>
 
                         <span class="s-content__tag-list">
                             @foreach (var cat in cats)
@@ -121,7 +123,7 @@
                             {
                                 <div class="s-content__prev">
                                     <a href="@postModel.Older.Slug" rel="prev">
-                                        <span>Previous Post</span>
+                                        <span>@Localizer["previous"]</span>
                                         @postModel.Older.Title
                                     </a>
                                 </div>
@@ -130,7 +132,7 @@
                             {
                                 <div class="s-content__next">
                                     <a href="@postModel.Newer.Slug" rel="next">
-                                        <span>Next Post</span>
+                                        <span>@Localizer["next"]</span>
                                         @postModel.Newer.Title
                                     </a>
                                 </div>

@@ -1,4 +1,6 @@
-﻿@inject IDataService DataService
+﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@inject IDataService DataService
+@inject IJsonStringLocalizer<ListModel> Localizer
 @{
     AppSettings.SiteRoot = Url.Content("~/");
     var img = $"{AppSettings.SiteRoot}themes/philosophy/images";
@@ -24,7 +26,7 @@
         @if (popular.Any())
         {
             <div class="col-eight md-six tab-full popular">
-                <h3>Popular Posts</h3>
+                <h3>@Localizer["popular"]</h3>
                 <div class="block-1-2 block-m-full popular__posts">
                     @foreach (var pop in popular)
                     {
@@ -57,7 +59,7 @@
         @if (catsUnordered.Any())
         {
             <div class="col-full tags">
-                <h3>Tags</h3>
+                <h3>@Localizer["tag", true]</h3>
                 <div class="tagcloud">
                     @foreach (var cat in catsUnordered)
                     {
@@ -77,16 +79,16 @@
         <div class="row">
 
             <div class="col-two md-four mob-full s-footer__sitelinks">
-                <h4>Quick Links</h4>
+                <h4>@Localizer["quick-links"]</h4>
                 <ul class="s-footer__linklist">
-                    <li><a href="~/">Home</a></li>
-                    <li><a href="~/blog">Blog</a></li>
-                    <li><a href="~/admin">Admin</a></li>
+                    <li><a href="~/">@Localizer["home"]</a></li>
+                    <li><a href="~/blog">@Localizer["blog"]</a></li>
+                    <li><a href="~/admin">@Localizer["admin"]</a></li>
                 </ul>
             </div> <!-- end s-footer__sitelinks -->
 
             <div class="col-two md-four mob-full s-footer__archives">
-                <h4>Categories</h4>
+                <h4>@Localizer["categories", true]</h4>
                 <ul class="s-footer__linklist">
                     @if (cats.Any())
                     {
@@ -104,23 +106,23 @@
             </div> <!-- end s-footer__archives -->
 
             <div class="col-two md-four mob-full s-footer__social">
-                <h4>Social</h4>
+                <h4>@Localizer["social-accounts"]</h4>
                 <ul class="s-footer__linklist">
                     <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialLinks" />
                 </ul>
-            </div> <!-- end s-footer__social -->         
+            </div> <!-- end s-footer__social -->
 
             <div class="col-five md-full end s-footer__subscribe">
 
-                <h4>Newsletter</h4>
-                <p>Join our subscribers list to get the latest news and updates directly in your inbox.</p>
+                <h4>@Localizer["newsletter"]</h4>
+                <p>@Localizer["join-subscribers"]</p>
 
-                <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">Thank you!</h2>
+                <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">@Localizer["thank-you"]</h2>
 
                 <div class="subscribe-form" id="frmNewsletter">
                     <form id="mc-form" class="group" novalidate>
-                        <input type="email" id="txtEmail" name="txtEmail" value="" class="email" placeholder="Email Address" required="">
-                        <input type="submit" name="subscribe" value="Send" onclick="return subscribeClick();">
+                        <input type="email" id="txtEmail" name="txtEmail" value="" class="email" placeholder="@Localizer["enter-email"]" required="">
+                        <input type="submit" name="subscribe" value="@Localizer["send"]" onclick="return subscribeClick();">
                         <label for="mc-email" class="subscribe-message"></label>
                     </form>
                 </div>

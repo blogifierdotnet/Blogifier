@@ -340,9 +340,9 @@
   },
   "categories": {
     "Values": {
-      "en-US": "Categories",
+      "en-US": "Category|Categories",
       "es-ES": "Categorías",
-      "ru-RU": "Категории",
+      "ru-RU": "Категория,|Категории",
       "zh-cn": "分类",
       "zh-tw": "類別",
       "pt-BR": "Categorias"
@@ -764,6 +764,84 @@
     "Values": {
       "en-US": "Type here..",
       "ru-RU": "Печатать.."
+    }
+  },
+  "thank-you": {
+    "Values": {
+      "en-US": "Thank you!",
+      "ru-RU": "Спасибо!"
+    }
+  },
+  "enter-email": {
+    "Values": {
+      "en-US": "Enter email",
+      "ru-RU": "Адрес электронной почты"
+    }
+  },
+  "subscribe": {
+    "Values": {
+      "en-US": "Subscribe",
+      "ru-RU": "Подписаться"
+    }
+  },
+  "join-subscribers": {
+    "Values": {
+      "en-US": "Join our subscribers list to get the latest news and updates directly in your inbox.",
+      "ru-RU": "Подписаться и получать уведомлания о новых публикациях по электронной почте"
+    }
+  },
+  "login": {
+    "Values": {
+      "en-US": "Login",
+      "ru-RU": "Войти"
+    }
+  },
+  "home": {
+    "Values": {
+      "en-US": "Home",
+      "ru-RU": "Домашняя"
+    }
+  },
+  "blog": {
+    "Values": {
+      "en-US": "Blog",
+      "ru-RU": "Блог"
+    }
+  },
+  "admin": {
+    "Values": {
+      "en-US": "Admin",
+      "ru-RU": "Администрация"
+    }
+  },
+  "tag": {
+    "Values": {
+      "en-US": "Tag|Tags",
+      "ru-RU": "Тег|Теги"
+    }
+  },
+  "quick-links": {
+    "Values": {
+      "en-US": "Quick links",
+      "ru-RU": "Ссылки"
+    }
+  },
+  "navigation": {
+    "Values": {
+      "en-US": "Navigation",
+      "ru-RU": "Навигация"
+    }
+  },
+  "previous": {
+    "Values": {
+      "en-US": "Previous",
+      "ru-RU": "Предыдущий"
+    }
+  },
+  "next": {
+    "Values": {
+      "en-US": "Next",
+      "ru-RU": "Следующий"
     }
   }
 }
