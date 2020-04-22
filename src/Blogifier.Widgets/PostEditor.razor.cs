@@ -100,6 +100,9 @@ namespace Blogifier.Widgets
                         if(postAction == PostAction.Unpublish)
                             item.Published = DateTime.MinValue;
 
+                        if (postAction == PostAction.Publish)
+                            item.Published = SystemClock.Now();
+
                         saved = await DataService.BlogPosts.SaveItem(item);
                     }
                     DataService.Complete();
