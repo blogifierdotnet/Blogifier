@@ -42,29 +42,23 @@ window.commonJsFunctions = {
     },
     startClock: function () {
         var clock = document.getElementById('clock');
-        var ext = document.getElementById('ampm');
-
         var clockDay = document.getElementById('clock-day');
         var clockMonth = document.getElementById('clock-month');
-        var clockYear = document.getElementById('clock-year');
 
         function time() {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
-            var ampm = hours >= 12 ? 'pm' : 'am';
             hours = hours % 12;
             hours = hours ? hours : 12;
             minutes = minutes < 10 ? '0' + minutes : minutes;
             clock.textContent = hours + ':' + minutes;
-            ext.textContent = ampm;
 
             var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             clockDay.textContent = days[date.getDay()];
             clockMonth.textContent = months[date.getMonth()] + ' ' + date.getDate();
-            //clockYear.textContent = date.getFullYear();
         }
         time();
         setInterval(time, 60 * 1000);

@@ -81,7 +81,7 @@
   },
   "posts": {
     "Values": {
-      "en-US": "Posts",
+      "en-US": "Post|Posts",
       "es-ES": "Entradas",
       "ru-RU": "Сообщения",
       "zh-cn": "文章列表",
@@ -250,9 +250,9 @@
   },
   "draft": {
     "Values": {
-      "en-US": "Draft",
+      "en-US": "Draft|Drafts",
       "es-ES": "Borrador",
-      "ru-RU": "Черновики",
+      "ru-RU": "Черновик|Черновики",
       "zh-cn": "草稿",
       "zh-tw": "草稿",
       "pt-BR": "Rascunho"
@@ -350,9 +350,9 @@
   },
   "view": {
     "Values": {
-      "en-US": "View",
+      "en-US": "View|Views",
       "es-ES": "Ver",
-      "ru-RU": "Посмотреть",
+      "ru-RU": "Посмотреть|Просмотры",
       "zh-cn": "查看",
       "zh-tw": "察看",
       "pt-BR": "Visualizar"
@@ -752,6 +752,18 @@
       "ru-RU": "Название",
       "zh-cn": "姓名",
       "zh-tw": "姓名"
+    }
+  },
+  "post-title": {
+    "Values": {
+      "en-US": "Post title..",
+      "ru-RU": "Заголовок поста.."
+    }
+  },
+  "type-here": {
+    "Values": {
+      "en-US": "Type here..",
+      "ru-RU": "Печатать.."
     }
   }
 }

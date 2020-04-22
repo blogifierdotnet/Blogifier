@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col col-md-8 dash-cnt">
                 <div class="dash-clock">
-                    <span id="clock"></span><span id="ampm"></span>
+                    <span id="clock"></span>@*<span id="ampm"></span>*@
                 </div>
                 <div>
                     <span id="clock-day"></span>, <span id="clock-month"></span>
@@ -18,15 +18,15 @@
         <div class="row stats">
             <div class="col dash-cnt">
                 <h3 class="mb-0">@PostCount</h3>
-                <small>Posts</small>
+                <small>@Localizer["posts", true]</small>
             </div>
             <div class="col dash-cnt">
                 <h3 class="mb-0">@ViewsCount</h3>
-                <small>Views</small>
+                <small>@Localizer["view", true]</small>
             </div>
             <div class="col dash-cnt">
                 <h3 class="mb-0">@DraftCount</h3>
-                <small>Drafts</small>
+                <small>@Localizer["draft", true]</small>
             </div>
         </div>
     </div>

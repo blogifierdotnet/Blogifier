@@ -8,7 +8,7 @@
 else
 {
     <div class="input-group search">
-        <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="search">
+        <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="@Localizer["search"]">
         <span class="input-group-append">
             <button @onclick="(async () => await SearchPosts())" class="btn btn-secondary btn-search" type="button">
                 <span class="oi oi-magnifying-glass"></span>

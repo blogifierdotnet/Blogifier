@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Data;
+﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core.Data;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -20,7 +21,9 @@ namespace Blogifier.Widgets
         protected IDataService DataService { get; set; }
         [Inject]
         protected IJSRuntime JSRuntime { get; set; }
-        
+        [Inject]
+        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+
         public Author Author { get; set; }
         protected int PostCount { get; set; }
         protected int ViewsCount { get; set; }

@@ -1,5 +1,5 @@
 ﻿<div class="input-group search">
-    <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="search">
+    <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="@Localizer["search"]">
     <span class="input-group-append">
         <button @onclick="(async () => await SearchSubscriptions(1))" class="btn btn-secondary btn-search" type="button">
             <span class="oi oi-magnifying-glass"></span>
@@ -60,6 +60,7 @@
                 </a>
             </li>
         }
+        <li class="item item-text"><span class="text-active">@Model.Pager.CurrentPage</span><span>out of @Model.Pager.LastPage</span></li>
         @if (Model.Pager.ShowNewer)
         {
             <li class="item item-next">

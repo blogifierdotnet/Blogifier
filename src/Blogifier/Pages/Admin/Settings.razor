@@ -44,14 +44,14 @@
                                         <label>@Localizer["logo"]</label>
                                         <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
                                         <span class="input-group-btn">
-                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> Select</button>
+                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @Localizer["select"]</button>
                                         </span>
                                     </div>
                                     <div class="input-group">
                                         <label>@Localizer["cover"]</label>
                                         <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
                                         <span class="input-group-btn">
-                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> Select</button>
+                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @Localizer["select"]</button>
                                         </span>
                                     </div>
                                     <div class="input-group">
@@ -81,7 +81,7 @@
 
                                     <div>
                                         <label>&nbsp;</label>
-                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
                                     </div>
                                 </fieldset>
                             </EditForm>
