@@ -1,9 +1,12 @@
 # Blogifier
+[![Build Status](https://dev.azure.com/rtur/Blogifier/_apis/build/status/blogifierdotnet.Blogifier)](https://dev.azure.com/rtur/Blogifier/_build/latest?definitionId=3)
+
 Blogifier is a single-user personal blog written in ASP.NET Core MVC and Blazor. It is small, easy to use and highly customizable 
 via theming engine and Blazor components.
 
 > If you are looking for a multi-user Angular version of Blogifier, please find it under [Blogifier.SPA](https://github.com/blogifierdotnet/Blogifier.SPA) repository.
 > Both versions are fully supported.
+
 
 ## System Requirements
 
