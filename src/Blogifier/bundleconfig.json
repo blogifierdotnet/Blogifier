@@ -3,7 +3,6 @@
     "outputFileName": "wwwroot/themes/standard/css/standard.min.css",
     "inputFiles": [
       "wwwroot/themes/standard/css/bootstrap.min.css",
-      "wwwroot/themes/standard/css/font-awesome.min.css",
       "wwwroot/themes/standard/css/prism.css",
       "wwwroot/themes/standard/css/styles.min.css"
     ]
