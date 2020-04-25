@@ -6,6 +6,7 @@ using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.FeatureManagement;
 using Microsoft.JSInterop;
 using Sotsera.Blazor.Toaster;
 using System;
@@ -39,6 +40,8 @@ namespace Blogifier.Widgets
         protected IJSRuntime JSRuntime { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
+        [Inject]
+        IFeatureManager FeatureManager { get; set; }
 
         protected string Cover { get; set; }
         protected PostItem Post { get; set; }
@@ -107,7 +110,7 @@ namespace Blogifier.Widgets
                     }
                     DataService.Complete();
 
-                    if (postAction == PostAction.Publish && !AppSettings.DemoMode)
+                    if (postAction == PostAction.Publish && !FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
                     {
                         var section = Configuration.GetSection(Constants.ConfigSectionKey);
                         if(section != null)

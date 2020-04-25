@@ -5,6 +5,7 @@ using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.FeatureManagement;
 using Sotsera.Blazor.Toaster;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace Blogifier.Widgets
         protected UserManager<AppUser> UserManager { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        IFeatureManager FeatureManager { get; set; }
 
         protected Author Author { get; set; }
         protected IEnumerable<CustomField> UserFields { get; set; }
@@ -122,7 +125,7 @@ namespace Blogifier.Widgets
         {
             try
             {
-                if (AppSettings.DemoMode)
+                if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
                 {
                     Toaster.Error("Running in demo mode - change password disabled");
                 }

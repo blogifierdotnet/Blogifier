@@ -1,4 +1,6 @@
-﻿<div class="input-group search">
+﻿@inject IFeatureManager FeatureManager
+
+<div class="input-group search">
     <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="@Localizer["search"]">
     <span class="input-group-append">
         <button @onclick="(async () => await SearchSubscriptions(1))" class="btn btn-secondary btn-search" type="button">
@@ -20,7 +22,7 @@
                 var ipAr = letter.Ip.Split('|');
                 if(ipAr.Length == 3)
                 {
-                    if (AppSettings.DemoMode)
+                    if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
                     {
                         var emAr = title.Split('@');
                         title = $"demo@{emAr[1]} - {ipAr[1]}, {ipAr[2]}";

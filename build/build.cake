@@ -46,7 +46,7 @@ Task("Default").IsDependentOn("Test").Does(() =>
 	{
 		var appjson = File("./publish/appsettings.json");
 		var fileContent = System.IO.File.ReadAllText(appjson);
-		fileContent = fileContent.Replace("\"DemoMode\": false", "\"DemoMode\": true"); 
+		fileContent = fileContent.Replace("\"Demo\": false", "\"Demo\": true"); 
 		System.IO.File.WriteAllText(appjson, fileContent);
 	}
 });

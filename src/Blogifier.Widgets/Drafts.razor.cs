@@ -5,6 +5,7 @@ using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
+using Microsoft.FeatureManagement;
 using Sotsera.Blazor.Toaster;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Blogifier.Widgets
         public NavigationManager NavigationManager { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
+        [Inject]
+        IFeatureManager FeatureManager { get; set; }
 
         protected int PostId { get; set; }
         protected bool Edit { get; set; }
@@ -57,7 +60,7 @@ namespace Blogifier.Widgets
                 var saved = await DataService.BlogPosts.SaveItem(post);
                 DataService.Complete();
 
-                if (!AppSettings.DemoMode)
+                if (!FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
                 {
                     // send newsletters on post publish
                     var section = Configuration.GetSection(Constants.ConfigSectionKey);

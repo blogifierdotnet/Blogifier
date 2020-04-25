@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Askmethat.Aspnet.JsonLocalizer.Localizer;
 using Microsoft.Extensions.Configuration;
 using Blogifier.Core;
+using Microsoft.FeatureManagement;
 
 namespace Blogifier.Widgets
 {
@@ -19,6 +20,8 @@ namespace Blogifier.Widgets
         protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
+        [Inject]
+        IFeatureManager FeatureManager { get; set; }
 
         protected EmailModel Model { get; set; }
 
@@ -27,7 +30,7 @@ namespace Blogifier.Widgets
             Model = new EmailModel { SendTo = "", Subject = "", Content = "" };
 
             var section = Configuration.GetSection(Constants.ConfigSectionKey);
-            if(section != null && !AppSettings.DemoMode)
+            if(section != null && !FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
                 Model.ApiKey = section.GetValue<string>("SendGridApiKey");
             else
                 Model.ApiKey = "YOUR-SENDGRID-API-KEY";
@@ -35,7 +38,7 @@ namespace Blogifier.Widgets
 
         protected async Task Send()
         {
-            if (AppSettings.DemoMode)
+            if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
             {
                 Toaster.Info(Localizer["demo-disabled"]);
             }

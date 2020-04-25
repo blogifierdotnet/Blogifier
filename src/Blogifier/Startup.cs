@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.FeatureManagement;
 using Serilog;
 using Serilog.Events;
 using Sotsera.Blazor.Toaster.Core.Models;
@@ -32,6 +33,7 @@ namespace Blogifier
             services.AddBlogLocalization();
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+            services.AddFeatureManagement();
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews().AddViewLocalization(); 
