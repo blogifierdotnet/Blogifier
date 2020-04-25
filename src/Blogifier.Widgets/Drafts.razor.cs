@@ -1,10 +1,8 @@
 ﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
-using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 using Sotsera.Blazor.Toaster;
 using System;
@@ -25,8 +23,6 @@ namespace Blogifier.Widgets
         protected IEmailService EmailService { get; set; }
         [Inject]
         IJsonStringLocalizer<Drafts> Localizer { get; set; }
-        [Inject]
-        protected IConfiguration Configuration { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
@@ -60,26 +56,18 @@ namespace Blogifier.Widgets
                 var saved = await DataService.BlogPosts.SaveItem(post);
                 DataService.Complete();
 
-                if (!FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+                if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Email)).Result)
                 {
-                    // send newsletters on post publish
-                    var section = Configuration.GetSection(Constants.ConfigSectionKey);
-                    if (section != null)
-                    {
-                        var apiKey = section.GetValue<string>("SendGridApiKey");
-                        if (!string.IsNullOrEmpty(apiKey) && apiKey != "YOUR-SENDGRID-API-KEY")
-                        {
-                            var pager = new Pager(1, 10000);
-                            var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
-                            var emails = items.Select(i => i.Email).ToList();
-                            var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+                    // send newsletters on post publish when email feature enabled
+                    var pager = new Pager(1, 10000);
+                    var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+                    var emails = items.Select(i => i.Email).ToList();
+                    var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
 
-                            int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                            if (count > 0)
-                            {
-                                Toaster.Success(string.Format(Localizer["email-sent-count"], count));
-                            }
-                        }
+                    int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
+                    if (count > 0)
+                    {
+                        Toaster.Success(string.Format(Localizer["email-sent-count"], count));
                     }
                 }
                 Toaster.Success("Saved");

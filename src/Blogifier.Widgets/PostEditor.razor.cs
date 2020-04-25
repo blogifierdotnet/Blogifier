@@ -110,25 +110,17 @@ namespace Blogifier.Widgets
                     }
                     DataService.Complete();
 
-                    if (postAction == PostAction.Publish && !FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+                    if (postAction == PostAction.Publish && FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Email)).Result)
                     {
-                        var section = Configuration.GetSection(Constants.ConfigSectionKey);
-                        if(section != null)
-                        {
-                            var apiKey = section.GetValue<string>("SendGridApiKey");
-                            if (!string.IsNullOrEmpty(apiKey) && apiKey != "YOUR-SENDGRID-API-KEY")
-                            {
-                                var pager = new Pager(1, 10000);
-                                var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
-                                var emails = items.Select(i => i.Email).ToList();
-                                var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+                        var pager = new Pager(1, 10000);
+                        var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+                        var emails = items.Select(i => i.Email).ToList();
+                        var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
 
-                                int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                                if(count > 0)
-                                {
-                                    Toaster.Success(string.Format(Localizer["email-sent-count"], count));
-                                }
-                            }
+                        int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
+                        if(count > 0)
+                        {
+                            Toaster.Success(string.Format(Localizer["email-sent-count"], count));
                         }
                     }
                     
