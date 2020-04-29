@@ -2,7 +2,8 @@
 @{
     ListModel listModel = (ListModel)Model;
     Pager pgr = listModel.Pager;
-    string cover = $"{Url.Content("~/")}{listModel.Blog.Cover}";
+    string root = Url.Content("~/");
+    string cover = $"{root}{listModel.Blog.Cover}";
 }
 @inject IJsonStringLocalizer<ListModel> Localizer
 <!DOCTYPE html>
@@ -31,7 +32,7 @@
                 {
                     <article class="post">
                         <div class="post-cover">
-                            <img src="~/@post.Cover.ToThumb()" alt="@post.Title">
+                            <img src="~/@post.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
                             @if (post.Featured)
                             {
                                 <span class="post-featrued-label"><i class="fa fa-star"></i>@Localizer["featured"]</span>
