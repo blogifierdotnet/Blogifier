@@ -41,7 +41,8 @@
                         <h2 class="post-title"><a href="posts/@post.Slug">@post.Title</a></h2>
                         <div class="post-meta">
                             <a class="post-meta-author">@post.Author.DisplayName</a>
-                            <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time>
+                            <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> / 
+                            <a href="posts/@post.Slug#disqus_thread">Second article</a>
                         </div>
                         <div class="post-description">@Html.Raw(post.Description)</div>
                         <a class="post-more btn btn-rounded btn-dark" href="posts/@post.Slug">@Localizer["read"]</a>
@@ -78,5 +79,6 @@
     </div>
 
     <partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
+    <script id="dsq-count-scr" src="//blogifierdotnet.disqus.com/count.js" async></script>
 </body>
 </html>

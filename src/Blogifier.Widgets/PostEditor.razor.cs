@@ -159,14 +159,18 @@ namespace Blogifier.Widgets
         {
             try
             {
-                var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
-                DataService.BlogPosts.Remove(post);
-                DataService.Complete();
-                
-                await HideCallback.InvokeAsync("remove");
+                bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", Localizer["confirm-delete"]);
+                if (confirmed)
+                {
+                    var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
+                    DataService.BlogPosts.Remove(post);
+                    DataService.Complete();
 
-                Toaster.Success("Removed");
-                StateHasChanged();
+                    await HideCallback.InvokeAsync("remove");
+
+                    Toaster.Success("Removed");
+                    StateHasChanged();
+                }
             }
             catch (Exception ex)
             {

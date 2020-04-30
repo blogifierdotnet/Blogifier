@@ -843,5 +843,11 @@
       "en-US": "Next",
       "ru-RU": "Следующий"
     }
+  },
+  "confirm-delete": {
+    "Values": {
+      "en-US": "Delete post?",
+      "ru-RU": "Удалить пост?"
+    }
   }
 }
