@@ -757,97 +757,130 @@
   "post-title": {
     "Values": {
       "en-US": "Post title..",
-      "ru-RU": "Заголовок поста.."
+      "ru-RU": "Заголовок поста..",
+      "zh-cn": "文章标题..",
+      "zh-tw": "文章標題.."
     }
   },
   "type-here": {
     "Values": {
       "en-US": "Type here..",
-      "ru-RU": "Печатать.."
+      "ru-RU": "Печатать..",
+      "zh-cn": "在此处输入..",
+      "zh-tw": "在此處輸入.."
     }
   },
   "thank-you": {
     "Values": {
       "en-US": "Thank you!",
-      "ru-RU": "Спасибо!"
+      "ru-RU": "Спасибо!",
+      "zh-cn": "谢谢你！",
+      "zh-tw": "謝謝妳！"
     }
   },
   "enter-email": {
     "Values": {
       "en-US": "Enter email",
-      "ru-RU": "Адрес электронной почты"
+      "ru-RU": "Адрес электронной почты",
+      "zh-cn": "输入电子邮件",
+      "zh-tw": "輸入電子郵件"
+	  
     }
   },
   "subscribe": {
     "Values": {
       "en-US": "Subscribe",
-      "ru-RU": "Подписаться"
+      "ru-RU": "Подписаться",
+      "zh-cn": "订阅",
+      "zh-tw": "訂閱"
     }
   },
   "join-subscribers": {
     "Values": {
       "en-US": "Join our subscribers list to get the latest news and updates directly in your inbox.",
-      "ru-RU": "Подписаться и получать уведомлания о новых публикациях по электронной почте"
+      "ru-RU": "Подписаться и получать уведомлания о новых публикациях по электронной почте",
+      "zh-cn": "加入我们的订阅者列表，直接在您的收件箱中获取最新消息和更新。",
+      "zh-tw": "加入我們的訂閱者列表，直接在您的收件箱中獲取最新消息和更新。"
     }
   },
   "login": {
     "Values": {
       "en-US": "Login",
-      "ru-RU": "Войти"
+      "ru-RU": "Войти",
+      "zh-cn": "登录",
+      "zh-tw": "登錄"
     }
   },
   "home": {
     "Values": {
       "en-US": "Home",
-      "ru-RU": "Домашняя"
+      "ru-RU": "Домашняя",
+      "zh-cn": "首页",
+      "zh-tw": "首頁"
     }
   },
   "blog": {
     "Values": {
       "en-US": "Blog",
-      "ru-RU": "Блог"
+      "ru-RU": "Блог",
+      "zh-cn": "博客",
+      "zh-tw": "博客"
     }
   },
   "admin": {
     "Values": {
       "en-US": "Admin",
-      "ru-RU": "Администрация"
+      "ru-RU": "Администрация",
+      "zh-cn": "管理",
+      "zh-tw": "管理"
     }
   },
   "tag": {
     "Values": {
       "en-US": "Tag|Tags",
-      "ru-RU": "Тег|Теги"
+      "ru-RU": "Тег|Теги",
+      "zh-cn": "标签|标签",
+      "zh-tw": "標簽|標簽"
     }
   },
   "quick-links": {
     "Values": {
       "en-US": "Quick links",
-      "ru-RU": "Ссылки"
+      "ru-RU": "Ссылки",
+      "zh-cn": "快速链接",
+      "zh-tw": "快速鏈接"
     }
   },
   "navigation": {
     "Values": {
       "en-US": "Navigation",
-      "ru-RU": "Навигация"
+      "ru-RU": "Навигация",
+      "zh-cn": "导航",
+      "zh-tw": "導航"
     }
   },
   "previous": {
     "Values": {
       "en-US": "Previous",
-      "ru-RU": "Предыдущий"
+      "ru-RU": "Предыдущий",
+      "zh-cn": "向前",
+      "zh-tw": "向前"
     }
   },
   "next": {
     "Values": {
       "en-US": "Next",
-      "ru-RU": "Следующий"
+      "ru-RU": "Следующий",
+      "zh-cn": "向后",
+      "zh-tw": "向後"
     }
   },
   "confirm-delete": {
     "Values": {
       "en-US": "Delete post?",
-      "ru-RU": "Удалить пост?"
+      "ru-RU": "Удалить пост?",
+      "zh-cn": "刪除文章？",
+      "zh-tw": "刪除文章？"
     }
   }
 }
