@@ -86,7 +86,7 @@ namespace Blogifier.Widgets
                             a => a.AppUserName == authState.User.Identity.Name);
 
                         Post.Author = author;
-                        Post.Slug = Post.Title.ToSlug();
+                        Post.Slug = GetSlug(Post.Title);
                         Post.Description = Post.Title;
 
                         saved = await DataService.BlogPosts.SaveItem(Post);
@@ -159,7 +159,7 @@ namespace Blogifier.Widgets
         {
             try
             {
-                bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", Localizer["confirm-delete"]);
+                bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"{Localizer["confirm-delete"]}");
                 if (confirmed)
                 {
                     var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
@@ -176,6 +176,23 @@ namespace Blogifier.Widgets
             {
                 Toaster.Error(ex.Message);
             }
+        }
+
+        protected string GetSlug(string title)
+        {
+            string slug = title.ToSlug();
+            if(DataService.BlogPosts.Find(p => p.Slug == slug).Any())
+            {
+                for (int i = 2; i < 100; i++)
+                {
+                    slug = $"{slug}{i}";
+                    if(!DataService.BlogPosts.Find(p => p.Slug == slug).Any())
+                    {
+                        return slug;
+                    }
+                }
+            }
+            return slug;
         }
     }
 

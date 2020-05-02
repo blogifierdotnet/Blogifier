@@ -245,6 +245,10 @@ pre code {
     color: #a6a6a6;
 }
 
+.post-thumbnail img {
+    width: 100%;
+}
+
 @keyframes lds-ellipsis1 {
     0% {
     transform: scale(0); }
@@ -927,13 +931,17 @@ pre code {
     position: absolute;
     right: 30px;
     bottom: 30px;
-    background-color: #0f1112;
+    background-color: #0f1112; 
     padding: 6px 12px;
     border-radius: 2px;
     font-size: 14px;
     color: #ffffff;
     line-height: 1;
     z-index: 79; }
+
+.video-duration {
+    background-color: #387e0e !important;
+}
 
 .post-cata {
   background-color: #db4437;
