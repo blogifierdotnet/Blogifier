@@ -3,9 +3,9 @@ using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Sotsera.Blazor.Toaster;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
@@ -19,6 +19,11 @@ namespace Blogifier.Widgets
         [Inject]
         protected IToaster Toaster { get; set; }
 
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        [Parameter]
+        public string Level { get; set; }
+
         protected List<SocialField> SocialFields { get; set; }
         protected SocialField CurrentField { get; set; }
 
@@ -29,26 +34,33 @@ namespace Blogifier.Widgets
 
         protected async Task Load()
         {
-            SocialFields = await DataService.CustomFields.GetSocial();
-            CurrentField = new SocialField { AuthorId = 0 };
+            int authorId = await GetAuthorId();
+            CurrentField = new SocialField { AuthorId = authorId };
+            SocialFields = await DataService.CustomFields.GetSocial(authorId);           
             StateHasChanged();
         }
 
         protected async Task Save()
         {
-            var newField = new SocialField
+            if (string.IsNullOrEmpty(CurrentField.Title) || string.IsNullOrEmpty(CurrentField.Content))
             {
-                Title = CurrentField.Title.Capitalize(),
-                Content = CurrentField.Content,
-                Icon = $"fa-{CurrentField.Title.ToLower()}",
-                AuthorId = 0,
-                Name = $"social|{CurrentField.Title.ToLower()}|1",
-                Rank = 1
-            };
-
-            await DataService.CustomFields.SaveSocial(newField);
-            await Load();
-            Toaster.Success("Updated");
+                Toaster.Error("Name and content required");
+            }
+            else
+            {
+                var newField = new SocialField
+                {
+                    Title = CurrentField.Title.Capitalize(),
+                    Content = CurrentField.Content,
+                    Icon = $"fa-{CurrentField.Title.ToLower()}",
+                    AuthorId = await GetAuthorId(),
+                    Name = $"social|{CurrentField.Title.ToLower()}|1",
+                    Rank = 1
+                };
+                await DataService.CustomFields.SaveSocial(newField);
+                await Load();
+                Toaster.Success("Updated");
+            }
         }
 
         protected async Task RemoveField(int id)
@@ -105,6 +117,19 @@ namespace Blogifier.Widgets
             {
                 Toaster.Error($"Error moving field #{id}");
             }
+        }
+
+        private async Task<int> GetAuthorId()
+        {
+            int authorId = 0;
+            if(Level == "author")
+            {
+                var authState = await AuthenticationStateTask;
+                var author = await DataService.Authors.GetItem(
+                    a => a.AppUserName == authState.User.Identity.Name);
+                return author.Id;
+            }
+            return authorId;
         }
     }
 }

@@ -7,7 +7,7 @@
     string root = Url.Content("~/");
     string cover = $"{root}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-    var socials = await DataService.CustomFields.GetSocial(); //(postModel.Post.Author.Id);
+    var socials = await DataService.CustomFields.GetSocial(postModel.Post.Author.Id);
 }
 <!DOCTYPE html>
 <html lang="en">

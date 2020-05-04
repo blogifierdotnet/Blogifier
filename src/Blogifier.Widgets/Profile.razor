@@ -75,40 +75,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
-                        <EditForm Model="@CurrentField" OnValidSubmit="SaveCustom">
-                            <DataAnnotationsValidator />
-                            <ValidationSummary />
-                            <fieldset>
-                                <div>
-                                    <label>@Localizer["name"]</label>
-                                    <input type="text" @bind="CurrentField.Name" />
-                                </div>
-                                <div>
-                                    <label>@Localizer["content"]</label>
-                                    <input type="text" @bind="CurrentField.Content" />
-                                </div>
-                                <div class="input-group save-profile">
-                                    <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
-                                </div>
-                            </fieldset>
-                        </EditForm>
-
-                        @if (UserFields == null || UserFields.Count() == 0)
-                        {
-                            <div class="notfound">@Localizer["empty"]</div>
-                        }
-                        <ul class="bf-list bf-posts-list d-block" aria-label="drafts">
-                            @foreach (var field in UserFields)
-                            {
-                            <li class="bf-list-item d-flex align-items-center">
-                                <span class="bf-list-item-link">@field.Name - @field.Content</span>
-                                <a href="#" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto btn-remove" @onclick="(() => RemoveField(field.Id))" @onclick:preventDefault>
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </li>
-                            }
-                        </ul>
-
+                        <SocialAdmin Level="author" />
                     </div>
 
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

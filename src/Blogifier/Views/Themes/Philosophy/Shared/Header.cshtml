@@ -3,7 +3,7 @@
 @inject IJsonStringLocalizer<ListModel> Localizer
 @{
     var blog = await DataService.CustomFields.GetBlogSettings();
-    string socialIcons = "icons";
+    var socials = await DataService.CustomFields.GetSocial();
 }
 <header class="header">
     <div class="header__content row">
@@ -15,7 +15,10 @@
         </div>
 
         <ul class="header__social">
-            <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialIcons" />
+            @foreach (var field in socials)
+            {
+            <li><a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a></li>
+            }
             <li><a href="~/feed/rss"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
         </ul>
 

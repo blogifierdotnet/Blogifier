@@ -7,7 +7,7 @@
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-    string socialLinks = "links";
+    var socials = await DataService.CustomFields.GetSocial(postModel.Post.Author.Id);
 
     var cats = string.IsNullOrEmpty(postModel.Post.Categories)
         ? null : postModel.Post.Categories.Split(',').ToList();
@@ -110,7 +110,10 @@
                         </p>
 
                         <ul class="s-content__author-social">
-                            <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialLinks" />
+                            @foreach (var field in socials)
+                            {
+                            <li><a href="@field.Content">@field.Title</a></li>
+                            }
                         </ul>
                     </div>
                 </div>

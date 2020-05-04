@@ -7,15 +7,11 @@
     var imgPlaceholder = $"{AppSettings.SiteRoot}admin/img/img-placeholder.png";
 
     var popular = await DataService.BlogPosts.GetPopular(new Pager(1, 4));
-
     var catsUnordered = await DataService.BlogPosts.Categories();
-
     var cats = catsUnordered.OrderByDescending(c => c.PostCount);
-
     var blog = await DataService.CustomFields.GetBlogSettings();
 
-    string socialLinks = "links";
-    string socialIcons = "icons";
+    var socials = await DataService.CustomFields.GetSocial();
 }
 <!-- s-extra
 ================================================== -->
@@ -49,7 +45,10 @@
             <h3>About @blog.Title</h3>
             <p>@blog.Description</p>
             <ul class="about__social">
-                <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialIcons" />
+                @foreach (var field in socials)
+                {
+                <li><a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a></li>
+                }
             </ul>
         </div>
 
@@ -108,7 +107,10 @@
             <div class="col-two md-four mob-full s-footer__social">
                 <h4>@Localizer["social-accounts"]</h4>
                 <ul class="s-footer__linklist">
-                    <partial name="~/Views/Themes/Philosophy/Shared/Socials.cshtml" model="socialLinks" />
+                    @foreach (var field in socials)
+                    {
+                    <li><a href="@field.Content">@field.Title</a></li>
+                    }
                 </ul>
             </div> <!-- end s-footer__social -->
 
