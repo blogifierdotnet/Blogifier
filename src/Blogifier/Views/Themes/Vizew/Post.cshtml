@@ -7,19 +7,14 @@
     string root = Url.Content("~/");
     string cover = $"{root}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-
-    var facebook = DataService.CustomFields.GetCustomValue("facebook");
-    var twitter = DataService.CustomFields.GetCustomValue("twitter");
-    var instagram = DataService.CustomFields.GetCustomValue("instagram");
-    var pinterest = DataService.CustomFields.GetCustomValue("pinterest");
-    var github = DataService.CustomFields.GetCustomValue("github");
+    var socials = await DataService.CustomFields.GetSocial(); //(postModel.Post.Author.Id);
 }
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
+    <meta name="description" content="@postModel.Post.Description">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@postModel.Post.Title &amp; @postModel.Blog.Title</title>
@@ -175,21 +170,9 @@
                         <!-- ***** Single Widget ***** -->
                         <div class="single-widget share-post-widget mb-50">
                             <p>Share This Post</p>
-                            @if (!string.IsNullOrEmpty(facebook))
+                            @foreach (var field in socials)
                             {
-                                <a href="https://www.facebook.com/@facebook" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
-                            }
-                            @if (!string.IsNullOrEmpty(twitter))
-                            {
-                                <a href="https://www.twitter.com/@twitter" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
-                            }
-                            @if (!string.IsNullOrEmpty(pinterest))
-                            {
-                                <a href="https://www.pinterest.com/@pinterest" class="pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i> Pinterest</a>
-                            }
-                            @if (!string.IsNullOrEmpty(instagram))
-                            {
-                                <a href="https://www.instagram.com/@instagram" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
+                            <a href="@field.Content" class="@field.Title.ToLower()"><i class="fa @field.Icon" aria-hidden="true"></i> @field.Title</a>
                             }
                         </div>
 
@@ -199,21 +182,9 @@
                                 <img class="author-avatar" src="~/@postModel.Post.Author.Avatar" alt="">
                                 <a href="#" class="author-name">@postModel.Post.Author.DisplayName</a>
                                 <div class="author-social-info">
-                                    @if (!string.IsNullOrEmpty(facebook))
+                                    @foreach (var field in socials)
                                     {
-                                        <a href="https://www.facebook.com/@facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                    }
-                                    @if (!string.IsNullOrEmpty(twitter))
-                                    {
-                                        <a href="https://www.twitter.com/@twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                    }
-                                    @if (!string.IsNullOrEmpty(pinterest))
-                                    {
-                                        <a href="https://www.pinterest.com/@pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                    }
-                                    @if (!string.IsNullOrEmpty(instagram))
-                                    {
-                                        <a href="https://www.instagram.com/@instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                    <a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a>
                                     }
                                 </div>
                                 <p>@postModel.Post.Author.Bio</p>
