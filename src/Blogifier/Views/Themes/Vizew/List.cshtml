@@ -12,6 +12,7 @@
     var featured = flist.ToList();
 
     var popular = await DataService.BlogPosts.GetPopular(new Pager(1, 4));
+    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
 }
 @inject IJsonStringLocalizer<ListModel> Localizer
 <!DOCTYPE html>
@@ -135,21 +136,21 @@
                             {
                                 foreach (var item in featured)
                                 {
-                                <div class="single-blog-post d-flex">
-                                    <div class="post-thumbnail">
-                                        <img src="~/@item.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@item.Cover';" alt="@item.Title">
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="~/posts/@item.Slug" class="post-title">@item.Title</a>
-                                        <div class="post-meta d-flex justify-content-between">
-                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @item.PostViews</a>
-                                            <span>
-                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                                <a href="posts/@item.Slug#disqus_thread"></a>
-                                            </span>
+                                    <div class="single-blog-post d-flex">
+                                        <div class="post-thumbnail">
+                                            <img src="~/@item.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@item.Cover';" alt="@item.Title">
+                                        </div>
+                                        <div class="post-content">
+                                            <a href="~/posts/@item.Slug" class="post-title">@item.Title</a>
+                                            <div class="post-meta d-flex justify-content-between">
+                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @item.PostViews</a>
+                                                <span>
+                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                    <a href="posts/@item.Slug#disqus_thread"></a>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 }
                             }
                         </div>
@@ -192,6 +193,7 @@
     </section>
     <!-- ##### Vizew Psot Area End ##### -->
     <partial name="~/Views/Themes/Vizew/Shared/Footer.cshtml" />
+    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 
 </html>

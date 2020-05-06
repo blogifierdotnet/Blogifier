@@ -7,7 +7,12 @@
     var m = Model as ListModel;
     var pgr = m.Pager;
 
-    var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
+    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
+
+    //var posts = await DataService.BlogPosts.GetList(p => 
+    //    p.IsFeatured == false && p.Published > DateTime.MinValue, new Pager(1));
+    var posts = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "P");
+    var coverPost = posts.Where(p => p.Featured == false).FirstOrDefault();
     var flist = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "F");
     var featured = flist.ToList();
 }
@@ -53,7 +58,7 @@
                 <div class="featured">
 
                     <div class="featured__column featured__column--big">
-                        @if (featured == null || featured.Count == 0)
+                        @if (coverPost == null)
                         {
                             <div class="entry" style="background-image:url('@imgPlaceholder');">
                                 <div class="entry__content">&nbsp;</div>
@@ -61,13 +66,51 @@
                         }
                         else
                         {
-                            var cats0 = string.IsNullOrEmpty(featured[0].Categories)
-                                ? null : featured[0].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[0].Cover');">
+                            var cats0 = string.IsNullOrEmpty(coverPost.Categories)
+                                ? null : coverPost.Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@coverPost.Cover');">
                                 <div class="entry__content">
                                     @if (cats0 != null)
                                     {
                                         foreach (var cat in cats0)
+                                        {
+                                            <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
+                                        }
+                                    }
+                                    <h1><a href="~/posts/@coverPost.Slug" title="">@coverPost.Title</a></h1>
+                                    <div class="entry__info">
+                                        <a href="#" class="entry__profile-pic">
+                                            <img class="avatar" src="~/@coverPost.Author.Avatar" alt="">
+                                        </a>
+
+                                        <ul class="entry__meta">
+                                            <li><a href="#">@coverPost.Author.DisplayName</a></li>
+                                            <li>@coverPost.Published.ToFriendlyDateString()</li>
+                                            <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @coverPost.PostViews</a></li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                    <a href="posts/@coverPost.Slug#disqus_thread"></a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div> <!-- end entry__content -->
+                            </div> <!-- end entry -->
+                        }
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        @if (featured != null && featured.Count > 0)
+                        {
+                            var cats1 = string.IsNullOrEmpty(featured[0].Categories)
+                                ? null : featured[0].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[0].Cover');">
+                                <div class="entry__content">
+                                    @if (cats1 != null)
+                                    {
+                                        foreach (var cat in cats1)
                                         {
                                             <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
@@ -81,37 +124,13 @@
                                         <ul class="entry__meta">
                                             <li><a href="#">@featured[0].Author.DisplayName</a></li>
                                             <li>@featured[0].Published.ToFriendlyDateString()</li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end entry__content -->
-                            </div> <!-- end entry -->
-                        }
-                    </div> <!-- end featured__big -->
-
-                    <div class="featured__column featured__column--small">
-
-                        @if (featured != null && featured.Count > 1)
-                        {
-                            var cats1 = string.IsNullOrEmpty(featured[1].Categories)
-                                ? null : featured[1].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[1].Cover');">
-                                <div class="entry__content">
-                                    @if (cats1 != null)
-                                    {
-                                        foreach (var cat in cats1)
-                                        {
-                                            <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
-                                        }
-                                    }
-                                    <h1><a href="~/posts/@featured[1].Slug" title="">@featured[1].Title</a></h1>
-                                    <div class="entry__info">
-                                        <a href="#" class="entry__profile-pic">
-                                            <img class="avatar" src="~/@featured[1].Author.Avatar" alt="">
-                                        </a>
-
-                                        <ul class="entry__meta">
-                                            <li><a href="#">@featured[1].Author.DisplayName</a></li>
-                                            <li>@featured[1].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @featured[0].PostViews</a></li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                    <a href="posts/@featured[0].Slug#disqus_thread"></a>
+                                                </span>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div> <!-- end entry__content -->
@@ -122,11 +141,11 @@
                         {
                             <div class="entry" style="background-image:url('@imgPlaceholder');"></div>
                         }
-                        @if (featured != null && featured.Count > 2)
+                        @if (featured != null && featured.Count > 1)
                         {
-                            var cats2 = string.IsNullOrEmpty(featured[2].Categories)
-                                ? null : featured[2].Categories.Split(',').ToList();
-                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[2].Cover');">
+                            var cats2 = string.IsNullOrEmpty(featured[1].Categories)
+                                ? null : featured[1].Categories.Split(',').ToList();
+                            <div class="entry" style="background-image:url('@AppSettings.SiteRoot@featured[1].Cover');">
                                 <div class="entry__content">
                                     @if (cats2 != null)
                                     {
@@ -135,14 +154,21 @@
                                             <span class="entry__category"><a href="~/categories/@cat">@cat</a></span>
                                         }
                                     }
-                                    <h1><a href="~/posts/@featured[2].Slug" title="">@featured[2].Title</a></h1>
+                                    <h1><a href="~/posts/@featured[1].Slug" title="">@featured[1].Title</a></h1>
                                     <div class="entry__info">
                                         <a href="#" class="entry__profile-pic">
-                                            <img class="avatar" src="~/@featured[2].Author.Avatar" alt="">
+                                            <img class="avatar" src="~/@featured[1].Author.Avatar" alt="">
                                         </a>
                                         <ul class="entry__meta">
-                                            <li><a href="#">@featured[2].Author.DisplayName</a></li>
-                                            <li>@featured[2].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#">@featured[1].Author.DisplayName</a></li>
+                                            <li>@featured[1].Published.ToFriendlyDateString()</li>
+                                            <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @featured[1].PostViews</a></li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                    <a href="posts/@featured[1].Slug#disqus_thread"></a>
+                                                </span>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div> <!-- end entry__content -->
@@ -181,6 +207,11 @@
                             <div class="entry__header">
                                 <div class="entry__date">
                                     <a href="~/posts/@post.Slug">@post.Published.ToFriendlyDateString()</a>
+                                    <span style="float:right">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</a>
+                                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                        <a href="posts/@post.Slug#disqus_thread"></a>
+                                    </span>
                                 </div>
                                 <h1 class="entry__title"><a href="~/posts/@post.Slug">@post.Title</a></h1>
                             </div>
@@ -234,7 +265,7 @@
     </section> <!-- s-content -->
 
     <partial name="~/Views/Themes/Philosophy/Shared/Footer.cshtml" />
-
+    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 
 </html>

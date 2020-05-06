@@ -6,6 +6,9 @@
             </a>
             @Localizer["disqus-info"]
         </div>
+        <div>
+            <input type="text" @bind="DisqusSiteValue" name="display-site-name" placeholder="yoursite.disqus.com" />
+        </div>
         <textarea class="form-control txt-disqus" rows="10" @bind="DisqusValue" name="disqus" placeholder="Disqus script" />
         <div class="btn-group" role="group" aria-label="Disqus">
             <button class="btn btn-primary" @onclick="Save">@Localizer["save"]</button>

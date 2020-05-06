@@ -700,7 +700,7 @@
   },
   "disqus-info": {
     "Values": {
-      "en-US": "Here you can enter or update script to add Disqus comments",
+      "en-US": "Here you can enter or update site and script to add Disqus comments",
       "ru-RU": "Скрипт для подключения Disqus комментариев",
       "zh-cn": "在这里您可以输入或更新脚本以添加Disqus评论",
       "zh-tw": "在這裏您可以輸入或更新腳本以添加Disqus評論"
@@ -784,7 +784,7 @@
       "ru-RU": "Адрес электронной почты",
       "zh-cn": "输入电子邮件",
       "zh-tw": "輸入電子郵件"
-	  
+
     }
   },
   "subscribe": {

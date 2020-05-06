@@ -18,15 +18,20 @@ namespace Blogifier.Widgets
         protected string DisqusValue { get; set; }
         private readonly string DisqusKey = "disqus-key";
 
+        protected string DisqusSiteValue { get; set; }
+        private readonly string DisqusSiteKey = "disqus-site-key";
+
         protected override void OnInitialized()
         {
             DisqusValue = DataService.CustomFields.GetCustomValue(DisqusKey);
+            DisqusSiteValue = DataService.CustomFields.GetCustomValue(DisqusSiteKey);
             StateHasChanged();
         }
 
         protected async Task Save()
         {
             await DataService.CustomFields.SaveCustomValue(DisqusKey, DisqusValue);
+            await DataService.CustomFields.SaveCustomValue(DisqusSiteKey, DisqusSiteValue);
             StateHasChanged();
             Toaster.Success("Updated");
         }

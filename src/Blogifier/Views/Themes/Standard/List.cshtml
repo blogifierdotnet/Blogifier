@@ -1,11 +1,13 @@
 ﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@inject IDataService DataService
+@inject IJsonStringLocalizer<ListModel> Localizer
 @{
     ListModel listModel = (ListModel)Model;
     Pager pgr = listModel.Pager;
     string root = Url.Content("~/");
     string cover = $"{root}{listModel.Blog.Cover}";
+    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
 }
-@inject IJsonStringLocalizer<ListModel> Localizer
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +43,7 @@
                         <h2 class="post-title"><a href="posts/@post.Slug">@post.Title</a></h2>
                         <div class="post-meta">
                             <a class="post-meta-author">@post.Author.DisplayName</a>
-                            <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> / 
+                            <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> /
                             <a href="posts/@post.Slug#disqus_thread">Second article</a>
                         </div>
                         <div class="post-description">@Html.Raw(post.Description)</div>
@@ -79,6 +81,6 @@
     </div>
 
     <partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
-    <script id="dsq-count-scr" src="//blogifierdotnet.disqus.com/count.js" async></script>
+    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 </html>
