@@ -2,7 +2,6 @@
 @{
     ListModel listModel = (ListModel)Model;
     ViewData["BlogTitle"] = listModel.Blog.Title;
-    var socials = await DataService.CustomFields.GetSocial();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +95,7 @@
     <hr>
 
     <!-- Footer -->
-    <partial name="~/Views/Themes/CleanBlog/Shared/Footer.cshtml" model="socials" view-data="ViewData" />
+    <partial name="~/Views/Themes/CleanBlog/Shared/Footer.cshtml" model="listModel.Blog.SocialFields" view-data="ViewData" />
 
 
     <!-- Bootstrap core JavaScript -->

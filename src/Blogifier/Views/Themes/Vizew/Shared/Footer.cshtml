@@ -5,7 +5,6 @@
     var blog = await DataService.CustomFields.GetBlogSettings();
     var catsUnordered = await DataService.BlogPosts.Categories();
     var cats = catsUnordered.OrderByDescending(c => c.PostCount);
-    var socials = await DataService.CustomFields.GetSocial();
 }
 
 <!-- ##### Footer Area Start ##### -->
@@ -68,7 +67,7 @@
                     </div>
                     <!-- Footer Social Area -->
                     <div class="footer-social-area">
-                        @foreach (var field in socials)
+                        @foreach (var field in blog.SocialFields)
                         {
                         <a href="@field.Content" class="@field.Title.ToLower()"><i class="fa @field.Icon"></i></a>
                         }
