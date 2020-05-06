@@ -3,7 +3,7 @@
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     ViewData["BlogTitle"] = postModel.Blog.Title;
-    var socials = await DataService.CustomFields.GetSocial();
+    var socials = await DataService.CustomFields.GetSocial(postModel.Post.Author.Id);
 }
 <!DOCTYPE html>
 <html lang="en">
