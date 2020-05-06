@@ -19,6 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@postModel.Post.Title &amp; @postModel.Blog.Title</title>
     <link rel="icon" href="~/themes/vizew/img/core-img/favicon.ico">
+    <link rel="stylesheet" href="~/themes/vizew/css/prism.css">
     <link rel="stylesheet" href="~/themes/vizew/style.css">
 </head>
 
@@ -130,12 +131,12 @@
 
                                 <div class="d-flex justify-content-between mb-30">
                                     <div class="post-meta d-flex align-items-center">
-                                        <a href="#" class="post-author">By @postModel.Post.Author.DisplayName</a>
+                                        <span class="post-author">By @postModel.Post.Author.DisplayName</span>
                                         <i class="fa fa-circle" aria-hidden="true"></i>
-                                        <a href="#" class="post-date">@postModel.Post.Published.ToFriendlyDateString()</a>
+                                        <span class="post-date">@postModel.Post.Published.ToFriendlyDateString()</span>
                                     </div>
                                     <div class="post-meta d-flex">
-                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Post.PostViews</a>
+                                        <span><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Post.PostViews</span>
                                     </div>
                                 </div>
                             </div>

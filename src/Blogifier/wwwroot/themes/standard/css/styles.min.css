@@ -9,3 +9,8 @@ body,html{height:100%}a{color:#5731b3}a:focus,a:hover{color:#704acd;text-decorat
     position: relative;
     top: 60px;
 }
+.nav-login {
+    margin-left: 10px;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.25);
+}

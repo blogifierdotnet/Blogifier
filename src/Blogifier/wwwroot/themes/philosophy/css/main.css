@@ -879,6 +879,12 @@ input[type="button"].btn--primary:focus {
    border-color: #0054a5;
 }
 
+.center {
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
 /* button modifiers
  * ------------------------------------------------- */
 .btn.full-width, button.full-width {

@@ -845,11 +845,39 @@ pre code {
       color: #a6a6a6;
       font-size: 12px; }
 
+.pagination {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #393c3d;
+    border-radius: 0;
+}
+.post-meta span {
+    margin-right: 10px;
+}
+.pg-current { 
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 15px;
+    position: relative;
+    top: 2px;
+}
+.pg-last {
+    margin-right: 15px;
+    margin-left: 5px;
+    position:relative;
+    top: 8px;
+}
+.item-prev i, .item-next i {
+    font-size: 2em;
+    font-weight: 600;
+}
+
 .single-feature-post.video-post {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 500px; }
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 500px;
+}
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .single-feature-post.video-post {
       height: 400px; } }

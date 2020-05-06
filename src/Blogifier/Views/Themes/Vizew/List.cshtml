@@ -74,13 +74,13 @@
                                                 }
                                                 <a href="posts/@post.Slug" class="post-title mb-2">@post.Title</a>
                                                 <div class="post-meta d-flex align-items-center mb-2">
-                                                    <a href="#" class="post-author">By @post.Author.DisplayName</a>
+                                                    <span class="post-author">By @post.Author.DisplayName</span>
                                                     <i class="fa fa-circle" aria-hidden="true"></i>
-                                                    <a href="#" class="post-date">@post.Published.ToFriendlyDateString()</a>
+                                                    <span class="post-date">@post.Published.ToFriendlyDateString()</span>
                                                 </div>
                                                 <p class="mb-2">@Html.Raw(post.Description)</p>
                                                 <div class="post-meta d-flex">
-                                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</a>
+                                                    <span><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</span>
                                                     <span>
                                                         <i class="fa fa-comments-o" aria-hidden="true"></i>
                                                         <a href="posts/@post.Slug#disqus_thread"></a>
@@ -97,15 +97,17 @@
                                     @if (pgr.ShowOlder)
                                     {
                                         <li class="item item-prev">
-                                            <a class="item-link" href="@pgr.LinkToOlder">
+                                            <a class="post-cata cata-sm cata-danger" href="@pgr.LinkToOlder">
                                                 <i class="item-icon fa fa-angle-left"></i>
                                             </a>
                                         </li>
                                     }
+                                    <li><span class="pg-current">@pgr.CurrentPage</span></li>
+                                    <li><span class="pg-last">out of @pgr.LastPage</span></li>
                                     @if (pgr.ShowNewer)
                                     {
                                         <li class="item item-next">
-                                            <a class="item-link" href="@pgr.LinkToNewer">
+                                            <a class="post-cata cata-sm cata-danger" href="@pgr.LinkToNewer">
                                                 <i class="item-icon fa fa-angle-right"></i>
                                             </a>
                                         </li>
@@ -142,8 +144,8 @@
                                         </div>
                                         <div class="post-content">
                                             <a href="~/posts/@item.Slug" class="post-title">@item.Title</a>
-                                            <div class="post-meta d-flex justify-content-between">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @item.PostViews</a>
+                                            <div class="post-meta d-flex">
+                                                <span><i class="fa fa-eye" aria-hidden="true"></i> @item.PostViews</span>
                                                 <span>
                                                     <i class="fa fa-comments-o" aria-hidden="true"></i>
                                                     <a href="posts/@item.Slug#disqus_thread"></a>
@@ -173,8 +175,8 @@
                                         </div>
                                         <div class="post-content">
                                             <a href="~/posts/@pop.Slug" class="post-title">@pop.Title</a>
-                                            <div class="post-meta d-flex justify-content-between">
-                                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @pop.PostViews</a>
+                                            <div class="post-meta d-flex">
+                                                <span><i class="fa fa-eye" aria-hidden="true"></i> @pop.PostViews</span>
                                                 <span>
                                                     <i class="fa fa-comments-o" aria-hidden="true"></i>
                                                     <a href="posts/@pop.Slug#disqus_thread"></a>
