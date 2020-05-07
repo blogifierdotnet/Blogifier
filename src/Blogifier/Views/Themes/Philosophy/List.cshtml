@@ -8,13 +8,12 @@
     var pgr = m.Pager;
 
     var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
-
-    //var posts = await DataService.BlogPosts.GetList(p => 
-    //    p.IsFeatured == false && p.Published > DateTime.MinValue, new Pager(1));
-    var posts = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "P");
-    var coverPost = posts.Where(p => p.Featured == false).FirstOrDefault();
-    var flist = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "F");
-    var featured = flist.ToList();
+    var coverPost = m.Posts.Where(p => p.Featured == false).FirstOrDefault();
+    if(coverPost == null)
+    {
+        coverPost = m.Posts.FirstOrDefault();
+    }
+    var featured = DataService.BlogPosts.GetList(new Pager(1), 0, "", "F").Result.ToList(); // flist.ToList();
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">

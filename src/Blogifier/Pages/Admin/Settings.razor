@@ -43,6 +43,10 @@
                                         <label>@Localizer["items-per-page"]</label>
                                         <input type="text" @bind="Model.ItemsPerPage" name="pageitems" />
                                     </div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" @bind="Model.IncludeFeatured" class="custom-control-input" id="switch1">
+                                        <label class="custom-control-label" for="switch1">@Localizer["include-featured"]</label>
+                                    </div>
                                     <div class="input-group">
                                         <label>@Localizer["logo"]</label>
                                         <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />

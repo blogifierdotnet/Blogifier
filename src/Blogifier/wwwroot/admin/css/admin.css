@@ -401,6 +401,16 @@ select {
     margin-top: 20px;
 }
 
+.custom-switch {
+    margin: 1rem 0;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #5731b3;
+    background-color: #5731b3;
+}
+
 /* validation */
 
 .valid.modified:not([type=checkbox]) {
