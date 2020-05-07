@@ -10,8 +10,6 @@
     var catsUnordered = await DataService.BlogPosts.Categories();
     var cats = catsUnordered.OrderByDescending(c => c.PostCount);
     var blog = await DataService.CustomFields.GetBlogSettings();
-
-    var socials = await DataService.CustomFields.GetSocial();
 }
 <!-- s-extra
 ================================================== -->
@@ -45,7 +43,7 @@
             <h3>About @blog.Title</h3>
             <p>@blog.Description</p>
             <ul class="about__social">
-                @foreach (var field in socials)
+                @foreach (var field in blog.SocialFields)
                 {
                 <li><a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a></li>
                 }
@@ -107,7 +105,7 @@
             <div class="col-two md-four mob-full s-footer__social">
                 <h4>@Localizer["social-accounts"]</h4>
                 <ul class="s-footer__linklist">
-                    @foreach (var field in socials)
+                    @foreach (var field in blog.SocialFields)
                     {
                     <li><a href="@field.Content">@field.Title</a></li>
                     }

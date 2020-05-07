@@ -32,3 +32,5 @@ repository and published to `Nuget.org` package gallery.
 The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install.
 
 ![dashboard-3](https://user-images.githubusercontent.com/1932785/77836549-1481c900-7125-11ea-812f-9bd5343274f9.png)
+
+The [developer's blog](http://rtur.net/blog).

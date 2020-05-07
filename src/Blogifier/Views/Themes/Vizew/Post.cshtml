@@ -1,13 +1,11 @@
 ﻿@using Blogifier.Core.Data
 @using Askmethat.Aspnet.JsonLocalizer.Localizer
-@inject IDataService DataService
 @inject IJsonStringLocalizer<ListModel> Localizer
 @{
     PostModel postModel = (PostModel)Model;
     string root = Url.Content("~/");
     string cover = $"{root}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-    var socials = await DataService.CustomFields.GetSocial(postModel.Post.Author.Id);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -171,7 +169,7 @@
                         <!-- ***** Single Widget ***** -->
                         <div class="single-widget share-post-widget mb-50">
                             <p>Share This Post</p>
-                            @foreach (var field in socials)
+                            @foreach (var field in postModel.Blog.SocialFields)
                             {
                             <a href="@field.Content" class="@field.Title.ToLower()"><i class="fa @field.Icon" aria-hidden="true"></i> @field.Title</a>
                             }
@@ -183,7 +181,7 @@
                                 <img class="author-avatar" src="~/@postModel.Post.Author.Avatar" alt="">
                                 <a href="#" class="author-name">@postModel.Post.Author.DisplayName</a>
                                 <div class="author-social-info">
-                                    @foreach (var field in socials)
+                                    @foreach (var field in postModel.Blog.SocialFields)
                                     {
                                     <a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a>
                                     }

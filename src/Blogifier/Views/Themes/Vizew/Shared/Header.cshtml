@@ -3,7 +3,6 @@
 @inject IJsonStringLocalizer<ListModel> Localizer
 @{
     var blog = await DataService.CustomFields.GetBlogSettings();
-    var socials = await DataService.CustomFields.GetSocial();
 }
 
 <!-- Preloader -->
@@ -29,7 +28,7 @@
                     <div class="top-meta-data d-flex align-items-center justify-content-end">
                         <!-- Top Social Info -->
                         <div class="top-social-info">
-                            @foreach (var field in socials)
+                            @foreach (var field in blog.SocialFields)
                             {
                             <a href="@field.Content"><i class="fa @field.Icon"></i></a>
                             }

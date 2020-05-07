@@ -43,7 +43,10 @@ namespace Blogifier.Controllers
 
             if (string.IsNullOrEmpty(term))
             {
-                model.Posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pgr);
+                if(blog.IncludeFeatured)
+                    model.Posts = await DataService.BlogPosts.GetList(pgr, 0, "", "FP");
+                else
+                    model.Posts = await DataService.BlogPosts.GetList(pgr, 0, "", "P");
             }
             else
             {
