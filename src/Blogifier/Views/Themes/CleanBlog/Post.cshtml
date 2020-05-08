@@ -50,9 +50,15 @@
                     <div class="post-heading">
                         <h1>@postModel.Post.Title</h1>
                         <h2 class="subheading">@Html.Raw(postModel.Post.Description)</h2>
-                        <span class="meta">
+                        <span class="meta mb-1">
                             Posted by @postModel.Post.Author.DisplayName on @postModel.Post.Published.ToFriendlyDateString()
                         </span>
+                        @if (!string.IsNullOrEmpty(postModel.Post.Categories))
+                        {
+                            <span class="tags">
+                                Tags: @Html.Raw(string.Join(", ", postModel.Post.Categories.Split(",").Select(s => string.Format("<a href=\"{0}{1}\" class=\"post-cata cata-sm cata-danger\">{1}</a>", Url.Content("~/categories/"), s))))
+                            </span>
+                        }
                     </div>
                 </div>
             </div>

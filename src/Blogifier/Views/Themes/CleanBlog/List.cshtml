@@ -64,7 +64,7 @@
                 @foreach (PostItem post in listModel.Posts)
                 {
                     <div class="post-preview">
-                        <a href="posts/@post.Slug">
+                        <a href="~/posts/@post.Slug">
                             <h2 class="post-title">
                                 @post.Title
                             </h2>
@@ -72,9 +72,18 @@
                                 @Html.Raw(post.Description.MdToHtml())
                             </h3>
                         </a>
-                        <p class="post-meta">
-                            Posted on @post.Published.ToFriendlyDateString()
-                        </p>
+                        <div class="row">
+                            <div class="post-meta col-lg-6 col-md-6 mx-auto">
+                                Posted on @post.Published.ToFriendlyDateString()
+                            </div>
+                            @if (!string.IsNullOrEmpty(post.Categories))
+                            {
+                                <div class="post-tags col-lg-6 col-md-6 mx-auto">
+                                    <b>Tags: </b>
+                                    @Html.Raw(string.Join(", ", post.Categories.Split(',').Select(s => string.Format("<a href=\"{0}{1}\" class=\"post-cata cata-sm cata-danger\">{1}</a>", Url.Content("~/categories/"), s))))
+                                </div>
+                            }
+                        </div>
                     </div>
                     <hr>
                 }
