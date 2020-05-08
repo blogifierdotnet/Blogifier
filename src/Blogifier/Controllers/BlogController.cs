@@ -102,6 +102,13 @@ namespace Blogifier.Controllers
             {
                 ViewBag.Slug = slug;
                 var model = await DataService.BlogPosts.GetModel(slug);
+
+                // If unpublished and unauthorised redirect to error / 404.
+                if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
+                {
+                    return Redirect("~/error");
+                }
+
                 model.Blog = await DataService.CustomFields.GetBlogSettings();
                 model.Post.Description = model.Post.Description.MdToHtml();
                 model.Post.Content = model.Post.Content.MdToHtml();
