@@ -73,12 +73,12 @@
                             </h3>
                         </a>
                         <div class="row">
-                            <div class="post-meta col-lg-6 col-md-6 mx-auto">
+                            <div class="post-meta col-lg-6 col-md-6">
                                 Posted on @post.Published.ToFriendlyDateString()
                             </div>
                             @if (!string.IsNullOrEmpty(post.Categories))
                             {
-                                <div class="post-tags col-lg-6 col-md-6 mx-auto">
+                                <div class="post-tags col-lg-6 col-md-6">
                                     <b>Tags: </b>
                                     @Html.Raw(string.Join(", ", post.Categories.Split(',').Select(s => string.Format("<a href=\"{0}{1}\" class=\"post-cata cata-sm cata-danger\">{1}</a>", Url.Content("~/categories/"), s))))
                                 </div>
