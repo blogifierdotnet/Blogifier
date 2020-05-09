@@ -112,7 +112,6 @@ namespace Blogifier.Controllers
                 model.Blog = await DataService.CustomFields.GetBlogSettings();
                 model.Post.Description = model.Post.Description.MdToHtml();
                 model.Post.Content = model.Post.Content.MdToHtml();
-                model.Disqus = DataService.CustomFields.GetCustomValue("disqus-key");
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }

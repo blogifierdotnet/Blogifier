@@ -393,7 +393,7 @@ select {
     height: 2.5rem;
 }
 
-.txt-upload {
+.txt-upload, .txt-area {
     margin-bottom: 1rem !important;
 }
 

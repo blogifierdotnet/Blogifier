@@ -42,7 +42,7 @@ namespace Blogifier
             services.AddRazorPages(options => 
                 options.Conventions.AuthorizeFolder("/Admin")
                 .AllowAnonymousToPage("/Admin/_Host")
-            ).AddViewLocalization();
+            ).AddRazorRuntimeCompilation().AddViewLocalization();
 
             services.AddServerSideBlazor();
 

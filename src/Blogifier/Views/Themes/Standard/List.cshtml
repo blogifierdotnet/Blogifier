@@ -6,7 +6,6 @@
     Pager pgr = listModel.Pager;
     string root = Url.Content("~/");
     string cover = $"{root}{listModel.Blog.Cover}";
-    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +15,7 @@
     <partial name="~/Views/Themes/Standard/Shared/Head.cshtml" />
 </head>
 <body class="home">
-    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="listModel.Blog.SocialFields"/>
+    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="listModel.Blog.SocialFields" />
 
     <div class="page-cover" style="background-image: url('@cover')">
         <h1 class="page-cover-title">
@@ -83,8 +82,6 @@
 
         </div>
     </div>
-
     <partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
-    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 </html>

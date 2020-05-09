@@ -888,5 +888,11 @@
       "en-US": "Include Featured in the List",
       "ru-RU": "Включать избранное в общий список"
     }
+  },
+  "include-scripts": {
+    "Values": {
+      "en-US": "Scripts to be included in the page header and footer (Disqus, Analytics etc.)",
+      "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)"
+    }
   }
 }

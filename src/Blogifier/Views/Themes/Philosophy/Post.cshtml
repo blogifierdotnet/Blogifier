@@ -35,6 +35,8 @@
     ================================================== -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <partial name="~/Views/Shared/HeaderScript.cshtml" />
 </head>
 
 <body id="top">
@@ -153,7 +155,6 @@
             <div id="comments" class="row">
                 <div class="col-full">
                     <div id="disqus_thread"></div>
-                    @Html.Raw(postModel.Disqus)
                 </div>
             </div>
         </div>

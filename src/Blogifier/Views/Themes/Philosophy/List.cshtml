@@ -7,7 +7,6 @@
     var m = Model as ListModel;
     var pgr = m.Pager;
 
-    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
     var coverPost = m.Posts.Where(p => p.Featured == false).FirstOrDefault();
     if(coverPost == null)
     {
@@ -41,6 +40,8 @@
     ================================================== -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <partial name="~/Views/Shared/HeaderScript.cshtml" />
 </head>
 
 <body id="top">
@@ -264,7 +265,6 @@
     </section> <!-- s-content -->
 
     <partial name="~/Views/Themes/Philosophy/Shared/Footer.cshtml" />
-    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 
 </html>

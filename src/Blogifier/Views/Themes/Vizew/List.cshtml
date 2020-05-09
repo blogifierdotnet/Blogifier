@@ -10,9 +10,7 @@
     var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
     var flist = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "F");
     var featured = flist.ToList();
-
     var popular = await DataService.BlogPosts.GetPopular(new Pager(1, 4));
-    var disqusSite = DataService.CustomFields.GetCustomValue("disqus-site-key");
 }
 @inject IJsonStringLocalizer<ListModel> Localizer
 <!DOCTYPE html>
@@ -195,7 +193,6 @@
     </section>
     <!-- ##### Vizew Psot Area End ##### -->
     <partial name="~/Views/Themes/Vizew/Shared/Footer.cshtml" />
-    <script id="dsq-count-scr" src="//@disqusSite/count.js" async></script>
 </body>
 
 </html>

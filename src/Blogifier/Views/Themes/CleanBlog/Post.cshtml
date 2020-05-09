@@ -17,6 +17,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href="~/themes/cleanblog/css/clean-blog.css" rel="stylesheet">
+    <partial name="~/Views/Shared/HeaderScript.cshtml" />
 </head>
 
 <body>
@@ -74,8 +75,6 @@
                     @Html.Raw(postModel.Post.Content)
 
                     <div id="disqus_thread"></div>
-                    @Html.Raw(postModel.Disqus)
-
                 </div>
             </div>
         </div>
@@ -89,5 +88,7 @@
     <script src="~/themes/cleanblog/vendor/jquery/jquery.min.js"></script>
     <script src="~/themes/cleanblog/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/themes/cleanblog/js/clean-blog.min.js"></script>
+
+    <partial name="~/Views/Shared/FooterScript.cshtml" />
 </body>
 </html>
