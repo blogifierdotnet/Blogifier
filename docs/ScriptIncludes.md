@@ -12,6 +12,8 @@ For a theme to support header scripts, this partial view should be included to t
 </head>
 ```
 
+> Included header script will also automatically add page title, description, canonical and alternate URLs.
+
 ### Footer scripts
 For a theme to support footer scripts, this should be included in the page just before closing `body` tag:
 ```xml
