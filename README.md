@@ -23,14 +23,14 @@ via theming engine and Blazor components.
 
 ## Other Projects
 
-Blogifier uses `Blogifier.Core` library hosted in this same 
-repository and published to `Nuget.org` package gallery.
+Blogifier publishes `Blogifier.Core` library to the Nuget gallery.
+This package used by Blogifier.SPA and can be used by other applications.
 
-![blogifier-diagram](https://user-images.githubusercontent.com/1932785/78852494-1465b100-79e2-11ea-81f4-2d7c51f89702.png)
+![blogifier-dgm](https://user-images.githubusercontent.com/1932785/81506457-1611e580-92bc-11ea-927e-b826c56ba21b.png)
 ## Demo site
 
 The [demo site](http://blogifier.net) is a playground to check out Blogifier features. You can write and publish posts, upload files and test application before install.
 
-![dashboard-3](https://user-images.githubusercontent.com/1932785/77836549-1481c900-7125-11ea-812f-9bd5343274f9.png)
+![screenshot](https://user-images.githubusercontent.com/1932785/81506584-faf3a580-92bc-11ea-92c9-fd0802d9e977.png)
 
 The [developer's blog](http://rtur.net/blog).

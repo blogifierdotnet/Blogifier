@@ -42,6 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier", "src\Blogifier\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Widgets", "src\Blogifier.Widgets\Blogifier.Widgets.csproj", "{19384C5F-D421-4A41-AD66-8812B48F48AC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Core", "src\Blogifier.Core\Blogifier.Core.csproj", "{B5E6D870-731D-4E48-B772-3751EAEBA77E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Core.Tests", "src\Blogifier.Core.Tests\Blogifier.Core.Tests.csproj", "{F16D9352-B301-4643-B1AE-E16AC82ADA10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19384C5F-D421-4A41-AD66-8812B48F48AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E6D870-731D-4E48-B772-3751EAEBA77E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E6D870-731D-4E48-B772-3751EAEBA77E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E6D870-731D-4E48-B772-3751EAEBA77E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E6D870-731D-4E48-B772-3751EAEBA77E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16D9352-B301-4643-B1AE-E16AC82ADA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16D9352-B301-4643-B1AE-E16AC82ADA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16D9352-B301-4643-B1AE-E16AC82ADA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16D9352-B301-4643-B1AE-E16AC82ADA10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +75,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0DC52C2B-3803-4BB3-A5A2-6371E94700D7} = {39614650-0D6E-4502-B87D-184366060F59}
 		{19384C5F-D421-4A41-AD66-8812B48F48AC} = {39614650-0D6E-4502-B87D-184366060F59}
+		{B5E6D870-731D-4E48-B772-3751EAEBA77E} = {39614650-0D6E-4502-B87D-184366060F59}
+		{F16D9352-B301-4643-B1AE-E16AC82ADA10} = {39614650-0D6E-4502-B87D-184366060F59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D601BCCC-A1D9-415B-94B5-B3C0EF4AAF0B}
