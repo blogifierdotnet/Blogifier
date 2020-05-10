@@ -162,20 +162,28 @@ app {
     max-width: 100%;
 }
 
-.card-group .card {
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 15px;
+.theme-active {
+    border: 2px solid #35c21f;
 }
 
-.card-columns {
-    @include media-breakpoint-only(lg) {
-        column-count: 4;
-    }
+.card-title span {
+    float: right;
+}
 
-    @include media-breakpoint-only(xl) {
-        column-count: 5;
-    }
+.card-title a {
+    font-size: .7em;
+    font-weight: 600;
+    text-decoration: none;
+    color: #5731b3;
+}
+
+.card.dash.themes .card {
+    width: 285px;
+    height: 340px;
+}
+
+.card.dash.themes .col .card-body {
+    border-top: 1px solid #dedede;
 }
 
 /* post lists */

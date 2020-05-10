@@ -13,9 +13,9 @@
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["settings"]</a>
                 </li>
 
-                @*<li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" id="themes-tab" data-toggle="tab" href="#themes" role="tab" aria-controls="themes" aria-selected="false">Themes</a>
-                </li>*@
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">Social</a>
@@ -78,18 +78,6 @@
                                             }
                                         </select>
                                     </div>
-                                    <div class="input-group">
-                                        <label>@Localizer["theme"]</label>
-                                        <select @bind="Model.Theme">
-                                            @if (Themes != null)
-                                            {
-                                                @foreach (var theme in Themes)
-                                                {
-                                                    <option value="@theme.Value">@theme.Text</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
                                     <div>
                                         <label>&nbsp;</label>
                                         <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
@@ -100,9 +88,9 @@
                     </div>
 
                 </div>
-                @*<div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
+                <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
                     <Themes />
-                </div>*@
+                </div>
                 <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
                     <SocialAdmin Level="blog" />
                 </div>
