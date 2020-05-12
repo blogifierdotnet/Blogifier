@@ -7,8 +7,8 @@ namespace Blogifier.Core.Data
     {
         public string Avatar { get; set; }
         public bool DemoMode { get; set; }
-        public string ImageExtensions { get; set; }
-        public string ImportTypes { get; set; }
+        public string ImageExtensions { get; set; } = "png,jpg,jpeg,gif,bmp,tiff";
+        public string ImportTypes { get; set; } = "zip,7z,xml,pdf,doc,docx,xls,xlsx,mp3,avi";
         public bool SeedData { get; set; }
     }
 

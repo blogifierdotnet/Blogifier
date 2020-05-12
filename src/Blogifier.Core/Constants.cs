@@ -39,4 +39,11 @@
         PostCover,
         PostImage
     }
+
+    public enum AppFeatureFlags
+    {
+        Demo,
+        Email,
+        GenerateThumbs
+    }
 }

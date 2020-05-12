@@ -2,6 +2,7 @@
 using Blogifier.Core.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -48,8 +49,9 @@ namespace Blogifier.Core.Services
         private readonly string _uploadFolder = "data";
         private readonly string _thumbs = "thumbs";
         private readonly ILogger _logger;
+        private readonly IFeatureManager _featureManager;
 
-        public StorageService(IHttpContextAccessor httpContext, ILogger<StorageService> logger)
+        public StorageService(IHttpContextAccessor httpContext, ILogger<StorageService> logger, IFeatureManager featureManager)
         {
             if(httpContext == null || httpContext.HttpContext == null)
             {
@@ -61,6 +63,7 @@ namespace Blogifier.Core.Services
             }
             
             _logger = logger;
+            _featureManager = featureManager;
 
             if (!Directory.Exists(Location))
                 CreateFolder("");
@@ -264,8 +267,11 @@ namespace Blogifier.Core.Services
             {
                 await file.CopyToAsync(fileStream);
 
-                Stream stream = file.OpenReadStream();
-                SaveThumbnail(stream, thumbFolder, fileName);
+                if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+                {
+                    Stream stream = file.OpenReadStream();
+                    SaveThumbnail(stream, thumbFolder, fileName);
+                }
 
                 return new AssetItem
                 {
@@ -339,8 +345,11 @@ namespace Blogifier.Core.Services
                         Stream contentStream = await (await client.SendAsync(request)).Content.ReadAsStreamAsync(),
                         stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 3145728, true))
                     {
-                        await contentStream.CopyToAsync(stream);
-                        SaveThumbnail(contentStream, thumbFolder, fileName);
+                        if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+                        {
+                            await contentStream.CopyToAsync(stream);
+                            SaveThumbnail(contentStream, thumbFolder, fileName);
+                        }
 
                         return new AssetItem
                         {
@@ -584,8 +593,7 @@ namespace Blogifier.Core.Services
             {
                 foreach (var asset in assets)
                 {
-                    // Azure puts web sites under "wwwroot" folder
-                    var path = asset.Replace($"wwwroot{_separator}wwwroot", "wwwroot", StringComparison.OrdinalIgnoreCase);
+                    var path = asset.Replace(GetAppRoot(), "");
 
                     items.Add(new AssetItem
                     {

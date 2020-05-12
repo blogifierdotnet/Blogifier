@@ -5,12 +5,6 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
 {
-    public enum AppFeatureFlags
-    {
-        Demo,
-        Email
-    }
-
     [FilterAlias("EmailFilter")]
     public class EmailFeatureFilter : IFeatureFilter
     {

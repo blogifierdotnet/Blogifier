@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Core.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
 using Moq;
 using System;
 using System.Linq.Expressions;
@@ -15,13 +16,14 @@ namespace Core.Tests.Services
         private readonly Mock<IAuthorRepository> authorRepository = new Mock<IAuthorRepository>();
         private readonly Mock<IPostRepository> postRepository = new Mock<IPostRepository>();
         private readonly Mock<ILogger<StorageService>> _logger = new Mock<ILogger<StorageService>>();
+        private readonly Mock<IFeatureManager> _featureMgr = new Mock<IFeatureManager>();
         private readonly IStorageService _storage;
 
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
         
         public SyndicationServiceTests()
         {
-            _storage = new StorageService(null, _logger.Object);
+            _storage = new StorageService(null, _logger.Object, _featureMgr.Object);
         }
 
         private FeedService GetSut()

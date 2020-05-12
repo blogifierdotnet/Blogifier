@@ -3,6 +3,7 @@ using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -18,10 +19,11 @@ namespace Core.Tests.Services
         static Uri _uri2 = new Uri("http://dnbe.net/v01/images/mp3player.png");
         static string _separator = System.IO.Path.DirectorySeparatorChar.ToString();
         private readonly Mock<ILogger<StorageService>> _logger = new Mock<ILogger<StorageService>>();
+        private readonly Mock<IFeatureManager> _featureMgr = new Mock<IFeatureManager>();
 
         public StorageServiceTests()
         {
-            _storage = new StorageService(null, _logger.Object);
+            _storage = new StorageService(null, _logger.Object, _featureMgr.Object);
         }
 
         [Fact]
@@ -107,14 +109,17 @@ namespace Core.Tests.Services
             AssetItem result = await _storage.UploadFromWeb(new Uri(img), "/");
             Assert.True(System.IO.File.Exists(result.Path));
 
-            string thumbPath = result.Path.Replace(result.Title, $"thumbs\\{result.Title}");
-            Assert.True(System.IO.File.Exists(thumbPath));
-
             _storage.DeleteFile(result.Title);
             Assert.False(System.IO.File.Exists(result.Path));
 
-            _storage.DeleteFile(thumbPath);
-            Assert.False(System.IO.File.Exists(thumbPath));
+            if (_featureMgr.Object.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+            {
+                string thumbPath = result.Path.Replace(result.Title, $"thumbs\\{result.Title}");
+                Assert.True(System.IO.File.Exists(thumbPath));              
+
+                _storage.DeleteFile(thumbPath);
+                Assert.False(System.IO.File.Exists(thumbPath));
+            }
         }
 
         [Theory]

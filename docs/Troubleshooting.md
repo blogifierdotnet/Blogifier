@@ -2,7 +2,7 @@ Blogifier is server-side ASP.NET Core application that can be deployed to differ
 Below several common scenarios to run and troubleshoot locally before application deployed to host server.
 
 ### Run in Visual Studio
-1. Open solution in Visual Studio, right-click `App` project in solution explorer and set it as startup project
+1. Open solution in Visual Studio, right-click `Blogifier` project in solution explorer and set it as startup project
 2. Run in debug mode and make sure application runs in the web browser
 3. In the browser, open developer tools, refresh page and make sure no errors show up in the console
 
@@ -10,7 +10,7 @@ If all looks good, application is ready for deployment
 
 ### Deploy and Run from Local Folder
 Use steps outlined in the [build section](https://github.com/blogifierdotnet/Blogifier/blob/master/docs/Build.md)
-to publish application to the local folder and run it using `dotnet App.dll` command.
+to publish application to the local folder and run it using `dotnet Blogifier.dll` command.
 Again, open developer tools and verify no client-side errors thrown in the JavaScript console.
 
 ### Deploy to Host Server

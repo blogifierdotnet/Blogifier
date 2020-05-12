@@ -233,7 +233,7 @@ _Pvt_Extensions
 
 PublishProfiles/
 
-src/App/Logs
+src/Blogifier/Logs
 
 package-lock.json
 
