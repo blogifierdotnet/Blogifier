@@ -167,6 +167,7 @@ namespace Blogifier.Core.Data
 
             post.PostViews++;
             await _db.SaveChangesAsync();
+            await SaveStatsTotals(post.Id);
 
             return await Task.FromResult(item);
         }
@@ -205,6 +206,7 @@ namespace Blogifier.Core.Data
             var post = _db.BlogPosts.Single(p => p.Slug == slug);
             post.PostViews++;
             await _db.SaveChangesAsync();
+            await SaveStatsTotals(post.Id);
 
             return await Task.FromResult(model);
         }
@@ -366,6 +368,31 @@ namespace Blogifier.Core.Data
             }
 
             return items;
+        }
+
+        async Task SaveStatsTotals(int postId)
+        {
+            try
+            {
+                var existentTotal = _db.StatsTotals.Where(s => s.PostId == postId 
+                    && s.DateCreated == SystemClock.Now().Date).FirstOrDefault();
+
+                if (existentTotal == null)
+                {
+                    await _db.StatsTotals.AddAsync(new StatsTotal
+                    {
+                        PostId = postId,
+                        Total = 1,
+                        DateCreated = SystemClock.Now().Date
+                    });
+                }
+                else
+                {
+                    existentTotal.Total = existentTotal.Total + 1;
+                }
+                await _db.SaveChangesAsync();
+            }
+            catch { }
         }
     }
 

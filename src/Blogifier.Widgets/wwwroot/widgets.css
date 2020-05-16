@@ -120,3 +120,12 @@
 .settings-table label {
     color: #333;
 }
+
+.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+    stroke: #5731B3;
+}
+
+.ct-bar {
+    fill: none;
+    stroke-width: 40px;
+}

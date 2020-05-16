@@ -62,7 +62,7 @@ namespace Core.Tests.Services
             INewsletterRepository letters = new NewsletterRepository(context);
             ICustomFieldRepository custom = new CustomFieldRepository(context);
 
-            IDataService ds = new DataService(context, posts, authors, null, null, custom, letters);
+            IDataService ds = new DataService(context, posts, authors, null, null, custom, letters, null);
 
             var logger = new Mock<ILogger<SendGridService>>();
             var storage = new Mock<IStorageService>();

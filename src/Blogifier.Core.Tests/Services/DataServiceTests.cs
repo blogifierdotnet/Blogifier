@@ -37,7 +37,7 @@ namespace Blogifier.Core.Tests.Services
             INewsletterRepository letters = new NewsletterRepository(context);
             ICustomFieldRepository custom = new CustomFieldRepository(context);
 
-            return new DataService(context, posts, authors, null, null, custom, letters);
+            return new DataService(context, posts, authors, null, null, custom, letters, null);
         }
     }
 }

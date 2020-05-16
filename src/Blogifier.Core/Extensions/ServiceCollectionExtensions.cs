@@ -130,6 +130,7 @@ namespace Blogifier.Core.Extensions
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
+            services.AddScoped<IStatsRepository, StatsRepository>();
         }
     }
 }
