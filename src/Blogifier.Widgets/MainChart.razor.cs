@@ -15,20 +15,49 @@ namespace Blogifier.Widgets
         protected IDataService DataService { get; set; }
 
         protected string[] Labels { get; set; }
-        protected double[] Values { get; set; }       
+        protected double[] Values { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected List<ChartOption> ChartOptions = new List<ChartOption>() { 
+            new ChartOption { Id = ChartSelector.Week, Label = "Last week" },
+            new ChartOption { Id = ChartSelector.Month, Label = "Last month" },
+            new ChartOption { Id = ChartSelector.All, Label = "All" }
+        };
+
+        private ChartSelector selectedChart;
+        public ChartSelector SelectedChartOption
         {
-            await LoadLastWeek();
+            get { return selectedChart; }
+            set
+            {
+                selectedChart = value;
+                Load();
+            }
         }
 
-        async Task LoadLastWeek()
+        protected override void OnInitialized()
         {
-            var stats = await Task.FromResult(DataService.StatsRepository
-                .Find(p => p.DateCreated >= SystemClock.Now().Date.AddDays(-7)));
+            SelectedChartOption = ChartSelector.Week;
+        }
 
-            stats = stats.OrderBy(s => s.DateCreated);
+        void Load()
+        {
+            if (selectedChart == ChartSelector.Week)
+            {
+                LoadWeekly();
+            }
+            else if (selectedChart == ChartSelector.Month)
+            {
+                LoadMonthly();
+            }
+            else
+            {
+                LoadAll();
+            }
+        }
 
+        void LoadWeekly()
+        {
+            var stats = GetStats(-8);
             var chartItems = new List<ChartItem>();
 
             foreach (var stat in stats)
@@ -48,6 +77,61 @@ namespace Blogifier.Widgets
 
             Labels = chartItems.Select(i => i.Label).ToArray();
             Values = chartItems.Select(i => i.Value).ToArray();
+        }
+
+        void LoadMonthly()
+        {
+            var stats = GetStats(-31);
+            var chartItems = new List<ChartItem>();
+
+            foreach (var stat in stats)
+            {
+                var date = $"{stat.DateCreated.Month}/{stat.DateCreated.Day}";
+                var item = chartItems.Where(i => i.Label == date).FirstOrDefault();
+
+                if (item == null)
+                {
+                    chartItems.Add(new ChartItem { Label = date, Value = stat.Total });
+                }
+                else
+                {
+                    item.Value += stat.Total;
+                }
+            }
+
+            Labels = chartItems.Select(i => i.Label).ToArray();
+            Values = chartItems.Select(i => i.Value).ToArray();
+        }
+
+        void LoadAll()
+        {
+            var stats = GetStats();
+            var chartItems = new List<ChartItem>();
+
+            foreach (var stat in stats)
+            {
+                var date = $"{stat.DateCreated.Month}/{stat.DateCreated.Day}";
+                var item = chartItems.Where(i => i.Label == date).FirstOrDefault();
+
+                if (item == null)
+                {
+                    chartItems.Add(new ChartItem { Label = date, Value = stat.Total });
+                }
+                else
+                {
+                    item.Value += stat.Total;
+                }
+            }
+
+            Labels = chartItems.Select(i => i.Label).ToArray();
+            Values = chartItems.Select(i => i.Value).ToArray();
+        }
+
+        IEnumerable<StatsTotal> GetStats(int days = 0)
+        {
+            IEnumerable<StatsTotal> stats = days == 0 ? DataService.StatsRepository.All() :
+                DataService.StatsRepository.Find(p => p.DateCreated >= SystemClock.Now().Date.AddDays(days));
+            return stats.OrderBy(s => s.DateCreated);
         }
 
         async Task LoadLatestPosts()
@@ -75,5 +159,16 @@ namespace Blogifier.Widgets
     {
         public string Label { get; set; }
         public double Value { get; set; }
+    }
+
+    public class ChartOption
+    {
+        public ChartSelector Id { get; set; }
+        public string Label { get; set; }
+    }
+
+    public enum ChartSelector
+    {
+        Week = 1, Month = 2, All = 3
     }
 }
