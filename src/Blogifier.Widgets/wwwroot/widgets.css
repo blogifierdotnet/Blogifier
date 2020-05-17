@@ -129,3 +129,9 @@
     fill: none;
     stroke-width: 40px;
 }
+
+.chart-card select {
+    border: none;
+    width: 160px;
+    margin: 0 0 0 10px;
+}
