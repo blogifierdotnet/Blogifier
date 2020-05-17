@@ -57,7 +57,7 @@ namespace Blogifier.Widgets
 
         void LoadWeekly()
         {
-            var stats = GetStats(-8);
+            var stats = GetStats(-7);
             var chartItems = new List<ChartItem>();
 
             foreach (var stat in stats)

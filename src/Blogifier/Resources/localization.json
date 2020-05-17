@@ -894,5 +894,23 @@
       "en-US": "Scripts to be included in the page header and footer (Disqus, Analytics etc.)",
       "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)"
     }
+  },
+  "subscribers": {
+    "Values": {
+      "en-US": "Subscriber|Subscribers",
+      "ru-RU": "Подписка|Подписчики"
+    }
+  },
+  "last-week": {
+    "Values": {
+      "en-US": "Last week",
+      "ru-RU": "Прошлая неделя"
+    }
+  },
+  "last-month": {
+    "Values": {
+      "en-US": "Last month",
+      "ru-RU": "Прошлый месяц"
+    }
   }
 }

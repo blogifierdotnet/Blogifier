@@ -28,6 +28,7 @@ namespace Blogifier.Widgets
         protected int PostCount { get; set; }
         protected int ViewsCount { get; set; }
         protected int DraftCount { get; set; }
+        protected int SubsriberCount { get; set; }
         protected bool Edit { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -42,9 +43,10 @@ namespace Blogifier.Widgets
             Author = await DataService.Authors.GetItem(a =>
                 a.AppUserName == authState.User.Identity.Name);
 
-            PostCount = DataService.BlogPosts.All().ToList().Count;
+            PostCount = DataService.BlogPosts.All().Count();
             ViewsCount = DataService.BlogPosts.All().Select(v => v.PostViews).Sum();
             DraftCount = DataService.BlogPosts.Find(p => p.Published == DateTime.MinValue).Count();
+            SubsriberCount = DataService.Newsletters.All().Count();
 
             StateHasChanged();
         }
