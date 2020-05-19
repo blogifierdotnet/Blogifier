@@ -50,7 +50,7 @@ namespace Blogifier.Controllers
             }
             else
             {
-                model.Posts = await DataService.BlogPosts.Search(pgr, term);
+                model.Posts = await DataService.BlogPosts.Search(pgr, term, 0, "FP");
             }
 
             if (pgr.ShowOlder) pgr.LinkToOlder = $"blog?page={pgr.Older}";
