@@ -11,6 +11,7 @@
     <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.2.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="BundlerMinifier.Core" Version="3.2.447" />
+    <PackageReference Include="Grunt" Version="0.1.13" />
     <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
@@ -28,6 +29,7 @@
 
   <ItemGroup>
     <Content Include="Blog.db" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="gruntfile.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +44,8 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="wwwroot\admin\scss\components\" />
+    <Folder Include="wwwroot\admin\scss\page\" />
   </ItemGroup>
 
 </Project>

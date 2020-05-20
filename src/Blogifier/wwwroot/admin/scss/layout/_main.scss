@@ -1,0 +1,24 @@
+﻿
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.app {
+    display: flex;
+    flex: 1;
+}
+
+.app-content {
+}
+
+.app-sidebar {
+    background-color: $color;
+    width: 4rem;
+}

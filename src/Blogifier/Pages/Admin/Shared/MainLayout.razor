@@ -1,11 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
+<nav class="app-sidebar">
     <NavMenu />
-</div>
-<div class="main">
-    <div class="content px-4">
-        @Body
-    </div>
+</nav>
+<div class="app-content">
+    @Body
 </div>
 <ToastContainer />
