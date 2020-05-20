@@ -9,13 +9,13 @@ body {
     flex-direction: column;
 }
 
-
 .app {
     display: flex;
     flex: 1;
 }
 
 .app-content {
+    flex:1;
 }
 
 .app-sidebar {

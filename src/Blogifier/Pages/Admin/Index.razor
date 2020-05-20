@@ -1,31 +1,29 @@
 ﻿@page "/admin"
 
-<div class="container-fluid">
-
-    <div class="row bf-row">
-        <div class="col-lg-3 order-lg-1 col-md-6 order-md-1 col-sm-12 bf-col">
-            <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
-        </div>
-        <div class="col-lg-6 order-lg-2 col-md-12 order-md-3 col-sm-12 bf-col">
-            <MainChart />
-        </div>
-        <div class="col-lg-3 order-lg-3 col-md-6 order-md-2  col-sm-12 bf-col">
+<div class="row no-gutters">
+    <div class="col-8">
+        <Published @ref="PublishedInstance" OnUpdate="UpdateHandler" />
+    </div>
+    <div class="col-4">
+        <div>
             <Profile />
         </div>
-    </div>
-    <div class="row bf-row">
-        <div class="col-lg-3 order-lg-1 col-md-6 order-md-2 col-sm-12 bf-col">
-            <Drafts @ref="DraftsInstance" OnUpdate="UpdateHandler" />
+        <div>
+            <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
         </div>
-        <div class="col-lg-6 order-lg-2 col-md-12 order-md-1 col-sm-12 bf-col">
-            <Published @ref="PublishedInstance" OnUpdate="UpdateHandler" />
+        <div>
+            <MainChart />
         </div>
-        <div class="col-lg-3 order-lg-3 col-md-6 order-md-3  col-sm-12 bf-col">
+        <div>
             <Custom />
         </div>
     </div>
-
 </div>
+
+@*
+    // replacing drafts with filters for posts
+    <Drafts @ref="DraftsInstance" OnUpdate="UpdateHandler" />
+*@
 
 @code {
 
