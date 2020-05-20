@@ -1,5 +1,6 @@
 using Blogifier.Core;
 using Blogifier.Core.Extensions;
+using Blogifier.Core.Services;
 using Blogifier.Widgets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,7 @@ namespace Blogifier
             services.AddBlogLocalization();
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-            services.AddFeatureManagement().AddFeatureFilter<EmailFeatureFilter>();
+            services.AddFeatureManagement().AddFeatureFilter<EmailConfiguredFilter>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews().AddViewLocalization(); 

@@ -112,7 +112,7 @@ namespace Core.Tests.Services
             _storage.DeleteFile(result.Title);
             Assert.False(System.IO.File.Exists(result.Path));
 
-            if (_featureMgr.Object.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+            if (_featureMgr.Object.IsEnabledAsync(nameof(AppFeatureFlags.ThumbnailsEnabled)).Result)
             {
                 string thumbPath = result.Path.Replace(result.Title, $"thumbs\\{result.Title}");
                 Assert.True(System.IO.File.Exists(thumbPath));              

@@ -57,7 +57,7 @@ namespace Blogifier.Widgets
                 var saved = await DataService.BlogPosts.SaveItem(post);
                 DataService.Complete();
 
-                if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Email)).Result)
+                if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.EmailEnabled)).Result)
                 {
                     // send newsletters on post publish when email feature enabled
                     var pager = new Pager(1, 10000);

@@ -1,6 +1,10 @@
 ﻿@page "/admin/settings"
 
 @inject IJsonStringLocalizer<Settings> Localizer
+@inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
+@{ 
+    var isDemo = FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result;
+}
 
 <div class="container-fluid">
 
@@ -108,14 +112,14 @@
                                         @Localizer["include-scripts"]
                                     </div>
                                     <div class="input-group">
-                                        <textarea class="form-control txt-area" rows="4" @bind="Model.HeaderScript" name="headerScript" placeholder="Header script" />
+                                        <textarea readonly="@(isDemo)" class="form-control txt-area" rows="4" @bind="Model.HeaderScript" name="headerScript" placeholder="Header script" />
                                     </div>
                                     <div class="input-group">
-                                        <textarea class="form-control txt-area" rows="10" @bind="Model.FooterScript" name="footerScrip" placeholder="Footer script" />
+                                        <textarea readonly="@(isDemo)" class="form-control txt-area" rows="10" @bind="Model.FooterScript" name="footerScrip" placeholder="Footer script" />
                                     </div>
                                     <div>
                                         <label>&nbsp;</label>
-                                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                                        <input type="submit" disabled="@(isDemo)" value="@Localizer["save"]" class="btn btn-primary" />
                                     </div>
                                 </fieldset>
                             </EditForm>

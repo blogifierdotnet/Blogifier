@@ -30,7 +30,7 @@ namespace Blogifier.Widgets
             Model = new EmailModel { SendTo = "", Subject = "", Content = "" };
 
             var section = Configuration.GetSection(Constants.ConfigSectionKey);
-            if(section != null && !FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+            if(section != null && !FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result)
                 Model.ApiKey = section.GetValue<string>("SendGridApiKey");
             else
                 Model.ApiKey = "YOUR-SENDGRID-API-KEY";
@@ -38,7 +38,7 @@ namespace Blogifier.Widgets
 
         protected async Task Send()
         {
-            if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+            if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result)
             {
                 Toaster.Info(Localizer["demo-disabled"]);
             }

@@ -267,7 +267,7 @@ namespace Blogifier.Core.Services
             {
                 await file.CopyToAsync(fileStream);
 
-                if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+                if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.ThumbnailsEnabled)).Result)
                 {
                     Stream stream = file.OpenReadStream();
                     SaveThumbnail(stream, thumbFolder, fileName);
@@ -344,8 +344,8 @@ namespace Blogifier.Core.Services
                     using (
                         Stream contentStream = await (await client.SendAsync(request)).Content.ReadAsStreamAsync(),
                         stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 3145728, true))
-                    {
-                        if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.GenerateThumbs)).Result)
+                    { 
+                        if (_featureManager.IsEnabledAsync(nameof(AppFeatureFlags.ThumbnailsEnabled)).Result)
                         {
                             await contentStream.CopyToAsync(stream);
                             SaveThumbnail(contentStream, thumbFolder, fileName);

@@ -22,7 +22,7 @@
                 var ipAr = letter.Ip.Split('|');
                 if(ipAr.Length == 3)
                 {
-                    if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+                    if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result)
                     {
                         var emAr = title.Split('@');
                         title = $"demo@{emAr[1]} - {ipAr[1]}, {ipAr[2]}";

@@ -1,16 +1,15 @@
-﻿using Blogifier.Core;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 using System.Threading.Tasks;
 
-namespace Blogifier.Widgets
+namespace Blogifier.Core.Services
 {
-    [FilterAlias("EmailFilter")]
-    public class EmailFeatureFilter : IFeatureFilter
+    [FilterAlias("EmailConfigured")]
+    public class EmailConfiguredFilter : IFeatureFilter
     {
         private readonly IConfiguration Configuration;
 
-        public EmailFeatureFilter(IConfiguration configuration)
+        public EmailConfiguredFilter(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -26,10 +25,13 @@ namespace Blogifier.Widgets
             var featureSection = Configuration.GetSection("FeatureManagement");
 
             bool isDemo;
-            bool.TryParse(featureSection.GetValue<string>(nameof(AppFeatureFlags.Demo)), out isDemo);
+            bool.TryParse(featureSection.GetValue<string>(nameof(AppFeatureFlags.DemoMode)), out isDemo);
 
-            var isConfigured = blogSection != null && 
-                blogSection.GetValue<string>("SendGridApiKey") != "YOUR-SENDGRID-API-KEY";
+            string keyValue = blogSection.GetValue<string>("SendGridApiKey");
+
+            var isConfigured = blogSection != null 
+                && !string.IsNullOrEmpty(keyValue) 
+                && keyValue != "YOUR-SENDGRID-API-KEY";
 
             return Task.FromResult(isConfigured && !isDemo);
         }

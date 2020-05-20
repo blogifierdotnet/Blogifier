@@ -111,7 +111,7 @@ namespace Blogifier.Widgets
 
                     if(saved != null && saved.Id > 0)
                     {
-                        if (postAction == PostAction.Publish && FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Email)).Result)
+                        if (postAction == PostAction.Publish && FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.EmailEnabled)).Result)
                         {
                             var pager = new Pager(1, 10000);
                             var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);

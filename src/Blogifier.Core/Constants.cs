@@ -42,8 +42,8 @@
 
     public enum AppFeatureFlags
     {
-        Demo,
-        Email,
-        GenerateThumbs
+        DemoMode,
+        EmailEnabled,
+        ThumbnailsEnabled
     }
 }
