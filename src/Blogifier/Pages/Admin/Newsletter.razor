@@ -1,6 +1,16 @@
 ﻿@page "/admin/newsletter"
 
+@using Microsoft.AspNetCore.Components.Authorization
 @inject IJsonStringLocalizer<Settings> Localizer
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@{
+    var authState = AuthenticationStateProvider.GetAuthenticationStateAsync().Result;
+    if (authState == null || !authState.User.Identity.IsAuthenticated)
+    {
+        try { NavigationManager.NavigateTo("account/login?returnUrl=/admin"); } catch { }
+    }
+}
 
 <div class="container-fluid">
 
