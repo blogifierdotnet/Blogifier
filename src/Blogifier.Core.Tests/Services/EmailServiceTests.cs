@@ -47,21 +47,29 @@ namespace Core.Tests.Services
             Assert.Equal(0, expected);
         }
 
+        #region MailKit
+
+        [Fact]
+        public async Task CanSendMailKitEmail()
+        {
+            var sut = GetMailKitService();
+
+            bool expected = await sut.SendEmail(email, "test", "testing blogifier");
+
+            Assert.False(expected);
+        }
+
+        #endregion
+
         private SendGridService GetSut()
         {
-            var data = new Mock<IDataService>();
-
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseSqlite("DataSource=Blog.db").Options;
-
-            var context = new AppDbContext(options);
+            var context = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlite("DataSource=Blog.db").Options);
             var customFieldRepository = new CustomFieldRepository(context);
 
             IPostRepository posts = new PostRepository(context, customFieldRepository);
             IAuthorRepository authors = new AuthorRepository(context);
             INewsletterRepository letters = new NewsletterRepository(context);
             ICustomFieldRepository custom = new CustomFieldRepository(context);
-
             IDataService ds = new DataService(context, posts, authors, null, null, custom, letters, null);
 
             var logger = new Mock<ILogger<SendGridService>>();
@@ -69,6 +77,24 @@ namespace Core.Tests.Services
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             return new SendGridService(ds, config, logger.Object, storage.Object);
+        }
+
+        private MailKitService GetMailKitService()
+        {
+            var context = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlite("DataSource=Blog.db").Options);
+            var customFieldRepository = new CustomFieldRepository(context);
+
+            IPostRepository posts = new PostRepository(context, customFieldRepository);
+            IAuthorRepository authors = new AuthorRepository(context);
+            INewsletterRepository letters = new NewsletterRepository(context);
+            ICustomFieldRepository custom = new CustomFieldRepository(context);
+            IDataService ds = new DataService(context, posts, authors, null, null, custom, letters, null);
+
+            var logger = new Mock<ILogger<SendGridService>>();
+            var storage = new Mock<IStorageService>();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+            return new MailKitService(ds, config, logger.Object, storage.Object);
         }
     }
 }
