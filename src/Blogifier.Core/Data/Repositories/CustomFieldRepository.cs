@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Blogifier.Core.Data.Models;
+using System.Net.Mail;
+using MailKit.Security;
 
 namespace Blogifier.Core.Data
 {
@@ -14,6 +17,9 @@ namespace Blogifier.Core.Data
 
 		Task<List<SocialField>> GetSocial(int authorId = 0);
 		Task SaveSocial(SocialField socialField);
+
+		Task<EmailModel> GetEmailModel();
+		Task<bool> SaveEmailModel(EmailModel model);
 	}
 
 	public class CustomFieldRepository : Repository<CustomField>, ICustomFieldRepository
@@ -185,6 +191,90 @@ namespace Blogifier.Core.Data
 				field.Name = socialField.Name;
 			}
 			await _db.SaveChangesAsync();
+		}
+
+		#endregion
+
+		#region email model
+
+		public async Task<EmailModel> GetEmailModel()
+        {
+			var model = new EmailModel();
+			model.Providers = new List<ProviderItem>();
+
+			model.Providers.Add(new ProviderItem { Key = EmailProvider.SendGrid.ToString(), Label = EmailProvider.SendGrid.ToString() });
+			model.Providers.Add(new ProviderItem { Key = EmailProvider.MailKit.ToString(), Label = EmailProvider.MailKit.ToString() });
+
+			var selectedProvider = GetBlogValue(Constants.EmailSelectedProvider);
+			model.SelectedProvider = string.IsNullOrEmpty(selectedProvider) ? EmailProvider.MailKit : (
+				selectedProvider == EmailProvider.MailKit.ToString() ? EmailProvider.MailKit : EmailProvider.SendGrid);
+
+			// sendgrid email provider
+			model.SendGridModel = new SendGridModel();
+
+			var sgKey = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.EmailSendgridApiKey).FirstOrDefault();
+			model.SendGridModel.ApiKey = sgKey == null ? "" : sgKey.Content;
+
+			model.SendGridModel.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailSendgridConfigured)) ? false : 
+				bool.Parse(GetBlogValue(Constants.EmailSendgridConfigured));
+
+			// mailkit email provider
+			model.MailKitModel = new MailKitModel();
+
+			model.MailKitModel.EmailName = GetBlogValue(Constants.EmailMailKitName);
+			model.MailKitModel.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
+			model.MailKitModel.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
+			model.MailKitModel.Port = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitPort)) ? 465 : int.Parse(GetBlogValue(Constants.EmailMailKitPort));
+
+			model.MailKitModel.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitConfigured)) ? false : 
+				bool.Parse(GetBlogValue(Constants.EmailMailKitConfigured));
+
+			model.MailKitModel.Options = SecureSocketOptions.SslOnConnect;
+
+			return await Task.FromResult(model);
+		}
+		public async Task<bool> SaveEmailModel(EmailModel model)
+        {
+            try
+            {
+				await SaveBlogValue(Constants.EmailSelectedProvider, model.SelectedProvider.ToString());
+				// sendgrid
+				await SaveBlogValue(Constants.EmailSendgridApiKey, model.SendGridModel.ApiKey);
+				await SaveBlogValue(Constants.EmailSendgridConfigured, model.SendGridModel.Configured.ToString());
+				// mailkit
+				await SaveBlogValue(Constants.EmailMailKitName, model.MailKitModel.EmailName);
+				await SaveBlogValue(Constants.EmailMailKitAddress, model.MailKitModel.EmailAddress);
+				await SaveBlogValue(Constants.EmailMailKitServer, model.MailKitModel.EmailServer);
+				await SaveBlogValue(Constants.EmailMailKitPort, model.MailKitModel.Port.ToString());
+				await SaveBlogValue(Constants.EmailMailKitConfigured, model.MailKitModel.Configured.ToString());
+
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+            catch
+            {
+				return await Task.FromResult(false);
+            }
+		}
+
+		public async Task SaveBlogValue(string name, string value)
+		{
+			var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == name).FirstOrDefault();
+			if (field == null)
+			{
+				_db.CustomFields.Add(new CustomField { Name = name, Content = value, AuthorId = 0 });
+			}
+			else
+			{
+				field.Content = value;
+			}
+			await _db.SaveChangesAsync();
+		}
+
+		private string GetBlogValue(string key)
+        {
+			var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == key).FirstOrDefault();
+			return field == null ? "" : field.Content;
 		}
 
 		#endregion

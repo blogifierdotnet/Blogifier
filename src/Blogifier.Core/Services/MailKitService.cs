@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Data;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MimeKit;
@@ -26,24 +27,36 @@ namespace Blogifier.Core.Services
 
         public Task<bool> SendEmail(string to, string subject, string content)
         {
-            var mailMessage = new MimeMessage();
-            mailMessage.From.Add(new MailboxAddress("Tester", "tester@test.com"));
-            mailMessage.To.Add(new MailboxAddress("test", "test@gmail.com"));
-            mailMessage.Subject = "subject";
-            mailMessage.Body = new TextPart("plain")
-            {
-                Text = "Hello, this is a test."
-            };
+            var section = _config.GetSection(Constants.ConfigSectionKey);
 
+            if (section != null)
+            {
+                var apiKey = section.GetValue<string>("MailKitApiKey");
+            }
+            
             try
             {
-                using (var smtpClient = new SmtpClient())
-                {
-                    smtpClient.Connect("smtp.gmail.com", 25, false);
-                    smtpClient.Authenticate("test@gmail.com", "test");
-                    smtpClient.Send(mailMessage);
-                    smtpClient.Disconnect(true);
-                }
+                var message = new MimeMessage();
+                var bodyBuilder = new BodyBuilder();
+
+                // from
+                message.From.Add(new MailboxAddress("test", "from_email@example.com"));
+                // to
+                message.To.Add(new MailboxAddress("test", "test@gmail.com"));
+
+                message.Subject = "subject";
+                bodyBuilder.HtmlBody = "html body";
+                message.Body = bodyBuilder.ToMessageBody();
+
+                var client = new SmtpClient();
+
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                client.Authenticate("test@gmail.com", "password");
+                client.Send(message);
+                client.Disconnect(true);
+
+
                 return Task.FromResult(true);
             }
             catch (Exception ex)
@@ -51,8 +64,6 @@ namespace Blogifier.Core.Services
                 _logger.LogError(ex.Message);
                 return Task.FromResult(false);
             }
-
-            
         }
 
         public Task<int> SendNewsletters(BlogPost postItem, List<string> emails, string siteUrl)

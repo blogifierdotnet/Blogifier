@@ -1,0 +1,50 @@
+﻿@using Core.Data.Models
+
+<div class="card">
+    <div class="card-body">
+        <fieldset>
+            <div class="input-group">
+                <label>@Localizer["email-provider"]</label>
+                <select @bind="SelectedProvider">
+                    @if (Model.Providers != null)
+                    {
+                        @foreach (var provider in Model.Providers)
+                        {
+                            <option value="@provider.Key">@provider.Label</option>
+                        }
+                    }
+                </select>
+            </div>
+            @if (Model.SelectedProvider == EmailProvider.SendGrid)
+            {
+            <div class="input-group">
+                <label>@Localizer["sendgrid-key"]</label>
+                <input class="form-control" type="text" @bind="Model.SendGridModel.ApiKey" />
+            </div>
+            }
+            @if (Model.SelectedProvider == EmailProvider.MailKit)
+            {
+            <div class="input-group">
+                <label>@Localizer["email-address"]</label>
+                <input class="form-control" type="text" @bind="Model.MailKitModel.EmailAddress" placeholder="someone@gmail.com" />
+            </div>
+            <div class="input-group">
+                <label>@Localizer["email-name"]</label>
+                <input class="form-control" type="text" @bind="Model.MailKitModel.EmailName" />
+            </div>
+            <div class="input-group">
+                <label>@Localizer["email-server"]</label>
+                <input class="form-control" type="text" @bind="Model.MailKitModel.EmailServer" placeholder="smtp.gmail.com" />
+            </div>
+            <div class="input-group">
+                <label>@Localizer["email-port"]</label>
+                <input class="form-control" type="text" @bind="Model.MailKitModel.Port" />
+            </div>
+            }
+            <div>
+                <label>&nbsp;</label>
+                <input type="button" value="@Localizer["save"]" @onclick="OnSave" class="btn btn-primary" />
+            </div>
+        </fieldset>
+    </div>
+</div>

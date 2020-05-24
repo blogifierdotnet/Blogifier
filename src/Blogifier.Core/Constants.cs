@@ -28,6 +28,16 @@
         public static string ThemeScreenshot = "screenshot.png";
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
         public static string ThemeDataFile = "data.json";
+
+        // email model
+        public static string EmailSelectedProvider = "email-selected-provider";
+        public static string EmailSendgridApiKey = "email-sendgrid-api-key";
+        public static string EmailSendgridConfigured = "email-sendgrid-configured";
+        public static string EmailMailKitConfigured = "email-mailkit-configured";
+        public static string EmailMailKitName = "email-mailkit-name";
+        public static string EmailMailKitAddress = "email-mailkit-address";
+        public static string EmailMailKitServer = "email-mailkit-server";
+        public static string EmailMailKitPort = "email-mailkit-port";
     }
 
     public enum UploadType
