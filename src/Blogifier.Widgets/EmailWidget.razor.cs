@@ -13,7 +13,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+        protected IJsonStringLocalizer<EmailWidget> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 
@@ -51,6 +51,12 @@ namespace Blogifier.Widgets
             {
                 Toaster.Error(Localizer["error"]);
             }
+        }
+
+        protected async Task OnCheck()
+        {
+            Toaster.Success(Localizer["completed"]);
+            await Task.FromResult("ok");
         }
     }
 }

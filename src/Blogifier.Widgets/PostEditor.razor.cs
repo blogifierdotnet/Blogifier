@@ -31,7 +31,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IEmailService EmailService { get; set; }
         [Inject]
-        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+        protected IJsonStringLocalizer<PostEditor> Localizer { get; set; }
         [Inject]
         protected IConfiguration Configuration { get; set; }
         [Inject]

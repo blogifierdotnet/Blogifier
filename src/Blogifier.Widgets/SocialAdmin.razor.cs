@@ -15,7 +15,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+        protected IJsonStringLocalizer<SocialAdmin> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 

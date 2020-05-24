@@ -22,7 +22,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IJSRuntime JSRuntime { get; set; }
         [Inject]
-        protected IJsonStringLocalizer<EmailForm> Localizer { get; set; }
+        protected IJsonStringLocalizer<Welcome> Localizer { get; set; }
 
         public Author Author { get; set; }
         protected int PostCount { get; set; }
