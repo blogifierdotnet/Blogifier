@@ -38,6 +38,7 @@
         public static string EmailMailKitAddress = "email-mailkit-address";
         public static string EmailMailKitServer = "email-mailkit-server";
         public static string EmailMailKitPort = "email-mailkit-port";
+        public static string EmailMailKitPassword = "email-mailkit-password";
     }
 
     public enum UploadType

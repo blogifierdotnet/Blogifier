@@ -1,13 +1,12 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Blogifier.Core.Tests.Services
+namespace Core.Tests.Services
 {
     public class DataServiceTests
     {
@@ -26,10 +25,9 @@ namespace Blogifier.Core.Tests.Services
 
         private IDataService GetSut()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseSqlite("DataSource=Blog.db").Options;
+            var helper = new DbHelper();
+            var context = helper.GetDbContext();
 
-            var context = new AppDbContext(options);
             var customFieldRepository = new CustomFieldRepository(context);
 
             IPostRepository posts = new PostRepository(context, customFieldRepository);

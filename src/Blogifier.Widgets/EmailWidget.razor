@@ -33,6 +33,10 @@
                 <input class="form-control" type="text" @bind="Model.MailKitModel.EmailName" />
             </div>
             <div class="input-group">
+                <label>@Localizer["password"]</label>
+                <input class="form-control" type="password" @bind="Model.MailKitModel.EmailPassword" />
+            </div>
+            <div class="input-group">
                 <label>@Localizer["email-server"]</label>
                 <input class="form-control" type="text" @bind="Model.MailKitModel.EmailServer" placeholder="smtp.gmail.com" />
             </div>
@@ -44,7 +48,22 @@
             <div>
                 <label>&nbsp;</label>
                 <input type="button" value="@Localizer["save"]" @onclick="OnSave" class="btn btn-primary" />
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="input-group">
+                <label>@Localizer["email-to"]</label>
+                <input class="form-control" type="text" @bind="SendTo" placeholder="me@gmail.com" />
+            </div>
+            <div>
+                <label>&nbsp;</label>
                 <input type="button" value="@Localizer["check-configuration"]" @onclick="OnCheck" class="btn btn-secondary" />
+                @if ((Model.SelectedProvider == EmailProvider.MailKit && Model.MailKitModel.Configured) ||
+                  (Model.SelectedProvider == EmailProvider.SendGrid && Model.SendGridModel.Configured))
+                {
+                    <span>Configured</span>
+                }
             </div>
         </fieldset>
     </div>

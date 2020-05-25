@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Blogifier.Core.Data.Models;
-using System.Net.Mail;
+﻿using Blogifier.Core.Data.Models;
 using MailKit.Security;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data
 {
-	public interface ICustomFieldRepository : IRepository<CustomField>
+    public interface ICustomFieldRepository : IRepository<CustomField>
 	{
 		Task<BlogItem> GetBlogSettings();
 		Task SaveBlogSettings(BlogItem blog);
@@ -224,6 +223,7 @@ namespace Blogifier.Core.Data
 			model.MailKitModel.EmailName = GetBlogValue(Constants.EmailMailKitName);
 			model.MailKitModel.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
 			model.MailKitModel.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
+			model.MailKitModel.EmailPassword = GetBlogValue(Constants.EmailMailKitPassword);
 			model.MailKitModel.Port = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitPort)) ? 465 : int.Parse(GetBlogValue(Constants.EmailMailKitPort));
 
 			model.MailKitModel.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitConfigured)) ? false : 
@@ -245,6 +245,7 @@ namespace Blogifier.Core.Data
 				await SaveBlogValue(Constants.EmailMailKitName, model.MailKitModel.EmailName);
 				await SaveBlogValue(Constants.EmailMailKitAddress, model.MailKitModel.EmailAddress);
 				await SaveBlogValue(Constants.EmailMailKitServer, model.MailKitModel.EmailServer);
+				await SaveBlogValue(Constants.EmailMailKitPassword, model.MailKitModel.EmailPassword);
 				await SaveBlogValue(Constants.EmailMailKitPort, model.MailKitModel.Port.ToString());
 				await SaveBlogValue(Constants.EmailMailKitConfigured, model.MailKitModel.Configured.ToString());
 

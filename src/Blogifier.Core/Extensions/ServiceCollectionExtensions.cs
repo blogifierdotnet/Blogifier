@@ -40,7 +40,8 @@ namespace Blogifier.Core.Extensions
             services.AddTransient<IImportService, ImportService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IWebService, WebService>();
-            services.AddTransient<IEmailService, SendGridService>();
+            //services.AddTransient<IEmailService, SendGridService>();
+            services.AddTransient<INewsletterService, NewsletterService>();
 
             services.AddTransient<UserManager<AppUser>>();
 

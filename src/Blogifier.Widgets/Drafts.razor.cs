@@ -65,11 +65,11 @@ namespace Blogifier.Widgets
                     var emails = items.Select(i => i.Email).ToList();
                     var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
 
-                    int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                    if (count > 0)
-                    {
-                        Toaster.Success(string.Format(Localizer["email-sent-count"], count));
-                    }
+                    //int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
+                    //if (count > 0)
+                    //{
+                    //    Toaster.Success(string.Format(Localizer["email-sent-count"], count));
+                    //}
                 }
                 Toaster.Success("Saved");
 

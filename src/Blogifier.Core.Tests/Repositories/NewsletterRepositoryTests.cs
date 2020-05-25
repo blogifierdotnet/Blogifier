@@ -1,11 +1,10 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Blogifier.Core.Tests.Repositories
+namespace Core.Tests.Repositories
 {
     public class NewsletterRepositoryTests
     {
@@ -33,12 +32,8 @@ namespace Blogifier.Core.Tests.Repositories
 
         private AppDbContext GetSut()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseSqlite("DataSource=Blog.db").Options;
-
-            var context = new AppDbContext(options);
-
-            return context;
+            var helper = new DbHelper();
+            return helper.GetDbContext();
         }
     }
 }

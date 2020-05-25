@@ -1,11 +1,10 @@
 ﻿using Blogifier.Core.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Blogifier.Core.Tests.Repositories
+namespace Core.Tests.Repositories
 {
-	public class CustomFieldsRepositoryTests
+    public class CustomFieldsRepositoryTests
 	{
 		[Fact]
 		public async Task CanSaveAndGetCustomField()
@@ -13,16 +12,16 @@ namespace Blogifier.Core.Tests.Repositories
 			var db = GetSut();
 			var sut = new CustomFieldRepository(db);
 
-			sut.Add(new CustomField { AuthorId = 1, Name = "social|facebook|1", Content = "http://your.facebook.page.com" });
+			sut.Add(new CustomField { AuthorId = 1, Name = "social|foo|1", Content = "http://foo.com" });
 			await db.SaveChangesAsync();
 
-			var result = sut.Single(f => f.Name.Contains("social|facebook"));
+			var result = sut.Single(f => f.Name.Contains("social|foo"));
 			Assert.NotNull(result);
 
 			sut.Remove(result);
 			await db.SaveChangesAsync();
 
-			result = sut.Single(f => f.Name.Contains("social|facebook"));
+			result = sut.Single(f => f.Name.Contains("social|foo"));
 			Assert.Null(result);
 		}
 
@@ -34,34 +33,30 @@ namespace Blogifier.Core.Tests.Repositories
 
 			await sut.SaveSocial(new SocialField { 
 				AuthorId = 0, 
-				Title = "Facebook", 
+				Title = "Foo", 
 				Icon = "fa-facebook",
-				Name = "social|facebook|1",
+				Name = "social|foo|1",
 				Rank = 1, 
-				Content = "http://your.facebook.page.com" 
+				Content = "http://foo.com" 
 			});
 
 			var socials = await sut.GetSocial();
 			Assert.NotNull(socials);
 
-			var result = sut.Single(f => f.Name.Contains("social|facebook"));
+			var result = sut.Single(f => f.Name.Contains("social|foo"));
 			Assert.NotNull(result);
 
 			sut.Remove(result);
 			await db.SaveChangesAsync();
 
-			result = sut.Single(f => f.Name.Contains("social|facebook"));
+			result = sut.Single(f => f.Name.Contains("social|foo"));
 			Assert.Null(result);
 		}
 
 		private AppDbContext GetSut()
 		{
-			var options = new DbContextOptionsBuilder<AppDbContext>()
-					.UseSqlite("DataSource=Blog.db").Options;
-
-			var context = new AppDbContext(options);
-
-			return context;
+			var helper = new DbHelper();
+			return helper.GetDbContext();
 		}
 	}
 }

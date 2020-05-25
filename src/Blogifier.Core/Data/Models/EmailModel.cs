@@ -22,6 +22,7 @@ namespace Blogifier.Core.Data.Models
         public bool Configured { get; set; }
         public string EmailName { get; set; }
         public string EmailAddress { get; set; }
+        public string EmailPassword { get; set; }
         public string EmailServer { get; set; }
         public int Port { get; set; }
         public SecureSocketOptions Options { get; set; }

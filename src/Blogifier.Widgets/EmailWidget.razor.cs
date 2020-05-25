@@ -2,6 +2,7 @@
 using Blogifier.Core.Data.Models;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Sotsera.Blazor.Toaster;
 using Sotsera.Blazor.Toaster.Core;
 using System.Threading.Tasks;
@@ -13,11 +14,16 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
+        protected IStorageService StorageService { get; set; }
+        [Inject]
+        protected ILogger<EmailService> Logger { get; set; }
+        [Inject]
         protected IJsonStringLocalizer<EmailWidget> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 
         protected EmailModel Model { get; set; }
+        protected string SendTo { get; set; }
 
         private EmailProvider selectedProvider;
         public EmailProvider SelectedProvider
@@ -55,7 +61,22 @@ namespace Blogifier.Widgets
 
         protected async Task OnCheck()
         {
-            Toaster.Success(Localizer["completed"]);
+            EmailFactory factory = new EmailService(DataService);
+            var emailService = factory.GetEmailService();
+
+            var status = await emailService.SendEmail("admin", "admin@blog.com", SendTo, "test subject", "test content");
+
+            if (Model.SelectedProvider == EmailProvider.MailKit)
+                Model.MailKitModel.Configured = status;
+                    
+            if (Model.SelectedProvider == EmailProvider.SendGrid)
+                Model.SendGridModel.Configured = status;
+
+            await DataService.CustomFields.SaveEmailModel(Model);
+
+            if(status) Toaster.Success(Localizer["completed"]);
+            else Toaster.Error(Localizer["error"]);
+
             await Task.FromResult("ok");
         }
     }
