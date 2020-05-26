@@ -18,7 +18,12 @@ namespace Blogifier.Core.Data
 		Task SaveSocial(SocialField socialField);
 
 		Task<EmailModel> GetEmailModel();
+		Task<SendGridModel> GetSendGridModel();
+		Task<MailKitModel> GetMailKitModel();
+
 		Task<bool> SaveEmailModel(EmailModel model);
+		Task<bool> SaveSendGridModel(SendGridModel model);
+		Task<bool> SaveMailKitModel(MailKitModel model);
 	}
 
 	public class CustomFieldRepository : Repository<CustomField>, ICustomFieldRepository
@@ -194,7 +199,7 @@ namespace Blogifier.Core.Data
 
 		#endregion
 
-		#region email model
+		#region Email model
 
 		public async Task<EmailModel> GetEmailModel()
         {
@@ -208,47 +213,44 @@ namespace Blogifier.Core.Data
 			model.SelectedProvider = string.IsNullOrEmpty(selectedProvider) ? EmailProvider.MailKit : (
 				selectedProvider == EmailProvider.MailKit.ToString() ? EmailProvider.MailKit : EmailProvider.SendGrid);
 
-			// sendgrid email provider
-			model.SendGridModel = new SendGridModel();
+			return await Task.FromResult(model);
+		}
+
+		public async Task<SendGridModel> GetSendGridModel()
+		{
+			var model = new SendGridModel();
 
 			var sgKey = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.EmailSendgridApiKey).FirstOrDefault();
-			model.SendGridModel.ApiKey = sgKey == null ? "" : sgKey.Content;
-
-			model.SendGridModel.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailSendgridConfigured)) ? false : 
+			model.ApiKey = sgKey == null ? "" : sgKey.Content;
+			model.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailSendgridConfigured)) ? false :
 				bool.Parse(GetBlogValue(Constants.EmailSendgridConfigured));
-
-			// mailkit email provider
-			model.MailKitModel = new MailKitModel();
-
-			model.MailKitModel.EmailName = GetBlogValue(Constants.EmailMailKitName);
-			model.MailKitModel.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
-			model.MailKitModel.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
-			model.MailKitModel.EmailPassword = GetBlogValue(Constants.EmailMailKitPassword);
-			model.MailKitModel.Port = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitPort)) ? 465 : int.Parse(GetBlogValue(Constants.EmailMailKitPort));
-
-			model.MailKitModel.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitConfigured)) ? false : 
-				bool.Parse(GetBlogValue(Constants.EmailMailKitConfigured));
-
-			model.MailKitModel.Options = SecureSocketOptions.SslOnConnect;
 
 			return await Task.FromResult(model);
 		}
+
+		public async Task<MailKitModel> GetMailKitModel()
+		{
+			var model = new MailKitModel();
+
+			model.EmailName = GetBlogValue(Constants.EmailMailKitName);
+			model.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
+			model.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
+			model.EmailPassword = GetBlogValue(Constants.EmailMailKitPassword);
+			model.Port = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitPort)) ? 465 : int.Parse(GetBlogValue(Constants.EmailMailKitPort));
+
+			model.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitConfigured)) ? false :
+				bool.Parse(GetBlogValue(Constants.EmailMailKitConfigured));
+
+			model.Options = SecureSocketOptions.SslOnConnect;
+
+			return await Task.FromResult(model);
+		}
+
 		public async Task<bool> SaveEmailModel(EmailModel model)
         {
             try
             {
 				await SaveBlogValue(Constants.EmailSelectedProvider, model.SelectedProvider.ToString());
-				// sendgrid
-				await SaveBlogValue(Constants.EmailSendgridApiKey, model.SendGridModel.ApiKey);
-				await SaveBlogValue(Constants.EmailSendgridConfigured, model.SendGridModel.Configured.ToString());
-				// mailkit
-				await SaveBlogValue(Constants.EmailMailKitName, model.MailKitModel.EmailName);
-				await SaveBlogValue(Constants.EmailMailKitAddress, model.MailKitModel.EmailAddress);
-				await SaveBlogValue(Constants.EmailMailKitServer, model.MailKitModel.EmailServer);
-				await SaveBlogValue(Constants.EmailMailKitPassword, model.MailKitModel.EmailPassword);
-				await SaveBlogValue(Constants.EmailMailKitPort, model.MailKitModel.Port.ToString());
-				await SaveBlogValue(Constants.EmailMailKitConfigured, model.MailKitModel.Configured.ToString());
-
 				await _db.SaveChangesAsync();
 				return await Task.FromResult(true);
 			}
@@ -256,6 +258,40 @@ namespace Blogifier.Core.Data
             {
 				return await Task.FromResult(false);
             }
+		}
+
+		public async Task<bool> SaveSendGridModel(SendGridModel model)
+		{
+			try
+			{
+				await SaveBlogValue(Constants.EmailSendgridApiKey, model.ApiKey);
+				await SaveBlogValue(Constants.EmailSendgridConfigured, model.Configured.ToString());
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+			catch
+			{
+				return await Task.FromResult(false);
+			}
+		}
+
+		public async Task<bool> SaveMailKitModel(MailKitModel model)
+		{
+			try
+			{
+				await SaveBlogValue(Constants.EmailMailKitName, model.EmailName);
+				await SaveBlogValue(Constants.EmailMailKitAddress, model.EmailAddress);
+				await SaveBlogValue(Constants.EmailMailKitServer, model.EmailServer);
+				await SaveBlogValue(Constants.EmailMailKitPassword, model.EmailPassword);
+				await SaveBlogValue(Constants.EmailMailKitPort, model.Port.ToString());
+				await SaveBlogValue(Constants.EmailMailKitConfigured, model.Configured.ToString());
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+			catch
+			{
+				return await Task.FromResult(false);
+			}
 		}
 
 		public async Task SaveBlogValue(string name, string value)

@@ -18,8 +18,8 @@ namespace Blogifier.Core.Services
         {
             try
             {
-                var model = await _db.CustomFields.GetEmailModel();
-                var client = new SendGridClient(model.SendGridModel.ApiKey);
+                var model = await _db.CustomFields.GetSendGridModel();
+                var client = new SendGridClient(model.ApiKey);
 
                 var from = new EmailAddress(fromEmail, fromName);
 

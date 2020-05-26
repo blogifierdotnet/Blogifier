@@ -18,9 +18,7 @@ namespace Blogifier.Core.Services
         {          
             try
             {
-                var model = await _db.CustomFields.GetEmailModel();
-                var mailKit = model.MailKitModel;
-
+                var mailKit = await _db.CustomFields.GetMailKitModel();
                 var message = new MimeMessage();
                 var bodyBuilder = new BodyBuilder();
 

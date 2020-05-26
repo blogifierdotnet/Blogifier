@@ -1,5 +1,6 @@
 ﻿using MailKit.Security;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Core.Data.Models
 {
@@ -7,8 +8,7 @@ namespace Blogifier.Core.Data.Models
     {
         public List<ProviderItem> Providers { get; set; }
         public EmailProvider SelectedProvider { get; set; }
-        public SendGridModel SendGridModel { get; set; }
-        public MailKitModel MailKitModel { get; set; }
+        public string SendTo { get; set; }
     }
 
     public class SendGridModel
