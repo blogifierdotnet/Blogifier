@@ -53,9 +53,14 @@ namespace Blogifier.Core.Services
                         author.DisplayName, // 9
                         siteUrl); // 10
 
-                    if (await emailService.SendEmail(fromName, fromEmail, email, subject, htmlContent))
+                    string msg = await emailService.SendEmail(fromName, fromEmail, email, subject, htmlContent);
+                    if (string.IsNullOrEmpty(msg))
                     {
                         sendCount++;
+                    }
+                    else
+                    {
+                        _logger.LogError($"Error sending email to {email}");
                     }
                 }
             }

@@ -49,8 +49,9 @@ namespace Blogifier.Widgets
             EmailModel.SelectedProvider = SelectedProvider;
         }
 
-        protected async Task OnSendMailModelSave()
+        protected async Task OnSendGridModelSave()
         {
+            SendGridModel.Configured = false;
             await DataService.CustomFields.SaveSendGridModel(SendGridModel);
             await DataService.CustomFields.SaveEmailModel(EmailModel);
             Toaster.Success(Localizer["completed"]);
@@ -58,6 +59,7 @@ namespace Blogifier.Widgets
 
         protected async Task OnMailKitModelSave()
         {
+            MailKitModel.Configured = false;
             await DataService.CustomFields.SaveMailKitModel(MailKitModel);
             await DataService.CustomFields.SaveEmailModel(EmailModel);
             Toaster.Success(Localizer["completed"]);
@@ -68,7 +70,8 @@ namespace Blogifier.Widgets
             EmailFactory factory = new EmailService(DataService);
             var emailService = factory.GetEmailService();
 
-            var status = await emailService.SendEmail("admin", "admin@blog.com", EmailModel.SendTo, "test subject", "test content");
+            var msg = await emailService.SendEmail("admin", "admin@blog.com", EmailModel.SendTo, "test subject", "test content");
+            bool status = string.IsNullOrEmpty(msg);
 
             if (EmailModel.SelectedProvider == EmailProvider.MailKit)
             {
@@ -82,10 +85,8 @@ namespace Blogifier.Widgets
                 await DataService.CustomFields.SaveSendGridModel(SendGridModel);
             }
 
-            if(status) Toaster.Success(Localizer["completed"]);
-            else Toaster.Error(Localizer["error"]);
-
-            await Task.FromResult("ok");
+            if(status) Toaster.Success(Localizer["email-sent-success"]);
+            else Toaster.Error(msg);
         }
     }
 }

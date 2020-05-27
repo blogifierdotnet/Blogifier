@@ -912,5 +912,35 @@
       "en-US": "Last month",
       "ru-RU": "Прошлый месяц"
     }
+  },
+  "email-provider": {
+    "Values": {
+      "en-US": "Email provider",
+      "ru-RU": "Почтовый провайдер"
+    }
+  },
+  "sendgrid-key": {
+    "Values": {
+      "en-US": "Sendgrid key",
+      "ru-RU": "API код"
+    }
+  },
+  "server": {
+    "Values": {
+      "en-US": "Server",
+      "ru-RU": "Сервер"
+    }
+  },
+  "port": {
+    "Values": {
+      "en-US": "Port",
+      "ru-RU": "Порт"
+    }
+  },
+  "send-test-email": {
+    "Values": {
+      "en-US": "Send test email",
+      "ru-RU": "Протестировать почту"
+    }
   }
 }

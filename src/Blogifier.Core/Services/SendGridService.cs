@@ -14,31 +14,26 @@ namespace Blogifier.Core.Services
             _db = db;
         }
 
-        public async Task<bool> SendEmail(string fromName, string fromEmail, string toEmail, string subject, string content)
+        public async Task<string> SendEmail(string fromName, string fromEmail, string toEmail, string subject, string content)
         {
             try
             {
                 var model = await _db.CustomFields.GetSendGridModel();
                 var client = new SendGridClient(model.ApiKey);
-
                 var from = new EmailAddress(fromEmail, fromName);
-
                 var msg = MailHelper.CreateSingleEmail(from, new EmailAddress(toEmail), subject, content.StripHtml(), content);
                 var response = await client.SendEmailAsync(msg);
 
                 if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    //_logger.LogError("SendGrid service returned 'Unauthorized' - please verfiy SendGrid API key in configuration file");
-                    return false;
+                    return "SendGrid service returned 'Unauthorized' - please verfiy SendGrid API key in configuration file";
                 }
+                return "";
             }
             catch (Exception ex)
             {
-                return false;
+                return ex.Message;
             }
-
-            await Task.CompletedTask;
-            return true;
         }
     }
 }

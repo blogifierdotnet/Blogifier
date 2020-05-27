@@ -6,7 +6,7 @@ namespace Blogifier.Core.Services
 {
     public interface IEmailService
     {
-        Task<bool> SendEmail(string fromName, string fromEmail, string toEmail, string subject, string content);
+        Task<string> SendEmail(string fromName, string fromEmail, string toEmail, string subject, string content);
     }
 
     public abstract class EmailFactory

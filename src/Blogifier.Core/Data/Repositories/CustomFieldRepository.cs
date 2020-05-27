@@ -231,8 +231,6 @@ namespace Blogifier.Core.Data
 		public async Task<MailKitModel> GetMailKitModel()
 		{
 			var model = new MailKitModel();
-
-			model.EmailName = GetBlogValue(Constants.EmailMailKitName);
 			model.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
 			model.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
 			model.EmailPassword = GetBlogValue(Constants.EmailMailKitPassword);
@@ -279,7 +277,6 @@ namespace Blogifier.Core.Data
 		{
 			try
 			{
-				await SaveBlogValue(Constants.EmailMailKitName, model.EmailName);
 				await SaveBlogValue(Constants.EmailMailKitAddress, model.EmailAddress);
 				await SaveBlogValue(Constants.EmailMailKitServer, model.EmailServer);
 				await SaveBlogValue(Constants.EmailMailKitPassword, model.EmailPassword);
