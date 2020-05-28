@@ -21,8 +21,6 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        protected IEmailService EmailService { get; set; }
-        [Inject]
         IJsonStringLocalizer<Drafts> Localizer { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }

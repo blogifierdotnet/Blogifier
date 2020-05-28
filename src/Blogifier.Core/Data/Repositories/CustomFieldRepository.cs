@@ -213,6 +213,9 @@ namespace Blogifier.Core.Data
 			model.SelectedProvider = string.IsNullOrEmpty(selectedProvider) ? EmailProvider.MailKit : (
 				selectedProvider == EmailProvider.MailKit.ToString() ? EmailProvider.MailKit : EmailProvider.SendGrid);
 
+			model.FromName = GetBlogValue(Constants.EmailFromName);
+			model.FromEmail = GetBlogValue(Constants.EmailFromEmail);
+
 			return await Task.FromResult(model);
 		}
 
@@ -249,6 +252,8 @@ namespace Blogifier.Core.Data
             try
             {
 				await SaveBlogValue(Constants.EmailSelectedProvider, model.SelectedProvider.ToString());
+				await SaveBlogValue(Constants.EmailFromEmail, model.FromEmail.ToString());
+				await SaveBlogValue(Constants.EmailFromName, model.FromName.ToString());
 				await _db.SaveChangesAsync();
 				return await Task.FromResult(true);
 			}

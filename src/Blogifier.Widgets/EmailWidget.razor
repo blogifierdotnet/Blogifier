@@ -5,6 +5,14 @@
     <div class="card-body">
         <fieldset>
             <div class="input-group">
+                <label>@Localizer["name"]</label>
+                <input class="form-control" type="text" @bind="EmailModel.FromName" />
+            </div>
+            <div class="input-group">
+                <label>@Localizer["email"]</label>
+                <input class="form-control" type="text" @bind="EmailModel.FromEmail" />
+            </div>
+            <div class="input-group">
                 <label>@Localizer["email-provider"]</label>
                 <select @bind="SelectedProvider">
                     @if (EmailModel.Providers != null)
@@ -16,6 +24,7 @@
                     }
                 </select>
             </div>
+
             @if (EmailModel.SelectedProvider == EmailProvider.SendGrid)
             {
                 <EditForm Model="@SendGridModel" OnValidSubmit="OnSendGridModelSave">

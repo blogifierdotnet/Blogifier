@@ -29,8 +29,6 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        protected IEmailService EmailService { get; set; }
-        [Inject]
         protected IJsonStringLocalizer<PostEditor> Localizer { get; set; }
         [Inject]
         protected IConfiguration Configuration { get; set; }
@@ -42,6 +40,8 @@ namespace Blogifier.Widgets
         protected IToaster Toaster { get; set; }
         [Inject]
         IFeatureManager FeatureManager { get; set; }
+        [Inject]
+        INewsletterService NewsletterService { get; set; }
 
         protected string Cover { get; set; }
         protected PostItem Post { get; set; }
@@ -118,11 +118,11 @@ namespace Blogifier.Widgets
                             var emails = items.Select(i => i.Email).ToList();
                             var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
 
-                            //int count = await EmailService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                            //if (count > 0)
-                            //{
-                            //    Toaster.Success(string.Format(Localizer["email-sent-count"], count));
-                            //}
+                            int count = await NewsletterService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
+                            if (count > 0)
+                            {
+                                Toaster.Success(string.Format(Localizer["email-sent-count"], count));
+                            }
                         }
                         Toaster.Success("Saved");
                         Post = saved;

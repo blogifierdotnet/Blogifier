@@ -8,7 +8,7 @@ namespace Blogifier.Core.Services
 {
     public interface INewsletterService
     {
-        Task<int> SendNewsletters(BlogPost post, List<string> emails, string siteUrl, string fromName, string fromEmail);
+        Task<int> SendNewsletters(BlogPost post, List<string> emails, string siteUrl);
     }
 
     public class NewsletterService : INewsletterService
@@ -24,12 +24,13 @@ namespace Blogifier.Core.Services
             _logger = logger;
         }
 
-        public async Task<int> SendNewsletters(BlogPost post, List<string> emails, string siteUrl, string fromName, string fromEmail)
+        public async Task<int> SendNewsletters(BlogPost post, List<string> emails, string siteUrl)
         {
             int sendCount = 0;
             try
             {
                 var blog = await _db.CustomFields.GetBlogSettings();
+                var emailModel = await _db.CustomFields.GetEmailModel();
                 var author = _db.Authors.Single(a => a.Id == post.AuthorId);
 
                 EmailFactory factory = new EmailService(_db);
@@ -53,7 +54,7 @@ namespace Blogifier.Core.Services
                         author.DisplayName, // 9
                         siteUrl); // 10
 
-                    string msg = await emailService.SendEmail(fromName, fromEmail, email, subject, htmlContent);
+                    string msg = await emailService.SendEmail(emailModel.FromName, emailModel.FromEmail, email, subject, htmlContent);
                     if (string.IsNullOrEmpty(msg))
                     {
                         sendCount++;

@@ -8,6 +8,10 @@ namespace Blogifier.Core.Data.Models
     {
         public List<ProviderItem> Providers { get; set; }
         public EmailProvider SelectedProvider { get; set; }
+        [Required, EmailAddress]
+        public string FromEmail { get; set; }
+        [Required]
+        public string FromName { get; set; }
         public string SendTo { get; set; }
     }
 

@@ -31,6 +31,8 @@
 
         // email model
         public static string EmailSelectedProvider = "email-selected-provider";
+        public static string EmailFromName = "email-from-name";
+        public static string EmailFromEmail = "email-from-email";
         public static string EmailSendgridApiKey = "email-sendgrid-api-key";
         public static string EmailSendgridConfigured = "email-sendgrid-configured";
         public static string EmailMailKitConfigured = "email-mailkit-configured";
