@@ -1,0 +1,61 @@
+﻿$app_toolbar_height: 2.5rem;
+$app_toolbar_icon_color:#9db1c7;
+
+.app-posts {
+    padding: 2rem;
+
+    &-toolbar {
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #f1f4f8;
+    }
+
+
+    &-search {
+        background: #f1f4f8;
+        border-radius: .25rem;
+        position: relative;
+        height: $app_toolbar_height;
+        max-width: 10rem;
+
+        &-input {
+            height: $app_toolbar_height;
+            border: 0;
+            background: none;
+            padding: 0 $app_toolbar_height .125rem .875rem;
+            max-width: 100%;
+
+            &::placeholder {
+                color: $app_toolbar_icon_color;
+            }
+        }
+
+        &-button {
+            border: 0;
+            background: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: $app_toolbar_height;
+            width: $app_toolbar_height;
+            padding: 0;
+            -webkit-appearance: none;
+
+            &:hover, &:focus {
+                .app-posts-search-icon {
+                    fill: #456a93;
+                }
+            }
+        }
+
+        &-icon {
+            vertical-align: top;
+            height: 1rem;
+            width: 1rem;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            left: 50%;
+            fill: $app_toolbar_icon_color;
+        }
+    }
+}
