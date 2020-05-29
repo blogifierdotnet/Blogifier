@@ -20,7 +20,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IStorageService StorageService { get; set; }
         [Inject]
-        IJsonStringLocalizer<Drafts> Localizer { get; set; }
+        IJsonStringLocalizer<Themes> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
 

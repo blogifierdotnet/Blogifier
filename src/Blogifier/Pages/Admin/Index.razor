@@ -20,42 +20,14 @@
     </div>
 </div>
 
-@*
-    // replacing drafts with filters for posts
-    <Drafts @ref="DraftsInstance" OnUpdate="UpdateHandler" />
-*@
-
 @code {
 
-    Drafts DraftsInstance;
     Published PublishedInstance;
     Welcome WelcomeInstance;
 
     async Task UpdateHandler(string msg)
     {
-        //if(msg == "publish" || msg == "unfeature")
-        //{
-        //    await DraftsInstance.Load();
-        //    await PublishedInstance.LoadPosts(1);
-        //}
-        //if(msg == "unpublish" || msg == "add")
-        //{
-        //    await DraftsInstance.Load();
-        //    await PublishedInstance.LoadPosts(1);
-        //}
-        //if(msg == "feature")
-        //{
-        //    await PublishedInstance.LoadPosts(1);
-        //}
-        //if(msg == "remove")
-        //{
-        //    await PublishedInstance.LoadPosts(1);
-        //    await DraftsInstance.Load();
-        //}
-
-        // await DraftsInstance.Load();
         await PublishedInstance.LoadPosts(1);
-
         await WelcomeInstance.Load();
     }
 }

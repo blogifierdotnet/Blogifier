@@ -29,6 +29,29 @@ var subscribe = function (url, email) {
     }); 
 }
 
+$('#blog-unsubscribe').on('click', function () {
+    var email = $('#txtEmail').val();
+    if (email) {
+        unsubscribe(email);
+    }
+    return false;
+});
+
+var unsubscribe = function (email) {
+
+    var obj = { Email: email };
+    var options = {
+        url: "/newsletter/unsubscribe?email=" + email,
+        type: "PUT",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: "html",
+        success: done,
+        error: done
+    };
+    $.ajax(options);
+}
+
 var done = function (data) {
     $('#frmNewsletter').slideUp();
     $('#ttlNewsletter').slideDown();

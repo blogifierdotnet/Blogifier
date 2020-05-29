@@ -942,5 +942,11 @@
       "en-US": "Send test email",
       "ru-RU": "Протестировать почту"
     }
+  },
+  "unsubscribe": {
+    "Values": {
+      "en-US": "Unsubscribe",
+      "ru-RU": "Отказаться от подписки"
+    }
   }
 }

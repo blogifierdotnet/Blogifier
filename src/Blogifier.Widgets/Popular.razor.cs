@@ -13,7 +13,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        IJsonStringLocalizer<Drafts> Localizer { get; set; }
+        IJsonStringLocalizer<Popular> Localizer { get; set; }
 
         protected int PostId { get; set; }
         protected bool Edit { get; set; }

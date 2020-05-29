@@ -111,17 +111,21 @@ namespace Blogifier.Widgets
 
                     if(saved != null && saved.Id > 0)
                     {
-                        if (postAction == PostAction.Publish && FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.EmailEnabled)).Result)
+                        if (postAction == PostAction.Publish)
                         {
                             var pager = new Pager(1, 10000);
                             var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
                             var emails = items.Select(i => i.Email).ToList();
-                            var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
 
-                            int count = await NewsletterService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                            if (count > 0)
+                            if(emails.Count > 0)
                             {
-                                Toaster.Success(string.Format(Localizer["email-sent-count"], count));
+                                var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
+
+                                int count = await NewsletterService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
+                                if (count > 0)
+                                {
+                                    Toaster.Success(string.Format(Localizer["email-sent-count"], count));
+                                }
                             }
                         }
                         Toaster.Success("Saved");
