@@ -7,7 +7,7 @@
     {
 
         <div class="app-posts-toolbar d-flex">
-            <div class="app-posts-selectall custom-control custom-checkbox my-auto" data-toggle="tooltip" title="Select All">
+            <div class="app-posts-selectall custom-control custom-checkbox mr-3" data-toggle="tooltip" title="Select All">
                 <input type="checkbox" class="custom-control-input" id="EXAMPLE_1">
                 <label class="custom-control-label" for="EXAMPLE_1"><span class="sr-only">Select All</span></label>
             </div>
@@ -42,8 +42,17 @@
                     </svg>
                 </button>
             </div>
+            <div class="dropdown app-posts-filters ml-3">
+                <button class="btn btn-light dropdown-toggle" type="button" id="filterByStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>All</span> Posts
+                </button>
+                <div class="dropdown-menu" aria-labelledby="filterByStatus">
+                    <button class="dropdown-item">All</button>
+                    <button class="dropdown-item">Archived</button>
+                    <button class="dropdown-item">Published</button>
+                </div>
+            </div>
         </div>
-
 
         @if (Posts == null || Posts.Count() == 0)
         {

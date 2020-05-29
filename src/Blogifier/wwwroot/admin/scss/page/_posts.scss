@@ -13,8 +13,6 @@ $app_toolbar_icon_color: #9db1c7;
         padding: 0;
         width: $app_toolbar_height;
         height: $app_toolbar_height;
-        margin-right: 1rem;
-
 
         .custom-control-label {
             width: 100%;
@@ -27,6 +25,36 @@ $app_toolbar_icon_color: #9db1c7;
                 position: absolute;
                 top: 50%;
                 left: 50%;
+            }
+        }
+    }
+
+
+    &-actions {
+        .btn {
+            width: $app_toolbar_height;
+            padding: 0;
+        }
+
+        .bi {
+            fill: $app_toolbar_icon_color;
+            vertical-align: top;
+            transform: translate(-50%,-50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+
+            &-check {
+                width: 1.625rem;
+                height: 1.625rem;
+            }
+
+
+
+            &-star-fill, &-archive-fill, &-trash-fill {
+                width: .9875rem;
+                height: .9875rem;
             }
         }
     }
@@ -81,33 +109,9 @@ $app_toolbar_icon_color: #9db1c7;
         }
     }
 
-
-    &-actions {
-        .btn {
-            width: $app_toolbar_height;
-            padding: 0;
-        }
-
-        .bi {
-            fill: $app_toolbar_icon_color;
-            vertical-align: top;
-            transform: translate(-50%,-50%);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-
-
-            &-check {
-                width: 1.625rem;
-                height: 1.625rem;
-            }
-
-
-
-            &-star-fill, &-archive-fill, &-trash-fill {
-                width: .9875rem;
-                height: .9875rem;
-            }
+    &-filters{
+        .dropdown-toggle{
+            height:$app_toolbar_height;
         }
     }
 }
