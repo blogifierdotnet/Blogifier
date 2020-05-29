@@ -8,8 +8,8 @@
 
         <div class="app-posts-toolbar d-flex">
             <div class="app-posts-selectall custom-control custom-checkbox mr-3" data-toggle="tooltip" title="Select All">
-                <input type="checkbox" class="custom-control-input" id="EXAMPLE_1">
-                <label class="custom-control-label" for="EXAMPLE_1"><span class="sr-only">Select All</span></label>
+                <input type="checkbox" class="custom-control-input" id="EXAMPLESELECTALL">
+                <label class="custom-control-label" for="EXAMPLESELECTALL"><span class="sr-only">Select All</span></label>
             </div>
             <div class="app-posts-actions btn-group mr-2" role="group" aria-label="First group">
                 <button type="button" class="btn btn-light" data-toggle="tooltip" title="Featured">
@@ -59,26 +59,42 @@
             <div class="notfound">@Localizer["empty"]</div>
         }
 
-        <ul class="bf-list bf-posts-list d-block" aria-label="posts">
+        <ul class="app-posts-list" aria-label="posts">
             @foreach (var post in Posts)
             {
-                <li class="bf-list-item d-flex align-items-center">
+                <li class="app-posts-item d-flex align-items-center">
                     @{
                         string title = post.Title.Length < 60 ? post.Title : post.Title.Substring(0, 57) + "...";
                         string pubStatus = post.IsPublished ? "published" : "draft";
                         string pubDate = post.IsPublished ? post.Published.ToFriendlyShortDateString() : "Draft";
-                        string featured = post.Featured ? "fa-star" : "fa-star-o";
+                        string featured = post.Featured ? "is-featured" : "";
                     }
-                    <a class="bf-list-item-link" href="" @onclick="(() => EditPost(post.Id))" @onclick:preventDefault>@title</a>
-                    <span class="bf-list-item-date ml-3 d-none d-lg-block">@pubDate</span>
-                    <span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" @onclick="(async () => await Publish(post.Id, post.IsPublished))" data-tooltip="" title="" data-original-title="published">
-                        <i class="fa fa-circle"></i>
-                    </span>
-                    <button class="btn-unstyled bf-list-item-favorite ml-3" @onclick="(async () => await Feature(post.Id, post.Featured))" data-tooltip="" title="" data-original-title="featured">
-                        <i class="fa @featured"></i>
+                    <div class="app-posts-item-select custom-control custom-checkbox mr-3">
+                        <input type="checkbox" class="custom-control-input" id="EXAMPLE_@(post.Id)">
+                        <label class="custom-control-label" for="EXAMPLE_@(post.Id)"><span class="sr-only">Select All</span></label>
+                    </div>
+
+                    <a class="app-posts-item-link" href="" @onclick="(() => EditPost(post.Id))" @onclick:preventDefault>@title</a>
+                    <span class="app-posts-item-date ml-auto d-none d-lg-block ml-3">@pubDate</span>
+                    <button class="app-posts-item-status app-posts-item-status-@pubStatus ml-3" @onclick="(async () => await Publish(post.Id, post.IsPublished))"  data-toggle="tooltip" title="Status">
+                        <svg class="bi bi-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>
                     </button>
-                    <a href="posts/@post.Slug" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto" data-tooltip="" title="" data-original-title="link">
-                        <i class="fa fa-external-link"></i>
+                    <button class="app-posts-item-featured @featured ml-3" @onclick="(async () => await Feature(post.Id, post.Featured))" data-toggle="tooltip" title="Featured">
+                        <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                        </svg>
+                        <svg class="bi bi-star" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                        </svg>
+
+                    </button>
+                    <a href="posts/@post.Slug" target="_blank" class="app-posts-item-external ml-3" data-toggle="tooltip" title="Link">
+                        <svg class="bi bi-box-arrow-up-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h8a1.5 1.5 0 0 0 1.5-1.5V9a.5.5 0 0 0-1 0v4a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 5v8zm7-11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.5H9a.5.5 0 0 1-.5-.5z" />
+                            <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z" />
+                        </svg>
                     </a>
                 </li>
             }

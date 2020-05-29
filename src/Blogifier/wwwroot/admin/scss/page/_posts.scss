@@ -3,7 +3,7 @@ $app_toolbar_icon_color: #9db1c7;
 
 .app-posts {
     padding: 2rem;
-
+    /* TOOLBAR */
     &-toolbar {
         padding-bottom: 2rem;
         border-bottom: 1px solid #f1f4f8;
@@ -109,9 +109,102 @@ $app_toolbar_icon_color: #9db1c7;
         }
     }
 
-    &-filters{
-        .dropdown-toggle{
-            height:$app_toolbar_height;
+    &-filters {
+        .dropdown-toggle {
+            height: $app_toolbar_height;
+        }
+    }
+    /* LIST */
+    &-list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &-item {
+        height: 3rem;
+        border-bottom: 1px solid #f1f4f8;
+
+
+
+        &-select {
+            padding: 0;
+            width: $app_toolbar_height;
+            height: $app_toolbar_height;
+
+            .custom-control-label {
+                width: 100%;
+                height: 100%;
+
+                &::before,
+                &::after {
+                    vertical-align: top;
+                    transform: translate(-50%,-50%);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                }
+            }
+        }
+
+        &-date {
+            color: gray;
+            text-transform: uppercase;
+            font-size: .75rem;
+        }
+
+        &-status {
+            border: 0;
+            padding: 0;
+            background: none;
+
+            .bi {
+                width: .875rem;
+                height: .875rem;
+            }
+
+            &-published {
+                .bi {
+                    fill: #00c748;
+                }
+            }
+
+            &-draft {
+                .bi {
+                    fill: #ff9b00;
+                }
+            }
+        }
+
+        &-featured {
+            border: 0;
+            padding: 0;
+            background: none;
+
+            .bi-star {
+                fill: #4a6e96;
+            }
+
+            .bi-star-fill {
+                fill: #ffae21;
+                display: none;
+            }
+
+
+
+            &.is-featured {
+                .bi-star {
+                    display: none;
+                }
+
+                .bi-star-fill {
+                    display: block;
+                }
+            }
+        }
+
+        &-external {
+            color: #4a6e96;
         }
     }
 }
