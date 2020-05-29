@@ -1,9 +1,12 @@
 ﻿@import "helpers/variables";
+@import "helpers/mixins";
 @import "helpers/reset";
 
 @import "layout/old";
 @import "layout/main";
 @import "layout/nav";
+
+@import "components/buttons";
 
 @import "page/posts";
   

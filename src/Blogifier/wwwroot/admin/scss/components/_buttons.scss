@@ -1,0 +1,6 @@
+﻿.btn {
+    &-light {
+        @include makebutton(#9db1c7, #f1f4f8, #e4ebf5);
+        border: 0;
+    }
+}

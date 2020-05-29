@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
-    <Folder Include="wwwroot\admin\scss\components\" />
   </ItemGroup>
 
 </Project>

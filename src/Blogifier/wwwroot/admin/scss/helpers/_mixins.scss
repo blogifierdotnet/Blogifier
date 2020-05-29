@@ -1,0 +1,9 @@
+﻿@mixin makebutton($color, $bg, $bghover) {
+    color: $color;
+    background-color: $bg;
+
+    &:hover {
+        color: $color;
+        background-color: $bghover;
+    }
+}
