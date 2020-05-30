@@ -27,7 +27,7 @@
 
     async Task UpdateHandler(string msg)
     {
-        await PublishedInstance.LoadPosts(1);
+        await PublishedInstance.LoadPage(1);
         await WelcomeInstance.Load();
     }
 }

@@ -19,6 +19,7 @@ namespace Blogifier.Widgets
 
         protected string SearchTerm { get; set; }
         protected int PostId { get; set; }
+        protected int CurrentPage { get; set; }
         protected bool Edit { get; set; }
 
         protected IEnumerable<PostItem> Posts { get; set; }
@@ -38,8 +39,9 @@ namespace Blogifier.Widgets
 
         protected override async Task OnInitializedAsync()
         {
+            CurrentPage = 1;
             FilterLabel = Localizer["all"];
-            await LoadPosts(1);
+            await LoadPosts();
         }
 
         protected async Task SearchKeyPress(KeyboardEventArgs e)
@@ -50,39 +52,38 @@ namespace Blogifier.Widgets
             }
         }
 
-        protected async Task SearchPosts()
+        public async Task LoadPage(int page)
         {
-            if (string.IsNullOrEmpty(SearchTerm))
-            {
-                await LoadPosts(1);
-            }
-            else
-            {
-                var blog = await DataService.CustomFields.GetBlogSettings();
-                Pager = new Pager(1, blog.ItemsPerPage);
-                Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, "D,F,P");
-
-                if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
-                if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";
-            }
+            CurrentPage = page;
+            await LoadPosts();
         }
 
-        public async Task LoadPosts(int page)
+        protected async Task SearchPosts()
+        {
+            CurrentPage = 1;
+            await LoadPosts();
+        }
+
+        public async Task LoadPosts()
         {
             try
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
-                Pager = new Pager(page, blog.ItemsPerPage);
+                Pager = new Pager(CurrentPage, blog.ItemsPerPage);
 
                 string include = "D,F,P";
                 if (FilterValue == PublishedStatus.Drafts) include = "D";
                 if (FilterValue == PublishedStatus.Published) include = "F,P";
                 if (FilterValue == PublishedStatus.Featured) include = "F";
 
-                Posts = await DataService.BlogPosts.GetList(Pager, 0, "", include);
-
-                if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
-                if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";
+                if (string.IsNullOrEmpty(SearchTerm)) 
+                {
+                    Posts = await DataService.BlogPosts.GetList(Pager, 0, "", include);
+                }
+                else
+                {
+                    Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, include);
+                }
                 StateHasChanged();
             }
             catch (Exception ex)
@@ -118,7 +119,7 @@ namespace Blogifier.Widgets
 
                 StateHasChanged();
                 Toaster.Success("Saved");
-                await LoadPosts(1);
+                await LoadPosts();
             }
             catch (Exception ex)
             {
@@ -138,7 +139,7 @@ namespace Blogifier.Widgets
 
                 StateHasChanged();
                 Toaster.Success("Saved");
-                await LoadPosts(1);
+                await LoadPosts();
             }
             catch (Exception ex)
             {
@@ -164,7 +165,8 @@ namespace Blogifier.Widgets
                     FilterLabel = Localizer["all"];
                     break;
             }
-            await LoadPosts(1);
+            CurrentPage = 1;
+            await LoadPosts();
         }
 
         public void CheckAll(object checkValue)
@@ -209,7 +211,7 @@ namespace Blogifier.Widgets
                     DataService.Complete();
                 }
                 Toaster.Success(Localizer["completed"]);
-                await LoadPosts(1);
+                await LoadPosts();
             }
         }
     }

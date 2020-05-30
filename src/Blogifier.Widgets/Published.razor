@@ -107,7 +107,7 @@
                 @if (Pager.ShowOlder)
                 {
                     <li class="item item-prev">
-                        <a class="item-link" href="" @onclick="(async () => await LoadPosts(Pager.Older))" @onclick:preventDefault>
+                        <a class="item-link" href="" @onclick="(async () => await LoadPage(Pager.Older))" @onclick:preventDefault>
                             <span class="item-icon oi oi-chevron-left" title="Older"></span>
                         </a>
                     </li>
@@ -116,7 +116,7 @@
                 @if (Pager.ShowNewer)
                 {
                     <li class="item item-next">
-                        <a class="item-link" href="" @onclick="(async () => await LoadPosts(Pager.Newer))" @onclick:preventDefault>
+                        <a class="item-link" href="" @onclick="(async () => await LoadPage(Pager.Newer))" @onclick:preventDefault>
                             <span class="item-icon oi oi-chevron-right" title="Newer"></span>
                         </a>
                     </li>
