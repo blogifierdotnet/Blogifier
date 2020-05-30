@@ -1,7 +1,7 @@
 ﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
 @inject IJsonStringLocalizer<Profile> Localizer
 
-<div class="card dash custom">
+<div class="app-widget app-widget-custom">
     <div class="card-body">
         @((MarkupString)@FieldValue.MdToHtml())
         <button class="btn primary" style="float:right" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>

@@ -1,0 +1,14 @@
+﻿
+.app-widget {
+    background: #f1f4f8;
+    border-radius: .25rem;
+    position: relative;
+    padding: 2rem;
+
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+    &-profile {
+    }
+}

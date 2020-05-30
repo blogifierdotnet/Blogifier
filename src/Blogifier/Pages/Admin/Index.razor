@@ -1,22 +1,14 @@
 ﻿@page "/admin"
 
-<div class="row no-gutters">
-    <div class="col-8">
+<div class="app-dashboard row no-gutters">
+    <div class="app-dashboard-posts col-8">
         <Published @ref="PublishedInstance" OnUpdate="UpdateHandler" />
     </div>
-    <div class="col-4">
-        <div>
-            <Profile />
-        </div>
-        <div>
-            <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
-        </div>
-        <div>
-            <MainChart />
-        </div>
-        <div>
-            <Custom />
-        </div>
+    <div class="app-dashboard-widgets col-4">
+        <Profile />
+        <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
+        <MainChart />
+        <Custom />
     </div>
 </div>
 

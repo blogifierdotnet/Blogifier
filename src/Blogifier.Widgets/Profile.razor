@@ -3,16 +3,12 @@
 
 @inject IJsonStringLocalizer<Profile> Localizer
 
-<div class="card dash profile h-100">
-    <div class="card-body">
-        <img id="profile-avatar" src="@Author.Avatar" class="rounded-circle" alt="Avatar">
-        <div class="container">
-            <h4><b>@Author.DisplayName</b></h4>
-            <p>@Author.Email</p>
-        </div>
-        <div class="btn-group-dash">
-            <button class="btn primary" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>
-        </div>
+<div class="app-widget app-widget-profile d-flex">
+    <img id="profile-avatar" width="128" src="@Author.Avatar" class="widget-profile-avatar rounded-circle mr-5" alt="@Author.DisplayName">
+    <div class="widget-profile-info">
+        <h4 class="widget-profile-name">@Author.DisplayName</h4>
+        <p class="widget-profile-email">@Author.Email</p>
+        <button class="btn btn-primary" @onclick="ShowEditor">Edit Profile</button>
     </div>
 </div>
 

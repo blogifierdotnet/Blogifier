@@ -10,15 +10,17 @@ body {
 }
 
 .app {
-    display: flex;
-    flex: 1;
+    padding-left: 4rem;
 }
 
 .app-content {
-    flex:1;
 }
 
 .app-sidebar {
     background-color: $color;
     width: 4rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
