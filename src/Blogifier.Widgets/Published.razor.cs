@@ -23,6 +23,9 @@ namespace Blogifier.Widgets
         protected IEnumerable<PostItem> Posts { get; set; }
         protected Pager Pager { get; set; }
 
+        protected string FilterLabel { get; set; }
+        protected PublishedStatus FilterValue { get; set; }
+
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
@@ -32,6 +35,7 @@ namespace Blogifier.Widgets
 
         protected override async Task OnInitializedAsync()
         {
+            FilterLabel = Localizer["all"];
             await LoadPosts(1);
         }
 
@@ -53,7 +57,7 @@ namespace Blogifier.Widgets
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
                 Pager = new Pager(1, blog.ItemsPerPage);
-                Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, "F,P");
+                Posts = await DataService.BlogPosts.Search(Pager, SearchTerm, 0, "D,F,P");
 
                 if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
                 if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";
@@ -66,7 +70,13 @@ namespace Blogifier.Widgets
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
                 Pager = new Pager(page, blog.ItemsPerPage);
-                Posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.MinValue, Pager);
+
+                string include = "D,F,P";
+                if (FilterValue == PublishedStatus.Drafts) include = "D";
+                if (FilterValue == PublishedStatus.Published) include = "F,P";
+                if (FilterValue == PublishedStatus.Featured) include = "F";
+
+                Posts = await DataService.BlogPosts.GetList(Pager, 0, "", include);
 
                 if (Pager.ShowOlder) Pager.LinkToOlder = $"admin/posts?page={Pager.Older}";
                 if (Pager.ShowNewer) Pager.LinkToNewer = $"admin/posts?page={Pager.Newer}";
@@ -131,6 +141,27 @@ namespace Blogifier.Widgets
             {
                 Toaster.Error(ex.Message);
             }
+        }
+
+        public async Task Filter(PublishedStatus filter)
+        {
+            FilterValue = filter;
+            switch (filter)
+            {
+                case PublishedStatus.Published:
+                    FilterLabel = Localizer["published"];
+                    break;
+                case PublishedStatus.Drafts:
+                    FilterLabel = Localizer["draft", true];
+                    break;
+                case PublishedStatus.Featured:
+                    FilterLabel = Localizer["featured"];
+                    break;
+                default:
+                    FilterLabel = Localizer["all"];
+                    break;
+            }
+            await LoadPosts(1);
         }
     }
 }

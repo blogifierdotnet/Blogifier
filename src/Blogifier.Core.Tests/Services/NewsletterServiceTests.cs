@@ -30,7 +30,7 @@ namespace Core.Tests.Services
                 AuthorId = 1
             };
 
-            int expected = await sut.SendNewsletters(post, emails, "http://blogifier.net", "admin", "admin@blog.com");
+            int expected = await sut.SendNewsletters(post, emails, "http://blogifier.net");
 
             Assert.Equal(0, expected);
         }

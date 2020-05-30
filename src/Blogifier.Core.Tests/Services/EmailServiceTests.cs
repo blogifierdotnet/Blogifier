@@ -14,9 +14,9 @@ namespace Core.Tests.Services
         {
             IEmailService sut = GetSut();
 
-            bool expected = await sut.SendEmail("blog admin", "admin@blog.com", "test@test.com", "test", "testing");
+            string expected = await sut.SendEmail("blog admin", "admin@blog.com", "test@test.com", "test", "testing");
 
-            Assert.False(expected);
+            Assert.True(string.IsNullOrEmpty(expected));
         }
 
         private IEmailService GetSut()

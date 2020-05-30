@@ -144,6 +144,6 @@ namespace Blogifier.Core.Data
 
     public enum PublishedStatus
     {
-        All, Published, Drafts
+        All, Published, Drafts, Featured
     }
 }
