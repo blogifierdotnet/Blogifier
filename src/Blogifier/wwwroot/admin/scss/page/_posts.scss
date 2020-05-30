@@ -34,6 +34,12 @@ $app_toolbar_icon_color: #9db1c7;
         .btn {
             width: $app_toolbar_height;
             padding: 0;
+
+            &:hover {
+                .bi {
+                    fill: $color;
+                }
+            }
         }
 
         .bi {
@@ -122,10 +128,27 @@ $app_toolbar_icon_color: #9db1c7;
     }
 
     &-item {
-        height: 3rem;
+        height: 2.5rem;
         border-bottom: 1px solid #f1f4f8;
 
+        &:hover {
+            background: #fafafa;
+        }
 
+        &-link {
+            font-size: 1rem;
+            font-weight: 500;
+            color: $color;
+            flex: 1;
+            line-height: 2.375rem;
+            margin-right: 1rem;
+
+
+            &:hover {
+                color: $color-hover;
+                text-decoration: none;
+            }
+        }
 
         &-select {
             padding: 0;
@@ -147,10 +170,35 @@ $app_toolbar_icon_color: #9db1c7;
             }
         }
 
+        &-external,
+        &-status,
+        &-featured,
+        &-icon {
+            display: block;
+            width: $app_toolbar_height;
+            height: $app_toolbar_height;
+            margin: 0 !important;
+            position: relative;
+
+
+            .bi {
+                vertical-align: top;
+                transform: translate(-50%,-50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+
+            &:focus {
+                outline: none !important;
+            }
+        }
+
         &-date {
-            color: gray;
+            color: #aaa;
             text-transform: uppercase;
             font-size: .75rem;
+            margin-right: 1rem;
         }
 
         &-status {

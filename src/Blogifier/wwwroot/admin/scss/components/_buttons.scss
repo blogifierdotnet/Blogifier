@@ -9,3 +9,23 @@
         border: 0;
     }
 }
+
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: $color;
+    background-color: $color;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba($color,.25);
+}
+
+.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+    color: #fff;
+    background-color: #e8deff;
+    border-color: #e8deff;
+}
+
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+    border-color: $color;
+}
