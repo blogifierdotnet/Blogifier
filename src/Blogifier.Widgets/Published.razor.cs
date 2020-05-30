@@ -4,6 +4,7 @@ using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using Sotsera.Blazor.Toaster;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace Blogifier.Widgets
         IJsonStringLocalizer<Published> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
+        [Inject]
+        protected IJSRuntime JSRuntime { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -108,7 +111,7 @@ namespace Blogifier.Widgets
             try
             {
                 var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
-                post.Published = published ? DateTime.MinValue : DateTime.UtcNow;
+                post.Published = published ? DateTime.MinValue : SystemClock.Now();
                 await Task.FromResult(DataService.Complete());
 
                 await OnUpdate.InvokeAsync("unpublish");
@@ -162,6 +165,52 @@ namespace Blogifier.Widgets
                     break;
             }
             await LoadPosts(1);
+        }
+
+        public void CheckAll(object checkValue)
+        {
+            bool isChecked = (bool)checkValue;
+            Posts.ToList().ForEach(e => e.Selected = isChecked);
+        }
+
+        public async Task GroupAction(GroupAction action)
+        {
+            var selectedPosts = Posts.Where(p => p.Selected).ToList();
+            if(selectedPosts.Any())
+            {
+                bool confirmed = false;
+                foreach (var item in selectedPosts)
+                {
+                    var post = DataService.BlogPosts.Find(p => p.Id == item.Id).FirstOrDefault();
+                    switch (action)
+                    {
+                        case Core.Data.GroupAction.Publish:
+                            post.Published = SystemClock.Now();
+                            break;
+                        case Core.Data.GroupAction.Unpublish:
+                            post.Published = DateTime.MinValue;
+                            break;
+                        case Core.Data.GroupAction.Feature:
+                            post.IsFeatured = true;
+                            break;
+                        case Core.Data.GroupAction.Delete:
+                            if (!confirmed)
+                            {
+                                confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"{Localizer["confirm-delete"]}");
+                                if (confirmed)
+                                {
+                                    DataService.BlogPosts.Remove(post);
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    DataService.Complete();
+                }
+                Toaster.Success(Localizer["completed"]);
+                await LoadPosts(1);
+            }
         }
     }
 }

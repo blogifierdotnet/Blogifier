@@ -52,6 +52,7 @@ namespace Blogifier.Core.Data
         public Author Author { get; set; }
         public SaveStatus Status { get; set; }
         public List<SocialField> SocialFields { get; set; }
+        public bool Selected { get; set; }
 
         #region IEquatable
         // to be able compare two posts
@@ -145,5 +146,10 @@ namespace Blogifier.Core.Data
     public enum PublishedStatus
     {
         All, Published, Drafts, Featured
+    }
+
+    public enum GroupAction
+    {
+        Publish, Unpublish, Feature, Delete
     }
 }

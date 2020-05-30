@@ -8,26 +8,26 @@
 
         <div class="app-posts-toolbar d-flex">
             <div class="app-posts-selectall custom-control custom-checkbox mr-3" data-toggle="tooltip" title="Select All">
-                <input type="checkbox" class="custom-control-input" id="EXAMPLESELECTALL">
+                <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="custom-control-input" id="EXAMPLESELECTALL">
                 <label class="custom-control-label" for="EXAMPLESELECTALL"><span class="sr-only">Select All</span></label>
             </div>
             <div class="app-posts-actions btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-light" data-toggle="tooltip" title="Featured">
+                <button type="button" @onclick="(async ()=> await GroupAction(Core.Data.GroupAction.Feature))" class="btn btn-light" data-toggle="tooltip" title="Featured">
                     <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                     </svg>
                 </button>
-                <button type="button" class="btn btn-light" data-toggle="tooltip" title="Publish">
+                <button type="button" @onclick="(async ()=> await GroupAction(Core.Data.GroupAction.Publish))" class="btn btn-light" data-toggle="tooltip" title="Publish">
                     <svg class="bi bi-check" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z" />
                     </svg>
                 </button>
-                <button type="button" class="btn btn-light" data-toggle="tooltip" title="Archive">
+                <button type="button" @onclick="(async ()=> await GroupAction(Core.Data.GroupAction.Unpublish))" class="btn btn-light" data-toggle="tooltip" title="Archive">
                     <svg class="bi bi-archive-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM6 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z" />
                     </svg>
                 </button>
-                <button type="button" class="btn btn-light" data-toggle="tooltip" title="Delete">
+                <button type="button" @onclick="(async ()=> await GroupAction(Core.Data.GroupAction.Delete))" class="btn btn-light" data-toggle="tooltip" title="Delete">
                     <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
                     </svg>
@@ -71,7 +71,7 @@
                         string featured = post.Featured ? "is-featured" : "";
                     }
                     <div class="app-posts-item-select custom-control custom-checkbox mr-3">
-                        <input type="checkbox" class="custom-control-input" id="EXAMPLE_@(post.Id)">
+                        <input type="checkbox" @bind="post.Selected" class="custom-control-input" id="EXAMPLE_@(post.Id)">
                         <label class="custom-control-label" for="EXAMPLE_@(post.Id)"><span class="sr-only">Select All</span></label>
                     </div>
 
