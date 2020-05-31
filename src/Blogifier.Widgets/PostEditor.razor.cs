@@ -5,6 +5,7 @@ using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 using Microsoft.JSInterop;
@@ -20,9 +21,7 @@ namespace Blogifier.Widgets
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Parameter]
-        public int PostId { get; set; }
-        [Parameter]
-        public EventCallback<string> HideCallback { get; set; }       
+        public int PostId { get; set; }    
         [Parameter] 
         public EventCallback<string> OnUpdate { get; set; }
 
@@ -48,6 +47,13 @@ namespace Blogifier.Widgets
 
         protected override async Task OnInitializedAsync()
         {
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var param))
+            {
+                PostId = int.Parse(param.First());
+            }
+
             if (PostId > 0)
             {
                 Post = await DataService.BlogPosts.GetItem(p => p.Id == PostId);
@@ -174,8 +180,6 @@ namespace Blogifier.Widgets
                     var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
                     DataService.BlogPosts.Remove(post);
                     DataService.Complete();
-
-                    await HideCallback.InvokeAsync("remove");
 
                     Toaster.Success("Removed");
                     StateHasChanged();

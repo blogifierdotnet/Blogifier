@@ -356,6 +356,7 @@ namespace Blogifier.Core.Data
         List<BlogPost> GetPosts(string include, int author)
         {
             var items = new List<BlogPost>();
+            var pubfeatured = new List<BlogPost>();
 
             if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
             {
@@ -370,7 +371,7 @@ namespace Blogifier.Core.Data
                 var featured = author > 0 ?
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
-                items = items.Concat(featured).ToList();
+                pubfeatured = pubfeatured.Concat(featured).ToList();
             }
 
             if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
@@ -378,8 +379,11 @@ namespace Blogifier.Core.Data
                 var published = author > 0 ?
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
-                items = items.Concat(published).ToList();
+                pubfeatured = pubfeatured.Concat(published).ToList();
             }
+
+            pubfeatured = pubfeatured.OrderByDescending(p => p.Published).ToList();
+            items = items.Concat(pubfeatured).ToList();
 
             return items;
         }

@@ -9,9 +9,9 @@
             </div>
         </div>
         <div class="col col-md-4 dash-cnt">
-            <div class="add-new-container">
+            @*<div class="add-new-container">
                 <button class="btn add-new" @onclick="@(() => EditPost(0))"><span class="oi oi-plus"></span></button>
-            </div>
+            </div>*@
         </div>
     </div>
     <div class="row stats">
@@ -32,5 +32,5 @@
 
 @if (Edit)
 {
-    <PostEditor PostId="0" HideCallback="HideEditor" />
+    <PostEditor PostId="0" />
 }

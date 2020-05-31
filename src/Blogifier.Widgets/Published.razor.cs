@@ -92,29 +92,22 @@ namespace Blogifier.Widgets
             }
         }
 
-        public void EditPost(int id)
-        {
-            Edit = true;
-            PostId = id;
-            StateHasChanged();
-        }
-
-        protected async Task HideEditor(string arg)
-        {
-            Edit = false;
-            PostId = 0;
-            await OnUpdate.InvokeAsync(arg);
-            StateHasChanged();
-        }
-
         public async Task Publish(int id, bool published)
         {
             try
             {
                 var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
-                post.Published = published ? DateTime.MinValue : SystemClock.Now();
-                await Task.FromResult(DataService.Complete());
+                if (published)
+                {
+                    post.Published = DateTime.MinValue;
+                    post.IsFeatured = false;
+                }
+                else
+                {
+                    post.Published = SystemClock.Now();
+                }
 
+                await Task.FromResult(DataService.Complete());
                 await OnUpdate.InvokeAsync("unpublish");
 
                 StateHasChanged();
@@ -132,9 +125,15 @@ namespace Blogifier.Widgets
             try
             {
                 var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
-                post.IsFeatured = !featured;
+                if (featured)
+                {
+                    post.IsFeatured = false;
+                }
+                else
+                {
+                    post.IsFeatured = true;
+                }
                 await Task.FromResult(DataService.Complete());
-
                 await OnUpdate.InvokeAsync("feature");
 
                 StateHasChanged();
