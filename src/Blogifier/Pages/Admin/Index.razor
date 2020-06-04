@@ -2,7 +2,7 @@
 
 <div class="app-dashboard row no-gutters">
     <div class="app-dashboard-posts col-8">
-        <Published @ref="PublishedInstance" OnUpdate="UpdateHandler" />
+        <PostsWidget @ref="PostsWidgetInstance" OnUpdate="UpdateHandler" />
     </div>
     <div class="app-dashboard-widgets col-4">
         <Profile />
@@ -14,12 +14,12 @@
 
 @code {
 
-    Published PublishedInstance;
+    PostsWidget PostsWidgetInstance;
     Welcome WelcomeInstance;
 
     async Task UpdateHandler(string msg)
     {
-        await PublishedInstance.LoadPage(1);
+        await PostsWidgetInstance.LoadPage(1);
         await WelcomeInstance.Load();
     }
 }

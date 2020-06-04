@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
 {
-    public partial class Published : ComponentBase
+    public partial class PostsWidget : ComponentBase
     {
         [Parameter] public EventCallback<string> OnUpdate { get; set; }
 
@@ -31,7 +31,7 @@ namespace Blogifier.Widgets
         [Inject]
         protected IDataService DataService { get; set; }
         [Inject]
-        IJsonStringLocalizer<Published> Localizer { get; set; }
+        IJsonStringLocalizer<PostsWidget> Localizer { get; set; }
         [Inject]
         protected IToaster Toaster { get; set; }
         [Inject]
