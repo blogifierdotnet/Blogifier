@@ -225,7 +225,8 @@
       "es-ES": "Buscar",
       "ru-RU": "Поиск",
       "zh-cn": "搜索",
-      "zh-tw": "搜尋"
+      "zh-tw": "搜尋",
+      "pt-BR": "Buscar"
     }
   },
   "all": {
@@ -385,7 +386,7 @@
       "ru-RU": "Краткая биография",
       "zh-cn": "用户简介",
       "zh-tw": "部落格作者介紹",
-      "pt-BR": "Informação biográfica"
+      "pt-BR": "Informações do usuário"
     }
   },
   "avatar": {
@@ -591,7 +592,8 @@
       "en-US": "Contact",
       "ru-RU": "Контакт",
       "zh-cn": "联系",
-      "zh-tw": "聯系"
+      "zh-tw": "聯系",
+      "pt-BR": "Contato"
     }
   },
   "dashboard": {
@@ -599,7 +601,8 @@
       "en-US": "Dashboard",
       "ru-RU": "Панель Управления",
       "zh-cn": "仪表盘",
-      "zh-tw": "儀表盤"
+      "zh-tw": "儀表盤",
+      "pt-BR": "Painel de controle"
     }
   },
   "popular": {
@@ -607,7 +610,8 @@
       "en-US": "Popular",
       "ru-RU": "Популярные",
       "zh-cn": "热门",
-      "zh-tw": "熱門"
+      "zh-tw": "熱門",
+      "pt-BR": "Popular"
     }
   },
   "empty": {
@@ -615,7 +619,8 @@
       "en-US": "Empty",
       "ru-RU": "Пустой лист",
       "zh-cn": "空的",
-      "zh-tw": "空的"
+      "zh-tw": "空的",
+      "pt-BR": "Vazio"
     }
   },
   "edit": {
@@ -623,7 +628,8 @@
       "en-US": "Edit",
       "ru-RU": "Редактировать",
       "zh-cn": "编辑",
-      "zh-tw": "編輯"
+      "zh-tw": "編輯",
+      "pt-BR": "Editar"
     }
   },
   "details": {
@@ -631,7 +637,8 @@
       "en-US": "Details",
       "ru-RU": "Детали",
       "zh-cn": "详情",
-      "zh-tw": "詳情"
+      "zh-tw": "詳情",
+      "pt-BR": "Detalhes"
     }
   },
   "custom-field": {
@@ -639,7 +646,8 @@
       "en-US": "Custom field",
       "ru-RU": "Пользовательский виджет",
       "zh-cn": "自定义字段",
-      "zh-tw": "自定義字段"
+      "zh-tw": "自定義字段",
+      "pt-BR": "Campo customizado"
     }
   },
   "error-msg": {
@@ -647,7 +655,8 @@
       "en-US": "Sorry, something went wrong or there's nothing at this address.",
       "ru-RU": "Страница не найдена или произошла ошибка.",
       "zh-cn": "抱歉，出现了一些错误或者这个地址什么都没有。",
-      "zh-tw": "抱歉，出現了壹些錯誤或者這個地址什麽都沒有。"
+      "zh-tw": "抱歉，出現了壹些錯誤或者這個地址什麽都沒有。",
+      "pt-BR": "Desculpe, algo deu errado ou não existe noda neste endereço"
     }
   },
   "send": {
@@ -655,7 +664,8 @@
       "en-US": "Send",
       "ru-RU": "Отправить",
       "zh-cn": "发送",
-      "zh-tw": "發送"
+      "zh-tw": "發送",
+      "pt-BR": "Enviar"
     }
   },
   "send-to": {
@@ -663,7 +673,8 @@
       "en-US": "Send to",
       "ru-RU": "Получатель",
       "zh-cn": "发送到",
-      "zh-tw": "發送到"
+      "zh-tw": "發送到",
+      "pt-BR": "Enviar para"
     }
   },
   "subject": {
@@ -671,7 +682,8 @@
       "en-US": "Subject",
       "ru-RU": "Тема",
       "zh-cn": "主题",
-      "zh-tw": "主題"
+      "zh-tw": "主題",
+      "pt-BR": "Assunto"
     }
   },
   "content": {
@@ -679,7 +691,8 @@
       "en-US": "Content",
       "ru-RU": "Содержание",
       "zh-cn": "内容",
-      "zh-tw": "內容"
+      "zh-tw": "內容",
+      "pt-BR": "Conteúdo"
     }
   },
   "completed": {
@@ -687,7 +700,8 @@
       "en-US": "Completed",
       "ru-RU": "Закончил",
       "zh-cn": "完成",
-      "zh-tw": "完成"
+      "zh-tw": "完成",
+      "pt-BR": "Concluído"
     }
   },
   "email-info": {
@@ -695,7 +709,8 @@
       "en-US": "Here you can verify newsletter settings by sending test email",
       "ru-RU": "Здесь можно протестировать работу почтового сервиса",
       "zh-cn": "在这里，您可以通过发送测试电子邮件来验证新闻稿设置",
-      "zh-tw": "在這裏，您可以通過發送測試電子郵件來驗證新聞稿設置"
+      "zh-tw": "在這裏，您可以通過發送測試電子郵件來驗證新聞稿設置",
+      "pt-BR": "Aqui você poderá verificar as configurações do boletim de notícias enviando um email de teste"
     }
   },
   "disqus-info": {
@@ -703,7 +718,8 @@
       "en-US": "Here you can enter or update site and script to add Disqus comments",
       "ru-RU": "Скрипт для подключения Disqus комментариев",
       "zh-cn": "在这里您可以输入或更新脚本以添加Disqus评论",
-      "zh-tw": "在這裏您可以輸入或更新腳本以添加Disqus評論"
+      "zh-tw": "在這裏您可以輸入或更新腳本以添加Disqus評論",
+      "pt-BR": "Aqui você pode inserir ou atualizar o site e script para adicionar comentários do Disqus"
     }
   },
   "demo-disabled": {
@@ -711,7 +727,8 @@
       "en-US": "Disabled in the demo mode",
       "ru-RU": "Функция отключена в режиме демонстрации",
       "zh-cn": "在演示模式下禁用",
-      "zh-tw": "在演示模式下禁用"
+      "zh-tw": "在演示模式下禁用",
+      "pt-BR": "Desabilitado no modo demo"
     }
   },
   "email-sent-success": {
@@ -719,7 +736,8 @@
       "en-US": "Email sent successfully",
       "ru-RU": "Почта отправлена успешно",
       "zh-cn": "电子邮件发送成功",
-      "zh-tw": "電子郵件發送成功"
+      "zh-tw": "電子郵件發送成功",
+      "pt-BR": "Email enviado com sucesso"
     }
   },
   "email-sent-error": {
@@ -727,7 +745,8 @@
       "en-US": "Error sending email, check logs for details",
       "ru-RU": "Ошибка при отправке почты, подробности в логе",
       "zh-cn": "发送电子邮件时出错，请查看日志以了解详细信息",
-      "zh-tw": "發送電子郵件時出錯，請查看日誌以了解詳細信息"
+      "zh-tw": "發送電子郵件時出錯，請查看日誌以了解詳細信息",
+      "pt-BR": "Erro ao enviar email, verifique os logs para detalhes"
     }
   },
   "email-sent-count": {
@@ -735,7 +754,8 @@
       "en-US": "Sent {0} newsletters",
       "ru-RU": "Отправлено {0} сообщений",
       "zh-cn": "已发送{0}封新闻稿",
-      "zh-tw": "已發送{0}封新聞稿"
+      "zh-tw": "已發送{0}封新聞稿",
+      "pt-BR": "Enviado {0} boletins de notícias"
     }
   },
   "social-accounts": {
@@ -743,7 +763,8 @@
       "en-US": "Social accounts",
       "ru-RU": "Соцсети",
       "zh-cn": "社交账户",
-      "zh-tw": "社交賬戶"
+      "zh-tw": "社交賬戶",
+      "pt-BR": "Contas nas mídias sociais"
     }
   },
   "name": {
@@ -751,7 +772,8 @@
       "en-US": "Name",
       "ru-RU": "Название",
       "zh-cn": "姓名",
-      "zh-tw": "姓名"
+      "zh-tw": "姓名",
+      "pt-BR": "Nome"
     }
   },
   "post-title": {
@@ -759,7 +781,8 @@
       "en-US": "Post title..",
       "ru-RU": "Заголовок поста..",
       "zh-cn": "文章标题..",
-      "zh-tw": "文章標題.."
+      "zh-tw": "文章標題..",
+      "pt-BR": "Título da postagem"
     }
   },
   "type-here": {
@@ -767,7 +790,8 @@
       "en-US": "Type here..",
       "ru-RU": "Печатать..",
       "zh-cn": "在此处输入..",
-      "zh-tw": "在此處輸入.."
+      "zh-tw": "在此處輸入..",
+      "pt-BR": "Escreva aqui..."
     }
   },
   "thank-you": {
@@ -775,7 +799,8 @@
       "en-US": "Thank you!",
       "ru-RU": "Спасибо!",
       "zh-cn": "谢谢你！",
-      "zh-tw": "謝謝妳！"
+      "zh-tw": "謝謝妳！",
+      "pt-BR": "Obrigado!"
     }
   },
   "enter-email": {
@@ -783,8 +808,8 @@
       "en-US": "Enter email",
       "ru-RU": "Адрес электронной почты",
       "zh-cn": "输入电子邮件",
-      "zh-tw": "輸入電子郵件"
-
+      "zh-tw": "輸入電子郵件",
+      "pt-BR": "Informe o email"
     }
   },
   "subscribe": {
@@ -792,7 +817,8 @@
       "en-US": "Subscribe",
       "ru-RU": "Подписаться",
       "zh-cn": "订阅",
-      "zh-tw": "訂閱"
+      "zh-tw": "訂閱",
+      "pt-BR": "Inscreva-se"
     }
   },
   "join-subscribers": {
@@ -800,7 +826,8 @@
       "en-US": "Join our subscribers list to get the latest news and updates directly in your inbox.",
       "ru-RU": "Подписаться и получать уведомлания о новых публикациях по электронной почте",
       "zh-cn": "加入我们的订阅者列表，直接在您的收件箱中获取最新消息和更新。",
-      "zh-tw": "加入我們的訂閱者列表，直接在您的收件箱中獲取最新消息和更新。"
+      "zh-tw": "加入我們的訂閱者列表，直接在您的收件箱中獲取最新消息和更新。",
+      "pt-BR": "Junte-se a nossa lista de inscritos para ter as últimas notícias diretamente na sua caixa de email"
     }
   },
   "login": {
@@ -808,7 +835,8 @@
       "en-US": "Login",
       "ru-RU": "Войти",
       "zh-cn": "登录",
-      "zh-tw": "登錄"
+      "zh-tw": "登錄",
+      "pt-BR": "Entrar"
     }
   },
   "home": {
@@ -816,7 +844,8 @@
       "en-US": "Home",
       "ru-RU": "Домашняя",
       "zh-cn": "首页",
-      "zh-tw": "首頁"
+      "zh-tw": "首頁",
+      "pt-BR": "Principal"
     }
   },
   "blog": {
@@ -824,7 +853,8 @@
       "en-US": "Blog",
       "ru-RU": "Блог",
       "zh-cn": "博客",
-      "zh-tw": "博客"
+      "zh-tw": "博客",
+      "pt-BR": "Blog"
     }
   },
   "admin": {
@@ -832,7 +862,8 @@
       "en-US": "Admin",
       "ru-RU": "Администрация",
       "zh-cn": "管理",
-      "zh-tw": "管理"
+      "zh-tw": "管理",
+      "pt-BR": "Admin"
     }
   },
   "tag": {
@@ -840,7 +871,8 @@
       "en-US": "Tag|Tags",
       "ru-RU": "Тег|Теги",
       "zh-cn": "标签|标签",
-      "zh-tw": "標簽|標簽"
+      "zh-tw": "標簽|標簽",
+      "pt-BR": "Tag"
     }
   },
   "quick-links": {
@@ -848,7 +880,8 @@
       "en-US": "Quick links",
       "ru-RU": "Ссылки",
       "zh-cn": "快速链接",
-      "zh-tw": "快速鏈接"
+      "zh-tw": "快速鏈接",
+      "pt-BR": "Links rápidos"
     }
   },
   "navigation": {
@@ -856,7 +889,8 @@
       "en-US": "Navigation",
       "ru-RU": "Навигация",
       "zh-cn": "导航",
-      "zh-tw": "導航"
+      "zh-tw": "導航",
+      "pt-BR": "Navegação"
     }
   },
   "previous": {
@@ -864,7 +898,8 @@
       "en-US": "Previous",
       "ru-RU": "Предыдущий",
       "zh-cn": "向前",
-      "zh-tw": "向前"
+      "zh-tw": "向前",
+      "pt-BR": "Anterior"
     }
   },
   "next": {
@@ -872,7 +907,8 @@
       "en-US": "Next",
       "ru-RU": "Следующий",
       "zh-cn": "向后",
-      "zh-tw": "向後"
+      "zh-tw": "向後",
+      "pt-BR": "Próximo"
     }
   },
   "confirm-delete": {
@@ -880,37 +916,43 @@
       "en-US": "Delete post?",
       "ru-RU": "Удалить пост?",
       "zh-cn": "刪除文章？",
-      "zh-tw": "刪除文章？"
+      "zh-tw": "刪除文章？",
+      "pt-BR": "Excluir postagem?"
     }
   },
   "include-featured": {
     "Values": {
       "en-US": "Include Featured in the List",
-      "ru-RU": "Включать избранное в общий список"
+      "ru-RU": "Включать избранное в общий список",
+      "pt-BR": "Incluir destacado na lista"
     }
   },
   "include-scripts": {
     "Values": {
       "en-US": "Scripts to be included in the page header and footer (Disqus, Analytics etc.)",
-      "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)"
+      "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)",
+      "pt-BR": "Scripts para incluir no cabeçalho e no rodapé (Disqus, Analytics etc.)"
     }
   },
   "subscribers": {
     "Values": {
       "en-US": "Subscriber|Subscribers",
-      "ru-RU": "Подписка|Подписчики"
+      "ru-RU": "Подписка|Подписчики",
+      "pt-BR": "Inscritos"
     }
   },
   "last-week": {
     "Values": {
       "en-US": "Last week",
-      "ru-RU": "Прошлая неделя"
+      "ru-RU": "Прошлая неделя",
+      "pt-BR": "Última semana"
     }
   },
   "last-month": {
     "Values": {
       "en-US": "Last month",
-      "ru-RU": "Прошлый месяц"
+      "ru-RU": "Прошлый месяц",
+      "pt-BR": "Último mês"
     }
   }
 }
