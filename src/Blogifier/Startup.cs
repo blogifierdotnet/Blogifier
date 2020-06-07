@@ -86,6 +86,7 @@ namespace Blogifier
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("AllowOrigin");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

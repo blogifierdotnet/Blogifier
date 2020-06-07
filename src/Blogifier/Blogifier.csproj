@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.2.2.0</Version>
+    <Version>1.2.3.0</Version>
     <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blogifier.API\Blogifier.API.csproj" />
     <ProjectReference Include="..\Blogifier.Widgets\Blogifier.Widgets.csproj" />
   </ItemGroup>
 
