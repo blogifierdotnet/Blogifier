@@ -37,7 +37,7 @@ $app_toolbar_icon_color: #9db1c7;
 
             &:hover {
                 .bi {
-                    fill: $color;
+                    fill: $color-brand;
                 }
             }
         }
@@ -138,14 +138,14 @@ $app_toolbar_icon_color: #9db1c7;
         &-link {
             font-size: 1rem;
             font-weight: 500;
-            color: $color;
+            color: $color-brand;
             flex: 1;
             line-height: 2.375rem;
             margin-right: 1rem;
 
 
             &:hover {
-                color: $color-hover;
+                color: $color-brand-hover;
                 text-decoration: none;
             }
         }

@@ -1,23 +1,23 @@
 ﻿.btn {
-    &-primary {
-        @include makebutton(#fff, $color, $color-hover);
+    &-brand {
+        @include makebutton(#fff, #fff, $color-brand, $color-brand-hover);
         border: 0;
     }
 
-    &-light {
-        @include makebutton(#9db1c7, #f1f4f8, #e4ebf5);
+    &-gray {
+        @include makebutton(#6a84ab, #4f6990, $color-gray, $color-gray-hover);
         border: 0;
     }
 }
 
 
 .custom-control-input:checked ~ .custom-control-label::before {
-    border-color: $color;
-    background-color: $color;
+    border-color: $color-brand;
+    background-color: $color-brand;
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
-    box-shadow: 0 0 0 0.2rem rgba($color,.25);
+    box-shadow: 0 0 0 0.2rem rgba($color-brand,.25);
 }
 
 .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
@@ -27,5 +27,5 @@
 }
 
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-    border-color: $color;
+    border-color: $color-brand;
 }

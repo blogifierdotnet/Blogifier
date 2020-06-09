@@ -14,10 +14,8 @@
 
 .CodeMirror-lines {
     padding: 2rem 0;
-    max-width: 60rem;
+    max-width: 70rem;
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -490,7 +488,7 @@ span.CodeMirror-selectedtext {
     font: inherit;
     z-index: 1;
     word-wrap: break-word;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f6f8fb;
 }
 
 .CodeMirror-scroll {
@@ -521,12 +519,11 @@ span.CodeMirror-selectedtext {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
-    max-width: 60rem;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    max-width: 100%;
+    width: 70rem;
     margin-right: auto;
     margin-left: auto;
+    padding: .5rem 0;
 }
 
     .editor-toolbar:after, .editor-toolbar:before {
@@ -597,17 +594,17 @@ span.CodeMirror-selectedtext {
         display: inline-block;
         text-align: center;
         text-decoration: none !important;
-        width: 3rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
         margin: 0;
         padding: 0;
         border-radius: 2px;
         cursor: pointer;
-        color: #444;
+        color: #6a84ab;
     }
 
         .editor-toolbar a.active, .editor-toolbar a:hover, .editor-toolbar button.active, .editor-toolbar button:hover {
-            background-color: #eee;
+            background-color: #d3dff1;
         }
 
         .editor-toolbar a:before, .editor-toolbar button:before {
@@ -617,7 +614,7 @@ span.CodeMirror-selectedtext {
     .editor-toolbar i.separator {
         display: inline-block;
         width: 0;
-        border-left: 1px solid #d9d9d9;
+        border-left: 1px solid #d3dff1;
         border-right: 1px solid #fff;
         color: transparent;
         text-indent: -10px;
@@ -689,7 +686,7 @@ span.CodeMirror-selectedtext {
     }
 
 .editor-preview {
-    padding: 10px;
+    padding: 3rem;
     position: absolute;
     width: 100%;
     height: 100%;

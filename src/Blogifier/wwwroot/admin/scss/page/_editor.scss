@@ -1,6 +1,13 @@
 ﻿.app-editor {
+    &-container {
+        width: 70rem;
+        max-width:100%;
+        margin-right:auto;
+        margin-left:auto;
+    }
+
     &-header {
-        background: #fafafa;
+        background: #f6f8fb;
         padding: 2rem;
     }
 
@@ -11,6 +18,9 @@
 
         .form-control {
             height: 2.5rem;
+            background: 0;
+            border: 1px solid $color-gray;
+            box-shadow: none;
         }
     }
 
@@ -18,8 +28,9 @@
 
         .btn {
             height: 2.5rem;
-            padding-right: 1.5rem;
-            padding-left: 1.5rem;
+            line-height: 2.5rem;
+            width: 7rem;
+            padding: 0;
             text-transform: uppercase;
             font-weight: 500;
             font-size: .875rem;
@@ -30,11 +41,13 @@
 
             &-icon {
                 padding: 0;
+                width: 2.5rem;
 
                 svg {
                     width: 2.5rem;
                     line-height: 2.5rem;
-                    font-size:1rem;
+                    height: 1.25rem;
+                    font-size: 1rem;
                 }
             }
         }
