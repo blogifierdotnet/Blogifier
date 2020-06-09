@@ -1,1 +1,42 @@
-﻿
+﻿.app-editor {
+    &-header {
+        background: #fafafa;
+        padding: 2rem;
+    }
+
+    &-title {
+        flex: 1;
+        -webkit-flex: 1;
+        padding-right: 2rem;
+
+        .form-control {
+            height: 2.5rem;
+        }
+    }
+
+    &-actions {
+
+        .btn {
+            height: 2.5rem;
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: .875rem;
+
+            &:not(:last-child) {
+                margin-right: .25rem;
+            }
+
+            &-icon {
+                padding: 0;
+
+                svg {
+                    width: 2.5rem;
+                    line-height: 2.5rem;
+                    font-size:1rem;
+                }
+            }
+        }
+    }
+}

@@ -6,4 +6,25 @@
         color: $color;
         background-color: $bghover;
     }
+
+    &.focus,
+    &:focus {
+        color: $color;
+        background-color: $bg;
+        border-color: $bg;
+        box-shadow: 0 0 0 0.2rem rgba($bg,.25);
+    }
+
+    &:not(:disabled):not(.disabled).active,
+    &:not(:disabled):not(.disabled):active,
+    .show > &.dropdown-toggle {
+        color: $color;
+        background-color: $bghover;
+    }
+
+    &:not(:disabled):not(.disabled).active:focus,
+    &:not(:disabled):not(.disabled):active:focus,
+    .show > &.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgba($bg,.5);
+    }
 }
