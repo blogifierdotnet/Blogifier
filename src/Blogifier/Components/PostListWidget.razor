@@ -207,11 +207,11 @@
     {
         try
         {
-            var post = await Http.GetJsonAsync<PostItem>($"http://localhost:57084/api/posts/{id}", GetHttpHandler());
+            var post = await Http.GetJsonAsync<PostItem>($"{Http.BaseAddress}posts/{id}", GetHttpHandler());
 
             string pub = published ? "U" : "P";
 
-            var msg = await Http.PutJsonAsync($"http://localhost:57084/api/posts/publish?id={id}&flag={pub}", GetHttpHandler(), post);
+            var msg = await Http.PutJsonAsync($"{Http.BaseAddress}posts/publish?id={id}&flag={pub}", GetHttpHandler(), post);
 
             Toaster.Success("Saved");
             await LoadPosts();
@@ -226,19 +226,11 @@
     {
         try
         {
-            //var post = DataService.BlogPosts.Find(p => p.Id == id).FirstOrDefault();
-            //if (featured)
-            //{
-            //    post.IsFeatured = false;
-            //}
-            //else
-            //{
-            //    post.IsFeatured = true;
-            //}
-            //await Task.FromResult(DataService.Complete());
-            //await OnUpdate.InvokeAsync("feature");
+            var post = await Http.GetJsonAsync<PostItem>($"{Http.BaseAddress}posts/{id}", GetHttpHandler());
+            string flag = featured ? "U" : "F";
 
-            StateHasChanged();
+            await Http.PutJsonAsync($"{Http.BaseAddress}posts/feature?id={id}&flag={flag}", GetHttpHandler(), post);
+
             Toaster.Success("Saved");
             await LoadPosts();
         }
@@ -284,32 +276,31 @@
             bool confirmed = false;
             foreach (var item in selectedPosts)
             {
-                //var post = DataService.BlogPosts.Find(p => p.Id == item.Id).FirstOrDefault();
-                //switch (action)
-                //{
-                //    case Core.Data.GroupAction.Publish:
-                //        post.Published = SystemClock.Now();
-                //        break;
-                //    case Core.Data.GroupAction.Unpublish:
-                //        post.Published = DateTime.MinValue;
-                //        break;
-                //    case Core.Data.GroupAction.Feature:
-                //        post.IsFeatured = true;
-                //        break;
-                //    case Core.Data.GroupAction.Delete:
-                //        if (!confirmed)
-                //        {
-                //            confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"{Localizer["confirm-delete"]}");
-                //            if (confirmed)
-                //            {
-                //                DataService.BlogPosts.Remove(post);
-                //            }
-                //        }
-                //        break;
-                //    default:
-                //        break;
-                //}
-                //DataService.Complete();
+                var post = await Http.GetJsonAsync<PostItem>($"{Http.BaseAddress}posts/{item.Id}", GetHttpHandler());
+                switch (action)
+                {
+                    case Core.Data.GroupAction.Publish:
+                        await Http.PutJsonAsync($"{Http.BaseAddress}posts/publish?id={item.Id}&flag=P", GetHttpHandler(), post);
+                        break;
+                    case Core.Data.GroupAction.Unpublish:
+                        await Http.PutJsonAsync($"{Http.BaseAddress}posts/publish?id={item.Id}&flag=U", GetHttpHandler(), post);
+                        break;
+                    case Core.Data.GroupAction.Feature:
+                        await Http.PutJsonAsync($"{Http.BaseAddress}posts/feature?id={item.Id}&flag=F", GetHttpHandler(), post);
+                        break;
+                    case Core.Data.GroupAction.Delete:
+                        if (!confirmed)
+                        {
+                            confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"{Localizer["confirm-delete"]}");
+                            if (confirmed)
+                            {
+                                await Http.RemoveAsync($"{Http.BaseAddress}posts/remove/{item.Id}", GetHttpHandler());
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
             Toaster.Success(Localizer["completed"]);
             await LoadPosts();
@@ -324,12 +315,12 @@
 
         if (HttpContextAccessor.HttpContext.Request.Cookies != null)
         {
-            var cookieVal = HttpContextAccessor.HttpContext.Request.Cookies[".AspNetCore.Identity.Application"];
+            var cookieVal = HttpContextAccessor.HttpContext.Request.Cookies[Constants.IdentityCookieName];
             if (cookieVal != null)
             {
                 clientHandler.CookieContainer.Add(new Cookie
                 {
-                    Name = ".AspNetCore.Identity.Application",
+                    Name = Constants.IdentityCookieName,
                     Value = cookieVal,
                     Expires = DateTime.Now.AddDays(30),
                     Domain = HttpContextAccessor.HttpContext.Request.Host.Host

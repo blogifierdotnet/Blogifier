@@ -106,8 +106,6 @@ namespace Blogifier.Widgets
                     }
                 }
 
-                var zzz = await Http.GetJsonAsync<IEnumerable<string>>("http://localhost:57084/api/test", clientHandler);
-
                 string include = "D,F,P";
                 if (FilterValue == PublishedStatus.Drafts) include = "D";
                 if (FilterValue == PublishedStatus.Published) include = "F,P";

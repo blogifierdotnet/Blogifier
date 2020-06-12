@@ -35,5 +35,13 @@ namespace Blogifier.Core.Api
             httpClient.Dispose();
             return response;
         }
+
+        public async Task<HttpResponseMessage> RemoveAsync(string requestUri, HttpClientHandler clientHandler)
+        {
+            HttpClient httpClient = new HttpClient(clientHandler);
+            var response = await httpClient.DeleteAsync(requestUri);
+            httpClient.Dispose();
+            return response;
+        }
     }
 }
