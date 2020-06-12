@@ -1,5 +1,4 @@
-﻿using Blogifier.Core;
-using Blogifier.Core.Data;
+﻿using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Core.Api
+namespace Blogifier.Core.Api
 {
     [Route("api/[controller]")]
     [ApiController]

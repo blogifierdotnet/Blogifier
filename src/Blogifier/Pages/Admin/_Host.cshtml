@@ -1,7 +1,10 @@
 ﻿@page "/admin"
 @namespace Blogifier.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Core.Api.CustomHttpClient HttpClient
 @{
+    AppSettings.SiteBaseUrl = $"{Request.Scheme}://{Request.Host}";
+    HttpClient.BaseAddress = new Uri($"{AppSettings.SiteBaseUrl}/api/");
     Layout = null;
 }
 

@@ -1,7 +1,7 @@
 ﻿using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.Api
+namespace Blogifier.Core.Api
 {
     [Route("api/[controller]")]
     [ApiController]

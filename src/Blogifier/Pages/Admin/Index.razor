@@ -2,7 +2,8 @@
 
 <div class="app-dashboard row no-gutters">
     <div class="app-dashboard-posts col-8">
-        <PostsWidget @ref="PostsWidgetInstance" OnUpdate="UpdateHandler" />
+        @*<PostsWidget @ref="PostsWidgetInstance" OnUpdate="UpdateHandler" />*@
+        <Blogifier.Components.PostListWidget />
     </div>
     <div class="app-dashboard-widgets col-4">
         <Profile />

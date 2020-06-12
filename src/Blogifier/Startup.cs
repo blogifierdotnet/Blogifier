@@ -1,7 +1,6 @@
 using Blogifier.Core;
 using Blogifier.Core.Extensions;
 using Blogifier.Core.Services;
-using Blogifier.Widgets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -47,8 +46,8 @@ namespace Blogifier
 
             services.AddServerSideBlazor();
 
-            //services.AddHttpContextAccessor();
-            
+            services.AddHttpContextAccessor();
+
             services.AddToaster(config =>
             {
                 config.PositionClass = Defaults.Classes.Position.BottomRight;

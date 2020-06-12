@@ -1,21 +1,30 @@
 ﻿using Askmethat.Aspnet.JsonLocalizer.Localizer;
+using Blogifier.Core.Api;
 using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using Sotsera.Blazor.Toaster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Blogifier.Widgets
 {
     public partial class PostsWidget : ComponentBase
     {
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
         [Parameter] public EventCallback<string> OnUpdate { get; set; }
+
+        protected HttpClient HttpClient { get; set; }
 
         protected string SearchTerm { get; set; }
         protected int PostId { get; set; }
@@ -36,6 +45,10 @@ namespace Blogifier.Widgets
         protected IToaster Toaster { get; set; }
         [Inject]
         protected IJSRuntime JSRuntime { get; set; }
+        [Inject]
+        protected IHttpContextAccessor HttpContextAccessor { get; set; }
+        [Inject]
+        CustomHttpClient Http { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -70,6 +83,30 @@ namespace Blogifier.Widgets
             {
                 var blog = await DataService.CustomFields.GetBlogSettings();
                 Pager = new Pager(CurrentPage, blog.ItemsPerPage);
+
+                var authState = await AuthenticationStateTask;
+                var author = authState.User.Identity;
+
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.UseCookies = true;
+                clientHandler.CookieContainer = new CookieContainer();
+
+                if (HttpContextAccessor.HttpContext.Request.Cookies != null)
+                {
+                    var cookieVal = HttpContextAccessor.HttpContext.Request.Cookies[".AspNetCore.Identity.Application"];
+                    if (cookieVal != null)
+                    {
+                        clientHandler.CookieContainer.Add(new Cookie
+                        {
+                            Name = ".AspNetCore.Identity.Application",
+                            Value = cookieVal,
+                            Expires = DateTime.Now.AddDays(30),
+                            Domain = "localhost"
+                        });
+                    }
+                }
+
+                var zzz = await Http.GetJsonAsync<IEnumerable<string>>("http://localhost:57084/api/test", clientHandler);
 
                 string include = "D,F,P";
                 if (FilterValue == PublishedStatus.Drafts) include = "D";
