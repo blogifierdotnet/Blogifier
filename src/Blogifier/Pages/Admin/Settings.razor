@@ -1,5 +1,5 @@
 ﻿@page "/admin/settings"
-
+@using Blogifier.Components
 @inject IJsonStringLocalizer<Settings> Localizer
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
 @{ 
@@ -96,7 +96,7 @@
                     <Themes />
                 </div>
                 <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
-                    <SocialAdmin Level="blog" />
+                    <SocialAdminWidget Level="blog" />
                 </div>
                 <div class="tab-pane fade" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">
                     <div class="card">

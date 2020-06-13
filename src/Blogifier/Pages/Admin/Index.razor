@@ -1,12 +1,12 @@
 ﻿@page "/admin"
+@using Blogifier.Components
 
 <div class="app-dashboard row no-gutters">
     <div class="app-dashboard-posts col-8">
-        @*<PostsWidget @ref="PostsWidgetInstance" OnUpdate="UpdateHandler" />*@
-        <Blogifier.Components.PostListWidget />
+        <PostListWidget />
     </div>
     <div class="app-dashboard-widgets col-4">
-        <Profile />
+        <ProfileWidget />
         <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
         <MainChart />
         <Custom />
@@ -15,12 +15,12 @@
 
 @code {
 
-    PostsWidget PostsWidgetInstance;
+    //PostsWidget PostsWidgetInstance;
     Welcome WelcomeInstance;
 
     async Task UpdateHandler(string msg)
     {
-        await PostsWidgetInstance.LoadPage(1);
+        //await PostsWidgetInstance.LoadPage(1);
         await WelcomeInstance.Load();
     }
 }

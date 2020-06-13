@@ -13,6 +13,7 @@ namespace Blogifier.Core.Data
 
 		string GetCustomValue(string name);
 		Task SaveCustomValue(string name, string value);
+		Task<CustomField> SaveCustomField(CustomField field);
 
 		Task<List<SocialField>> GetSocial(int authorId = 0);
 		Task SaveSocial(SocialField socialField);
@@ -55,6 +56,21 @@ namespace Blogifier.Core.Data
 				field.Content = value;
 			}
 			await _db.SaveChangesAsync();
+		}
+
+		public async Task<CustomField> SaveCustomField(CustomField field)
+		{
+			CustomField existing = field.Id > 0 ?
+				_db.CustomFields.Where(f => f.Id == field.Id).FirstOrDefault() :
+				_db.CustomFields.Where(f => f.Name == field.Name).FirstOrDefault();
+
+			if (existing == null)
+				_db.CustomFields.Add(field);
+			else
+				existing.Content = field.Content;
+
+			await _db.SaveChangesAsync();
+			return _db.CustomFields.Where(f => f.Name == field.Name && f.AuthorId == field.AuthorId).FirstOrDefault();
 		}
 
 		#endregion
