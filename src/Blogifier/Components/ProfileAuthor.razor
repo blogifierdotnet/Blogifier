@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@using Blogifier.Core.Api
+@using Blogifier.Core.Data
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Http
+@using Sotsera.Blazor.Toaster
+@using System.Threading.Tasks
+
+@inject CustomHttpClient Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@inject IJsonStringLocalizer<ProfileAuthor> Localizer
+@inject IToaster Toaster
+@inject NavigationManager NavigationManager
+
+@if (Author != null)
+{
+    <EditForm Model="@Author" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset>
+            <div>
+                <label>@Localizer["user-name"]</label>
+                <input type="text" @bind="Author.DisplayName" name="display-name" />
+            </div>
+            <div>
+                <label>@Localizer["email"]</label>
+                <input type="text" @bind="Author.Email" name="e-mail" />
+            </div>
+            <div>
+                <label>@Localizer["user-bio"]</label>
+                <textarea class="form-control" rows="3" @bind="Author.Bio" name="bio" />
+            </div>
+            <div class="input-group">
+                <label>@Localizer["avatar"]</label>
+                <input type="text" class="form-control txt-upload" @bind="Author.Avatar" name="avatar" id="avatar" readonly="" />
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @Localizer["select"]</button>
+                </span>
+            </div>
+            <div class="input-group save-profile">
+                <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
+            </div>
+        </fieldset>
+    </EditForm>
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected Author Author { get; set; }
+    protected HttpRequest Request { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Request = HttpContextAccessor.HttpContext.Request;
+        var authState = await AuthenticationStateTask;
+
+        if (authState == null || !authState.User.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+
+        Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
+        var x = Author.DisplayName;
+    }
+
+    protected async Task Save()
+    {
+        try
+        {
+            await Http.PutJsonAsync($"authors/update", Request, Author);
+            Toaster.Success("Saved");
+        }
+        catch (Exception ex)
+        {
+            Toaster.Error(ex.Message);
+        }
+    }
+}
