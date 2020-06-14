@@ -1,7 +1,4 @@
-﻿@using System.Reflection
-
-@inject IJsonStringLocalizer<BlogSettings> Localizer
-@inject AppDbContext DbContext
+﻿@inject IJsonStringLocalizer<BlogSettings> Localizer
 @inject IDataService DataService
 @inject IStorageService StorageService
 @inject Sotsera.Blazor.Toaster.IToaster Toaster
@@ -72,8 +69,6 @@
     protected BlogItem Model { get; set; }
     protected List<SelectListItem> Cultures { get; set; }
     protected List<SelectListItem> Themes { get; set; }
-    protected string DbProviderName { get; set; }
-    protected string BlazorVersion { get; set; }
     private string CurrentCulture { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -87,14 +82,6 @@
         {
             Themes.Add(new SelectListItem { Value = theme, Text = theme.Capitalize() });
         }
-
-        DbProviderName = DbContext.Database.ProviderName;
-
-        BlazorVersion = typeof(BlogSettings)
-                .GetTypeInfo()
-                .Assembly
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
 
         Model = await DataService.CustomFields.GetBlogSettings();
         CurrentCulture = Model.Culture;

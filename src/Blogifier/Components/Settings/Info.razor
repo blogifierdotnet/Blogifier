@@ -1,0 +1,50 @@
+﻿@using System.Reflection
+@inject AppDbContext DbContext
+
+@if (DbProviderName != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><label>Blogifier</label></td>
+                        <td>v.@BlazorVersion</td>
+                    </tr>
+                    <tr>
+                        <td><label>Blogifier.Core</label></td>
+                        <td>v.@AppSettings.Version</td>
+                    </tr>
+                    <tr>
+                        <td><label>Database</label></td>
+                        <td>@DbProviderName</td>
+                    </tr>
+                    <tr>
+                        <td><label>Root</label></td>
+                        <td>@AppSettings.ContentRootPath</td>
+                    </tr>
+                    <tr>
+                        <td><label>OS</label></td>
+                        <td>@AppSettings.OSDescription</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@code {
+    protected string DbProviderName { get; set; }
+    protected string BlazorVersion { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DbProviderName = DbContext.Database.ProviderName;
+
+        BlazorVersion = typeof(BlogSettings)
+                .GetTypeInfo()
+                .Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .InformationalVersion;
+    }
+}

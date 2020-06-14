@@ -1,0 +1,53 @@
+﻿@inject IJsonStringLocalizer<BlogSettings> Localizer
+@inject IDataService DataService
+@inject Sotsera.Blazor.Toaster.IToaster Toaster
+
+@inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
+@{
+    var isDemo = FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result;
+}
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <EditForm Model="@Model" OnValidSubmit="SaveScripts">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <fieldset>
+                    <div class="alert alert-info" role="alert">
+                        <a href="https://github.com/blogifierdotnet/Blogifier/blob/master/docs/ScriptIncludes.md" target="_blank">
+                            <i class="fa fa-info-circle"></i>
+                        </a>
+                        @Localizer["include-scripts"]
+                    </div>
+                    <div class="input-group">
+                        <textarea readonly="@(isDemo)" class="form-control txt-area" rows="4" @bind="Model.HeaderScript" name="headerScript" placeholder="Header script" />
+                    </div>
+                    <div class="input-group">
+                        <textarea readonly="@(isDemo)" class="form-control txt-area" rows="10" @bind="Model.FooterScript" name="footerScrip" placeholder="Footer script" />
+                    </div>
+                    <div>
+                        <label>&nbsp;</label>
+                        <input type="submit" disabled="@(isDemo)" value="@Localizer["save"]" class="btn btn-primary" />
+                    </div>
+                </fieldset>
+            </EditForm>
+        </div>
+    </div>
+}
+
+@code {
+    protected BlogItem Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await DataService.CustomFields.GetBlogSettings();
+    }
+
+    protected async Task SaveScripts()
+    {
+        await DataService.CustomFields.SaveBlogSettings(Model);
+        Toaster.Success("Saved");
+    }
+}
