@@ -1,0 +1,105 @@
+﻿@inject IDataService DataService
+@inject IStorageService StorageService
+@inject IJsonStringLocalizer<Themes> Localizer
+@inject IToaster Toaster
+
+@if (CurrentTheme != null)
+{
+    <div class="card dash themes">
+        <div class="card-body">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col mb-4">
+                    <div class="card theme-active">
+                        <img src="@CurrentTheme.Cover" class="card-img-top" alt="@CurrentTheme.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                @CurrentTheme.Title
+                                <span><i class="fa fa-check-square-o fa-4" aria-hidden="true"></i></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in ThemeItems)
+                {
+                    <div class="col mb-4">
+                        <div class="card">
+                            <img src="@item.Cover" class="card-img-top" alt="@item.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @item.Title
+                                    <span>
+                                        <a href="#" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@Localizer["select"]</a>
+                                    </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnUpdate { get; set; }
+
+    List<ThemeItem> ThemeItems { get; set; }
+    ThemeItem CurrentTheme { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    public async Task Load()
+    {
+        var blogSettings = await DataService.CustomFields.GetBlogSettings();
+        ThemeItems = new List<ThemeItem>();
+        foreach (var theme in StorageService.GetThemes())
+        {
+            if (theme.ToLower() == blogSettings.Theme.ToLower())
+            {
+                CurrentTheme = new ThemeItem
+                {
+                    Title = theme.Capitalize(),
+                    IsCurrent = (blogSettings.Theme.ToLower() == theme.ToLower()),
+                    Cover = GetCover(theme)
+                };
+            }
+            else
+            {
+                ThemeItems.Add(new ThemeItem
+                {
+                    Title = theme.Capitalize(),
+                    IsCurrent = (blogSettings.Theme.ToLower() == theme.ToLower()),
+                    Cover = GetCover(theme)
+                });
+            }
+
+        }
+
+        StateHasChanged();
+    }
+
+    protected async Task SelectTheme(string theme)
+    {
+        var blogSettings = await DataService.CustomFields.GetBlogSettings();
+        blogSettings.Theme = theme.ToLower();
+        await DataService.CustomFields.SaveBlogSettings(blogSettings);
+
+        Toaster.Success("Saved");
+        await Load();
+    }
+
+    private string GetCover(string theme)
+    {
+        string slash = System.IO.Path.DirectorySeparatorChar.ToString();
+        string file = $"{AppSettings.WebRootPath}{slash}themes{slash}{theme}{slash}screenshot.png";
+        if (System.IO.File.Exists(file))
+        {
+            return $"themes/{theme}/screenshot.png";
+        }
+        return "admin/img/img-placeholder.png";
+    }
+}

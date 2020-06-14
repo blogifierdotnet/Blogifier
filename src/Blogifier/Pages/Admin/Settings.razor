@@ -1,8 +1,9 @@
 ﻿@page "/admin/settings"
 @using Blogifier.Components
+@using Blogifier.Components.Settings
 @inject IJsonStringLocalizer<Settings> Localizer
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
-@{ 
+@{
     var isDemo = FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result;
 }
 
@@ -33,64 +34,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane tab-subscription fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                    <div class="card">
-                        <div class="card-body">
-                            <EditForm Model="@Model" OnValidSubmit="HandleValidSubmit">
-                                <DataAnnotationsValidator />
-                                <ValidationSummary />
-                                <fieldset>
-                                    <div>
-                                        <label>@Localizer["title"]</label>
-                                        <input type="text" @bind="Model.Title" name="title" />
-                                    </div>
-                                    <div>
-                                        <label>@Localizer["description"]</label>
-                                        <input type="text" @bind="Model.Description" name="description" />
-                                    </div>
-                                    <div>
-                                        <label>@Localizer["items-per-page"]</label>
-                                        <input type="text" @bind="Model.ItemsPerPage" name="pageitems" />
-                                    </div>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" @bind="Model.IncludeFeatured" class="custom-control-input" id="switch1">
-                                        <label class="custom-control-label" for="switch1">@Localizer["include-featured"]</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>@Localizer["logo"]</label>
-                                        <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @Localizer["select"]</button>
-                                        </span>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>@Localizer["cover"]</label>
-                                        <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @Localizer["select"]</button>
-                                        </span>
-                                    </div>
-                                    <div class="input-group">
-                                        <label>@Localizer["language"]</label>
-                                        <select @bind="Model.Culture">
-                                            @if (Cultures != null)
-                                            {
-                                                @foreach (var culture in Cultures)
-                                                {
-                                                    <option value="@culture.Value">@culture.Text</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label>&nbsp;</label>
-                                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
-                                    </div>
-                                </fieldset>
-                            </EditForm>
-                        </div>
-                    </div>
-
+                    <BlogSettings />
                 </div>
                 <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
                     <Themes />
