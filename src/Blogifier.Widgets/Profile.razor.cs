@@ -125,7 +125,7 @@ namespace Blogifier.Widgets
         {
             try
             {
-                if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)).Result)
+                if (await FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.Demo)))
                 {
                     Toaster.Error("Running in demo mode - change password disabled");
                 }
