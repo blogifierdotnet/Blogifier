@@ -7,8 +7,8 @@
     </div>
     <div class="app-dashboard-widgets col-4">
         <ProfileWidget />
-        <Welcome @ref="WelcomeInstance" OnUpdate="UpdateHandler" />
-        <MainChart />
+        <Counters @ref="CountersInstance" OnUpdate="UpdateHandler" />
+        <Analytics />
         <Custom />
     </div>
 </div>
@@ -16,11 +16,11 @@
 @code {
 
     //PostsWidget PostsWidgetInstance;
-    Welcome WelcomeInstance;
+    Counters CountersInstance;
 
     async Task UpdateHandler(string msg)
     {
         //await PostsWidgetInstance.LoadPage(1);
-        await WelcomeInstance.Load();
+        await CountersInstance.Load();
     }
 }
