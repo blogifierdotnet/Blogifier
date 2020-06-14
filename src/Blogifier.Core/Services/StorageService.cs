@@ -311,8 +311,6 @@ namespace Blogifier.Core.Services
                 Path.Combine(Location, fileName) :
                 Path.Combine(Location, path + _separator + fileName);
 
-            byte[] bytes = Convert.FromBase64String(baseImg);
-
             await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(baseImg));
 
             return new AssetItem
