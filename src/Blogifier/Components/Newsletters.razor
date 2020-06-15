@@ -1,0 +1,147 @@
+﻿@using Microsoft.FeatureManagement
+
+@inject IDataService DataService
+@inject IJsonStringLocalizer<Newsletters> Localizer
+@inject IFeatureManager FeatureManager
+@inject IToaster Toaster
+
+@if (Model != null)
+{
+    <div class="input-group search">
+        <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="form-control py-2 border-right-0 border" type="search" placeholder="@Localizer["search"]">
+        <span class="input-group-append">
+            <button @onclick="(async () => await SearchSubscriptions(1))" class="btn btn-secondary btn-search" type="button">
+                <span class="oi oi-magnifying-glass"></span>
+            </button>
+        </span>
+    </div>
+
+    <ul class="bf-list bf-posts-list d-block" aria-label="posts">
+        @if (!Model.Emails.Any())
+        {
+            <li class="bf-list-item d-flex align-items-center">@Localizer["not-found"]</li>
+        }
+        @foreach (var letter in Model.Emails)
+        {
+            <li class="bf-list-item d-flex align-items-center">
+                @{
+                    string title = letter.Email;
+                    var ipAr = letter.Ip.Split('|');
+                    if (ipAr.Length == 3)
+                    {
+                        if (FeatureManager.IsEnabledAsync(nameof(AppFeatureFlags.DemoMode)).Result)
+                        {
+                            var emAr = title.Split('@');
+                            title = $"demo@{emAr[1]} - {ipAr[1]}, {ipAr[2]}";
+                        }
+                        else
+                        {
+                            title = $"{title} - {ipAr[0]} - {ipAr[1]}, {ipAr[2]}";
+                        }
+                    }
+                    else
+                    {
+                        title = $"{title} {letter.Ip}";
+                    }
+                    string pubStatus = "published";
+                    string pubDate = letter.Created > DateTime.MinValue ? letter.Created.ToFriendlyShortDateString() : "n/a";
+                }
+                <span class="bf-list-item-link">@title</span>
+                <span class="bf-list-item-date ml-3 d-none d-lg-block">@pubDate</span>
+                <span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" title="" data-original-title="published">
+                    <i class="fa fa-circle"></i>
+                </span>
+                <a href="#" target="_blank" class="bf-list-item-status bf-list-item-status-link ml-auto btn-remove" @onclick="(async () => await RemoveSubscription(letter.Id))" @onclick:preventDefault>
+                    <i class="fa fa-times"></i>
+                </a>
+            </li>
+        }
+    </ul>
+
+    @if (Model.Pager != null && (Model.Pager.ShowOlder || Model.Pager.ShowNewer))
+    {
+        <ul class="pagination justify-content-center">
+            @if (Model.Pager.ShowOlder)
+            {
+                <li class="item item-prev">
+                    <a class="item-link" href="" @onclick="(async () => await GetSubscriptions(Model.Pager.Older))" @onclick:preventDefault>
+                        <span class="item-icon oi oi-chevron-left" title="Older"></span>
+                    </a>
+                </li>
+            }
+            <li class="item item-text"><span class="text-active">@Model.Pager.CurrentPage</span><span>out of @Model.Pager.LastPage</span></li>
+            @if (Model.Pager.ShowNewer)
+            {
+                <li class="item item-next">
+                    <a class="item-link" href="" @onclick="(async () => await GetSubscriptions(Model.Pager.Newer))" @onclick:preventDefault>
+                        <span class="item-icon oi oi-chevron-right" title="Newer"></span>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    protected NewsletterModel Model { get; set; }
+    protected string SearchTerm { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetSubscriptions(1);
+    }
+
+    public async Task GetSubscriptions(int page = 1)
+    {
+        var pager = new Pager(page);
+        var items = await DataService.Newsletters.GetList(e => e.Id > 0, pager);
+
+        Model = new NewsletterModel
+        {
+            Emails = items,
+            Pager = pager
+        };
+        StateHasChanged();
+    }
+
+    protected async Task SearchKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SearchSubscriptions(1);
+        }
+    }
+
+    protected async Task SearchSubscriptions(int page)
+    {
+        if (string.IsNullOrEmpty(SearchTerm))
+        {
+            await GetSubscriptions(1);
+        }
+        else
+        {
+            var pager = new Pager(page);
+            IEnumerable<Newsletter> items;
+
+            items = await DataService.Newsletters.GetList(e => e.Email.Contains(SearchTerm) || e.Ip.Contains(SearchTerm), pager);
+
+            Model = new NewsletterModel
+            {
+                Emails = items,
+                Pager = pager
+            };
+        }
+    }
+
+    protected async Task RemoveSubscription(int id)
+    {
+        var existing = DataService.Newsletters.Single(n => n.Id == id);
+        if (existing != null)
+        {
+            DataService.Newsletters.Remove(existing);
+            DataService.Complete();
+            Toaster.Success("Removed");
+            await GetSubscriptions(1);
+        }
+    }
+}

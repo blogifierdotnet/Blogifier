@@ -1,0 +1,183 @@
+﻿@inject IDataService DataService
+@inject IStorageService StorageService
+@inject ILogger<EmailService> Logger
+@inject IJsonStringLocalizer<EmailProviders> Localizer
+@inject IToaster Toaster
+
+@if(EmailModel != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <fieldset>
+                <div class="input-group">
+                    <label>@Localizer["name"]</label>
+                    <input class="form-control" type="text" @bind="EmailModel.FromName" />
+                </div>
+                <div class="input-group">
+                    <label>@Localizer["email"]</label>
+                    <input class="form-control" type="text" @bind="EmailModel.FromEmail" />
+                </div>
+                <div class="input-group">
+                    <label>@Localizer["email-provider"]</label>
+                    <select @bind="SelectedProvider">
+                        @if (EmailModel.Providers != null)
+                        {
+                            @foreach (var provider in EmailModel.Providers)
+                            {
+                                <option value="@provider.Key">@provider.Label</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                @if (EmailModel.SelectedProvider == EmailProvider.SendGrid)
+                {
+                    <EditForm Model="@SendGridModel" OnValidSubmit="OnSendGridModelSave">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="input-group">
+                            <label>@Localizer["sendgrid-key"]</label>
+                            <input class="form-control" type="text" @bind="SendGridModel.ApiKey" />
+                        </div>
+                        <div>
+                            <label>&nbsp;</label>
+                            <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                        </div>
+                    </EditForm>
+                }
+                @if (EmailModel.SelectedProvider == EmailProvider.MailKit)
+                {
+                    <EditForm Model="@MailKitModel" OnValidSubmit="OnMailKitModelSave">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="input-group">
+                            <label>@Localizer["email"]</label>
+                            <input class="form-control" type="text" @bind="MailKitModel.EmailAddress" placeholder="someone@gmail.com" />
+                        </div>
+                        <div class="input-group">
+                            <label>@Localizer["password"]</label>
+                            <input class="form-control" type="password" @bind="MailKitModel.EmailPassword" />
+                        </div>
+                        <div class="input-group">
+                            <label>@Localizer["server"]</label>
+                            <input class="form-control" type="text" @bind="MailKitModel.EmailServer" placeholder="smtp.gmail.com" />
+                        </div>
+                        <div class="input-group">
+                            <label>@Localizer["port"]</label>
+                            <input class="form-control" type="text" @bind="MailKitModel.Port" />
+                        </div>
+                        <div>
+                            <label>&nbsp;</label>
+                            <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                        </div>
+                    </EditForm>
+                }
+            </fieldset>
+
+            <fieldset>
+                <div class="input-group">
+                    <label>@Localizer["send-to"]</label>
+                    <input class="form-control" type="text" @bind="EmailModel.SendTo" placeholder="me@gmail.com" />
+                </div>
+                <div>
+                    <label>&nbsp;</label>
+                    <input type="button" value="@Localizer["send-test-email"]" @onclick="OnCheck" class="btn btn-secondary" />
+                    @if ((EmailModel.SelectedProvider == EmailProvider.MailKit && MailKitModel.Configured) ||
+                     (EmailModel.SelectedProvider == EmailProvider.SendGrid && SendGridModel.Configured))
+                    {
+                        <span>Configured</span>
+                    }
+                </div>
+            </fieldset>
+        </div>
+    </div>
+}
+
+@code {
+    protected EmailModel EmailModel { get; set; }
+    protected SendGridModel SendGridModel { get; set; }
+    protected MailKitModel MailKitModel { get; set; }
+    private EmailProvider selectedProvider;
+
+    public EmailProvider SelectedProvider
+    {
+        get { return selectedProvider; }
+        set
+        {
+            selectedProvider = value;
+            OnProviderChange();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EmailModel = await DataService.CustomFields.GetEmailModel();
+        SelectedProvider = EmailModel.SelectedProvider;
+        SendGridModel = await DataService.CustomFields.GetSendGridModel();
+        MailKitModel = await DataService.CustomFields.GetMailKitModel();
+    }
+
+    protected void OnProviderChange()
+    {
+        EmailModel.SelectedProvider = SelectedProvider;
+    }
+
+    protected async Task OnSendGridModelSave()
+    {
+        if (Verified())
+        {
+            SendGridModel.Configured = false;
+            await DataService.CustomFields.SaveSendGridModel(SendGridModel);
+            await DataService.CustomFields.SaveEmailModel(EmailModel);
+            Toaster.Success(Localizer["completed"]);
+        }
+    }
+
+    protected async Task OnMailKitModelSave()
+    {
+        if (Verified())
+        {
+            MailKitModel.Configured = false;
+            await DataService.CustomFields.SaveMailKitModel(MailKitModel);
+            await DataService.CustomFields.SaveEmailModel(EmailModel);
+            Toaster.Success(Localizer["completed"]);
+        }
+    }
+
+    protected async Task OnCheck()
+    {
+        if (Verified())
+        {
+            EmailFactory factory = new EmailService(DataService);
+            var emailService = factory.GetEmailService();
+
+            var msg = await emailService.SendEmail(EmailModel.FromName, EmailModel.FromEmail, EmailModel.SendTo, "test subject", "test content");
+            bool status = string.IsNullOrEmpty(msg);
+
+            if (EmailModel.SelectedProvider == EmailProvider.MailKit)
+            {
+                MailKitModel.Configured = status;
+                await DataService.CustomFields.SaveMailKitModel(MailKitModel);
+            }
+
+            if (EmailModel.SelectedProvider == EmailProvider.SendGrid)
+            {
+                SendGridModel.Configured = status;
+                await DataService.CustomFields.SaveSendGridModel(SendGridModel);
+            }
+
+            if (status) Toaster.Success(Localizer["email-sent-success"]);
+            else Toaster.Error(msg);
+        }
+    }
+
+    bool Verified()
+    {
+        if (string.IsNullOrEmpty(EmailModel.FromEmail) || string.IsNullOrEmpty(EmailModel.FromName))
+        {
+            Toaster.Error(Localizer["name-and-email-required"]);
+            return false;
+        }
+        return true;
+    }
+}
