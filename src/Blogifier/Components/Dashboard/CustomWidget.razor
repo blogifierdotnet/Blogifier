@@ -1,4 +1,6 @@
-﻿@inject IJSRuntime JSRuntime
+﻿@using Blogifier.Components.Editor
+
+@inject IJSRuntime JSRuntime
 @inject IDataService DataService
 @inject IJsonStringLocalizer<CustomWidget> Localizer
 @inject IToaster Toaster
@@ -30,7 +32,7 @@
                 </div>
             </div>
             <div class="profile-outer">
-                <MdEditor Content="@FieldValue" />
+                <MarkdownEditor Content="@FieldValue" />
             </div>
         </div>
     </div>

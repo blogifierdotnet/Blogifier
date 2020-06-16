@@ -7,6 +7,21 @@
                 <button class="btn btn-secondary btn-rounded" @onclick="HideEditor"><span class="oi oi-x"></span></button>
             </div>
         </div>
-        <MdEditor Content="@FieldValue" />
+        <MarkdownEditor Content="@FieldValue" />
     </div>
 </div>
+
+@code {
+    protected string FieldTitle = "Title";
+    protected string FieldValue = "Type here..";
+
+    protected void Save()
+    {
+
+    }
+
+    protected void HideEditor()
+    {
+
+    }
+}

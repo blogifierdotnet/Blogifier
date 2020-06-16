@@ -1,9 +1,9 @@
 ﻿@inject NavigationManager NavigationManager
-@code {        
+@code {
     protected override void OnAfterRender(bool firstRender)
     {
         var url = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
-        if(url.ToLower() != "error")
+        if (url.ToLower() != "error")
         {
             NavigationManager.NavigateTo("account/login?ReturnUrl=/admin", true);
         }
