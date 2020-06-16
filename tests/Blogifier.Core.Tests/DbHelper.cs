@@ -14,9 +14,10 @@ namespace Core.Tests
 
         private string GetDataSource()
         {
+            string slash = Path.DirectorySeparatorChar.ToString();
             string path = Directory.GetCurrentDirectory();
-            path = path.Substring(0, path.IndexOf("Blogifier.Core.Tests"));
-            return $"DataSource={path}Blogifier{Path.DirectorySeparatorChar}Blog.db";
+            path = path.Substring(0, path.IndexOf($"tests{slash}Blogifier.Core.Tests"));
+            return $"DataSource={path}src{slash}Blogifier{slash}Blog.db";
         }
     }
 }
