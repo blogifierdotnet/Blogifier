@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Api
@@ -18,6 +19,12 @@ namespace Blogifier.Core.Api
         public CustomFieldsController(IDataService data)
         {
             _data = data;
+        }
+
+        [HttpGet]
+        public CustomField GetField([FromQuery] string key, int id = 0)
+        {
+            return _data.CustomFields.Find(f => f.AuthorId == id && f.Name == key).FirstOrDefault();
         }
 
         [HttpGet("listbyid/{id:int}")]
