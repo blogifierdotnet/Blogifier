@@ -55,4 +55,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Models\Blogifier.Models.csproj" />
+  </ItemGroup>
+
 </Project>

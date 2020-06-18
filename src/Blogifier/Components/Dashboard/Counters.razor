@@ -1,42 +1,37 @@
-﻿@inject IDataService DataService
-@inject IJSRuntime JSRuntime
+﻿@inject IJSRuntime JSRuntime
 @inject IJsonStringLocalizer<Counters> Localizer
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
-<div class="app-widget app-widget-welcome">
-    <div class="row">
-        <div class="col col-md-8 dash-cnt">
-            <div class="dash-clock">
-                <span id="clock"></span>@*<span id="ampm"></span>*@
-            </div>
-            <div>
-                <span id="clock-day"></span>, <span id="clock-month"></span>
-            </div>
-        </div>
-        <div class="col col-md-4 dash-cnt">
-            @*<div class="add-new-container">
-                <button class="btn add-new" @onclick="@(() => EditPost(0))"><span class="oi oi-plus"></span></button>
-            </div>*@
-        </div>
-    </div>
-    <div class="row stats">
-        <div class="col dash-cnt">
-            <h3 class="mb-0">@PostCount</h3>
-            <small>@Localizer["posts", true]</small>
-        </div>
-        <div class="col dash-cnt">
-            <h3 class="mb-0">@ViewsCount</h3>
-            <small>@Localizer["view", true]</small>
-        </div>
-        <div class="col dash-cnt">
-            <h3 class="mb-0">@SubsriberCount</h3>
-            <small>@Localizer["subscribers", true]</small>
-        </div>
-    </div>
-</div>
-
-@if (Edit)
+@if (Totals != null)
 {
-    <PostEditor PostId="0" />
+    <div class="app-widget app-widget-welcome">
+        <div class="row">
+            <div class="col col-md-8 dash-cnt">
+                <div class="dash-clock">
+                    <span id="clock"></span>
+                </div>
+                <div>
+                    <span id="clock-day"></span>, <span id="clock-month"></span>
+                </div>
+            </div>
+            <div class="col col-md-4 dash-cnt"></div>
+        </div>
+        <div class="row stats">
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@Totals.PostCount</h3>
+                <small>@Localizer["posts", true]</small>
+            </div>
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@Totals.ViewsCount</h3>
+                <small>@Localizer["view", true]</small>
+            </div>
+            <div class="col dash-cnt">
+                <h3 class="mb-0">@Totals.SubsriberCount</h3>
+                <small>@Localizer["subscribers", true]</small>
+            </div>
+        </div>
+    </div>
 }
 
 @code {
@@ -44,31 +39,20 @@
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
     [Parameter]
     public EventCallback<string> OnUpdate { get; set; }
+    protected HttpRequest Request { get; set; }
 
-    public Author Author { get; set; }
-    protected int PostCount { get; set; }
-    protected int ViewsCount { get; set; }
-    protected int DraftCount { get; set; }
-    protected int SubsriberCount { get; set; }
-    protected bool Edit { get; set; }
+    public Totals Totals { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Request = HttpContextAccessor.HttpContext.Request;
         await Load();
     }
 
     public async Task Load()
     {
         var authState = await AuthenticationStateTask;
-
-        Author = await DataService.Authors.GetItem(a =>
-            a.AppUserName == authState.User.Identity.Name);
-
-        PostCount = DataService.BlogPosts.All().Count();
-        ViewsCount = DataService.BlogPosts.All().Select(v => v.PostViews).Sum();
-        DraftCount = DataService.BlogPosts.Find(p => p.Published == DateTime.MinValue).Count();
-        SubsriberCount = DataService.Newsletters.All().Count();
-
+        Totals = await Http.GetJsonAsync<Totals>($"analytics/counts", Request);
         StateHasChanged();
     }
 
@@ -76,18 +60,5 @@
     {
         if (firstRender)
             await JSRuntime.InvokeAsync<string>("commonJsFunctions.startClock", "");
-    }
-
-    protected void EditPost(int id)
-    {
-        Edit = true;
-        StateHasChanged();
-    }
-
-    protected async Task HideEditor()
-    {
-        Edit = false;
-        await OnUpdate.InvokeAsync("add");
-        StateHasChanged();
     }
 }

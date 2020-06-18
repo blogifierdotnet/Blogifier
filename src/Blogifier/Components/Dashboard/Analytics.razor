@@ -1,8 +1,5 @@
-﻿@using Blogifier.Core.Data
-@using Blogifier.Core.Helpers
-@using Blogifier.Core.Services
-@using Blogifier.Models
-@using Microsoft.AspNetCore.Components
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
 @if (Labels != null)
 {
@@ -37,17 +34,19 @@
 }
 
 @code {
-    [Inject]
-    protected IDataService DataService { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     protected string[] Labels { get; set; }
     protected double[] Values { get; set; }
 
+    protected HttpRequest Request { get; set; }
+
     protected List<ChartOption> ChartOptions = new List<ChartOption>() {
-            new ChartOption { Id = ChartSelector.Week, Label = "Last week" },
-            new ChartOption { Id = ChartSelector.Month, Label = "Last month" },
-            new ChartOption { Id = ChartSelector.All, Label = "All" }
-        };
+        new ChartOption { Id = ChartSelector.Week, Label = "Last week" },
+        new ChartOption { Id = ChartSelector.Month, Label = "Last month" },
+        new ChartOption { Id = ChartSelector.All, Label = "All" }
+    };
 
     private ChartSelector selectedChart;
     public ChartSelector SelectedChartOption
@@ -56,34 +55,35 @@
         set
         {
             selectedChart = value;
-            Load();
+            Task.Run(() => Load()).Wait();
         }
     }
 
     protected override void OnInitialized()
     {
+        Request = HttpContextAccessor.HttpContext.Request;
         SelectedChartOption = ChartSelector.Week;
     }
 
-    void Load()
+    async Task Load()
     {
         if (selectedChart == ChartSelector.Week)
         {
-            LoadWeekly();
+            await LoadWeekly();
         }
         else if (selectedChart == ChartSelector.Month)
         {
-            LoadMonthly();
+            await LoadMonthly();
         }
         else
         {
-            LoadAll();
+            await LoadAll();
         }
     }
 
-    void LoadWeekly()
+    async Task LoadWeekly()
     {
-        var stats = GetStats(-7);
+        var stats = await GetStats(-7);
         var chartItems = new List<ChartItem>();
 
         foreach (var stat in stats)
@@ -105,9 +105,9 @@
         Values = chartItems.Select(i => i.Value).ToArray();
     }
 
-    void LoadMonthly()
+    async Task LoadMonthly()
     {
-        var stats = GetStats(-31);
+        var stats = await GetStats(-31);
         var chartItems = new List<ChartItem>();
 
         foreach (var stat in stats)
@@ -129,9 +129,9 @@
         Values = chartItems.Select(i => i.Value).ToArray();
     }
 
-    void LoadAll()
+    async Task LoadAll()
     {
-        var stats = GetStats();
+        var stats = await GetStats();
         var chartItems = new List<ChartItem>();
 
         foreach (var stat in stats)
@@ -153,18 +153,15 @@
         Values = chartItems.Select(i => i.Value).ToArray();
     }
 
-    IEnumerable<StatsTotal> GetStats(int days = 0)
+    async Task<IEnumerable<StatsTotal>> GetStats(int days = 0)
     {
-        IEnumerable<StatsTotal> stats = days == 0 ? DataService.StatsRepository.All() :
-            DataService.StatsRepository.Find(p => p.DateCreated >= SystemClock.Now().Date.AddDays(days));
-        return stats.OrderBy(s => s.DateCreated);
+        var result = await Http.GetJsonAsync<IEnumerable<StatsTotal>>($"analytics/totals?days={days}", Request);
+        return result;
     }
 
     async Task LoadLatestPosts()
     {
-        var posts = await Task.FromResult(DataService.BlogPosts
-            .Find(p => p.Published > DateTime.MinValue)
-            .OrderByDescending(p => p.Published));
+        var posts = await Http.GetJsonAsync<IEnumerable<BlogPost>>("analytics/latestposts", Request);
 
         Labels = posts.Select(p => p.Title.Length > 4 ? p.Title.Substring(0, 5) + ".." : p.Title).ToArray();
         Values = posts.Select(p => (double)p.PostViews).ToArray();

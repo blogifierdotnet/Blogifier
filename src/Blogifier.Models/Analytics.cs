@@ -1,5 +1,13 @@
 ﻿namespace Blogifier.Models
 {
+    public class Totals
+    {
+        public int PostCount { get; set; }
+        public int ViewsCount { get; set; }
+        public int DraftCount { get; set; }
+        public int SubsriberCount { get; set; }
+    }
+
     public class ChartItem
     {
         public string Label { get; set; }
