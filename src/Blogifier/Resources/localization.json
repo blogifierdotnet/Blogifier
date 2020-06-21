@@ -924,35 +924,45 @@
     "Values": {
       "en-US": "Include Featured in the List",
       "ru-RU": "Включать избранное в общий список",
-      "pt-BR": "Incluir destacado na lista"
+      "pt-BR": "Incluir destacado na lista",
+      "zh-cn": "包含在列表中",
+      "zh-tw": "包含在列表中"
     }
   },
   "include-scripts": {
     "Values": {
       "en-US": "Scripts to be included in the page header and footer (Disqus, Analytics etc.)",
       "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)",
-      "pt-BR": "Scripts para incluir no cabeçalho e no rodapé (Disqus, Analytics etc.)"
+      "pt-BR": "Scripts para incluir no cabeçalho e no rodapé (Disqus, Analytics etc.)",
+	  "zh-cn": "包含在页眉和页脚中的脚本（主题、分析等）。",
+      "zh-tw": "包含在頁眉和頁腳中的腳本（主題、分析等）。"
     }
   },
   "subscribers": {
     "Values": {
       "en-US": "Subscriber|Subscribers",
       "ru-RU": "Подписка|Подписчики",
-      "pt-BR": "Inscritos"
+      "pt-BR": "Inscritos",
+	  "zh-cn": "订阅者",
+      "zh-tw": "訂閱者"
     }
   },
   "last-week": {
     "Values": {
       "en-US": "Last week",
       "ru-RU": "Прошлая неделя",
-      "pt-BR": "Última semana"
+      "pt-BR": "Última semana",
+	  "zh-cn": "上一周",
+      "zh-tw": "上壹周"
     }
   },
   "last-month": {
     "Values": {
       "en-US": "Last month",
       "ru-RU": "Прошлый месяц",
-      "pt-BR": "Último mês"
+      "pt-BR": "Último mês",
+	  "zh-cn": "上个月",
+      "zh-tw": "上個月"
     }
   }
 }
