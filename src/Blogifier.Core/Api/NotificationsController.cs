@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Api
@@ -17,11 +18,13 @@ namespace Blogifier.Core.Api
     {
         IDataService _data;
         INotificationService _notes;
+        INewsletterService _newsletterService;
 
-        public NotificationsController(IDataService data, INotificationService notes)
+        public NotificationsController(IDataService data, INotificationService notes, INewsletterService newsletterService)
         {
             _data = data;
             _notes = notes;
+            _newsletterService = newsletterService;
         }
 
         /// <summary>
@@ -100,6 +103,24 @@ namespace Blogifier.Core.Api
                 _data.Complete();
             }
             return Ok();
+        }
+
+        [HttpGet("sendnewsletters/{postId}")]
+        [Administrator]
+        public async Task<int> SendNewsletters(int postId)
+        {
+            var pager = new Pager(1, 10000);
+            var items = await _data.Newsletters.GetList(e => e.Id > 0, pager);
+            var emails = items.Select(i => i.Email).ToList();
+            int count = 0;
+
+            if (emails.Count > 0)
+            {
+                var blogPost = _data.BlogPosts.Single(p => p.Id == postId);
+                string baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/";
+                count = await _newsletterService.SendNewsletters(blogPost, emails, baseUrl);
+            }
+            return count;
         }
 
         /// <summary>

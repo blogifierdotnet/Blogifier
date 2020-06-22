@@ -118,7 +118,7 @@
 
         if (PostId > 0)
         {
-            Post = await Http.GetJsonAsync<PostItem>($"posts/{PostId}", Request);
+            Post = await Http.GetJsonAsync<PostItem>($"posts/{PostId}?format=md", Request);
         }
         else
         {
@@ -156,12 +156,12 @@
                     Post.Description = Post.Title;
 
                     await Http.PostJsonAsync<PostItem>($"posts", Request, Post);
-                    var model = await Http.GetJsonAsync<PostModel>($"posts/byslug/{Post.Slug}", Request);
+                    var model = await Http.GetJsonAsync<PostModel>($"posts/byslug/{Post.Slug}?format=md", Request);
                     saved = model.Post;
                 }
                 else
                 {
-                    var item = await Http.GetJsonAsync<PostItem>($"posts/{Post.Id}", Request);
+                    var item = await Http.GetJsonAsync<PostItem>($"posts/{Post.Id}?format=md", Request);
 
                     item.Content = Post.Content;
                     item.Title = Post.Title;
@@ -175,26 +175,18 @@
                         item.Published = SystemClock.Now();
 
                     await Http.PutJsonAsync<PostItem>($"posts", Request, item);
-                    saved = await Http.GetJsonAsync<PostItem>($"posts/{item.Id}", Request);
+                    saved = await Http.GetJsonAsync<PostItem>($"posts/{item.Id}?format=md", Request);
                 }
 
                 if (saved != null && saved.Id > 0)
                 {
                     if (postAction == PostAction.Publish)
                     {
-                        var items = await Http.GetJsonAsync<IEnumerable<Newsletter>>($"notifications/newsletters", Request);
-                        var emails = items.Select(i => i.Email).ToList();
-
-                        //if (emails.Count > 0)
-                        //{
-                        //    var blogPost = DataService.BlogPosts.Single(p => p.Id == saved.Id);
-
-                        //    int count = await NewsletterService.SendNewsletters(blogPost, emails, NavigationManager.BaseUri);
-                        //    if (count > 0)
-                        //    {
-                        //        Toaster.Success(string.Format(Localizer["email-sent-count"], count));
-                        //    }
-                        //}
+                        var cnt = await Http.GetJsonAsync<int>($"notifications/sendnewsletters/{saved.Id}", Request);
+                        if (cnt > 0)
+                        {
+                            Toaster.Success(string.Format(Localizer["email-sent-count"], cnt));
+                        }
                     }
                     Toaster.Success("Saved");
                     Post = saved;
