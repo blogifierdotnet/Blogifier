@@ -33,6 +33,12 @@ namespace Blogifier.Core.Api
             return _data.CustomFields.Find(f => f.AuthorId == id);
         }
 
+        [HttpGet("blogsettings")]
+        public async Task<BlogItem> GetBlogSettings()
+        {
+            return await _data.CustomFields.GetBlogSettings();
+        }
+
         [HttpPost]
         [Administrator]
         public async Task<ActionResult<CustomField>> Post(CustomField model)

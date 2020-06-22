@@ -48,6 +48,14 @@ namespace Blogifier.Core.Api
             };
         }
 
+        [HttpGet("newsletters")]
+        [Administrator]
+        public async Task<IEnumerable<Newsletter>> GetNewsletters()
+        {
+            var pager = new Pager(1, 10000);
+            return await _data.Newsletters.GetList(e => e.Id > 0, pager);
+        }
+
         /// <summary>
         /// Subscribe to newsletter (CORS enabled)
         /// </summary>

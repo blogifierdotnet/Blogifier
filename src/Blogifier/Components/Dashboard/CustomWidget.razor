@@ -70,7 +70,7 @@
 
         var field = await Http.GetJsonAsync<CustomField>($"customfields?key={FieldKey}", Request);
 
-        FieldValue = field.Content; // DataService.CustomFields.GetCustomValue(FieldKey);
+        FieldValue = field.Content;
         StateHasChanged();
     }
 
