@@ -126,7 +126,7 @@
 var subscribeClick = function () {
     var email = $('#nlEmail').val();
     if (email) {
-        subscribe("newsletter/subscribe", email);
+        subscribe("api/newsletters/subscribe", email);
     }
     return false;
 }

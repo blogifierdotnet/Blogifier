@@ -98,7 +98,7 @@
 
     public async Task GetSubscriptions(int page = 1)
     {
-        Model = await Http.GetJsonAsync<NewsletterModel>($"notifications/subscriptions?page={page}", Request);
+        Model = await Http.GetJsonAsync<NewsletterModel>($"newsletters/subscriptions?page={page}", Request);
     }
 
     protected async Task SearchKeyPress(KeyboardEventArgs e)
@@ -119,7 +119,7 @@
         {
             var pager = new Pager(page);
             IEnumerable<Newsletter> items;
-            items = await Http.GetJsonAsync<IEnumerable<Newsletter>>($"notifications/newsletters/search?term={SearchTerm}", Request);
+            items = await Http.GetJsonAsync<IEnumerable<Newsletter>>($"newsletters/search?term={SearchTerm}", Request);
             Model = new NewsletterModel
             {
                 Emails = items,

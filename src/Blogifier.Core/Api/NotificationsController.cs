@@ -18,53 +18,11 @@ namespace Blogifier.Core.Api
     {
         IDataService _data;
         INotificationService _notes;
-        INewsletterService _newsletterService;
 
-        public NotificationsController(IDataService data, INotificationService notes, INewsletterService newsletterService)
+        public NotificationsController(IDataService data, INotificationService notes)
         {
             _data = data;
             _notes = notes;
-            _newsletterService = newsletterService;
-        }
-
-        /// <summary>
-        /// List of newsletter subscriptions (admins only)
-        /// </summary>
-        /// <param name="page">Page number</param>
-        /// <returns>List of subscribers</returns>
-        [HttpGet("subscriptions")]
-        [Administrator]
-        public async Task<NewsletterModel> GetSubscriptions(int page = 1)
-        {
-            var pager = new Pager(page, 20);
-            IEnumerable<Newsletter> items;
-
-            items = await _data.Newsletters.GetList(e => e.Id > 0, pager);
-
-            if (page < 1 || page > pager.LastPage)
-                return null;
-
-            return new NewsletterModel
-            {
-                Emails = items,
-                Pager = pager
-            };
-        }
-
-        [HttpGet("newsletters")]
-        [Administrator]
-        public async Task<IEnumerable<Newsletter>> GetNewsletters()
-        {
-            var pager = new Pager(1, 10000);
-            return await _data.Newsletters.GetList(e => e.Id > 0, pager);
-        }
-
-        [HttpGet("newsletters/search")]
-        [Administrator]
-        public async Task<IEnumerable<Newsletter>> SearchNewsletters([FromQuery]string term)
-        {
-            var pager = new Pager(1, 100);
-            return await _data.Newsletters.GetList(e => e.Email.Contains(term) || e.Ip.Contains(term), pager);
         }
 
         /// <summary>
@@ -111,24 +69,6 @@ namespace Blogifier.Core.Api
                 _data.Complete();
             }
             return Ok();
-        }
-
-        [HttpGet("sendnewsletters/{postId}")]
-        [Administrator]
-        public async Task<int> SendNewsletters(int postId)
-        {
-            var pager = new Pager(1, 10000);
-            var items = await _data.Newsletters.GetList(e => e.Id > 0, pager);
-            var emails = items.Select(i => i.Email).ToList();
-            int count = 0;
-
-            if (emails.Count > 0)
-            {
-                var blogPost = _data.BlogPosts.Single(p => p.Id == postId);
-                string baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/";
-                count = await _newsletterService.SendNewsletters(blogPost, emails, baseUrl);
-            }
-            return count;
         }
 
         /// <summary>

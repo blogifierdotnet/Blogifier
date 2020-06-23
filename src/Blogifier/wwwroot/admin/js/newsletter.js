@@ -1,7 +1,7 @@
 $('#blog-subscribe').on('click', function () {
     var email = $('#txtEmail').val();
     if (email) {
-        subscribe("newsletter/subscribe", email);
+        subscribe("api/newsletters/subscribe", email);
     }
     return false;
 });
@@ -18,7 +18,7 @@ var subscribe = function (url, email) {
         var obj = { Email: email, Ip: all };
         var options = {
             url: "/" + url,
-            type: "POST",
+            type: "PUT",
             data: JSON.stringify(obj),
             contentType: "application/json",
             dataType: "html",
@@ -41,7 +41,7 @@ var unsubscribe = function (email) {
 
     var obj = { Email: email };
     var options = {
-        url: "/newsletter/unsubscribe?email=" + email,
+        url: "/api/newsletters/unsubscribe?email=" + email,
         type: "PUT",
         data: JSON.stringify(obj),
         contentType: "application/json",
