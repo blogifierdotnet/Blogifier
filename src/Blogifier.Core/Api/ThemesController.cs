@@ -47,6 +47,20 @@ namespace Blogifier.Core.Api
             }
         }
 
+        [Authorize]
+        [HttpGet("getall")]
+        public IList<string> GetAll()
+        {
+            try
+            {
+                return _store.GetThemes();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Set theme as current for a blog (admins only)
         /// </summary>

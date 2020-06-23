@@ -1,7 +1,7 @@
-﻿@inject IDataService DataService
-@inject IStorageService StorageService
-@inject IJsonStringLocalizer<Themes> Localizer
+﻿@inject IJsonStringLocalizer<Themes> Localizer
 @inject IToaster Toaster
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
 @if (CurrentTheme != null)
 {
@@ -43,20 +43,25 @@
 @code {
     [Parameter]
     public EventCallback<string> OnUpdate { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected HttpRequest Request { get; set; }
 
     List<ThemeItem> ThemeItems { get; set; }
     ThemeItem CurrentTheme { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Request = HttpContextAccessor.HttpContext.Request;
         await Load();
     }
 
     public async Task Load()
     {
-        var blogSettings = await DataService.CustomFields.GetBlogSettings();
+        var blogSettings = await Http.GetJsonAsync<BlogItem>($"settings", Request);
         ThemeItems = new List<ThemeItem>();
-        foreach (var theme in StorageService.GetThemes())
+        var allThemes = await Http.GetJsonAsync<IList<string>>($"themes/getall", Request);
+        foreach (var theme in allThemes)
         {
             if (theme.ToLower() == blogSettings.Theme.ToLower())
             {
@@ -76,17 +81,15 @@
                     Cover = GetCover(theme)
                 });
             }
-
         }
-
         StateHasChanged();
     }
 
     protected async Task SelectTheme(string theme)
     {
-        var blogSettings = await DataService.CustomFields.GetBlogSettings();
+        var blogSettings = await Http.GetJsonAsync<BlogItem>($"settings", Request);
         blogSettings.Theme = theme.ToLower();
-        await DataService.CustomFields.SaveBlogSettings(blogSettings);
+        await Http.PostJsonAsync<BlogItem>($"settings", Request, blogSettings);
 
         Toaster.Success("Saved");
         await Load();

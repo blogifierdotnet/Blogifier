@@ -1,6 +1,7 @@
 ﻿@inject IJsonStringLocalizer<BlogSettings> Localizer
-@inject IDataService DataService
 @inject Sotsera.Blazor.Toaster.IToaster Toaster
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
 @{
@@ -38,16 +39,21 @@
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected HttpRequest Request { get; set; }
+
     protected BlogItem Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await DataService.CustomFields.GetBlogSettings();
+        Request = HttpContextAccessor.HttpContext.Request;
+        Model = await Http.GetJsonAsync<BlogItem>($"settings", Request);
     }
 
     protected async Task SaveScripts()
     {
-        await DataService.CustomFields.SaveBlogSettings(Model);
+        await Http.PostJsonAsync<BlogItem>($"settings", Request, Model);
         Toaster.Success("Saved");
     }
 }

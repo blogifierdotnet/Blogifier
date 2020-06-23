@@ -1,9 +1,10 @@
 ﻿@inject IJsonStringLocalizer<BlogSettings> Localizer
-@inject IDataService DataService
-@inject IStorageService StorageService
 @inject Sotsera.Blazor.Toaster.IToaster Toaster
 @inject IOptions<JsonLocalizationOptions> Options
 @inject IJSRuntime JSRuntime
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
 @if (Model != null)
 {
@@ -66,6 +67,10 @@
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected HttpRequest Request { get; set; }
     protected BlogItem Model { get; set; }
     protected List<SelectListItem> Cultures { get; set; }
     protected List<SelectListItem> Themes { get; set; }
@@ -73,23 +78,26 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Request = HttpContextAccessor.HttpContext.Request;
+
         Cultures = Options.Value.SupportedCultureInfos
             .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
             .ToList();
 
         Themes = new List<SelectListItem>();
-        foreach (var theme in StorageService.GetThemes())
+        var allThemes = await Http.GetJsonAsync<IList<string>>($"themes/getall", Request);
+        foreach (var theme in allThemes)
         {
             Themes.Add(new SelectListItem { Value = theme, Text = theme.Capitalize() });
         }
 
-        Model = await DataService.CustomFields.GetBlogSettings();
+        Model = await Http.GetJsonAsync<BlogItem>($"settings", Request);
         CurrentCulture = Model.Culture;
     }
 
     protected async Task SaveBlogSettings()
     {
-        await DataService.CustomFields.SaveBlogSettings(Model);
+        await Http.PostJsonAsync<BlogItem>($"settings", Request, Model);
 
         if (Model.Culture != CurrentCulture)
         {

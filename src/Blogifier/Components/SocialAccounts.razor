@@ -1,19 +1,9 @@
-﻿@using Microsoft.AspNetCore.Components.Forms
-@using Askmethat.Aspnet.JsonLocalizer.Localizer
-@using Blogifier.Core
-@using Blogifier.Core.Data
-@using Blogifier.Core.Services
-@using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Components.Authorization
-@using Sotsera.Blazor.Toaster
-@using System.Collections.Generic
-@using System.Threading.Tasks
-
-@inject IDataService DataService
-@inject IJsonStringLocalizer<SocialAccounts> Localizer
+﻿@inject IJsonStringLocalizer<SocialAccounts> Localizer
 @inject IToaster Toaster
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
 
-@if(SocialFields != null)
+@if (SocialFields != null)
 {
     <div class="card">
         <div class="card-body">
@@ -76,6 +66,7 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    protected HttpRequest Request { get; set; }
     [Parameter]
     public string Level { get; set; }
 
@@ -84,7 +75,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Request = HttpContextAccessor.HttpContext.Request;
+        Request = HttpContextAccessor.HttpContext.Request;
         await Load();
     }
 
@@ -92,7 +83,7 @@
     {
         int authorId = await GetAuthorId();
         CurrentField = new SocialField { AuthorId = authorId };
-        SocialFields = await DataService.CustomFields.GetSocial(authorId);
+        SocialFields = await Http.GetJsonAsync<List<SocialField>>($"customfields/socialaccounts?authorId={authorId}", Request);
         StateHasChanged();
     }
 
@@ -113,7 +104,7 @@
                 Name = $"social|{CurrentField.Title.ToLower()}|1",
                 Rank = 1
             };
-            await DataService.CustomFields.SaveSocial(newField);
+            await Http.PostJsonAsync<SocialField>($"customfields", Request, newField);
             await Load();
             Toaster.Success("Updated");
         }
@@ -121,23 +112,21 @@
 
     protected async Task RemoveField(int id)
     {
-        var existing = DataService.CustomFields.Single(f => f.Id == id);
-        if (existing != null)
+        try
         {
-            DataService.CustomFields.Remove(existing);
-            DataService.Complete();
+            await Http.RemoveAsync($"customfields/{id}", Request);
             Toaster.Success(Localizer["completed"]);
             await Load();
         }
-        else
+        catch (Exception ex)
         {
-            Toaster.Error($"Error removing field #{id}");
+            Toaster.Error(ex.Message);
         }
     }
 
     protected async Task RankField(int id, bool up)
     {
-        var existing = DataService.CustomFields.Single(f => f.Id == id);
+        var existing = await Http.GetJsonAsync<SocialField>($"customfields/byid/{id}", Request);
         if (existing != null)
         {
             var fieldArray = existing.Name.Split('|');
@@ -159,8 +148,7 @@
                     AuthorId = existing.AuthorId,
                     Content = existing.Content
                 };
-                await DataService.CustomFields.SaveSocial(toUpdate);
-                DataService.Complete();
+                await Http.PostJsonAsync<SocialField>($"customfields", Request, toUpdate);
                 Toaster.Success(Localizer["completed"]);
                 await Load();
             }
@@ -181,8 +169,7 @@
         if (Level == "author")
         {
             var authState = await AuthenticationStateTask;
-            var author = await DataService.Authors.GetItem(
-                a => a.AppUserName == authState.User.Identity.Name);
+            var author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
             return author.Id;
         }
         return authorId;
