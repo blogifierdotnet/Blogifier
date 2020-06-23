@@ -59,6 +59,14 @@ namespace Blogifier.Core.Api
             return await _data.Newsletters.GetList(e => e.Id > 0, pager);
         }
 
+        [HttpGet("newsletters/search")]
+        [Administrator]
+        public async Task<IEnumerable<Newsletter>> SearchNewsletters([FromQuery]string term)
+        {
+            var pager = new Pager(1, 100);
+            return await _data.Newsletters.GetList(e => e.Email.Contains(term) || e.Ip.Contains(term), pager);
+        }
+
         /// <summary>
         /// Subscribe to newsletter (CORS enabled)
         /// </summary>
