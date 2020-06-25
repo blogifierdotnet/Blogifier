@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
 
 namespace Blogifier.Core.Helpers
@@ -21,6 +22,56 @@ namespace Blogifier.Core.Helpers
                 }
             }
             return "";
+        }
+    }
+
+    public class PostListFilter
+    {
+        HttpRequest _req;
+
+        public PostListFilter(HttpRequest request)
+        {
+            _req = request;
+        }
+
+        public string Page
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["page"])
+                    ? "" : _req.Query["page"].ToString();
+            }
+        }
+        public string Status
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["status"])
+                    ? "A" : _req.Query["status"].ToString();
+            }
+        }
+        public string Search
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_req.Query["search"])
+                    ? "" : _req.Query["search"].ToString();
+            }
+        }
+        public string Qstring
+        {
+            get
+            {
+                var q = "";
+                if (!string.IsNullOrEmpty(Status)) q += $"&status={Status}";
+                if (!string.IsNullOrEmpty(Search)) q += $"&search={Search}";
+                return q;
+            }
+        }
+
+        public string IsChecked(string status)
+        {
+            return status == Status ? "checked" : "";
         }
     }
 }

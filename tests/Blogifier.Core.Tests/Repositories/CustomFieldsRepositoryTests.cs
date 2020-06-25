@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Data;
+using Blogifier.Models;
 using System.Threading.Tasks;
 using Xunit;
 

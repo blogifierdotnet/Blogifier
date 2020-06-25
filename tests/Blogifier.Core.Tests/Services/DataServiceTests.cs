@@ -1,6 +1,6 @@
 ﻿using Blogifier.Core.Data;
-using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

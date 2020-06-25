@@ -1,6 +1,6 @@
-﻿namespace Blogifier.Core.Data
+﻿namespace Blogifier.Models
 {
-	public class CustomField
+    public class CustomField
 	{
 		public int Id { get; set; }
 		public int AuthorId { get; set; }

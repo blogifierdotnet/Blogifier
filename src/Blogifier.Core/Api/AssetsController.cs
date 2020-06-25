@@ -1,5 +1,4 @@
-﻿using Blogifier.Core.Data;
-using Blogifier.Core.Helpers;
+﻿using Blogifier.Models;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +34,7 @@ namespace Blogifier.Core.Api
         public async Task<AssetsModel> Get(int page = 1, string filter = "", string search = "")
         {
             var blog = await _data.CustomFields.GetBlogSettings();
-            var pager = new Pager(page, blog.ItemsPerPage);
+            var pager = new Blogifier.Models.Pager(page, blog.ItemsPerPage);
             IEnumerable<AssetItem> items;
 
             if (string.IsNullOrEmpty(search))

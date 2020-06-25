@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blogifier.Core.Data
+namespace Blogifier.Models
 {
+    public class NotificationModel
+    {
+        public IEnumerable<Notification> Notifications { get; set; }
+        public Pager Pager { get; set; }
+    }
+
     public class Notification
     {
         public int Id { get; set; }
@@ -15,12 +21,13 @@ namespace Blogifier.Core.Data
         public bool Active { get; set; }
     }
 
-    public class Newsletter
+    public class ContactModel
     {
-        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required, EmailAddress]
         public string Email { get; set; }
-        public string Ip { get; set; }
-        public DateTime Created { get; set; }
+        public string Content { get; set; }
     }
 
     public enum AlertType

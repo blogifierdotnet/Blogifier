@@ -2,6 +2,7 @@
 using Blogifier.Core.Api;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

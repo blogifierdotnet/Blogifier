@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using Moq;

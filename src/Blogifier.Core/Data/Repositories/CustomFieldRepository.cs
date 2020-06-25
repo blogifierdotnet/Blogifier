@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data.Models;
+﻿using Blogifier.Models;
 using MailKit.Security;
 using System.Collections.Generic;
 using System.Linq;

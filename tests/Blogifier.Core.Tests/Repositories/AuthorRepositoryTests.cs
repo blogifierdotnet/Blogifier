@@ -1,5 +1,5 @@
 ﻿using Blogifier.Core.Data;
-using Blogifier.Core.Helpers;
+using Blogifier.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

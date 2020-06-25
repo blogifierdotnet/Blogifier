@@ -1,7 +1,6 @@
-﻿using Blogifier.Core.Data;
-using Blogifier.Core.Data.Models;
-using Blogifier.Core.Helpers;
+﻿using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

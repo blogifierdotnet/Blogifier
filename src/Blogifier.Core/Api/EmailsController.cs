@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data.Models;
+﻿using Blogifier.Models;
 using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Http;

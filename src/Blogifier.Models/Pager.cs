@@ -1,4 +1,4 @@
-﻿namespace Blogifier.Core.Helpers
+﻿namespace Blogifier.Models
 {
     public class Pager
     {

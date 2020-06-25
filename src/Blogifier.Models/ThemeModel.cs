@@ -1,4 +1,4 @@
-﻿namespace Blogifier.Core.Data
+﻿namespace Blogifier.Models
 {
     public class ThemeDataModel
     {

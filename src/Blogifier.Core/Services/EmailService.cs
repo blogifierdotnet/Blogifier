@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data.Models;
+﻿using Blogifier.Models;
 using System;
 using System.Threading.Tasks;
 

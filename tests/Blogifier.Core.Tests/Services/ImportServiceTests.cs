@@ -1,6 +1,6 @@
 ﻿using Blogifier.Core.Data;
-using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

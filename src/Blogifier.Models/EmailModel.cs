@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blogifier.Core.Data.Models
+namespace Blogifier.Models
 {
     public class EmailModel
     {

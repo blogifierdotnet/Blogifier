@@ -1,13 +1,11 @@
-﻿using Blogifier.Core.Data;
-using Blogifier.Core.Data.Models;
-using Blogifier.Core.Helpers;
+﻿using Blogifier.Core.Helpers;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Api

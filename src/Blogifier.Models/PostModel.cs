@@ -1,10 +1,8 @@
-﻿using Blogifier.Core.Helpers;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blogifier.Core.Data
+namespace Blogifier.Models
 {
     public class PostModel
     {
@@ -77,54 +75,9 @@ namespace Blogifier.Core.Data
         Blog, Category, Author, Search
     }
 
-    public class PostListFilter
+    public enum PostAction
     {
-        HttpRequest _req;
-
-        public PostListFilter(HttpRequest request)
-        {
-            _req = request;
-        }
-
-        public string Page
-        {
-            get
-            {
-                return string.IsNullOrEmpty(_req.Query["page"])
-                    ? "" : _req.Query["page"].ToString();
-            }
-        }
-        public string Status
-        {
-            get
-            {
-                return string.IsNullOrEmpty(_req.Query["status"])
-                    ? "A" : _req.Query["status"].ToString();
-            }
-        }
-        public string Search
-        {
-            get
-            {
-                return string.IsNullOrEmpty(_req.Query["search"])
-                    ? "" : _req.Query["search"].ToString();
-            }
-        }
-        public string Qstring
-        {
-            get
-            {
-                var q = "";
-                if (!string.IsNullOrEmpty(Status)) q += $"&status={Status}";
-                if (!string.IsNullOrEmpty(Search)) q += $"&search={Search}";
-                return q;
-            }
-        }
-
-        public string IsChecked(string status)
-        {
-            return status == Status ? "checked" : "";
-        }
+        Save, Publish, Unpublish
     }
 
     public class CategoryItem: IComparable<CategoryItem>

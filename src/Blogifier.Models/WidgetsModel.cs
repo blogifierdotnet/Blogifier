@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Blogifier.Core.Data
+namespace Blogifier.Models
 {
     public class WidgetsModel
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Blogifier.Core.Data.Github
+namespace Blogifier.Models.Github
 {
     public class Author
     {

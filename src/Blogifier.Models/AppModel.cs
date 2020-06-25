@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blogifier.Core.Data
+namespace Blogifier.Models
 {
     public class AppItem
     {

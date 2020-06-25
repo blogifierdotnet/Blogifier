@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Core.Helpers;
+using Blogifier.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
