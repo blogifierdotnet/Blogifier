@@ -572,6 +572,7 @@
   "newsletter": {
     "Values": {
       "en-US": "Newsletter",
+      "es-ES": "Suscribirse",
       "ru-RU": "Рассылка",
       "zh-cn": "内容订阅",
       "zh-tw": "內容訂閱",
@@ -662,6 +663,7 @@
   "send": {
     "Values": {
       "en-US": "Send",
+      "es-ES": "Enviar",
       "ru-RU": "Отправить",
       "zh-cn": "发送",
       "zh-tw": "發送",
@@ -761,6 +763,7 @@
   "social-accounts": {
     "Values": {
       "en-US": "Social accounts",
+      "es-ES": "Redes sociales",
       "ru-RU": "Соцсети",
       "zh-cn": "社交账户",
       "zh-tw": "社交賬戶",
@@ -806,6 +809,7 @@
   "enter-email": {
     "Values": {
       "en-US": "Enter email",
+      "es-ES": "Ingresar correo",
       "ru-RU": "Адрес электронной почты",
       "zh-cn": "输入电子邮件",
       "zh-tw": "輸入電子郵件",
@@ -824,6 +828,7 @@
   "join-subscribers": {
     "Values": {
       "en-US": "Join our subscribers list to get the latest news and updates directly in your inbox.",
+      "es-ES": "Unete a nuestra lista de correo y obtén las ultimas novedades directamente en tu inbox",
       "ru-RU": "Подписаться и получать уведомлания о новых публикациях по электронной почте",
       "zh-cn": "加入我们的订阅者列表，直接在您的收件箱中获取最新消息和更新。",
       "zh-tw": "加入我們的訂閱者列表，直接在您的收件箱中獲取最新消息和更新。",
@@ -878,6 +883,7 @@
   "quick-links": {
     "Values": {
       "en-US": "Quick links",
+      "es-ES": "Enlaces",
       "ru-RU": "Ссылки",
       "zh-cn": "快速链接",
       "zh-tw": "快速鏈接",
@@ -934,7 +940,7 @@
       "en-US": "Scripts to be included in the page header and footer (Disqus, Analytics etc.)",
       "ru-RU": "Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)",
       "pt-BR": "Scripts para incluir no cabeçalho e no rodapé (Disqus, Analytics etc.)",
-	  "zh-cn": "包含在页眉和页脚中的脚本（主题、分析等）。",
+      "zh-cn": "包含在页眉和页脚中的脚本（主题、分析等）。",
       "zh-tw": "包含在頁眉和頁腳中的腳本（主題、分析等）。"
     }
   },
@@ -943,7 +949,7 @@
       "en-US": "Subscriber|Subscribers",
       "ru-RU": "Подписка|Подписчики",
       "pt-BR": "Inscritos",
-	  "zh-cn": "订阅者",
+      "zh-cn": "订阅者",
       "zh-tw": "訂閱者"
     }
   },
@@ -952,7 +958,7 @@
       "en-US": "Last week",
       "ru-RU": "Прошлая неделя",
       "pt-BR": "Última semana",
-	  "zh-cn": "上一周",
+      "zh-cn": "上一周",
       "zh-tw": "上壹周"
     }
   },
@@ -961,7 +967,7 @@
       "en-US": "Last month",
       "ru-RU": "Прошлый месяц",
       "pt-BR": "Último mês",
-	  "zh-cn": "上个月",
+      "zh-cn": "上个月",
       "zh-tw": "上個月"
     }
   }
