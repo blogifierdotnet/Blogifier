@@ -1,28 +1,6 @@
 ﻿
-.dash-cnt img {
-    width: 72px;
-}
-
-.dash-clock {
-    padding: 0 !important;
-    margin: 15px 0 3px 0 !important;
-    line-height: 1rem;
-}
-
-#clock {
-    font-size: 3.5em;
-    letter-spacing: -3px;
-    color: #666;
-    margin-left: 5px;
-}
-
 #ampm {
     margin-left: 5px;
-}
-
-#clock-day, #clock-month {
-    font-size: .9em;
-    color: #666;
 }
 
 .dash-1 .card {
@@ -31,29 +9,6 @@
 
 .dash-1 h3 {
     font-size: 1.3em;
-}
-
-#clock-date {
-    font-size: 1em;
-    font-weight: 600;
-    display: block;
-    margin: 10px 0;
-}
-
-.welcome h3 {
-    margin: 15px 0 0 0;
-}
-
-.dash-cnt {
-    text-align: center;
-}
-
-.dash-3 .card {
-    min-height: 300px !important;
-}
-
-.add-new-container {
-    padding: 5px;
 }
 
 .add-new-container .btn.add-new {

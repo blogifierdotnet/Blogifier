@@ -1,0 +1,18 @@
+﻿.app-widget-stats {
+    margin-bottom:2rem;
+    &-item {
+        background-color: #f1f4f8;
+        color: $color-text;
+        padding:1.5rem 0;
+        font-size:2.5rem;
+        font-weight:300;
+        border-radius:.25rem;
+        span {
+            display:block;
+            text-align:center;
+        }
+        &-title {
+            font-size:1rem;
+        }
+    }
+}

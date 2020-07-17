@@ -5,30 +5,23 @@
 
 @if (Totals != null)
 {
-    <div class="app-widget app-widget-welcome">
-        <div class="row">
-            <div class="col col-md-8 dash-cnt">
-                <div class="dash-clock">
-                    <span id="clock"></span>
-                </div>
-                <div>
-                    <span id="clock-day"></span>, <span id="clock-month"></span>
-                </div>
+    <div class="app-widget-stats row">
+        <div class="col">
+            <div class="app-widget-stats-item">
+                <span>@Totals.PostCount</span>
+                <span class="app-widget-stats-item-title">@Localizer["posts", true]</span>
             </div>
-            <div class="col col-md-4 dash-cnt"></div>
         </div>
-        <div class="row stats">
-            <div class="col dash-cnt">
-                <h3 class="mb-0">@Totals.PostCount</h3>
-                <small>@Localizer["posts", true]</small>
+        <div class="col">
+            <div class="app-widget-stats-item">
+                <span>@Totals.ViewsCount</span>
+                <span class="app-widget-stats-item-title">@Localizer["view", true]</span>
             </div>
-            <div class="col dash-cnt">
-                <h3 class="mb-0">@Totals.ViewsCount</h3>
-                <small>@Localizer["view", true]</small>
-            </div>
-            <div class="col dash-cnt">
-                <h3 class="mb-0">@Totals.SubsriberCount</h3>
-                <small>@Localizer["subscribers", true]</small>
+        </div>
+        <div class="col">
+            <div class="app-widget-stats-item">
+                <span>@Totals.SubsriberCount</span>
+                <span class="app-widget-stats-item-title">@Localizer["subscribers", true]</span>
             </div>
         </div>
     </div>

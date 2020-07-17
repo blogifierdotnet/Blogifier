@@ -1,4 +1,7 @@
-﻿
+﻿.app-dashboard-widgets {
+    padding: 2rem !important;
+}
+
 .app-widget {
     background: #f1f4f8;
     border-radius: .25rem;
@@ -8,7 +11,12 @@
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
-
-    &-profile {
-    }
 }
+
+
+.app-widget-profile {
+}
+
+.app-widget-stats {
+}
+ 

@@ -4,60 +4,30 @@
 @inject IJsonStringLocalizer<ProfileWidget> Localizer
 @inject NavigationManager NavigationManager
 
+
+
 @if (Author != null)
 {
-<div class="app-widget app-widget-profile d-flex">
-    <img id="profile-avatar" width="128" src="@Author.Avatar" class="widget-profile-avatar rounded-circle mr-5" alt="@Author.DisplayName">
-    <div class="widget-profile-info">
-        <h4 class="widget-profile-name">@Author.DisplayName</h4>
-        <p class="widget-profile-email">@Author.Email</p>
-        <button class="btn btn-primary" @onclick="ShowEditor">Edit Profile</button>
-    </div>
-</div>
+            <img id="profile-avatar" width="32" src="@Author.Avatar" class="app-widget-profile-avatar" alt="@Author.DisplayName">
+            <span class="widget-profile-name">@Author.DisplayName</span>
+            <span class="widget-profile-email">@Author.Email</span>
+            <button class="btn btn-primary" @onclick="ShowEditor">Edit Profile</button>
 }
+
+<div class="app-clock">
+    <span id="clock"></span> <span id="clock-day"></span>, <span id="clock-month"></span>
+</div>
 
 @if (Edit)
 {
-    <div class="editor-modal-bg">
-        <div class="editor-modal-content">
-
-            <div class="modal-actions">
-                <ul class="nav nav-tabs" id="post-edit-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["profile"]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">@Localizer["social-accounts"]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">@Localizer["change-password"]</a>
-                    </li>
-                </ul>
-                <div class="btn-group post-options" role="group" aria-label="Post options">
-                    <button class="btn btn-secondary" @onclick="HideEditor">
-                        <span class="oi oi-x"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="modal-profile">
-
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <ProfileAuthor />
-                    </div>
-                    <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
-                        <SocialAccounts Level="author" />
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <ProfilePassword />
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+    @Localizer["profile"]
+    <ProfileAuthor />
+    <hr />
+    @Localizer["social-accounts"]
+    <SocialAccounts Level="author" />
+    <hr />
+    @Localizer["change-password"]
+    <ProfilePassword />
 }
 
 @code {

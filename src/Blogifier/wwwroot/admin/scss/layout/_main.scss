@@ -10,7 +10,6 @@ body {
 }
 
 .app {
-    padding-left: 4rem;
 }
 
 .app-content {
@@ -18,9 +17,4 @@ body {
 
 .app-sidebar {
     background-color: $color-brand;
-    width: 4rem;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
 }
