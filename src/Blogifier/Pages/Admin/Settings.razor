@@ -2,51 +2,45 @@
 @using Blogifier.Components
 @using Blogifier.Components.Settings
 @inject IJsonStringLocalizer<Settings> Localizer
-<ul class="nav nav-tabs" id="newsletter-tab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["settings"]</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="home-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="home" aria-selected="true">@Localizer["profile"]</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="themes-tab" data-toggle="tab" href="#themes" role="tab" aria-controls="themes" aria-selected="false">Themes</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="social-tab" data-toggle="tab" href="#social" role="tab" aria-controls="social" aria-selected="false">Social</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="scripts-tab" data-toggle="tab" href="#scripts" role="tab" aria-controls="scripts" aria-selected="false">Scripts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Info</a>
-    </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane tab-subscription fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <BlogSettings />
-    </div>
-    <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-        @Localizer["profile"]
-        @* HERE *@
-        <hr />
-        @Localizer["social-accounts"]
-        @* HERE *@
-        <hr />
-        @Localizer["change-password"]
-        @* HERE *@
-    </div>
-    <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
-        <Themes />
-    </div>
-    <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
-        <SocialAccounts Level="blog" />
-    </div>
-    <div class="tab-pane fade" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">
-        <Scripts />
-    </div>
-    <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
-        <Info />
+<div class="app-settings">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["settings"]</a>
+                <a class="nav-link" id="home-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="home" aria-selected="false">@Localizer["profile"]</a>
+                <a class="nav-link" id="themes-tab" data-toggle="pill" href="#themes" role="tab" aria-controls="themes" aria-selected="false">Themes</a>
+                <a class="nav-link" id="social-tab" data-toggle="pill" href="#social" role="tab" aria-controls="social" aria-selected="false">Social</a>
+                <a class="nav-link" id="scripts-tab" data-toggle="pill" href="#scripts" role="tab" aria-controls="scripts" aria-selected="false">Scripts</a>
+                <a class="nav-link" id="info-tab" data-toggle="pill" href="#info" role="tab" aria-controls="info" aria-selected="false">Info</a>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <BlogSettings />
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="app-settings-title">@Localizer["profile"]</div>
+                    @* HERE *@
+                    <div class="app-settings-title">@Localizer["social-accounts"]</div>
+                    @* HERE *@
+                    <div class="app-settings-title">@Localizer["change-password"]</div>
+                    @* HERE *@
+                </div>
+                <div class="tab-pane fade" id="themes" role="tabpanel" aria-labelledby="themes-tab">
+                    <Themes />
+                </div>
+                <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
+                    <SocialAccounts Level="blog" />
+                </div>
+                <div class="tab-pane fade" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">
+                    <Scripts />
+                </div>
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                    <Info />
+                </div>
+            </div>
+        </div>
     </div>
 </div>

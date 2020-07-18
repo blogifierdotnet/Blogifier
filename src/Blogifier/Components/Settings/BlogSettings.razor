@@ -8,62 +8,65 @@
 
 @if (Model != null)
 {
-    <div class="card">
-        <div class="card-body">
-            <EditForm Model="@Model" OnValidSubmit="SaveBlogSettings">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <fieldset>
-                    <div>
-                        <label>@Localizer["title"]</label>
-                        <input type="text" @bind="Model.Title" name="title" />
-                    </div>
-                    <div>
-                        <label>@Localizer["description"]</label>
-                        <input type="text" @bind="Model.Description" name="description" />
-                    </div>
-                    <div>
-                        <label>@Localizer["items-per-page"]</label>
-                        <input type="text" @bind="Model.ItemsPerPage" name="pageitems" />
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" @bind="Model.IncludeFeatured" class="custom-control-input" id="switch1">
-                        <label class="custom-control-label" for="switch1">@Localizer["include-featured"]</label>
-                    </div>
-                    <div class="input-group">
-                        <label>@Localizer["logo"]</label>
-                        <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @Localizer["select"]</button>
-                        </span>
-                    </div>
-                    <div class="input-group">
-                        <label>@Localizer["cover"]</label>
-                        <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @Localizer["select"]</button>
-                        </span>
-                    </div>
-                    <div class="input-group">
-                        <label>@Localizer["language"]</label>
-                        <select @bind="Model.Culture">
-                            @if (Cultures != null)
-                            {
-                                @foreach (var culture in Cultures)
-                                {
-                                    <option value="@culture.Value">@culture.Text</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div>
-                        <label>&nbsp;</label>
-                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
-                    </div>
-                </fieldset>
-            </EditForm>
+    <EditForm Model="@Model" OnValidSubmit="SaveBlogSettings">
+
+        <div class="app-settings-title">
+            Basic Settings
         </div>
-    </div>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["title"]</label>
+                <input type="text" class="form-control" @bind="Model.Title" name="title" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["description"]</label>
+                <input type="text" class="form-control" @bind="Model.Description" name="description" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["items-per-page"]</label>
+                <input type="text" class="form-control" @bind="Model.ItemsPerPage" name="pageitems" />
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" @bind="Model.IncludeFeatured" class="custom-control-input" id="switch1">
+                    <label class="custom-control-label" for="switch1">@Localizer["include-featured"]</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["logo"]</label>
+                <div class="input-group">
+                    <input type="text" class="form-control txt-upload" @bind="Model.Logo" name="logo" id="logo" readonly="" />
+                    <span class="input-group-append">
+                        <button class="btn btn-secondary" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @Localizer["select"]</button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["cover"]</label>
+                <div class="input-group">
+                    <input type="text" class="form-control txt-upload" @bind="Model.Cover" name="cover" id="cover" readonly="" />
+                    <span class="input-group-append">
+                        <button class="btn btn-secondary" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @Localizer["select"]</button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["language"]</label>
+                <select @bind="Model.Culture" class="custom-select">
+                    @if (Cultures != null)
+                    {
+                        @foreach (var culture in Cultures)
+                        {
+                            <option value="@culture.Value">@culture.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-submit-button">
+                <input type="submit" value="@Localizer["save"]" class="btn btn-brand" />
+            </div>
+    </EditForm>
 }
 
 @code {
