@@ -4,3 +4,8 @@
         box-shadow: 0 0 10rem rgba(#000, .3);
     }
 }
+
+.form-control:disabled, .form-control[readonly] {
+    background:none;
+    cursor:default;
+}

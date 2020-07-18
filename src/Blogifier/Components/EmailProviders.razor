@@ -39,9 +39,9 @@
                         <label class="form-control-label">@Localizer["sendgrid-key"]</label>
                         <input class="form-control" type="text" @bind="SendGridModel.ApiKey" />
                     </div>
-                    <div class="form-group">
+                    <div class="form-submit-button">
 
-                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                        <input type="submit" value="@Localizer["save"]" class="btn btn-brand" />
                     </div>
                 </EditForm>
             }
@@ -66,26 +66,29 @@
                         <label class="form-control-label">@Localizer["port"]</label>
                         <input class="form-control" type="text" @bind="MailKitModel.Port" />
                     </div>
-                    <div>
-                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                    <div class="form-submit-button">
+                        <input type="submit" value="@Localizer["save"]" class="btn btn-brand" />
                     </div>
                 </EditForm>
             }
         </fieldset>
+
+        <div class="app-settings-title">Test Newsletter Settings</div>
 
         <fieldset>
             <div class="form-group">
                 <label class="form-control-label">@Localizer["send-to"]</label>
                 <input class="form-control" type="text" @bind="EmailModel.SendTo" placeholder="me@gmail.com" />
             </div>
-            <div>
-                <input type="button" value="@Localizer["send-test-email"]" @onclick="OnCheck" class="btn btn-secondary" />
-                @if ((EmailModel.SelectedProvider == EmailProvider.MailKit && MailKitModel.Configured) ||
-              (EmailModel.SelectedProvider == EmailProvider.SendGrid && SendGridModel.Configured))
-                {
-                    <span>Configured</span>
-                }
+            <div class="form-submit-button">
+                <input type="button" value="@Localizer["send-test-email"]" @onclick="OnCheck" class="btn btn-brand" />
             </div>
+
+            @if ((EmailModel.SelectedProvider == EmailProvider.MailKit && MailKitModel.Configured) ||
+      (EmailModel.SelectedProvider == EmailProvider.SendGrid && SendGridModel.Configured))
+            {
+                <div class="alert alert bg-success">Configured</div>
+            }
         </fieldset>
     </div>
 }
