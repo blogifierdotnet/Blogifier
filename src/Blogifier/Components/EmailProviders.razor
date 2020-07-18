@@ -6,90 +6,87 @@
 
 @if (EmailModel != null)
 {
-    <div class="card">
-        <div class="card-body">
-            <fieldset>
-                <div class="input-group">
-                    <label>@Localizer["name"]</label>
-                    <input class="form-control" type="text" @bind="EmailModel.FromName" />
-                </div>
-                <div class="input-group">
-                    <label>@Localizer["email"]</label>
-                    <input class="form-control" type="text" @bind="EmailModel.FromEmail" />
-                </div>
-                <div class="input-group">
-                    <label>@Localizer["email-provider"]</label>
-                    <select @bind="SelectedProvider">
-                        @if (EmailModel.Providers != null)
-                        {
-                            @foreach (var provider in EmailModel.Providers)
-                            {
-                                <option value="@provider.Key">@provider.Label</option>
-                            }
-                        }
-                    </select>
-                </div>
-
-                @if (EmailModel.SelectedProvider == EmailProvider.SendGrid)
-                {
-                    <EditForm Model="@SendGridModel" OnValidSubmit="OnSendGridModelSave">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div class="input-group">
-                            <label>@Localizer["sendgrid-key"]</label>
-                            <input class="form-control" type="text" @bind="SendGridModel.ApiKey" />
-                        </div>
-                        <div>
-                            <label>&nbsp;</label>
-                            <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
-                        </div>
-                    </EditForm>
-                }
-                @if (EmailModel.SelectedProvider == EmailProvider.MailKit)
-                {
-                    <EditForm Model="@MailKitModel" OnValidSubmit="OnMailKitModelSave">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div class="input-group">
-                            <label>@Localizer["email"]</label>
-                            <input class="form-control" type="text" @bind="MailKitModel.EmailAddress" placeholder="someone@gmail.com" />
-                        </div>
-                        <div class="input-group">
-                            <label>@Localizer["password"]</label>
-                            <input class="form-control" type="password" @bind="MailKitModel.EmailPassword" />
-                        </div>
-                        <div class="input-group">
-                            <label>@Localizer["server"]</label>
-                            <input class="form-control" type="text" @bind="MailKitModel.EmailServer" placeholder="smtp.gmail.com" />
-                        </div>
-                        <div class="input-group">
-                            <label>@Localizer["port"]</label>
-                            <input class="form-control" type="text" @bind="MailKitModel.Port" />
-                        </div>
-                        <div>
-                            <label>&nbsp;</label>
-                            <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
-                        </div>
-                    </EditForm>
-                }
-            </fieldset>
-
-            <fieldset>
-                <div class="input-group">
-                    <label>@Localizer["send-to"]</label>
-                    <input class="form-control" type="text" @bind="EmailModel.SendTo" placeholder="me@gmail.com" />
-                </div>
-                <div>
-                    <label>&nbsp;</label>
-                    <input type="button" value="@Localizer["send-test-email"]" @onclick="OnCheck" class="btn btn-secondary" />
-                    @if ((EmailModel.SelectedProvider == EmailProvider.MailKit && MailKitModel.Configured) ||
-                    (EmailModel.SelectedProvider == EmailProvider.SendGrid && SendGridModel.Configured))
+    <div class="app-settings-title">Newsletter Settings</div>
+    <div class="app-newsletter-settings">
+        <fieldset>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["name"]</label>
+                <input class="form-control" type="text" @bind="EmailModel.FromName" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["email"]</label>
+                <input class="form-control" type="text" @bind="EmailModel.FromEmail" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["email-provider"]</label>
+                <select @bind="SelectedProvider" class="custom-select">
+                    @if (EmailModel.Providers != null)
                     {
-                        <span>Configured</span>
+                        @foreach (var provider in EmailModel.Providers)
+                        {
+                            <option value="@provider.Key">@provider.Label</option>
+                        }
                     }
-                </div>
-            </fieldset>
-        </div>
+                </select>
+            </div>
+
+            @if (EmailModel.SelectedProvider == EmailProvider.SendGrid)
+            {
+                <EditForm Model="@SendGridModel" OnValidSubmit="OnSendGridModelSave">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["sendgrid-key"]</label>
+                        <input class="form-control" type="text" @bind="SendGridModel.ApiKey" />
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                    </div>
+                </EditForm>
+            }
+            @if (EmailModel.SelectedProvider == EmailProvider.MailKit)
+            {
+                <EditForm Model="@MailKitModel" OnValidSubmit="OnMailKitModelSave">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["email"]</label>
+                        <input class="form-control" type="text" @bind="MailKitModel.EmailAddress" placeholder="someone@gmail.com" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["password"]</label>
+                        <input class="form-control" type="password" @bind="MailKitModel.EmailPassword" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["server"]</label>
+                        <input class="form-control" type="text" @bind="MailKitModel.EmailServer" placeholder="smtp.gmail.com" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["port"]</label>
+                        <input class="form-control" type="text" @bind="MailKitModel.Port" />
+                    </div>
+                    <div>
+                        <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                    </div>
+                </EditForm>
+            }
+        </fieldset>
+
+        <fieldset>
+            <div class="form-group">
+                <label class="form-control-label">@Localizer["send-to"]</label>
+                <input class="form-control" type="text" @bind="EmailModel.SendTo" placeholder="me@gmail.com" />
+            </div>
+            <div>
+                <input type="button" value="@Localizer["send-test-email"]" @onclick="OnCheck" class="btn btn-secondary" />
+                @if ((EmailModel.SelectedProvider == EmailProvider.MailKit && MailKitModel.Configured) ||
+              (EmailModel.SelectedProvider == EmailProvider.SendGrid && SendGridModel.Configured))
+                {
+                    <span>Configured</span>
+                }
+            </div>
+        </fieldset>
     </div>
 }
 

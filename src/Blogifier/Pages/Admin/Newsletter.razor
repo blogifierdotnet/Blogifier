@@ -1,41 +1,23 @@
 ﻿@page "/admin/newsletter"
 @using Blogifier.Components
 @inject IJsonStringLocalizer<Settings> Localizer
-
-<div class="container-fluid">
-
-    <div class="row bf-row">
-        <div class="col-lg-2 col-md col-sm bf-col"></div>
-        <div class="col-lg-8 col-md-12 col-sm-12 bf-col">
-
-            <ul class="nav nav-tabs" id="newsletter-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@Localizer["newsletter"]</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">@Localizer["email"]</a>
-                </li>
-            </ul>
-
+<div class="app-newsletter">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="emails-tab" data-toggle="pill" href="#emails" role="tab" aria-controls="home" aria-selected="true">@Localizer["newsletter"]</a>
+                <a class="nav-link" id="settings-tab" data-toggle="pill" href="#settings" role="tab" aria-controls="settings" aria-selected="false">@Localizer["settings"]</a>
+            </div>
+        </div>
+        <div class="col-9">
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane tab-subscription fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="card">
-                        <div class="card-body">
-                            <Newsletters />
-                        </div>
-                    </div>
+                <div class="tab-pane fade show active" id="emails" role="tabpanel" aria-labelledby="emails-tab">
+                    <Newsletters />
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="card">
-                        <div class="card-body">
-                            <EmailProviders />
-                        </div>
-                    </div>
+                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <EmailProviders />
                 </div>
             </div>
-
         </div>
-        <div class="col-lg-2 col-md col-sm bf-col"></div>
     </div>
-
 </div>
