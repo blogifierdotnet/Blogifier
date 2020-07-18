@@ -1,8 +1,10 @@
-﻿$color-brand: #593c8f;
+﻿/*$color-brand: #593c8f;*/
+$color-brand: #6200ee;
 $color-brand-hover: #4d2b8e;
 
-$color-gray: #d3dff1;
-$color-gray-hover: #c4d3e8;
-
-$color-text: #6a84ab;
-$color-text-hover: #4f6990;
+$color-gray-dark: #2d3436;
+$color-gray: #636e72;
+$color-gray-light: #b2bec3;
+$color-gray-lighter: #f1f4f8;
+$color-text: $color-gray;
+$color-text-hover: $color-gray-dark;

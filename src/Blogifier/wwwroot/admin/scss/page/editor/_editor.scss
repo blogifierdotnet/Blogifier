@@ -1,14 +1,14 @@
 ﻿.app-editor {
     &-container {
         width: 70rem;
-        max-width:100%;
-        margin-right:auto;
-        margin-left:auto;
+        max-width: 100%;
+        margin-right: auto;
+        margin-left: auto;
     }
 
     &-header {
-        background: #f6f8fb;
-        padding: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #f6f8fb;
     }
 
     &-title {
@@ -19,8 +19,11 @@
         .form-control {
             height: 2.5rem;
             background: 0;
-            border: 1px solid $color-gray;
+            border: 1px solid $color-gray-light;
             box-shadow: none;
+            &:focus{
+                border-color:$color-gray;
+            }
         }
     }
 
@@ -42,10 +45,10 @@
             &-icon {
                 padding: 0;
                 width: 2.5rem;
+                line-height: 1.25rem;
 
                 svg {
-                    width: 2.5rem;
-                    line-height: 2.5rem;
+                    width: 1.25rem;
                     height: 1.25rem;
                     font-size: 1rem;
                 }

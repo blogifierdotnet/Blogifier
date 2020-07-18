@@ -7,13 +7,14 @@
 @import "layout/nav";
 
 @import "components/buttons";
+@import "components/dropdowns";
 @import "components/tooltips";
 
 @import "page/dashboard/posts";
 @import "page/dashboard/widgets";
 @import "page/dashboard/clock";
-@import "page/dashboard/profile";
-@import "page/dashboard/counters"; 
+@import "page/dashboard/counters";
+@import "page/dashboard/analytics"; 
 
 @import "page/editor/editor";
    

@@ -1,10 +1,15 @@
 ﻿
 .app-nav {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    height: 100%;
-    display: flex;
+    background-color: $color-brand;
+
+    &-list {
+        padding: 0;
+        margin-top: 0;
+        margin-bottom:0;
+        list-style: none;
+        height: 100%;
+        display: flex;
+    }
 
     .app-nav-seperate-right {
         &::before {
@@ -72,31 +77,28 @@
         }
 
         &-content {
-            margin-right: .5rem;
             margin-top: .5rem;
             width: 16rem;
-            border: 0;
-            box-shadow: 0 0 10rem rgba(#000, .3);
             padding: 2rem;
         }
 
         &-avatar {
             border-radius: 100%;
             border: 2px solid $color-gray;
-            width:4rem;
-            height:4rem;
-            display:block;
-            margin:0 auto 1rem;
+            width: 4rem;
+            height: 4rem;
+            display: block;
+            margin: 0 auto 1rem;
         }
 
         &-name {
-            font-weight:500;
-            line-height:1.25;
+            font-weight: 500;
+            line-height: 1.25;
         }
 
         &-email {
-            font-size:.75rem;
-            color:#666;
+            font-size: .75rem;
+            color: #666;
         }
 
         &-info {
@@ -123,7 +125,7 @@
                 display: block;
                 position: relative;
                 font-size: .875rem;
-                font-weight:500;
+                font-weight: 500;
 
                 &:hover {
                     color: $color-brand;

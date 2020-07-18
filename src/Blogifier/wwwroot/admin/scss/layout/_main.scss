@@ -1,5 +1,4 @@
-﻿
-html {
+﻿html {
     height: 100%;
 }
 
@@ -7,14 +6,18 @@ body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
+    cursor:default;
 }
 
 .app {
+
+    &-content {
+        padding-top:2rem;
+        padding-bottom:4rem;
+    }
 }
 
-.app-content {
-}
-
-.app-sidebar {
-    background-color: $color-brand;
+.container {
+    width: 70rem;
+    max-width: 100%;
 }

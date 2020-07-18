@@ -13,16 +13,16 @@
 
 .add-new-container .btn.add-new {
     color: #fff;
-    background-color: #5731b3;
-    border-color: #1861ac;
+    background-color: #6200ee;
+    border-color: #6200ee;
     padding: 10px 5px;
     float: right;
 }
 
-.add-new-container .btn.add-new:hover {
-    border-color: #492997;
-    background-color: #492997;
-}
+    .add-new-container .btn.add-new:hover {
+        border-color: #6200ee;
+        background-color: #6200ee;
+    }
 
 
 .modal-profile {
@@ -77,7 +77,7 @@
 }
 
 .ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
-    stroke: #5731B3;
+    stroke: #6200ee;
 }
 
 .ct-bar {

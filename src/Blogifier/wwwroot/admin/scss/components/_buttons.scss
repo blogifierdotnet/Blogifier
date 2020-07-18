@@ -5,7 +5,13 @@
     }
 
     &-gray {
-        @include makebutton(#6a84ab, #4f6990, $color-gray, $color-gray-hover);
+        @include makebutton(#fff, #fff, $color-gray, $color-gray-dark);
+        border: 0;
+    }
+
+
+    &-light {
+        @include makebutton($color-gray, $color-gray, $color-gray-lighter, #e4e8ee);
         border: 0;
     }
 }

@@ -52,7 +52,7 @@
                 <button class="btn btn-light dropdown-toggle" type="button" id="filterByStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>@FilterLabel</span>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="filterByStatus">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="filterByStatus">
                     <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@Localizer["all"]</button>
                     <button @onclick="(async ()=> await Filter(PublishedStatus.Drafts))" class="dropdown-item">@Localizer["draft", true]</button>
                     <button @onclick="(async ()=> await Filter(PublishedStatus.Published))" class="dropdown-item">@Localizer["published"]</button>

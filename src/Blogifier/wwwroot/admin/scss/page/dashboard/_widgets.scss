@@ -1,22 +1,16 @@
 ﻿.app-dashboard-widgets {
-    padding: 2rem !important;
 }
 
 .app-widget {
-    background: #f1f4f8;
+    background: $color-gray-lighter;
     border-radius: .25rem;
-    position: relative;
-    padding: 2rem;
+
+    &-body {
+        position: relative;
+        padding: 1rem;
+    }
 
     &:not(:last-child) {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 }
-
-
-.app-widget-profile {
-}
-
-.app-widget-stats {
-}
- 

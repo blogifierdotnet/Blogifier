@@ -4,19 +4,7 @@
 @if (Labels != null)
 {
     <div class="app-widget app-widget-analytics">
-        <div class="chart-card">
-            <div class="input-group">
-                <select @bind="SelectedChartOption">
-                    @if (ChartOptions != null)
-                    {
-                        @foreach (var item in ChartOptions)
-                        {
-                            <option value="@item.Id">@item.Label</option>
-                        }
-                    }
-                </select>
-            </div>
-
+        <div class="app-widget-body">
             @if (SelectedChartOption == ChartSelector.Week)
             {
                 <Chart Type="ChartType.Bar" Labels="@Labels">
@@ -29,6 +17,15 @@
                     <Series Values="@Values" />
                 </Chart>
             }
+            <select @bind="SelectedChartOption" class="custom-select">
+                @if (ChartOptions != null)
+                {
+                    @foreach (var item in ChartOptions)
+                    {
+                        <option value="@item.Id">@item.Label</option>
+                    }
+                }
+            </select>
         </div>
     </div>
 }
