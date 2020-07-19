@@ -1,6 +1,7 @@
 ﻿@page "/admin/settings"
 @using Blogifier.Components
 @using Blogifier.Components.Settings
+@using Blogifier.Components.Profile
 @inject IJsonStringLocalizer<Settings> Localizer
 <div class="app-settings">
     <div class="row">
@@ -58,11 +59,11 @@
                 </div>
                 <div class="tab-pane fade" id="tab-settings-profile" role="tabpanel">
                     <div class="app-settings-title">@Localizer["profile"]</div>
-                    @* HERE *@
+                    <ProfileAuthor />
                     <div class="app-settings-title">@Localizer["social-accounts"]</div>
-                    @* HERE *@
+                    <SocialAccounts Level="author" />
                     <div class="app-settings-title">@Localizer["change-password"]</div>
-                    @* HERE *@
+                    <ProfilePassword />
                 </div>
                 <div class="tab-pane fade" id="tab-settings-themes" role="tabpanel">
                     <Themes />
