@@ -1,16 +1,59 @@
 ﻿.app-settings {
     .nav-pills {
         padding-right: 1rem;
+
+        .nav-link {
+            .bi-gear, .bi-link-45deg, .bi-person {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            padding-right: 0;
+            margin: -2rem -1rem 2rem;
+            background: $color-gray-lighter;
+
+            &.show {
+                display: block;
+            }
+
+            .nav-link {
+                color: $color-gray;
+                font-weight: 500;
+                height: 3rem;
+                flex: 1;
+
+                svg {
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:hover {
+                    color: $color-gray-dark;
+                }
+
+                &.active {
+                    background: none;
+                    color: $color-brand;
+
+                    &:hover {
+                        color: $color-brand;
+                    }
+                }
+            }
+        }
     }
 
     &-title {
         font-size: 1.25rem;
         font-weight: 500;
-        border-bottom: 1px solid $color-gray-light;
-        margin-bottom: 1rem;
-        line-height: 1;
-        padding-bottom: .5rem;
+        margin-bottom: .5rem;
+        line-height: 2.5rem;
+        height: 2.5rem;
         color: $color-gray-dark;
+        text-transform: uppercase;
+        position: relative;
 
         &:not(:first-child) {
             margin-top: 3rem;

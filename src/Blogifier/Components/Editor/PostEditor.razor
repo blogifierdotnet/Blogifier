@@ -13,10 +13,10 @@
 @if (Post != null)
 {
     <div class="app-editor-header">
-        <div class="d-flex">
+        <div class="d-lg-flex">
             @if (Post != null)
             {
-                <div class="app-editor-title">
+                <div class="app-editor-title mb-3 mb-lg-0 pr-0 pr-lg-3">
                     <input type="text" class="form-control" @bind="Post.Title" name="title" placeholder="@Localizer["post-title"]" autocomplete="off" autofocus />
                 </div>
             }

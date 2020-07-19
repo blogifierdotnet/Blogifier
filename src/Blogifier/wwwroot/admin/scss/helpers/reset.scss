@@ -15,6 +15,7 @@ a {
     .nav-link {
         color: $color-gray;
         font-weight: 500;
+        position: relative;
 
         &:hover {
             color: $color-gray-dark;
@@ -27,6 +28,25 @@ a {
             &:hover {
                 color: #fff;
             }
+        }
+    }
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .nav-link-name {
+        padding-left: 2rem;
+    }
+
+    @media screen and (max-width: 767px) {
+        .nav-link-name {
+            display: none;
         }
     }
 }

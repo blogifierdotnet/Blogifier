@@ -3,10 +3,10 @@
 @using Blogifier.Components.Dashboard
 
 <div class="app-dashboard row no-gutters">
-    <div class="app-dashboard-posts col-8">
+    <div class="app-dashboard-posts col-lg-8">
         <PostListWidget />
     </div>
-    <div class="app-dashboard-widgets col-4">
+    <div class="app-dashboard-widgets col-lg-4">
         <ProfileWidget />
         <Counters @ref="CountersInstance" OnUpdate="UpdateHandler" />
         <Analytics />

@@ -3,13 +3,13 @@
 @inject IJsonStringLocalizer<Settings> Localizer
 <div class="app-newsletter">
     <div class="row">
-        <div class="col-3">
+        <div class="col-lg-3 mb-lg-0 mb-5">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="emails-tab" data-toggle="pill" href="#emails" role="tab" aria-controls="home" aria-selected="true">@Localizer["newsletter"]</a>
                 <a class="nav-link" id="settings-tab" data-toggle="pill" href="#settings" role="tab" aria-controls="settings" aria-selected="false">@Localizer["settings"]</a>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-lg-9">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="emails" role="tabpanel" aria-labelledby="emails-tab">
                     <Newsletters />
