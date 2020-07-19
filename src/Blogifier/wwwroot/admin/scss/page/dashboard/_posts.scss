@@ -2,7 +2,7 @@
 
 .app-posts {
     padding-right: 3rem;
-    margin-bottom:3rem;
+    margin-bottom: 3rem;
     /* TOOLBAR */
     &-toolbar {
         padding-bottom: 1rem;
@@ -22,7 +22,7 @@
             &::after {
                 vertical-align: top;
                 transform: translate(-50%,-50%);
-                position: absolute; 
+                position: absolute;
                 top: 50%;
                 left: 50%;
             }
@@ -266,6 +266,21 @@
                 height: .875rem;
                 fill: $color-gray;
             }
+        }
+    }
+
+    @media screen and (max-width:767px) {
+        .app-posts-item-link {
+            font-size: .875rem;
+        }
+
+        .app-posts-selectall, .app-posts-item-select {
+            width: 1rem;
+            margin-right: .5rem;
+        }
+
+        .app-posts-item-external, .app-posts-item-status, .app-posts-item-featured, .app-posts-item-icon {
+            width: 1.5rem;
         }
     }
 }

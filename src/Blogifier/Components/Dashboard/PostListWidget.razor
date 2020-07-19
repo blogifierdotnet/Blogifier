@@ -13,7 +13,7 @@
     else
     {
         <div class="app-posts-toolbar d-flex">
-            <div class="app-posts-selectall custom-control custom-checkbox mr-3" data-toggle="tooltip" title="Select All">
+            <div class="app-posts-selectall custom-control custom-checkbox mr-md-3" data-toggle="tooltip" title="Select All">
                 <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="custom-control-input" id="EXAMPLESELECTALL">
                 <label class="custom-control-label" for="EXAMPLESELECTALL"><span class="sr-only">Select All</span></label>
             </div>
@@ -76,7 +76,7 @@
                         string pubDate = post.IsPublished ? post.Published.ToFriendlyShortDateString() : "Draft";
                         string featured = post.Featured ? "is-featured" : "";
                     }
-                    <div class="app-posts-item-select custom-control custom-checkbox mr-3">
+                    <div class="app-posts-item-select custom-control custom-checkbox mr-md-3">
                         <input type="checkbox" @bind="post.Selected" class="custom-control-input" id="EXAMPLE_@(post.Id)">
                         <label class="custom-control-label" for="EXAMPLE_@(post.Id)"><span class="sr-only">Select All</span></label>
                     </div>
