@@ -15,4 +15,10 @@
         min-width: 10rem;
         margin: 0;
     }
+
+    @media screen and (max-width:991px) {
+        li, label {
+            display: block;
+        }
+    }
 }

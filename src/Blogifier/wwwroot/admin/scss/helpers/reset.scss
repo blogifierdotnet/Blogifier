@@ -49,4 +49,39 @@ a {
             display: none;
         }
     }
+
+    @media screen and (max-width: 767px) {
+        padding-right: 0;
+        margin: -2rem -1rem 2rem;
+        background: $color-gray-lighter;
+
+        &.show {
+            display: block;
+        }
+
+        .nav-link {
+            color: $color-gray;
+            font-weight: 500;
+            height: 3rem;
+            flex: 1;
+
+            svg {
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            &:hover {
+                color: $color-gray-dark;
+            }
+
+            &.active {
+                background: none;
+                color: $color-brand;
+
+                &:hover {
+                    color: $color-brand;
+                }
+            }
+        }
+    }
 }
