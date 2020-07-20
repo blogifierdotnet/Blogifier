@@ -10,30 +10,30 @@
     <EditForm Model="@Author" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <fieldset>
-            <div>
-                <label>@Localizer["user-name"]</label>
-                <input type="text" @bind="Author.DisplayName" name="display-name" />
-            </div>
-            <div>
-                <label>@Localizer["email"]</label>
-                <input type="text" @bind="Author.Email" name="e-mail" />
-            </div>
-            <div>
-                <label>@Localizer["user-bio"]</label>
-                <textarea class="form-control" rows="3" @bind="Author.Bio" name="bio" />
-            </div>
+        <div class="form-group">
+            <label class="form-control-label">@Localizer["user-name"]</label>
+            <input type="text" class="form-control" @bind="Author.DisplayName" name="display-name" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">@Localizer["email"]</label>
+            <input type="email" class="form-control" @bind="Author.Email" name="e-mail" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">@Localizer["user-bio"]</label>
+            <textarea class="form-control" rows="3" @bind="Author.Bio" name="bio" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">@Localizer["avatar"]</label>
             <div class="input-group">
-                <label>@Localizer["avatar"]</label>
                 <input type="text" class="form-control txt-upload" @bind="Author.Avatar" name="avatar" id="avatar" readonly="" />
-                <span class="input-group-btn">
-                    <button class="btn btn-secondary btn-upload" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @Localizer["select"]</button>
+                <span class="input-group-append">
+                    <button class="btn btn-outline-secondary px-md-4" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @Localizer["select"]</button>
                 </span>
             </div>
-            <div class="input-group save-profile">
-                <button type="submit" class="btn btn-primary btn-main">@Localizer["save"]</button>
-            </div>
-        </fieldset>
+        </div>
+        <div class="form-submit-button">
+            <button type="submit" class="btn btn-brand">@Localizer["save"]</button>
+        </div>
     </EditForm>
 }
 

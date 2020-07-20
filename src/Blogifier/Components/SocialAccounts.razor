@@ -3,12 +3,12 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject CustomHttpClient Http
 
+<div class="app-settings-title">@Localizer["social-accounts"]</div>
 @if (SocialFields != null)
 {
     <div class="app-social">
 
         <EditForm Model="@CurrentField" OnValidSubmit="Save">
-            <div class="app-settings-title">Add Social Links</div>
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -26,7 +26,6 @@
 
         @if (SocialFields.Any())
         {
-            <div class="app-settings-title">Social Links</div>
             <ul class="app-social-list" aria-label="drafts">
                 @foreach (var field in SocialFields)
                 {
@@ -56,7 +55,7 @@
         }
         else
         {
-            <div class="notfound" style="margin-left: 20px">@Localizer["empty"]</div>
+            <div>@Localizer["empty"]</div>
         }
     </div>
 }
