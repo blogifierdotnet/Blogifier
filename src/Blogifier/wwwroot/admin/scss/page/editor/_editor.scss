@@ -6,10 +6,6 @@
         margin-left: auto;
     }
 
-    &-header {
-        padding-bottom: 2rem;
-        border-bottom: 1px solid #f6f8fb;
-    }
 
     &-title {
         flex: 1;
@@ -21,22 +17,25 @@
             background: 0;
             border: 1px solid $color-gray-light;
             box-shadow: none;
-            &:focus{
-                border-color:$color-gray;
+
+            &:focus {
+                border-color: $color-gray;
             }
         }
     }
 
     &-actions {
+        padding-bottom: 3.5rem;
+
 
         .btn {
             height: 2.5rem;
             line-height: 2.5rem;
-            width: 7rem;
             padding: 0;
             text-transform: uppercase;
             font-weight: 500;
             font-size: .875rem;
+            flex: 1;
 
             &:not(:last-child) {
                 margin-right: .25rem;
@@ -46,6 +45,7 @@
                 padding: 0;
                 width: 2.5rem;
                 line-height: 1.25rem;
+                flex: none;
 
                 svg {
                     width: 1.25rem;
@@ -53,6 +53,20 @@
                     font-size: 1rem;
                 }
             }
+        }
+    }
+
+    &-details {
+        background: $color-gray-lighter;
+        padding: 1rem;
+        border-radius: .25rem;
+
+        .form-control {
+            background: none;
+        }
+
+        .btn-outline-secondary {
+            border-color: #ced4da;
         }
     }
 }
