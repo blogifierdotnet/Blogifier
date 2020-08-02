@@ -111,7 +111,7 @@
     {
         try
         {
-            await Http.RemoveAsync($"customfields/{id}", Request);
+            await Http.RemoveAsync($"customfields/remove/{id}", Request);
             Toaster.Success(Localizer["completed"]);
             await Load();
         }
@@ -145,7 +145,7 @@
                     AuthorId = existing.AuthorId,
                     Content = existing.Content
                 };
-                await Http.PostJsonAsync<SocialField>($"customfields", Request, toUpdate);
+                await Http.PostJsonAsync<SocialField>($"customfields/socialaccounts", Request, toUpdate);
                 Toaster.Success(Localizer["completed"]);
                 await Load();
             }

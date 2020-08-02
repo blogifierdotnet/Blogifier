@@ -92,6 +92,7 @@ namespace Blogifier.Core.Api
                 {
                     var existing = _data.CustomFields.Single(f => f.Id == id);
                     _data.CustomFields.Remove(existing);
+                    _data.Complete();
                 }
                 catch (Exception ex)
                 {
