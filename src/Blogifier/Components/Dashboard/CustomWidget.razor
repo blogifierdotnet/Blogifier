@@ -12,7 +12,7 @@
     <div class="app-widget app-widget-custom">
         <div class="card-body">
             @((MarkupString)@FieldValue.MdToHtml())
-            <button class="btn primary" style="float:right" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>
+            <button class="btn primary" style="float:right; position: relative; top: -20px" @onclick="ShowEditor"><span class="oi oi-pencil"></span></button>
         </div>
     </div>
 }
@@ -22,12 +22,7 @@
     <div class="editor-modal-bg">
         <div class="editor-modal-content">
             <div class="modal-actions">
-                <ul class="nav nav-tabs" id="post-edit-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="true">@Localizer["custom-field"]</a>
-                    </li>
-                </ul>
-                <div class="btn-group post-options" role="group" aria-label="Post options">
+                <div class="btn-group post-options" style="position: relative" role="group" aria-label="Post options">
                     <button class="btn btn-secondary" @onclick="Save" @onclick:preventDefault>
                         <span class="oi oi-check"></span> @Localizer["save"]
                     </button>
@@ -36,7 +31,7 @@
                     </button>
                 </div>
             </div>
-            <div class="profile-outer">
+            <div class="profile-outer" style="padding: 10px; width: 100%; height: 410px">
                 <MarkdownEditor Content="@FieldValue" />
             </div>
         </div>
