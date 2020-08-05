@@ -1,5 +1,9 @@
 ﻿@inject IJsonStringLocalizer<Settings> Localizer
 @inject IJSRuntime JSRuntime
+
+@inject CustomHttpClient Http
+@inject IHttpContextAccessor HttpContextAccessor
+@inject NavigationManager NavigationManager
 <nav class="app-nav">
     <ul class="app-nav-list container">
         <li>
@@ -31,15 +35,25 @@
                 <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 01-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 01.872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 012.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 012.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 01.872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 01-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 01-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 100-5.86 2.929 2.929 0 000 5.858z" clip-rule="evenodd" />
                 </svg>
-                
+
             </NavLink>
         </li>
         <li class="app-nav-profile dropdown">
             <button class="app-nav-profile-button" type="button" id="profileDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="app-nav-profile-button-img" width="32" src="/data/admin/avatar.png" alt="Author.DisplayName">
+                @if (Author != null)
+                {
+                    <img class="app-nav-profile-button-img" width="32" src="@Author.Avatar" alt="@Author.DisplayName">
+                }
             </button>
             <div class="app-nav-profile-content dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdownMenu">
-                <Blogifier.Components.Profile.ProfileInfo />
+                <div class="app-nav-profile-info">
+                    @if (Author != null)
+                    {
+                        <img class="app-nav-profile-avatar" width="64" src="@Author.Avatar" alt="Author.DisplayName">
+                        <span class="app-nav-profile-name">@Author.DisplayName</span>
+                        <span class="app-nav-profile-email">@Author.Email</span>
+                    }
+                </div>
                 <ul class="app-nav-profile-links">
                     <li>
                         <NavLink href="admin/settings">
@@ -81,6 +95,23 @@
     //{
     //    collapseNavMenu = !collapseNavMenu;
     //}
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected Author Author { get; set; }
+    protected HttpRequest Request { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Request = HttpContextAccessor.HttpContext.Request;
+        var authState = await AuthenticationStateTask;
+
+        if (authState == null || !authState.User.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+
+        Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
