@@ -85,6 +85,7 @@ namespace Blogifier.Core.Extensions
                 new CultureInfo("es-ES"),
                 new CultureInfo("pt-BR"),
                 new CultureInfo("ru-RU"),
+                new CultureInfo("sv-SE"),
                 new CultureInfo("zh-cn"),
                 new CultureInfo("zh-tw")
             };
