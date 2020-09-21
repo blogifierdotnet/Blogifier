@@ -1,7 +1,7 @@
 var subscribeClick = function () {
     var email = $('#txtEmail').val();
     if (email) {
-        subscribe("newsletter/subscribe", email);
+        subscribe("api/newsletters/subscribe", email);
     }
     return false;
 }

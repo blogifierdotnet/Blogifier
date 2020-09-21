@@ -1,7 +1,7 @@
 $('#blog-subscribe').on('click', function () {
     var email = $('#txtEmail').val();
     if (email) {
-        subscribe("newsletter/subscribe", email);
+        subscribe("api/newsletters/subscribe", email);
     }
     return false;
 });
@@ -18,7 +18,7 @@ var subscribe = function (url, email) {
         var obj = { Email: email, Ip: all };
         var options = {
             url: "/" + url,
-            type: "POST",
+            type: "PUT",
             data: JSON.stringify(obj),
             contentType: "application/json",
             dataType: "html",
@@ -27,6 +27,29 @@ var subscribe = function (url, email) {
         };
         $.ajax(options);
     }); 
+}
+
+$('#blog-unsubscribe').on('click', function () {
+    var email = $('#txtEmail').val();
+    if (email) {
+        unsubscribe(email);
+    }
+    return false;
+});
+
+var unsubscribe = function (email) {
+
+    var obj = { Email: email };
+    var options = {
+        url: "/api/newsletters/unsubscribe?email=" + email,
+        type: "PUT",
+        data: JSON.stringify(obj),
+        contentType: "application/json",
+        dataType: "html",
+        success: done,
+        error: done
+    };
+    $.ajax(options);
 }
 
 var done = function (data) {

@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

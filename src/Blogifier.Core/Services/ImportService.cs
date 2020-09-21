@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Data;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;

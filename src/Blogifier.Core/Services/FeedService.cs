@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Helpers;
+using Blogifier.Models;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;

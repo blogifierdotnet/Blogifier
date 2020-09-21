@@ -1,6 +1,6 @@
 using Blogifier.Core;
 using Blogifier.Core.Extensions;
-using Blogifier.Widgets;
+using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -34,7 +34,7 @@ namespace Blogifier
             services.AddBlogLocalization();
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-            services.AddFeatureManagement().AddFeatureFilter<EmailFeatureFilter>();
+            services.AddFeatureManagement().AddFeatureFilter<EmailConfiguredFilter>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews().AddViewLocalization(); 
@@ -46,8 +46,8 @@ namespace Blogifier
 
             services.AddServerSideBlazor();
 
-            //services.AddHttpContextAccessor();
-            
+            services.AddHttpContextAccessor();
+
             services.AddToaster(config =>
             {
                 config.PositionClass = Defaults.Classes.Position.BottomRight;
@@ -85,6 +85,7 @@ namespace Blogifier
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("AllowOrigin");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

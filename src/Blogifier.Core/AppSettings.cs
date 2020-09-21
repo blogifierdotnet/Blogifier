@@ -13,6 +13,7 @@ namespace Blogifier.Core
         public static bool SeedData { get; set; }
 
         public static string SiteRoot { get; set; } = "/";
+        public static string SiteBaseUrl { get; set; }
 
         public static string WebRootPath { get; set; }
         public static string ContentRootPath { get; set; }

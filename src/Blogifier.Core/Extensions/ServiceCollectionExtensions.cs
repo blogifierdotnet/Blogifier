@@ -1,6 +1,8 @@
 ﻿using Askmethat.Aspnet.JsonLocalizer.Extensions;
+using Blogifier.Core.Api;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -10,8 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Microsoft.FeatureManagement;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -40,7 +40,9 @@ namespace Blogifier.Core.Extensions
             services.AddTransient<IImportService, ImportService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IWebService, WebService>();
-            services.AddTransient<IEmailService, SendGridService>();
+            services.AddTransient<INewsletterService, NewsletterService>();
+
+            services.AddSingleton<CustomHttpClient>();
 
             services.AddTransient<UserManager<AppUser>>();
 

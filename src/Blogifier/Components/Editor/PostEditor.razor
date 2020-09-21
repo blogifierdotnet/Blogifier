@@ -1,0 +1,268 @@
+﻿@using Microsoft.AspNetCore.WebUtilities
+
+@inject IJsonStringLocalizer<PostEditor> Localizer
+@inject IConfiguration Configuration
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+@inject IToaster Toaster
+@inject INewsletterService NewsletterService
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject CustomHttpClient Http
+
+@if (Post != null)
+{
+    <div class="row">
+        <div class="col-lg-9">
+            @if (Post != null)
+            {
+                <div class="app-editor-title mb-3 mb-lg-0">
+                    <input type="text" class="form-control" @bind="Post.Title" name="title" placeholder="@Localizer["post-title"]" autocomplete="off" autofocus />
+                </div>
+            }
+            <MarkdownEditor Content="@Post.Content" />
+        </div>
+        <div class="col-lg-3">
+            <div class="app-editor-sidebar">
+                <div class="app-editor-actions d-flex">
+
+                    @if (Post.Id > 0)
+                    {
+                        <button class="btn btn-icon btn-gray" @onclick="(() => Remove(Post.Id))" title="@Localizer["delete"]">
+                            <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                        </button>
+                    }
+
+                    @if (Post.Id == 0)
+                    {
+                        <button type="button" class="btn btn-gray" @onclick="() => Save()" @onclick:preventDefault>@Localizer["save"]</button>
+                        <button type="button" class="btn btn-brand" @onclick="() => Publish()">@Localizer["publish"]</button>
+                    }
+                    else
+                    {
+                        if (Post.Published > DateTime.MinValue)
+                        {
+                            <button type="button" class="btn btn-gray" @onclick="() => Unpublish()" @onclick:preventDefault>@Localizer["unpublish"]</button>
+                            <button type="button" class="btn btn-brand" @onclick="() => Save()">@Localizer["save"]</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-gray" @onclick="() => Save()" @onclick:preventDefault>@Localizer["save"]</button>
+                            <button type="button" class="btn btn-brand" @onclick="() => Publish()">@Localizer["publish"]</button>
+                        }
+                    }
+
+                </div>
+                <div class="app-editor-details">
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["description"]</label>
+                        <textarea @bind="Post.Description" class="form-control" rows="5" name="description" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">@Localizer["categories", true]</label>
+                        <input @bind="Post.Categories" type="text" class="form-control" />
+                    </div>
+                    @if (Post.Id > 0)
+                    {
+                        <div class="form-group mb-0">
+                            <label class="form-control-label">@Localizer["cover"]</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly="" />
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button"> @Localizer["select"]</button>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+    [Parameter]
+    public int PostId { get; set; }
+    [Parameter]
+    public EventCallback<string> OnUpdate { get; set; }
+
+    protected HttpRequest Request { get; set; }
+    protected string Cover { get; set; }
+    protected PostItem Post { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Request = HttpContextAccessor.HttpContext.Request;
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var param))
+        {
+            PostId = int.Parse(param.First());
+        }
+
+        if (PostId > 0)
+        {
+            Post = await Http.GetJsonAsync<PostItem>($"posts/{PostId}?format=md", Request);
+        }
+        else
+        {
+            var blog = await Http.GetJsonAsync<PostItem>($"customfields/blogsettings", Request);
+            Post = new PostItem { Cover = blog.Cover, Content = "", Title = "" };
+        }
+        Cover = $"background-image: url({AppSettings.SiteRoot}{Post.Cover})";
+        StateHasChanged();
+    }
+
+    protected async Task SavePost(PostAction postAction)
+    {
+        try
+        {
+            var content = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
+            Post.Content = content;
+
+            if (string.IsNullOrEmpty(Post.Title))
+            {
+                Toaster.Error("Post title required");
+            }
+            else if (string.IsNullOrEmpty(Post.Content))
+            {
+                Toaster.Error("Post content required");
+            }
+            else
+            {
+                PostItem saved;
+                if (Post.Id == 0)
+                {
+                    var authState = await AuthenticationStateTask;
+                    Post.Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
+
+                    Post.Slug = GetSlug(Post.Title);
+                    Post.Description = Post.Title;
+
+                    await Http.PostJsonAsync<PostItem>($"posts", Request, Post);
+                    var model = await Http.GetJsonAsync<PostModel>($"posts/byslug/{Post.Slug}?format=md", Request);
+                    saved = model.Post;
+                }
+                else
+                {
+                    var item = await Http.GetJsonAsync<PostItem>($"posts/{Post.Id}?format=md", Request);
+
+                    item.Content = Post.Content;
+                    item.Title = Post.Title;
+                    item.Description = Post.Description;
+                    item.Categories = Post.Categories;
+
+                    if (postAction == PostAction.Unpublish)
+                        item.Published = DateTime.MinValue;
+
+                    if (postAction == PostAction.Publish)
+                        item.Published = SystemClock.Now();
+
+                    await Http.PutJsonAsync<PostItem>($"posts", Request, item);
+                    saved = await Http.GetJsonAsync<PostItem>($"posts/{item.Id}?format=md", Request);
+                }
+
+                if (saved != null && saved.Id > 0)
+                {
+                    if (postAction == PostAction.Publish)
+                    {
+                        var cnt = await Http.GetJsonAsync<int>($"notifications/sendnewsletters/{saved.Id}", Request);
+                        if (cnt > 0)
+                        {
+                            Toaster.Success(string.Format(Localizer["email-sent-count"], cnt));
+                        }
+                    }
+                    Toaster.Success("Saved");
+                    Post = saved;
+                    PostId = Post.Id;
+                    StateHasChanged();
+                }
+                else
+                {
+                    Toaster.Error("Post was not saved");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Toaster.Error(ex.Message);
+        }
+    }
+
+    protected async Task Publish()
+    {
+        Post.Published = SystemClock.Now();
+        await OnUpdate.InvokeAsync("publish");
+        await SavePost(PostAction.Publish);
+    }
+
+    protected async Task Unpublish()
+    {
+        await OnUpdate.InvokeAsync("unpublish");
+        await SavePost(PostAction.Unpublish);
+    }
+
+    protected async Task Save()
+    {
+        await OnUpdate.InvokeAsync("save");
+        await SavePost(PostAction.Save);
+    }
+
+    protected async Task Remove(int id)
+    {
+        try
+        {
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"{Localizer["confirm-delete"]}");
+            if (confirmed)
+            {
+                var item = await Http.GetJsonAsync<PostItem>($"posts/{id}", Request);
+                await Http.RemoveAsync($"posts/remove/{id}", Request);
+
+                Toaster.Success("Removed");
+                NavigationManager.NavigateTo("/admin");
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Toaster.Error(ex.Message);
+        }
+    }
+
+    protected string GetSlug(string title)
+    {
+        string slug = title.ToSlug();
+        PostItem item = GetBySlug(slug);
+        if (item != null)
+        {
+            for (int i = 2; i < 100; i++)
+            {
+                slug = $"{slug}{i}";
+                if (GetBySlug(slug) == null)
+                {
+                    return slug;
+                }
+            }
+        }
+        return slug;
+    }
+
+    private PostItem GetBySlug(string slug)
+    {
+        try
+        {
+            var result = AsyncHelper.RunSync(() => Http.GetJsonAsync<PostModel>($"posts/byslug/{slug}", Request));
+            return result.Post;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+}

@@ -1,8 +1,6 @@
-﻿using Blogifier.Core.Data;
-using Blogifier.Core.Helpers;
+﻿using Blogifier.Core.Helpers;
+using Blogifier.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Services
