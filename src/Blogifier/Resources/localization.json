@@ -1096,6 +1096,12 @@
       "ru-RU": "Порт"
     }
   },
+  "smtp-email": {
+    "Values": {
+      "en-US": "SMTP Email",
+      "ru-RU": "Адрес электронной почты (SMTP)"
+    }
+  },
   "send-test-email": {
     "Values": {
       "en-US": "Send test email",

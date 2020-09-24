@@ -9,7 +9,7 @@ namespace Blogifier.Core
         public static string Avatar { get; set; }
         public static bool DemoMode { get; set; }     
         public static string ImageExtensions { get; set; }
-        public static string ImportTypes { get; set; }
+        public static string ImportTypes { get; set; } = "zip,7z,xml,pdf,doc,docx,xls,xlsx,mp3,avi";
         public static bool SeedData { get; set; }
 
         public static string SiteRoot { get; set; } = "/";
