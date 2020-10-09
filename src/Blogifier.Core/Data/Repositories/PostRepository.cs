@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Helpers;
+using Blogifier.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,29 +118,43 @@ namespace Blogifier.Core.Data
         public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
         {
             var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-                       
+                                   
             var results = new List<SearchResult>();
+            var termList = term.ToLower().Split(' ').ToList();
+
             foreach (var p in GetPosts(include, author))
             {
                 var rank = 0;
                 var hits = 0;
                 term = term.ToLower();
 
-                if (p.Title.ToLower().Contains(term))
+                foreach (var termItem in termList)
                 {
-                    hits = Regex.Matches(p.Title.ToLower(), term).Count;
-                    rank += hits * 10;
-                }
-                if (p.Description.ToLower().Contains(term))
-                {
-                    hits = Regex.Matches(p.Description.ToLower(), term).Count;
-                    rank += hits * 3;
-                }
-                if (p.Content.ToLower().Contains(term))
-                {
-                    rank += Regex.Matches(p.Content.ToLower(), term).Count;
-                }
+                    if (termItem.Length < 4 && rank > 0) continue;
 
+                    if (!string.IsNullOrEmpty(p.Categories))
+                    {
+                        var catList = p.Categories.ToLower().Split(',').ToList();
+                        foreach (var catItem in catList)
+                        {
+                            if (catItem == termItem) rank += 10;
+                        }
+                    }
+                    if (p.Title.ToLower().Contains(termItem))
+                    {
+                        hits = Regex.Matches(p.Title.ToLower(), termItem).Count;
+                        rank += hits * 10;
+                    }
+                    if (p.Description.ToLower().Contains(termItem))
+                    {
+                        hits = Regex.Matches(p.Description.ToLower(), termItem).Count;
+                        rank += hits * 3;
+                    }
+                    if (p.Content.ToLower().Contains(termItem))
+                    {
+                        rank += Regex.Matches(p.Content.ToLower(), termItem).Count;
+                    }
+                }
                 if (rank > 0)
                 {
                     results.Add(new SearchResult { Rank = rank, Item = await PostToItem(p, sanitize) });
@@ -342,6 +357,7 @@ namespace Blogifier.Core.Data
         List<BlogPost> GetPosts(string include, int author)
         {
             var items = new List<BlogPost>();
+            var pubfeatured = new List<BlogPost>();
 
             if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
             {
@@ -356,7 +372,7 @@ namespace Blogifier.Core.Data
                 var featured = author > 0 ?
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
-                items = items.Concat(featured).ToList();
+                pubfeatured = pubfeatured.Concat(featured).ToList();
             }
 
             if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
@@ -364,8 +380,11 @@ namespace Blogifier.Core.Data
                 var published = author > 0 ?
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
                     _db.BlogPosts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
-                items = items.Concat(published).ToList();
+                pubfeatured = pubfeatured.Concat(published).ToList();
             }
+
+            pubfeatured = pubfeatured.OrderByDescending(p => p.Published).ToList();
+            items = items.Concat(pubfeatured).ToList();
 
             return items;
         }

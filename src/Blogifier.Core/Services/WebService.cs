@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blogifier.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -41,7 +42,7 @@ namespace Blogifier.Core.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
+                var repo = await response.Content.ReadAsAsync<Models.Github.Repository>();
 
                 int current, latest;
 
@@ -58,7 +59,7 @@ namespace Blogifier.Core.Services
 
                     if (field == null)
                     {
-                        _db.CustomFields.Add(new Data.CustomField
+                        _db.CustomFields.Add(new CustomField
                         {
                             AuthorId = 0,
                             Name = Constants.NewestVersion,
@@ -87,7 +88,7 @@ namespace Blogifier.Core.Services
                 HttpResponseMessage response = await client.GetAsync(getGithubRepoUrl());
                 if (response.IsSuccessStatusCode)
                 {
-                    var repo = await response.Content.ReadAsAsync<Data.Github.Repository>();
+                    var repo = await response.Content.ReadAsAsync<Models.Github.Repository>();
                     var zipUrl = repo.assets[0].browser_download_url;
                     var zipPath = $"{Constants.UpgradeDirectory}{Path.DirectorySeparatorChar.ToString()}{repo.tag_name}.zip";
 
@@ -125,7 +126,7 @@ namespace Blogifier.Core.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var folder = await response.Content.ReadAsAsync<List<Data.Github.GithubFile>>();
+                var folder = await response.Content.ReadAsAsync<List<Models.Github.GithubFile>>();
                 if(folder != null && folder.Count > 0)
                 {
                     foreach (var file in folder)

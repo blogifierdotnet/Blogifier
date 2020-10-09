@@ -1,52 +1,116 @@
 ﻿@inject IJsonStringLocalizer<Settings> Localizer
 @inject IJSRuntime JSRuntime
 
-<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="blog" target="_blank">
-        <img src="admin/img/logo-light.png" class="img-logo" />
-    </a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+@inject CustomHttpClient Http
+@inject IHttpContextAccessor HttpContextAccessor
+@inject NavigationManager NavigationManager
+<nav class="app-nav">
+    <ul class="app-nav-list container">
+        <li>
+            <NavLink class="app-nav-link" href="admin" Match="NavLinkMatch.All" data-toggle="tooltip" data-placement="top" title="@Localizer["dashboard"]">
+                <svg class="app-nav-svg bi bi-grid-1x2-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 1a1 1 0 011-1h5a1 1 0 011 1v14a1 1 0 01-1 1H1a1 1 0 01-1-1V1zm9 0a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V1zm0 9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5z" />
+                </svg>
+            </NavLink>
+        </li>
+        <li>
+            <a class="app-nav-link" href="admin/editor" data-toggle="tooltip" data-placement="top" title="@Localizer["new-post"]">
+                <svg class="app-nav-svg bi bi-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </li>
+        <li>
+            <NavLink class="app-nav-link" href="admin/newsletter" data-toggle="tooltip" data-placement="top" title="@Localizer["newsletter"]">
+                <svg class="app-nav-svg bi bi-newspaper" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0 2A1.5 1.5 0 011.5.5h11A1.5 1.5 0 0114 2v12a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 010 14V2zm1.5-.5A.5.5 0 001 2v12a.5.5 0 00.5.5h11a.5.5 0 00.5-.5V2a.5.5 0 00-.5-.5h-11z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd" d="M15.5 3a.5.5 0 01.5.5V14a1.5 1.5 0 01-1.5 1.5h-3v-1h3a.5.5 0 00.5-.5V3.5a.5.5 0 01.5-.5z" clip-rule="evenodd" />
+                    <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+                </svg>
+            </NavLink>
+        </li>
+        <li class="ml-auto">
+            <NavLink class="app-nav-link" href="admin/settings" data-toggle="tooltip" data-placement="top" title="@Localizer["settings"]">
+                <svg class="bi bi-gear-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 01-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 01.872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 012.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 012.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 01.872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 01-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 01-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 100-5.86 2.929 2.929 0 000 5.858z" clip-rule="evenodd" />
+                </svg>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" style="height: auto">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="admin" Match="NavLinkMatch.All" data-toggle="tooltip" data-placement="right" title="@Localizer["dashboard"]">
-                <span class="oi oi-grid-three-up" aria-hidden="true"></span>
-                <span class="nal-label">@Localizer["dashboard"]</span>
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="admin/settings" data-toggle="tooltip" data-placement="right" title="@Localizer["settings"]">
-                <span class="oi oi-cog" aria-hidden="true"></span>
-                <span class="nal-label">@Localizer["settings"]</span>
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="admin/newsletter" data-toggle="tooltip" data-placement="right" title="@Localizer["newsletter"]">
-                <span class="oi oi-envelope-closed" aria-hidden="true"></span>
-                <span class="nal-label">@Localizer["newsletter"]</span>
-            </NavLink>
+        <li class="app-nav-profile dropdown">
+            <button class="app-nav-profile-button" type="button" id="profileDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if (Author != null)
+                {
+                    <img class="app-nav-profile-button-img" width="32" src="@Author.Avatar" alt="@Author.DisplayName">
+                }
+            </button>
+            <div class="app-nav-profile-content dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdownMenu">
+                <div class="app-nav-profile-info">
+                    @if (Author != null)
+                    {
+                        <img class="app-nav-profile-avatar" width="64" src="@Author.Avatar" alt="Author.DisplayName">
+                        <span class="app-nav-profile-name">@Author.DisplayName</span>
+                        <span class="app-nav-profile-email">@Author.Email</span>
+                    }
+                </div>
+                <ul class="app-nav-profile-links">
+                    <li>
+                        <NavLink href="admin/settings">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-lines-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7 1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm2 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
+                            </svg>
+                            Edit Profile
+                        </NavLink>
+                    </li>
+                    <li>
+                        <a href="/blog/" target="_blank">
+                            <svg class="bi bi-house-door-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 10.995V14.5a.5.5 0 01-.5.5H2a.5.5 0 01-.5-.5v-7a.5.5 0 01.146-.354l6-6a.5.5 0 01.708 0l6 6a.5.5 0 01.146.354v7a.5.5 0 01-.5.5h-4a.5.5 0 01-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z" />
+                                <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5z" clip-rule="evenodd" />
+                            </svg>
+                            @Localizer["home"]
+                        </a>
+                    </li>
+                    <li>
+                        <NavLink href="account/logout">
+                            <svg class="bi bi-box-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.354 11.354a.5.5 0 000-.708L1.707 8l2.647-2.646a.5.5 0 10-.708-.708l-3 3a.5.5 0 000 .708l3 3a.5.5 0 00.708 0z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M11.5 8a.5.5 0 00-.5-.5H2a.5.5 0 000 1h9a.5.5 0 00.5-.5z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M14 13.5a1.5 1.5 0 001.5-1.5V4A1.5 1.5 0 0014 2.5H7A1.5 1.5 0 005.5 4v1.5a.5.5 0 001 0V4a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H7a.5.5 0 01-.5-.5v-1.5a.5.5 0 00-1 0V12A1.5 1.5 0 007 13.5h7z" clip-rule="evenodd" />
+                            </svg>
+                            @Localizer["sign-out"]
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
-    <ul class="nav flex-column btm-ul">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="account/logout" data-toggle="tooltip" data-placement="right" title="@Localizer["sign-out"]">
-                <span class="oi oi-account-logout" aria-hidden="true"></span>
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
+</nav>
 @code {
-    private bool collapseNavMenu = true;
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    //private bool collapseNavMenu = true;
+    //private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
+    //private void ToggleNavMenu()
+    //{
+    //    collapseNavMenu = !collapseNavMenu;
+    //}
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    protected Author Author { get; set; }
+    protected HttpRequest Request { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        collapseNavMenu = !collapseNavMenu;
+        Request = HttpContextAccessor.HttpContext.Request;
+        var authState = await AuthenticationStateTask;
+
+        if (authState == null || !authState.User.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+
+        Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

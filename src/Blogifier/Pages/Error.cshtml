@@ -1,0 +1,43 @@
+﻿@page
+@using Askmethat.Aspnet.JsonLocalizer.Localizer
+@inject IJsonStringLocalizer<Blogifier.App> Localizer
+@{
+    ViewData["Title"] = "Blogifier";
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>Blogifier - 404</title>
+    <link href="home/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+    <div class="container-fluid">
+        <div class="row bf-row">
+            <div class="col-lg-3 order-lg-1 col-md-6 order-md-1 col-sm-12 bf-col"></div>
+            <div class="col-lg-6 order-lg-2 col-md-12 order-md-3 col-sm-12 bf-col">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center">
+                            <span class="display-1 d-block">404</span>
+                            <div class="mb-4 lead">
+                                @Localizer["error-msg"]
+                            </div>
+                            <a href="blog" class="btn btn-primary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-3 col-md-6 order-md-2  col-sm-12 bf-col"></div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,19 +1,30 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using Blogifier.Models;
+using MailKit.Security;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogifier.Core.Data
 {
-	public interface ICustomFieldRepository : IRepository<CustomField>
+    public interface ICustomFieldRepository : IRepository<CustomField>
 	{
 		Task<BlogItem> GetBlogSettings();
 		Task SaveBlogSettings(BlogItem blog);
 
 		string GetCustomValue(string name);
 		Task SaveCustomValue(string name, string value);
+		Task<CustomField> SaveCustomField(CustomField field);
 
 		Task<List<SocialField>> GetSocial(int authorId = 0);
 		Task SaveSocial(SocialField socialField);
+
+		Task<EmailModel> GetEmailModel();
+		Task<SendGridModel> GetSendGridModel();
+		Task<MailKitModel> GetMailKitModel();
+
+		Task<bool> SaveEmailModel(EmailModel model);
+		Task<bool> SaveSendGridModel(SendGridModel model);
+		Task<bool> SaveMailKitModel(MailKitModel model);
 	}
 
 	public class CustomFieldRepository : Repository<CustomField>, ICustomFieldRepository
@@ -45,6 +56,21 @@ namespace Blogifier.Core.Data
 				field.Content = value;
 			}
 			await _db.SaveChangesAsync();
+		}
+
+		public async Task<CustomField> SaveCustomField(CustomField field)
+		{
+			CustomField existing = field.Id > 0 ?
+				_db.CustomFields.Where(f => f.Id == field.Id).FirstOrDefault() :
+				_db.CustomFields.Where(f => f.Name == field.Name).FirstOrDefault();
+
+			if (existing == null)
+				_db.CustomFields.Add(field);
+			else
+				existing.Content = field.Content;
+
+			await _db.SaveChangesAsync();
+			return _db.CustomFields.Where(f => f.Name == field.Name && f.AuthorId == field.AuthorId).FirstOrDefault();
 		}
 
 		#endregion
@@ -185,6 +211,125 @@ namespace Blogifier.Core.Data
 				field.Name = socialField.Name;
 			}
 			await _db.SaveChangesAsync();
+		}
+
+		#endregion
+
+		#region Email model
+
+		public async Task<EmailModel> GetEmailModel()
+        {
+			var model = new EmailModel();
+			model.Providers = new List<ProviderItem>();
+
+			model.Providers.Add(new ProviderItem { Key = EmailProvider.SendGrid.ToString(), Label = EmailProvider.SendGrid.ToString() });
+			model.Providers.Add(new ProviderItem { Key = EmailProvider.MailKit.ToString(), Label = EmailProvider.MailKit.ToString() });
+
+			var selectedProvider = GetBlogValue(Constants.EmailSelectedProvider);
+			model.SelectedProvider = string.IsNullOrEmpty(selectedProvider) ? EmailProvider.MailKit : (
+				selectedProvider == EmailProvider.MailKit.ToString() ? EmailProvider.MailKit : EmailProvider.SendGrid);
+
+			model.FromName = GetBlogValue(Constants.EmailFromName);
+			model.FromEmail = GetBlogValue(Constants.EmailFromEmail);
+
+			return await Task.FromResult(model);
+		}
+
+		public async Task<SendGridModel> GetSendGridModel()
+		{
+			var model = new SendGridModel();
+
+			var sgKey = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.EmailSendgridApiKey).FirstOrDefault();
+			model.ApiKey = sgKey == null ? "" : sgKey.Content;
+			model.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailSendgridConfigured)) ? false :
+				bool.Parse(GetBlogValue(Constants.EmailSendgridConfigured));
+
+			return await Task.FromResult(model);
+		}
+
+		public async Task<MailKitModel> GetMailKitModel()
+		{
+			var model = new MailKitModel();
+			model.EmailAddress = GetBlogValue(Constants.EmailMailKitAddress);
+			model.EmailServer = GetBlogValue(Constants.EmailMailKitServer);
+			model.EmailPassword = GetBlogValue(Constants.EmailMailKitPassword);
+			model.Port = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitPort)) ? 465 : int.Parse(GetBlogValue(Constants.EmailMailKitPort));
+
+			model.Configured = string.IsNullOrEmpty(GetBlogValue(Constants.EmailMailKitConfigured)) ? false :
+				bool.Parse(GetBlogValue(Constants.EmailMailKitConfigured));
+
+			model.Options = SecureSocketOptions.SslOnConnect;
+
+			return await Task.FromResult(model);
+		}
+
+		public async Task<bool> SaveEmailModel(EmailModel model)
+        {
+            try
+            {
+				await SaveBlogValue(Constants.EmailSelectedProvider, model.SelectedProvider.ToString());
+				await SaveBlogValue(Constants.EmailFromEmail, model.FromEmail.ToString());
+				await SaveBlogValue(Constants.EmailFromName, model.FromName.ToString());
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+            catch
+            {
+				return await Task.FromResult(false);
+            }
+		}
+
+		public async Task<bool> SaveSendGridModel(SendGridModel model)
+		{
+			try
+			{
+				await SaveBlogValue(Constants.EmailSendgridApiKey, model.ApiKey);
+				await SaveBlogValue(Constants.EmailSendgridConfigured, model.Configured.ToString());
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+			catch
+			{
+				return await Task.FromResult(false);
+			}
+		}
+
+		public async Task<bool> SaveMailKitModel(MailKitModel model)
+		{
+			try
+			{
+				await SaveBlogValue(Constants.EmailMailKitAddress, model.EmailAddress);
+				await SaveBlogValue(Constants.EmailMailKitServer, model.EmailServer);
+				await SaveBlogValue(Constants.EmailMailKitPassword, model.EmailPassword);
+				await SaveBlogValue(Constants.EmailMailKitPort, model.Port.ToString());
+				await SaveBlogValue(Constants.EmailMailKitConfigured, model.Configured.ToString());
+				await _db.SaveChangesAsync();
+				return await Task.FromResult(true);
+			}
+			catch
+			{
+				return await Task.FromResult(false);
+			}
+		}
+
+		public async Task SaveBlogValue(string name, string value)
+		{
+			var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == name).FirstOrDefault();
+			if (field == null)
+			{
+				_db.CustomFields.Add(new CustomField { Name = name, Content = value, AuthorId = 0 });
+			}
+			else
+			{
+				field.Content = value;
+			}
+			await _db.SaveChangesAsync();
+		}
+
+		private string GetBlogValue(string key)
+        {
+			var field = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == key).FirstOrDefault();
+			return field == null ? "" : field.Content;
 		}
 
 		#endregion

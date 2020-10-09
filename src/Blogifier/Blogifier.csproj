@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.1.4.0</Version>
+    <Version>1.3.4.0</Version>
     <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
@@ -11,6 +11,7 @@
     <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.2.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="BundlerMinifier.Core" Version="3.2.447" />
+    <PackageReference Include="Grunt" Version="0.1.13" />
     <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
@@ -19,19 +20,21 @@
     </PackageReference>
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="Demo.BlazorChartist" Version="0.1.0-20200124.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Blog.db" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="gruntfile.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blogifier.Widgets\Blogifier.Widgets.csproj" />
+    <ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
