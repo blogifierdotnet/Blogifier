@@ -22,7 +22,7 @@ namespace Blogifier.Core.Services
 
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(fromName, fromEmail));
-                message.To.Add(new MailboxAddress(toEmail));
+                message.To.Add(new MailboxAddress(fromName, toEmail));
                 message.Subject = subject;
 
                 var bodyBuilder = new BodyBuilder();
