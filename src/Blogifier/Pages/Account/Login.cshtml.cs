@@ -4,6 +4,7 @@ using Blogifier.Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,11 +28,13 @@ namespace Blogifier.Pages.Account
 
         SignInManager<AppUser> SignInManager;
         IDataService DataService;
+        ILogger Logger;
 
-        public LoginModel(SignInManager<AppUser> signInManager, IDataService dataService)
+        public LoginModel(SignInManager<AppUser> signInManager, IDataService dataService, ILogger<LoginModel> logger)
         {
             SignInManager = signInManager;
             DataService = dataService;
+            Logger = logger;
         }
 
         public IActionResult OnGet()
@@ -50,10 +53,12 @@ namespace Blogifier.Pages.Account
                 var result = await SignInManager.PasswordSignInAsync(UserName, Password, RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    Logger.LogWarning($"Successful login for {UserName}; Return Url: {returnUrl}");
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
+                    Logger.LogWarning($"Failed login for {UserName}");
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
@@ -70,7 +75,7 @@ namespace Blogifier.Pages.Account
             }
             else
             {
-                return Redirect("~/");
+                return Redirect("~/admin");
             }
         }
     }

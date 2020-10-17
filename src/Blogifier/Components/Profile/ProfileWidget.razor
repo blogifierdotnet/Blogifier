@@ -4,24 +4,19 @@
 @inject IJsonStringLocalizer<ProfileWidget> Localizer
 @inject NavigationManager NavigationManager
 
-
 <div class="app-widget app-notifications">
     <div class="app-notifications-clock">
         <span id="clock"></span> <span id="clock-day"></span>, <span id="clock-month"></span>
     </div>
 </div>
 
-
-
-
-
 @*@if (Author != null)
-    {
-        <img id="profile-avatar" width="32" src="@Author.Avatar" class="app-widget-profile-avatar" alt="@Author.DisplayName">
-        <span class="widget-profile-name">@Author.DisplayName</span>
-        <span class="widget-profile-email">@Author.Email</span>
-        <button class="btn btn-primary" @onclick="ShowEditor">Edit Profile</button>
-    }*@
+{
+   <img id="profile-avatar" width="32" src="@Author.Avatar" class="app-widget-profile-avatar" alt="@Author.DisplayName">
+   <span class="widget-profile-name">@Author.DisplayName</span>
+   <span class="widget-profile-email">@Author.Email</span>
+   <button class="btn btn-primary" @onclick="ShowEditor">Edit Profile</button>
+}*@
 
 @if (Edit)
 {
@@ -55,7 +50,7 @@
 
         if (authState == null || !authState.User.Identity.IsAuthenticated)
         {
-            NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+            NavigationManager.NavigateTo($"account/login?returnUrl={AppSettings.SiteRoot}admin");
         }
 
         Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);

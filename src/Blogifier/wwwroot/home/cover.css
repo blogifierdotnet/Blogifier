@@ -28,7 +28,7 @@ html,
 body {
   height: 100%;
   background-color: #666;
-  background-image: url('/home/img/sea2.webp');
+  background-image: url('img/sea2.webp');
   background-size: cover;
 }
 

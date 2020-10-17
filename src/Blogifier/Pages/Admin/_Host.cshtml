@@ -4,7 +4,8 @@
 @inject Blogifier.Core.Api.CustomHttpClient HttpClient
 @{
     AppSettings.SiteBaseUrl = $"{Request.Scheme}://{Request.Host}";
-    HttpClient.BaseAddress = new Uri($"{AppSettings.SiteBaseUrl}/api/");
+    AppSettings.SiteRoot = Url.Content("~/");
+    HttpClient.BaseAddress = new Uri($"{AppSettings.SiteBaseUrl}{AppSettings.SiteRoot}api/");
     Layout = null;
 }
 

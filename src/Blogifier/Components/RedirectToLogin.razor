@@ -5,7 +5,7 @@
         var url = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
         if (url.ToLower() != "error")
         {
-            NavigationManager.NavigateTo("account/login?ReturnUrl=/admin", true);
+            NavigationManager.NavigateTo($"account/login?ReturnUrl={AppSettings.SiteRoot}admin", true);
         }
     }
 }

@@ -108,7 +108,7 @@
         var authState = await AuthenticationStateTask;
 
         if (authState == null || !authState.User.Identity.IsAuthenticated)
-            NavigationManager.NavigateTo("account/login?returnUrl=/admin");
+            NavigationManager.NavigateTo($"account/login?returnUrl={AppSettings.SiteRoot}admin");
 
         Author = await Http.GetJsonAsync<Author>($"authors/{authState.User.Identity.Name}", Request);
     }
