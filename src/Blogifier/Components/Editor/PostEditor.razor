@@ -164,20 +164,25 @@
                     if (postAction == PostAction.Publish)
                         item.Published = SystemClock.Now();
 
-                    await Http.PutJsonAsync<PostItem>($"posts", Request, item);
+                    var responseMsg = await Http.PostJsonAsync<PostItem>($"posts", Request, item);
+                    if(!responseMsg.IsSuccessStatusCode)
+                    {
+                        throw new ApplicationException("Post was not saved");
+                    }
+
                     saved = await Http.GetJsonAsync<PostItem>($"posts/{item.Id}?format=md", Request);
                 }
 
                 if (saved != null && saved.Id > 0)
                 {
-                    if (postAction == PostAction.Publish)
-                    {
-                        var cnt = await Http.GetJsonAsync<int>($"notifications/sendnewsletters/{saved.Id}", Request);
-                        if (cnt > 0)
-                        {
-                            Toaster.Success(string.Format(Localizer["email-sent-count"], cnt));
-                        }
-                    }
+                    //if (postAction == PostAction.Publish)
+                    //{
+                    //    var cnt = await Http.GetJsonAsync<int>($"notifications/sendnewsletters/{saved.Id}", Request);
+                    //    if (cnt > 0)
+                    //    {
+                    //        Toaster.Success(string.Format(Localizer["email-sent-count"], cnt));
+                    //    }
+                    //}
                     Toaster.Success("Saved");
                     Post = saved;
                     PostId = Post.Id;
