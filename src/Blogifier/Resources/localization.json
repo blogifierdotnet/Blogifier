@@ -1075,43 +1075,59 @@
   "email-provider": {
     "Values": {
       "en-US": "Email provider",
-      "ru-RU": "Почтовый провайдер"
+      "ru-RU": "Почтовый провайдер",
+      "zh-cn": "电子邮件服务提供商",
+      "zh-tw": "電子郵件服務提供商"
     }
   },
   "sendgrid-key": {
     "Values": {
       "en-US": "Sendgrid key",
-      "ru-RU": "API код"
+      "ru-RU": "API код",
+      "zh-cn": "SendGrid API 密钥",
+      "zh-tw": "SendGrid API 密鑰"
+      
     }
   },
   "server": {
     "Values": {
       "en-US": "Server",
-      "ru-RU": "Сервер"
+      "ru-RU": "Сервер",
+      "zh-cn": "服务器",
+      "zh-tw": "服務器"
     }
   },
   "port": {
     "Values": {
       "en-US": "Port",
-      "ru-RU": "Порт"
+      "ru-RU": "Порт",
+      "zh-cn": "端口",
+      "zh-tw": "端口"
     }
   },
   "smtp-email": {
     "Values": {
       "en-US": "SMTP Email",
-      "ru-RU": "Адрес электронной почты (SMTP)"
+      "ru-RU": "Адрес электронной почты (SMTP)",
+      "zh-cn": "SMTP 电子邮件服务器",
+      "zh-tw": "SMTP 電子郵件服務器"
+      
     }
   },
   "send-test-email": {
     "Values": {
       "en-US": "Send test email",
-      "ru-RU": "Протестировать почту"
+      "ru-RU": "Протестировать почту",
+      "zh-cn": "发送测试邮件",
+      "zh-tw": "發送測試郵件"
     }
   },
   "unsubscribe": {
     "Values": {
       "en-US": "Unsubscribe",
-      "ru-RU": "Отказаться от подписки"
+      "ru-RU": "Отказаться от подписки",
+      "zh-cn": "取消订阅",
+      "zh-tw": "取消訂閱"
     }
   }
 }
