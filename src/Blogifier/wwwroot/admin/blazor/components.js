@@ -68,7 +68,7 @@ window.commonJsFunctions = {
 function getEditor() {
     var simplemde = new SimpleMDE({
         toolbar: [
-            "bold", "italic", "heading-2",
+            "bold", "italic", "heading-1", "heading-2",
             "|", "quote", "unordered-list", "ordered-list",
             "|", "link", "code",
             {
