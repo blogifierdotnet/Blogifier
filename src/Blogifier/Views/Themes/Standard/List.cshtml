@@ -39,18 +39,18 @@
                                 <span class="post-featrued-label"><i class="fa fa-star"></i>@Localizer["featured"]</span>
                             }
                         </div>
-                        <h2 class="post-title"><a href="posts/@post.Slug">@post.Title</a></h2>
+                        <h2 class="post-title"><a href="~/posts/@post.Slug">@post.Title</a></h2>
                         <div class="post-meta">
                             <a class="post-meta-author">@post.Author.DisplayName</a>
                             <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> /
                             <span><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</span> /
                             <span>
                                 <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                <a href="posts/@post.Slug#disqus_thread"></a>
+                                <a href="~/posts/@post.Slug#disqus_thread"></a>
                             </span>
                         </div>
                         <div class="post-description">@Html.Raw(post.Description)</div>
-                        <a class="post-more btn btn-rounded btn-dark" href="posts/@post.Slug">@Localizer["read"]</a>
+                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@post.Slug">@Localizer["read"]</a>
                     </article>
                 }
                 @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
@@ -59,7 +59,7 @@
                         @if (pgr.ShowOlder)
                         {
                             <li class="item item-prev">
-                                <a class="item-link" href="@pgr.LinkToOlder">
+                                <a class="item-link" href="~/@pgr.LinkToOlder">
                                     <i class="item-icon fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -67,7 +67,7 @@
                         @if (pgr.ShowNewer)
                         {
                             <li class="item item-next">
-                                <a class="item-link" href="@pgr.LinkToNewer">
+                                <a class="item-link" href="~/@pgr.LinkToNewer">
                                     <i class="item-icon fa fa-angle-right"></i>
                                 </a>
                             </li>
