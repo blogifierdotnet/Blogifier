@@ -50,7 +50,7 @@
                         @if (postModel.Older != null)
                         {
                             <li class="item item-prev">
-                                <a class="item-link" href="@postModel.Older.Slug" title="@postModel.Older.Title">
+                                <a class="item-link" href="~/posts/@postModel.Older.Slug" title="@postModel.Older.Title">
                                     <i class="item-icon fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -58,7 +58,7 @@
                         @if (postModel.Newer != null)
                         {
                             <li class="item item-next">
-                                <a class="item-link" href="@postModel.Newer.Slug" title="@postModel.Newer.Title">
+                                <a class="item-link" href="~/posts/@postModel.Newer.Slug" title="@postModel.Newer.Title">
                                     <i class="item-icon fa fa-angle-right"></i>
                                 </a>
                             </li>
