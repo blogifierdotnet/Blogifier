@@ -1,0 +1,42 @@
+﻿@layout LoginLayout
+@page "/admin/login"
+@inject HttpClient Http
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Resource> localizer
+@{ 
+	string youCanSignIn = localizer["you-can-sign-in"];
+}
+
+<div class="bf-account-header">
+	<h1>@localizer["welcome"]!</h1>
+	<p>@((MarkupString)youCanSignIn).</p>
+</div>
+
+@if (showError)
+{
+	<ul class="validation-errors">
+		<li class="validation-message">
+			@localizer["login-failed"].
+		</li>
+	</ul>
+}
+
+@if (model != null)
+{
+	<EditForm Model="@model" OnValidSubmit="LoginUser">
+		<DataAnnotationsValidator />
+		<div class="form-group">
+			<label class="form-control-label">@localizer["email"]</label>
+			<input class="form-control" type="email" @bind="model.Email" placeholder="you@mail.com" />
+			<ValidationMessage For="@(() => model.Email)"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@localizer["password"]</label>
+			<input class="form-control" type="password" @bind="model.Password" placeholder="@localizer["password"]" />
+			<ValidationMessage For="@(() => model.Password)"></ValidationMessage>
+		</div>
+		<div class="form-submit-button">
+			<button type="submit" class="btn btn-brand center">@localizer["login"]</button>
+		</div>
+	</EditForm>
+}

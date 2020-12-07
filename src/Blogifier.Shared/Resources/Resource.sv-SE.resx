@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>Allmänt</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>Teman</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Användare</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>Ny användare</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Importera</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>Nytt inlägg</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>Inlägg</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Inställningar</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>Meddelanden</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>Besök bloggen</value>
+  </data>
+  <data name="sign-out" xml:space="preserve">
+    <value>Logga ut</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>Inlägg per sida</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>Logotyp</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>Omslagsbild</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Språk</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Välj</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>Vald</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>Alla</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>Publicerad</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Utkast</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>Hittades inte</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>Publicera</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>Avpublicera</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>Utvalda</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>Lägg till som utvald</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>Kategori|Kategorier</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>Vy|Vyer</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>Användarnamn</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>E-post</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>Biografi</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>Profilbild</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>Borttagen</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>Nytt lösenord</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>Bekräfta lösenord</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Stäng</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>Sätt som administratör</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>Välj en RSS-fil (.xml) att importera inlägg ifrån</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>Bilder</value>
+  </data>
+  <data name="attachements" xml:space="preserve">
+    <value>Bilagor</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>Ladda upp</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>Filtrera</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>Ändra lösenord</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>Läs</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>Uppdaterad</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Skapad</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>Om</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>Nyhetsbrev</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>Prenumeranter på nyhetsbrevet</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>Kontrollpanel</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>Populär</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>Tom</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Redigera</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Detaljer</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>Anpassat fält</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>Tyvärr, någonting gick fel eller så finns det ingenting här</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>Skicka till</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>Ämne</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Innehåll</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>Färdig</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>Verifiera inställningarna för nyhetsbrev genom att skicka ett testmeddelande</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>Här kan du ange webbplats- och scriptinställningar för Disqus-kommentarer</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>Inaktiverad i demoläget</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>E-postmeddelandet skickades</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>Fel vid utskick av E-post, inspektera loggarna för detaljer</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>Skickade {0} nyhetsbrev</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>Konton på sociala medier</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>Inläggets titel...</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>Skriv här...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>Tack!</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>Ange E-post</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>Prenumerera</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>Prenumerera på nyhetsbrevet för att få uppdateringar om nya inlägg direkt till din inbox</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Logga in</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>Hem</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>Blogg</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Administratör</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>Etikett|Etiketter</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>Snabblänkar</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>Navigering</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Föregående</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Nästa</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>Ta bort inlägget?</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>Inkludera utvalda inlägg i listan</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>Script som inkluderas i sido-/fothuvudet (Disqus, Analytics etc.)</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>Prenumerant|Prenumeranter</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>Förra veckan</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>Förra månaden</value>
+  </data>
+</root>

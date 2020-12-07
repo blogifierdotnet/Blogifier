@@ -1,11 +1,13 @@
-﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
-@inject IJsonStringLocalizer<ListModel> Localizer
+﻿@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@inject IStringLocalizer<Resource> _localizer
+
 <div class="modal fade blog-search" id="blog-search" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
-                <form role="search" asp-controller="Blog" asp-action="Search" method="post">
-                    <input type="search" id="term" name="term" class="form-control form-control-lg" placeholder="@Localizer["search"]" autocomplete="off">
+                <form role="search" asp-controller="Home" asp-action="Search" method="post">
+                    <input type="search" id="term" name="term" class="form-control form-control-lg" placeholder="@_localizer["search"]" autocomplete="off">
                 </form>
             </div>
         </div>
@@ -14,33 +16,33 @@
 
 <div class="container" id="newsletter">
     <div class="jumbotron" id="newsletter-form">
-        <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">@Localizer["thank-you"]</h2>
+        <h2 class="newsletter-title" id="ttlNewsletter" style="display:none">@_localizer["thank-you"]</h2>
         <form id="frmNewsletter">
             <div class="form-group">
-                <h2 class="newsletter-title">@Localizer["newsletter"]</h2>
+                <h2 class="newsletter-title">@_localizer["newsletter"]</h2>
                 <div class="form-group">
-                    <input class="form-control" id="txtEmail" name="txtEmail" placeholder="@Localizer["enter-email"]" type="text">
+                    <input class="form-control" id="txtEmail" name="txtEmail" placeholder="@_localizer["enter-email"]" type="text">
                 </div>
                 <small class="form-text text-muted" id="emailHelp">
-                    @Localizer["join-subscribers"]
+                    @_localizer["join-subscribers"]
                 </small>
             </div>
-            <button id="blog-subscribe" class="btn btn-subscribe btn-rounded btn-dark">@Localizer["subscribe"]</button>
+            <button id="blog-subscribe" class="btn btn-subscribe btn-rounded btn-dark">@_localizer["subscribe"]</button>
         </form>
     </div>
 </div>
 
 <footer class="blog-footer">
     <div class="container d-lg-flex text-center text-lg-left">
-        <p>Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - @AppSettings.Version">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
+        <p>Copyright © @DateTime.Now.Year. Powered by <a href="https://github.com/blogifierdotnet/Blogifier" data-toggle="tooltip" target="_blank" title="Version - 1.0.0">Blogifier</a>. Designed by <a href="https://francis.bio/" target="_blank" rel="nofollow">Francis</a>.</p>
         <div class="ml-auto">
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="~/admin">@Localizer["admin"]</a>
+                <a href="~/admin">@_localizer["admin"]</a>
             }
             else
             {
-                <a href="~/account/login">@Localizer["login"]</a>
+                <a href="~/account/login">@_localizer["login"]</a>
             }
         </div>
     </div>

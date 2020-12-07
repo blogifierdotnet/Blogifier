@@ -1,0 +1,76 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime JSRuntime
+@using Blazored.Typeahead
+
+<label class="form-control-label">@_localizer["categories", true]</label>
+
+<BlazoredTypeahead SearchMethod="SearchCategories" @bind-Value="SelectedTag">
+	<SelectedTemplate>@context.Content</SelectedTemplate>
+	<ResultTemplate>@context.Content</ResultTemplate>
+</BlazoredTypeahead>
+
+@if (PostCategories != null)
+{
+	foreach (var item in PostCategories)
+	{
+		<div class="label label-tag">
+			@item.Content
+			<a href="" @onclick="()=> Remove(item.Id)" @onclick:preventDefault>
+				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+				</svg>
+			</a>
+		</div>
+	}
+}
+
+@if (SelectedTag != null)
+{
+	<p>Selected Film is: @SelectedTag.Content</p>
+}
+<ToasterComponent @ref="Toaster" />
+
+@code {
+	[Parameter] public Post Post { get; set; }
+
+	protected ToasterComponent Toaster;
+	protected Category SelectedTag { get; set; }
+	protected Blog Blog { get; set; }
+	protected List<Category> BlogCategories { get; set; }
+	protected List<Category> PostCategories { get; set; }
+
+	private async Task<IEnumerable<Category>> SearchCategories(string searchText)
+	{
+		return await Task.FromResult(BlogCategories.Where(x => x.Content.ToLower().Contains(searchText.ToLower())).ToList());
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Load();
+	}
+
+	protected async Task Load()
+	{
+		BlogCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/blog/categories")).ToList();
+		PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/post/categories/{Post.Id}")).ToList();
+	}
+
+	private async Task SelectedResultChanged(Category category)
+	{
+		//SelectedTag = result;
+		//movieCredits = await client.GetPersonMovieCredits(result.Id);
+	}
+
+	//protected async Task AddFromTxt()
+	//{
+	//	Toaster.Toast(await _http.PostAsJsonAsync<int>($"api/post/category/{Post.Id}/{TxtCategory}", Post.Id));
+	//	await Load();
+	//}
+
+	protected async Task Remove(int categoryId)
+	{
+		Toaster.Toast(await _http.DeleteAsync($"api/post/category/{Post.Id}/{categoryId}"));
+		await Load();
+	}
+}

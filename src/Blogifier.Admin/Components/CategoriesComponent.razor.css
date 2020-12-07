@@ -1,0 +1,34 @@
+﻿
+.form-control-label {
+	width: 100%;
+}
+.label-tag {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 1px 0 1px 5px;
+	margin: 4px 2px;
+}
+
+.label-tag a {
+	padding-bottom: 3px;
+	color: #333;
+	float: right;
+}
+
+.label-add {
+	float: right;
+}
+
+svg {
+	color: #333;
+	vertical-align: central;
+}
+
+.blazored-typeahead__input {
+	background: none;
+	padding: 2px 5px;
+}
+
+.blazored-typeahead {
+	margin-bottom: 10px;
+}

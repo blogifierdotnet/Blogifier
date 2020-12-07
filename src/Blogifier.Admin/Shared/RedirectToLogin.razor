@@ -1,0 +1,19 @@
+﻿@inject HttpClient _http
+@inject NavigationManager _navigationManager
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+			if(blog == null)
+				_navigationManager.NavigateTo("admin/register");
+			else
+				_navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+		}
+		catch
+		{
+			_navigationManager.NavigateTo("admin/register");
+		}
+	}
+}

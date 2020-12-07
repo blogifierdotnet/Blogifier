@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <title>Blogifier</title>
+   <base href="/" />
+   <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+   <link href="css/admin.min.css" rel="stylesheet" />
+   <link href="css/prism.css" rel="stylesheet" />
+   <link href="css/simplemde.min.css" rel="stylesheet" />
+   <link href="_content/Sotsera.Blazor.Toaster/toastr.min.css" rel="stylesheet" />
+   <link href="css/components.css" rel="stylesheet" />
+   <link href="css/site.css" rel="stylesheet" />
+   <link href="Blogifier.Admin.styles.css" rel="stylesheet" />
+   <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
+</head>
+
+<body>
+   <div id="app"></div>
+
+   <div id="blazor-error-ui">
+      An unhandled error has occurred.
+      <a href="" class="reload">Reload</a>
+      <a class="dismiss">🗙</a>
+   </div>
+
+   <div style="display:none;">
+      <form method="post" name="frmUpload" id="frmUpload" action="upload" enctype="multipart/form-data">
+         <input type="file" name="file" id="file" onchange="fileManager.uploadSubmit(); return false;" />
+         <input type="submit" value="Upload" />
+      </form>
+   </div>
+
+   <script src="js/jquery.min.js"></script>
+   <script src="js/bootstrap.bundle.min.js"></script>
+   <script src="js/prism.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/simplemde.min.js"></script>
+   <script src="js/components.js"></script>
+   <script src="js/dataService.js"></script>
+   <script src="js/fileManager.js"></script>
+
+   <script src="_framework/blazor.webassembly.js"></script>
+   <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
+</body>
+
+</html>

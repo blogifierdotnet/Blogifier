@@ -1,51 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.3.5.0</Version>
-    <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Askmethat.Aspnet.JsonLocalizer" Version="2.2.0" />
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
-    <PackageReference Include="BundlerMinifier.Core" Version="3.2.447" />
-    <PackageReference Include="Grunt" Version="0.1.13" />
-    <PackageReference Include="Markdig" Version="0.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.FeatureManagement" Version="2.0.0" />
-    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-    <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
-    <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
-    <PackageReference Include="Demo.BlazorChartist" Version="0.1.0-20200124.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="3.1.3"/>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00905" />
+		<PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Blog.db" CopyToPublishDirectory="PreserveNewest" />
-    <Content Include="gruntfile.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Blogifier.Admin\Blogifier.Admin.csproj" />
+		<ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
+		<ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Resources\localization.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Logs\" />
+	</ItemGroup>
 
 </Project>

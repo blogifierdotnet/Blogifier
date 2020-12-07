@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>Темы</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Пользователи</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>Новый пользователь</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>Новое сообщение</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>Сообщения</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>Посетить блог</value>
+  </data>
+  <data name="sign-out" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>Количество сообщений на странице</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>Логотип</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>Обложка</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>Выбранный</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>Всё</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>Опубликовано</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Черновик</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>Не найдено</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>Опубликовать</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>Отменить публикацию</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>Избранное</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>Добавить в избранное</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>Категории</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>Посмотреть</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Почта</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>Краткая биография</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>Аватар</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>Удалено</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>Подтвердить пароль</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>Сделать администратором</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>Выберите RSS (.xml) файл для импорта</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>Изображения</value>
+  </data>
+  <data name="attachements" xml:space="preserve">
+    <value>Вложения</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>Фильтры</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>Изменить пароль</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>Читать</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>Запись обновлена</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Запись создана</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>Рассылка</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>Список подписчиков электронной почты</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Контакт</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>Панель Управления</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>Популярные</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>Пустой лист</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Детали</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>Пользовательский виджет</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>Страница не найдена или произошла ошибка.</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>Получатель</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Содержание</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>Закончил</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>Здесь можно протестировать работу почтового сервиса</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>Скрипт для подключения Disqus комментариев</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>Функция отключена в режиме демонстрации</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>Почта отправлена успешно</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>Ошибка при отправке почты, подробности в логе</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>Отправлено {0} сообщений</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>Соцсети</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>Заголовок поста...</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>Печатать...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>Спасибо!</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>Адрес электронной почты</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>Подписаться</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>Подписаться и получать уведомлания о новых публикациях по электронной почте</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>Домашняя</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>Блог</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Администрация</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>Тег</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>Ссылки</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>Навигация</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Предыдущий</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Следующий</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>Удалить пост?</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>Включать избранное в общий список</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>Подписка|Подписчики</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>Прошлая неделя</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>Прошлый месяц</value>
+  </data>
+  <data name="email-provider" xml:space="preserve">
+    <value>Почтовый провайдер</value>
+  </data>
+  <data name="sendgrid-key" xml:space="preserve">
+    <value>API код</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>Сервер</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+  <data name="smtp-email" xml:space="preserve">
+    <value>Адрес электронной почты (SMTP)</value>
+  </data>
+  <data name="send-test-email" xml:space="preserve">
+    <value>Протестировать почту</value>
+  </data>
+  <data name="unsubscribe" xml:space="preserve">
+    <value>Отказаться от подписки</value>
+  </data>
+  <data name="login-failed" xml:space="preserve">
+    <value>Ошибка при проверке пароля, пожалуйста попробуйте снова</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>Здравствуйте</value>
+  </data>
+  <data name="you-can-sign-in" xml:space="preserve">
+    <value>Вы можете войти или &lt;a href="/"&gt;вернуться назад&lt;/a&gt;</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Зарегистрироваться</value>
+  </data>
+  <data name="you-can-register" xml:space="preserve">
+    <value>Вы можете зарегистрироваться или &lt;a href="/"&gt;вернуться назад&lt;/a&gt;</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="generic-error" xml:space="preserve">
+    <value>Произошла ошибка, попробуйте снова.</value>
+  </data>
+  <data name="title-content-required" xml:space="preserve">
+    <value>Заголовок и пост нужно заполнить</value>
+  </data>
+</root>

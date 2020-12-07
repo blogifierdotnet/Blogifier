@@ -1,0 +1,33 @@
+body {
+   background-color: #f4f4f4 !important;
+}
+
+h1 {
+   font-size: 1.5rem;
+}
+
+.bf-account-container {
+   padding-top: 50px;
+}
+
+.bf-account {
+   width: 400px;
+   margin: 0 auto;
+   background-color: #fff;
+   padding: 3rem;
+   border-radius: 1rem;
+   box-shadow: 0 0 10rem rgba(0,0,0,0.1);
+}
+
+.bf-account-footer {
+   text-align: center;
+   padding-top: 15px;
+}
+
+.bf-account-footer a {
+   opacity: .25;
+}
+
+.center {
+   margin: 0 auto;
+}

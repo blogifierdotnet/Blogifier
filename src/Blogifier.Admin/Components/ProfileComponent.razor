@@ -1,0 +1,58 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+
+@if (Author != null)
+{
+	<EditForm Model="@Author" OnValidSubmit="Save">
+		<DataAnnotationsValidator />
+		<div class="form-group">
+			<label class="form-control-label">@_localizer["email"]</label>
+			<input class="form-control" type="email" @bind="Author.Email" placeholder="you@mail.com" />
+			<ValidationMessage For="@(() => Author.Email)"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@_localizer["name"]</label>
+			<input class="form-control" @bind="Author.DisplayName" placeholder="@_localizer["name"]" />
+			<ValidationMessage For="@(() => Author.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@_localizer["user-bio"]</label>
+			<textarea class="form-control" rows="3" @bind="Author.Bio" name="bio" />
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@_localizer["avatar"]</label>
+			<div class="input-group">
+				<input type="text" class="form-control txt-upload" @bind="Author.Avatar" name="avatar" id="avatar" readonly="" />
+				<span class="input-group-append">
+					<button class="btn btn-outline-secondary px-md-4" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
+				</span>
+			</div>
+		</div>
+		<div class="form-submit-button">
+			<button type="submit" class="btn btn-brand">@_localizer["save"]</button>
+		</div>
+	</EditForm>
+}
+<ToasterComponent @ref="Toaster" />
+
+@code {
+	protected Author Author { get; set; }
+	protected ToasterComponent Toaster;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Load();
+	}
+
+	protected async Task Load()
+	{
+		Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
+	}
+
+	protected async Task Save()
+	{
+		Toaster.Toast(await _http.PutAsJsonAsync<Author>("api/author/update", Author));
+		await Load();
+	}
+}

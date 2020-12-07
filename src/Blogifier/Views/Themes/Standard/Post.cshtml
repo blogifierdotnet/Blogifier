@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Blogifier.Shared
+@{
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
@@ -11,7 +12,7 @@
     <partial name="~/Views/Themes/Standard/Shared/Head.cshtml" />
 </head>
 <body class="home">
-    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="postModel.Blog.SocialFields" />
+    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="postModel.Blog" />
 
     <article class="post-single">
         <div class="post-cover" style="background-image: url('@cover')"></div>
@@ -26,14 +27,13 @@
                         <span class="post-meta-author">@postModel.Post.Author.DisplayName</span>
 
                         <time class="post-meta-time">@string.Format("{0:MMM d, yyyy}", postModel.Post.Published)</time>
-                        @if (!string.IsNullOrEmpty(postModel.Post.Categories))
+                        @if (postModel.Post.Categories != null && postModel.Post.Categories.Count > 0)
                         {
                             <span>/</span>
-                            var cats = postModel.Post.Categories.Split(',');
-                            foreach (var cat in cats)
+                            foreach (var cat in postModel.Post.Categories)
                             {
                                 <span>
-                                    <a href="@catUrl/@cat">@cat</a>
+                                    <a href="@catUrl/@cat.Content">@cat.Content</a>
                                 </span>
                             }
                         }
@@ -50,7 +50,7 @@
                         @if (postModel.Older != null)
                         {
                             <li class="item item-prev">
-                                <a class="item-link" href="~/posts/@postModel.Older.Slug" title="@postModel.Older.Title">
+                                <a class="item-link" href="@postModel.Older.Slug" title="@postModel.Older.Title">
                                     <i class="item-icon fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -58,7 +58,7 @@
                         @if (postModel.Newer != null)
                         {
                             <li class="item item-next">
-                                <a class="item-link" href="~/posts/@postModel.Newer.Slug" title="@postModel.Newer.Title">
+                                <a class="item-link" href="@postModel.Newer.Slug" title="@postModel.Newer.Title">
                                     <i class="item-icon fa fa-angle-right"></i>
                                 </a>
                             </li>

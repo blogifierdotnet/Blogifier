@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace Blogifier.Shared
+{
+	public class Category
+	{
+		public Category()	{ }
+
+		public int Id { get; set; }
+		[Required]
+		[StringLength(120)]
+		public string Content { get; set; }
+
+		public virtual ICollection<Post> Posts { get; set; }
+	}
+}

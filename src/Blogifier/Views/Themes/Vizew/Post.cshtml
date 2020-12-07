@@ -1,200 +1,200 @@
-﻿@using Blogifier.Core.Data
-@using Askmethat.Aspnet.JsonLocalizer.Localizer
-@inject IJsonStringLocalizer<ListModel> Localizer
+﻿@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@inject IStringLocalizer<Resource> _localizer
 @{
-    PostModel postModel = (PostModel)Model;
-    string root = Url.Content("~/");
-    string cover = $"{root}{postModel.Post.Cover}";
-    var catUrl = Url.Content("~/categories");
+	PostModel postModel = (PostModel)Model;
+	string root = Url.Content("~/");
+	string cover = $"{root}{postModel.Post.Cover}";
+	var catUrl = Url.Content("~/categories");
 }
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="~/themes/vizew/img/core-img/favicon.ico">
-    <link rel="stylesheet" href="~/themes/vizew/css/prism.css">
-    <link rel="stylesheet" href="~/themes/vizew/style.css">
-    <partial name="~/Views/Shared/HeaderScript.cshtml" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="~/themes/vizew/img/core-img/favicon.ico">
+	<link rel="stylesheet" href="~/themes/vizew/css/prism.css">
+	<link rel="stylesheet" href="~/themes/vizew/style.css">
+	<partial name="~/Views/Shared/HeaderScript.cshtml" />
 </head>
 
 <body>
-    <partial name="~/Views/Themes/Vizew/Shared/Header.cshtml" />
-    <!-- ##### Header Area End ##### -->
-    <!-- ##### Breadcrumb Area Start ##### -->
-    <div class="vizew-breadcrumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="~/"><i class="fa fa-home" aria-hidden="true"></i> @Localizer["home"]</a></li>
-                            <li class="breadcrumb-item"><a href="~/blog">@Localizer["blog"]</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">@postModel.Post.Title</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Breadcrumb Area End ##### -->
-    <!-- ##### Pager Area Start ##### -->
-    <div class="vizew-pager-area">
+	<partial name="~/Views/Themes/Vizew/Shared/Header.cshtml" />
+	<!-- ##### Header Area End ##### -->
+	<!-- ##### Breadcrumb Area Start ##### -->
+	<div class="vizew-breadcrumb">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="~/"><i class="fa fa-home" aria-hidden="true"></i> @_localizer["home"]</a></li>
+							<li class="breadcrumb-item active" aria-current="page">@postModel.Post.Title</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ##### Breadcrumb Area End ##### -->
+	<!-- ##### Pager Area Start ##### -->
+	<div class="vizew-pager-area">
 
-        @if (postModel.Older != null)
-        {
-            <div class="vizew-pager-prev">
-                <p>@Localizer["previous"]</p>
+		@if (postModel.Older != null)
+		{
+			<div class="vizew-pager-prev">
+				<p>@_localizer["previous"]</p>
 
-                <!-- Single Feature Post -->
-                <div class="single-feature-post video-post bg-img pager-article" style="background-image: url(@root@postModel.Older.Cover);">
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        @if (!string.IsNullOrEmpty(postModel.Older.Categories))
-                        {
-                            foreach (var cat in postModel.Older.Categories.Split(',').ToList())
-                            {
-                                <a href="~/categories/@cat" class="post-cata cata-sm cata-danger">@cat</a>
-                            }
-                        }
-                        <a href="~/posts/@postModel.Older.Slug" class="post-title">@postModel.Older.Title</a>
-                        <div class="post-meta d-flex">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Older.PostViews</a>
-                        </div>
-                    </div>
-                    <!-- Video Duration -->
-                    @if (postModel.Older.Featured)
-                    {
-                        <span class="video-duration"><i class="fa fa-star"></i>&nbsp;@Localizer["featured"]</span>
-                    }
-                </div>
-            </div>
-        }
+				<!-- Single Feature Post -->
+				<div class="single-feature-post video-post bg-img pager-article" style="background-image: url(@root@postModel.Older.Cover);">
+					<!-- Post Content -->
+					<div class="post-content">
+						@if (postModel.Older.Categories != null)
+						{
+							foreach (var cat in postModel.Older.Categories)
+							{
+								<a href="~/categories/@cat.Content" class="post-cata cata-sm cata-danger">@cat.Content</a>
+							}
+						}
+						<a href="~/posts/@postModel.Older.Slug" class="post-title">@postModel.Older.Title</a>
+						<div class="post-meta d-flex">
+							<a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Older.PostViews</a>
+						</div>
+					</div>
+					<!-- Video Duration -->
+					@if (postModel.Older.Featured)
+					{
+						<span class="video-duration"><i class="fa fa-star"></i>&nbsp;@_localizer["featured"]</span>
+					}
+				</div>
+			</div>
+		}
 
-        @if (postModel.Newer != null)
-        {
-            <div class="vizew-pager-next">
-                <p>@Localizer["next"]</p>
+		@if (postModel.Newer != null)
+		{
+			<div class="vizew-pager-next">
+				<p>@_localizer["next"]</p>
 
-                <!-- Single Feature Post -->
-                <div class="single-feature-post video-post bg-img pager-article" style="background-image: url(@root@postModel.Newer.Cover);">
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        @if (!string.IsNullOrEmpty(postModel.Newer.Categories))
-                        {
-                            foreach (var cat in postModel.Newer.Categories.Split(',').ToList())
-                            {
-                                <a href="~/categories/@cat" class="post-cata cata-sm cata-danger">@cat</a>
-                            }
-                        }
-                        <a href="@postModel.Newer.Slug" class="post-title">@postModel.Newer.Title</a>
-                        <div class="post-meta d-flex">
-                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Newer.PostViews</a>
-                        </div>
-                    </div>
-                    <!-- Video Duration -->
-                    @if (postModel.Newer.Featured)
-                    {
-                        <span class="video-duration"><i class="fa fa-star"></i>&nbsp;@Localizer["featured"]</span>
-                    }
-                </div>
-            </div>
-        }
-    </div>
-    <!-- ##### Pager Area End ##### -->
-    <!-- ##### Post Details Area Start ##### -->
-    <section class="post-details-area mb-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="post-details-thumb mb-50">
-                        <img src="~/@postModel.Post.Cover" alt="">
-                    </div>
-                </div>
-            </div>
+				<!-- Single Feature Post -->
+				<div class="single-feature-post video-post bg-img pager-article" style="background-image: url(@root@postModel.Newer.Cover);">
+					<!-- Post Content -->
+					<div class="post-content">
+						@if (postModel.Newer.Categories != null)
+						{
+							foreach (var cat in postModel.Newer.Categories)
+							{
+								<a href="~/categories/@cat.Content" class="post-cata cata-sm cata-danger">@cat.Content</a>
+							}
+						}
+						<a href="@postModel.Newer.Slug" class="post-title">@postModel.Newer.Title</a>
+						<div class="post-meta d-flex">
+							<a href="#"><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Newer.PostViews</a>
+						</div>
+					</div>
+					<!-- Video Duration -->
+					@if (postModel.Newer.Featured)
+					{
+						<span class="video-duration"><i class="fa fa-star"></i>&nbsp;@_localizer["featured"]</span>
+					}
+				</div>
+			</div>
+		}
+	</div>
+	<!-- ##### Pager Area End ##### -->
+	<!-- ##### Post Details Area Start ##### -->
+	<section class="post-details-area mb-80">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="post-details-thumb mb-50">
+						<img src="~/@postModel.Post.Cover" alt="">
+					</div>
+				</div>
+			</div>
 
-            <div class="row justify-content-center">
-                <!-- Post Details Content Area -->
-                <div class="col-12 col-lg-8 col-xl-7">
-                    <div class="post-details-content">
-                        <!-- Blog Content -->
-                        <div class="blog-content">
+			<div class="row justify-content-center">
+				<!-- Post Details Content Area -->
+				<div class="col-12 col-lg-8 col-xl-7">
+					<div class="post-details-content">
+						<!-- Blog Content -->
+						<div class="blog-content">
 
-                            <!-- Post Content -->
-                            <div class="post-content mt-0">
-                                <a href="~/posts/@postModel.Post.Slug" class="post-title mb-2">@postModel.Post.Title</a>
+							<!-- Post Content -->
+							<div class="post-content mt-0">
+								<a href="~/posts/@postModel.Post.Slug" class="post-title mb-2">@postModel.Post.Title</a>
 
-                                <div class="d-flex justify-content-between mb-30">
-                                    <div class="post-meta d-flex align-items-center">
-                                        <span class="post-author">By @postModel.Post.Author.DisplayName</span>
-                                        <i class="fa fa-circle" aria-hidden="true"></i>
-                                        <span class="post-date">@postModel.Post.Published.ToFriendlyDateString()</span>
-                                    </div>
-                                    <div class="post-meta d-flex">
-                                        <span><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Post.PostViews</span>
-                                    </div>
-                                </div>
-                            </div>
+								<div class="d-flex justify-content-between mb-30">
+									<div class="post-meta d-flex align-items-center">
+										<span class="post-author">By @postModel.Post.Author.DisplayName</span>
+										<i class="fa fa-circle" aria-hidden="true"></i>
+										<span class="post-date">@postModel.Post.Published.ToFriendlyDateString()</span>
+									</div>
+									<div class="post-meta d-flex">
+										<span><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Post.PostViews</span>
+									</div>
+								</div>
+							</div>
 
-                            @Html.Raw(postModel.Post.Content)
+							@Html.Raw(postModel.Post.Content)
 
-                            <!-- Post Tags -->
-                            <div class="post-tags mt-30">
-                                <ul>
-                                    @if (!string.IsNullOrEmpty(postModel.Post.Categories))
-                                    {
-                                        foreach (var cat in postModel.Post.Categories.Split(',').ToList())
-                                        {
-                                            <li><a href="~/categories/@cat">@cat</a></li>
-                                        }
-                                    }
-                                </ul>
-                            </div>
+							<!-- Post Tags -->
+							<div class="post-tags mt-30">
+								<ul>
+									@if (postModel.Post.Categories != null)
+									{
+										foreach (var cat in postModel.Post.Categories)
+										{
+											<li><a href="~/categories/@cat.Content">@cat.Content</a></li>
+										}
+									}
+								</ul>
+							</div>
 
-                            <!-- Comment Area Start -->
-                            <div id="disqus_thread"></div>
-                        </div>
-                    </div>
-                </div>
+							<!-- Comment Area Start -->
+							<div id="disqus_thread"></div>
+						</div>
+					</div>
+				</div>
 
-                <!-- Sidebar Widget -->
-                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                    <div class="sidebar-area">
+				<!-- Sidebar Widget -->
+				<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+					<div class="sidebar-area">
 
-                        <!-- ***** Single Widget ***** -->
-                        <div class="single-widget share-post-widget mb-50">
-                            <p>Share This Post</p>
-                            @foreach (var field in postModel.Blog.SocialFields)
-                            {
-                            <a href="@field.Content" class="@field.Title.ToLower()"><i class="fa @field.Icon" aria-hidden="true"></i> @field.Title</a>
-                            }
-                        </div>
+						<!-- ***** Single Widget ***** -->
+						<div class="single-widget share-post-widget mb-50">
+							<p>Share This Post</p>
+							@foreach (var field in postModel.Blog.SocialFields)
+							{
+								<a href="@field.Content" class="@field.Title.ToLower()"><i class="fa @field.Icon" aria-hidden="true"></i> @field.Title</a>
+							}
+						</div>
 
-                        <!-- ***** Single Widget ***** -->
-                        <div class="single-widget p-0 author-widget">
-                            <div class="p-4">
-                                <img class="author-avatar" src="~/@postModel.Post.Author.Avatar" alt="">
-                                <a href="#" class="author-name">@postModel.Post.Author.DisplayName</a>
-                                <div class="author-social-info">
-                                    @foreach (var field in postModel.Blog.SocialFields)
-                                    {
-                                    <a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a>
-                                    }
-                                </div>
-                                <p>@postModel.Post.Author.Bio</p>
-                            </div>
+						<!-- ***** Single Widget ***** -->
+						<div class="single-widget p-0 author-widget">
+							<div class="p-4">
+								<img class="author-avatar" src="~/@postModel.Post.Author.Avatar" alt="">
+								<a href="#" class="author-name">@postModel.Post.Author.DisplayName</a>
+								<div class="author-social-info">
+									@foreach (var field in postModel.Blog.SocialFields)
+									{
+										<a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a>
+									}
+								</div>
+								<p>@postModel.Post.Author.Bio</p>
+							</div>
 
-                        </div>
+						</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Post Details Area End ##### -->
-    <partial name="~/Views/Themes/Vizew/Shared/Footer.cshtml" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ##### Post Details Area End ##### -->
+	<partial name="~/Views/Themes/Vizew/Shared/Footer.cshtml" />
 </body>
 
 </html>

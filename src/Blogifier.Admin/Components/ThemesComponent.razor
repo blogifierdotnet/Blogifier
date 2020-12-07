@@ -1,0 +1,93 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+
+@*<div class="app-settings-title">Themes Settings</div>*@
+@if (CurrentTheme != null)
+{
+	<div class="app-themes">
+		<div class="row">
+			<div class="col-md-6 col-lg-4">
+				<div class="app-themes-item app-themes-active">
+					<img src="@CurrentTheme.Cover" class="app-themes-cover" alt="@CurrentTheme.Title">
+					<div class="app-themes-title d-flex">
+						<span class="app-themes-name my-auto">@CurrentTheme.Title (current)</span>
+					</div>
+				</div>
+			</div>
+			@foreach (var item in Themes)
+			{
+				<div class="col-md-6 col-lg-4">
+					<div class="app-themes-item">
+						<img src="@item.Cover" class="app-themes-cover" alt="@item.Title">
+						<div class="app-themes-title d-flex">
+							<span class="app-themes-name my-auto">@item.Title</span>
+							<button type="button" class="btn btn-dark my-auto ml-auto" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@_localizer["select"]</button>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}
+<ToasterComponent @ref="Toaster" />
+
+@code {
+	protected Blog Blog { get; set; }
+	protected List<ThemeItem> Themes { get; set; }
+	protected ThemeItem CurrentTheme { get; set; }
+	protected ToasterComponent Toaster;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Load();
+	}
+
+	public async Task Load()
+	{
+		Themes = new List<ThemeItem>();
+
+		Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+		var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
+
+		foreach (var theme in allThemes)
+		{
+			if (theme.ToLower() == Blog.Theme.ToLower())
+			{
+				CurrentTheme = new ThemeItem
+				{
+					Title = theme.Capitalize(),
+					IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+					Cover = await GetCover(theme)
+				};
+			}
+			else
+			{
+				Themes.Add(new ThemeItem
+				{
+					Title = theme.Capitalize(),
+					IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+					Cover = await GetCover(theme)
+				});
+			}
+		}
+	}
+
+	protected async Task SelectTheme(string theme)
+	{
+		Blog.Theme = theme;
+		Toaster.Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
+		await Load();
+	}
+
+	private async Task<string> GetCover(string theme)
+	{
+		string slash = System.IO.Path.DirectorySeparatorChar.ToString();
+		string file = $"wwwroot{slash}themes{slash}{theme}{slash}screenshot.png";
+		var result = await _http.PutAsJsonAsync<string>($"api/storage/exists", file);
+
+		if (result.IsSuccessStatusCode)
+			return $"themes/{theme}/screenshot.png";
+		else
+			return "img/img-placeholder.png";
+	}
+}

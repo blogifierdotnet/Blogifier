@@ -1,0 +1,12 @@
+﻿@inject IToaster _toaster
+@inject IStringLocalizer<Resource> _localizer
+
+@code {
+	public void Toast(HttpResponseMessage msg)
+	{
+		if (msg.IsSuccessStatusCode)
+			_toaster.Success(_localizer["completed"]);
+		else
+			_toaster.Error(_localizer["generic-error"]);
+	}
+}

@@ -1,103 +1,85 @@
-using Blogifier.Core;
 using Blogifier.Core.Extensions;
-using Blogifier.Core.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.FeatureManagement;
 using Serilog;
-using Serilog.Events;
-using Sotsera.Blazor.Toaster.Core.Models;
 
 namespace Blogifier
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            Log.Logger = new LoggerConfiguration()
-              .Enrich.FromLogContext()
-              .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
-              .CreateLogger();
-        }
+	public class Startup
+	{
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+			Log.Logger = new LoggerConfiguration()
+				  .Enrich.FromLogContext()
+				  .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+				  .CreateLogger();
 
-        public IConfiguration Configuration { get; }
+			Log.Warning("Application start");
+		}
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddBlogDatabase(Configuration);
-            services.AddBlogSecurity();
-            services.AddBlogLocalization();
+		public IConfiguration Configuration { get; }
 
-            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-            services.AddFeatureManagement().AddFeatureFilter<EmailConfiguredFilter>();
+		public void ConfigureServices(IServiceCollection services)
+		{
+			Log.Warning("Start configure services");
 
-            services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllersWithViews().AddViewLocalization(); 
-            
-            services.AddRazorPages(options => 
-                options.Conventions.AuthorizeFolder("/Admin")
-                .AllowAnonymousToPage("/Admin/_Host")
-            ).AddRazorRuntimeCompilation().AddViewLocalization();
+			services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
 
-            services.AddServerSideBlazor();
+			services.AddAuthentication(options => {
+				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			}).AddCookie();
 
-            services.AddHttpContextAccessor();
+			services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
+			{
+				builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+			}));
 
-            services.AddToaster(config =>
-            {
-                config.PositionClass = Defaults.Classes.Position.BottomRight;
-                config.PreventDuplicates = true;
-                config.NewestOnTop = false;
-            });
+			services.AddBlogDatabase(Configuration);
+						
+			services.AddBlogProviders();
 
-            services.AddBlogServices();
-        }
+			services.AddControllersWithViews();
+			services.AddRazorPages();
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+			Log.Warning("Done configure services");
+		}
 
-            AppSettings.WebRootPath = env.WebRootPath;
-            AppSettings.ContentRootPath = env.ContentRootPath;
-            AppSettings.ThumbWidth = 270;
-            AppSettings.ThumbHeight = 180;
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+				app.UseWebAssemblyDebugging();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+			}
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+			app.UseBlazorFrameworkFiles();
+			app.UseStaticFiles();
+			app.UseCookiePolicy();
 
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-            app.UseRequestLocalization();
-            app.UseStaticFiles();
+			app.UseRouting();
+			app.UseCors("BlogifierPolicy");
 
-            app.UseRouting();
-            app.UseCors("AllowOrigin");
-            app.UseAuthorization();
+			app.UseAuthentication();
+			app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Blog}/{action=Index}/{id?}"
-                );
-                endpoints.MapRazorPages();
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/Admin/_Host");
-            });
-        }
-    }
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllerRoute(
+					  name: "default",
+					  pattern: "{controller=Home}/{action=Index}/{id?}"
+				 );
+				endpoints.MapRazorPages();
+				endpoints.MapFallbackToFile("index.html");
+			});
+		}
+	}
 }

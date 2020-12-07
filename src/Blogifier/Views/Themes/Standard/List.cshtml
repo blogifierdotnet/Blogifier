@@ -1,87 +1,90 @@
-﻿@using Askmethat.Aspnet.JsonLocalizer.Localizer
-@inject IDataService DataService
-@inject IJsonStringLocalizer<ListModel> Localizer
+﻿@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@using Blogifier.Core.Extensions
+@using Blogifier.Shared
+@inject IStringLocalizer<Resource> _localizer
+
 @{
-    ListModel listModel = (ListModel)Model;
-    Pager pgr = listModel.Pager;
-    string root = Url.Content("~/");
-    string cover = $"{root}{listModel.Blog.Cover}";
+	ListModel listModel = (ListModel)Model;
+	Pager pgr = listModel.Pager;
+	string root = Url.Content("~/");
+	string cover = $"{root}img/cover.png"; // $"{root}{listModel.Blog.Cover}";
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <partial name="~/Views/Themes/Standard/Shared/Head.cshtml" />
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<partial name="~/Views/Themes/Standard/Shared/Head.cshtml" />
 </head>
 <body class="home">
-    <partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="listModel.Blog.SocialFields" />
+	<partial name="~/Views/Themes/Standard/Shared/Header.cshtml" model="listModel.Blog" />
 
-    <div class="page-cover" style="background-image: url('@cover')">
-        <h1 class="page-cover-title">
-            <a href="~/blog">@listModel.Blog.Title</a>
-        </h1>
-        <p class="page-cover-desc">@listModel.Blog.Description</p>
-    </div>
+	<div class="page-cover" style="background-image: url('@cover')">
+		<h1 class="page-cover-title">
+			<a href="~/">@listModel.Blog.Title</a>
+		</h1>
+		<p class="page-cover-desc">@listModel.Blog.Description</p>
+	</div>
 
-    <div class="page-content">
-        <div class="container">
+	<div class="page-content">
+		<div class="container">
 
-            @if (listModel.Posts.Count() > 0)
-            {
-                @foreach (var post in listModel.Posts)
-                {
-                    <article class="post">
-                        <div class="post-cover">
-                            <img src="~/@post.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
-                            @if (post.Featured)
-                            {
-                                <span class="post-featrued-label"><i class="fa fa-star"></i>@Localizer["featured"]</span>
-                            }
-                        </div>
-                        <h2 class="post-title"><a href="~/posts/@post.Slug">@post.Title</a></h2>
-                        <div class="post-meta">
-                            <a class="post-meta-author">@post.Author.DisplayName</a>
-                            <time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> /
-                            <span><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</span> /
-                            <span>
-                                <i class="fa fa-comments-o" aria-hidden="true"></i>
-                                <a href="~/posts/@post.Slug#disqus_thread"></a>
-                            </span>
-                        </div>
-                        <div class="post-description">@Html.Raw(post.Description)</div>
-                        <a class="post-more btn btn-rounded btn-dark" href="~/posts/@post.Slug">@Localizer["read"]</a>
-                    </article>
-                }
-                @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
-                {
-                    <ul class="pagination justify-content-center">
-                        @if (pgr.ShowOlder)
-                        {
-                            <li class="item item-prev">
-                                <a class="item-link" href="~/@pgr.LinkToOlder">
-                                    <i class="item-icon fa fa-angle-left"></i>
-                                </a>
-                            </li>
-                        }
-                        @if (pgr.ShowNewer)
-                        {
-                            <li class="item item-next">
-                                <a class="item-link" href="~/@pgr.LinkToNewer">
-                                    <i class="item-icon fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                }
-            }
-            else
-            {
-                <div class="notfound">@Localizer["empty"]</div>
-            }
+			@if (listModel.Posts.Count() > 0)
+			{
+				@foreach (var post in listModel.Posts)
+				{
+					<article class="post">
+						<div class="post-cover">
+							<img src="~/@post.Cover" alt="@post.Title">
+							@if (post.Featured)
+							{
+								<span class="post-featrued-label"><i class="fa fa-star"></i>@_localizer["featured"]</span>
+							}
+						</div>
+						<h2 class="post-title"><a href="posts/@post.Slug">@post.Title</a></h2>
+						<div class="post-meta">
+							<a class="post-meta-author">@post.Author.DisplayName</a>
+							<time class="post-meta-time">/ @post.Published.ToFriendlyDateString()</time> /
+							<span><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</span> /
+							<span>
+								<i class="fa fa-comments-o" aria-hidden="true"></i>
+								<a href="posts/@post.Slug#disqus_thread"></a>
+							</span>
+						</div>
+						<div class="post-description">@Html.Raw(post.Description)</div>
+						<a class="post-more btn btn-rounded btn-dark" href="posts/@post.Slug">@_localizer["read"]</a>
+					</article>
+				}
+				@if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
+				{
+					<ul class="pagination justify-content-center">
+						@if (pgr.ShowOlder)
+						{
+							<li class="item item-prev">
+								<a class="item-link" href="@pgr.LinkToOlder">
+									<i class="item-icon fa fa-angle-left"></i>
+								</a>
+							</li>
+						}
+						@if (pgr.ShowNewer)
+						{
+							<li class="item item-next">
+								<a class="item-link" href="@pgr.LinkToNewer">
+									<i class="item-icon fa fa-angle-right"></i>
+								</a>
+							</li>
+						}
+					</ul>
+				}
+			}
+			else
+			{
+				<div class="notfound">@_localizer["empty"]</div>
+			}
 
-        </div>
-    </div>
-    <partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
+		</div>
+	</div>
+	<partial name="~/Views/Themes/Standard/Shared/Footer.cshtml" />
 </body>
 </html>

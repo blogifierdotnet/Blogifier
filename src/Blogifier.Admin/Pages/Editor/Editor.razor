@@ -1,0 +1,167 @@
+﻿@page "/admin/editor"
+@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime _jsruntime
+@inject IToaster _toaster
+@inject NavigationManager _navigation
+
+<div class="row">
+	@if (Post != null)
+	{
+		<div class="col-lg-9">
+			<div class="app-editor-title mb-3 mb-lg-0">
+				<input type="text" class="form-control" name="title" @bind="Post.Title" placeholder="@_localizer["post-title"]" autocomplete="off" autofocus />
+			</div>
+			<PostEditorComponent Content="@Post.Content" />
+		</div>
+		<div class="col-lg-3">
+			<div class="app-editor-sidebar">
+				<div class="app-editor-actions d-flex">
+					@if (Post.Id > 0)
+					{
+						<button class="btn btn-icon btn-gray" @onclick="(() => Remove(Post.Id))" title="@_localizer["delete"]">
+							<svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+								<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+							</svg>
+						</button>
+					}
+					@if (Post.Id == 0)
+					{
+						<button type="button" class="btn btn-gray" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
+						<button type="button" class="btn btn-brand" @onclick="() => Publish()">@_localizer["publish"]</button>
+					}
+					else
+					{
+						if (Post.Published > DateTime.MinValue)
+						{
+							<button type="button" class="btn btn-gray" @onclick="() => Unpublish()" @onclick:preventDefault>@_localizer["unpublish"]</button>
+							<button type="button" class="btn btn-brand" @onclick="() => Save()">@_localizer["save"]</button>
+						}
+						else
+						{
+							<button type="button" class="btn btn-gray" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
+							<button type="button" class="btn btn-brand" @onclick="() => Publish()">@_localizer["publish"]</button>
+						}
+					}
+				</div>
+				<div class="app-editor-details">
+					<div class="form-group">
+						<label class="form-control-label">@_localizer["description"]</label>
+						<textarea class="form-control" rows="5" @bind="Post.Description" name="description" />
+					</div>
+					<div class="form-group">
+						@if (!string.IsNullOrEmpty(Post.Slug) && 1 == 2)
+						{
+							<CategoriesComponent Post="Post" />
+						}
+					</div>
+					<div class="form-group mb-0">
+						<label class="form-control-label">@_localizer["cover"]</label>
+						<div class="input-group">
+							<input type="text" class="form-control txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly="" />
+							<span class="input-group-append">
+								<button class="btn btn-outline-secondary" disabled="@(string.IsNullOrEmpty(Post.Slug) ? true : false)" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button"> @_localizer["select"]</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+<ToasterComponent @ref="Toaster" />
+
+@code{
+	protected Author Author { get; set; }
+	protected Post Post { get; set; }
+	protected ToasterComponent Toaster;
+	protected string Confirm { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
+		Confirm = _localizer["confirm-delete"];
+		await Load();
+	}
+
+	protected async Task Load()
+	{
+		Post = NewPost();
+		var coll = System.Web.HttpUtility.ParseQueryString(new Uri(_navigation.Uri).Query);
+		var slug = coll["slug"];
+		if (!string.IsNullOrEmpty(slug))
+		{
+			Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{slug}");
+		}
+	}
+
+	protected async Task SavePost(PostAction postAction)
+	{
+		Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
+		Post.Cover = "img/cover.png";
+
+		if (string.IsNullOrEmpty(Post.Description))
+			Post.Description = Post.Title;
+
+		if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(Post.Content))
+		{
+			_toaster.Error(_localizer["title-content-required"]);
+			return;
+		}
+
+		if (postAction == PostAction.Publish)
+			Post.Published = DateTime.UtcNow;
+
+		if (postAction == PostAction.Unpublish)
+			Post.Published = DateTime.MinValue;
+
+		if (Post.Id == 0)
+		{
+			Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
+			Toaster.Toast(await _http.PostAsJsonAsync<Post>($"api/post/add", Post));
+			_navigation.NavigateTo($"admin/editor?slug={Post.Slug}");
+		}
+		else
+		{
+			Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
+			await Load();
+		}
+	}
+
+	protected async Task Save()
+	{
+		await SavePost(PostAction.Save);
+	}
+
+	protected async Task Publish()
+	{
+		await SavePost(PostAction.Publish);
+	}
+
+	protected async Task Unpublish()
+	{
+		await SavePost(PostAction.Unpublish);
+	}
+
+	protected async Task Remove(int id)
+	{
+		if (await _jsruntime.InvokeAsync<bool>("confirm", Confirm))
+		{
+			Toaster.Toast(await _http.DeleteAsync($"api/post/{id}"));
+			_navigation.NavigateTo($"admin");
+		}
+	}
+
+	protected Post NewPost()
+	{
+		return new Post
+		{
+			Id = 0,
+			Title = "",
+			Description = "",
+			Content = "",
+			AuthorId = Author.Id
+		};
+	}
+}

@@ -1,0 +1,52 @@
+﻿@layout LoginLayout
+@page "/admin/register"
+@inject HttpClient Http
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Resource> localizer
+@{
+	string youCanRegister = localizer["you-can-register"];
+}
+
+<div class="bf-account-header">
+	<h1>@localizer["registration"]</h1>
+	<p>@((MarkupString)youCanRegister).</p>
+</div>
+
+@if (showError)
+{
+	<ul class="validation-errors">
+		<li class="validation-message">
+			@localizer["login-failed"].
+		</li>
+	</ul>
+}
+
+@if (model != null)
+{
+	<EditForm Model="@model" OnValidSubmit="RegisterUser">
+		<DataAnnotationsValidator />
+		<div class="form-group">
+			<label class="form-control-label">@localizer["email"]</label>
+			<input class="form-control" type="email" @bind="model.Email" placeholder="you@mail.com" />
+			<ValidationMessage For="@(() => model.Email)"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@localizer["name"]</label>
+			<input class="form-control" @bind="model.Name" placeholder="@localizer["name"]" />
+			<ValidationMessage For="@(() => model.Name)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@localizer["password"]</label>
+			<input class="form-control" type="password" @bind="model.Password" placeholder="@localizer["password"]" />
+			<ValidationMessage For="@(() => model.Password)"></ValidationMessage>
+		</div>
+		<div class="form-group">
+			<label class="form-control-label">@localizer["confirm-password"]</label>
+			<input class="form-control" type="password" @bind="model.PasswordConfirm" placeholder="@localizer["confirm-password"]" />
+			<ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
+		</div>
+		<div class="form-submit-button">
+			<button type="submit" class="btn btn-brand">@localizer["register"]</button>
+		</div>
+	</EditForm>
+}

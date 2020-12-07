@@ -1,4 +1,4 @@
-﻿@inject IDataService DataService
+﻿@using Blogifier.Shared
 @{
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="~/blog">Blog</a>
+                        <a class="nav-link" href="~/">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="~/admin">Admin</a>
@@ -51,10 +51,10 @@
                         <span class="meta mb-1">
                             Posted by @postModel.Post.Author.DisplayName on @postModel.Post.Published.ToFriendlyDateString()
                         </span>
-                        @if (!string.IsNullOrEmpty(postModel.Post.Categories))
+                        @if (postModel.Post.Categories != null)
                         {
                             <span class="tags">
-                                Tags: @Html.Raw(string.Join(", ", postModel.Post.Categories.Split(",").Select(s => string.Format("<a href=\"{0}{1}\" class=\"post-cata cata-sm cata-danger\">{1}</a>", Url.Content("~/categories/"), s))))
+                                Tags: @Html.Raw(string.Join(", ", postModel.Post.Categories.Select(s => string.Format("<a href=\"{0}{1}\" class=\"post-cata cata-sm cata-danger\">{1}</a>", Url.Content("~/categories/"), s.Content))))
                             </span>
                         }
                     </div>

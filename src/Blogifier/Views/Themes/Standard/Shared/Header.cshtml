@@ -1,17 +1,17 @@
 ﻿<header class="blog-header d-flex flex-column">
     <div class="container d-flex">
-        <a href="~/blog" class="blog-logo my-auto d-flex">
+        <a href="~/" class="blog-logo my-auto d-flex">
             <img src="~/themes/standard/img/logo-white.png" alt="Blog Title" class="my-auto" />
         </a>
         <ul class="blog-social nav ml-auto my-auto">
-            @foreach (var field in Model)
+            @*@foreach (var field in Model)
             {
                 <li class="blog-social-item">
                     <a class="blog-social-link" target="_blank" href="@field.Content">
                         <i class="blog-social-icon fa @field.Icon"></i>
                     </a>
                 </li>
-            }
+            }*@
             <li class="blog-social-item">
                 <a class="blog-social-link" target="_blank" href="feed/rss">
                     <i class="blog-social-icon fa fa-rss"></i>
@@ -30,6 +30,3 @@
         </ul>
     </div>
 </header>
-@{
-    AppSettings.SiteRoot = Url.Content("~/");
-}
