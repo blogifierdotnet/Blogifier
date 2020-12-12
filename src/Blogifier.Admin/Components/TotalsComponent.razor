@@ -1,0 +1,41 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+
+<div class="app-widget app-notifications">
+    <div class="app-notifications-clock">
+        <span id="clock">@System.DateTime.Now.ToString("f")</span>
+    </div>
+</div>
+
+@if (_model != null)
+{
+	<div class="app-widget-stats row no-gutters">
+		<div class="col">
+			<div class="app-widget-stats-item">
+				<span>@_model.TotalPosts</span>
+				<span class="app-widget-stats-item-title">@_localizer["posts", true]</span>
+			</div>
+		</div>
+		<div class="col">
+			<div class="app-widget-stats-item">
+				<span>@_model.TotalViews</span>
+				<span class="app-widget-stats-item-title">@_localizer["view", true]</span>
+			</div>
+		</div>
+		<div class="col">
+			<div class="app-widget-stats-item">
+				<span>@_model.TotalSubscribers</span>
+				<span class="app-widget-stats-item-title">@_localizer["subscribers", true]</span>
+			</div>
+		</div>
+	</div>
+}
+
+@code {
+	protected AnalyticsModel _model;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
+	}
+}

@@ -412,7 +412,7 @@
     <value>Добавить скрипт в начале и конце каждой страницы (например Disqus или Analytics)</value>
   </data>
   <data name="subscribers" xml:space="preserve">
-    <value>Подписка|Подписчики</value>
+    <value>Подписчики</value>
   </data>
   <data name="last-week" xml:space="preserve">
     <value>Прошлая неделя</value>
