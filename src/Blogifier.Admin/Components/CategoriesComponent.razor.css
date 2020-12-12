@@ -2,6 +2,7 @@
 .form-control-label {
 	width: 100%;
 }
+
 .label-tag {
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -22,13 +23,4 @@
 svg {
 	color: #333;
 	vertical-align: central;
-}
-
-.blazored-typeahead__input {
-	background: none;
-	padding: 2px 5px;
-}
-
-.blazored-typeahead {
-	margin-bottom: 10px;
 }

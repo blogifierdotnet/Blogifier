@@ -51,7 +51,7 @@
 						<textarea class="form-control" rows="5" @bind="Post.Description" name="description" />
 					</div>
 					<div class="form-group">
-						@if (!string.IsNullOrEmpty(Post.Slug) && 1 == 2)
+						@if (!string.IsNullOrEmpty(Post.Slug))
 						{
 							<CategoriesComponent Post="Post" />
 						}

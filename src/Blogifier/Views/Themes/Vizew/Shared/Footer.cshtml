@@ -2,9 +2,10 @@
 @using Blogifier.Shared.Resources
 @inject IStringLocalizer<Resource> _localizer
 @inject IPostProvider _postProvider
+@inject ICategoryProvider _categoryProvider
 @{
 	var blog = Model.Blog;
-	var catsUnordered = await _postProvider.Categories();
+	var catsUnordered = await _categoryProvider.Categories();
 	var cats = catsUnordered.OrderByDescending(c => c.PostCount);
 }
 

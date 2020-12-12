@@ -3,15 +3,16 @@
 @using Blogifier.Shared
 @inject IStringLocalizer<Resource> _localizer
 @inject IPostProvider _postProvider
+@inject ICategoryProvider _categoryProvider
 @{
 	var root = Url.Content("~/");
 	var img = $"{root}themes/philosophy/images";
 	var imgPlaceholder = $"{root}admin/img/img-placeholder.png";
 
 	var popular = await _postProvider.GetPopular(new Pager(1, 4));
-	var catsUnordered = await _postProvider.Categories();
+	var catsUnordered = await _categoryProvider.Categories();
 	var cats = catsUnordered.OrderByDescending(c => c.PostCount);
-	var blog = Model.Blog; // await DataService.CustomFields.GetBlogSettings();
+	var blog = Model.Blog;
 }
 <!-- s-extra
 ================================================== -->

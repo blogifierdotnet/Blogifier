@@ -1,14 +1,10 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-@inject IJSRuntime JSRuntime
-@using Blazored.Typeahead
 
-<label class="form-control-label">@_localizer["categories", true]</label>
-
-<BlazoredTypeahead SearchMethod="SearchCategories" @bind-Value="SelectedTag">
-	<SelectedTemplate>@context.Content</SelectedTemplate>
-	<ResultTemplate>@context.Content</ResultTemplate>
-</BlazoredTypeahead>
+<div class="form-group">
+	<label class="form-control-label">@_localizer["categories"]</label>
+	<input type="text" class="form-control" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="Type and hit 'Enter'" />
+</div>
 
 @if (PostCategories != null)
 {
@@ -25,25 +21,11 @@
 	}
 }
 
-@if (SelectedTag != null)
-{
-	<p>Selected Film is: @SelectedTag.Content</p>
-}
-<ToasterComponent @ref="Toaster" />
-
 @code {
 	[Parameter] public Post Post { get; set; }
 
-	protected ToasterComponent Toaster;
-	protected Category SelectedTag { get; set; }
-	protected Blog Blog { get; set; }
-	protected List<Category> BlogCategories { get; set; }
+	protected string Tag { get; set; }
 	protected List<Category> PostCategories { get; set; }
-
-	private async Task<IEnumerable<Category>> SearchCategories(string searchText)
-	{
-		return await Task.FromResult(BlogCategories.Where(x => x.Content.ToLower().Contains(searchText.ToLower())).ToList());
-	}
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -52,25 +34,22 @@
 
 	protected async Task Load()
 	{
-		BlogCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/blog/categories")).ToList();
-		PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/post/categories/{Post.Id}")).ToList();
+		Tag = "";
+		PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
 	}
 
-	private async Task SelectedResultChanged(Category category)
+	protected async Task KeyPressed(KeyboardEventArgs eventArgs)
 	{
-		//SelectedTag = result;
-		//movieCredits = await client.GetPersonMovieCredits(result.Id);
+		if(eventArgs.Code == "Enter")
+		{
+			await _http.PostAsJsonAsync($"api/category/{Post.Id}/{Tag}", Tag);
+			await Load();
+		}
 	}
-
-	//protected async Task AddFromTxt()
-	//{
-	//	Toaster.Toast(await _http.PostAsJsonAsync<int>($"api/post/category/{Post.Id}/{TxtCategory}", Post.Id));
-	//	await Load();
-	//}
 
 	protected async Task Remove(int categoryId)
 	{
-		Toaster.Toast(await _http.DeleteAsync($"api/post/category/{Post.Id}/{categoryId}"));
+		await _http.DeleteAsync($"api/category/{Post.Id}/{categoryId}");
 		await Load();
 	}
 }

@@ -70,23 +70,5 @@ namespace Blogifier.Controllers
 		{
 			return await _postProvider.Remove(id);
 		}
-
-		[HttpGet("categories/{postId:int}")]
-		public async Task<ICollection<Category>> GetPostCategories(int postId)
-		{
-			return await _postProvider.GetPostCategories(postId);
-		}
-
-		[HttpPost("category/{postId:int}/{tag}")]
-		public async Task<ActionResult<bool>> AddCategory(int postId, string tag)
-		{
-			return await _postProvider.AddCategory(postId, tag);
-		}
-
-		[HttpDelete("category/{postId:int}/{categoryId:int}")]
-		public async Task<ActionResult<bool>> RemoveCategory(int postId, int categoryId)
-		{
-			return await _postProvider.RemoveCategory(postId, categoryId);
-		}
 	}
 }
