@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared
@@ -11,6 +12,9 @@ namespace Blogifier.Shared
 		[Required]
 		[StringLength(120)]
 		public string Content { get; set; }
+
+		public DateTime DateCreated { get; set; }
+		public DateTime DateUpdated { get; set; }
 
 		public virtual ICollection<Post> Posts { get; set; }
 	}

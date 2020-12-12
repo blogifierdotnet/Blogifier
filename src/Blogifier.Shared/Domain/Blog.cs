@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared
@@ -12,19 +13,19 @@ namespace Blogifier.Shared
 		public string Description { get; set; }
 		[StringLength(160)]
 		public string Theme { get; set; }
-
 		public bool IncludeFeatured { get; set; }
 		public int ItemsPerPage { get; set; }
-
 		[StringLength(160)]
 		public string Cover { get; set; }
 		[StringLength(160)]
 		public string Logo { get; set; }
-
 		[StringLength(2000)]
 		public string HeaderScript { get; set; }
 		[StringLength(2000)]
 		public string FooterScript { get; set; }
+
+		public DateTime DateCreated { get; set; }
+		public DateTime DateUpdated { get; set; }
 
 		public List<Post> Posts { get; set; }
 		public List<Author> Authors { get; set; }

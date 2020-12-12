@@ -3,6 +3,7 @@ using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,10 +84,20 @@ namespace Blogifier.Core.Providers
 					Title = "Blog Title",
 					Description = "Short Blog Description",
 					Theme = "Standard",
-					ItemsPerPage = 10
+					ItemsPerPage = 10,
+					DateCreated = DateTime.UtcNow
 				};
+
 				_db.Blogs.Add(blog);
-				await _db.SaveChangesAsync();
+				try
+				{
+					await _db.SaveChangesAsync();
+				}
+				catch (Exception ex)
+				{
+					Serilog.Log.Warning($"Error registering new blog: {ex.Message}");
+					return false;
+				}
 			}
 
 			existingBlog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
@@ -100,8 +111,10 @@ namespace Blogifier.Core.Providers
 				Password = model.Password.Hash(_salt),
 				IsAdmin = isAdmin,
 				Avatar = "img/avatar.png",
-				Bio = "The short author bio."
+				Bio = "The short author bio.",
+				DateCreated = DateTime.UtcNow
 			};
+
 			await _db.Authors.AddAsync(author);
 			await _db.SaveChangesAsync();
 
@@ -128,6 +141,7 @@ namespace Blogifier.Core.Providers
 			author.IsAdmin = false;
 			author.Password = author.Password.Hash(_salt);
 			author.Avatar = "img/avatar.png";
+			author.DateCreated = DateTime.UtcNow;
 
 			await _db.Authors.AddAsync(author);
 			await _db.SaveChangesAsync();

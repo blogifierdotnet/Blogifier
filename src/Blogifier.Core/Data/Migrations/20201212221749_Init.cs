@@ -21,7 +21,9 @@ namespace Blogifier.Core.Data.Migrations
                     Cover = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
                     Logo = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
                     HeaderScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    FooterScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true)
+                    FooterScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
                 },
                 constraints: table =>
                 {
@@ -34,7 +36,9 @@ namespace Blogifier.Core.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Content = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false)
+                    Content = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
                 },
                 constraints: table =>
                 {
@@ -53,7 +57,8 @@ namespace Blogifier.Core.Data.Migrations
                     Bio = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
                     Avatar = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
                     IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
                     BlogId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -61,6 +66,31 @@ namespace Blogifier.Core.Data.Migrations
                     table.PrimaryKey("PK_Authors", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Authors_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscribers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
+                    Ip = table.Column<string>(type: "TEXT", maxLength: 80, nullable: true),
+                    Country = table.Column<string>(type: "TEXT", maxLength: 120, nullable: true),
+                    Region = table.Column<string>(type: "TEXT", maxLength: 120, nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
+                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscribers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subscribers_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
                         principalColumn: "Id",
@@ -84,6 +114,8 @@ namespace Blogifier.Core.Data.Migrations
                     IsFeatured = table.Column<bool>(type: "INTEGER", nullable: false),
                     Selected = table.Column<bool>(type: "INTEGER", nullable: false),
                     Published = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
                     BlogId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -146,12 +178,20 @@ namespace Blogifier.Core.Data.Migrations
                 name: "IX_Posts_BlogId",
                 table: "Posts",
                 column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscribers_BlogId",
+                table: "Subscribers",
+                column: "BlogId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "CategoryPost");
+
+            migrationBuilder.DropTable(
+                name: "Subscribers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

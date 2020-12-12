@@ -64,7 +64,7 @@ namespace Blogifier.Core.Providers
 			var category = await _db.Categories.AsNoTracking().Where(c => c.Content == tag).FirstOrDefaultAsync();
 			if (category == null)
 			{
-				_db.Categories.Add(new Category() { Content = tag });
+				_db.Categories.Add(new Category() { Content = tag, DateCreated = DateTime.UtcNow });
 				await _db.SaveChangesAsync();
 				category = await _db.Categories.Where(c => c.Content == tag).FirstOrDefaultAsync();
 			}			

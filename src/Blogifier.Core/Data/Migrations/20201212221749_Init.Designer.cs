@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201206224406_Init")]
+    [Migration("20201212221749_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("Blogifier.Shared.Author", b =>
                 {
@@ -35,6 +35,14 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<int?>("BlogId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("DATE('now')");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(160)
@@ -47,9 +55,6 @@ namespace Blogifier.Core.Data.Migrations
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -72,6 +77,14 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<string>("Cover")
                         .HasMaxLength(160)
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("DATE('now')");
 
                     b.Property<string>("Description")
                         .HasMaxLength(450)
@@ -119,6 +132,14 @@ namespace Blogifier.Core.Data.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("DATE('now')");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -143,6 +164,14 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<string>("Cover")
                         .HasMaxLength(160)
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("DATE('now')");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -183,6 +212,47 @@ namespace Blogifier.Core.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("Blogifier.Shared.Subscriber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BlogId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("DATE('now')");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Ip")
+                        .HasMaxLength(80)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("Subscribers");
+                });
+
             modelBuilder.Entity("CategoryPost", b =>
                 {
                     b.Property<int>("CategoriesId")
@@ -215,6 +285,15 @@ namespace Blogifier.Core.Data.Migrations
 
                     b.HasOne("Blogifier.Shared.Blog", "Blog")
                         .WithMany("Posts")
+                        .HasForeignKey("BlogId");
+
+                    b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("Blogifier.Shared.Subscriber", b =>
+                {
+                    b.HasOne("Blogifier.Shared.Blog", "Blog")
+                        .WithMany()
                         .HasForeignKey("BlogId");
 
                     b.Navigation("Blog");

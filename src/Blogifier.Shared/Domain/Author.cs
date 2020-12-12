@@ -13,24 +13,21 @@ namespace Blogifier.Shared
       [Required]
       [EmailAddress]
       [StringLength(160)]
-      public string Email { get; set; }
-      
+      public string Email { get; set; }    
       [Required]
       [StringLength(160)]
       public string Password { get; set; }
-
       [Required]
       [StringLength(160)]
       public string DisplayName { get; set; }
-
       [StringLength(2000)]
       public string Bio { get; set; }
-
       [StringLength(160)]
       public string Avatar { get; set; }
-
       public bool IsAdmin { get; set; }
-      public DateTime LastUpdated { get; set; }
+
+      public DateTime DateCreated { get; set; }
+      public DateTime DateUpdated { get; set; }
 
       public List<Post> Posts { get; set; }
    }

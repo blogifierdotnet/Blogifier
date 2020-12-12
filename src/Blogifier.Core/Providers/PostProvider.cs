@@ -218,6 +218,7 @@ namespace Blogifier.Core.Providers
 				return false;
 
 			post.Blog = _db.Blogs.First();
+			post.DateCreated = DateTime.UtcNow;
 
 			await _db.Posts.AddAsync(post);
 			return await _db.SaveChangesAsync() > 0;
