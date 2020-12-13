@@ -24,7 +24,7 @@ namespace Blogifier.Core.Providers
       public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
       {
          var items = new List<AtomEntry>();
-         var posts = await _postProvider.GetList(new Pager(1)); // _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
+         var posts = await _postProvider.GetList(new Pager(1), 0, "", "P");
 
          foreach (var post in posts)
          {
@@ -38,13 +38,13 @@ namespace Blogifier.Core.Providers
                ContentType = "html",
             };
 
-            //if (!string.IsNullOrEmpty(post.Categories))
-            //{
-            //   foreach (string category in post.Categories.Split(','))
-            //   {
-            //      item.AddCategory(new SyndicationCategory("category"));
-            //   }
-            //}
+            if (post.Categories != null && post.Categories.Count > 0)
+            {
+               foreach (Category category in post.Categories)
+               {
+                  item.AddCategory(new SyndicationCategory(category.Content));
+               }
+            }
 
             item.AddContributor(new SyndicationPerson(post.Author.Email, post.Author.DisplayName));
             item.AddLink(new SyndicationLink(new Uri(item.Id)));

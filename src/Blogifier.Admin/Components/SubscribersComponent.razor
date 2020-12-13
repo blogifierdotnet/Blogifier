@@ -1,0 +1,55 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+
+<div class="app-newsletter-subscribers">
+
+	<ul class="app-newsletter-subscribers-list">
+		@if (Subscribers == null || Subscribers.Count == 0)
+		{
+			<li class="border-0">@_localizer["not-found"]</li>
+		}
+		else
+		{
+			foreach (var subscriber in Subscribers)
+			{
+				<li>
+					@{
+						string pubStatus = "published";
+						string pubDate = subscriber.DateCreated > DateTime.MinValue ? subscriber.DateCreated.ToFriendlyShortDateString() : "n/a";
+						string title = $"{subscriber.Email} - {subscriber.Ip} - {subscriber.Country} - {subscriber.Region} - {pubDate}";
+					}
+					<span>@title</span>
+					<span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" title="" data-original-title="published">
+						<i class="fa fa-circle"></i>
+					</span>
+					<a href="#" target="_blank" class="" @onclick="(async () => await RemoveSubscription(subscriber.Id))" @onclick:preventDefault>
+						Remove
+					</a>
+				</li>
+			}
+		}
+	</ul>
+
+</div>
+<ToasterComponent @ref="Toaster" />
+
+@code {
+	protected ToasterComponent Toaster;
+	protected List<Subscriber> Subscribers;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Load();
+	}
+
+	protected async Task Load()
+	{
+		Subscribers = await _http.GetFromJsonAsync<List<Subscriber>>($"api/newsletter/subscribers");
+	}
+
+	protected async Task RemoveSubscription(int id)
+	{
+		Toaster.Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
+		await Load();
+	}
+}

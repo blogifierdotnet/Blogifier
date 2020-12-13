@@ -1,9 +1,6 @@
 ﻿using Blogifier.Core.Data;
 using Blogifier.Shared;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
@@ -28,7 +25,7 @@ namespace Blogifier.Core.Providers
 			{
 				TotalPosts = _db.Posts.Count(),
 				TotalViews = _db.Posts.Select(v => v.PostViews).Sum(),
-				TotalSubscribers = 0
+				TotalSubscribers = _db.Subscribers.Count()
 			};
 
 			return await Task.FromResult(model);
