@@ -46,6 +46,23 @@ namespace Blogifier.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Newsletters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SentCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    FailCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Newsletters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Authors",
                 columns: table => new
                 {
@@ -189,6 +206,9 @@ namespace Blogifier.Core.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CategoryPost");
+
+            migrationBuilder.DropTable(
+                name: "Newsletters");
 
             migrationBuilder.DropTable(
                 name: "Subscribers");

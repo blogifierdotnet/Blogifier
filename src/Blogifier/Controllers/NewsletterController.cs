@@ -29,6 +29,12 @@ namespace Blogifier.Controllers
 			return await _subscriberProvider.GetSubscribers();
 		}
 
+		[HttpGet("send/{postId:int}")]
+		public async Task<bool> SendNewsletter(int postId)
+		{
+			return await _subscriberProvider.SendNewsletter(postId);
+		}
+
 		[HttpDelete("remove/{id:int}")]
 		public async Task<ActionResult<bool>> RemoveCategory(int id)
 		{
