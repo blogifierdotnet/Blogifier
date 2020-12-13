@@ -1,0 +1,42 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+
+<div class="app-newsletter-subscribers">
+
+	<ul class="app-newsletter-subscribers-list">
+		@if (Newsletters == null || Newsletters.Count == 0)
+		{
+			<li class="border-0">@_localizer["not-found"]</li>
+		}
+		else
+		{
+			foreach (var newsletter in Newsletters)
+			{
+				<li>
+					@{
+						string pubDate = newsletter.DateCreated.ToFriendlyShortDateString();
+						string title = $"{newsletter.PostId} - {newsletter.SentCount} - {newsletter.FailCount} - {pubDate}";
+					}
+					<span>@title</span>
+				</li>
+			}
+		}
+	</ul>
+
+</div>
+<ToasterComponent @ref="Toaster" />
+
+@code {
+	protected ToasterComponent Toaster;
+	protected List<Newsletter> Newsletters;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Load();
+	}
+
+	protected async Task Load()
+	{
+		Newsletters = await _http.GetFromJsonAsync<List<Newsletter>>($"api/newsletter/newsletters");
+	}
+}

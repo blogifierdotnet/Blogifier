@@ -14,14 +14,10 @@
 			{
 				<li>
 					@{
-						string pubStatus = "published";
 						string pubDate = subscriber.DateCreated > DateTime.MinValue ? subscriber.DateCreated.ToFriendlyShortDateString() : "n/a";
 						string title = $"{subscriber.Email} - {subscriber.Ip} - {subscriber.Country} - {subscriber.Region} - {pubDate}";
 					}
 					<span>@title</span>
-					<span class="bf-list-item-status bf-list-item-status-@pubStatus ml-auto" title="" data-original-title="published">
-						<i class="fa fa-circle"></i>
-					</span>
 					<a href="#" target="_blank" class="" @onclick="(async () => await RemoveSubscription(subscriber.Id))" @onclick:preventDefault>
 						Remove
 					</a>

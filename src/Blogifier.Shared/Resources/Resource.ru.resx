@@ -465,4 +465,7 @@
   <data name="title-content-required" xml:space="preserve">
     <value>Заголовок и пост нужно заполнить</value>
   </data>
+  <data name="views" xml:space="preserve">
+    <value>Просмотры</value>
+  </data>
 </root>

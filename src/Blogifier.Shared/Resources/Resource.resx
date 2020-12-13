@@ -465,4 +465,7 @@
   <data name="title-content-required" xml:space="preserve">
     <value>Title and Content are required.</value>
   </data>
+  <data name="views" xml:space="preserve">
+    <value>Views</value>
+  </data>
 </root>

@@ -29,6 +29,12 @@ namespace Blogifier.Controllers
 			return await _subscriberProvider.GetSubscribers();
 		}
 
+		[HttpGet("newsletters")]
+		public async Task<List<Newsletter>> GetNewsletters()
+		{
+			return await _subscriberProvider.GetNewsletters();
+		}
+
 		[HttpGet("send/{postId:int}")]
 		public async Task<bool> SendNewsletter(int postId)
 		{

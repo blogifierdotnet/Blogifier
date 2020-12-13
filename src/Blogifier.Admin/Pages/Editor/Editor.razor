@@ -120,11 +120,19 @@
 		{
 			Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
 			Toaster.Toast(await _http.PostAsJsonAsync<Post>($"api/post/add", Post));
+
+			if (postAction == PostAction.Publish)
+			{
+				Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
+				await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+			}
+
 			_navigation.NavigateTo($"admin/editor?slug={Post.Slug}");
 		}
 		else
 		{
 			Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
+			await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
 			await Load();
 		}
 	}

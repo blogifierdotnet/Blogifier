@@ -14,6 +14,7 @@ namespace Blogifier.Core.Providers
 		Task<List<Subscriber>> GetSubscribers();
 		Task<bool> RemoveSubscriber(int id);
 		Task<bool> SendNewsletter(int postId);
+		Task<List<Newsletter>> GetNewsletters();
 	}
 
 	public class SubscriberProvider : ISubscriberProvider
@@ -40,6 +41,11 @@ namespace Blogifier.Core.Providers
 		public async Task<List<Subscriber>> GetSubscribers()
 		{
 			return await _db.Subscribers.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
+		}
+
+		public async Task<List<Newsletter>> GetNewsletters()
+		{
+			return await _db.Newsletters.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
 		}
 
 		public async Task<bool> RemoveSubscriber(int id)
