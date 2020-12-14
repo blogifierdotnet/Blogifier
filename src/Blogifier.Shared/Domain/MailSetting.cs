@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared
 {
-	public class Mail
+	public class MailSetting
 	{
 		public int Id { get; set; }
 
@@ -11,7 +11,6 @@ namespace Blogifier.Shared
 		[StringLength(160)]
 		public string Host { get; set; }
 		public int Port { get; set; }
-		public int Options { get; set; }
 		[Required]
 		[EmailAddress]
 		[StringLength(120)]

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201214020449_Init")]
+    [Migration("20201214030621_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,7 +145,7 @@ namespace Blogifier.Core.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Blogifier.Shared.Mail", b =>
+            modelBuilder.Entity("Blogifier.Shared.MailSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,9 +177,6 @@ namespace Blogifier.Core.Data.Migrations
                         .HasMaxLength(160)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Options")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Port")
                         .HasColumnType("INTEGER");
 
@@ -202,7 +199,7 @@ namespace Blogifier.Core.Data.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Mails");
+                    b.ToTable("MailSettings");
                 });
 
             modelBuilder.Entity("Blogifier.Shared.Newsletter", b =>
@@ -219,16 +216,12 @@ namespace Blogifier.Core.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("DATE('now')");
 
-                    b.Property<int>("FailCount")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("PostId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SentCount")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Newsletters");
                 });
@@ -363,13 +356,24 @@ namespace Blogifier.Core.Data.Migrations
                         .HasForeignKey("BlogId");
                 });
 
-            modelBuilder.Entity("Blogifier.Shared.Mail", b =>
+            modelBuilder.Entity("Blogifier.Shared.MailSetting", b =>
                 {
                     b.HasOne("Blogifier.Shared.Blog", "Blog")
                         .WithMany()
                         .HasForeignKey("BlogId");
 
                     b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("Blogifier.Shared.Newsletter", b =>
+                {
+                    b.HasOne("Blogifier.Shared.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Blogifier.Shared.Post", b =>

@@ -15,7 +15,7 @@
 				<li>
 					@{
 						string pubDate = newsletter.DateCreated.ToFriendlyShortDateString();
-						string title = $"{newsletter.PostId} - {newsletter.SentCount} - {newsletter.FailCount} - {pubDate}";
+						string title = $"{newsletter.Post.Title} - {pubDate}";
 					}
 					<span>@title</span>
 				</li>

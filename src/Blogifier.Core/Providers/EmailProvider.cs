@@ -10,14 +10,14 @@ namespace Blogifier.Core.Providers
 {
 	public interface IEmailProvider
 	{
-		Task<bool> SendEmail(Mail settings, List<Subscriber> subscribers, string subject, string content);
+		Task<bool> SendEmail(MailSetting settings, List<Subscriber> subscribers, string subject, string content);
 	}
 
 	public class MailKitProvider : IEmailProvider
 	{
 		public MailKitProvider() { }
 
-		public async Task<bool> SendEmail(Mail settings, List<Subscriber> subscribers, string subject, string content)
+		public async Task<bool> SendEmail(MailSetting settings, List<Subscriber> subscribers, string subject, string content)
 		{                 
          var client = GetClient(settings);
          if (client == null)
@@ -48,7 +48,7 @@ namespace Blogifier.Core.Providers
          return await Task.FromResult(true);
       }
 
-      private SmtpClient GetClient(Mail settings)
+      private SmtpClient GetClient(MailSetting settings)
 		{
 			try
 			{

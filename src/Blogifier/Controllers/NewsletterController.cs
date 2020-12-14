@@ -49,13 +49,13 @@ namespace Blogifier.Controllers
 
 
 		[HttpGet("mailsettings")]
-		public async Task<Mail> GetMailSettings()
+		public async Task<MailSetting> GetMailSettings()
 		{
 			return await _subscriberProvider.GetMailSettings();
 		}
 
 		[HttpPut("mailsettings")]
-		public async Task<ActionResult<bool>> SaveMailSettings([FromBody] Mail mailSettings)
+		public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
 		{
 			return await _subscriberProvider.SaveMailSettings(mailSettings);
 		}

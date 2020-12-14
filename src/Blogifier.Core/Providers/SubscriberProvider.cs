@@ -15,8 +15,8 @@ namespace Blogifier.Core.Providers
 		Task<bool> RemoveSubscriber(int id);
 		Task<bool> SendNewsletter(int postId);
 		Task<List<Newsletter>> GetNewsletters();
-		Task<Mail> GetMailSettings();
-		Task<bool> SaveMailSettings(Mail mail);
+		Task<MailSetting> GetMailSettings();
+		Task<bool> SaveMailSettings(MailSetting mail);
 	}
 
 	public class SubscriberProvider : ISubscriberProvider
@@ -73,7 +73,7 @@ namespace Blogifier.Core.Providers
 			if (subscribers == null || subscribers.Count == 0)
 				return false;
 
-			var settings = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
+			var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
 			if (settings == null)
 				return false;
 
@@ -82,12 +82,12 @@ namespace Blogifier.Core.Providers
 
 			if(await _emailProvider.SendEmail(settings, subscribers, subject, content))
 			{
-				return await SaveNewsletter(postId, 0, subscribers.Count - 0);
+				return await SaveNewsletter(postId);
 			}
 			return false;
 		}
 
-		private async Task<bool> SaveNewsletter(int postId, int sentCount, int failCount)
+		private async Task<bool> SaveNewsletter(int postId)
 		{
 			var existing = await _db.Newsletters.AsNoTracking().Where(n => n.PostId == postId).FirstOrDefaultAsync();
 			if (existing != null)
@@ -96,9 +96,8 @@ namespace Blogifier.Core.Providers
 			var newsletter = new Newsletter()
 			{
 				PostId = postId,
-				SentCount = sentCount,
-				FailCount = failCount,
-				DateCreated = DateTime.UtcNow
+				DateCreated = DateTime.UtcNow,
+				Post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault()
 			};
 
 			_db.Newsletters.Add(newsletter);
@@ -106,18 +105,18 @@ namespace Blogifier.Core.Providers
 		}
 
 
-		public async Task<Mail> GetMailSettings()
+		public async Task<MailSetting> GetMailSettings()
 		{
-			var settings = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
-			return settings == null ? new Mail() : settings;
+			var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+			return settings == null ? new MailSetting() : settings;
 		}
 
-		public async Task<bool> SaveMailSettings(Mail mail)
+		public async Task<bool> SaveMailSettings(MailSetting mail)
 		{
-			var existing = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
+			var existing = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
 			if (existing == null)
 			{
-				var newMail = new Mail()
+				var newMail = new MailSetting()
 				{
 					Host = mail.Host,
 					Port = mail.Port,
@@ -129,7 +128,7 @@ namespace Blogifier.Core.Providers
 					DateCreated = DateTime.UtcNow,
 					Blog = _db.Blogs.FirstOrDefault()
 				};
-				_db.Mails.Add(newMail);
+				_db.MailSettings.Add(newMail);
 			}
 			else
 			{

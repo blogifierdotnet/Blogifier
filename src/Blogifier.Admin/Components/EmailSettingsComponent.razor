@@ -47,18 +47,18 @@
 	protected ToasterComponent Toaster;
 
 	protected Blog Blog { get; set; }
-	protected Mail Mail { get; set; }
+	protected MailSetting Mail { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
 		Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-		Mail = await _http.GetFromJsonAsync<Mail>("api/newsletter/mailsettings");
+		Mail = await _http.GetFromJsonAsync<MailSetting>("api/newsletter/mailsettings");
 		if (Mail == null)
-			Mail = new Mail();
+			Mail = new MailSetting();
 	}
 
 	protected async Task Save()
 	{
-		Toaster.Toast(await _http.PutAsJsonAsync<Mail>("api/newsletter/mailsettings", Mail));
+		Toaster.Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
 	}
 }
