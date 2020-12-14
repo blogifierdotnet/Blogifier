@@ -1,0 +1,54 @@
+﻿@using ChartJs.Blazor
+@using ChartJs.Blazor.Common
+@using ChartJs.Blazor.Common.Enums
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.BarChart
+@using System.Drawing
+
+<Chart Config="_config"></Chart>
+
+@code {
+	private BarConfig _config;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_config = new BarConfig
+		{
+			Options = new BarOptions
+			{
+				Responsive = true,
+				Legend = new Legend
+				{
+					Position = Position.Top
+				}
+			}
+		};
+		await Task.Run(()=> LoadSampleData());
+	}
+
+	protected void LoadSampleData()
+	{
+		IDataset<int> dataset1 = new BarDataset<int>()
+		{
+			Label = "Latest Post Views",
+			BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 0, 238)),
+			BorderWidth = 0
+		};
+
+		dataset1.Add(20205);
+		dataset1.Add(18124);
+		dataset1.Add(21035);
+		dataset1.Add(9846);
+		dataset1.Add(12579);
+		dataset1.Add(14382);
+
+		_config.Data.Labels.Add("10/08/2020");
+		_config.Data.Labels.Add("10/21/2020");
+		_config.Data.Labels.Add("11/03/2020");
+		_config.Data.Labels.Add("11/20/2020");
+		_config.Data.Labels.Add("12/01/2020");
+		_config.Data.Labels.Add("12/11/2020");
+
+		_config.Data.Datasets.Add(dataset1);
+	}
+}
