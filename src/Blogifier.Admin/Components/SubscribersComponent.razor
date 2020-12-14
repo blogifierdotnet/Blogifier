@@ -47,7 +47,7 @@
 
 	protected async Task RemoveSubscription(int id)
 	{
-		Toaster.Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
+		Toaster.Toast(await _http.DeleteAsync($"api/newsletter/unsubscribe/{id}"));
 		await Load();
 	}
 }

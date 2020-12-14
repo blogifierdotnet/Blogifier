@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201214030621_Init")]
+    [Migration("20201214150104_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,6 +162,9 @@ namespace Blogifier.Core.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("DATE('now')");
 
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("FromEmail")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -217,6 +220,9 @@ namespace Blogifier.Core.Data.Migrations
                         .HasDefaultValueSql("DATE('now')");
 
                     b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Success")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

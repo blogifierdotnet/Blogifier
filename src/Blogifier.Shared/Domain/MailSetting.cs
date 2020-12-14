@@ -29,6 +29,7 @@ namespace Blogifier.Shared
 		[Required]
 		[StringLength(120)]
 		public string ToName { get; set; }
+		public bool Enabled { get; set; }
 
 		public DateTime DateCreated { get; set; }
 		public DateTime DateUpdated { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Blogifier.Core.Data;
+using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,11 +11,14 @@ namespace Blogifier.Core.Providers
 {
 	public interface INewsletterProvider
 	{
-		Task<bool> AddSubscriber(Subscriber subscriber);
 		Task<List<Subscriber>> GetSubscribers();
+		Task<bool> AddSubscriber(Subscriber subscriber);
 		Task<bool> RemoveSubscriber(int id);
-		Task<bool> SendNewsletter(int postId);
+		
 		Task<List<Newsletter>> GetNewsletters();
+		Task<bool> SendNewsletter(int postId);
+		Task<bool> RemoveNewsletter(int id);
+
 		Task<MailSetting> GetMailSettings();
 		Task<bool> SaveMailSettings(MailSetting mail);
 	}
@@ -30,6 +34,12 @@ namespace Blogifier.Core.Providers
 			_emailProvider = emailProvider;
 		}
 
+
+		public async Task<List<Subscriber>> GetSubscribers()
+		{
+			return await _db.Subscribers.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
+		}
+
 		public async Task<bool> AddSubscriber(Subscriber subscriber)
 		{
 			var existing = await _db.Subscribers.AsNoTracking().Where(s => s.Email == subscriber.Email).FirstOrDefaultAsync();
@@ -41,17 +51,7 @@ namespace Blogifier.Core.Providers
 			}
 			return true;
 		}
-
-		public async Task<List<Subscriber>> GetSubscribers()
-		{
-			return await _db.Subscribers.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
-		}
-
-		public async Task<List<Newsletter>> GetNewsletters()
-		{
-			return await _db.Newsletters.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
-		}
-
+				
 		public async Task<bool> RemoveSubscriber(int id)
 		{
 			var existing = _db.Subscribers.Where(s => s.Id == id).FirstOrDefault();
@@ -61,6 +61,39 @@ namespace Blogifier.Core.Providers
 				return await _db.SaveChangesAsync() > 0;
 			}
 			return false;
+		}
+
+
+		public async Task<List<Newsletter>> GetNewsletters()
+		{
+			return await _db.Newsletters.AsNoTracking()
+				.Include(n => n.Post)
+				.OrderByDescending(n => n.Id)
+				.ToListAsync();
+		}
+
+		private async Task<bool> SaveNewsletter(int postId, bool success)
+		{
+			var existing = await _db.Newsletters.Where(n => n.PostId == postId).FirstOrDefaultAsync();
+
+			if (existing != null)
+			{
+				existing.DateUpdated = DateTime.UtcNow;
+				existing.Success = success;
+			}
+			else
+			{
+				var newsletter = new Newsletter()
+				{
+					PostId = postId,
+					DateCreated = DateTime.UtcNow,
+					Success = success,
+					Post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault()
+				};
+				_db.Newsletters.Add(newsletter);
+			}
+
+			return await _db.SaveChangesAsync() > 0;
 		}
 
 		public async Task<bool> SendNewsletter(int postId)
@@ -74,34 +107,27 @@ namespace Blogifier.Core.Providers
 				return false;
 
 			var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
-			if (settings == null)
+			if (settings == null || settings.Enabled == false)
 				return false;
 
 			string subject = post.Title;
-			string content = post.Description;
+			string content = post.Content.MdToHtml();
 
-			if(await _emailProvider.SendEmail(settings, subscribers, subject, content))
-			{
-				return await SaveNewsletter(postId);
-			}
-			return false;
+			bool sent = await _emailProvider.SendEmail(settings, subscribers, subject, content);
+			bool saved = await SaveNewsletter(postId, sent);
+
+			return sent && saved;
 		}
 
-		private async Task<bool> SaveNewsletter(int postId)
+		public async Task<bool> RemoveNewsletter(int id)
 		{
-			var existing = await _db.Newsletters.AsNoTracking().Where(n => n.PostId == postId).FirstOrDefaultAsync();
+			var existing = _db.Newsletters.Where(s => s.Id == id).FirstOrDefault();
 			if (existing != null)
-				return false;
-
-			var newsletter = new Newsletter()
 			{
-				PostId = postId,
-				DateCreated = DateTime.UtcNow,
-				Post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault()
-			};
-
-			_db.Newsletters.Add(newsletter);
-			return await _db.SaveChangesAsync() > 0;
+				_db.Newsletters.Remove(existing);
+				return await _db.SaveChangesAsync() > 0;
+			}
+			return false;
 		}
 
 
@@ -113,7 +139,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<bool> SaveMailSettings(MailSetting mail)
 		{
-			var existing = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+			var existing = await _db.MailSettings.FirstOrDefaultAsync();
 			if (existing == null)
 			{
 				var newMail = new MailSetting()
@@ -125,6 +151,7 @@ namespace Blogifier.Core.Providers
 					FromEmail = mail.FromEmail,
 					FromName = mail.FromName,
 					ToName = mail.ToName,
+					Enabled = mail.Enabled,
 					DateCreated = DateTime.UtcNow,
 					Blog = _db.Blogs.FirstOrDefault()
 				};
@@ -139,6 +166,7 @@ namespace Blogifier.Core.Providers
 				existing.FromEmail = mail.FromEmail;
 				existing.FromName = mail.FromName;
 				existing.ToName = mail.ToName;
+				existing.Enabled = mail.Enabled;
 			}
 			return await _db.SaveChangesAsync() > 0;
 		}

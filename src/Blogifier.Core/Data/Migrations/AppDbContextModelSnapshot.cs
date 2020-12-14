@@ -160,6 +160,9 @@ namespace Blogifier.Core.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("DATE('now')");
 
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("FromEmail")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -215,6 +218,9 @@ namespace Blogifier.Core.Data.Migrations
                         .HasDefaultValueSql("DATE('now')");
 
                     b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Success")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

@@ -36,6 +36,13 @@
 			<input type="text" class="form-control" @bind="Mail.FromName" name="fromname" placeholder="Blog Admin" />
 		</div>
 
+		<div class="form-group">
+			<div class="custom-control custom-switch">
+				<input type="checkbox" @bind="Mail.Enabled" class="custom-control-input" id="switch1">
+				<label class="custom-control-label" for="switch1">@_localizer["enabled"]</label>
+			</div>
+		</div>
+
 		<div class="form-submit-button">
 			<input type="submit" value="@_localizer["save"]" class="btn btn-brand" />
 		</div>

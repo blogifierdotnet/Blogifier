@@ -10,54 +10,61 @@ namespace Blogifier.Controllers
 	[ApiController]
 	public class NewsletterController : ControllerBase
 	{
-		protected readonly INewsletterProvider _subscriberProvider;
+		protected readonly INewsletterProvider _newsletterProvider;
 
-		public NewsletterController(INewsletterProvider subscriberProvider)
+		public NewsletterController(INewsletterProvider newsletterProvider)
 		{
-			_subscriberProvider = subscriberProvider;
+			_newsletterProvider = newsletterProvider;
 		}
 
 		[HttpPut("subscribe")]
 		public async Task<ActionResult<bool>> Subscribe([FromBody] Subscriber subscriber)
 		{
-			return await _subscriberProvider.AddSubscriber(subscriber);
+			return await _newsletterProvider.AddSubscriber(subscriber);
 		}
 
 		[HttpGet("subscribers")]
 		public async Task<List<Subscriber>> GetSubscribers()
 		{
-			return await _subscriberProvider.GetSubscribers();
+			return await _newsletterProvider.GetSubscribers();
 		}
+
+		[HttpDelete("unsubscribe/{id:int}")]
+		public async Task<ActionResult<bool>> RemoveSubscriber(int id)
+		{
+			return await _newsletterProvider.RemoveSubscriber(id);
+		}
+
 
 		[HttpGet("newsletters")]
 		public async Task<List<Newsletter>> GetNewsletters()
 		{
-			return await _subscriberProvider.GetNewsletters();
+			return await _newsletterProvider.GetNewsletters();
 		}
 
 		[HttpGet("send/{postId:int}")]
 		public async Task<bool> SendNewsletter(int postId)
 		{
-			return await _subscriberProvider.SendNewsletter(postId);
+			return await _newsletterProvider.SendNewsletter(postId);
 		}
 
 		[HttpDelete("remove/{id:int}")]
-		public async Task<ActionResult<bool>> RemoveCategory(int id)
+		public async Task<ActionResult<bool>> RemoveNewsletter(int id)
 		{
-			return await _subscriberProvider.RemoveSubscriber(id);
+			return await _newsletterProvider.RemoveNewsletter(id);
 		}
 
 
 		[HttpGet("mailsettings")]
 		public async Task<MailSetting> GetMailSettings()
 		{
-			return await _subscriberProvider.GetMailSettings();
+			return await _newsletterProvider.GetMailSettings();
 		}
 
 		[HttpPut("mailsettings")]
 		public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
 		{
-			return await _subscriberProvider.SaveMailSettings(mailSettings);
+			return await _newsletterProvider.SaveMailSettings(mailSettings);
 		}
 	}
 }

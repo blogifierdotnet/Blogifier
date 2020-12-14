@@ -85,6 +85,7 @@ namespace Blogifier.Core.Data.Migrations
                     FromName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
                     FromEmail = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
                     ToName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    Enabled = table.Column<bool>(type: "INTEGER", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
                     BlogId = table.Column<int>(type: "INTEGER", nullable: true)
@@ -194,6 +195,7 @@ namespace Blogifier.Core.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     PostId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Success = table.Column<bool>(type: "INTEGER", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
                 },
