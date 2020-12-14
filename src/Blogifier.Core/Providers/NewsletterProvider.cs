@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
 {
-	public interface ISubscriberProvider
+	public interface INewsletterProvider
 	{
 		Task<bool> AddSubscriber(Subscriber subscriber);
 		Task<List<Subscriber>> GetSubscribers();
@@ -19,12 +19,12 @@ namespace Blogifier.Core.Providers
 		Task<bool> SaveMailSettings(MailSetting mail);
 	}
 
-	public class SubscriberProvider : ISubscriberProvider
+	public class NewsletterProvider : INewsletterProvider
 	{
 		private readonly AppDbContext _db;
 		private readonly IEmailProvider _emailProvider;
 
-		public SubscriberProvider(AppDbContext db, IEmailProvider emailProvider)
+		public NewsletterProvider(AppDbContext db, IEmailProvider emailProvider)
 		{
 			_db = db;
 			_emailProvider = emailProvider;

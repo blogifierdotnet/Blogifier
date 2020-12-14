@@ -48,7 +48,7 @@ namespace Blogifier.Core.Extensions
 			services.AddScoped<IFeedProvider, FeedProvider>();
 			services.AddScoped<ICategoryProvider, CategoryProvider>();
 			services.AddScoped<IAnalyticsProvider, AnalyticsProvider>();
-			services.AddScoped<ISubscriberProvider, SubscriberProvider>();
+			services.AddScoped<INewsletterProvider, NewsletterProvider>();
 			services.AddScoped<IEmailProvider, MailKitProvider>();
 
 			return services;

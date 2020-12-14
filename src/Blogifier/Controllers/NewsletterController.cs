@@ -10,9 +10,9 @@ namespace Blogifier.Controllers
 	[ApiController]
 	public class NewsletterController : ControllerBase
 	{
-		protected readonly ISubscriberProvider _subscriberProvider;
+		protected readonly INewsletterProvider _subscriberProvider;
 
-		public NewsletterController(ISubscriberProvider subscriberProvider)
+		public NewsletterController(INewsletterProvider subscriberProvider)
 		{
 			_subscriberProvider = subscriberProvider;
 		}
