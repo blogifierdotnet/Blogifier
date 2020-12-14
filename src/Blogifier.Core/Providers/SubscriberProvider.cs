@@ -15,15 +15,19 @@ namespace Blogifier.Core.Providers
 		Task<bool> RemoveSubscriber(int id);
 		Task<bool> SendNewsletter(int postId);
 		Task<List<Newsletter>> GetNewsletters();
+		Task<Mail> GetMailSettings();
+		Task<bool> SaveMailSettings(Mail mail);
 	}
 
 	public class SubscriberProvider : ISubscriberProvider
 	{
 		private readonly AppDbContext _db;
+		private readonly IEmailProvider _emailProvider;
 
-		public SubscriberProvider(AppDbContext db)
+		public SubscriberProvider(AppDbContext db, IEmailProvider emailProvider)
 		{
 			_db = db;
+			_emailProvider = emailProvider;
 		}
 
 		public async Task<bool> AddSubscriber(Subscriber subscriber)
@@ -69,27 +73,18 @@ namespace Blogifier.Core.Providers
 			if (subscribers == null || subscribers.Count == 0)
 				return false;
 
-			int sent = 0;
-			int fail = 0;
+			var settings = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
+			if (settings == null)
+				return false;
 
-			foreach (var subscriber in subscribers)
+			string subject = post.Title;
+			string content = post.Description;
+
+			if(await _emailProvider.SendEmail(settings, subscribers, subject, content))
 			{
-				if(await SendEmail(subscriber))
-				{
-					sent++;
-				}
-				else
-				{
-					fail++;
-				}
+				return await SaveNewsletter(postId, 0, subscribers.Count - 0);
 			}
-
-			return await SaveNewsletter(postId, sent, fail);
-		}
-
-		private async Task<bool> SendEmail(Subscriber subscriber)
-		{
-			return true;
+			return false;
 		}
 
 		private async Task<bool> SaveNewsletter(int postId, int sentCount, int failCount)
@@ -107,6 +102,45 @@ namespace Blogifier.Core.Providers
 			};
 
 			_db.Newsletters.Add(newsletter);
+			return await _db.SaveChangesAsync() > 0;
+		}
+
+
+		public async Task<Mail> GetMailSettings()
+		{
+			var settings = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
+			return settings == null ? new Mail() : settings;
+		}
+
+		public async Task<bool> SaveMailSettings(Mail mail)
+		{
+			var existing = await _db.Mails.AsNoTracking().FirstOrDefaultAsync();
+			if (existing == null)
+			{
+				var newMail = new Mail()
+				{
+					Host = mail.Host,
+					Port = mail.Port,
+					UserEmail = mail.UserEmail,
+					UserPassword = mail.UserPassword,
+					FromEmail = mail.FromEmail,
+					FromName = mail.FromName,
+					ToName = mail.ToName,
+					DateCreated = DateTime.UtcNow,
+					Blog = _db.Blogs.FirstOrDefault()
+				};
+				_db.Mails.Add(newMail);
+			}
+			else
+			{
+				existing.Host = mail.Host;
+				existing.Port = mail.Port;
+				existing.UserEmail = mail.UserEmail;
+				existing.UserPassword = mail.UserPassword;
+				existing.FromEmail = mail.FromEmail;
+				existing.FromName = mail.FromName;
+				existing.ToName = mail.ToName;
+			}
 			return await _db.SaveChangesAsync() > 0;
 		}
 	}

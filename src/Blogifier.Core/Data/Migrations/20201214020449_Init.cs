@@ -90,6 +90,35 @@ namespace Blogifier.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Mails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Host = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
+                    Port = table.Column<int>(type: "INTEGER", nullable: false),
+                    Options = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserEmail = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    UserPassword = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    FromName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    FromEmail = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    ToName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
+                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Mails_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Subscribers",
                 columns: table => new
                 {
@@ -187,6 +216,11 @@ namespace Blogifier.Core.Data.Migrations
                 column: "PostsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Mails_BlogId",
+                table: "Mails",
+                column: "BlogId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",
                 table: "Posts",
                 column: "AuthorId");
@@ -206,6 +240,9 @@ namespace Blogifier.Core.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CategoryPost");
+
+            migrationBuilder.DropTable(
+                name: "Mails");
 
             migrationBuilder.DropTable(
                 name: "Newsletters");

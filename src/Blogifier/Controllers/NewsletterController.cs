@@ -46,5 +46,18 @@ namespace Blogifier.Controllers
 		{
 			return await _subscriberProvider.RemoveSubscriber(id);
 		}
+
+
+		[HttpGet("mailsettings")]
+		public async Task<Mail> GetMailSettings()
+		{
+			return await _subscriberProvider.GetMailSettings();
+		}
+
+		[HttpPut("mailsettings")]
+		public async Task<ActionResult<bool>> SaveMailSettings([FromBody] Mail mailSettings)
+		{
+			return await _subscriberProvider.SaveMailSettings(mailSettings);
+		}
 	}
 }

@@ -19,6 +19,7 @@ namespace Blogifier.Core.Data
       public DbSet<Category> Categories { get; set; }
       public DbSet<Subscriber> Subscribers { get; set; }
 		public DbSet<Newsletter> Newsletters { get; set; }
+		public DbSet<Mail> Mails { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -42,6 +43,7 @@ namespace Blogifier.Core.Data
 			modelBuilder.Entity<Category>().Property(c => c.DateUpdated).HasDefaultValueSql(sql);
 			modelBuilder.Entity<Subscriber>().Property(s => s.DateUpdated).HasDefaultValueSql(sql);
 			modelBuilder.Entity<Newsletter>().Property(n => n.DateUpdated).HasDefaultValueSql(sql);
+			modelBuilder.Entity<Mail>().Property(n => n.DateUpdated).HasDefaultValueSql(sql);
 		}
 	}
 }
