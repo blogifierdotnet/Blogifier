@@ -5,6 +5,9 @@
 @using ChartJs.Blazor.BarChart
 @using System.Drawing
 
+@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+
 <Chart Config="_config"></Chart>
 
 @code {
@@ -23,32 +26,45 @@
 				}
 			}
 		};
-		await Task.Run(()=> LoadSampleData());
-	}
 
-	protected void LoadSampleData()
-	{
-		IDataset<int> dataset1 = new BarDataset<int>()
+		IDataset<int> dataset = new BarDataset<int>()
 		{
 			Label = "Latest Post Views",
 			BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 0, 238)),
 			BorderWidth = 0
 		};
 
-		dataset1.Add(20205);
-		dataset1.Add(18124);
-		dataset1.Add(21035);
-		dataset1.Add(9846);
-		dataset1.Add(12579);
-		dataset1.Add(14382);
+		var model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
 
-		_config.Data.Labels.Add("10/08/2020");
-		_config.Data.Labels.Add("10/21/2020");
-		_config.Data.Labels.Add("11/03/2020");
-		_config.Data.Labels.Add("11/20/2020");
-		_config.Data.Labels.Add("12/01/2020");
-		_config.Data.Labels.Add("12/11/2020");
+		if(model == null || model.LatestPostViews == null)
+		{
+			LoadData(dataset, TestData());
+		}
+		else
+		{
+			LoadData(dataset, model.LatestPostViews);
+		}
+		_config.Data.Datasets.Add(dataset);
+	}
 
-		_config.Data.Datasets.Add(dataset1);
+	protected void LoadData(IDataset<int> dataset, BarChartModel model)
+	{
+		foreach (var label in model.Labels)
+		{
+			_config.Data.Labels.Add(label);
+		}
+		foreach (var item in model.Data)
+		{
+			dataset.Add(item);
+		}
+	}
+
+	protected BarChartModel TestData()
+	{
+		return new BarChartModel()
+		{
+			Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
+			Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
+		};
 	}
 }
