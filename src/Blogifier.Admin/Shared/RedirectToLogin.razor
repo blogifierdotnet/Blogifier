@@ -1,12 +1,16 @@
 ﻿@inject HttpClient _http
 @inject NavigationManager _navigationManager
+@inject IJSRuntime JSRuntime
+
 @code {
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
+			await JSRuntime.InvokeAsync<string>("commonJsFunctions.hideLoader", "blazor-loading-ui");
+
 			Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-			if(blog == null)
+			if (blog == null)
 				_navigationManager.NavigateTo("admin/register");
 			else
 				_navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");

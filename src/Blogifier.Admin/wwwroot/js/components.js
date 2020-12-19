@@ -5,6 +5,10 @@ window.commonJsFunctions = {
 	showPrompt: function (message) {
 		return prompt(message, 'Type anything here');
 	},
+	hideLoader: function (id) {
+		var el = document.getElementById(id);
+		el.style.display = 'none';
+	},
 	getFieldValue: function (field) {
 		if (field.type === 'checkbox') {
 			return document.getElementById(field.id).checked ;

@@ -19,6 +19,10 @@
 <body>
    <div id="app"></div>
 
+   <div id="blazor-loading-ui">
+      <div id="blazor-spinner"></div>
+   </div>
+
    <div id="blazor-error-ui">
       An unhandled error has occurred.
       <a href="" class="reload">Reload</a>
@@ -44,6 +48,9 @@
    <script src="_framework/blazor.webassembly.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
    <script src="_content/ChartJs.Blazor.Fork/ChartJsBlazorInterop.js"></script>
+   <script>
+		$('#blazor-spinner').addClass('spinner');
+   </script>
 </body>
 
 </html>
