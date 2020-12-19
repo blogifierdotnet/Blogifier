@@ -19,13 +19,17 @@ namespace Blogifier.Controllers
 		protected readonly IPostProvider _postProvider;
 		protected readonly IFeedProvider _feedProvider;
 		protected readonly IAuthorProvider _authorProvider;
+		protected readonly IThemeProvider _themeProvider;
+		protected readonly IStorageProvider _storageProvider;
 
-		public HomeController(IBlogProvider blogProvider, IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider)
+		public HomeController(IBlogProvider blogProvider, IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider, IThemeProvider themeProvider, IStorageProvider storageProvider)
 		{
 			_blogProvider = blogProvider;
 			_postProvider = postProvider;
 			_feedProvider = feedProvider;
 			_authorProvider = authorProvider;
+			_themeProvider = themeProvider;
+			_storageProvider = storageProvider;
 		}
 
 		public async Task<IActionResult> Index(string term, int page = 1)
@@ -57,6 +61,8 @@ namespace Blogifier.Controllers
 				model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
 			}
 
+			model.Blog.ThemeSettings = await _storageProvider.GetThemeSettings(model.Blog.Theme);
+
 			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"blog?page={model.Pager.Older}";
 			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"blog?page={model.Pager.Newer}";
 
@@ -86,6 +92,8 @@ namespace Blogifier.Controllers
 				model.Blog = await _blogProvider.GetBlogItem();
 				model.Post.Description = model.Post.Description.MdToHtml();
 				model.Post.Content = model.Post.Content.MdToHtml();
+
+				model.Blog.ThemeSettings = await _storageProvider.GetThemeSettings(model.Blog.Theme);
 
 				return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
 			}

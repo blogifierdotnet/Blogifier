@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blogifier.Shared
+namespace Blogifier.Shared.Extensions
 { 
 	public static class StringExtensions
 	{

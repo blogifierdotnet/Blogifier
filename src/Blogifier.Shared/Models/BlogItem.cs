@@ -26,6 +26,8 @@ namespace Blogifier.Shared
       [StringLength(15)]
       public string Culture { get; set; }
       public bool IncludeFeatured { get; set; }
+
+      public ThemeSettings ThemeSettings { get; set; }
       public List<SocialField> SocialFields { get; set; }
 
       public string HeaderScript { get; set; }

@@ -1,9 +1,11 @@
 ﻿using Blogifier.Core.Extensions;
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
@@ -13,6 +15,8 @@ namespace Blogifier.Core.Providers
 		Task<IList<string>> GetThemes();
 		bool FileExists(string path);
 		Task<bool> UploadFormFile(IFormFile file, string path = "");
+		Task<ThemeSettings> GetThemeSettings(string theme);
+		Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
 	}
 
 	public class StorageProvider : IStorageProvider
@@ -45,6 +49,50 @@ namespace Blogifier.Core.Providers
 			}
 			catch { }
 			return await Task.FromResult(themes);
+		}
+
+		public async Task<ThemeSettings> GetThemeSettings(string theme)
+		{
+			var settings = new ThemeSettings();
+			var fileName = Path.Combine(_environment.ContentRootPath, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			if (File.Exists(fileName))
+			{
+				try
+				{
+					string jsonString = File.ReadAllText(fileName);
+					settings = JsonSerializer.Deserialize<ThemeSettings>(jsonString);
+				}
+				catch (Exception ex) 
+				{
+					Serilog.Log.Error($"Error reading theme settings: {ex.Message}");
+					return null;
+				}
+			}
+
+			return await Task.FromResult(settings);
+		}
+
+		public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
+		{
+			var fileName = Path.Combine(_environment.ContentRootPath, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			try
+			{
+				if (File.Exists(fileName))
+					File.Delete(fileName);
+
+				var options = new JsonSerializerOptions { WriteIndented = true, PropertyNameCaseInsensitive = true	};
+
+				string jsonString = JsonSerializer.Serialize(settings, options);
+
+				using FileStream createStream = File.Create(fileName);
+				await JsonSerializer.SerializeAsync(createStream, settings, options);
+			}
+			catch (Exception ex)
+			{
+				Serilog.Log.Error($"Error writing theme settings: {ex.Message}");
+				return false;
+			}
+			return true;
 		}
 
 		public async Task<bool> UploadFormFile(IFormFile file, string path = "")
@@ -83,7 +131,7 @@ namespace Blogifier.Core.Providers
 				Random rnd = new Random();
 				fileName = fileName.Replace("mceclip0", rnd.Next(100000, 999999).ToString());
 			}
-			return fileName.SanitizePath();
+			return fileName. SanitizePath();
 		}
 
 		void VerifyPath(string path)

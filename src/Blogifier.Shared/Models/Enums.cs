@@ -34,4 +34,12 @@
       PostCover,
       PostImage
    }
+
+   public enum ThemeOptions
+	{
+      Text,
+      TextArea,
+      Checkbox,
+      Select
+	}
 }
