@@ -1,21 +1,18 @@
-﻿@{ 
-	BlogItem blog = (BlogItem)Model;
-}
-<header class="blog-header d-flex flex-column">
+﻿<header class="blog-header d-flex flex-column">
 	<div class="container d-flex">
 		<a href="~/" class="blog-logo my-auto d-flex">
 			<img src="~/themes/standard/img/logo-white.png" alt="Blog Title" class="my-auto" />
 		</a>
 		<ul class="blog-social nav ml-auto my-auto">
-			@if (blog.values["enabled"] == "True")
+			@if (Model.values["enabled"] == "True")
 			{
 				<li class="blog-social-item">
-					<a class="blog-social-link" target="_blank" href="https://www.facebook.com/@blog.values["facebook"]">
+					<a class="blog-social-link" target="_blank" href="https://www.facebook.com/@Model.values["facebook"]">
 						<i class="blog-social-icon fa fa-facebook"></i>
 					</a>
 				</li>
 				<li class="blog-social-item">
-					<a class="blog-social-link" target="_blank" href="https://www.twitter.com/@blog.values["twitter"]">
+					<a class="blog-social-link" target="_blank" href="https://www.twitter.com/@Model.values["twitter"]">
 						<i class="blog-social-icon fa fa-twitter"></i>
 					</a>
 				</li>
