@@ -4,21 +4,21 @@
       "Label": "Social Buttons",
       "Fields": [
         {
-          "Id": "sbEnabled",
+          "Id": "enabled",
           "Label": "Enabled",
           "Type": "checkbox",
           "Value": "True",
           "Options": null
         },
         {
-          "Id": "txtFacebook",
+          "Id": "facebook",
           "Label": "Facebook",
           "Type": "text",
           "Value": "blogifierdotnet",
           "Options": null
         },
         {
-          "Id": "txtTwitter",
+          "Id": "twitter",
           "Label": "Twitter",
           "Type": "text",
           "Value": "blogifierdotnet",
@@ -30,7 +30,7 @@
       "Label": "Select Dropdown Sample",
       "Fields": [
         {
-          "Id": "ddSample",
+          "Id": "dd-sample",
           "Label": "Select Sample",
           "Type": "select",
           "Value": "two",
@@ -43,10 +43,10 @@
       ]
     },
     {
-      "Label": "Sectin Three",
+      "Label": "Section Three",
       "Fields": [
         {
-          "Id": "txtArea",
+          "Id": "txt-area",
           "Label": "Text Area Sample",
           "Type": "textarea",
           "Value": "Some test text here",

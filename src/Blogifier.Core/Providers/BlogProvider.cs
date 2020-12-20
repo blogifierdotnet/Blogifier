@@ -18,10 +18,12 @@ namespace Blogifier.Core.Providers
 	public class BlogProvider : IBlogProvider
 	{
 		private readonly AppDbContext _db;
+		private readonly IStorageProvider _storageProvider;
 
-		public BlogProvider(AppDbContext db)
+		public BlogProvider(AppDbContext db, IStorageProvider storageProvider)
 		{
 			_db = db;
+			_storageProvider = storageProvider;
 		}
 
 		public async Task<BlogItem> GetBlogItem()
@@ -35,7 +37,8 @@ namespace Blogifier.Core.Providers
 				ItemsPerPage = blog.ItemsPerPage,
 				SocialFields = new List<SocialField>(),
 				Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : "img/cover.png",
-				Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : "img/logo.png"
+				Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : "img/logo.png",
+				values = await GetValues(blog.Theme)
 			};
 		}
 
@@ -62,6 +65,27 @@ namespace Blogifier.Core.Providers
 			existing.Logo = blog.Logo;
 
 			return await _db.SaveChangesAsync() > 0;
+		}
+
+		private async Task<dynamic> GetValues(string theme)
+		{
+			var settings = await _storageProvider.GetThemeSettings(theme);
+			var values = new Dictionary<string, string>();
+
+			if (settings != null && settings.Sections != null)
+			{
+				foreach (var section in settings.Sections)
+				{
+					if (section.Fields != null)
+					{
+						foreach (var field in section.Fields)
+						{
+							values.Add(field.Id, field.Value);
+						}
+					}
+				}
+			}
+			return values;
 		}
 	}
 }

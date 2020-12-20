@@ -59,9 +59,7 @@ namespace Blogifier.Controllers
 				model.Blog.Title = term;
 				model.Blog.Description = "";
 				model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
-			}
-
-			model.Blog.ThemeSettings = await _storageProvider.GetThemeSettings(model.Blog.Theme);
+			}	
 
 			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"blog?page={model.Pager.Older}";
 			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"blog?page={model.Pager.Newer}";
@@ -92,8 +90,6 @@ namespace Blogifier.Controllers
 				model.Blog = await _blogProvider.GetBlogItem();
 				model.Post.Description = model.Post.Description.MdToHtml();
 				model.Post.Content = model.Post.Content.MdToHtml();
-
-				model.Blog.ThemeSettings = await _storageProvider.GetThemeSettings(model.Blog.Theme);
 
 				return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
 			}
@@ -157,6 +153,5 @@ namespace Blogifier.Controllers
 				return File(stream.ToArray(), "application/xml; charset=utf-8");
 			}
 		}
-
 	}
 }

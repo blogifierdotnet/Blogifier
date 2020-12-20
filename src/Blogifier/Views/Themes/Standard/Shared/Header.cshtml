@@ -1,9 +1,5 @@
 ﻿@{ 
-	BlogItem model = (BlogItem)Model;
-	var fields = model.ThemeSettings.Sections.Where(s => s.Label == "Social Buttons").FirstOrDefault().Fields;
-	bool enabled = bool.Parse(fields.Where(f => f.Id == "sbEnabled").First().Value);
-	var btnFacebook = fields.Where(f => f.Id == "txtFacebook").First().Value;
-	var btnTwitter = fields.Where(f => f.Id == "txtTwitter").First().Value;
+	BlogItem blog = (BlogItem)Model;
 }
 <header class="blog-header d-flex flex-column">
 	<div class="container d-flex">
@@ -11,15 +7,15 @@
 			<img src="~/themes/standard/img/logo-white.png" alt="Blog Title" class="my-auto" />
 		</a>
 		<ul class="blog-social nav ml-auto my-auto">
-			@if (enabled)
+			@if (blog.values["enabled"] == "True")
 			{
 				<li class="blog-social-item">
-					<a class="blog-social-link" target="_blank" href="https://www.facebook.com/@btnFacebook">
+					<a class="blog-social-link" target="_blank" href="https://www.facebook.com/@blog.values["facebook"]">
 						<i class="blog-social-icon fa fa-facebook"></i>
 					</a>
 				</li>
 				<li class="blog-social-item">
-					<a class="blog-social-link" target="_blank" href="https://www.twitter.com/@btnTwitter">
+					<a class="blog-social-link" target="_blank" href="https://www.twitter.com/@blog.values["twitter"]">
 						<i class="blog-social-icon fa fa-twitter"></i>
 					</a>
 				</li>

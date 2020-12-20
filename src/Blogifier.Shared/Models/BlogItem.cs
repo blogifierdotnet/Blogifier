@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Blogifier.Shared
 {
@@ -27,10 +28,12 @@ namespace Blogifier.Shared
       public string Culture { get; set; }
       public bool IncludeFeatured { get; set; }
 
-      public ThemeSettings ThemeSettings { get; set; }
       public List<SocialField> SocialFields { get; set; }
 
       public string HeaderScript { get; set; }
       public string FooterScript { get; set; }
+
+      [JsonIgnore]
+      public dynamic values { get; set; }
    }
 }
