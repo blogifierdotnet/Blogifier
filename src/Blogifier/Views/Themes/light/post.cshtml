@@ -1,0 +1,65 @@
+﻿@using Blogifier.Shared
+@{
+    Layout = "~/Views/Themes/light/shared/layout/_layout.cshtml";
+    PostModel postModel = (PostModel)Model;
+    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
+    var catUrl = Url.Content("~/categories");
+    
+}
+
+<article class="post-single">
+    <header class="post-header">
+        <div class="post-cats">
+            @if (postModel.Post.Categories != null && postModel.Post.Categories.Count > 0)
+            {
+                foreach (var cat in postModel.Post.Categories)
+                {
+                    <a href="@catUrl/@cat">@cat</a>
+                }
+            }
+        </div>
+        <h1 class="post-title">@postModel.Post.Title</h1>
+        <div class="post-meta d-flex">
+            <div class="post-author">
+                <img class="post-author-img" width="24" src="~/@postModel.Post.Author.Avatar"
+                     alt="@postModel.Post.Author.DisplayName" />
+                <span class="post-author-name">@postModel.Post.Author.DisplayName</span>
+            </div>
+            <time class="post-time"><span class="post-meta-sep">-</span>@string.Format("{0:MMM d yyyy}", postModel.Post.Published)</time>
+        </div>
+    </header>
+
+    <figure class="post-cover">
+        <img class="post-cover-img" src="@cover" alt="@postModel.Post.Title">
+    </figure>
+
+    <section class="post-body">
+        @Html.Raw(postModel.Post.Content)
+    </section>
+
+    @if (postModel.Older != null || postModel.Newer != null)
+    {
+        <ul class="pagination justify-content-center">
+            @if (postModel.Older != null)
+            {
+                <li class="item item-prev">
+                    <a class="item-link" href="@postModel.Older.Slug" title="@postModel.Older.Title">
+                        <i class="item-icon fa fa-angle-left"></i>
+                    </a>
+                </li>
+            }
+            @if (postModel.Newer != null)
+            {
+                <li class="item item-next">
+                    <a class="item-link" href="@postModel.Newer.Slug" title="@postModel.Newer.Title">
+                        <i class="item-icon fa fa-angle-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</article>
+
+<div class="container">
+    <div id="disqus_thread"></div>
+</div>

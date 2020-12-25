@@ -1,0 +1,18 @@
+.blog-nav {
+  li {
+    &:not(:last-child) {
+      margin-right: 1.5rem;
+    }
+  }
+  a {
+    font-weight: 500;
+    line-height: 2rem;
+    display: block;
+    color: #666;
+    -webkit-font-smoothing: antialiased;
+
+    &:hover {
+      color: $color;
+    }
+  }
+}

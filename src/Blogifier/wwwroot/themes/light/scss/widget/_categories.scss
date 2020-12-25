@@ -1,0 +1,27 @@
+.widget-category {
+  border-top: 1px dashed #e5e5e5;
+  &-item {
+      margin: 0;
+  }
+  &-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: block;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dashed #e5e5e5;
+    color: #000;
+    text-transform: capitalize;
+    position: relative;
+    &:hover {
+      color: $color;
+    }
+    span {
+      position: absolute;
+      right: 0;
+      font-size: 0.625rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

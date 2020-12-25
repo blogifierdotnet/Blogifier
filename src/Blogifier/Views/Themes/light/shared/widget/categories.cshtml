@@ -1,0 +1,37 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+@inject ICategoryProvider _categoryProvider
+
+@{
+    var catsUnordered = await _categoryProvider.Categories();
+    var cats = catsUnordered.OrderByDescending(c => c.PostCount);
+}
+
+<section class="widget">
+    <h5 class="widget-title">Categories</h5>
+    <div class="widget-content">
+        <ul class="widget-category">
+            @if (catsUnordered.Any())
+            {
+                var cnt = 1;
+                @foreach (var cat in catsUnordered)
+                {
+                    if (cnt < 6)
+                    {
+                        <li class="widget-category-item"><a class="widget-category-link" href="~/categories/@cat.Category">@cat.Category <span>(@cat.PostCount)</span></a></li>
+                    }
+                    cnt++;
+                }
+            }
+            else
+            {
+                <li>No categories.</li>
+            }
+
+          
+        </ul>
+
+    </div>
+</section>

@@ -1,0 +1,18 @@
+@{
+    string root = Url.Content("~/");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<partial name="../include/head.cshtml" />
+
+<body>
+    <partial name="../include/header.cshtml" />
+    <main class="blog-content container">
+        @RenderBody()
+    </main>
+    <partial name="../include/footer.cshtml" />
+    <partial name="../include/foot.cshtml" />
+</body>
+
+</html>

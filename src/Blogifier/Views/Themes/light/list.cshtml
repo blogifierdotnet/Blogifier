@@ -1,0 +1,81 @@
+﻿@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@inject IStringLocalizer<Resource> _localizer
+
+@{
+    Layout = "~/Views/Themes/light/shared/layout/_layout.cshtml";
+    ListModel listModel = (ListModel)Model;
+    Pager pgr = listModel.Pager;
+    string root = Url.Content("~/");
+    string cover = $"{root}{listModel.Blog.Cover}";
+    var catUrl = Url.Content("~/categories");
+    string theme = listModel.Blog.Theme;
+}
+@if (listModel.Posts.Count() > 0)
+{
+    <div class="row">
+        @foreach (var post in listModel.Posts)
+        {
+            <article class="post-home col-md-6">
+                <figure class="post-cover">
+                    <a class="post-cover-link" href="posts/@post.Slug">
+                        <img src="~/@post.Cover" class="w-100" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                    </a>
+                </figure>
+                <header class="post-header">
+                    <div class="post-meta">
+                        <time class="post-time">@post.Published.ToFriendlyDateString()</time>
+                        <span class="post-cats">
+                            @if (post.Categories != null && post.Categories.Count > 0)
+                            {
+                                <span>/</span>
+                                foreach (var cat in post.Categories)
+                                {
+                                    <a href="@catUrl/@cat">@cat</a>
+                                }
+                            }
+                        </span>
+                    </div>
+                    <h2 class="post-title"><a class="post-title-link" href="posts/@post.Slug">@post.Title</a></h2>
+                </header>
+                <div class="post-body">
+                    <p>
+                        @Html.Raw(post.Description)
+                    </p>
+                    <a class="post-more" href="posts/@post.Slug">Read More</a>
+                </div>
+                @if (post.Featured)
+                {
+                    <span class="post-label">@_localizer["featured"]</span>
+                }
+            </article>
+        }
+    </div>
+
+    @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
+    {
+        <ul class="pagination justify-content-center mt-5">
+            @if (pgr.ShowOlder)
+            {
+                <li class="item item-prev">
+                    <a class="item-link" href="@pgr.LinkToOlder">
+                        <i class="item-icon fa fa-angle-left"></i>
+                    </a>
+                </li>
+            }
+            @if (pgr.ShowNewer)
+            {
+                <li class="item item-next">
+                    <a class="item-link" href="@pgr.LinkToNewer">
+                        <i class="item-icon fa fa-angle-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+}
+else
+{
+    <div class="notfound">@_localizer["empty"]!</div>
+}

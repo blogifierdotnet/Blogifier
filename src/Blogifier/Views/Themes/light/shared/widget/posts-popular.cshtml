@@ -1,0 +1,29 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+@inject IPostProvider _postProvider
+
+@{
+    var popular = await _postProvider.GetPopular(new Pager(1, 2));
+}
+
+<section class="widget">
+    <h5 class="widget-title">@_localizer["popular"]</h5>
+    <div class="widget-content">
+        <ul class="widget-posts">
+            @foreach (var item in popular)
+            {
+                <li class="widget-posts-item">
+                    <a class="widget-posts-link" href="~/posts/@item.Slug">
+                        <h4 class="widget-posts-title">@item.Title</h4>
+                        <time class="widget-posts-time">@item.Published.ToFriendlyDateString()</time>
+                        <div class="widget-posts-cover">
+                            <img class="widget-posts-img" src="~/@item.Cover" alt="@item.Title">
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</section>

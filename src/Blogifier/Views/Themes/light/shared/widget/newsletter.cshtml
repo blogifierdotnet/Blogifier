@@ -1,0 +1,23 @@
+@using Blogifier.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+
+<section class="widget">
+    <h5 class="widget-title">@_localizer["newsletter"]</h5>
+    <div class="widget-content">
+        <div class="blog-newsletter" id="newsletter">
+            <div id="newsletter-form">
+                <h2 id="ttlNewsletter" style="display:none">@_localizer["thank-you"]</h2>
+                <form id="frmNewsletter">
+                    <p class="blog-newsletter-desc" id="emailHelp">@_localizer["join-subscribers"]</p>
+                    <input class="form-control" id="txtEmail" name="txtEmail" placeholder="@_localizer["enter-email"]"
+                           type="email">
+                    <button id="blog-subscribe"
+                            class="btn btn-dark btn-block btn-subscribe">
+                        @_localizer["subscribe"]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
