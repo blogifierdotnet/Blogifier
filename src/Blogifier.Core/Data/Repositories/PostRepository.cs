@@ -21,6 +21,7 @@ namespace Blogifier.Core.Data
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
         Task<IEnumerable<CategoryItem>> Categories();
+        Task<IEnumerable<PostItem>> GetList(int count = 3);
     }
 
     public class PostRepository : Repository<BlogPost>, IPostRepository
@@ -32,6 +33,18 @@ namespace Blogifier.Core.Data
         {
             _db = db;
             _customFieldRepository = customFieldRepository;
+        }
+
+        public async Task<IEnumerable<PostItem>> GetList(int count = 3)
+        {
+            var posts = _db.BlogPosts
+                .Where(p => p.Published > DateTime.MinValue)
+                .OrderByDescending(p => p.IsFeatured)
+                .ThenByDescending(p => p.Published).ToList();
+
+            var finalList = posts.Take(count).ToList();
+
+            return await Task.FromResult(PostListToItems(finalList));
         }
 
         public async Task<IEnumerable<PostItem>> GetList(Expression<Func<BlogPost, bool>> predicate, Pager pager)

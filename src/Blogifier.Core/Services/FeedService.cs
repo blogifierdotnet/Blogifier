@@ -1,6 +1,4 @@
-﻿using Blogifier.Core.Helpers;
-using Blogifier.Models;
-using Microsoft.SyndicationFeed;
+﻿using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using Microsoft.SyndicationFeed.Rss;
 using System;
@@ -11,9 +9,9 @@ using System.Xml;
 
 namespace Blogifier.Core.Services
 {
-    public interface IFeedService
+	public interface IFeedService
     {
-        Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
+        Task<IEnumerable<AtomEntry>> GetEntries(string type, string host, int count);
         Task<ISyndicationFeedWriter> GetWriter(string type, string host, XmlWriter xmlWriter);
     }
 
@@ -26,10 +24,10 @@ namespace Blogifier.Core.Services
             _db = db;
         }
 
-        public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
+        public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host, int count)
         {
             var items = new List<AtomEntry>();
-            var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue, new Pager(1));
+            var posts = await _db.BlogPosts.GetList(count);
 
             foreach (var post in posts)
             {

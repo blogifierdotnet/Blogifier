@@ -124,11 +124,11 @@ namespace Blogifier.Controllers
 
         [ResponseCache(Duration = 1200)]
         [HttpGet("feed/{type}")]
-        public async Task<IActionResult> Rss(string type)
+        public async Task<IActionResult> Rss(string type, int count = 3)
         {
             string host = Request.Scheme + "://" + Request.Host;
             var blog = await DataService.CustomFields.GetBlogSettings();
-            var posts = await FeedService.GetEntries(type, host);
+            var posts = await FeedService.GetEntries(type, host, count);
             var items = new List<SyndicationItem>();
 
             var feed = new SyndicationFeed(
