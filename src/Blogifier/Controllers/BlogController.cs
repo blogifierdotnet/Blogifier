@@ -151,6 +151,13 @@ namespace Blogifier.Controllers
                         post.Published
                     );
                     item.PublishDate = post.Published;
+                    if(post.Categories != null && post.Categories.Count() > 0)
+					     {
+						      foreach (var category in post.Categories)
+						      {
+                           item.Categories.Add(new SyndicationCategory(category.Name));
+						      }
+					     }
                     items.Add(item);
                 }
             }
