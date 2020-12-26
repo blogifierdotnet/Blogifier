@@ -14,5 +14,5 @@ $input-btn-padding-y: .5rem;
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "components/simplemde.min.scss";
    
-@import "layout/header.scss";
-@import "layout/main.scss";
+@import "layout/header";
+@import "layout/main";
