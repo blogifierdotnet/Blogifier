@@ -2,7 +2,7 @@
   {
     "outputFileName": "wwwroot/css/blogifier.min.css",
     "inputFiles": [
-      "wwwroot/css/admin.css"
+      "wwwroot/css/app.css"
     ]
   },
   {

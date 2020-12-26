@@ -6,6 +6,10 @@
     <title>Blogifier</title>
     <base href="/" />
     <link href="css/app.css" rel="stylesheet" />
+    <!--
+        TODO: IF not devlopement environement we only include this CSS file:
+        <link href="css/blogifier.min.css" rel="stylesheet" />
+    -->
     <!--<link href="_content/Sotsera.Blazor.Toaster/toastr.min.css" rel="stylesheet" />-->
     <!--<link href="Blogifier.Admin.styles.css" rel="stylesheet" />-->
     <!--<link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />-->
@@ -33,10 +37,14 @@
     </div>
 
 
-    <!-- TOOD: bundle into blogifier.min.js if it's not dev environment -->
+
+    <!--
+        TODO: IF not devlopement environement we only include this JS file:
+        <script src="js/blogifier.min.js"></script>
+    -->
+
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-
 
     <script src="js/simplemde.min.js"></script>
     <script src="js/components.js"></script>

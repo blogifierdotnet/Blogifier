@@ -1,18 +1,13 @@
-﻿$primary: #7700ff;
-$container: 64rem;
-$secondary: #c7c9d2;
-$input-border-color: $secondary;
-$input-focus-box-shadow-width: 2px;
-$input-btn-focus-width: 2px;
-$input-focus-border-color: $secondary;
-$component-active-bg: $secondary;
-$link-decoration: none;
-$btn-font-weight: 500;
-$input-btn-font-size: .875rem;
-$input-btn-padding-y: .5rem;
-
+﻿@import "helpers/variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
-@import "components/simplemde.min.scss";
-   
+@import "helpers/reset";
+
+// layout
 @import "layout/header";
 @import "layout/main";
+
+// pages
+@import "pages/dashboard";
+
+// components
+@import "components/PostListComponent";
