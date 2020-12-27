@@ -123,6 +123,9 @@ namespace Blogifier.Core.Providers
 					path = path.Substring(0, path.LastIndexOf($"src{_slash}Blogifier"));
 					path = $"{path}src{_slash}Blogifier";
 				}
+				//if (!path.EndsWith("/"))
+				//	path = $"{path}/";
+
 				return path;
 			}
 		}

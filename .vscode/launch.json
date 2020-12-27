@@ -1,0 +1,31 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+        {
+            "name": "Launch and Debug Blazor WebAssembly App",
+            "type": "coreclr",
+						"request": "launch",
+						"program": "dotnet",
+						"args":["run"],
+						"cwd": "${workspaceFolder}/src/Blogifier",
+						"env": { "ASPNETCORE_ENVIRONMENT": "Development" },
+						"launchBrowser": {
+							"enabled": true,
+							"args": "${auto-detect-url}",
+							"windows": {
+									"command": "cmd.exe",
+									"args": "/C start ${auto-detect-url}",
+							},
+							"osx": {
+									"command": "open"
+							},      
+							"linux": {
+									"command": "xdg-open"
+							}       
+					}
+        }
+    ]
+}
