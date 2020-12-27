@@ -28,7 +28,7 @@ namespace Blogifier.Tests
       IRssImportProvider GetSut()
 		{
          var dbContext = _testHelper.GetDbContext();
-         var storageProvider = new StorageProvider(_testHelper.ContextRoot);
+         var storageProvider = new StorageProvider();
 
          return new RssImportProvider(dbContext, storageProvider);
       }
