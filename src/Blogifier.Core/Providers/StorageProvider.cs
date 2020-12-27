@@ -117,8 +117,13 @@ namespace Blogifier.Core.Providers
 			get
 			{
 				string path = Directory.GetCurrentDirectory();
-				path = path.Substring(0, path.LastIndexOf($"src{_slash}Blogifier"));
-				return $"{path}src{_slash}Blogifier";
+				Serilog.Log.Error($"GetCurrentDirectory() => {path}");
+				if(path.LastIndexOf($"src{_slash}Blogifier") > 0)
+				{
+					path = path.Substring(0, path.LastIndexOf($"src{_slash}Blogifier"));
+					path = $"{path}src{_slash}Blogifier";
+				}
+				return path;
 			}
 		}
 
