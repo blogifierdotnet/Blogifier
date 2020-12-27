@@ -1,6 +1,5 @@
 ﻿using Blogifier.Core.Extensions;
 using Blogifier.Shared;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -21,25 +20,23 @@ namespace Blogifier.Core.Providers
 
 	public class StorageProvider : IStorageProvider
 	{
-		private readonly IWebHostEnvironment _environment;
-		private readonly string _slash = Path.DirectorySeparatorChar.ToString();
 		private string _storageRoot;
-
-		public StorageProvider(IWebHostEnvironment environment)
+		private readonly string _slash = Path.DirectorySeparatorChar.ToString();
+		
+		public StorageProvider()
 		{
-			_environment = environment;
-			_storageRoot = $"{_environment.ContentRootPath}{_slash}wwwroot{_slash}data{_slash}";
+			_storageRoot = $"{ContentRoot}{_slash}wwwroot{_slash}data{_slash}";
 		}
 
 		public bool FileExists(string path)
 		{
-			return File.Exists(Path.Combine(_environment.ContentRootPath, path));
+			return File.Exists(Path.Combine(ContentRoot, path));
 		}
 
 		public async Task<IList<string>> GetThemes()
 		{
 			var themes = new List<string>();
-			var themesDirectory = Path.Combine(_environment.ContentRootPath, $"Views{_slash}Themes");
+			var themesDirectory = Path.Combine(ContentRoot, $"Views{_slash}Themes");
 			try
 			{
 				foreach (string dir in Directory.GetDirectories(themesDirectory))
@@ -54,7 +51,7 @@ namespace Blogifier.Core.Providers
 		public async Task<ThemeSettings> GetThemeSettings(string theme)
 		{
 			var settings = new ThemeSettings();
-			var fileName = Path.Combine(_environment.ContentRootPath, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
 			if (File.Exists(fileName))
 			{
 				try
@@ -74,7 +71,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
 		{
-			var fileName = Path.Combine(_environment.ContentRootPath, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
 			try
 			{
 				if (File.Exists(fileName))
@@ -114,6 +111,16 @@ namespace Blogifier.Core.Providers
 		}
 
 		#region Private members
+
+		private string ContentRoot
+		{
+			get
+			{
+				string path = Directory.GetCurrentDirectory();
+				path = path.Substring(0, path.LastIndexOf($"src{_slash}Blogifier"));
+				return $"{path}src{_slash}Blogifier";
+			}
+		}
 
 		string GetFileName(string fileName)
 		{

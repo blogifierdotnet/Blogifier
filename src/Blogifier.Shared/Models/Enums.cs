@@ -42,4 +42,14 @@
       Checkbox,
       Select
 	}
+
+   public enum Status
+   {
+      Success, Warning, Error
+   }
+
+   public enum ImportType
+   {
+      Post, Image, Attachement
+   }
 }
