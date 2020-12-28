@@ -1,52 +1,45 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-
+<h2 class="app-settings-title">General Settings</h2>
+<div class="app-settings-wrap app-settings-general">
 @if (Blog != null)
 {
 	<EditForm model="@Blog" OnValidSubmit="Save">
 		<DataAnnotationsValidator />
 		<ValidationSummary />
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["title"]</label>
+		<div class="form-item">
+			<label class="form-item-label">@_localizer["title"]</label>
 			<input type="text" class="form-control" @bind="Blog.Title" name="title" />
 		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["description"]</label>
-			<input type="text" class="form-control" @bind="Blog.Description" name="description" />
+		<div class="form-item">
+			<label class="form-item-label">@_localizer["description"]</label>
+			<textarea class="form-control" cols="30" rows="5" @bind="Blog.Description" name="description"></textarea>
 		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["items-per-page"]</label>
+		<div class="form-item">
+			<label class="form-item-label">@_localizer["items-per-page"]</label>
 			<input type="text" class="form-control" @bind="Blog.ItemsPerPage" name="pageitems" />
 		</div>
-		<div class="form-group">
-			<div class="custom-control custom-switch">
-				<input type="checkbox" @bind="Blog.IncludeFeatured" class="custom-control-input" id="switch1">
-				<label class="custom-control-label" for="switch1">@_localizer["include-featured"]</label>
+		<div class="form-item">
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" @bind="Blog.IncludeFeatured" id="IncludeFeaturedSwitch">
+				<label class="form-check-label" for="IncludeFeaturedSwitch">@_localizer["include-featured"]</label>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["logo"]</label>
-			<div class="input-group">
-				<input type="text" class="form-control txt-upload" @bind="Blog.Logo" name="logo" id="logo" readonly="" />
-				<span class="input-group-append">
-					<button class="btn btn-outline-secondary" onclick="return fileManager.uploadClick('@UploadType.AppLogo');" type="button"> @_localizer["select"]</button>
-				</span>
-			</div>
+		<div class="form-item">
+			<label class="form-item-label">@_localizer["language"]</label>
+			<select class="form-select" aria-label="Language">
+				<option selected>English</option>
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
 		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["cover"]</label>
-			<div class="input-group">
-				<input type="text" class="form-control txt-upload" @bind="Blog.Cover" name="cover" id="cover" readonly="" />
-				<span class="input-group-append">
-					<button class="btn btn-outline-secondary" onclick="return fileManager.uploadClick('@UploadType.AppCover');" type="button"> @_localizer["select"]</button>
-				</span>
-			</div>
-		</div>
-		<div class="form-submit-button">
-			<input type="submit" value="@_localizer["save"]" class="btn btn-brand" />
+		<div class="form-item">
+			<button type="submit" class="btn btn-primary px-5">@_localizer["save"]</button>
 		</div>
 	</EditForm>
 }
+</div>
 <ToasterComponent @ref="Toaster" />
 
 @code {

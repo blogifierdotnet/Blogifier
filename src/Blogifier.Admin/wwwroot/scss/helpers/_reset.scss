@@ -1,12 +1,30 @@
 ﻿#blazor-error-ui {
-    display: none;
+  display: none;
 }
 
 .btn-link {
+  font-weight: 500;
+}
+
+img {
+  max-width: 100%;
+}
+
+.form-control {
+  box-shadow: $bf-shadow;
+}
+
+.form-item {
+  margin-bottom: 1.5rem;
+
+  &-label {
+    font-size: 0.875rem;
     font-weight: 500;
+  }
+  &-desc {
+    font-size: 0.75rem;
+    color: $gray-600;
+    padding-left: .1rem;
+  }
 }
-
-
-img{
-    max-width: 100%;
-}
+ 
