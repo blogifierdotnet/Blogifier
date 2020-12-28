@@ -8,8 +8,10 @@ namespace Blogifier.Tests
 	{
       private readonly TestHelper _testHelper;
       private readonly string _rssFile;
+      private readonly string _imgUrl = "http://via.placeholder.com/200X120";
 
-		public RssImportProviderTests()
+
+      public RssImportProviderTests()
 		{
          _testHelper = new TestHelper();
          _rssFile = $"{_testHelper.ContextRoot}tests{_testHelper.Slash}data{_testHelper.Slash}test3.xml";

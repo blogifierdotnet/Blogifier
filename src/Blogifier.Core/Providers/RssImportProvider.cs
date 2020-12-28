@@ -181,18 +181,18 @@ namespace Blogifier.Core.Providers
                   //}
                   //else
                   //{
-                  //   asset = await _ss.UploadFromWeb(new Uri(uri), _webRoot, path);
+                     var mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
                   //}
 
                   //var mdTag = $"![{asset.Title}]({_webRoot}{asset.Url})";
 
-                  //post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+                  post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
 
                   _importMessages.Add(new ImportMessage
                   {
                      ImportType = ImportType.Image,
                      Status = Status.Success,
-                     Message = "todo: msg" // $"{tag} -> {mdTag}"
+                     Message = $"{tag} -> {mdTag}"
                   });
                }
                catch (Exception ex)

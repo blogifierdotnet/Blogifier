@@ -108,6 +108,17 @@ namespace Blogifier.Core.Extensions
          return Convert.ToBase64String(bytes);
       }
 
+      public static string ReplaceIgnoreCase(this string str, string search, string replacement)
+      {
+         string result = Regex.Replace(
+             str,
+             Regex.Escape(search),
+             replacement.Replace("$", "$$"),
+             RegexOptions.IgnoreCase
+         );
+         return result;
+      }
+
       #region Helper Methods
 
       static string RemoveIllegalCharacters(string text)

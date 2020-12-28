@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -14,6 +16,7 @@ namespace Blogifier.Core.Providers
 		Task<IList<string>> GetThemes();
 		bool FileExists(string path);
 		Task<bool> UploadFormFile(IFormFile file, string path = "");
+		Task<string> UploadFromWeb(Uri requestUri, string root, string path = "");
 		Task<ThemeSettings> GetThemeSettings(string theme);
 		Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
 	}
@@ -95,7 +98,6 @@ namespace Blogifier.Core.Providers
 		public async Task<bool> UploadFormFile(IFormFile file, string path = "")
 		{
 			path = path.Replace("/", _slash);
-
 			VerifyPath(path);
 
 			var fileName = GetFileName(file.FileName);
@@ -110,6 +112,23 @@ namespace Blogifier.Core.Providers
 			return true;
 		}
 
+		public async Task<string> UploadFromWeb(Uri requestUri, string root, string path = "")
+		{
+			path = path.Replace("/", _slash);
+			VerifyPath(path);
+
+			var fileName = TitleFromUri(requestUri);
+			var filePath = string.IsNullOrEmpty(path) ?
+				 Path.Combine(_storageRoot, fileName) :
+				 Path.Combine(_storageRoot, path + _slash + fileName);
+
+			using (WebClient client = new WebClient())
+			{
+				client.DownloadFile(requestUri, filePath);
+				return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
+			}
+		}
+
 		#region Private members
 
 		private string ContentRoot
@@ -117,15 +136,22 @@ namespace Blogifier.Core.Providers
 			get
 			{
 				string path = Directory.GetCurrentDirectory();
-				Serilog.Log.Error($"GetCurrentDirectory() => {path}");
-				if(path.LastIndexOf($"src{_slash}Blogifier") > 0)
-				{
-					path = path.Substring(0, path.LastIndexOf($"src{_slash}Blogifier"));
-					path = $"{path}src{_slash}Blogifier";
-				}
-				//if (!path.EndsWith("/"))
-				//	path = $"{path}/";
+				string testsDirectory = $"tests{_slash}Blogifier.Tests";
+				string appDirectory = $"src{_slash}Blogifier";
 
+				// development unit test run
+				if (path.LastIndexOf(testsDirectory) > 0)
+				{
+					path = path.Substring(0, path.LastIndexOf(testsDirectory));
+					return $"{path}src{_slash}Blogifier";
+				}
+
+				// development debug run
+				if (path.LastIndexOf(appDirectory) > 0)
+				{
+					path = path.Substring(0, path.LastIndexOf(appDirectory));
+					return $"{path}src{_slash}Blogifier";
+				}
 				return path;
 			}
 		}
@@ -162,6 +188,44 @@ namespace Blogifier.Core.Providers
 					Directory.CreateDirectory(dir);
 				}
 			}
+		}
+
+		string TitleFromUri(Uri uri)
+		{
+			var title = uri.ToString().ToLower();
+			title = title.Replace("%2f", "/");
+
+			if (title.EndsWith(".axdx"))
+			{
+				title = title.Replace(".axdx", "");
+			}
+			if (title.Contains("image.axd?picture="))
+			{
+				title = title.Substring(title.IndexOf("image.axd?picture=") + 18);
+			}
+			if (title.Contains("file.axd?file="))
+			{
+				title = title.Substring(title.IndexOf("file.axd?file=") + 14);
+			}
+			if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
+			{
+				Random rnd = new Random();
+				title = string.Format("{0}.png", rnd.Next(1000, 9999));
+			}
+
+			if (title.Contains("/"))
+			{
+				title = title.Substring(title.LastIndexOf("/"));
+			}
+
+			title = title.Replace(" ", "-");
+
+			return title.Replace("/", "").SanitizeFileName();
+		}
+
+		string PathToUrl(string path)
+		{
+			return path.ReplaceIgnoreCase(_storageRoot, "").Replace(_slash, "/");
 		}
 
 		#endregion
