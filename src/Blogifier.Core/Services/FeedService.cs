@@ -41,7 +41,7 @@ namespace Blogifier.Core.Services
             {
                Title = post.Title,
                Description = post.Content,
-               Id = $"{host}/posts/{post.Slug}",
+               Id = $"{host}posts/{post.Slug}",
                Published = post.Published,
                LastUpdated = post.Published,
                ContentType = "html",

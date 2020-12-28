@@ -130,6 +130,8 @@ namespace Blogifier.Controllers
             var posts = await DataService.BlogPosts.GetList(count);
             var items = new List<SyndicationItem>();
 
+            host = $"{host}{Url.Content("~/")}";
+
             var feed = new SyndicationFeed(
                 blog.Title, 
                 blog.Description, 
@@ -153,7 +155,7 @@ namespace Blogifier.Controllers
                     item.PublishDate = post.Published;
                    
                     item.ElementExtensions.Add("summary", "", $"{post.Description.MdToHtml()}");
-                    item.ElementExtensions.Add("cover", "", $"{host}/{post.Cover}");
+                    item.ElementExtensions.Add("cover", "", $"{host}{post.Cover}");
 
                     if(atomEntry.Categories != null && atomEntry.Categories.Count() > 0)
 					     {
