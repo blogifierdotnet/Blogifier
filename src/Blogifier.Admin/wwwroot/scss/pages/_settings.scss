@@ -1,0 +1,22 @@
+.app-settings {
+  &-nav {
+      width:16rem;
+      
+    &-item {
+      line-height: 2rem;
+      color: $secondary;
+      &:hover {
+        color: #000;
+      }
+      &.active {
+        font-weight: 500;
+        color:#000;
+      }
+    }
+  }
+  &-content {
+      flex:1;
+    &-item {
+    }
+  }
+}

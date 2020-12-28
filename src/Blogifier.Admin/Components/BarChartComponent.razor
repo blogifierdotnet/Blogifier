@@ -8,7 +8,9 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<Chart Config="_config"></Chart>
+<div class="app-widget-card p-3">
+	<Chart Config="_config"></Chart>
+</div>
 
 @code {
 	private BarConfig _config;
