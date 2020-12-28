@@ -2,10 +2,9 @@
 $link-wh: 3rem;
 
 .app-nav {
-    padding-top: .5rem + 0.75rem;
-    padding-bottom: .5rem;
+    padding-top: .75rem + 0.75rem;
+    padding-bottom: .75rem;
     position: relative;
-    border-bottom: 1px solid #eee;
     margin-bottom: 4rem;
     background: #fff;
     //
@@ -26,11 +25,7 @@ $link-wh: 3rem;
         position: relative;
         margin-bottom: 0;
         list-style: none;
-        // Dashboard icon
-        .bi-grid-1x2 {
-            width: $icon-wh - .125rem;
-            height: $icon-wh - .125rem;
-        }
+       
     }
     // <a>
     &-link {
@@ -45,7 +40,11 @@ $link-wh: 3rem;
             width: $icon-wh;
             height: $icon-wh;
         }
-
+        // Dashboard icon
+        .bi-grid-1x2 {
+            width: $icon-wh - .125rem;
+            height: $icon-wh - .125rem;
+        }
         &.active {
             color: $primary;
         }

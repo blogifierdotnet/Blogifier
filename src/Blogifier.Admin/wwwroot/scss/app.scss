@@ -1,6 +1,7 @@
 ﻿@import "helpers/variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "helpers/reset";
+@import "helpers/mixins";
 
 // layout
 @import "layout/main";
@@ -11,3 +12,5 @@
 
 // components
 @import "components/PostListComponent";
+@import "components/TotalsComponent";
+   

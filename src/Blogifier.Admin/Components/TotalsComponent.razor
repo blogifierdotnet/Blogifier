@@ -1,32 +1,24 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<div class="app-widget app-notifications">
-    <div class="app-notifications-clock">
-        <span id="clock">@System.DateTime.Now.ToString("f")</span>
-    </div>
-</div>
-
 @if (_model != null)
 {
-	<div class="app-widget-stats row no-gutters">
-		<div class="col">
-			<div class="app-widget-stats-item">
-				<span>@_model.TotalPosts</span>
-				<span class="app-widget-stats-item-title">@_localizer["posts", true]</span>
-			</div>
+	<div class="app-widget app-widget-stats  d-flex">
+		<div class="app-widget-card app-widget-stats-item">
+			<span class="app-widget-stats-number">@_model.TotalPosts</span>
+			<span class="app-widget-stats-title">@_localizer["posts", true]</span>
 		</div>
-		<div class="col">
-			<div class="app-widget-stats-item">
-				<span>@_model.TotalViews</span>
-				<span class="app-widget-stats-item-title">@_localizer["views", true]</span>
-			</div>
+		<div class="app-widget-card app-widget-stats-item">
+			<span class="app-widget-stats-number">0</span>
+			<span class="app-widget-stats-title">Pages</span>
 		</div>
-		<div class="col">
-			<div class="app-widget-stats-item">
-				<span>@_model.TotalSubscribers</span>
-				<span class="app-widget-stats-item-title">@_localizer["subscribers", true]</span>
-			</div>
+		<div class="app-widget-card app-widget-stats-item">
+			<span class="app-widget-stats-number">@_model.TotalViews</span>
+			<span class="app-widget-stats-title">@_localizer["views", true]</span>
+		</div>
+		<div class="app-widget-card app-widget-stats-item">
+			<span class="app-widget-stats-number">@_model.TotalSubscribers</span>
+			<span class="app-widget-stats-title">@_localizer["subscribers", true]</span>
 		</div>
 	</div>
 }

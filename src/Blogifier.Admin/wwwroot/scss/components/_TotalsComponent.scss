@@ -1,0 +1,24 @@
+.app-widget-stats {
+  &-item {
+    height: 6rem;
+    flex: 1;
+    text-align: center;
+    color: $secondary;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+    span {
+      display: block;
+    }
+  }
+  &-number {
+    font-size: 2rem;
+    font-weight: 300;
+    height: 4rem;
+    line-height: 4rem;
+  }
+  &-title {
+    font-size: 0.75rem;
+  }
+}
