@@ -128,7 +128,7 @@ namespace Blogifier.Core.Providers
 		async Task<bool> ImportPost(Post post)
 		{
 			await ImportImages(post);
-			//await ImportFiles(post);
+			await ImportFiles(post);
 
 			var converter = new ReverseMarkdown.Converter();
 
@@ -176,60 +176,49 @@ namespace Blogifier.Core.Providers
 			}
 		}
 
-		//async Task ImportFiles(PostItem post)
-		//{
-		//   var links = new List<ImportAsset>();
-		//   var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
-		//   string[] exts = AppSettings.ImportTypes.Split(',');
+		async Task ImportFiles(Post post)
+		{
+			var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
+			string[] exts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
 
-		//   if (string.IsNullOrEmpty(post.Content))
-		//      return;
+			if (string.IsNullOrEmpty(post.Content))
+				return;
 
-		//   MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-		//   if (matches != null)
-		//   {
-		//      foreach (Match m in matches)
-		//      {
-		//         try
-		//         {
-		//            var tag = m.Value;
-		//            var src = XElement.Parse(tag).Attribute("href").Value;
-		//            var mdTag = "";
+			if (matches != null)
+			{
+				foreach (Match m in matches)
+				{
+					try
+					{
+						var tag = m.Value;
+						var src = XElement.Parse(tag).Attribute("href").Value;
+						var mdTag = "";
 
-		//            foreach (var ext in exts)
-		//            {
-		//               if (src.ToLower().EndsWith($".{ext}"))
-		//               {
-		//                  var uri = ValidateUrl(src);
-		//                  var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
-		//                  var asset = await _ss.UploadFromWeb(new Uri(uri), _webRoot, path);
+						foreach (var ext in exts)
+						{
+							if (src.ToLower().EndsWith($".{ext}"))
+							{
+								var uri = ValidateUrl(src);
+								var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-		//                  mdTag = $"[{asset.Title}]({_webRoot}{asset.Url})";
+								mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
-		//                  post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
+								if (mdTag.StartsWith("!"))
+									mdTag = mdTag.Substring(1);
 
-		//                  _msgs.Add(new ImportMessage
-		//                  {
-		//                     ImportType = ImportType.Attachement,
-		//                     Status = Status.Success,
-		//                     Message = $"{tag} -> {mdTag}"
-		//                  });
-		//               }
-		//            }
-		//         }
-		//         catch (Exception ex)
-		//         {
-		//            _msgs.Add(new ImportMessage
-		//            {
-		//               ImportType = ImportType.Attachement,
-		//               Status = Status.Error,
-		//               Message = $"{m.Value} -> {ex.Message}"
-		//            });
-		//         }
-		//      }
-		//   }
-		//}
+								post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						Serilog.Log.Error($"Error importing files: {ex.Message}");
+					}
+				}
+			}
+		}
 
 		async Task<string> GetSlug(string title)
 		{

@@ -160,8 +160,6 @@ namespace Blogifier.Core.Providers
 				 Path.Combine(_storageRoot, fileName) :
 				 Path.Combine(_storageRoot, path + _slash + fileName);
 
-			//byte[] bytes = Convert.FromBase64String(imgSrc);
-
 			await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
 
 			return $"![{fileName}]({root}{PathToUrl(filePath)})";
