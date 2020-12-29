@@ -3,7 +3,7 @@
     width: 13rem;
     padding-right: 2rem;
 
-    &-item {
+    > a {
       line-height: 2rem;
       color: $secondary;
       &:hover {
@@ -21,8 +21,7 @@
   }
   &-content {
     flex: 1;
-    &-item {
-    }
+    font-size:.875rem;
   }
 
   &-wrap {
