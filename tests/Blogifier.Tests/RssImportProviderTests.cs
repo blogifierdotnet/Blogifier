@@ -24,7 +24,7 @@ namespace Blogifier.Tests
 
          SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(_feedUrl));
 
-         var result = await sut.ImportSyndicationItem(feed.Items.First(), 1);
+         var result = await sut.ImportSyndicationItem(feed.Items.First(), 1, feed.BaseUri);
 
          Assert.NotNull(result);
       }

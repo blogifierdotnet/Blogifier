@@ -18,7 +18,7 @@ namespace Blogifier.Core.Providers
 {
 	public interface IRssImportProvider
 	{
-      Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, string webRoot = "/");
+      Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, Uri baseUrl, string webRoot = "/");
    }
 
 	public class RssImportProvider : IRssImportProvider
@@ -27,8 +27,8 @@ namespace Blogifier.Core.Providers
       private readonly IStorageProvider _storageProvider;
       private readonly string _defaultCover = "img/cover.png";
       private int _userId;
-      private string _url;
       private string _webRoot;
+      private Uri _baseUrl;
 
       public RssImportProvider(AppDbContext dbContext, IStorageProvider storageProvider)
       {
@@ -36,13 +36,15 @@ namespace Blogifier.Core.Providers
          _storageProvider = storageProvider;
       }
 
-      public async Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, string webRoot = "/")
+      public async Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, Uri baseUrl, string webRoot = "/")
       {
          _userId = userId;
          _webRoot = webRoot;
+         _baseUrl = baseUrl;
+
 			try
 			{
-            Post post = await GetPost(syndicationItem, userId, webRoot);
+            Post post = await GetPost(syndicationItem);
 
 				if (!(await ImportPost(post)))
                return new ImportMessage
@@ -67,7 +69,7 @@ namespace Blogifier.Core.Providers
 			}
       }
 
-      async Task<Post> GetPost(SyndicationItem syndicationItem, int userId, string webRoot)
+      async Task<Post> GetPost(SyndicationItem syndicationItem)
 		{
          Blog blog = await _dbContext.Blogs.FirstOrDefaultAsync();
 
@@ -93,7 +95,14 @@ namespace Blogifier.Core.Providers
                   post.Description = ext.GetObject<XElement>().Value;
 
                if (ext.GetObject<XElement>().Name.LocalName == "cover")
-                  post.Cover = ext.GetObject<XElement>().Value;
+					{
+						post.Cover = ext.GetObject<XElement>().Value;
+						var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+
+						var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
+						if(mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
+							post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
+					}
             }
          }
 
@@ -116,42 +125,9 @@ namespace Blogifier.Core.Providers
          return post;
       }
 
-      //async Task<List<ImportMessage>> ImportFeed(StreamReader reader)
-      //{
-      //   using (var xmlReader = XmlReader.Create(reader, new XmlReaderSettings() { }))
-      //   {
-            //var feedReader = new RssFeedReader(xmlReader);
-                   
-       //              if(await ImportPost(post))
-							//{
-       //                 _importMessages.Add(new ImportMessage
-       //                 {
-       //                    ImportType = ImportType.Post, Status = Status.Success, Message = post.Title
-       //                 });
-       //              }
-							//else
-							//{
-       //                 _importMessages.Add(new ImportMessage
-       //                 {
-       //                    ImportType = ImportType.Post, Status = Status.Warning, Message = $"Post {post.Title} was not saved to the database"
-       //                 });
-       //              }
-       //           }
-       //           catch (Exception ex)
-       //           {
-       //              _importMessages.Add(new ImportMessage { 
-       //                 ImportType = ImportType.Post, Status = Status.Error, Message = $"Error saving post: {ex.Message}" 
-       //              });
-       //           }
-       //        }
-       //     }
-      //   }
-      //   return _importMessages;
-      //}
-
 		async Task<bool> ImportPost(Post post)
 		{
-			//await ImportImages(post);
+			await ImportImages(post);
 			//await ImportFiles(post);
 
 			var converter = new ReverseMarkdown.Converter();
@@ -163,61 +139,41 @@ namespace Blogifier.Core.Providers
          return await _dbContext.SaveChangesAsync() > 0;
       }
 
-		//async Task ImportImages(Post post)
-  //    {
-  //       //var links = new List<ImportAsset>();
-  //       string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
+		async Task ImportImages(Post post)
+		{
+			string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
 
-  //       if (string.IsNullOrEmpty(post.Content))
-  //          return;
+			if (string.IsNullOrEmpty(post.Content))
+				return;
 
-  //       var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-  //       if (matches != null)
-  //       {
-  //          foreach (Match m in matches)
-  //          {
-  //             var uri = "";
-  //             try
-  //             {
-  //                var tag = m.Groups[0].Value;
-  //                var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
+         if (matches == null)
+            return;
+         
+			foreach (Match m in matches)
+			{
+				try
+				{
+					var tag = m.Groups[0].Value;
+					var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-  //                uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					uri = ValidateUrl(uri);
 
-  //                uri = ValidateUrl(uri);
+					//if (uri.Contains("data:image"))
+					//   asset = await _ss.UploadBase64Image(uri, _webRoot, path);
+					//else
+					var mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
-  //                //AssetItem asset;
-  //                //if (uri.Contains("data:image"))
-  //                //{
-  //                //   asset = await _ss.UploadBase64Image(uri, _webRoot, path);
-  //                //}
-  //                //else
-  //                //{
-  //                   var mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
-  //                //}
-
-  //                //var mdTag = $"![{asset.Title}]({_webRoot}{asset.Url})";
-
-  //                post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
-
-  //                _importMessages.Add(new ImportMessage
-  //                {
-  //                   Status = Status.Success,
-  //                   Message = $"{tag} -> {mdTag}"
-  //                });
-  //             }
-  //             catch (Exception ex)
-  //             {
-  //                _importMessages.Add(new ImportMessage
-  //                {
-  //                   Status = Status.Error,
-  //                   Message = $"{m.Groups[0].Value} -> {uri} ->{ex.Message}"
-  //                });
-  //             }
-  //          }
-  //       }
-  //    }
+					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+				}
+				catch (Exception ex)
+				{
+					Serilog.Log.Error($"Error importing images: {ex.Message}");
+				}
+			}
+		}
 
 		//async Task ImportFiles(PostItem post)
 		//{
@@ -297,14 +253,19 @@ namespace Blogifier.Core.Providers
       {
          var url = link;
 
+			var baseUrl = _baseUrl.ToString();
+			if (baseUrl.EndsWith("/"))
+				baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+
          if (url.StartsWith("~"))
-         {
-            url = url.Replace("~", _url);
-         }
+            url = url.Replace("~", baseUrl);
+
          if (url.StartsWith("/"))
-         {
-            url = string.Concat(_url, url);
-         }
+            url = $"{baseUrl}{url}";
+
+			if (!(url.StartsWith("http:") || url.StartsWith("https:")))
+				url = $"{baseUrl}/{url}";
+
          return url;
       }
    }

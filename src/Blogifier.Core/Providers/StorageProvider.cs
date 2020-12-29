@@ -225,7 +225,8 @@ namespace Blogifier.Core.Providers
 
 		string PathToUrl(string path)
 		{
-			return path.ReplaceIgnoreCase(_storageRoot, "").Replace(_slash, "/");
+			string url = path.ReplaceIgnoreCase(_storageRoot, "").Replace(_slash, "/");
+			return $"data/{url}";
 		}
 
 		#endregion
