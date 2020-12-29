@@ -1,7 +1,7 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-<h2 class="app-settings-title">General Settings</h2>
-<div class="app-settings-wrap app-settings-general">
+<h1 class="app-settings-title">General Settings</h1>
+<div class="app-settings-wrap app-settings-wrap-50">
 @if (Blog != null)
 {
 	<EditForm model="@Blog" OnValidSubmit="Save">
