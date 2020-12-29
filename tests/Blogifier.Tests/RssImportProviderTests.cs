@@ -1,20 +1,20 @@
 ﻿using Blogifier.Core.Providers;
+using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
+using System.Xml;
 using Xunit;
 
 namespace Blogifier.Tests
 {
-   public class RssImportProviderTests
+	public class RssImportProviderTests
 	{
       private readonly TestHelper _testHelper;
-      private readonly string _rssFile;
-      private readonly string _imgUrl = "http://via.placeholder.com/200X120";
-
+      private readonly string _feedUrl = "http://localhost/blog/feed/rss";
 
       public RssImportProviderTests()
 		{
          _testHelper = new TestHelper();
-         _rssFile = $"{_testHelper.ContextRoot}tests{_testHelper.Slash}data{_testHelper.Slash}test3.xml";
       }
 
       [Fact]
@@ -22,7 +22,9 @@ namespace Blogifier.Tests
       {
          var sut = GetSut();
 
-         var result = await sut.Import(_rssFile, 1);
+         SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(_feedUrl));
+
+         var result = await sut.ImportSyndicationItem(feed.Items.First(), 1, feed.BaseUri);
 
          Assert.NotNull(result);
       }

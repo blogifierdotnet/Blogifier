@@ -3,12 +3,11 @@ using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.SyndicationFeed;
-using Microsoft.SyndicationFeed.Rss;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,249 +18,207 @@ namespace Blogifier.Core.Providers
 {
 	public interface IRssImportProvider
 	{
-      Task<List<ImportMessage>> Import(IFormFile file, int userId, string webRoot = "/");
-      Task<List<ImportMessage>> Import(string fileName, int userId, string webRoot = "/");
+      Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, Uri baseUrl, string webRoot = "/");
    }
 
 	public class RssImportProvider : IRssImportProvider
 	{
       private readonly AppDbContext _dbContext;
       private readonly IStorageProvider _storageProvider;
-      private readonly List<ImportMessage> _importMessages;
       private readonly string _defaultCover = "img/cover.png";
       private int _userId;
-      private string _url;
       private string _webRoot;
+      private Uri _baseUrl;
 
       public RssImportProvider(AppDbContext dbContext, IStorageProvider storageProvider)
       {
          _dbContext = dbContext;
          _storageProvider = storageProvider;
-         _importMessages = new List<ImportMessage>();
       }
 
-      public async Task<List<ImportMessage>> Import(IFormFile file, int userId, string webRoot = "/")
+      public async Task<ImportMessage> ImportSyndicationItem(SyndicationItem syndicationItem, int userId, Uri baseUrl, string webRoot = "/")
       {
          _userId = userId;
          _webRoot = webRoot;
-         return await ImportFeed(new StreamReader(file.OpenReadStream(), Encoding.UTF8));
-      }
+         _baseUrl = baseUrl;
 
-      public async Task<List<ImportMessage>> Import(string fileName, int userId, string webRoot = "/")
-      {
-         _userId = userId;
-         _webRoot = webRoot;
-         return await ImportFeed(new StreamReader(fileName, Encoding.UTF8));
-      }
+			try
+			{
+            Post post = await GetPost(syndicationItem);
 
-      async Task<List<ImportMessage>> ImportFeed(StreamReader reader)
-      {
-         using (var xmlReader = XmlReader.Create(reader, new XmlReaderSettings() { }))
-         {
-            var feedReader = new RssFeedReader(xmlReader);
+				if (!(await ImportPost(post)))
+               return new ImportMessage
+               {
+                  Status = Status.Error,
+                  Message = $"{post.Title} - failed to save..."
+               };
 
-            while (await feedReader.Read())
+            return new ImportMessage
             {
-               if (feedReader.ElementType == SyndicationElementType.Link)
-               {
-                  var link = await feedReader.ReadLink();
-                  _url = link.Uri.ToString();
+               Status = Status.Success,
+               Message = $"{post.Title} - completed..."
+            };
+         }
+			catch (Exception ex)
+			{
+            return new ImportMessage
+            {
+               Status = Status.Error,
+               Message = ex.Message
+            };
+			}
+      }
 
-                  if (_url.ToLower().EndsWith("/rss"))
-                     _url = _url.Substring(0, _url.Length - 4);
+      async Task<Post> GetPost(SyndicationItem syndicationItem)
+		{
+         Blog blog = await _dbContext.Blogs.FirstOrDefaultAsync();
 
-                  if (_url.EndsWith("/"))
-                     _url = _url.Substring(0, _url.Length - 1);
-               }
+         Post post = new Post()
+         {
+            AuthorId = _userId,
+            Blog = blog,
+            Title = syndicationItem.Title.Text,
+            Slug = await GetSlug(syndicationItem.Title.Text),
+            Description = syndicationItem.Title.Text,
+            Content = syndicationItem.Summary.Text,
+            Cover = $"{_webRoot}{_defaultCover}",
+            Published = syndicationItem.PublishDate.DateTime,
+            DateCreated = syndicationItem.PublishDate.DateTime,
+            DateUpdated = syndicationItem.LastUpdatedTime.DateTime
+         };
 
-               if (feedReader.ElementType == SyndicationElementType.Item)
-               {
-                  try
-                  {
-                     ISyndicationItem item = await feedReader.ReadItem();
-                     Blog blog = await _dbContext.Blogs.FirstOrDefaultAsync();
+         if (syndicationItem.ElementExtensions != null)
+         {
+            foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
+            {
+               if (ext.GetObject<XElement>().Name.LocalName == "summary")
+                  post.Description = ext.GetObject<XElement>().Value;
 
-                     Post post = new Post()
-                     {
-                        AuthorId = _userId,
-                        Blog = blog,
-                        Title = item.Title,
-                        Slug = await GetSlug(item.Title),
-                        Description = item.Title,
-                        Content = item.Description,
-                        Cover = $"{_webRoot}{_defaultCover}",
-                        Published = item.Published.DateTime,
-                        DateCreated = item.Published.DateTime,
-                        DateUpdated = item.LastUpdated.DateTime
-                     };
+               if (ext.GetObject<XElement>().Name.LocalName == "cover")
+					{
+						post.Cover = ext.GetObject<XElement>().Value;
+						var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-                     if (item.Categories != null)
-                     {
-                        if (post.Categories == null)
-                           post.Categories = new List<Category>();
-
-                        foreach (var category in item.Categories)
-                        {
-                           post.Categories.Add(new Category()
-                           {
-                              Content = category.Name,
-                              DateCreated = DateTime.UtcNow,
-                              DateUpdated = DateTime.UtcNow
-                           });
-                        }
-                     }
-                     
-                     if(await ImportPost(post))
-							{
-                        _importMessages.Add(new ImportMessage
-                        {
-                           ImportType = ImportType.Post, Status = Status.Success, Message = post.Title
-                        });
-                     }
-							else
-							{
-                        _importMessages.Add(new ImportMessage
-                        {
-                           ImportType = ImportType.Post, Status = Status.Warning, Message = $"Post {post.Title} was not saved to the database"
-                        });
-                     }
-                  }
-                  catch (Exception ex)
-                  {
-                     _importMessages.Add(new ImportMessage { 
-                        ImportType = ImportType.Post, Status = Status.Error, Message = $"Error saving post: {ex.Message}" 
-                     });
-                  }
-               }
+						var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
+						if(mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
+							post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
+					}
             }
          }
-         return _importMessages;
+
+         if (syndicationItem.Categories != null)
+         {
+            if (post.Categories == null)
+               post.Categories = new List<Category>();
+
+            foreach (var category in syndicationItem.Categories)
+            {
+               post.Categories.Add(new Category()
+               {
+                  Content = category.Name,
+                  DateCreated = DateTime.UtcNow,
+                  DateUpdated = DateTime.UtcNow
+               });
+            }
+         }
+
+         return post;
       }
 
 		async Task<bool> ImportPost(Post post)
 		{
 			await ImportImages(post);
-			//await ImportFiles(post);
+			await ImportFiles(post);
 
 			var converter = new ReverseMarkdown.Converter();
-			post.Content = converter.Convert(post.Content);
 
-			await _dbContext.Posts.AddAsync(post);
+			post.Description = converter.Convert(post.Description);
+         post.Content = converter.Convert(post.Content);
+
+         await _dbContext.Posts.AddAsync(post);
          return await _dbContext.SaveChangesAsync() > 0;
       }
 
 		async Task ImportImages(Post post)
-      {
-         //var links = new List<ImportAsset>();
-         string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
+		{
+			string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
 
-         if (string.IsNullOrEmpty(post.Content))
+			if (string.IsNullOrEmpty(post.Content))
+				return;
+
+			var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+         if (matches == null)
             return;
+         
+			foreach (Match m in matches)
+			{
+				try
+				{
+					var tag = m.Groups[0].Value;
+					var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-         var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					uri = ValidateUrl(uri);
+					var mdTag = "";
 
-         if (matches != null)
-         {
-            foreach (Match m in matches)
-            {
-               var uri = "";
-               try
-               {
-                  var tag = m.Groups[0].Value;
-                  var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
+					if (uri.Contains("data:image"))
+					   mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
+					else
+						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
-                  uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+				}
+				catch (Exception ex)
+				{
+					Serilog.Log.Error($"Error importing images: {ex.Message}");
+				}
+			}
+		}
 
-                  uri = ValidateUrl(uri);
+		async Task ImportFiles(Post post)
+		{
+			var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
+			string[] exts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
 
-                  //AssetItem asset;
-                  //if (uri.Contains("data:image"))
-                  //{
-                  //   asset = await _ss.UploadBase64Image(uri, _webRoot, path);
-                  //}
-                  //else
-                  //{
-                     var mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
-                  //}
+			if (string.IsNullOrEmpty(post.Content))
+				return;
 
-                  //var mdTag = $"![{asset.Title}]({_webRoot}{asset.Url})";
+			MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-                  post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+			if (matches != null)
+			{
+				foreach (Match m in matches)
+				{
+					try
+					{
+						var tag = m.Value;
+						var src = XElement.Parse(tag).Attribute("href").Value;
+						var mdTag = "";
 
-                  _importMessages.Add(new ImportMessage
-                  {
-                     ImportType = ImportType.Image,
-                     Status = Status.Success,
-                     Message = $"{tag} -> {mdTag}"
-                  });
-               }
-               catch (Exception ex)
-               {
-                  _importMessages.Add(new ImportMessage
-                  {
-                     ImportType = ImportType.Image,
-                     Status = Status.Error,
-                     Message = $"{m.Groups[0].Value} -> {uri} ->{ex.Message}"
-                  });
-               }
-            }
-         }
-      }
+						foreach (var ext in exts)
+						{
+							if (src.ToLower().EndsWith($".{ext}"))
+							{
+								var uri = ValidateUrl(src);
+								var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-		//async Task ImportFiles(PostItem post)
-		//{
-		//   var links = new List<ImportAsset>();
-		//   var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
-		//   string[] exts = AppSettings.ImportTypes.Split(',');
+								mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
-		//   if (string.IsNullOrEmpty(post.Content))
-		//      return;
+								if (mdTag.StartsWith("!"))
+									mdTag = mdTag.Substring(1);
 
-		//   MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-
-		//   if (matches != null)
-		//   {
-		//      foreach (Match m in matches)
-		//      {
-		//         try
-		//         {
-		//            var tag = m.Value;
-		//            var src = XElement.Parse(tag).Attribute("href").Value;
-		//            var mdTag = "";
-
-		//            foreach (var ext in exts)
-		//            {
-		//               if (src.ToLower().EndsWith($".{ext}"))
-		//               {
-		//                  var uri = ValidateUrl(src);
-		//                  var path = string.Format("{0}/{1}", post.Published.Year, post.Published.Month);
-		//                  var asset = await _ss.UploadFromWeb(new Uri(uri), _webRoot, path);
-
-		//                  mdTag = $"[{asset.Title}]({_webRoot}{asset.Url})";
-
-		//                  post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
-
-		//                  _msgs.Add(new ImportMessage
-		//                  {
-		//                     ImportType = ImportType.Attachement,
-		//                     Status = Status.Success,
-		//                     Message = $"{tag} -> {mdTag}"
-		//                  });
-		//               }
-		//            }
-		//         }
-		//         catch (Exception ex)
-		//         {
-		//            _msgs.Add(new ImportMessage
-		//            {
-		//               ImportType = ImportType.Attachement,
-		//               Status = Status.Error,
-		//               Message = $"{m.Value} -> {ex.Message}"
-		//            });
-		//         }
-		//      }
-		//   }
-		//}
+								post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						Serilog.Log.Error($"Error importing files: {ex.Message}");
+					}
+				}
+			}
+		}
 
 		async Task<string> GetSlug(string title)
 		{
@@ -286,22 +243,20 @@ namespace Blogifier.Core.Providers
       {
          var url = link;
 
+			var baseUrl = _baseUrl.ToString();
+			if (baseUrl.EndsWith("/"))
+				baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+
          if (url.StartsWith("~"))
-         {
-            url = url.Replace("~", _url);
-         }
+            url = url.Replace("~", baseUrl);
+
          if (url.StartsWith("/"))
-         {
-            url = string.Concat(_url, url);
-         }
+            url = $"{baseUrl}{url}";
+
+			if (!(url.StartsWith("http:") || url.StartsWith("https:")))
+				url = $"{baseUrl}/{url}";
+
          return url;
       }
-   }
-
-   public class ImportMessage
-   {
-      public ImportType ImportType { get; set; }
-      public Status Status { get; set; }
-      public string Message { get; set; }
    }
 }
