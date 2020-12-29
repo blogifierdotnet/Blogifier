@@ -1,0 +1,62 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+
+
+<h1 class="app-settings-title">Import</h1>
+<div class="app-settings-wrap">
+
+    <!-- FORM -->
+    <div class="app-settings-wrap-50">
+        <div class="form-item">
+            <label class="form-item-label">Upload or add the URL</label>
+            <div class="d-flex">
+                <input class="form-control" type="text" name="url" value="" />
+                <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
+                <button class="btn btn-outline-secondary" type="button">Select</button>
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn btn-primary px-5" type="submit">Get Data</button>
+        </div>
+    </div>
+    <!--/FORM -->
+
+    <!-- LIST -->
+    <p class="lead">134 Post found in 14 categories.</p>
+    <div class="app-list-toolbar d-flex">
+        <label class="form-check me-3 my-auto" data-toggle="tooltip" title="Select All">
+            <input type="checkbox" class="form-check-input ml-2">
+            <span>Import all</span>
+        </label>
+        <div class="app-posts-actions dropdown ml-3">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
+                All Categories
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
+                <a class="dropdown-item" href="#"> Category name</a>
+                <a class="dropdown-item" href="#"> Category name</a>
+                <a class="dropdown-item" href="#"> Category name</a>
+                <a class="dropdown-item" href="#"> Category name</a>
+                <a class="dropdown-item" href="#"> Category name</a>
+            </div>
+        </div>
+    </div>
+    <ul class="app-list">
+
+        <!-- ITEM -->
+        <li class="app-list-item d-flex">
+            <label class="app-posts-item-select form-check"><input type="checkbox" class="form-check-input"></label>
+            <div class="app-list-title">Title of the post</div>
+            <div class="app-list-text">Dec 17, 2020</div>
+        </li>
+        <!-- ITEM -->
+
+    </ul>
+    <p class="lead">You've selected 94 Post in 14 categories.</p>
+    <div class="form-item">
+        <button class="btn btn-primary px-5" type="submit">Import</button>
+    </div>
+    <!--/LIST -->
+
+</div>
