@@ -160,11 +160,12 @@ namespace Blogifier.Core.Providers
 
 					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
 					uri = ValidateUrl(uri);
+					var mdTag = "";
 
-					//if (uri.Contains("data:image"))
-					//   asset = await _ss.UploadBase64Image(uri, _webRoot, path);
-					//else
-					var mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+					if (uri.Contains("data:image"))
+					   mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
+					else
+						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
 					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
 				}

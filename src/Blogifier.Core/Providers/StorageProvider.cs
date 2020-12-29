@@ -17,6 +17,7 @@ namespace Blogifier.Core.Providers
 		bool FileExists(string path);
 		Task<bool> UploadFormFile(IFormFile file, string path = "");
 		Task<string> UploadFromWeb(Uri requestUri, string root, string path = "");
+		Task<string> UploadBase64Image(string baseImg, string root, string path = "");
 		Task<ThemeSettings> GetThemeSettings(string theme);
 		Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
 	}
@@ -129,6 +130,43 @@ namespace Blogifier.Core.Providers
 			}
 		}
 
+		public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")
+		{
+			path = path.Replace("/", _slash);
+			var fileName = "";
+
+			VerifyPath(path);
+			string imgSrc = GetImgSrcValue(baseImg);
+
+			Random rnd = new Random();
+
+			if (imgSrc.StartsWith("data:image/png;base64,"))
+			{
+				fileName = string.Format("{0}.png", rnd.Next(1000, 9999));
+				imgSrc = imgSrc.Replace("data:image/png;base64,", "");
+			}
+			if (imgSrc.StartsWith("data:image/jpeg;base64,"))
+			{
+				fileName = string.Format("{0}.jpeg", rnd.Next(1000, 9999));
+				imgSrc = imgSrc.Replace("data:image/jpeg;base64,", "");
+			}
+			if (imgSrc.StartsWith("data:image/gif;base64,"))
+			{
+				fileName = string.Format("{0}.gif", rnd.Next(1000, 9999));
+				imgSrc = imgSrc.Replace("data:image/gif;base64,", "");
+			}
+
+			var filePath = string.IsNullOrEmpty(path) ?
+				 Path.Combine(_storageRoot, fileName) :
+				 Path.Combine(_storageRoot, path + _slash + fileName);
+
+			//byte[] bytes = Convert.FromBase64String(imgSrc);
+
+			await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
+
+			return $"![{fileName}]({root}{PathToUrl(filePath)})";
+		}
+
 		#region Private members
 
 		private string ContentRoot
@@ -227,6 +265,25 @@ namespace Blogifier.Core.Providers
 		{
 			string url = path.ReplaceIgnoreCase(_storageRoot, "").Replace(_slash, "/");
 			return $"data/{url}";
+		}
+
+		string GetImgSrcValue(string imgTag)
+		{
+			if (!(imgTag.Contains("data:image") && imgTag.Contains("src=")))
+				return imgTag;
+
+			int start = imgTag.IndexOf("src=");
+			int srcStart = imgTag.IndexOf("\"", start) + 1;
+
+			if (srcStart < 2)
+				return imgTag;
+
+			int srcEnd = imgTag.IndexOf("\"", srcStart);
+
+			if (srcEnd < 1 || srcEnd <= srcStart)
+				return imgTag;
+
+			return imgTag.Substring(srcStart, srcEnd - srcStart);
 		}
 
 		#endregion
