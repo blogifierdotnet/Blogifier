@@ -1,0 +1,76 @@
+.stg-themes {
+
+    &-current {
+        @include bf-card();
+        overflow: hidden;
+        margin-bottom: 3rem;
+
+        &-cover {
+            max-height: 15rem;
+            overflow: hidden;
+            width: 14rem;
+            border-right: 1px solid $gray-200;
+        }
+
+        &-details {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        &-title {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        &-info {
+            list-style: none;
+            padding: 0;
+            color: #000;
+            margin-bottom: 2rem;
+
+            a {
+                color: #000;
+            }
+        }
+    }
+
+    &-installed {
+        margin-top: 1.5rem;
+
+        &-item {
+            @include bf-card();
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        &-cover {
+            max-height: 15rem;
+            min-width: 100%;
+            overflow: hidden;
+            border-bottom: 1px solid $gray-200;
+        }
+
+        &-details {
+            padding: 1.5rem;
+        }
+
+        &-title {
+            margin-bottom: .5rem;
+            font-size: .875rem;
+            font-weight: 500;
+        }
+
+        &-info {
+            font-size: .75rem;
+            list-style: none;
+            padding: 0;
+            color: #000;
+            margin-bottom: .75rem;
+
+            a {
+                color: #000;
+            }
+        }
+    }
+}
