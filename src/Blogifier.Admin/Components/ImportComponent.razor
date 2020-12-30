@@ -2,63 +2,112 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-
 <h1 class="app-settings-title">Import</h1>
 <div class="app-settings-wrap">
 
-    <!-- FORM -->
-    <div class="app-settings-wrap-50">
-        <div class="form-item">
+   <!-- FORM -->
+   <div class="app-settings-wrap-50">
+
+      <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
+         <DataAnnotationsValidator />
+         <div class="form-item">
             <label class="form-item-label">Upload or add the URL</label>
             <div class="d-flex">
-                <input class="form-control" type="text" name="url" value="" />
-                <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
-                <button class="btn btn-outline-secondary" type="button">Select</button>
+               <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
+               <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
+               <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
+               @*<button class="btn btn-outline-secondary" type="button">Select</button>*@
             </div>
-        </div>
-        <div class="form-item">
+         </div>
+         <div class="form-item">
             <button class="btn btn-primary px-5" type="submit">Get Data</button>
-        </div>
-    </div>
-    <!--/FORM -->
+         </div>
+      </EditForm>
 
-    <!-- LIST -->
-    <p class="lead">134 Post found in 14 categories.</p>
-    <div class="app-list-toolbar d-flex">
-        <label class="form-check me-3 my-auto" data-toggle="tooltip" title="Select All">
-            <input type="checkbox" class="form-check-input ml-2">
+   </div>
+   <!--/FORM -->
+
+   @if (Posts != null)
+   {
+      <!-- LIST -->
+      <p class="lead">@Posts.Count posts are found and ready to be imported.</p>
+      <div class="app-list-toolbar d-flex">
+         <label class="form-check me-3 my-auto" data-toggle="tooltip" title="Select All">
+            <input type="checkbox" class="form-check-input ml-2" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
             <span>Import all</span>
-        </label>
-        <div class="app-posts-actions dropdown ml-3">
+         </label>
+         @*<div class="app-posts-actions dropdown ml-3">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-                All Categories
+               All Categories
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
-                <a class="dropdown-item" href="#"> Category name</a>
-                <a class="dropdown-item" href="#"> Category name</a>
-                <a class="dropdown-item" href="#"> Category name</a>
-                <a class="dropdown-item" href="#"> Category name</a>
-                <a class="dropdown-item" href="#"> Category name</a>
+               <a class="dropdown-item" href="#"> Category name</a>
+               <a class="dropdown-item" href="#"> Category name</a>
+               <a class="dropdown-item" href="#"> Category name</a>
+               <a class="dropdown-item" href="#"> Category name</a>
+               <a class="dropdown-item" href="#"> Category name</a>
             </div>
-        </div>
-    </div>
-    <ul class="app-list">
-
-        <!-- ITEM -->
-        <li class="app-list-item d-flex">
-            <label class="app-posts-item-select form-check"><input type="checkbox" class="form-check-input"></label>
-            <div class="app-list-title">Title of the post</div>
-            <div class="app-list-text">Dec 17, 2020</div>
-        </li>
-        <!-- ITEM -->
-
-    </ul>
-    <p class="lead">You've selected 94 Post in 14 categories.</p>
-    <div class="form-item">
-        <button class="btn btn-primary px-5" type="submit">Import</button>
-        <button class="btn btn-secondary px-5" type="button">Cancel</button>
-
-    </div>
-    <!--/LIST -->
+         </div>*@
+      </div>
+      <ul class="app-list">
+         @foreach (var post in Posts)
+         {
+            <li class="app-list-item d-flex">
+               <label class="app-posts-item-select form-check">
+                  <input type="checkbox" class="form-check-input" @bind="post.Selected">
+               </label>
+               <div class="app-list-title">@post.Title</div>
+               <div class="app-list-text">Dec 17, 2020</div>
+            </li>
+         }
+      </ul>
+      @*<p class="lead">You've selected .</p>*@
+      <div class="form-item">
+         <button class="btn btn-primary px-5" type="submit">@_localizer["import"]</button>
+         <button class="btn btn-secondary px-5" type="button" @onclick="Cancel">@_localizer["cancel"]</button>
+      </div>
+      <!--/LIST -->
+   }
 
 </div>
+
+@code {
+   protected ImportModel ImportModel { get; set; }
+   protected List<Post> Posts { get; set; }
+
+   protected override async Task OnInitializedAsync()
+   {
+      await Load();
+   }
+
+   protected async Task Load()
+   {
+      ImportModel = new ImportModel { FeedUrl = "" };
+   }
+
+   protected async Task GetEntries()
+   {
+      Posts = await _http.GetFromJsonAsync<List<Post>>($"api/syndication/getitems?feedUrl={ImportModel.FeedUrl}");
+      var x = Posts.Count;
+   }
+
+   protected async Task Import()
+   {
+      foreach (var post in Posts)
+      {
+         var x = post.Slug;
+      }
+   }
+
+   public void CheckAll(object checkValue)
+   {
+      bool isChecked = (bool)checkValue;
+      Posts.ForEach(p => p.Selected = isChecked);
+      StateHasChanged();
+   }
+
+   protected void Cancel()
+   {
+      Posts = null;
+   }
+}
