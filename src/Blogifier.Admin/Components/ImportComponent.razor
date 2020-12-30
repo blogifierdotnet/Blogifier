@@ -11,12 +11,19 @@
       <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
          <DataAnnotationsValidator />
          <div class="form-item">
-            <label class="form-item-label">Upload or add the URL</label>
+            <label class="form-item-label">Import from RSS feed URL</label>
             <div class="d-flex">
                <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
                <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
                <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
                @*<button class="btn btn-outline-secondary" type="button">Select</button>*@
+            </div>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">Import from Base URL</label>
+            <div class="d-flex">
+               <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
+               <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
             </div>
          </div>
          <div class="form-item">
@@ -57,7 +64,7 @@
                   <input type="checkbox" class="form-check-input" @bind="post.Selected">
                </label>
                <div class="app-list-title">@post.Title</div>
-               <div class="app-list-text">Dec 17, 2020</div>
+               <div class="app-list-text">@post.Published.ToFriendlyShortDateString()</div>
             </li>
          }
       </ul>
@@ -87,7 +94,7 @@
 
    protected async Task GetEntries()
    {
-      Posts = await _http.GetFromJsonAsync<List<Post>>($"api/syndication/getitems?feedUrl={ImportModel.FeedUrl}");
+      Posts = await _http.GetFromJsonAsync<List<Post>>($"api/syndication/getitems?feedUrl={ImportModel.FeedUrl}&baseUrl={ImportModel.BaseUrl}");
       var x = Posts.Count;
    }
 

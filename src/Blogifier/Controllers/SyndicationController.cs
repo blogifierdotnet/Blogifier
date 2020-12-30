@@ -1,10 +1,12 @@
-﻿using Blogifier.Core.Providers;
+﻿using Blogifier.Core.Data;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.ServiceModel.Syndication;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace Blogifier.Controllers
 {
@@ -12,36 +14,26 @@ namespace Blogifier.Controllers
 	[ApiController]
 	public class SyndicationController : ControllerBase
 	{
-		private readonly IRssImportProvider _syndicationProvider;
+		private readonly AppDbContext _dbContext;
+		private readonly ISyndicationProvider _syndicationProvider;
 
-		public SyndicationController(IRssImportProvider syndicationProvider)
+		public SyndicationController(AppDbContext dbContext, ISyndicationProvider syndicationProvider)
 		{
+			_dbContext = dbContext;
 			_syndicationProvider = syndicationProvider;
 		}
 
+		[Authorize]
 		[HttpGet("getitems")]
-		public async Task<List<Post>> GetItems(string feedUrl)
+		public async Task<List<Post>> GetItems(string feedUrl, string baseUrl)
 		{
-			SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedUrl));
+			Author author = await _dbContext.Authors
+				.Where(a => a.Email == User.Identity.Name)
+				.FirstOrDefaultAsync();
 
-			List<Post> posts = new List<Post>();
+			string webRoot = Url.Content("~/");
 
-			foreach (var item in feed.Items)
-			{
-				posts.Add(new Post
-				{
-					AuthorId = 1,
-					Title = item.Title.Text,
-					Slug = item.Title.Text,
-					Description = item.Title.Text,
-					Content = item.Summary.Text,
-					Published = item.PublishDate.DateTime,
-					DateCreated = item.PublishDate.DateTime,
-					DateUpdated = item.LastUpdatedTime.DateTime
-				});
-			}
-
-			return await Task.FromResult(posts);
+			return await _syndicationProvider.GetPosts(feedUrl, author.Id, new System.Uri(baseUrl), webRoot);
 		}
 	}
 }

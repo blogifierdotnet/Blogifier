@@ -13,5 +13,8 @@ namespace Blogifier.Shared
       [Required]
       [Url]
       public string FeedUrl { get; set; }
+      [Required]
+      [Url]
+      public string BaseUrl { get; set; }
 	}
 }
