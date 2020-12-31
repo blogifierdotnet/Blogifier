@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,6 +15,7 @@ namespace Blogifier.Core.Providers
 	public interface ISyndicationProvider
 	{
 		Task<List<Post>> GetPosts(string feedUrl, int userId, Uri baseUrl, string webRoot = "/");
+		Task<bool> ImportPost(Post post);
 	}
 
 	public class SyndicationProvider : ISyndicationProvider
@@ -49,7 +51,73 @@ namespace Blogifier.Core.Providers
 			return posts;
 		}
 
+		public async Task<bool> ImportPost(Post post)
+		{
+			try
+			{
+				await ImportImages(post);
+				await ImportFiles(post);
+
+				var converter = new ReverseMarkdown.Converter();
+
+				post.Description = converter.Convert(post.Description);
+				post.Content = converter.Convert(post.Content);
+
+				await _dbContext.Posts.AddAsync(post);
+				return await _dbContext.SaveChangesAsync() > 0;
+			}
+			catch (Exception ex)
+			{
+				Serilog.Log.Error(ex.Message);
+				return false;
+			}
+		}
+
 		#region Private members
+
+		async Task ImportFiles(Post post)
+		{
+			var rgx = @"(?i)<a\b[^>]*?>(?<text>.*?)</a>";
+			string[] exts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
+
+			if (string.IsNullOrEmpty(post.Content))
+				return;
+
+			MatchCollection matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+			if (matches != null)
+			{
+				foreach (Match m in matches)
+				{
+					try
+					{
+						var tag = m.Value;
+						var src = XElement.Parse(tag).Attribute("href").Value;
+						var mdTag = "";
+
+						foreach (var ext in exts)
+						{
+							if (src.ToLower().EndsWith($".{ext}"))
+							{
+								var uri = ValidateUrl(src);
+								var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+
+								mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+
+								if (mdTag.StartsWith("!"))
+									mdTag = mdTag.Substring(1);
+
+								post.Content = post.Content.ReplaceIgnoreCase(m.Value, mdTag);
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						Serilog.Log.Error($"Error importing files: {ex.Message}");
+					}
+				}
+			}
+		}
 
 		async Task<Post> GetPost(SyndicationItem syndicationItem)
 		{
@@ -105,6 +173,43 @@ namespace Blogifier.Core.Providers
 			}
 
 			return post;
+		}
+
+		async Task ImportImages(Post post)
+		{
+			string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
+
+			if (string.IsNullOrEmpty(post.Content))
+				return;
+
+			var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+			if (matches == null)
+				return;
+
+			foreach (Match m in matches)
+			{
+				try
+				{
+					var tag = m.Groups[0].Value;
+					var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+
+					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					uri = ValidateUrl(uri);
+					var mdTag = "";
+
+					if (uri.Contains("data:image"))
+						mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
+					else
+						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+
+					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+				}
+				catch (Exception ex)
+				{
+					Serilog.Log.Error($"Error importing images: {ex.Message}");
+				}
+			}
 		}
 
 		async Task<string> GetSlug(string title)
