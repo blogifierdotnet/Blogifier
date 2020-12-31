@@ -170,3 +170,10 @@ function insertYoutube(editor) {
 		cm.replaceSelection(tag);
 	}
 }
+
+// Select bootstrap tab anywhere.
+function jumpTab(d) {
+    var selectJumpTab = new bootstrap.Tab(document.querySelector(d))
+    selectJumpTab.show() 
+}
+

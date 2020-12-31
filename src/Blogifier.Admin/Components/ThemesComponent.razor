@@ -4,29 +4,27 @@
 
 @if (CurrentTheme != null)
 {
-    <h1 class="app-settings-title">Current Theme</h1>
-    <div class="app-settings-wrap">
-        <div class="stg-themes-current d-flex">
-            <div class="stg-themes-current-cover">
-                <img src="@CurrentTheme.Cover" class="stg-themes-current-img" alt="@CurrentTheme.Title">
-            </div>
-            <div class="stg-themes-current-details">
-                <div class="stg-themes-current-title">@CurrentTheme.Title</div>
-                <ul class="stg-themes-current-info">
-                    <li>Designed by <a href="#">John Doe</a></li>
-                    <li>Version 2.1</li>
-                </ul>
-                <button type="button" class="btn btn-primary px-4" @onclick="()=> ModalShow()" @onclick:preventDefault>Personalize</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Installed Themes -->
-    <h1 class="app-settings-title">Installed Theme</h1>
+    <h1 class="app-settings-title">Themes</h1>
     <div class="app-settings-wrap">
-        <button class="btn btn-outline-dark mt-2 px-4">Upload</button>
         <div class="row stg-themes-installed">
-
+            <div class="col-md-6 col-lg-4">
+                <div class="stg-themes-installed-item">
+                    <div class="stg-themes-installed-cover">
+                        <img src="@CurrentTheme.Cover" class="stg-themes-installed-img" alt="@CurrentTheme.Title">
+                    </div>
+                    <div class="stg-themes-installed-details">
+                        <div class="stg-themes-installed-title">@CurrentTheme.Title (Current)</div>
+                        <ul class="stg-themes-installed-info">
+                            <li>Designed by <a href="#">John Doe</a></li>
+                            <li>Version 2.1</li>
+                        </ul>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary flex-grow-1 me-2" onclick="jumpTab('#link-tab-06')">@_localizer["Customize"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @foreach (var item in Themes)
             {
                 <div class="col-md-6 col-lg-4">

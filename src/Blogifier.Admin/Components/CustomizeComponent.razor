@@ -1,0 +1,195 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime JSRuntime
+
+@if (CurrentTheme != null)
+{
+    <div class="app-settings-wrap">
+        <div class="stg-themes-current d-flex">
+            <div class="stg-themes-current-cover">
+                <img src="@CurrentTheme.Cover" class="stg-themes-current-img" alt="@CurrentTheme.Title">
+            </div>
+            <div class="stg-themes-current-details">
+                <div class="stg-themes-current-title">@CurrentTheme.Title</div>
+                <ul class="stg-themes-current-info">
+                    <li>Designed by <a href="#">John Doe</a></li>
+                    <li>Version 2.1</li>
+                </ul>
+                <button type="button" class="btn btn-primary px-4" @onclick="()=> ModalShow()" @onclick:preventDefault>Personalize</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Settings</a>
+        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Widget</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+    <!--Settings -->
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+        @if (showModal)
+        {
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                @foreach (var section in Settings.Sections)
+                {
+
+                    <!-- -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="head-@section.Label.GetHashCode()">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@section.Label.GetHashCode()" aria-expanded="false" aria-controls="id-@section.Label.GetHashCode()">
+                                @section.Label
+                            </button>
+                        </h2>
+                        <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                @foreach (var field in section.Fields)
+                                {
+                                    <div class="form-item">
+                                        @if (field.Type == "select")
+                                        {
+                                            <label class="form-item-label">@field.Label</label>
+                                            <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
+                                                @foreach (var item in field.Options)
+                                                {
+                                                    if (field.Value == item)
+                                                    {
+                                                        <option value="@item" selected>@item</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">@item</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else if (field.Type == "checkbox")
+                                        {
+
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
+                                                <label class="form-check-label" for="@field.Id">@field.Label</label>
+                                            </div>
+                                        }
+                                        else if (field.Type == "textarea")
+                                        {
+                                            <label class="form-item-label">@field.Label</label>
+                                            <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
+                                        }
+                                        else
+                                        {
+                                            <label class="form-item-label">@field.Label</label>
+                                            <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
+                                        }
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+
+                }
+                <button type="button" class="btn btn-primary" @onclick=@Save>@_localizer["save"]</button>
+            </div>
+        }
+
+    </div>
+    <!--/Settings -->
+
+    <!-- Widgets -->
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    </div>
+    <!--/Widgets -->
+
+</div>
+
+<ToasterComponent @ref="Toaster" />
+
+@code {
+    protected Blog Blog { get; set; }
+    protected List<ThemeItem> Themes { get; set; }
+    protected ThemeItem CurrentTheme { get; set; }
+    protected ToasterComponent Toaster;
+    protected ThemeSettings Settings { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    public async Task Load()
+    {
+        Themes = new List<ThemeItem>();
+
+        Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+        var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
+
+        Settings = await _http.GetFromJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}");
+
+        foreach (var theme in allThemes)
+        {
+            if (theme.ToLower() == Blog.Theme.ToLower())
+            {
+                CurrentTheme = new ThemeItem
+                {
+                    Title = theme.Capitalize(),
+                    IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+                    Cover = await GetCover(theme)
+                };
+            }
+            else
+            {
+                Themes.Add(new ThemeItem
+                {
+                    Title = theme.Capitalize(),
+                    IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+                    Cover = await GetCover(theme)
+                });
+            }
+        }
+    }
+
+    protected async Task SelectTheme(string theme)
+    {
+        Blog.Theme = theme;
+        Toaster.Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
+        await Load();
+    }
+
+    private async Task<string> GetCover(string theme)
+    {
+        string slash = System.IO.Path.DirectorySeparatorChar.ToString();
+        string file = $"wwwroot{slash}themes{slash}{theme}{slash}screenshot.png";
+        var result = await _http.PutAsJsonAsync<string>($"api/storage/exists", file);
+
+        if (result.IsSuccessStatusCode)
+            return $"themes/{theme}/screenshot.png";
+        else
+            return "img/img-placeholder.png";
+    }
+
+    bool showModal = false;
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+
+    protected async Task Save()
+    {
+        foreach (var section in Settings.Sections)
+        {
+            foreach (var field in section.Fields)
+            {
+                var val = await JSRuntime.InvokeAsync<object>("commonJsFunctions.getFieldValue", field);
+                field.Value = val.ToString();
+            }
+        }
+
+        Toaster.Toast(await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings));
+        showModal = false;
+    }
+}
