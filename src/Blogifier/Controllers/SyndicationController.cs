@@ -41,18 +41,18 @@ namespace Blogifier.Controllers
 		[HttpPost("import")]
 		public async Task<ActionResult<bool>> Import(Post post)
 		{
-			//var success = await _syndicationProvider.ImportPost(post);
-			//return success ? Ok() : BadRequest();
+			var success = await _syndicationProvider.ImportPost(post);
+			return success ? Ok() : BadRequest();
 
-			Random rnd = new Random();
-			var ok = rnd.Next(1, 10) >= 2;
+			//Random rnd = new Random();
+			//var ok = rnd.Next(1, 10) >= 2;
 
-			System.Threading.Thread.Sleep(1000);
+			//System.Threading.Thread.Sleep(1000);
 
-			if(ok)
-				return await Task.FromResult(Ok());
-			else
-				return await Task.FromResult(BadRequest());
+			//if(ok)
+			//	return await Task.FromResult(Ok());
+			//else
+			//	return await Task.FromResult(BadRequest());
 		}
 	}
 }

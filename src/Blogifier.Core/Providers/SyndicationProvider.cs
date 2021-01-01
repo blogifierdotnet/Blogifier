@@ -23,9 +23,10 @@ namespace Blogifier.Core.Providers
 		private readonly AppDbContext _dbContext;
 		private readonly IStorageProvider _storageProvider;
 		private readonly string _defaultCover = "img/cover.png";
-		private int _userId;
-		private string _webRoot;
-		private Uri _baseUrl;
+
+		private static int _userId;
+		private static string _webRoot;
+		private static Uri _baseUrl;
 
 		public SyndicationProvider(AppDbContext dbContext, IStorageProvider storageProvider)
 		{
@@ -62,18 +63,125 @@ namespace Blogifier.Core.Providers
 
 				post.Description = converter.Convert(post.Description);
 				post.Content = converter.Convert(post.Content);
+				post.Selected = false;
 
 				await _dbContext.Posts.AddAsync(post);
-				return await _dbContext.SaveChangesAsync() > 0;
+				if (await _dbContext.SaveChangesAsync() == 0)
+				{
+					Serilog.Log.Error($"Error saving post {post.Title}");
+					return false;
+				}
+
+				Post savedPost = await _dbContext.Posts.SingleAsync(p => p.Slug == post.Slug);
+				if(savedPost == null)
+				{
+					Serilog.Log.Error($"Error finding saved post - {post.Title}");
+					return false;
+				}
+
+				savedPost.Blog = await _dbContext.Blogs.FirstOrDefaultAsync();
+				return await _dbContext.SaveChangesAsync() > 0;						
 			}
 			catch (Exception ex)
 			{
-				Serilog.Log.Error(ex.Message);
+				Serilog.Log.Error($"Error importing post {post.Title}: {ex.Message}");
 				return false;
 			}
 		}
 
 		#region Private members
+
+		async Task<Post> GetPost(SyndicationItem syndicationItem)
+		{
+			Post post = new Post()
+			{
+				AuthorId = _userId,
+				Title = syndicationItem.Title.Text,
+				Slug = await GetSlug(syndicationItem.Title.Text),
+				Description = syndicationItem.Title.Text,
+				Content = syndicationItem.Summary.Text,
+				Cover = $"{_webRoot}{_defaultCover}",
+				Published = syndicationItem.PublishDate.DateTime,
+				DateCreated = syndicationItem.PublishDate.DateTime,
+				DateUpdated = syndicationItem.LastUpdatedTime.DateTime
+			};
+
+			if (syndicationItem.ElementExtensions != null)
+			{
+				foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
+				{
+					if (ext.GetObject<XElement>().Name.LocalName == "summary")
+						post.Description = ext.GetObject<XElement>().Value;
+
+					if (ext.GetObject<XElement>().Name.LocalName == "cover")
+						post.Cover = ext.GetObject<XElement>().Value;
+				}
+			}
+
+			if (syndicationItem.Categories != null)
+			{
+				if (post.Categories == null)
+					post.Categories = new List<Category>();
+
+				foreach (var category in syndicationItem.Categories)
+				{
+					post.Categories.Add(new Category()
+					{
+						Content = category.Name,
+						DateCreated = DateTime.UtcNow,
+						DateUpdated = DateTime.UtcNow
+					});
+				}
+			}
+
+			return post;
+		}
+
+		async Task ImportImages(Post post)
+		{
+			string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
+
+			if (string.IsNullOrEmpty(post.Content))
+				return;
+
+			if(post.Cover != $"{_webRoot}{_defaultCover}")
+			{
+				var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+
+				var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
+				if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
+					post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
+			}
+
+			var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+			if (matches == null)
+				return;
+
+			foreach (Match m in matches)
+			{
+				try
+				{
+					var tag = m.Groups[0].Value;
+					var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+
+					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+					uri = ValidateUrl(uri);
+					var mdTag = "";
+
+					if (uri.Contains("data:image"))
+						mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
+					else
+						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+
+					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
+				}
+				catch (Exception ex)
+				{
+					Serilog.Log.Error($"Error importing images: {ex.Message}");
+				}
+			}
+		}
 
 		async Task ImportFiles(Post post)
 		{
@@ -115,99 +223,6 @@ namespace Blogifier.Core.Providers
 					{
 						Serilog.Log.Error($"Error importing files: {ex.Message}");
 					}
-				}
-			}
-		}
-
-		async Task<Post> GetPost(SyndicationItem syndicationItem)
-		{
-			Blog blog = await _dbContext.Blogs.FirstOrDefaultAsync();
-
-			Post post = new Post()
-			{
-				AuthorId = _userId,
-				Blog = blog,
-				Title = syndicationItem.Title.Text,
-				Slug = await GetSlug(syndicationItem.Title.Text),
-				Description = syndicationItem.Title.Text,
-				Content = syndicationItem.Summary.Text,
-				Cover = $"{_webRoot}{_defaultCover}",
-				Published = syndicationItem.PublishDate.DateTime,
-				DateCreated = syndicationItem.PublishDate.DateTime,
-				DateUpdated = syndicationItem.LastUpdatedTime.DateTime
-			};
-
-			if (syndicationItem.ElementExtensions != null)
-			{
-				foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
-				{
-					if (ext.GetObject<XElement>().Name.LocalName == "summary")
-						post.Description = ext.GetObject<XElement>().Value;
-
-					if (ext.GetObject<XElement>().Name.LocalName == "cover")
-					{
-						post.Cover = ext.GetObject<XElement>().Value;
-						var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
-
-						var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
-						if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
-							post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
-					}
-				}
-			}
-
-			if (syndicationItem.Categories != null)
-			{
-				if (post.Categories == null)
-					post.Categories = new List<Category>();
-
-				foreach (var category in syndicationItem.Categories)
-				{
-					post.Categories.Add(new Category()
-					{
-						Content = category.Name,
-						DateCreated = DateTime.UtcNow,
-						DateUpdated = DateTime.UtcNow
-					});
-				}
-			}
-
-			return post;
-		}
-
-		async Task ImportImages(Post post)
-		{
-			string rgx = @"<img[^>]*?src\s*=\s*[""']?([^'"" >]+?)[ '""][^>]*?>";
-
-			if (string.IsNullOrEmpty(post.Content))
-				return;
-
-			var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-
-			if (matches == null)
-				return;
-
-			foreach (Match m in matches)
-			{
-				try
-				{
-					var tag = m.Groups[0].Value;
-					var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
-
-					var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
-					uri = ValidateUrl(uri);
-					var mdTag = "";
-
-					if (uri.Contains("data:image"))
-						mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
-					else
-						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
-
-					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
-				}
-				catch (Exception ex)
-				{
-					Serilog.Log.Error($"Error importing images: {ex.Message}");
 				}
 			}
 		}

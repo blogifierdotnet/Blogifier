@@ -81,7 +81,7 @@
       <p class="lead">@StatusMsg</p>
       <div class="form-item">
          <button class="btn btn-primary px-5" type="button" @onclick="Import">@_localizer["import"]</button>
-         <button class="btn btn-secondary px-5" type="button" @onclick="Cancel">@_localizer["cancel"]</button>
+         <button class="btn btn-secondary px-5" type="button" @onclick="Load">@_localizer["cancel"]</button>
       </div>
       <!--/LIST -->
    }
@@ -93,14 +93,16 @@
    protected List<Post> Posts { get; set; }
    protected string StatusMsg { get; set; }
 
-   protected override async Task OnInitializedAsync()
+   protected override void OnInitialized()
    {
-      await Load();
+      Load();
    }
 
-   protected async Task Load()
+   protected void Load()
    {
       ImportModel = new ImportModel { FeedUrl = "" };
+      Posts = null;
+      StatusMsg = "";
    }
 
    protected async Task GetEntries()
@@ -142,10 +144,5 @@
       bool isChecked = (bool)checkValue;
       Posts.ForEach(p => p.Selected = isChecked);
       StateHasChanged();
-   }
-
-   protected void Cancel()
-   {
-      Posts = null;
    }
 }
