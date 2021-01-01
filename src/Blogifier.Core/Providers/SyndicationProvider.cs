@@ -40,15 +40,19 @@ namespace Blogifier.Core.Providers
 			_webRoot = webRoot;
 			_baseUrl = baseUrl;
 
-			SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedUrl));
-
 			List<Post> posts = new List<Post>();
-
-			foreach (var item in feed.Items)
+			try
 			{
-				posts.Add(await GetPost(item));
+				SyndicationFeed feed = SyndicationFeed.Load(XmlReader.Create(feedUrl));
+				foreach (var item in feed.Items)
+				{
+					posts.Add(await GetPost(item));
+				}
 			}
-
+			catch (Exception ex)
+			{
+				Serilog.Log.Error($"Error parsing feed URL: {ex.Message}");
+			}
 			return posts;
 		}
 
@@ -100,7 +104,7 @@ namespace Blogifier.Core.Providers
 				Slug = await GetSlug(syndicationItem.Title.Text),
 				Description = syndicationItem.Title.Text,
 				Content = syndicationItem.Summary.Text,
-				Cover = $"{_webRoot}{_defaultCover}",
+				Cover = $"{_defaultCover}",
 				Published = syndicationItem.PublishDate.DateTime,
 				DateCreated = syndicationItem.PublishDate.DateTime,
 				DateUpdated = syndicationItem.LastUpdatedTime.DateTime
@@ -144,7 +148,7 @@ namespace Blogifier.Core.Providers
 			if (string.IsNullOrEmpty(post.Content))
 				return;
 
-			if(post.Cover != $"{_webRoot}{_defaultCover}")
+			if(post.Cover != $"{_defaultCover}")
 			{
 				var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
@@ -172,8 +176,19 @@ namespace Blogifier.Core.Providers
 					if (uri.Contains("data:image"))
 						mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
 					else
-						mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
-
+					{
+						try
+						{
+							mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+						}
+						catch
+						{
+							if (uri.StartsWith("https:"))
+							{
+								mdTag = await _storageProvider.UploadFromWeb(new Uri(uri.Replace("https:", "http:")), _webRoot, path);
+							}
+						}					
+					}
 					post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
 				}
 				catch (Exception ex)
