@@ -15,7 +15,6 @@
                     <li>Designed by <a href="#">John Doe</a></li>
                     <li>Version 2.1</li>
                 </ul>
-                <button type="button" class="btn btn-primary px-4" @onclick="()=> ModalShow()" @onclick:preventDefault>Personalize</button>
             </div>
         </div>
     </div>
@@ -33,7 +32,7 @@
     <!--Settings -->
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-        @if (showModal)
+        @if (Settings != null)
         {
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 @foreach (var section in Settings.Sections)
@@ -113,7 +112,6 @@
 
 @code {
     protected Blog Blog { get; set; }
-    protected List<ThemeItem> Themes { get; set; }
     protected ThemeItem CurrentTheme { get; set; }
     protected ToasterComponent Toaster;
     protected ThemeSettings Settings { get; set; }
@@ -125,8 +123,6 @@
 
     public async Task Load()
     {
-        Themes = new List<ThemeItem>();
-
         Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
         var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
 
@@ -142,26 +138,10 @@
                     IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
                     Cover = await GetCover(theme)
                 };
-            }
-            else
-            {
-                Themes.Add(new ThemeItem
-                {
-                    Title = theme.Capitalize(),
-                    IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
-                    Cover = await GetCover(theme)
-                });
+                break;
             }
         }
     }
-
-    protected async Task SelectTheme(string theme)
-    {
-        Blog.Theme = theme;
-        Toaster.Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
-        await Load();
-    }
-
     private async Task<string> GetCover(string theme)
     {
         string slash = System.IO.Path.DirectorySeparatorChar.ToString();
@@ -173,10 +153,6 @@
         else
             return "img/img-placeholder.png";
     }
-
-    bool showModal = false;
-    void ModalShow() => showModal = true;
-    void ModalCancel() => showModal = false;
 
     protected async Task Save()
     {
@@ -190,6 +166,5 @@
         }
 
         Toaster.Toast(await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings));
-        showModal = false;
     }
 }

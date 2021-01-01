@@ -55,77 +55,6 @@
     </div>
 }
 
-@if (showModal)
-{
-    <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">@CurrentTheme.Title - @_localizer["settings"]</h4>
-                    <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body" style="height: 600px; overflow-y: scroll">
-                    @foreach (var section in Settings.Sections)
-                    {
-                        <h5>@section.Label</h5>
-                        <hr />
-                        foreach (var field in section.Fields)
-                        {
-                            <div class="form-group">
-                                @if (field.Type == "select")
-                                {
-                                    <label class="form-control-label">@field.Label</label>
-                                    <select class="form-control selectpicker" id="@field.Id" name="@field.Id">
-                                        @foreach (var item in field.Options)
-                                        {
-                                            if (field.Value == item)
-                                            {
-                                                <option value="@item" selected>@item</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item">@item</option>
-                                            }
-                                        }
-                                    </select>
-                                }
-                                else if (field.Type == "checkbox")
-                                {
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="@field.Id" name="@field.Id" value="@field.Value">
-                                        <label class="custom-control-label" for="@field.Id">@field.Label</label>
-                                    </div>
-                                }
-                                else if (field.Type == "textarea")
-                                {
-                                    <label class="form-control-label">@field.Label</label>
-                                    <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
-                                }
-                                else
-                                {
-                                    <label class="form-control-label">@field.Label</label>
-                                    <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
-                                }
-                            </div>
-                        }
-                    }
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @onclick="@ModalCancel">@_localizer["cancel"]</button>
-                    <button type="button" class="btn btn-brand" @onclick=@Save>@_localizer["save"]</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-}
-
 <ToasterComponent @ref="Toaster" />
 
 @code {
@@ -133,8 +62,7 @@
     protected List<ThemeItem> Themes { get; set; }
     protected ThemeItem CurrentTheme { get; set; }
     protected ToasterComponent Toaster;
-    protected ThemeSettings Settings { get; set; }
-
+    
     protected override async Task OnInitializedAsync()
     {
         await Load();
@@ -146,8 +74,6 @@
 
         Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
         var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
-
-        Settings = await _http.GetFromJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}");
 
         foreach (var theme in allThemes)
         {
@@ -194,19 +120,4 @@
     bool showModal = false;
     void ModalShow() => showModal = true;
     void ModalCancel() => showModal = false;
-
-    protected async Task Save()
-    {
-        foreach (var section in Settings.Sections)
-        {
-            foreach (var field in section.Fields)
-            {
-                var val = await JSRuntime.InvokeAsync<object>("commonJsFunctions.getFieldValue", field);
-                field.Value = val.ToString();
-            }
-        }
-
-        Toaster.Toast(await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings));
-        showModal = false;
-    }
 }
