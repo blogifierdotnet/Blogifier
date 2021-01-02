@@ -235,6 +235,7 @@ namespace Blogifier.Core.Providers
 			existing.Description = post.Description;
 			existing.Content = post.Content;
 			existing.Cover = post.Cover;
+			existing.PostType = post.PostType;
 			existing.Published = post.Published;
 
 			return await _db.SaveChangesAsync() > 0;

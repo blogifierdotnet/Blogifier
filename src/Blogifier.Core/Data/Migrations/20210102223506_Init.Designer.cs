@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201214150104_Init")]
+    [Migration("20210102223506_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,6 +266,9 @@ namespace Blogifier.Core.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsFeatured")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PostType")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PostViews")

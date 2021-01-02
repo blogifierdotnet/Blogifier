@@ -133,6 +133,7 @@ namespace Blogifier.Core.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PostType = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     Slug = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 450, nullable: false),

@@ -266,6 +266,9 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<bool>("IsFeatured")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("PostType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PostViews")
                         .HasColumnType("INTEGER");
 

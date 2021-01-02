@@ -11,6 +11,8 @@ namespace Blogifier.Shared
 		public int Id { get; set; }
 		public int AuthorId { get; set; }
 
+		public PostType PostType { get; set; }
+
 		[Required]
 		[StringLength(160)]
 		public string Title { get; set; }

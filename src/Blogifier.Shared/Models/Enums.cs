@@ -20,6 +20,11 @@
       Save, Publish, Unpublish
    }
 
+   public enum PostType
+   {
+      Post = 1, Page = 2
+   }
+
    public enum SaveStatus
    {
       Saving = 1, Publishing = 2, Unpublishing = 3
