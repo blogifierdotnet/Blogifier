@@ -61,8 +61,8 @@ namespace Blogifier.Controllers
 				model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
 			}	
 
-			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"blog?page={model.Pager.Older}";
-			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"blog?page={model.Pager.Newer}";
+			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
+			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
 
 			return View($"~/Views/Themes/{model.Blog.Theme}/List.cshtml", model);
 		}
