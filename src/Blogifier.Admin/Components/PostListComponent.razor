@@ -8,62 +8,71 @@
 <div class="app-posts pr-0 pr-lg-5">
     @if (Posts != null && Posts.Count > 0)
     {
-        <div class="app-posts-toolbar d-flex">
-            <label class="app-posts-selectall form-check" data-toggle="tooltip" title="Select All">
-                <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="form-check-input">
-            </label>
-            <a class="app-posts-add btn btn-primary me-3" href="/admin/editor">New</a>
-            <div class="app-posts-actions dropdown">
-                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
-                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Feature))" class="dropdown-item app-posts-actions-featured">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                        </svg>
-                        <span>Feature</span>
-                    </button>
-                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item app-posts-actions-publish">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                        </svg>
-                        <span>Publish</span>
-                    </button>
-                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item app-posts-actions-unpublish">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                        </svg>
-                        <span>Unpublish</span>
-                    </button>
-                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item app-posts-actions-delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-danger" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                        </svg>
-                        <span>Delete</span>
-                    </button>
-                </div>
-            </div>
-            <div class="dropdown app-posts-filters ms-auto ms-3">
-                <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
-                    @FilterLabel
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByStatus">
-                    <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@_localizer["all"]</button>
-                    <button @onclick="(async ()=> await Filter(PublishedStatus.Drafts))" class="dropdown-item">@_localizer["draft", true]</button>
-                    <button @onclick="(async ()=> await Filter(PublishedStatus.Published))" class="dropdown-item">@_localizer["published"]</button>
-                    <button @onclick="(async ()=> await Filter(PublishedStatus.Featured))" class="dropdown-item">@_localizer["featured"]</button>
-                </div>
-            </div>
-            <button type="button" class="btn btn-link app-posts-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseExample">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
+    <div class="app-posts-toolbar d-flex">
+        <label class="app-posts-selectall form-check" data-toggle="tooltip" title="Select All">
+            <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="form-check-input">
+        </label>
+        <a class="app-posts-add btn btn-primary me-3" href="/admin/editor">New</a>
+        <div class="app-posts-actions dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
             </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
+                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Feature))" class="dropdown-item app-posts-actions-featured">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                    </svg>
+                    <span>Feature</span>
+                </button>
+                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item app-posts-actions-publish">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                    </svg>
+                    <span>Publish</span>
+                </button>
+                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item app-posts-actions-unpublish">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                    </svg>
+                    <span>Unpublish</span>
+                </button>
+                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item app-posts-actions-delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-danger" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                    <span>Delete</span>
+                </button>
+            </div>
         </div>
+        <div class="dropdown app-posts-filters ms-auto ms-3">
+            <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
+                Posts
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByStatus">
+                <button class="dropdown-item">Posts</button>
+                <button class="dropdown-item">Pages</button>
+            </div>
+        </div>
+        <div class="dropdown app-posts-filters">
+            <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
+                @FilterLabel
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByStatus">
+                <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@_localizer["all"]</button>
+                <button @onclick="(async ()=> await Filter(PublishedStatus.Drafts))" class="dropdown-item">@_localizer["draft", true]</button>
+                <button @onclick="(async ()=> await Filter(PublishedStatus.Published))" class="dropdown-item">@_localizer["published"]</button>
+                <button @onclick="(async ()=> await Filter(PublishedStatus.Featured))" class="dropdown-item">@_localizer["featured"]</button>
+            </div>
+        </div>
+        <button type="button" class="btn btn-link app-posts-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+        </button>
+    </div>
 
         <div class="app-posts-search collapse" id="collapseExample">
             <div class="d-flex">
