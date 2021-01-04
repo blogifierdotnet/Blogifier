@@ -20,17 +20,24 @@ img {
 }
 
 .form-item {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 
-  &-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-  &-desc {
-    font-size: 0.75rem;
-    color: $gray-600;
-    padding-left: 0.1rem;
-  }
+    &-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    &-desc {
+        font-size: 0.75rem;
+        color: $gray-600;
+        padding-left: 0.1rem;
+    }
+
+    .validation-message, &-error {
+        color: $danger;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
 }
 
 // List - we move it later

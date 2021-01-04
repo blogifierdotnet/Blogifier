@@ -4,49 +4,71 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<Resource> localizer
 @{
-	string youCanRegister = localizer["you-can-register"];
+    string youCanRegister = localizer["you-can-register"];
 }
 
-<div class="bf-account-header">
-	<h1>@localizer["registration"]</h1>
-	<p>@((MarkupString)youCanRegister).</p>
-</div>
+<!--
+    TODO: work on the headers.
+    <div class="app-account-header">
+        <h1>@localizer["registration"]</h1>
+    </div>
+-->
 
 @if (showError)
 {
-	<ul class="validation-errors">
-		<li class="validation-message">
-			@localizer["login-failed"].
-		</li>
-	</ul>
+    <div class="app-account-message bg-danger text-white rounded">@localizer["login-failed"].</div>
 }
 
 @if (model != null)
 {
-	<EditForm Model="@model" OnValidSubmit="RegisterUser">
-		<DataAnnotationsValidator />
-		<div class="form-group">
-			<label class="form-control-label">@localizer["email"]</label>
-			<input class="form-control" type="email" @bind="model.Email" placeholder="you@mail.com" />
-			<ValidationMessage For="@(() => model.Email)"></ValidationMessage>
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@localizer["name"]</label>
-			<input class="form-control" @bind="model.Name" placeholder="@localizer["name"]" />
-			<ValidationMessage For="@(() => model.Name)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@localizer["password"]</label>
-			<input class="form-control" type="password" @bind="model.Password" placeholder="@localizer["password"]" />
-			<ValidationMessage For="@(() => model.Password)"></ValidationMessage>
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@localizer["confirm-password"]</label>
-			<input class="form-control" type="password" @bind="model.PasswordConfirm" placeholder="@localizer["confirm-password"]" />
-			<ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
-		</div>
-		<div class="form-submit-button">
-			<button type="submit" class="btn btn-brand">@localizer["register"]</button>
-		</div>
-	</EditForm>
+    <EditForm Model="@model" OnValidSubmit="RegisterUser">
+        <DataAnnotationsValidator />
+        <div class="form-item">
+            <label class="form-item-label">@localizer["email"]</label>
+            <input class="form-control" type="email" @bind="model.Email" autofocus>
+            <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
+        </div>
+        <div class="form-item">
+            <label class="form-item-label">@localizer["name"]</label>
+            <input class="form-control" @bind="model.Name">
+            <ValidationMessage For="@(() => model.Name)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+        </div>
+        <div class="form-item">
+            <label class="form-item-label">@localizer["password"]</label>
+            <input class="form-control" type="password" @bind="model.Password">
+            <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
+        </div>
+        <div class="form-item">
+            <label class="form-item-label">@localizer["confirm-password"]</label>
+            <input class="form-control" type="password" @bind="model.PasswordConfirm">
+            <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
+        </div>
+        <div class="form-item">
+            <button type="submit" class="btn btn-primary w-100">@localizer["register"]</button>
+        </div>
+    </EditForm>
 }
+
+<div class="app-account-footer">
+    <ul class="app-account-links">
+        <li>
+            <a href="/admin/login" class="app-account-backtoblog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                <span>Login</span>
+            </a>
+        </li>
+        <li>
+            <a href="/" class="app-account-backtoblog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                <!-- TODO: Add the Blog Name here -->
+                <span>Back to Blog Name</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+@*@((MarkupString)youCanRegister).*@
