@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Providers;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -41,30 +42,35 @@ namespace Blogifier.Controllers
 			return await _postProvider.GetSlugFromTitle(title);
 		}
 
+		[Authorize]
 		[HttpPost("add")]
 		public async Task<ActionResult<bool>> AddPost(Post post)
 		{
 			return await _postProvider.Add(post);
 		}
 
+		[Authorize]
 		[HttpPut("update")]
 		public async Task<ActionResult<bool>> UpdatePost(Post post)
 		{
 			return await _postProvider.Update(post);
 		}
 
+		[Authorize]
 		[HttpPut("publish/{id:int}")]
 		public async Task<ActionResult<bool>> PublishPost(int id, [FromBody] bool publish)
 		{
 			return await _postProvider.Publish(id, publish);
 		}
 
+		[Authorize]
 		[HttpPut("featured/{id:int}")]
 		public async Task<ActionResult<bool>> FeaturedPost(int id, [FromBody] bool featured)
 		{
 			return await _postProvider.Featured(id, featured);
 		}
 
+		[Authorize]
 		[HttpDelete("{id:int}")]
 		public async Task<ActionResult<bool>> RemovePost(int id)
 		{

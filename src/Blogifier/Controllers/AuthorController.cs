@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -20,12 +21,14 @@ namespace Blogifier.Controllers
 			_authorProvider = authorProvider;
 		}
 
+		[Authorize]
 		[HttpGet("all")]
 		public async Task<List<Author>> All()
 		{
 			return await _authorProvider.GetAuthors();
 		}
 
+		[Authorize]
 		[HttpGet("email/{email}")]
 		public async Task<ActionResult<Author>> FindByEmail(string email)
 		{
@@ -40,12 +43,14 @@ namespace Blogifier.Controllers
 			return new Author();
 		}
 
+		[Authorize]
 		[HttpDelete("{id:int}")]
 		public async Task<ActionResult<bool>> RemoveAuthor(int id)
 		{
 			return await _authorProvider.Remove(id);
 		}
 
+		[Authorize]
 		[HttpPost("add")]
 		public async Task<ActionResult<bool>> Add(Author author)
 		{
@@ -53,6 +58,7 @@ namespace Blogifier.Controllers
 			return success ? Ok() : BadRequest();
 		}
 
+		[Authorize]
 		[HttpPut("update")]
 		public async Task<ActionResult<bool>> Update(Author author)
 		{
@@ -88,6 +94,7 @@ namespace Blogifier.Controllers
 			return await Task.FromResult(true);
 		}
 
+		[Authorize]
 		[HttpPut("changepassword")]
 		public async Task<ActionResult<bool>> ChangePassword(RegisterModel model)
 		{

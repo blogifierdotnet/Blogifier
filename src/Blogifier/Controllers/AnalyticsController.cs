@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Providers;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace Blogifier.Controllers
 			_analyticsProvider = analyticsProvider;
 		}
 
+		[Authorize]
 		[HttpGet]
 		public async Task<AnalyticsModel> GetAnalytics()
 		{

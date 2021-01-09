@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Providers;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace Blogifier.Controllers
 			return await _blogProvider.GetBlogCategories();
 		}
 
+		[Authorize]
 		[HttpPut]
 		public async Task<ActionResult<bool>> ChangeTheme([FromBody] Blog blog)
 		{

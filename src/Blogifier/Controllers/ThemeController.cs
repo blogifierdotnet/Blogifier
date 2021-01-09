@@ -1,5 +1,6 @@
 ﻿using Blogifier.Core.Providers;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,12 +19,14 @@ namespace Blogifier.Controllers
 			_storageProvider = storageProvider;
 		}
 
+		[Authorize]
 		[HttpGet("{theme}")]
 		public async Task<ThemeSettings> GetThemeSettings(string theme)
 		{
 			return await _storageProvider.GetThemeSettings(theme);
 		}
 
+		[Authorize]
 		[HttpPost("{theme}")]
 		public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
 		{
