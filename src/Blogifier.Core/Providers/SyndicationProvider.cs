@@ -65,7 +65,7 @@ namespace Blogifier.Core.Providers
 
 				var converter = new ReverseMarkdown.Converter();
 
-				post.Description = converter.Convert(post.Description);
+				post.Description = GetDescription(converter.Convert(post.Description));
 				post.Content = converter.Convert(post.Content);
 				post.Selected = false;
 
@@ -100,9 +100,10 @@ namespace Blogifier.Core.Providers
 			Post post = new Post()
 			{
 				AuthorId = _userId,
+				PostType = PostType.Post,
 				Title = syndicationItem.Title.Text,
 				Slug = await GetSlug(syndicationItem.Title.Text),
-				Description = syndicationItem.Title.Text,
+				Description = GetDescription(syndicationItem.Title.Text),
 				Content = syndicationItem.Summary.Text,
 				Cover = $"{_defaultCover}",
 				Published = syndicationItem.PublishDate.DateTime,
@@ -115,7 +116,7 @@ namespace Blogifier.Core.Providers
 				foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
 				{
 					if (ext.GetObject<XElement>().Name.LocalName == "summary")
-						post.Description = ext.GetObject<XElement>().Value;
+						post.Description = GetDescription(ext.GetObject<XElement>().Value);
 
 					if (ext.GetObject<XElement>().Name.LocalName == "cover")
 						post.Cover = ext.GetObject<XElement>().Value;
@@ -279,6 +280,14 @@ namespace Blogifier.Core.Providers
 				url = $"{baseUrl}/{url}";
 
 			return url;
+		}
+
+		string GetDescription(string description)
+		{
+			description = description.StripHtml();
+			if (description.Length > 450)
+				description = description.Substring(0, 446) + "...";
+			return description;
 		}
 
 		#endregion
