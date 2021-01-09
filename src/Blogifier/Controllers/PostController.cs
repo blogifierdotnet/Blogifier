@@ -17,10 +17,10 @@ namespace Blogifier.Controllers
 			_postProvider = postProvider;
 		}
 
-		[HttpGet("list/{filter}")]
-		public async Task<ActionResult<List<Post>>> GetPosts(PublishedStatus filter)
+		[HttpGet("list/{filter}/{postType}")]
+		public async Task<ActionResult<List<Post>>> GetPosts(PublishedStatus filter, PostType postType)
 		{
-			return await _postProvider.GetPosts(filter);
+			return await _postProvider.GetPosts(filter, postType);
 		}
 
 		[HttpGet("list/search/{term}")]

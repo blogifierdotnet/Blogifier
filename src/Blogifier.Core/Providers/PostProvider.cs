@@ -12,7 +12,7 @@ namespace Blogifier.Core.Providers
 {
 	public interface IPostProvider
 	{
-		Task<List<Post>> GetPosts(PublishedStatus filter);
+		Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType);
 		Task<List<Post>> SearchPosts(string term);
 		Task<Post> GetPostById(int id);
 		Task<Post> GetPostBySlug(string slug);
@@ -38,18 +38,18 @@ namespace Blogifier.Core.Providers
 			_db = db;
 		}
 
-		public async Task<List<Post>> GetPosts(PublishedStatus filter)
+		public async Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType)
 		{
 			switch (filter)
 			{
 				case PublishedStatus.Published:
-					return await _db.Posts.AsNoTracking().Where(p => p.Published > DateTime.MinValue).OrderByDescending(p => p.Published).ToListAsync();
+					return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.Published > DateTime.MinValue).OrderByDescending(p => p.Published).ToListAsync();
 				case PublishedStatus.Drafts:
-					return await _db.Posts.AsNoTracking().Where(p => p.Published == DateTime.MinValue).OrderByDescending(p => p.Id).ToListAsync();
+					return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.Published == DateTime.MinValue).OrderByDescending(p => p.Id).ToListAsync();
 				case PublishedStatus.Featured:
-					return await _db.Posts.AsNoTracking().Where(p => p.IsFeatured).OrderByDescending(p => p.Id).ToListAsync();
+					return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.IsFeatured).OrderByDescending(p => p.Id).ToListAsync();
 				default:
-					return await _db.Posts.AsNoTracking().OrderByDescending(p => p.Id).ToListAsync();
+					return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).OrderByDescending(p => p.Id).ToListAsync();
 			}
 		}
 
@@ -59,7 +59,7 @@ namespace Blogifier.Core.Providers
 				return await _db.Posts.ToListAsync();
 
 			return await _db.Posts
-				.AsNoTracking()
+				.AsNoTracking()			
 				.Where(p => p.Title.ToLower().Contains(term.ToLower()))
 				.ToListAsync();
 		}

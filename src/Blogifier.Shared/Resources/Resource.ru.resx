@@ -468,4 +468,7 @@
   <data name="views" xml:space="preserve">
     <value>Просмотры</value>
   </data>
+  <data name="pages" xml:space="preserve">
+    <value>Страницы</value>
+  </data>
 </root>

@@ -468,4 +468,7 @@
   <data name="views" xml:space="preserve">
     <value>Views</value>
   </data>
+  <data name="pages" xml:space="preserve">
+    <value>Pages</value>
+  </data>
 </root>
