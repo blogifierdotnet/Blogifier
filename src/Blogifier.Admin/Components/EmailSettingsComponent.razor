@@ -1,6 +1,7 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
+<h1 class="app-settings-title">Mail Settings</h1>
 @if (Mail != null)
 {
 	<EditForm model="@Mail" OnValidSubmit="Save">

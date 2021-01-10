@@ -471,4 +471,19 @@
   <data name="pages" xml:space="preserve">
     <value>Pages</value>
   </data>
+  <data name="advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>Scripts</value>
+  </data>
 </root>

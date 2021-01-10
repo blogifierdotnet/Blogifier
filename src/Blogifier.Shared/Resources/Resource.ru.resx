@@ -471,4 +471,19 @@
   <data name="pages" xml:space="preserve">
     <value>Страницы</value>
   </data>
+  <data name="advanced" xml:space="preserve">
+    <value>Продвинутое</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Комментарии</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>Скрипты</value>
+  </data>
 </root>
