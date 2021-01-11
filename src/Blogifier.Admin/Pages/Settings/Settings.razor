@@ -1,39 +1,38 @@
 ﻿@page "/admin/settings"
 @inject HttpClient _http
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resource> localizer
-
 <div class="app-settings d-flex">
-	<!-- TAB NAV -->
-	<div class="app-settings-nav nav flex-column" id="nav-tab"  role="tablist">
-		<a class="active" id="link-tab-01" role="tab" data-bs-toggle="tab" href="#tab-01" aria-controls="tab-01" aria-selected="true">@localizer["general"]</a>
-      <a id="link-tab-02" role="tab" data-bs-toggle="tab" href="#tab-02" aria-controls="tab-02" aria-selected="false">@localizer["profile"]</a>
-      <a id="link-tab-03" role="tab" data-bs-toggle="tab" href="#tab-03" aria-controls="tab-03" aria-selected="false">@localizer["comments"]</a>
-		@if (model != null && model.IsAdmin){
-		<a id="link-tab-07" role="tab" data-bs-toggle="tab" href="#tab-07" aria-controls="tab-07" aria-selected="false">@localizer["users"]</a>
-		}
-		<hr>
-		<a id="link-tab-05" role="tab" data-bs-toggle="tab" href="#tab-05" aria-controls="tab-05" aria-selected="false">@localizer["themes"]</a>
-      <a id="link-tab-06" role="tab" data-bs-toggle="tab" href="#tab-06" aria-controls="tab-06" aria-selected="false">@localizer["customize"]</a>
-		<hr>
-      <a id="link-tab-04" role="tab" data-bs-toggle="tab" href="#tab-04" aria-controls="tab-04" aria-selected="false">@localizer["scripts"]</a>
-      <a id="link-tab-08" role="tab" data-bs-toggle="tab" href="#tab-08" aria-controls="tab-08" aria-selected="false">@localizer["import"]</a>
-      <a id="link-tab-09" role="tab" data-bs-toggle="tab" href="#tab-09" aria-controls="tab-09" aria-selected="false">@localizer["advanced"]</a>
-		<hr>
-      <a id="link-tab-10" role="tab" data-bs-toggle="tab" href="#tab-10" aria-controls="tab-10" aria-selected="false">@localizer["info"]</a>
-	</div>
-	<!-- TAB CONTENT -->
-	<div class="app-settings-content tab-content" id="nav-tabContent">
-		<div class="tab-pane fade show active" id="tab-01" role="tabpanel" aria-labelledby="tab-01"><SettingsComponent /></div>
-		<div class="tab-pane fade" id="tab-02" role="tabpanel" aria-labelledby="tab-02"><ProfileComponent /></div>
-		<div class="tab-pane fade" id="tab-03" role="tabpanel" aria-labelledby="tab-03"><CommentsSettingsComponent /></div>
-		<div class="tab-pane fade" id="tab-04" role="tabpanel" aria-labelledby="tab-04"><ScriptsComponent /></div>
-		<div class="tab-pane fade" id="tab-05" role="tabpanel" aria-labelledby="tab-05"><ThemesComponent /></div>
-		<div class="tab-pane fade" id="tab-06" role="tabpanel" aria-labelledby="tab-06"><CustomizeComponent /></div>
-		@if (model != null && model.IsAdmin){
-		<div class="tab-pane fade" id="tab-07" role="tabpanel" aria-labelledby="tab-07"><UsersComponent /></div>
-		}
-		<div class="tab-pane fade" id="tab-08" role="tabpanel" aria-labelledby="tab-08"><ImportComponent /></div>
-		<div class="tab-pane fade" id="tab-09" role="tabpanel" aria-labelledby="tab-09">Advanced</div>
-		<div class="tab-pane fade" id="tab-10" role="tabpanel" aria-labelledby="tab-10"><InfoComponent /></div>
-	</div>
+    <div class="app-settings-nav nav flex-column" id="nav-tab" role="tablist">
+        <a class="active" id="link-tab-01" role="tab" data-bs-toggle="tab" href="#tab-01" aria-controls="tab-01" aria-selected="true">@localizer["general"]</a>
+        <a id="link-tab-02" role="tab" data-bs-toggle="tab" href="#tab-02" aria-controls="tab-02" aria-selected="false">@localizer["profile"]</a>
+        <a id="link-tab-03" role="tab" data-bs-toggle="tab" href="#tab-03" aria-controls="tab-03" aria-selected="false">@localizer["comments"]</a>
+        @if (model != null && model.IsAdmin)
+        {
+            <a id="link-tab-07" role="tab" data-bs-toggle="tab" href="#tab-07" aria-controls="tab-07" aria-selected="false">@localizer["users"]</a>
+        }
+        <hr>
+        <a id="link-tab-05" role="tab" data-bs-toggle="tab" href="#tab-05" aria-controls="tab-05" aria-selected="false">@localizer["themes"]</a>
+        <a id="link-tab-06" role="tab" data-bs-toggle="tab" href="#tab-06" aria-controls="tab-06" aria-selected="false">@localizer["customize"]</a>
+        <hr>
+        <a id="link-tab-04" role="tab" data-bs-toggle="tab" href="#tab-04" aria-controls="tab-04" aria-selected="false">@localizer["scripts"]</a>
+        <a id="link-tab-08" role="tab" data-bs-toggle="tab" href="#tab-08" aria-controls="tab-08" aria-selected="false">@localizer["import"]</a>
+        <a id="link-tab-09" role="tab" data-bs-toggle="tab" href="#tab-09" aria-controls="tab-09" aria-selected="false">@localizer["advanced"]</a>
+        <hr>
+        <a id="link-tab-10" role="tab" data-bs-toggle="tab" href="#tab-10" aria-controls="tab-10" aria-selected="false">@localizer["info"]</a>
+    </div>
+    <div class="app-settings-content tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="tab-01" role="tabpanel" aria-labelledby="tab-01"><SettingsComponent /></div>
+        <div class="tab-pane fade" id="tab-02" role="tabpanel" aria-labelledby="tab-02"><ProfileComponent /></div>
+        <div class="tab-pane fade" id="tab-03" role="tabpanel" aria-labelledby="tab-03"><CommentsSettingsComponent /></div>
+        <div class="tab-pane fade" id="tab-04" role="tabpanel" aria-labelledby="tab-04"><ScriptsComponent /></div>
+        <div class="tab-pane fade" id="tab-05" role="tabpanel" aria-labelledby="tab-05"><ThemesComponent /></div>
+        <div class="tab-pane fade" id="tab-06" role="tabpanel" aria-labelledby="tab-06"><CustomizeComponent /></div>
+        @if (model != null && model.IsAdmin)
+        {
+            <div class="tab-pane fade" id="tab-07" role="tabpanel" aria-labelledby="tab-07"><UsersComponent /></div>
+        }
+        <div class="tab-pane fade" id="tab-08" role="tabpanel" aria-labelledby="tab-08"><ImportComponent /></div>
+        <div class="tab-pane fade" id="tab-09" role="tabpanel" aria-labelledby="tab-09">Advanced</div>
+        <div class="tab-pane fade" id="tab-10" role="tabpanel" aria-labelledby="tab-10"><InfoComponent /></div>
+    </div>
 </div>

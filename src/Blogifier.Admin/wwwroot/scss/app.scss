@@ -11,9 +11,11 @@
 @import "pages/dashboard";
 @import "pages/settings";
 @import "pages/account";
+@import "pages/editor";
 
 // components
 @import "components/PostListComponent";
 @import "components/TotalsComponent";
 @import "components/ThemesComponent";
+@import "components/simplemde.min";
    

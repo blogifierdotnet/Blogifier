@@ -1,55 +1,68 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<div class="form-group">
-	<label class="form-control-label">@_localizer["categories"]</label>
-	<input type="text" class="form-control" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="Type and hit 'Enter'" />
+<div class="app-editor-cats d-flex">
+
+    @if (PostCategories != null)
+    {
+        foreach (var item in PostCategories)
+        {
+            <div class="app-editor-cats-item">
+                
+               
+                <button class="app-editor-cats-button" @onclick="()=> Remove(item.Id)" @onclick:preventDefault type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" >
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hash" viewBox="0 0 16 16">
+                        <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.188-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.512.512 0 0 0-.523-.516.539.539 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.187.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.188.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z" />
+                    </svg>
+                </button>
+                <label class="app-editor-cats-label">@item.Content</label>
+
+            </div>
+        }
+    }
+
+    <div class="app-editor-cats-add">
+        <input type="text" id="add_category_control" class="app-editor-cats-control" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["Add"] @_localizer["Category"]" data-bs-toggle="tooltip" title="Type and hit 'Enter'" />
+        <label for="add_category_control">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+        </label>
+    </div>
 </div>
 
-@if (PostCategories != null)
-{
-	foreach (var item in PostCategories)
-	{
-		<div class="label label-tag">
-			@item.Content
-			<a href="" @onclick="()=> Remove(item.Id)" @onclick:preventDefault>
-				<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-				</svg>
-			</a>
-		</div>
-	}
-}
-
 @code {
-	[Parameter] public Post Post { get; set; }
+    [Parameter] public Post Post { get; set; }
 
-	protected string Tag { get; set; }
-	protected List<Category> PostCategories { get; set; }
+    protected string Tag { get; set; }
+    protected List<Category> PostCategories { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		await Load();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
 
-	protected async Task Load()
-	{
-		Tag = "";
-		PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
-	}
+    protected async Task Load()
+    {
+        Tag = "";
+        PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
+    }
 
-	protected async Task KeyPressed(KeyboardEventArgs eventArgs)
-	{
-		if(eventArgs.Code == "Enter")
-		{
-			await _http.PostAsJsonAsync($"api/category/{Post.Id}/{Tag}", Tag);
-			await Load();
-		}
-	}
+    protected async Task KeyPressed(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Code == "Enter")
+        {
+            await _http.PostAsJsonAsync($"api/category/{Post.Id}/{Tag}", Tag);
+            await Load();
+        }
+    }
 
-	protected async Task Remove(int categoryId)
-	{
-		await _http.DeleteAsync($"api/category/{Post.Id}/{categoryId}");
-		await Load();
-	}
+    protected async Task Remove(int categoryId)
+    {
+        await _http.DeleteAsync($"api/category/{Post.Id}/{categoryId}");
+        await Load();
+    }
 }

@@ -1,0 +1,267 @@
+.app-editor {
+    &-header {
+        margin-bottom: 2rem;
+    }
+
+    &-control {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        background: none;
+        display: block;
+        outline: none !important;
+
+        &-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+        }
+
+
+
+        &-url {
+            margin-bottom: .5rem;
+            opacity: .5;
+            font-size: .875rem;
+
+            &:hover, &:focus {
+                opacity: 1;
+            }
+        }
+
+        &-desc {
+            margin-bottom: 1rem;
+            font-size: .875rem;
+            resize: none;
+        }
+    }
+
+    &-actions {
+        .btn {
+            min-width: 6rem;
+
+            &:not(:first-child) {
+                margin-left: .325rem;
+            }
+
+            &-icon {
+                min-width: unset;
+                padding-right: 0;
+                padding-left: 0;
+                width: 2.625rem;
+
+                svg {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                }
+            }
+        }
+    }
+
+    &-toolbar {
+    }
+
+    &-cats {
+        font-size: .875rem;
+        margin-right: 1rem;
+
+
+        &-item {
+            position: relative;
+            padding: 0 0 0 1rem;
+            margin-right: .5rem;
+            height: 1.25rem;
+            line-height: 1;
+
+
+            &:hover {
+                .bi-x {
+                    top: 0;
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                .bi-hash {
+                    opacity: 0;
+                    visibility: hidden;
+                    top: 100%;
+                }
+            }
+        }
+
+        &-button {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1rem;
+            height: 1.25rem;
+            text-align: center;
+            outline: none;
+
+
+            svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                transition: all ease .25s;
+            }
+
+            .bi-x {
+                visibility: hidden;
+                opacity: 0;
+                top: -100%;
+                width: 1.125rem;
+                fill: $danger;
+            }
+
+            .bi-hash {
+                opacity: 1;
+                color: $gray-700;
+            }
+
+            &:focus {
+                outline: none;
+
+                + label {
+                    color: #000;
+                }
+
+                .bi-x {
+                    top: 0;
+                    opacity: 1;
+                    visibility: visible;
+                    fill: $danger;
+                }
+
+                .bi-hash {
+                    opacity: 0;
+                    visibility: hidden;
+                    top: 100%;
+                    fill: #000;
+                }
+            }
+        }
+
+        &-label {
+            display: block;
+            line-height: 1.25rem;
+            color: $gray-700;
+            word-spacing: -1px;
+        }
+
+        &-add {
+            position: relative;
+            line-height: 1;
+            padding-left: 1.0625rem;
+            margin-left: .125rem;
+            height: 1.25rem;
+
+            .bi {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                height: 100%;
+                width: 1.125rem;
+                transition: all ease .25s;
+                transform: translateY(-50%);
+            }
+
+            &:hover {
+
+                svg {
+                    left: -.15rem;
+                    color: green;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                input {
+                    cursor: pointer;
+                }
+
+                input::-webkit-input-placeholder {
+                    color: #000;
+                }
+            }
+        }
+
+        &-control {
+            background: none;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            outline: none !important;
+            height: 1.125rem;
+            font-size: .875rem;
+
+            &:focus {
+                padding-left: .25rem;
+                cursor: text !important;
+
+                + label {
+                    svg {
+                        left: -.15rem;
+                        color: green;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                    }
+                }
+
+                &::-webkit-input-placeholder {
+                    color: #f5f6f6 !important;
+                }
+            }
+        }
+    }
+
+    &-addcover {
+        position: relative;
+        line-height: 1;
+        padding-left: 1.25rem;
+        height: 1.25rem;
+        font-size: .875rem;
+        color: $gray-700;
+        outline: none;
+
+        .bi {
+            fill: $gray-600;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 100%;
+            width: 1rem;
+            transition: all ease .25s;
+            transform: translateY(-50%);
+        }
+
+
+        span {
+            display: block;
+            line-height: 1.25rem;
+        }
+
+        &:focus,
+        &:hover {
+            color: #000;
+
+            .bi {
+                fill: #000;
+            }
+        }
+    }
+}
+
+
+/**/
+.app-editor-content {
+    margin-top: 2rem;
+    background: #fff;
+    @include bf-card();
+}
