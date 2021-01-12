@@ -145,9 +145,7 @@ function getEditor() {
                 icon: easymde_icon_h3,
                 title: "H3",
             },
-
             "|",
-
             {
                 name: "code",
                 action: EasyMDE.toggleCodeBlock,
@@ -196,28 +194,28 @@ function getEditor() {
                 icon: easymde_icon_drawHorizontalRule,
                 title: "Insert Horizontal Line",
             },
-
             {
                 name: "preview",
                 action: EasyMDE.togglePreview,
                 icon: easymde_icon_togglePreview,
                 title: "Toggle Preview",
-            },
+                noDisable: true,
 
+            },
             {
                 name: "side-by-side",
                 action: EasyMDE.toggleSideBySide,
                 icon: easymde_icon_toggleSideBySide,
                 title: "Toggle Side by Side",
+                noDisable: true,
             },
-
             {
                 name: "fullscreen",
                 action: EasyMDE.toggleFullScreen,
                 icon: easymde_icon_toggleFullScreen,
                 title: "Toggle Fullscreen",
+                noDisable: true,
             },
-
             "|",
             {
                 name: "insertImg",
