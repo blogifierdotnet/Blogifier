@@ -1,4 +1,4 @@
-var simplemde = {};
+var easymde = {};
 
 window.commonJsFunctions = {
 
@@ -55,10 +55,10 @@ window.commonJsFunctions = {
 		});
 	},
 	loadEditor: function () {
-		simplemde = getEditor();
+		easymde = getEditor();
 	},
 	setEditorValue: function (txt) {
-		simplemde.value(txt
+		easymde.value(txt
 			.replace(/&#xA;/g, '\r\n')
 			.replace(/&#xD;/g, '')
 			.replace(/&lt;/g, '<')
@@ -66,7 +66,7 @@ window.commonJsFunctions = {
 			.replace(/&quot;/g, '"'));
 	},
 	getEditorValue: function () {
-		return simplemde.value();
+		return easymde.value();
 	},
 	showModal: function (id) {
 		document.getElementById(id).showModal();
@@ -96,41 +96,142 @@ window.commonJsFunctions = {
 	}
 };
 
+var easymdeHeight = "450px";
+if (window.screen.height < 769) {
+    easymdeHeight = "300px";
+}
+
 function getEditor() {
-	var simplemde = new SimpleMDE({
-		toolbar: [
-			"bold", "italic", "heading-2",
-			"|", "quote", "unordered-list", "ordered-list",
-			"|", "link", "code",
-			{
-				name: "insertImg",
-				action: insertImage,
-				className: "fa fa-picture-o",
-				title: "Insert Image"
-			},
-			{
-				name: "insertYoutube",
-				action: insertYoutube,
-				className: "fa fa-youtube",
-				title: "Insert Youtube Video"
-			},
-			"|", "side-by-side", "fullscreen", "preview",
-			"|", "guide"
-		],
-		blockStyles: {
-			bold: "__",
-			italic: "_"
-		},
-		element: document.getElementById("mdEditor"),
-		indentWithTabs: false,
-		insertTexts: {
-			horizontalRule: ["", "\n\n-----\n\n"],
-			image: ["![](http://", ")"],
-			link: ["[", "](#url#)"],
-			table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"]
-		},
-		lineWrapping: true,
-		minHeight: "300px",
+    var easymde = new EasyMDE({
+        autoDownloadFontAwesome: false,
+        toolbar: [
+            {
+                name: "bold",
+                action: EasyMDE.toggleBold,
+                icon: easymde_icon_bold,
+                title: "Bold",
+            },
+            {
+                name: "italic",
+                action: EasyMDE.toggleItalic,
+                icon: easymde_icon_italic,
+                title: "Italic",
+            },
+            {
+                name: "strikethrough",
+                action: EasyMDE.toggleStrikethrough,
+                icon: easymde_icon_strikethrough,
+                title: "strikethrough",
+            },
+            "|",
+            {
+                name: "H1",
+                action: EasyMDE.toggleHeading1,
+                icon: easymde_icon_h1,
+                title: "H1",
+            },
+            {
+                name: "H2",
+                action: EasyMDE.toggleHeading2,
+                icon: easymde_icon_h2,
+                title: "H2",
+            },
+            {
+                name: "H3",
+                action: EasyMDE.toggleHeading3,
+                icon: easymde_icon_h3,
+                title: "H3",
+            },
+
+            "|",
+
+            {
+                name: "code",
+                action: EasyMDE.toggleCodeBlock,
+                icon: easymde_icon_code,
+                title: "Insert Code",
+            },
+            {
+                name: "quote",
+                action: EasyMDE.toggleBlockquote,
+                icon: easymde_icon_quote,
+                title: "Quote",
+            },
+            {
+                name: "unordered-list",
+                action: EasyMDE.toggleUnorderedList,
+                icon: easymde_icon_UnorderedList,
+                title: "Generic List",
+            },
+            {
+                name: "ordered-list",
+                action: EasyMDE.toggleOrderedList,
+                icon: easymde_icon_OrderedList,
+                title: "Numbered List",
+            },
+            {
+                name: "clean-block",
+                action: EasyMDE.cleanBlock,
+                icon: easymde_icon_cleanBlock,
+                title: "Clean block",
+            },
+            {
+                name: "link",
+                action: EasyMDE.drawLink,
+                icon: easymde_icon_drawLink,
+                title: "Create Link",
+            },
+            {
+                name: "table",
+                action: EasyMDE.drawTable,
+                icon: easymde_icon_drawTable,
+                title: "Insert Table",
+            },
+            {
+                name: "horizontal-rule",
+                action: EasyMDE.drawHorizontalRule,
+                icon: easymde_icon_drawHorizontalRule,
+                title: "Insert Horizontal Line",
+            },
+
+            {
+                name: "preview",
+                action: EasyMDE.togglePreview,
+                icon: easymde_icon_togglePreview,
+                title: "Toggle Preview",
+            },
+
+            {
+                name: "side-by-side",
+                action: EasyMDE.toggleSideBySide,
+                icon: easymde_icon_toggleSideBySide,
+                title: "Toggle Side by Side",
+            },
+
+            {
+                name: "fullscreen",
+                action: EasyMDE.toggleFullScreen,
+                icon: easymde_icon_toggleFullScreen,
+                title: "Toggle Fullscreen",
+            },
+
+            "|",
+            {
+                name: "insertImg",
+                action: insertImage,
+                icon: easymde_icon_insertImage,
+                title: "Insert Image",
+            },
+            {
+                name: "insertYoutube",
+                action: insertYoutube,
+                icon: easymde_icon_insertYoutube,
+                title: "Insert Youtube Video"
+            }
+        ],
+        element: document.getElementById("mdEditor"),
+        indentWithTabs: false,
+        minHeight: easymdeHeight,
 		parsingConfig: {
 			allowAtxHeaderWithoutSpace: true,
 			strikethrough: false,
@@ -150,7 +251,7 @@ function getEditor() {
 		styleSelectedText: false,
 		syncSideBySidePreviewScroll: false
 	});
-	return simplemde;
+	return easymde;
 }
 
 var _editor = {};
