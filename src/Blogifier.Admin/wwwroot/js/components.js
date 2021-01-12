@@ -104,130 +104,136 @@ if (window.screen.height < 769) {
 // Get the placeholder with _localizer from the hidden textarea in the PostEditorComponent.razor
 var easymadePlaceholder = $("#mdEditor").attr('placeholder');
 
+
+
 function getEditor() {
+    function emdeicons(icon) {
+        return $(".bf-emdet-icons " + icon).prop("outerHTML")
+    }
     var easymde = new EasyMDE({
         autoDownloadFontAwesome: false,
         toolbar: [
             {
-                name: "bold",
+                name: "emdet-bold",
                 action: EasyMDE.toggleBold,
-                icon: easymde_icon_bold,
+                icon: emdeicons(".bi-type-bold"),
                 title: "Bold",
             },
             {
-                name: "italic",
+                name: "emdet-italic",
                 action: EasyMDE.toggleItalic,
-                icon: easymde_icon_italic,
+                icon: emdeicons(".bi-type-italic"),
                 title: "Italic",
             },
             {
-                name: "strikethrough",
+                name: "emdet-strikethrough",
                 action: EasyMDE.toggleStrikethrough,
-                icon: easymde_icon_strikethrough,
+                icon: emdeicons(".bi-type-strikethrough"),
                 title: "strikethrough",
             },
             "|",
             {
-                name: "H1",
+                name: "emdet-H1",
                 action: EasyMDE.toggleHeading1,
-                icon: easymde_icon_h1,
+                icon: emdeicons(".bi-type-h1"),
                 title: "H1",
             },
             {
-                name: "H2",
+                name: "emdet-H2",
                 action: EasyMDE.toggleHeading2,
-                icon: easymde_icon_h2,
+                icon: emdeicons(".bi-type-h2"),
                 title: "H2",
             },
             {
-                name: "H3",
+                name: "emdet-H3",
                 action: EasyMDE.toggleHeading3,
-                icon: easymde_icon_h3,
+                icon: emdeicons(".bi-type-h3"),
                 title: "H3",
             },
             "|",
             {
-                name: "code",
-                action: EasyMDE.toggleCodeBlock,
-                icon: easymde_icon_code,
-                title: "Insert Code",
-            },
-            {
-                name: "quote",
-                action: EasyMDE.toggleBlockquote,
-                icon: easymde_icon_quote,
-                title: "Quote",
-            },
-            {
-                name: "unordered-list",
+                name: "emdet-unordered-list",
                 action: EasyMDE.toggleUnorderedList,
-                icon: easymde_icon_UnorderedList,
+                icon: emdeicons(".bi-list-ul"),
                 title: "Generic List",
             },
             {
-                name: "ordered-list",
+                name: "emdet-ordered-list",
                 action: EasyMDE.toggleOrderedList,
-                icon: easymde_icon_OrderedList,
+                icon: emdeicons(".bi-list-ol"),
                 title: "Numbered List",
             },
             {
-                name: "clean-block",
-                action: EasyMDE.cleanBlock,
-                icon: easymde_icon_cleanBlock,
-                title: "Clean block",
+                name: "emdet-quote",
+                action: EasyMDE.toggleBlockquote,
+                icon: emdeicons(".bi-chat-left-quote"),
+                title: "Quote",
             },
             {
-                name: "link",
+                name: "emdet-horizontal-rule",
+                action: EasyMDE.drawHorizontalRule,
+                icon: emdeicons(".bi-hr"),
+                title: "Insert Horizontal Line",
+            },
+            {
+                name: "emdet-clean-block",
+                action: EasyMDE.cleanBlock,
+                icon: emdeicons(".bi-eraser"),
+                title: "Clean block",
+            },
+            "|",
+            {
+                name: "emdet-link",
                 action: EasyMDE.drawLink,
-                icon: easymde_icon_drawLink,
+                icon: emdeicons(".bi-link-45deg"),
                 title: "Create Link",
             },
             {
-                name: "table",
-                action: EasyMDE.drawTable,
-                icon: easymde_icon_drawTable,
-                title: "Insert Table",
+                name: "emdet-insertImg",
+                action: insertImage,
+                icon: emdeicons(".bi-card-image"),
+                title: "Insert Image",
             },
             {
-                name: "horizontal-rule",
-                action: EasyMDE.drawHorizontalRule,
-                icon: easymde_icon_drawHorizontalRule,
-                title: "Insert Horizontal Line",
+                name: "emdet-insertYoutube",
+                action: insertYoutube,
+                icon: emdeicons(".bi-play-btn"),
+                title: "Insert Youtube Video"
+            },
+            {
+                name: "emdet-code",
+                action: EasyMDE.toggleCodeBlock,
+                icon: emdeicons(".bi-code"),
+                title: "Insert Code",
+            },
+            {
+                name: "emdet-table",
+                action: EasyMDE.drawTable,
+                icon: emdeicons(".bi-table"),
+                title: "Insert Table",
+            },
+            "|",
+            {
+                name: "emdet-side-by-side",
+                action: EasyMDE.toggleSideBySide,
+                icon: emdeicons(".bi-layout-split"),
+                title: "Toggle Side by Side",
+                noDisable: true,
+                className: "ms-auto", // push to the right
+            },
+            {
+                name: "emdet-fullscreen",
+                action: EasyMDE.toggleFullScreen,
+                icon: emdeicons(".bi-arrows-fullscreen"),
+                title: "Toggle Fullscreen",
+                noDisable: true,
             },
             {
                 name: "preview",
                 action: EasyMDE.togglePreview,
-                icon: easymde_icon_togglePreview,
+                icon: emdeicons(".bi-eye"),
                 title: "Toggle Preview",
                 noDisable: true,
-
-            },
-            {
-                name: "side-by-side",
-                action: EasyMDE.toggleSideBySide,
-                icon: easymde_icon_toggleSideBySide,
-                title: "Toggle Side by Side",
-                noDisable: true,
-            },
-            {
-                name: "fullscreen",
-                action: EasyMDE.toggleFullScreen,
-                icon: easymde_icon_toggleFullScreen,
-                title: "Toggle Fullscreen",
-                noDisable: true,
-            },
-            "|",
-            {
-                name: "insertImg",
-                action: insertImage,
-                icon: easymde_icon_insertImage,
-                title: "Insert Image",
-            },
-            {
-                name: "insertYoutube",
-                action: insertYoutube,
-                icon: easymde_icon_insertYoutube,
-                title: "Insert Youtube Video"
             }
         ],
         element: document.getElementById("mdEditor"),
