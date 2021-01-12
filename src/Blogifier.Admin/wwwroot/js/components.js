@@ -101,6 +101,9 @@ if (window.screen.height < 769) {
     easymdeHeight = "300px";
 }
 
+// Get the placeholder with _localizer from the hidden textarea in the PostEditorComponent.razor
+var easymadePlaceholder = $("#mdEditor").attr('placeholder');
+
 function getEditor() {
     var easymde = new EasyMDE({
         autoDownloadFontAwesome: false,
@@ -237,7 +240,7 @@ function getEditor() {
 			strikethrough: false,
 			underscoresBreakWords: true
 		},
-		placeholder: "Type here...",
+        placeholder: easymadePlaceholder,
 		promptURLs: true,
 		renderingConfig: {
 			singleLineBreaks: false,
