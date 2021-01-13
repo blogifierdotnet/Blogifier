@@ -101,7 +101,7 @@
         var state = await _stateProvider.GetAuthenticationStateAsync();
         var identity = state.User.Identity;
         author = await _http.GetFromJsonAsync<Author>($"api/author/email/{identity.Name}");
-        cssAuto = author.IsAdmin ? "" : "ml-auto";
+        cssAuto = author.IsAdmin ? "" : "ms-auto";
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
