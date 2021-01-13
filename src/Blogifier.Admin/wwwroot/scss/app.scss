@@ -1,15 +1,20 @@
 ﻿@import "helpers/variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
-@import "helpers/reset";
 @import "helpers/mixins";
+@import "helpers/reset";
+
+// elements
+@import "elements/buttons";
+@import "elements/forms";
+@import "elements/list";
 
 // layout
 @import "layout/main";
 @import "layout/header";
 
 // pages
-@import "pages/dashboard";
-@import "pages/settings";
+@import "pages/dashboard"; 
+@import "pages/settings"; 
 @import "pages/account";
 @import "pages/editor";
 
