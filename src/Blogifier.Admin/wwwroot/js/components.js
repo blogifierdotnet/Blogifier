@@ -51,7 +51,7 @@ window.commonJsFunctions = {
 	},
 	setTooltip: function (args) {
 		$(document).ready(function () {
-			$('[data-toggle="tooltip"]').tooltip();
+			$('[data-bs-toggle="tooltip"]').tooltip();
 		});
 	},
 	loadEditor: function () {

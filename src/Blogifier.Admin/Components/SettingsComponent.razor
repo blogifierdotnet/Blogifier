@@ -4,31 +4,31 @@
 <div class="app-settings-wrap app-settings-wrap-50">
 @if (Blog != null)
 {
-	<EditForm model="@Blog" OnValidSubmit="Save">
-		<DataAnnotationsValidator />
-		<ValidationSummary />
-		<div class="form-item">
-			<label class="form-item-label">@_localizer["title"]</label>
-			<input type="text" class="form-control" @bind="Blog.Title" name="title" />
-		</div>
-		<div class="form-item">
-			<label class="form-item-label">@_localizer["description"]</label>
-			<textarea class="form-control" cols="30" rows="5" @bind="Blog.Description" name="description"></textarea>
-		</div>
-		<div class="form-item">
-			<label class="form-item-label">@_localizer["items-per-page"]</label>
-			<input type="text" class="form-control" @bind="Blog.ItemsPerPage" name="pageitems" />
-		</div>
-		<div class="form-item">
-			<div class="form-check form-switch">
-				<input class="form-check-input" type="checkbox" @bind="Blog.IncludeFeatured" id="IncludeFeaturedSwitch">
-				<label class="form-check-label" for="IncludeFeaturedSwitch">@_localizer["include-featured"]</label>
-			</div>
-		</div>
-		<div class="form-item">
-			<button type="submit" class="btn btn-primary px-5">@_localizer["save"]</button>
-		</div>
-	</EditForm>
+    <EditForm model="@Blog" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-item">
+            <label class="form-item-label">@_localizer["title"]</label>
+            <input type="text" class="form-control" @bind="Blog.Title" name="title" />
+        </div>
+        <div class="form-item">
+            <label class="form-item-label">@_localizer["description"]</label>
+            <textarea class="form-control" cols="30" rows="5" @bind="Blog.Description" name="description"></textarea>
+        </div>
+        <div class="form-item">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" @bind="Blog.IncludeFeatured" id="IncludeFeaturedSwitch">
+                <label class="form-check-label" for="IncludeFeaturedSwitch">@_localizer["include-featured"]</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-item-label">@_localizer["items-per-page"]</label>
+            <input type="text" class="form-control" @bind="Blog.ItemsPerPage" name="pageitems" />
+        </div>
+        <div class="form-item">
+            <button type="submit" class="btn btn-primary px-5">@_localizer["save"]</button>
+        </div>
+    </EditForm>
 }
 </div>
 <ToasterComponent @ref="Toaster" />
