@@ -94,7 +94,7 @@
                <label class="app-posts-item-select form-check">
                   <input type="checkbox" @bind="post.Selected" class="form-check-input">
                </label>
-               <a class="app-posts-item-link flex-grow-1 me-3" href="admin/editor?slug=@post.Slug">@title</a>
+               <a class="app-posts-item-link flex-grow-1 me-3" href="/admin/edit/?slug=@post.Slug">@title</a>
                <span class="app-posts-item-date ms-auto me-2 d-none d-lg-block">@pubDate</span>
                <button class="app-posts-item-status app-posts-item-status-@pubStatus" @onclick="(async () => await Publish(post))" data-toggle="tooltip" title="Status">
 

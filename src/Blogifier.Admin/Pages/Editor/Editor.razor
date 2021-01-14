@@ -1,4 +1,5 @@
 ﻿@page "/admin/new/"
+@page "/admin/edit/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -12,7 +13,7 @@
 
         <div class="app-editor-header row">
             <div class="col-md-7">
-                <input type="text" class="app-editor-control app-editor-control-title" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" autocomplete="off" autofocus/>
+                <input type="text" class="app-editor-control app-editor-control-title" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" autocomplete="off" autofocus />
                 <textarea class="app-editor-control app-editor-control-desc" @bind="Post.Description" name="description" rows="2" placeholder="@_localizer["description"]..." />
             </div>
             <div class="col-md-4 ms-auto">
@@ -133,7 +134,7 @@
                 await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
             }
 
-            _navigation.NavigateTo($"admin/editor?slug={Post.Slug}");
+            _navigation.NavigateTo($"/admin/edit/?slug={Post.Slug}");
             await Load();
         }
         else
