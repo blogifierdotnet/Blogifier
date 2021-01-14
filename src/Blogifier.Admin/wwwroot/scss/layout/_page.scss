@@ -1,0 +1,59 @@
+﻿.app-tab {
+    &-nav {
+        width: 13rem;
+        padding-right: 2rem;
+
+        > a {
+            line-height: 2rem;
+            color: $secondary;
+
+            &:hover {
+                color: #000;
+            }
+
+            &.active {
+                font-weight: 500;
+                color: #333;
+            }
+        }
+
+        hr {
+            background: linear-gradient(to right, $secondary, #f5f6f6);
+            width: 60%;
+        }
+    }
+
+    &-body {
+        flex: 1; 
+        font-size: .875rem;
+    }
+}
+
+
+.app-section {
+    
+    &-content {
+        width: 100%;
+        max-width: 26rem;
+        margin-bottom:4rem;
+    }
+
+    &-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        border-bottom: 1px solid $gray-300;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    &-desc {
+        font-size: .875rem;
+        color: $gray-600;
+    }
+
+    &-subtitle {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+}

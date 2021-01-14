@@ -7565,6 +7565,10 @@ img {
     color: #6c757d; }
     .btn-outline-default:hover {
       border-color: #adb5bd; }
+  .btn-xs {
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.2rem; }
 
 .form-control,
 .form-select {
@@ -7741,54 +7745,52 @@ body {
       left: .25rem;
       transform: translateY(-50%); }
 
-.app-widget {
-  margin-bottom: 2rem; }
-  .app-widget-card {
-    background: #fff;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 0.5rem; }
-
-.app-settings-nav {
+.app-tab-nav {
   width: 13rem;
   padding-right: 2rem; }
-  .app-settings-nav > a {
+  .app-tab-nav > a {
     line-height: 2rem;
     color: #6c757d; }
-    .app-settings-nav > a:hover {
+    .app-tab-nav > a:hover {
       color: #000; }
-    .app-settings-nav > a.active {
+    .app-tab-nav > a.active {
       font-weight: 500;
       color: #333; }
-  .app-settings-nav hr {
+  .app-tab-nav hr {
     background: linear-gradient(to right, #6c757d, #f5f6f6);
     width: 60%; }
 
-.app-settings-content {
+.app-tab-body {
   flex: 1;
   font-size: .875rem; }
 
-.app-settings-wrap {
-  width: 100%; }
-  .app-settings-wrap-50 {
-    max-width: 26rem; }
-  .app-settings-wrap-100 {
-    width: 100%; }
+.app-section-content {
+  width: 100%;
+  max-width: 26rem;
+  margin-bottom: 4rem; }
 
-.app-settings-title {
+.app-section-title {
   font-size: 1.25rem;
   font-weight: 500;
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem; }
 
-.app-settings-desc {
+.app-section-desc {
   font-size: .875rem;
   color: #6c757d; }
 
-.app-settings-subtitle {
+.app-section-subtitle {
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.5rem; }
+
+.app-widget {
+  margin-bottom: 2rem; }
+  .app-widget-card {
+    background: #fff;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem; }
 
 .app-account {
   padding: 5rem 1.5rem;

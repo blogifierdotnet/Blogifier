@@ -1,10 +1,9 @@
 ﻿@layout MainLayout
 @inherits LayoutComponentBase
-
 @inject HttpClient _http
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resource> localizer
-<div class="app-settings d-flex">
-    <div class="app-settings-nav nav flex-column">
+<div class="app-tab d-flex">
+    <div class="app-tab-nav nav flex-column">
         <NavLink href="/admin/settings/" Match="NavLinkMatch.All">@localizer["Basic"]</NavLink>
         <NavLink href="/admin/settings/profile/">@localizer["profile"]</NavLink>
         <NavLink href="/admin/settings/comments/">@localizer["comments"]</NavLink>
@@ -19,8 +18,7 @@
         <hr>
         <NavLink href="/admin/settings/info/">@localizer["info"]</NavLink>
     </div>
-    <div class="app-settings-content">
+    <div class="app-tab-body">
         @Body
     </div>
 </div>
-

@@ -1,20 +1,20 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
-<h1 class="app-settings-title">Public profile</h1>
-<div class="app-settings-wrap app-settings-wrap-50">
+<h1 class="app-section-title">Public profile</h1>
+<div class="app-section-content">
     @if (Author != null)
     {
     <EditForm Model="@Author" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <div class="form-item">
-            <label class="form-item-label">@_localizer["Profile picture"]</label>
+            <label class="form-item-label mb-1">@_localizer["Profile picture"]</label>
             <div class="input-group d-flex">
                 <img src="@Author.Avatar" width="48" height="48" class="rounded" alt="@Author.DisplayName" />
                 <div class="ms-2">
-                    <button class="btn btn-outline-secondary btn-sm" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="" type="button"> @_localizer["remove"]</button>
-                    <p class="m-0">Should be square and at least 250 X 250 pixel.</p>
+                    <button class="btn btn-default btn-xs" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
+                    <button class="btn btn-default btn-xs" onclick="" type="button"> @_localizer["remove"]</button>
+                    <p class="mb-0 mt-2 small">Should be square and at least 250 X 250 pixel.</p>
                 </div>
             </div>
         </div>
