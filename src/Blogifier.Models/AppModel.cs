@@ -10,6 +10,7 @@ namespace Blogifier.Models
         public string ImageExtensions { get; set; } = "png,jpg,jpeg,gif,bmp,tiff";
         public string ImportTypes { get; set; } = "zip,7z,xml,pdf,doc,docx,xls,xlsx,mp3,avi";
         public bool SeedData { get; set; }
+        public string SitemapBaseUri { get; set; }
     }
 
     public class BlogItem
