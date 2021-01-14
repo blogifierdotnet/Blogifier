@@ -1,4 +1,7 @@
-﻿@inject HttpClient _http
+﻿@layout SettingsLayout
+@page "/admin/settings/themes/"
+
+@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
@@ -62,7 +65,7 @@
     protected List<ThemeItem> Themes { get; set; }
     protected ThemeItem CurrentTheme { get; set; }
     protected ToasterComponent Toaster;
-    
+
     protected override async Task OnInitializedAsync()
     {
         await Load();
@@ -117,7 +120,7 @@
             return "img/img-placeholder.png";
     }
 
-    bool showModal = false;
-    void ModalShow() => showModal = true;
-    void ModalCancel() => showModal = false;
+    //bool showModal = false;
+    //void ModalShow() => showModal = true;
+    //void ModalCancel() => showModal = false;
 }

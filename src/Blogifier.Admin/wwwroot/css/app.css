@@ -8090,8 +8090,7 @@ body {
 
 .app-posts-add {
   width: 7rem;
-  border-radius: 5rem;
-  text-transform: uppercase; }
+  border-radius: 5rem; }
 
 .app-posts .dropdown-menu {
   padding: 0;

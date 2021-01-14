@@ -1,4 +1,7 @@
-﻿@inject HttpClient _http
+﻿@layout SettingsLayout
+@page "/admin/settings/customize/"
+
+@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
@@ -100,7 +103,6 @@
 
     </div>
     <!--/Settings -->
-
     <!-- Widgets -->
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
     </div>
