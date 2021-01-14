@@ -13,7 +13,7 @@ $link-wh: 3rem;
         content: "";
         display: block;
         height: 0.75rem;
-        background: $primary;
+        background: $blogifier;
         position: absolute;
         top: 0;
         left: 0;
@@ -25,7 +25,6 @@ $link-wh: 3rem;
         position: relative;
         margin-bottom: 0;
         list-style: none;
-       
     }
     // <a>
     &-link {
@@ -45,8 +44,9 @@ $link-wh: 3rem;
             width: $icon-wh - .125rem;
             height: $icon-wh - .125rem;
         }
+
         &.active {
-            color: $primary;
+            color: $blogifier;
         }
     }
     //
@@ -118,10 +118,10 @@ $link-wh: 3rem;
                 position: relative;
                 font-size: .875rem;
                 font-weight: 500;
-                cursor:pointer;
+                cursor: pointer;
 
-                &:hover{
-                    color:$primary;
+                &:hover {
+                    color: $blogifier;
                 }
             }
 
