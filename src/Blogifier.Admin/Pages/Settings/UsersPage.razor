@@ -4,10 +4,10 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<h1 class="app-section-title">Users Settings</h1>
-<div class="app-section-content mw-100">
-    @if (!showForm)
-    {
+@if (!showForm)
+{
+    <h1 class="app-section-title">Users Settings</h1>
+    <div class="app-section-content mw-100">
         <div class="app-list-toolbar d-flex">
             <label class="app-list-select form-check" data-toggle="tooltip" title="Select All">
                 @* TODO: Add check all: *@
@@ -43,62 +43,65 @@
                 </div>
             </div>
         </div>
-    }
 
-    @if (Authors != null && !showForm)
-    {
-        <ul class="app-list" aria-label="drafts">
-            @foreach (var author in Authors)
-            {
-                <li class="app-list-item d-flex align-items-center">
-                    <label class="app-list-select form-check">
-                        @* TODO: Add check all: *@
-                        <input type="checkbox" class="form-check-input">
-                    </label>
-                    <a class="app-list-title" href="#" @onclick="(()=> LoadForm(author.Email))" @onclick:preventDefault>@author.DisplayName</a>
-                    <span class="app-list-text text-muted ms-auto">@author.Email</span>
+        @if (Authors != null)
+        {
+            <ul class="app-list" aria-label="drafts">
+                @foreach (var author in Authors)
+                {
+                    <li class="app-list-item d-flex align-items-center">
+                        <label class="app-list-select form-check">
+                            @* TODO: Add check all: *@
+                            <input type="checkbox" class="form-check-input">
+                        </label>
+                        <a class="app-list-title" href="#" @onclick="(()=> LoadForm(author.Email))" @onclick:preventDefault>@author.DisplayName</a>
+                        <span class="app-list-text text-muted ms-auto">@author.Email</span>
 
-                    @if (!author.IsAdmin)
-                    {
-                        <button type="button" class="app-list-btn ml-3">
-                            @{
-                                string userStatus = "suspend";
-                            }
-                            @if (@userStatus == "suspend")
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill text-success" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        @if (!author.IsAdmin)
+                        {
+                            <button type="button" class="app-list-btn ml-3">
+                                @{
+                                    string userStatus = "suspend";
+                                }
+                                @if (@userStatus == "suspend")
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill text-success" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                }
+                                else
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill text-warning" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                }
+                            </button>
+                        }
+                        else
+                        {
+                            <span class="app-list-icon ml-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check text-blogifier" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
                                 </svg>
-                            }
-                            else
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill text-warning" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
-                                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                </svg>
-                            }
-                        </button>
-                    }
-                    else
-                    {
-                        <span class="app-list-icon ml-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check text-blogifier" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
-                            </svg>
-                        </span>
-                    }
-                </li>
-            }
-        </ul>
-    }
-    else if (!showForm)
-    {
-        <div>@_localizer["empty"]</div>
-    }
+                            </span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div>@_localizer["empty"]</div>
+        }
 
-    @if (showForm && SelectedAuthor != null)
-    {
+    </div>
+}
+@if (showForm && SelectedAuthor != null)
+{
+    <h1 class="app-section-title">Add User</h1>
+    <div class="app-section-content">
         <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
             <DataAnnotationsValidator />
             <div class="form-item">
@@ -121,13 +124,13 @@
                     <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
                 </div>*@
             <div class="form-item">
-                <button type="submit" class="btn btn-blogifier px-5 mr-3">@_localizer["save"]</button>
-                <button type="button" @onclick="Cancel" class="btn btn-outline-secondary">@_localizer["cancel"]</button>
+                <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+                <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
             </div>
         </EditForm>
-    }
+    </div>
+}
 
-</div>
 
 @code {
     protected List<Author> Authors { get; set; }

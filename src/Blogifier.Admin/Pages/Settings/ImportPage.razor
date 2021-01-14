@@ -13,19 +13,15 @@
             <DataAnnotationsValidator />
             <div class="form-item">
                 <label class="form-item-label">Import from RSS feed URL</label>
-                <div class="d-flex">
-                    <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
-                    <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
-                    <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
-                    @*<button class="btn btn-outline-secondary" type="button">Select</button>*@
-                </div>
+                <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
+                <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
+                <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
+                @*<button class="btn btn-outline-secondary" type="button">Select</button>*@
             </div>
             <div class="form-item">
                 <label class="form-item-label">Import from Base URL</label>
-                <div class="d-flex">
-                    <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
-                    <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
-                </div>
+                <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
+                <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
             </div>
             <div class="form-item">
                 <button class="btn btn-blogifier px-5" type="submit">Get Data</button>
