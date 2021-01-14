@@ -1,15 +1,13 @@
 ﻿@layout SettingsLayout
 @page "/admin/settings/themes/"
-
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
 @if (CurrentTheme != null)
 {
-    <!-- Installed Themes -->
-    <h1 class="app-settings-title">Themes</h1>
-    <div class="app-settings-wrap">
+    <h1 class="app-section-title">Themes</h1>
+    <div class="app-section-content mw-100">
         <div class="row stg-themes-installed">
             <div class="col-md-6 col-lg-4">
                 <div class="stg-themes-installed-item">

@@ -1,17 +1,14 @@
 ﻿@layout SettingsLayout
 @page "/admin/settings/import/"
-
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 @inject IJSRuntime JSRuntime
 
-<h1 class="app-settings-title">Import</h1>
-<div class="app-settings-wrap">
+<h1 class="app-section-title">Import</h1>
+<div class="app-section-content">
 
-    <!-- FORM -->
     <div class="app-settings-wrap-50">
-
         <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
             <DataAnnotationsValidator />
             <div class="form-item">
@@ -34,13 +31,10 @@
                 <button class="btn btn-blogifier px-5" type="submit">Get Data</button>
             </div>
         </EditForm>
-
     </div>
-    <!--/FORM -->
 
     @if (Posts != null)
     {
-        <!-- LIST -->
         <p class="lead">@Posts.Count posts are found and ready to be imported.</p>
         <div class="app-list-toolbar d-flex">
             <label class="form-check me-3 my-auto" data-toggle="tooltip" title="Select All">
@@ -48,17 +42,17 @@
                 <span>Import all</span>
             </label>
             @*<div class="app-posts-actions dropdown ml-3">
-                   <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-                      All Categories
-                   </button>
-                   <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
-                      <a class="dropdown-item" href="#"> Category name</a>
-                      <a class="dropdown-item" href="#"> Category name</a>
-                      <a class="dropdown-item" href="#"> Category name</a>
-                      <a class="dropdown-item" href="#"> Category name</a>
-                      <a class="dropdown-item" href="#"> Category name</a>
-                   </div>
-                </div>*@
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
+                    All Categories
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
+                    <a class="dropdown-item" href="#"> Category name</a>
+                    <a class="dropdown-item" href="#"> Category name</a>
+                    <a class="dropdown-item" href="#"> Category name</a>
+                    <a class="dropdown-item" href="#"> Category name</a>
+                    <a class="dropdown-item" href="#"> Category name</a>
+                </div>
+            </div>*@
         </div>
         <ul id="import-list" class="app-list">
 
@@ -86,7 +80,6 @@
             <button class="btn btn-blogifier px-5" type="button" @onclick="Import">@_localizer["import"]</button>
             <button class="btn btn-secondary px-5" type="button" @onclick="Load">@_localizer["cancel"]</button>
         </div>
-        <!--/LIST -->
     }
 
 </div>

@@ -7,22 +7,20 @@
 
 @if (CurrentTheme != null)
 {
-    <div class="app-settings-wrap">
-        <div class="stg-themes-current d-flex">
-            <div class="stg-themes-current-cover">
-                <img src="@CurrentTheme.Cover" class="stg-themes-current-img" alt="@CurrentTheme.Title">
-            </div>
-            <div class="stg-themes-current-details">
-                <div class="stg-themes-current-title">@CurrentTheme.Title</div>
-                <ul class="stg-themes-current-info">
-                    <li>Designed by <a href="#">John Doe</a></li>
-                    <li>Version 2.1</li>
-                </ul>
-            </div>
+    
+    <div class="stg-themes-current d-flex">
+        <div class="stg-themes-current-cover">
+            <img src="@CurrentTheme.Cover" class="stg-themes-current-img" alt="@CurrentTheme.Title">
+        </div>
+        <div class="stg-themes-current-details">
+            <div class="stg-themes-current-title">@CurrentTheme.Title</div>
+            <ul class="stg-themes-current-info">
+                <li>Designed by <a href="#">John Doe</a></li>
+                <li>Version 2.1</li>
+            </ul>
         </div>
     </div>
 }
-
 
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">

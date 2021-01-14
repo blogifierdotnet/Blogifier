@@ -1,23 +1,18 @@
 ﻿@layout SettingsLayout
 @page "/admin/settings/users/"
-
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<h1 class="app-settings-title">Users Settings</h1>
-<div class="app-settings-wrap">
-
+<h1 class="app-section-title">Users Settings</h1>
+<div class="app-section-content mw-100">
     @if (!showForm)
     {
         <div class="app-list-toolbar d-flex">
-
-
             <label class="app-list-select form-check" data-toggle="tooltip" title="Select All">
                 @* TODO: Add check all: *@
                 <input type="checkbox" class="form-check-input">
             </label>
-
             <button class="btn btn-outline-blogifier btn-rounded px-3 me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>@_localizer["new-user"]</button>
             <div class="app-posts-actions dropdown">
                 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
