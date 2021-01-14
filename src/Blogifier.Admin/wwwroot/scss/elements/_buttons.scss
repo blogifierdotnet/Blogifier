@@ -1,7 +1,31 @@
-.btn-link {
-    font-weight: 500;
-}
 
 .btn-rounded {
     border-radius: 5rem;
 }
+
+.btn {
+    box-shadow: 0px 1px 2px 0px rgba(#000, 0.2);
+
+    &-link {
+        font-weight: 500;
+        box-shadow: none;
+    }
+
+    &-default {
+        &:hover {
+            background-color: $gray-100;
+        }
+    }
+
+    &-outline {
+        &-default {
+            border-color: $gray-500;
+            color: $gray-600;
+
+            &:hover {
+                border-color: $gray-500;
+            }
+        }
+    }
+}
+
