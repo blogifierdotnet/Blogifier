@@ -1,111 +1,133 @@
 ﻿@layout SettingsLayout
 @page "/admin/settings/customize/"
-
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
-
-@if (CurrentTheme != null)
-{
-    
-    <div class="stg-themes-current d-flex">
-        <div class="stg-themes-current-cover">
-            <img src="@CurrentTheme.Cover" class="stg-themes-current-img" alt="@CurrentTheme.Title">
-        </div>
-        <div class="stg-themes-current-details">
-            <div class="stg-themes-current-title">@CurrentTheme.Title</div>
-            <ul class="stg-themes-current-info">
-                <li>Designed by <a href="#">John Doe</a></li>
-                <li>Version 2.1</li>
-            </ul>
-        </div>
-    </div>
-}
-
-<nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Settings</a>
-        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Widget</a>
-    </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-
-    <!--Settings -->
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
-        @if (Settings != null)
+@*<h1 class="app-section-title">Customize Standard Theme</h1>*@
+<div class="app-section-content mw-100">
+    <div class="stg-customize">
+        @if (CurrentTheme != null)
         {
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                @foreach (var section in Settings.Sections)
-                {
-
-                    <!-- -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="head-@section.Label.GetHashCode()">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@section.Label.GetHashCode()" aria-expanded="false" aria-controls="id-@section.Label.GetHashCode()">
-                                @section.Label
-                            </button>
-                        </h2>
-                        <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                @foreach (var field in section.Fields)
-                                {
-                                    <div class="form-item">
-                                        @if (field.Type == "select")
-                                        {
-                                            <label class="form-item-label">@field.Label</label>
-                                            <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
-                                                @foreach (var item in field.Options)
-                                                {
-                                                    if (field.Value == item)
-                                                    {
-                                                        <option value="@item" selected>@item</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item">@item</option>
-                                                    }
-                                                }
-                                            </select>
-                                        }
-                                        else if (field.Type == "checkbox")
-                                        {
-
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
-                                                <label class="form-check-label" for="@field.Id">@field.Label</label>
-                                            </div>
-                                        }
-                                        else if (field.Type == "textarea")
-                                        {
-                                            <label class="form-item-label">@field.Label</label>
-                                            <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
-                                        }
-                                        else
-                                        {
-                                            <label class="form-item-label">@field.Label</label>
-                                            <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
-                                        }
-                                    </div>
-                                }
-
-                            </div>
-                        </div>
+            <div class="stg-customize-head d-flex">
+                <div>
+                    <div class="stg-customize-head-cover shadow-sm">
+                        <img src="@CurrentTheme.Cover" class="stg-customize-head-img" alt="@CurrentTheme.Title">
                     </div>
-                    <!--  -->
-
-                }
-                <button type="button" class="btn btn-blogifier" @onclick=@Save>@_localizer["save"]</button>
+                </div>
+                <div class="stg-customize-head-details">
+                    <div class="stg-customize-head-title">@CurrentTheme.Title</div>
+                    <p class="stg-customize-head-desc">This is a test description, one paragraph long description for you guys, there should not be a break line in this description, otherwise, it doesn't look good, and it gets messy. Also, we have 3 links.</p>
+                    <ul class="stg-customize-head-info">
+                        <li>Version 2.1</li>
+                        <li>By John Doe</li>
+                        <li><a href="#">Website</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Other Link</a></li>
+                    </ul>
+                </div>
             </div>
         }
 
-    </div>
-    <!--/Settings -->
-    <!-- Widgets -->
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-    </div>
-    <!--/Widgets -->
 
+
+
+
+
+        <div class="stg-customize-settings">
+            <div class="stg-customize-settings-nav d-flex">
+                <div class="nav nav-pills flex-grow-1" id="customize-tab" role="tablist">
+                    <a class="nav-link active" id="customize-settings-tab" data-bs-toggle="pill" href="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="true">Settings</a>
+                    <a class="nav-link" id="customize-widgets-tab" data-bs-toggle="pill" href="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="false">Widgets</a>
+                    <a class="nav-link" id="customize-menu-tab" data-bs-toggle="pill" href="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">Menu</a>
+                </div>
+                <button class="btn btn-blogifier px-3 my-auto">Save Changes</button>
+            </div>
+
+            <div class="tab-content" id="customize-tabContent">
+
+                <!--Settings -->
+                <div class="tab-pane fade show active" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
+
+                    @if (Settings != null)
+                    {
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            @foreach (var section in Settings.Sections)
+                            {
+
+                                <!-- -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="head-@section.Label.GetHashCode()">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@section.Label.GetHashCode()" aria-expanded="false" aria-controls="id-@section.Label.GetHashCode()">
+                                            @section.Label
+                                        </button>
+                                    </h2>
+                                    <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            @foreach (var field in section.Fields)
+                                            {
+                                                <div class="form-item">
+                                                    @if (field.Type == "select")
+                                                    {
+                                                        <label class="form-item-label">@field.Label</label>
+                                                        <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
+                                                            @foreach (var item in field.Options)
+                                                            {
+                                                                if (field.Value == item)
+                                                                {
+                                                                    <option value="@item" selected>@item</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item">@item</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    }
+                                                    else if (field.Type == "checkbox")
+                                                    {
+
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
+                                                            <label class="form-check-label" for="@field.Id">@field.Label</label>
+                                                        </div>
+                                                    }
+                                                    else if (field.Type == "textarea")
+                                                    {
+                                                        <label class="form-item-label">@field.Label</label>
+                                                        <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="form-item-label">@field.Label</label>
+                                                        <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+
+                            }
+                            @*<button type="button" class="btn btn-blogifier" @onclick=@Save>@_localizer["Save Changes"]</button>*@
+                        </div>
+                    }
+
+                </div>
+                <!--/Settings -->
+
+                <!-- Widgets -->
+                <div class="tab-pane fade" id="customize-widgets" role="tabpanel" aria-labelledby="customize-widgets-tab">Widgets...</div>
+                <!--/Widgets -->
+
+                <!-- Menu -->
+                <div class="tab-pane fade" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">Menu...</div>
+                <!--/Menu -->
+
+            </div>
+        </div>
+    </div>
 </div>
 
 <ToasterComponent @ref="Toaster" />

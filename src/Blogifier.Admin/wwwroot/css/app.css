@@ -3364,11 +3364,11 @@ textarea.form-control-lg {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 0.5rem 0;
   font-size: 1rem;
   color: #111;
   background-color: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 0 solid rgba(0, 0, 0, 0.125);
   border-radius: 0;
   overflow-anchor: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease; }
@@ -3378,10 +3378,10 @@ textarea.form-control-lg {
   .accordion-button.collapsed {
     border-bottom-width: 0; }
   .accordion-button:not(.collapsed) {
-    color: #0c63e4;
-    background-color: #f2e8fd; }
+    color: #791ae6;
+    background-color: none; }
     .accordion-button:not(.collapsed)::after {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23791ae6'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
       transform: rotate(180deg); }
   .accordion-button::after {
     flex-shrink: 0;
@@ -3402,7 +3402,7 @@ textarea.form-control-lg {
     z-index: 3;
     border-color: #bc8df3;
     outline: 0;
-    box-shadow: 0 0 0 2px rgba(121, 26, 230, 0.25); }
+    box-shadow: none; }
 
 .accordion-header {
   margin-bottom: 0; }
@@ -3412,21 +3412,21 @@ textarea.form-control-lg {
   border-top-right-radius: 0.25rem; }
 
 .accordion-item:last-of-type .accordion-button.collapsed {
-  border-bottom-width: 1px;
+  border-bottom-width: 0;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem; }
 
 .accordion-item:last-of-type .accordion-collapse {
-  border-bottom-width: 1px;
+  border-bottom-width: 0;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem; }
 
 .accordion-collapse {
   border: solid rgba(0, 0, 0, 0.125);
-  border-width: 0 1px; }
+  border-width: 0 0; }
 
 .accordion-body {
-  padding: 1rem 1.25rem; }
+  padding: 1rem 0; }
 
 .accordion-flush .accordion-button {
   border-right: 0;
@@ -8201,32 +8201,6 @@ body {
 .app-widget-stats-title {
   font-size: 0.75rem; }
 
-.stg-themes-current {
-  background: #fff;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-  overflow: hidden;
-  margin-bottom: 3rem; }
-  .stg-themes-current-cover {
-    max-height: 15rem;
-    overflow: hidden;
-    width: 14rem;
-    border-right: 1px solid #e9ecef; }
-  .stg-themes-current-details {
-    padding: 2rem;
-    flex: 1; }
-  .stg-themes-current-title {
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 500; }
-  .stg-themes-current-info {
-    list-style: none;
-    padding: 0;
-    color: #000;
-    margin-bottom: 2rem; }
-    .stg-themes-current-info a {
-      color: #000; }
-
 .stg-themes-installed {
   margin-top: 1.5rem; }
   .stg-themes-installed-item {
@@ -8254,6 +8228,62 @@ body {
     margin-bottom: .75rem; }
     .stg-themes-installed-info a {
       color: #000; }
+
+.stg-customize-head {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem; }
+  .stg-customize-head-title {
+    font-size: 1.375rem;
+    font-weight: 500;
+    margin-bottom: .5rem; }
+  .stg-customize-head-desc {
+    width: 100%;
+    max-width: 50rem;
+    color: #495057; }
+  .stg-customize-head-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #495057;
+    font-size: .875rem;
+    font-weight: 500; }
+    .stg-customize-head-info li {
+      display: inline-block;
+      margin-right: 1.25rem; }
+      .stg-customize-head-info li a {
+        color: #495057; }
+        .stg-customize-head-info li a:hover {
+          color: #791ae6; }
+  .stg-customize-head-cover {
+    width: 7.5rem;
+    height: 7.5rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin-right: 2rem; }
+
+.stg-customize-settings-nav {
+  margin-bottom: 2rem; }
+
+.stg-customize-settings .nav .nav-link {
+  border: 0;
+  border-radius: .25rem;
+  color: #6c757d;
+  font-weight: 500;
+  margin-right: 1rem; }
+  .stg-customize-settings .nav .nav-link:hover {
+    color: #791ae6; }
+  .stg-customize-settings .nav .nav-link.active {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: #791ae6; }
+
+.stg-customize-settings .accordion-button {
+  padding-left: 2rem;
+  font-weight: 500; }
+  .stg-customize-settings .accordion-button::after {
+    position: absolute;
+    left: 0; }
 
 /**
  * easymde v2.13.0

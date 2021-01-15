@@ -1,40 +1,4 @@
 .stg-themes {
-
-    &-current {
-        @include bf-card();
-        overflow: hidden;
-        margin-bottom: 3rem;
-
-        &-cover {
-            max-height: 15rem;
-            overflow: hidden;
-            width: 14rem;
-            border-right: 1px solid $gray-200;
-        }
-
-        &-details {
-            padding: 2rem;
-            flex: 1;
-        }
-
-        &-title {
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
-        &-info {
-            list-style: none;
-            padding: 0;
-            color: #000;
-            margin-bottom: 2rem;
-
-            a {
-                color: #000;
-            }
-        }
-    }
-
     &-installed {
         margin-top: 1.5rem;
 
