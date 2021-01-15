@@ -1,0 +1,14 @@
+{
+  "name": "blogifier.admin",
+  "version": "1.0.0",
+  "description": "only for compiling sass files",
+  "author": "Francis",
+  "private": true,
+  "scripts": {
+    "sass": "node-sass --watch wwwroot/scss -o wwwroot/css --source-map true"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.0.0-beta1",
+    "node-sass": "^5.0.0"
+  }
+}
