@@ -1,72 +1,73 @@
 ﻿@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<h1 class="app-settings-title">Mail Settings</h1>
-@if (Mail != null)
-{
-	<EditForm model="@Mail" OnValidSubmit="Save">
-		<DataAnnotationsValidator />
-		<ValidationSummary />
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["host"]</label>
-			<input type="text" class="form-control" @bind="Mail.Host" name="host" placeholder="smtp.gmail.com" />
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["port"]</label>
-			<input type="text" class="form-control" @bind="Mail.Port" name="port" placeholder="465" />
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["email"]</label>
-			<input type="text" class="form-control" @bind="Mail.UserEmail" name="useremail" placeholder="you@gmail.com" />
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["password"]</label>
-			<input type="password" class="form-control" @bind="Mail.UserPassword" name="password" />
-		</div>
+<h1 class="app-section-title">Email Settings</h1>
+<div class="app-section-content">
+    @if (Mail != null)
+    {
+        <EditForm model="@Mail" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["host"]</label>
+                <input type="text" class="form-control" @bind="Mail.Host" name="host" placeholder="smtp.gmail.com" />
+            </div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["port"]</label>
+                <input type="text" class="form-control" @bind="Mail.Port" name="port" placeholder="465" />
+            </div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["email"]</label>
+                <input type="text" class="form-control" @bind="Mail.UserEmail" name="useremail" />
+            </div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["password"]</label>
+                <input type="password" class="form-control" @bind="Mail.UserPassword" name="password" />
+            </div>
 
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["to-name"]</label>
-			<input type="text" class="form-control" @bind="Mail.ToName" name="toname" placeholder="Subscriber" />
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["from-email"]</label>
-			<input type="text" class="form-control" @bind="Mail.FromEmail" name="fromemail" placeholder="noreply@webmaster.com" />
-		</div>
-		<div class="form-group">
-			<label class="form-control-label">@_localizer["from-name"]</label>
-			<input type="text" class="form-control" @bind="Mail.FromName" name="fromname" placeholder="Blog Admin" />
-		</div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["to-name"]</label>
+                <input type="text" class="form-control" @bind="Mail.ToName" name="toname" placeholder="Subscriber" />
+            </div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["from-email"]</label>
+                <input type="text" class="form-control" @bind="Mail.FromEmail" name="fromemail" placeholder="noreply@webmaster.com" />
+            </div>
+            <div class="form-item">
+                <label class="form-item-label">@_localizer["from-name"]</label>
+                <input type="text" class="form-control" @bind="Mail.FromName" name="fromname" placeholder="Blog Admin" />
+            </div>
+            <div class="form-item">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" @bind="Mail.Enabled" id="mailStatusSwitch">
+                    <label class="form-check-label" for="mailStatusSwitch">@_localizer["enabled"]</label>
+                </div>
+            </div>
+            <div class="form-item">
+                <button class="btn btn-blogifier px-5" type="button">@_localizer["save"]</button>
+            </div>
+        </EditForm>
+    }
 
-		<div class="form-group">
-			<div class="custom-control custom-switch">
-				<input type="checkbox" @bind="Mail.Enabled" class="custom-control-input" id="switch1">
-				<label class="custom-control-label" for="switch1">@_localizer["enabled"]</label>
-			</div>
-		</div>
-
-		<div class="form-submit-button">
-			<input type="submit" value="@_localizer["save"]" class="btn btn-blogifier" />
-		</div>
-	</EditForm>
-}
+</div>
 <ToasterComponent @ref="Toaster" />
 
 @code {
-	protected ToasterComponent Toaster;
+    protected ToasterComponent Toaster;
 
-	protected Blog Blog { get; set; }
-	protected MailSetting Mail { get; set; }
+    protected Blog Blog { get; set; }
+    protected MailSetting Mail { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-		Mail = await _http.GetFromJsonAsync<MailSetting>("api/newsletter/mailsettings");
-		if (Mail == null)
-			Mail = new MailSetting();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+        Mail = await _http.GetFromJsonAsync<MailSetting>("api/newsletter/mailsettings");
+        if (Mail == null)
+            Mail = new MailSetting();
+    }
 
-	protected async Task Save()
-	{
-		Toaster.Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
-	}
+    protected async Task Save()
+    {
+        Toaster.Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
+    }
 }
