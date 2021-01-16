@@ -26,10 +26,10 @@
     }
 }
 
-.modal{
-    .form-control {
-        box-shadow:none;
-        border:1px solid $gray-400;
+.modal {
+    .form-select, .form-control {
+        box-shadow: none;
+        border: 1px solid $gray-400;
     }
 }
 

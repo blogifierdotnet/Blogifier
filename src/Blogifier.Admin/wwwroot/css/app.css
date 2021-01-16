@@ -7591,7 +7591,7 @@ img {
     font-size: 0.75rem;
     font-weight: 500; }
 
-.modal .form-control {
+.modal .form-select, .modal .form-control {
   box-shadow: none;
   border: 1px solid #ced4da; }
 

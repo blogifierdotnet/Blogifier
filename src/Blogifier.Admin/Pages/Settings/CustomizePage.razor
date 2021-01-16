@@ -32,9 +32,9 @@
         <div class="stg-customize-settings">
             <div class="stg-customize-settings-nav d-flex">
                 <div class="nav nav-pills flex-grow-1" id="customize-tab" role="tablist">
-                    <a class="nav-link" id="customize-settings-tab" data-bs-toggle="pill" href="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="false">Settings</a>
+                    <a class="nav-link active" id="customize-settings-tab" data-bs-toggle="pill" href="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="false">Settings</a>
                     <a class="nav-link" id="customize-widgets-tab" data-bs-toggle="pill" href="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="true">Widgets</a>
-                    <a class="nav-link active" id="customize-menu-tab" data-bs-toggle="pill" href="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">Menu</a>
+                    <a class="nav-link" id="customize-menu-tab" data-bs-toggle="pill" href="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">Menu</a>
                 </div>
                 <button class="btn btn-blogifier px-3 my-auto">Save Changes</button>
             </div>
@@ -42,14 +42,14 @@
             <div class="tab-content" id="customize-tabContent">
 
                 <!--Settings -->
-                <div class="tab-pane fade" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
+                <div class="tab-pane fade show active" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
                  <SettingsComponent /> 
                 </div>
                 <!--/Settings -->
                 <div class="tab-pane fade" id="customize-widgets" role="tabpanel" aria-labelledby="customize-widgets-tab">
                     <WidgetsComponent />
                 </div>
-                <div class="tab-pane fade show active" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">
+                <div class="tab-pane fade" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">
                     <MenusComponent />
                 </div>
 
