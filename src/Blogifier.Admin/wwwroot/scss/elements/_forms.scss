@@ -10,7 +10,7 @@
     &-label {
         font-size: 0.875rem;
         font-weight: 500;
-        margin-bottom:.25rem;
+        margin-bottom: .25rem;
     }
 
     &-desc {
@@ -23,5 +23,36 @@
         color: $danger;
         font-size: 0.75rem;
         font-weight: 500;
+    }
+}
+
+
+// dropdown
+.dropdown-full {
+    .dropdown-toggle {
+        width: 100%;
+        text-align: left;
+        display: flex;
+
+        &::after {
+            margin-left: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+    }
+
+    .dropdown-menu {
+        padding: 0;
+        width: 100%;
+    }
+
+    .dropdown-item {
+        font-size: .875rem;
+        font-weight: 500;
+        padding: .5rem 1rem;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $gray-200;
+        }
     }
 }

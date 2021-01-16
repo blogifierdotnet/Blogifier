@@ -7569,6 +7569,8 @@ img {
     padding: 0.125rem 0.5rem;
     font-size: 0.75rem;
     border-radius: 0.2rem; }
+  .btn-block {
+    width: 100%; }
 
 .form-control,
 .form-select {
@@ -7588,6 +7590,26 @@ img {
     color: #dc3545;
     font-size: 0.75rem;
     font-weight: 500; }
+
+.dropdown-full .dropdown-toggle {
+  width: 100%;
+  text-align: left;
+  display: flex; }
+  .dropdown-full .dropdown-toggle::after {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto; }
+
+.dropdown-full .dropdown-menu {
+  padding: 0;
+  width: 100%; }
+
+.dropdown-full .dropdown-item {
+  font-size: .875rem;
+  font-weight: 500;
+  padding: .5rem 1rem; }
+  .dropdown-full .dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #e9ecef; }
 
 .app-list {
   padding: 0;
@@ -8928,11 +8950,58 @@ span[data-img-src]::before {
     content: 'characters: '; }
 
 .app-widgetzone {
-  border: 1px solid #ddd;
-  border-radius: .25rem;
-  padding: 1rem; }
+  border: 1px dashed #adb5bd;
+  border-radius: .5rem;
+  height: 100%; }
+  .app-widgetzone-row .col-lg-4 {
+    padding-bottom: 1.5rem; }
   .app-widgetzone-title {
-    font-size: 1.125rem;
-    font-weight: 500; }
+    font-size: 1rem;
+    font-weight: 500;
+    color: #495057;
+    padding: 1rem;
+    border-bottom: 1px dashed #adb5bd; }
+  .app-widgetzone-body {
+    padding: 1rem; }
+  .app-widgetzone-add {
+    margin-top: 1rem; }
+    .app-widgetzone-add .dropdown-toggle {
+      background: none;
+      box-shadow: none; }
+  .app-widgetzone-widget {
+    padding: 0;
+    background: #fff;
+    border-radius: .25rem;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15); }
+    .app-widgetzone-widget:not(:last-child) {
+      margin-bottom: .5rem; }
+    .app-widgetzone-widget-move {
+      width: 1.5rem;
+      height: 2.5rem;
+      text-align: center;
+      cursor: move; }
+      .app-widgetzone-widget-move .bi {
+        height: 2.5rem;
+        width: .875rem;
+        fill: #ced4da; }
+    .app-widgetzone-widget-title {
+      font-size: .875rem;
+      font-weight: 500;
+      line-height: 2.5rem;
+      user-select: none; }
+    .app-widgetzone-widget-btn {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: none;
+      /*border-left: 1px solid $gray-200;*/
+      height: 2.5rem;
+      width: 2.5rem; }
+      .app-widgetzone-widget-btn .bi {
+        width: .875rem;
+        height: 2.5rem;
+        fill: #6c757d; }
+    .app-widgetzone-widget:hover .bi {
+      fill: #791ae6; }
 
 /*# sourceMappingURL=app.css.map */
