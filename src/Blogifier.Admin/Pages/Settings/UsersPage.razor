@@ -6,194 +6,210 @@
 
 @if (!showForm)
 {
-    <h1 class="app-section-title">Users Settings</h1>
-    <div class="app-section-content mw-100">
-        <div class="app-list-toolbar d-flex">
-            <label class="app-list-select form-check" data-toggle="tooltip" title="Select All">
-                @* TODO: Add check all: *@
-                <input type="checkbox" class="form-check-input">
-            </label>
-            <button class="btn btn-outline-blogifier btn-rounded px-3 me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>@_localizer["new-user"]</button>
-            <div class="app-posts-actions dropdown">
-                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
-                    <button type="button" class="dropdown-item app-posts-actions-unpublish">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                        </svg>
-                        <span>Active</span>
-                    </button>
-                    <button type="button" class="dropdown-item app-posts-actions-publish">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                        </svg>
-                        <span>Suspend</span>
-                    </button>
-                    <button type="button" class="dropdown-item app-posts-actions-delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-danger" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                        </svg>
-                        <span>Delete</span>
-                    </button>
-                </div>
+   <h1 class="app-section-title">Users Settings</h1>
+   <div class="app-section-content mw-100">
+      <div class="app-list-toolbar d-flex">
+         <label class="app-list-select form-check" data-toggle="tooltip" title="Select All">
+            @* TODO: Add check all: *@
+            <input type="checkbox" class="form-check-input">
+         </label>
+         <button class="btn btn-outline-blogifier btn-rounded px-3 me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>@_localizer["new-user"]</button>
+         <div class="app-posts-actions dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
+               Action
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
+               <button type="button" class="dropdown-item app-posts-actions-unpublish">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
+                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                  </svg>
+                  <span>Active</span>
+               </button>
+               <button type="button" class="dropdown-item app-posts-actions-publish">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
+                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                  </svg>
+                  <span>Suspend</span>
+               </button>
+               <button type="button" class="dropdown-item app-posts-actions-delete" @onclick="(()=> RemoveSelected())">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle text-danger" viewBox="0 0 16 16">
+                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                  <span>Delete</span>
+               </button>
             </div>
-        </div>
+         </div>
+      </div>
 
-        @if (Authors != null)
-        {
-            <ul class="app-list" aria-label="drafts">
-                @foreach (var author in Authors)
-                {
-                    <li class="app-list-item d-flex align-items-center">
-                        <label class="app-list-select form-check">
-                            @* TODO: Add check all: *@
-                            <input type="checkbox" class="form-check-input">
-                        </label>
-                        <a class="app-list-title" href="#" @onclick="(()=> LoadForm(author.Email))" @onclick:preventDefault>@author.DisplayName</a>
-                        <span class="app-list-text text-muted ms-auto">@author.Email</span>
+      @if (AuthorItems != null)
+      {
+         <ul class="app-list" aria-label="drafts">
+            @foreach (var item in AuthorItems)
+            {
+               <li class="app-list-item d-flex align-items-center">
+                  <label class="app-list-select form-check">
+                     @* TODO: Add check all: *@
+                     <input type="checkbox" class="form-check-input" @bind="item.Selected">
+                  </label>
+                  <a class="app-list-title" href="#" @onclick="(()=> LoadForm(item.Author.Email))" @onclick:preventDefault>@item.Author.DisplayName</a>
+                  <span class="app-list-text text-muted ms-auto">@item.Author.Email</span>
 
-                        @if (!author.IsAdmin)
+                  @if (!item.Author.IsAdmin)
+                  {
+                     <button type="button" class="app-list-btn ml-3">
+                        @{
+                           string userStatus = "suspend";
+                        }
+                        @if (@userStatus == "suspend")
                         {
-                            <button type="button" class="app-list-btn ml-3">
-                                @{
-                                    string userStatus = "suspend";
-                                }
-                                @if (@userStatus == "suspend")
-                                {
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill text-success" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg>
-                                }
-                                else
-                                {
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill text-warning" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
-                                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg>
-                                }
-                            </button>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill text-success" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                              <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                           </svg>
                         }
                         else
                         {
-                            <span class="app-list-icon ml-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check text-blogifier" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
-                                </svg>
-                            </span>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill text-warning" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                              <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                           </svg>
                         }
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <div>@_localizer["empty"]</div>
-        }
+                     </button>
+                  }
+                  else
+                  {
+                     <span class="app-list-icon ml-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check text-blogifier" viewBox="0 0 16 16">
+                           <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
+                        </svg>
+                     </span>
+                  }
+               </li>
+            }
+         </ul>
+      }
+      else
+      {
+         <div>@_localizer["empty"]</div>
+      }
 
-    </div>
+   </div>
 }
 @if (showForm && SelectedAuthor != null)
 {
-    <h1 class="app-section-title">Add User</h1>
-    <div class="app-section-content">
-        <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
-            <DataAnnotationsValidator />
-            <div class="form-item">
-                <label class="form-item-label">@_localizer["email"]</label>
-                <input class="form-control" type="email" @bind="SelectedAuthor.Email" placeholder="you@mail.com" />
-                <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
-            </div>
-            <div class="form-item">
-                <label class="form-item-label">@_localizer["name"]</label>
-                <input class="form-control" @bind="SelectedAuthor.DisplayName" placeholder="@_localizer["name"]" />
-                <ValidationMessage For="@(() => SelectedAuthor.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
-            </div>
-            <div class="form-item">
-                <label class="form-item-label">@_localizer["user-bio"]</label>
-                <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" name="bio" />
-            </div>
-            @*<div class="form-group">
-                    <label class="form-control-label">@_localizer["password"]</label>
-                    <input class="form-control" type="password" @bind="SelectedAuthor.Password" placeholder="@_localizer["password"]" />
-                    <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
-                </div>*@
-            <div class="form-item">
-                <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-                <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
-            </div>
-        </EditForm>
-    </div>
+   <h1 class="app-section-title">Add User</h1>
+   <div class="app-section-content">
+      <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
+         <DataAnnotationsValidator />
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["email"]</label>
+            <input class="form-control" type="email" @bind="SelectedAuthor.Email" placeholder="you@mail.com" />
+            <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["name"]</label>
+            <input class="form-control" @bind="SelectedAuthor.DisplayName" placeholder="@_localizer["name"]" />
+            <ValidationMessage For="@(() => SelectedAuthor.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["password"]</label>
+            <input class="form-control" type="password" @bind="SelectedAuthor.Password" placeholder="@_localizer["password"]" />
+            <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["user-bio"]</label>
+            <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" name="bio" />
+         </div>
+         <div class="form-item">
+            <button type="submit" @onclick="Save" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+            <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
+         </div>
+      </EditForm>
+   </div>
 }
 
 
 @code {
-    protected List<Author> Authors { get; set; }
-    protected Author SelectedAuthor { get; set; }
-    protected bool showForm = false;
+   protected List<Author> Authors { get; set; }
+   protected List<AuthorItem> AuthorItems { get; set; }
+   protected Author SelectedAuthor { get; set; }
+   protected bool showForm = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await Load();
-    }
+   protected override async Task OnInitializedAsync()
+   {
+      await Load();
+   }
 
-    protected async Task Load()
-    {
-        Authors = await _http.GetFromJsonAsync<List<Author>>("api/author/all");
-        SelectedAuthor = BlankAuthor();
-        showForm = false;
-    }
+   protected async Task Load()
+   {
+      Authors = await _http.GetFromJsonAsync<List<Author>>("api/author/all");
 
-    protected async Task Remove(int id)
-    {
-        Toast(await _http.DeleteAsync($"api/author/{id}"));
-        await Load();
-    }
+      AuthorItems = new List<AuthorItem>();
+      foreach (var author in Authors)
+      {
+         AuthorItems.Add(new AuthorItem { Selected = false, Author = author });
+      }
+      SelectedAuthor = BlankAuthor();
+      showForm = false;
+   }
 
-    protected async Task Save()
-    {
-        if (SelectedAuthor.Id == 0)
-            Toast(await _http.PostAsJsonAsync<Author>("api/author/add", SelectedAuthor));
-        else
-            Toast(await _http.PutAsJsonAsync<Author>("api/author/update", SelectedAuthor));
-        await Load();
-    }
+   protected async Task RemoveSelected()
+   {
+      foreach (var item in AuthorItems)
+      {
+         if (item.Selected)
+            await Remove(item.Author.Id);
+      }
+   }
 
-    protected async Task LoadForm(string email)
-    {
-        if (string.IsNullOrEmpty(email))
-            SelectedAuthor = BlankAuthor();
-        else
-            SelectedAuthor = await _http.GetFromJsonAsync<Author>($"api/author/email/{email}");
-        showForm = true;
-    }
+   protected async Task Remove(int id)
+   {
+      Toast(await _http.DeleteAsync($"api/author/{id}"));
+      await Load();
+   }
 
-    protected void Cancel()
-    {
-        SelectedAuthor = BlankAuthor();
-        showForm = false;
-    }
+   protected async Task Save()
+   {
+      if (SelectedAuthor.Id == 0)
+         Toast(await _http.PostAsJsonAsync<Author>("api/author/add", SelectedAuthor));
+      else
+         Toast(await _http.PutAsJsonAsync<Author>("api/author/update", SelectedAuthor));
+      await Load();
+   }
 
-    protected void Toast(HttpResponseMessage msg)
-    {
-        if (msg.IsSuccessStatusCode)
-            _toaster.Success(_localizer["completed"]);
-        else
-            _toaster.Error(_localizer["generic-error"]);
-    }
+   protected async Task LoadForm(string email)
+   {
+      if (string.IsNullOrEmpty(email))
+         SelectedAuthor = BlankAuthor();
+      else
+         SelectedAuthor = await _http.GetFromJsonAsync<Author>($"api/author/email/{email}");
+      showForm = true;
+   }
 
-    protected Author BlankAuthor()
-    {
-        return new Author
-        {
-            DisplayName = "",
-            Email = "",
-            Password = ""
-        };
-    }
+   protected void Cancel()
+   {
+      SelectedAuthor = BlankAuthor();
+      showForm = false;
+   }
+
+   protected void Toast(HttpResponseMessage msg)
+   {
+      if (msg.IsSuccessStatusCode)
+         _toaster.Success(_localizer["completed"]);
+      else
+         _toaster.Error(_localizer["generic-error"]);
+   }
+
+   protected Author BlankAuthor()
+   {
+      return new Author
+      {
+         DisplayName = "",
+         Email = "",
+         Password = ""
+      };
+   }
 }

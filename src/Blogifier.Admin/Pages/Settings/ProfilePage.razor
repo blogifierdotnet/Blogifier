@@ -3,5 +3,99 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
-<ProfileComponent />
-<ChangePwdComponent />
+
+<h1 class="app-section-title">Public profile</h1>
+<div class="app-section-content">
+   @if (Author != null)
+   {
+      <EditForm Model="@Author" OnValidSubmit="SaveProfile">
+         <DataAnnotationsValidator />
+         <div class="form-item">
+            <label class="form-item-label mb-1">@_localizer["Profile picture"]</label>
+            <div class="input-group d-flex">
+               <img src="@Author.Avatar" width="48" height="48" class="rounded" alt="@Author.DisplayName" />
+               <div class="ms-2">
+                  <button class="btn btn-default btn-xs" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
+                  <button class="btn btn-default btn-xs" onclick="" type="button"> @_localizer["remove"]</button>
+                  <p class="mb-0 mt-2 small">Should be square and at least 250 X 250 pixel.</p>
+               </div>
+            </div>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["name"]</label>
+            <input class="form-control" @bind="Author.DisplayName" placeholder="@_localizer["name"]" />
+            <ValidationMessage For="@(() => Author.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["email"]</label>
+            <input class="form-control" type="email" @bind="Author.Email" placeholder="you@mail.com" />
+            <ValidationMessage For="@(() => Author.Email)"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["user-bio"]</label>
+            <textarea class="form-control" rows="4" @bind="Author.Bio" name="bio" />
+         </div>
+         <div class="form-item">
+            <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
+         </div>
+      </EditForm>
+   }
+
+</div>
+
+<h1 class="app-section-title">Change password</h1>
+<div class="app-section-content">
+   @if (Author != null)
+   {
+      <EditForm Model="@Model" OnValidSubmit="SavePassword">
+         <DataAnnotationsValidator />
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["password"]</label>
+            <input class="form-control" type="password" @bind="Model.Password" placeholder="@_localizer["password"]" />
+            <ValidationMessage For="@(() => Model.Password)"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <label class="form-item-label">@_localizer["confirm-password"]</label>
+            <input class="form-control" type="password" @bind="Model.PasswordConfirm" placeholder="@_localizer["confirm-password"]" />
+            <ValidationMessage For="@(() => Model.PasswordConfirm)"></ValidationMessage>
+         </div>
+         <div class="form-item">
+            <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
+         </div>
+      </EditForm>
+   }
+</div>
+<ToasterComponent @ref="Toaster" />
+
+@code {
+   protected Author Author { get; set; }
+   protected RegisterModel Model { get; set; }
+   protected ToasterComponent Toaster;
+
+   protected override async Task OnInitializedAsync()
+   {
+      await Load();
+   }
+
+   protected async Task Load()
+   {
+      Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
+      Model = new RegisterModel
+      {
+         Name = Author.DisplayName,
+         Email = Author.Email
+      };
+   }
+
+   protected async Task SaveProfile()
+   {
+      Toaster.Toast(await _http.PutAsJsonAsync<Author>("api/author/update", Author));
+      await Load();
+   }
+
+   protected async Task SavePassword()
+   {
+      Toaster.Toast(await _http.PutAsJsonAsync<RegisterModel>("api/author/changepassword", Model));
+      await Load();
+   }
+}
