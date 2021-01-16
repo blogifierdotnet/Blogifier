@@ -26,6 +26,13 @@
     }
 }
 
+.modal{
+    .form-control {
+        box-shadow:none;
+        border:1px solid $gray-400;
+    }
+}
+
 
 // dropdown
 .dropdown-full {

@@ -1,4 +1,4 @@
-.app-widgetzone {
+.app-menu {
     border: 1px dashed $gray-500;
     border-radius: .5rem;
     height: 100%;
@@ -30,7 +30,7 @@
         }
     }
 
-    &-widget {
+    &-item {
         padding: 0;
         background: #fff;
         border-radius: .25rem;
@@ -68,6 +68,7 @@
             /*border-left: 1px solid $gray-200;*/
             height: 2.5rem;
             width: 2.5rem;
+            margin-left: auto;
 
             .bi {
                 width: .875rem;
@@ -75,11 +76,20 @@
                 fill: $gray-600;
             }
         }
-        // hover widget
+        // hover menu
         &:hover {
             .bi {
                 fill: $blogifier;
             }
+        }
+    }
+
+    &-submenu {
+        margin-left: 2rem;
+        margin-bottom: 0;
+
+        &:not(:last-child) {
+            margin-bottom: .25rem;
         }
     }
 }

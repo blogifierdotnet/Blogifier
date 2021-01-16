@@ -7591,6 +7591,10 @@ img {
     font-size: 0.75rem;
     font-weight: 500; }
 
+.modal .form-control {
+  box-shadow: none;
+  border: 1px solid #ced4da; }
+
 .dropdown-full .dropdown-toggle {
   width: 100%;
   text-align: left;
@@ -9003,5 +9007,66 @@ span[data-img-src]::before {
         fill: #6c757d; }
     .app-widgetzone-widget:hover .bi {
       fill: #791ae6; }
+
+.app-menu {
+  border: 1px dashed #adb5bd;
+  border-radius: .5rem;
+  height: 100%; }
+  .app-menu-row .col-lg-4 {
+    padding-bottom: 1.5rem; }
+  .app-menu-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #495057;
+    padding: 1rem;
+    border-bottom: 1px dashed #adb5bd; }
+  .app-menu-body {
+    padding: 1rem; }
+  .app-menu-add {
+    margin-top: 1rem; }
+    .app-menu-add .dropdown-toggle {
+      background: none;
+      box-shadow: none; }
+  .app-menu-item {
+    padding: 0;
+    background: #fff;
+    border-radius: .25rem;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15); }
+    .app-menu-item:not(:last-child) {
+      margin-bottom: .5rem; }
+    .app-menu-item-move {
+      width: 1.5rem;
+      height: 2.5rem;
+      text-align: center;
+      cursor: move; }
+      .app-menu-item-move .bi {
+        height: 2.5rem;
+        width: .875rem;
+        fill: #ced4da; }
+    .app-menu-item-title {
+      font-size: .875rem;
+      font-weight: 500;
+      line-height: 2.5rem;
+      user-select: none; }
+    .app-menu-item-btn {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: none;
+      /*border-left: 1px solid $gray-200;*/
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-left: auto; }
+      .app-menu-item-btn .bi {
+        width: .875rem;
+        height: 2.5rem;
+        fill: #6c757d; }
+    .app-menu-item:hover .bi {
+      fill: #791ae6; }
+  .app-menu-submenu {
+    margin-left: 2rem;
+    margin-bottom: 0; }
+    .app-menu-submenu:not(:last-child) {
+      margin-bottom: .25rem; }
 
 /*# sourceMappingURL=app.css.map */
