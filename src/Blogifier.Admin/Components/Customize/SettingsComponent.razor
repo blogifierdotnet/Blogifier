@@ -1,0 +1,98 @@
+﻿@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime JSRuntime
+
+@if (Settings != null)
+{
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        @foreach (var section in Settings.Sections)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="head-@section.Label.GetHashCode()">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@section.Label.GetHashCode()" aria-expanded="false" aria-controls="id-@section.Label.GetHashCode()">
+                        @section.Label
+                    </button>
+                </h2>
+                <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        @foreach (var field in section.Fields)
+                        {
+                            <div class="form-item">
+                                @if (field.Type == "select")
+                                {
+                                    <label class="form-item-label">@field.Label</label>
+                                    <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
+                                        @foreach (var item in field.Options)
+                                        {
+                                            if (field.Value == item)
+                                            {
+                                                <option value="@item" selected>@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+                                }
+                                else if (field.Type == "checkbox")
+                                {
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
+                                        <label class="form-check-label" for="@field.Id">@field.Label</label>
+                                    </div>
+                                }
+                                else if (field.Type == "textarea")
+                                {
+                                    <label class="form-item-label">@field.Label</label>
+                                    <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
+                                }
+                                else
+                                {
+                                    <label class="form-item-label">@field.Label</label>
+                                    <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
+                                }
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+        @*<button type="button" class="btn btn-blogifier" @onclick=@Save>@_localizer["Save Changes"]</button>*@
+    </div>
+}
+
+@code {
+    protected Blog Blog { get; set; }
+    protected ThemeItem CurrentTheme { get; set; }
+    protected ToasterComponent Toaster;
+    protected ThemeSettings Settings { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    public async Task Load()
+    {
+        Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+        var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
+
+        Settings = await _http.GetFromJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}");
+    }
+
+    protected async Task Save()
+    {
+        foreach (var section in Settings.Sections)
+        {
+            foreach (var field in section.Fields)
+            {
+                var val = await JSRuntime.InvokeAsync<object>("commonJsFunctions.getFieldValue", field);
+                field.Value = val.ToString();
+            }
+        }
+
+        Toaster.Toast(await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings));
+    }
+}

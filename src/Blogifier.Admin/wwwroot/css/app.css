@@ -7578,7 +7578,8 @@ img {
   margin-bottom: 1.5rem; }
   .form-item-label {
     font-size: 0.875rem;
-    font-weight: 500; }
+    font-weight: 500;
+    margin-bottom: .25rem; }
   .form-item-desc {
     font-size: 0.75rem;
     color: #6c757d;
@@ -8925,5 +8926,13 @@ span[data-img-src]::before {
     content: 'words: '; }
   .bf-editor .editor-statusbar .characters:before {
     content: 'characters: '; }
+
+.app-widgetzone {
+  border: 1px solid #ddd;
+  border-radius: .25rem;
+  padding: 1rem; }
+  .app-widgetzone-title {
+    font-size: 1.125rem;
+    font-weight: 500; }
 
 /*# sourceMappingURL=app.css.map */

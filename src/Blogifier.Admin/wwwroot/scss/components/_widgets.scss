@@ -1,0 +1,10 @@
+.app-widgetzone {
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    padding: 1rem;
+
+    &-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+    }
+}
