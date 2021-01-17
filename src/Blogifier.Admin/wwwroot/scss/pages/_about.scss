@@ -1,0 +1,50 @@
+.app-about {
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &-info {
+
+        li {
+            margin-bottom: .5rem;
+
+            span {
+                &:nth-child(1) {
+                    display: inline-block;
+                    min-width: 8rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    &-nav {
+        li {
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 2rem;
+        }
+
+        a {
+            line-height: 2rem;
+            display: inline-block;
+        }
+
+        .bi {
+            margin-right: .125rem;
+            height: 2rem;
+            transform: translateY(-.125rem);
+        }
+    }
+
+
+    &-desc {
+        font-size: 1rem;
+        width: 100%;
+        max-width: 28rem;
+    }
+}

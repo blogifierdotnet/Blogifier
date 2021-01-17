@@ -8037,6 +8037,38 @@ body {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem; }
 
+.app-about ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.app-about-info li {
+  margin-bottom: .5rem; }
+  .app-about-info li span:nth-child(1) {
+    display: inline-block;
+    min-width: 8rem;
+    font-weight: 500; }
+
+.app-about-nav li {
+  font-size: 1rem;
+  font-weight: 500;
+  display: inline-block;
+  margin-right: 2rem; }
+
+.app-about-nav a {
+  line-height: 2rem;
+  display: inline-block; }
+
+.app-about-nav .bi {
+  margin-right: .125rem;
+  height: 2rem;
+  transform: translateY(-0.125rem); }
+
+.app-about-desc {
+  font-size: 1rem;
+  width: 100%;
+  max-width: 28rem; }
+
 #blazor-error-ui {
   display: none; }
 
