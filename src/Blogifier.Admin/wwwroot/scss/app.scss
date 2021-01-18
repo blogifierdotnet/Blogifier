@@ -1,32 +1,37 @@
-﻿@import "helpers/variables";
+﻿// helpers
+@import "helpers/variables";
 @import "helpers/bootstrap";
 @import "helpers/mixins";
 @import "helpers/reset";
-
-// elements
-@import "elements/buttons";
-@import "elements/forms";
-@import "elements/list";
 
 // layout
 @import "layout/main";
 @import "layout/header";
 @import "layout/page";
 
-// pages
-@import "pages/dashboard"; 
-@import "pages/settings"; 
-@import "pages/account";
-@import "pages/editor";
-@import "pages/about";
-
 // components
 @import "components/blazor";
-@import "components/PostListComponent";
-@import "components/TotalsComponent";
-@import "components/ThemesComponent";
-@import "components/CustomizeComponent";
-@import "components/easymde";
-@import "components/editor";
-@import "components/widgets";
-@import "components/menus";
+@import "components/buttons";
+@import "components/forms";
+@import "components/list";
+
+// pages > account
+@import "pages/account";
+
+// pages > dashbaord
+@import "pages/dashboard";
+@import "pages/dashboard.postlist";
+@import "pages/dashboard.totals";
+
+// pages > editor
+@import "pages/editor";
+@import "pages/editor.editor";
+@import "pages/editor.easymde";
+
+// pages > settings
+@import "pages/settings";
+@import "pages/settings.about";
+@import "pages/settings.themes";
+@import "pages/settings.customize";
+@import "pages/settings.customize.menus";
+@import "pages/settings.customize.widgets";
