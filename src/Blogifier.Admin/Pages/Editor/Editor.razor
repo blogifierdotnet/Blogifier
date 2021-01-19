@@ -1,5 +1,4 @@
-﻿@page "/admin/new/"
-@page "/admin/edit/"
+﻿@page "/admin/editor/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -134,7 +133,7 @@
                 await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
             }
 
-            _navigation.NavigateTo($"/admin/edit/?slug={Post.Slug}");
+            _navigation.NavigateTo($"/admin/editor/?slug={Post.Slug}");
             await Load();
         }
         else
