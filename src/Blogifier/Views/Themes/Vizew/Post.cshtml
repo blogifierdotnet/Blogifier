@@ -132,13 +132,10 @@
                                     <div class="post-meta d-flex align-items-center">
                                         <span class="post-author">By <span itemprop="author">@postModel.Post.Author.DisplayName</span></span>
                                         <i class="fa fa-circle" aria-hidden="true"></i>
-                                        <span class="post-date">@postModel.Post.Published.ToFriendlyDateString()</span>
+                                        <span class="post-date" itemprop="datePublished">@postModel.Post.Published.ToFriendlyDateString()</span>
                                     </div>
                                     <div class="post-meta d-flex">
-                                        <span>
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            <span itemprop="datePublished">@postModel.Post.PostViews</span>
-                                        </span>
+                                        <span><i class="fa fa-eye" aria-hidden="true"></i>@postModel.Post.PostViews</span>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +149,12 @@
                                     {
                                         foreach (var cat in postModel.Post.Categories.Split(',').ToList())
                                         {
-                                            <li><a href="~/categories/@cat" itemprop="articleSection">@cat</a></li>
+                                            <li>
+                                                
+                                                <a href="~/categories/@cat">
+                                                    <span itemprop="articleSection">@cat</span>
+                                                </a>
+                                            </li>
                                         }
                                     }
                                 </ul>
