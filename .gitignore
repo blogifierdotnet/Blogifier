@@ -239,3 +239,5 @@ package-lock.json
 
 build/tools
 build/publish
+
+.idea
