@@ -1988,8 +1988,17 @@ textarea.form-control {
 .rusetfs {
   font-family: Roboto, arial;
 }
-.rusetfs navbar {
+.rusetfs nav {
   padding: 10px 16px;
+}
+.rusetfs nav .buttons button {
+  background-color: #4c4b61;
+  border: 0;
+  line-height: 20px;
+}
+.rusetfs nav .buttons button i {
+  color: #fff;
+  font-size: 20px;
 }
 .rusetfs .classy-nav-container{
   background-color: #4c4b61!important;
