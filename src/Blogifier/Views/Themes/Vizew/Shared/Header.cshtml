@@ -17,75 +17,48 @@
 
 <!-- ##### Header Area Start ##### -->
 <header class="header-area">
-    <!-- Top Header Area -->
-    <div class="top-header-area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-6">
-                    <span class="blog-title">@blog.Title</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="top-meta-data d-flex align-items-center justify-content-end">
-                        <!-- Top Social Info -->
-                        <div class="top-social-info">
-                            @foreach (var field in blog.SocialFields)
-                            {
-                            <a href="@field.Content"><i class="fa @field.Icon"></i></a>
-                            }
-                        </div>
-                        <!-- Top Search Area -->
-                        <div class="top-search-area">
-                            <form asp-controller="Blog" asp-action="Search" method="post">
-                                <input type="search" id="term" name="term" placeholder="Search...">
-                                <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                        <!-- Login -->
-                        <a href="~/admin" class="login-btn"><i class="fa fa-user" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Navbar Area -->
-    <div class="vizew-main-menu" id="sticker">
+    <div class="vizew-main-menu rusetfs" id="sticker">
         <div class="classy-nav-container breakpoint-off">
-            <div class="container">
-
-                <!-- Menu -->
-                <nav class="classy-navbar justify-content-between" id="vizewNav">
-
-                    <!-- Nav brand -->
-                    <a href="~/blog" class="nav-brand"><img src="~/themes/vizew/img/core-img/logotype.png" alt=""></a>
-
-                    <!-- Navbar Toggler -->
-                    <div class="classy-navbar-toggler">
-                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+ 
+            <!-- Menu -->
+            <nav class="navbar sticky-top navbar-expand-sm navbar-dark">
+                <a class="navbar-brand navbar-logo mb-0" href="https://rusetfs.com/">
+                    <span class="logo-light">RUS</span><span class="logo-bold">ETFS</span>
+                </a>
+                <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavAltMarkup" data-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav flex-fill">
+                        <a class="nav-item nav-link " href="https://rusetfs.com/screener">Скринер</a>
+                        <a class="nav-item nav-link " href="https://rusetfs.com/map">Карта</a>
+                        <a class="nav-item nav-link " href="https://rusetfs.com/portfolio/calculator">Портфель</a>
+                        <a class="nav-item nav-link " href="https://rusetfs.com/community">Сообщество</a>
+                        <a class="nav-item nav-link active" href="https://blog.rusetfs.com">Статьи</a>
+                        <a class="nav-item nav-link " href="https://rusetfs.com/donation">Помощь проекту</a>
                     </div>
-
-                    <div class="classy-menu">
-
-                        <!-- Close Button -->
-                        <div class="classycloseIcon">
-                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                        </div>
-
-                        <!-- Nav Start -->
-                        <div class="classynav">
-                            <ul>
-                                <li><a href="~/">@Localizer["home"]</a></li>
-                                <li class="active"><a href="~/blog">@Localizer["blog"]</a></li>
-                                <li><a href="~/feed/rss">@Localizer["subscribe"]</a></li>
-                            </ul>
-                        </div>
-                        <!-- Nav End -->
+                    <div class="buttons">
+                        <button data-toggle="modal" data-target="#globalSearch">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
+ 
         </div>
     </div>
 </header>
+
+<div class="modal fade" id="globalSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="ya-site-form ya-site-form_inited_no" data-bem="{&quot;action&quot;:&quot;https://yandex.ru/search/site/&quot;,&quot;arrow&quot;:false,&quot;bg&quot;:&quot;transparent&quot;,&quot;fontsize&quot;:25,&quot;fg&quot;:&quot;#000000&quot;,&quot;language&quot;:&quot;ru&quot;,&quot;logo&quot;:&quot;rb&quot;,&quot;publicname&quot;:&quot;Поиск на базе RUSETFs&quot;,&quot;suggest&quot;:true,&quot;target&quot;:&quot;_blank&quot;,&quot;tld&quot;:&quot;ru&quot;,&quot;type&quot;:2,&quot;usebigdictionary&quot;:true,&quot;searchid&quot;:2384588,&quot;input_fg&quot;:&quot;#000000&quot;,&quot;input_bg&quot;:&quot;#ffffff&quot;,&quot;input_fontStyle&quot;:&quot;normal&quot;,&quot;input_fontWeight&quot;:&quot;normal&quot;,&quot;input_placeholder&quot;:&quot;&quot;,&quot;input_placeholderColor&quot;:&quot;#000000&quot;,&quot;input_borderColor&quot;:&quot;#454d55&quot;}"><form action="https://yandex.ru/search/site/" method="get" target="_blank" accept-charset="utf-8"><input type="hidden" name="searchid" value="2384588"/><input type="hidden" name="l10n" value="ru"/><input type="hidden" name="reqenc" value=""/><input type="search" name="text" value=""/><input type="submit" value="Найти"/></form></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>
+      </div>
+    </div>
+  </div>
+</div>
 
 @{
     AppSettings.SiteRoot = Url.Content("~/");
