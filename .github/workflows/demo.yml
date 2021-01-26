@@ -1,0 +1,29 @@
+name: Deploy to demo branch
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy-to-demo:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.102'
+
+    - name: Publish Blogifier
+      run: dotnet publish -c Release -o release --nologo
+
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: demo
+        FOLDER: release/wwwroot
