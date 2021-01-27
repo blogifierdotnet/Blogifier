@@ -6,6 +6,7 @@ namespace Blogifier.Core
 {
     public class AppSettings
     {
+        public static string LocalSiteUrl { get; set; }
         public static string Avatar { get; set; }
         public static bool DemoMode { get; set; }     
         public static string ImageExtensions { get; set; }
