@@ -12,46 +12,47 @@
     var catUrl = Url.Content("~/categories");
     string theme = listModel.Blog.Theme;
 }
+
 @if (listModel.Posts.Count() > 0)
 {
-    <div class="row">
         @foreach (var post in listModel.Posts)
         {
-            <article class="post-home col-md-6">
-                <figure class="post-cover">
-                    <a class="post-cover-link" href="posts/@post.Slug">
+            <article class="mb-5 shadow-lg">
+                <figure class="mb-0">
+                    <a href="posts/@post.Slug">
                         <img src="~/@post.Cover" class="w-100" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
                     </a>
                 </figure>
-                <header class="post-header">
-                    <div class="post-meta">
-                        <time class="post-time">@post.Published.ToFriendlyDateString()</time>
-                        <span class="post-cats">
-                            @if (post.Categories != null && post.Categories.Count > 0)
-                            {
-                                <span>/</span>
-                                foreach (var cat in post.Categories)
+                <section class="p-5">
+                    <header class="post-header">
+                        <div class="text-muted mb-3">
+                            <time>@post.Published.ToFriendlyDateString()</time>
+                            <span>
+                                @if (post.Categories != null && post.Categories.Count > 0)
                                 {
-                                    <a href="@catUrl/@cat">@cat</a>
+                                    <span>/</span>
+                                    foreach (var cat in post.Categories)
+                                    {
+                                        <a class="text-muted" href="@catUrl/@cat">@cat</a>
+                                    }
                                 }
-                            }
-                        </span>
+                            </span>
+                        </div>
+                        <h2 class="post-title"><a class="post-title-link" href="posts/@post.Slug">@post.Title</a></h2>
+                    </header>
+                    <div class="post-body">
+                        <p>
+                            @Html.Raw(post.Description)
+                        </p>
+                        <a class="post-more" href="posts/@post.Slug">Read More</a>
                     </div>
-                    <h2 class="post-title"><a class="post-title-link" href="posts/@post.Slug">@post.Title</a></h2>
-                </header>
-                <div class="post-body">
-                    <p>
-                        @Html.Raw(post.Description)
-                    </p>
-                    <a class="post-more" href="posts/@post.Slug">Read More</a>
-                </div>
-                @if (post.Featured)
-                {
-                    <span class="post-label">@_localizer["featured"]</span>
-                }
+                    @if (post.Featured)
+                    {
+                        <span class="post-label">@_localizer["featured"]</span>
+                    }
+                </section>
             </article>
         }
-    </div>
 
     @if (pgr != null && (pgr.ShowOlder || pgr.ShowNewer))
     {

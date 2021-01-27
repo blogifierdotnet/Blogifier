@@ -1,6 +1,5 @@
 .widget {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  margin-bottom: 4rem;
   &-title {
     font-weight: 400;
     letter-spacing: 0.1em;
@@ -8,7 +7,7 @@
     font-size: 1rem;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   &-content {
     ul {

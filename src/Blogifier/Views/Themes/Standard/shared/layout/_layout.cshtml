@@ -8,9 +8,16 @@
 
 <body>
     <partial name="../include/header.cshtml" />
-    <main class="blog-content container">
-        @RenderBody()
-    </main>
+    <div class="container">
+       <main class="row">
+            <section class="col-lg-8">
+                @RenderBody()
+            </section>
+            <aside class="col-lg-4 ps-5">
+                <partial name="../include/sidebar.cshtml" />
+            </aside>
+        </main>
+    </div>
     <partial name="../include/footer.cshtml" />
     <partial name="../include/foot.cshtml" />
 </body>

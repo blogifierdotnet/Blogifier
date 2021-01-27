@@ -1,0 +1,13 @@
+{
+  "name": "blogifier",
+  "version": "1.0.0",
+  "description": "Theme developement",
+  "author": "Francis",
+  "private": true,
+  "scripts": {
+    "sass": "node-sass --watch themes/Standard/scss -o themes/Standard/css --source-map true"
+  },
+  "devDependencies": {
+    "node-sass": "^5.0.0"
+  }
+}

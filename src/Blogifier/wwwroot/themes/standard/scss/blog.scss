@@ -1,17 +1,19 @@
 @charset 'utf-8';
-
+:root{
+    --blogifier: #622aff;
+}
 @import "helpers/variables";
 @import "helpers/reset";
-
+ 
 @import "layout/main";
-@import "layout/header";
+@import "layout/header"; 
 @import "layout/nav";
 @import "layout/footer";
 @import "layout/widgets";
 
-@import "page/post-home";
+@import "page/post-home"; 
 @import "page/post-single"; 
-
+ 
 @import "widget/posts"; 
 @import "widget/newsletter"; 
 @import "widget/categories"; 
