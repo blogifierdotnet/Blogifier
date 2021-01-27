@@ -32,6 +32,8 @@
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
     [Parameter]
     public EventCallback<string> OnUpdate { get; set; }
+    [Parameter]
+    public string OfAuthor { get; set; }
     protected HttpRequest Request { get; set; }
 
     public Totals Totals { get; set; }
@@ -45,7 +47,7 @@
     public async Task Load()
     {
         var authState = await AuthenticationStateTask;
-        Totals = await Http.GetJsonAsync<Totals>($"analytics/counts", Request);
+        Totals = await Http.GetJsonAsync<Totals>($"analytics/counts?author={OfAuthor}", Request);
         StateHasChanged();
     }
 
