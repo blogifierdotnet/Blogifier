@@ -106,11 +106,11 @@
     <!-- ##### Pager Area End ##### -->
     <!-- ##### Post Details Area Start ##### -->
     <section class="post-details-area mb-80">
-        <div class="container">
+        <div class="container" itemscope itemtype="https://schema.org/BlogPosting">
             <div class="row">
                 <div class="col-12">
                     <div class="post-details-thumb mb-50">
-                        <img src="~/@postModel.Post.Cover" alt="">
+                        <img itemprop="thumbnailUrl" src="~/@postModel.Post.Cover" alt="">
                     </div>
                 </div>
             </div>
@@ -118,22 +118,24 @@
             <div class="row justify-content-center">
                 <!-- Post Details Content Area -->
                 <div class="col-12 col-lg-8 col-xl-7">
-                    <div class="post-details-content">
+                    <div class="post-details-content" >
                         <!-- Blog Content -->
-                        <div class="blog-content">
+                        <div class="blog-content" itemprop="articleBody">
 
                             <!-- Post Content -->
                             <div class="post-content mt-0">
-                                <a href="~/posts/@postModel.Post.Slug" class="post-title mb-2">@postModel.Post.Title</a>
+                                <a href="~/posts/@postModel.Post.Slug" class="post-title mb-2">
+                                    <h1 itemprop="headline">@postModel.Post.Title</h1>
+                                </a>
 
                                 <div class="d-flex justify-content-between mb-30">
                                     <div class="post-meta d-flex align-items-center">
-                                        <span class="post-author">By @postModel.Post.Author.DisplayName</span>
+                                        <span class="post-author">By <span itemprop="author">@postModel.Post.Author.DisplayName</span></span>
                                         <i class="fa fa-circle" aria-hidden="true"></i>
-                                        <span class="post-date">@postModel.Post.Published.ToFriendlyDateString()</span>
+                                        <span class="post-date" itemprop="datePublished">@postModel.Post.Published.ToFriendlyDateString()</span>
                                     </div>
                                     <div class="post-meta d-flex">
-                                        <span><i class="fa fa-eye" aria-hidden="true"></i> @postModel.Post.PostViews</span>
+                                        <span><i class="fa fa-eye" aria-hidden="true"></i>@postModel.Post.PostViews</span>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +149,12 @@
                                     {
                                         foreach (var cat in postModel.Post.Categories.Split(',').ToList())
                                         {
-                                            <li><a href="~/categories/@cat">@cat</a></li>
+                                            <li>
+                                                
+                                                <a href="~/categories/@cat">
+                                                    <span itemprop="articleSection">@cat</span>
+                                                </a>
+                                            </li>
                                         }
                                     }
                                 </ul>
