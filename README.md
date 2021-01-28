@@ -3,14 +3,14 @@
 Blogifier is an open-source publishing platform.<br>
 Written in .NET 5.0 and Blazor WebAssembly.
 
-<a href="https://blogifier.net/" target="_blank"><b>Explore Blogifier Website »</b></a>
+**[Blogifier Website »](https://blogifier.net/)**
 <br>
 <br>
 
 ## Demo
 We have an online demo that you can take a look.
 
-<a href="https://demo.blogifier.net/" target="_blank"><b>Blogifier Demo »</b></a>
+**[Blogifier Demo »](https://demo.blogifier.net/)**
 
 Username: `admin@us.com` Password: `admin`
 <br>
@@ -19,7 +19,7 @@ Username: `admin@us.com` Password: `admin`
 ## Docs
 We publish Docs on the blogifier website.
 
-<a href="https://blogifier.net/docs/" target="_blank"><b>Explore Blogifier Docs »</b></a>
+**[Explore Blogifier Docs »](https://blogifier.net/docs/)**
 <br>
 <br>
 
