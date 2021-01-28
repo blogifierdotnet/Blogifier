@@ -23,15 +23,18 @@
 
 .dropdown-user {
   &-btn {
-    background: none;
     color: #622aff;
+    background: rgba(#622aff, .15);
     font-weight: 500;
-    border: 2px solid #622aff;
+    border: 0;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
     outline: none !important;
-    &:hover {
-      border-color: rgba(#622aff, 0.8);
+    font-size:.9875rem;
+    &:hover ,
+    &:focus{
+      background-color:#622aff;
+      color:#fff;
     }
 
     img {
@@ -45,9 +48,10 @@
     min-width: 100%;
     border: 0;
     .dropdown-item {
-      color: rgba(#fff, 0.7);
+      color: rgba(#fff, 0.85);
       font-size: 0.875rem;
       padding: 0.25rem 1rem;
+      text-transform: capitalize;
 
       &:hover,
       &:focus {

@@ -1,47 +1,27 @@
 
-# Blogifier
-Blogifier is an open-source publishing platform.<br>
-Written in .NET 5.0 and Blazor WebAssembly.
+## Blogifier
+Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.
 
-**[Blogifier Website »](https://blogifier.net/)**
-<br>
-<br>
+[**Blogifier Website »**](https://blogifier.net/)
 
 ## Demo
 We have an online demo that you can take a look.
 
-**[Blogifier Demo »](https://demo.blogifier.net/)**
+[**Blogifier Demo »**](https://demo.blogifier.net/)
 
-Username: `admin@us.com` Password: `admin`
-<br>
-<br>
 
 ## Docs
-We publish Docs on the blogifier website.
+We publish docs on the Blogifier website.
 
-**[Explore Blogifier Docs »](https://blogifier.net/docs/)**
-<br>
-<br>
+[**Explore Blogifier Docs »**](https://blogifier.net/docs/)
 
-## Quick  Start
-There are two options, ready-to-use and the source version.
+## Team
 
-- ### Ready-to-use
-
-    Requirements:x
-    - None
-
-    Steps:
-    - Download the latest version
-    - Upload
+[![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
+[![@rxtur](https://avatars.githubusercontent.com/u/1932785?s=60&v=4)](https://github.com/rxtur)
 
 
-- ### Source
+## Copyright and License
+Code released under the MIT License. Docs released under Creative Commons.
 
-    Requirements:
-    - .NET 5.0
-    - VS Code or any other IDE
-
-    Steps:
-    - Clone the Master branch or latest source version
-    - ...
+Copyright 2017–2021 Blogifier
