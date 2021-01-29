@@ -3,14 +3,13 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 
-<footer class="blog-footer py-5 mt-5 text-uppercase">
+<footer class="blog-footer">
     <div class="container d-flex">
-        <p class="m-0">
+        <p>
             © @DateTime.Now.Year - Site Title
         </p>
-       <p class="m-0 ms-auto">
-            Powered by
-            <a href="https://blogifier.net" data-toggle="tooltip" rel="nofollow" target="_blank" title="Version - ">Blogifier</a>
+       <p class="ms-auto">
+            Powered by <a href="https://blogifier.net" data-toggle="tooltip" rel="nofollow" target="_blank" title="Version - ">Blogifier</a>
        </p>
     </div>
 </footer>

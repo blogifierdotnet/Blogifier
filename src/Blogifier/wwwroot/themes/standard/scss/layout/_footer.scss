@@ -1,12 +1,9 @@
 .blog-footer {
-  margin-top: 2.5rem;
-  background-color: #f7f7f7;
-}
-.blog-copyright {
-  border-top: 1px solid rgba(#000, 0.05);
+  margin-top: 5rem;
+  border-top:1px solid #eee;
   color: #666;
   font-size: 0.75rem;
-  text-transform: uppercase;
+
   line-height: 2rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -19,16 +16,5 @@
     &:hover {
       color: $color;
     }
-  }
-}
-.blog-adminbar {
-  svg {
-    width: 0.875rem;
-    height: 0.875rem;
-    transform: translateY(-1px);
-    margin-right: 0.125rem;
-  }
-  a {
-    margin-left: 1rem;
   }
 }
