@@ -16,7 +16,7 @@ namespace Blogifier.Admin
 			_httpClient = httpClient;
 		}
 
-		public async override Task<AuthenticationState> GetAuthenticationStateAsync()
+		public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 		{
 			Author author = await _httpClient.GetFromJsonAsync<Author>("api/author/getcurrent");
 

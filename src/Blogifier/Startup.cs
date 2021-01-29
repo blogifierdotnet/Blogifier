@@ -9,77 +9,79 @@ using Serilog;
 
 namespace Blogifier
 {
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-			Log.Logger = new LoggerConfiguration()
-				  .Enrich.FromLogContext()
-				  .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
-				  .CreateLogger();
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+                  .Enrich.FromLogContext()
+                  .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+                  .CreateLogger();
 
-			Log.Warning("Application start");
-		}
+            Log.Warning("Application start");
+        }
 
-		public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-		public void ConfigureServices(IServiceCollection services)
-		{
-			Log.Warning("Start configure services");
+        public void ConfigureServices(IServiceCollection services)
+        {
+            Log.Warning("Start configure services");
 
-			services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
 
-			services.AddAuthentication(options => {
-				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-			}).AddCookie();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie();
 
-			services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
-			{
-				builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-			}));
+            services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
 
-			services.AddBlogDatabase(Configuration);
-						
-			services.AddBlogProviders();
+            services.AddBlogDatabase(Configuration);
 
-			services.AddControllersWithViews();
-			services.AddRazorPages();
+            services.AddBlogProviders();
 
-			Log.Warning("Done configure services");
-		}
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-				app.UseWebAssemblyDebugging();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Error");
-			}
+            Log.Warning("Done configure services");
+        }
 
-			app.UseBlazorFrameworkFiles();
-			app.UseStaticFiles();
-			app.UseCookiePolicy();
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
 
-			app.UseRouting();
-			app.UseCors("BlogifierPolicy");
+            app.UseBlazorFrameworkFiles();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
-			app.UseAuthentication();
-			app.UseAuthorization();
+            app.UseRouting();
+            app.UseCors("BlogifierPolicy");
 
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					  name: "default",
-					  pattern: "{controller=Home}/{action=Index}/{id?}"
-				 );
-				endpoints.MapRazorPages();
-				endpoints.MapFallbackToFile("index.html");
-			});
-		}
-	}
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                      name: "default",
+                      pattern: "{controller=Home}/{action=Index}/{id?}"
+                 );
+                endpoints.MapRazorPages();
+                endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
+                endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
+            });
+        }
+    }
 }
