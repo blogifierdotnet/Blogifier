@@ -1,6 +1,6 @@
 ﻿@using Blogifier.Shared
 @{
-    Layout = "~/Views/Themes/Standard/shared/layout/_layout.cshtml";
+    Layout = "~/Views/Themes/Standard/layout/_layout.cshtml";
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
@@ -35,7 +35,7 @@
 
     <section class="post-body">
         @Html.Raw(postModel.Post.Content)
-    </section>
+    </section> 
 
     @if (postModel.Older != null || postModel.Newer != null)
     {

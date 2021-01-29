@@ -1,0 +1,63 @@
+.bft-post {
+  margin-bottom: 1rem;
+  overflow: hidden;
+
+  &-cover {
+    margin: 0 0 1rem;
+  }
+  &-content {
+    padding: 0rem;
+  }
+
+  // title
+  &-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  
+  &-link {
+    color: #000;
+    &:hover {
+      color: $color;
+    }
+  }
+
+  // meta
+  &-meta {
+    margin-bottom: .75rem;
+    color: #ccc;
+    font-size: 0.875rem;
+  }
+  &-time {
+  }
+  &-cat {
+    color: #ccc;
+    &::before {
+      content: "";
+      margin: 0 0.5rem;
+      width: 0.25rem;
+      height: 0.25rem;
+      border-radius: 1rem;
+      background-color: rgba(#000, 0.2);
+      display: inline-block;
+      transform: translateY(-0.125rem);
+    }
+    &:hover {
+      color: #555;
+    }
+  }
+
+  // desc
+  &-desc {
+    color: #222;
+    font-size:1rem;
+    margin-bottom: .25rem;
+  }
+  &-more {
+    color:#444;
+    font-weight: 400;
+    display: inline-block;
+  }
+}

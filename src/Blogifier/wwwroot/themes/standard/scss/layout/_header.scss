@@ -1,6 +1,15 @@
+.bft-header {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  margin-bottom: 5rem;
+  border-bottom: 1px solid #f7f7f7;
+}
+
 .bft-title {
   font-size: 1.75rem;
   margin: 0;
+  font-weight: 700;
+  color:#000;
 }
 
 .bft-social {
@@ -24,17 +33,17 @@
 .dropdown-user {
   &-btn {
     color: #622aff;
-    background: rgba(#622aff, .15);
+    background: rgba(#622aff, 0.15);
     font-weight: 500;
     border: 0;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
     outline: none !important;
-    font-size:.9875rem;
-    &:hover ,
-    &:focus{
-      background-color:#622aff;
-      color:#fff;
+    font-size: 0.9875rem;
+    &:hover,
+    &:focus {
+      background-color: #622aff;
+      color: #fff;
     }
 
     img {
