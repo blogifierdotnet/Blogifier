@@ -3,57 +3,78 @@
   padding-bottom: 2.5rem;
   margin-bottom: 5rem;
   border-bottom: 1px solid #f7f7f7;
-}
 
-.bft-title {
-  font-size: 1.75rem;
-  margin: 0;
-  font-weight: 700;
-  color:#000;
-}
-
-.bft-social {
-  a {
-    display: block;
-    text-align: center;
-
-    &:hover {
-      .bi {
-        fill: $color;
+  &-sign {
+    margin-right: 1rem;
+    &:hover,
+    &:focus {
+      .bft-header-title {
+        color: var(--bft-header-title-hover);
       }
     }
   }
-  .bi {
-    width: 1.125rem;
-    height: 100%;
-    fill: #555;
+
+  &-title {
+    margin: 0;
+    font-size: var(--bft-header-title-size);
+    font-weight: var(--bft-header-title-weight);
+    color: var(--bft-header-title-color);
+  }
+
+  &-logo {
+    width: var(--bft-header-logo-width);
+    height: var(--bft-header-logo-height);
   }
 }
 
 .dropdown-user {
-  &-btn {
-    color: #622aff;
-    background: rgba(#622aff, 0.15);
-    font-weight: 500;
+  &-link {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    display: block;
+    position: relative;
+    margin-left: 1.5rem;
+    border-radius: 100%;
     border: 0;
-    border-radius: 0.25rem;
-    padding: 0.5rem 1rem;
-    outline: none !important;
-    font-size: 0.9875rem;
-    &:hover,
-    &:focus {
-      background-color: #622aff;
-      color: #fff;
+    background: none;
+
+    &.logedin {
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0;
+      }
     }
 
-    img {
-      transform: translateY(-1px);
+    &:hover,
+    &:focus {
+      .bi {
+        fill: $color;
+      }
+    }
+    &::before {
+      content: "";
+      width: 1px;
+      height: 1rem;
+      background-color: rgba(#000, 0.1);
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -0.75rem;
+      transform: translateY(1rem);
+    }
+    .bi {
+      height: 100%;
+      fill: #555;
+      transform: translateX(-0.135rem);
     }
   }
+
   &-menu {
     margin-top: 0.5rem !important;
     background-color: #622aff;
-    width: 100%;
+    width: 10rem;
     min-width: 100%;
     border: 0;
     .dropdown-item {

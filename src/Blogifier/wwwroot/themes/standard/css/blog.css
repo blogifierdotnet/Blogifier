@@ -1,8 +1,5 @@
-:root {
-  --blogifier: #622aff; }
-
 a {
-  color: #6200ee;
+  color: var(--bft-color);
   text-decoration: none; }
   a:hover {
     color: #888; }
@@ -24,43 +21,54 @@ img {
   padding-bottom: 2.5rem;
   margin-bottom: 5rem;
   border-bottom: 1px solid #f7f7f7; }
+  .bft-header-sign {
+    margin-right: 1rem; }
+    .bft-header-sign:hover .bft-header-title, .bft-header-sign:focus .bft-header-title {
+      color: var(--bft-header-title-hover); }
+  .bft-header-title {
+    margin: 0;
+    font-size: var(--bft-header-title-size);
+    font-weight: var(--bft-header-title-weight);
+    color: var(--bft-header-title-color); }
+  .bft-header-logo {
+    width: var(--bft-header-logo-width);
+    height: var(--bft-header-logo-height); }
 
-.bft-title {
-  font-size: 1.75rem;
-  margin: 0;
-  font-weight: 700;
-  color: #000; }
-
-.bft-social a {
+.dropdown-user-link {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
   display: block;
-  text-align: center; }
-  .bft-social a:hover .bi {
-    fill: #6200ee; }
-
-.bft-social .bi {
-  width: 1.125rem;
-  height: 100%;
-  fill: #555; }
-
-.dropdown-user-btn {
-  color: #622aff;
-  background: rgba(98, 42, 255, 0.15);
-  font-weight: 500;
+  position: relative;
+  margin-left: 1.5rem;
+  border-radius: 100%;
   border: 0;
-  border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  outline: none !important;
-  font-size: 0.9875rem; }
-  .dropdown-user-btn:hover, .dropdown-user-btn:focus {
-    background-color: #622aff;
-    color: #fff; }
-  .dropdown-user-btn img {
-    transform: translateY(-1px); }
+  background: none; }
+  .dropdown-user-link.logedin img {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0; }
+  .dropdown-user-link:hover .bi, .dropdown-user-link:focus .bi {
+    fill: var(--bft-color); }
+  .dropdown-user-link::before {
+    content: "";
+    width: 1px;
+    height: 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -0.75rem;
+    transform: translateY(1rem); }
+  .dropdown-user-link .bi {
+    height: 100%;
+    fill: #555;
+    transform: translateX(-0.135rem); }
 
 .dropdown-user-menu {
   margin-top: 0.5rem !important;
   background-color: #622aff;
-  width: 100%;
+  width: 10rem;
   min-width: 100%;
   border: 0; }
   .dropdown-user-menu .dropdown-item {
@@ -83,7 +91,7 @@ img {
   color: #666;
   -webkit-font-smoothing: antialiased; }
   .blog-nav a:hover {
-    color: #6200ee; }
+    color: var(--bft-color); }
 
 .blog-footer {
   margin-top: 5rem;
@@ -98,7 +106,7 @@ img {
   .blog-footer a {
     color: #666; }
     .blog-footer a:hover {
-      color: #6200ee; }
+      color: var(--bft-color); }
 
 .widget:not(:last-child) {
   margin-bottom: 4rem; }
@@ -117,6 +125,25 @@ img {
   padding: 0;
   margin: 0; }
 
+.bft-social {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+  .bft-social-item {
+    width: 3rem;
+    height: 3rem; }
+  .bft-social-link {
+    display: block;
+    text-align: center;
+    display: block;
+    height: 100%; }
+    .bft-social-link:hover .bi, .bft-social-link:focus .bi {
+      fill: var(--bft-color); }
+  .bft-social .bi {
+    width: 1.125rem;
+    height: 100%;
+    fill: #555; }
+
 .bft-featured {
   margin-bottom: 5rem; }
   .bft-featured-figure {
@@ -129,7 +156,7 @@ img {
   .bft-featured-link {
     color: #000; }
     .bft-featured-link:hover {
-      color: #6200ee; }
+      color: var(--bft-color); }
   .bft-featured-meta {
     margin-bottom: 1.5rem;
     color: #999;
@@ -146,7 +173,7 @@ img {
       display: inline-block;
       transform: translateY(-0.125rem); }
     .bft-featured-cat:hover {
-      color: #6200ee; }
+      color: var(--bft-color); }
   .bft-featured-desc {
     color: #666;
     line-height: 1.8;
@@ -167,7 +194,7 @@ img {
   .bft-post-link {
     color: #000; }
     .bft-post-link:hover {
-      color: #6200ee; }
+      color: var(--bft-color); }
   .bft-post-meta {
     margin-bottom: 0.75rem;
     color: #ccc;
@@ -231,7 +258,7 @@ img {
     .post-home .post-title-link {
       color: #000; }
       .post-home .post-title-link:hover {
-        color: #6200ee; }
+        color: var(--bft-color); }
   .post-home .post-meta {
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -397,7 +424,7 @@ img {
     text-transform: capitalize;
     position: relative; }
     .widget-category-link:hover {
-      color: #6200ee; }
+      color: var(--bft-color); }
     .widget-category-link span {
       position: absolute;
       right: 0;

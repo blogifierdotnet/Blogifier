@@ -1,0 +1,28 @@
+.bft-social {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &-item {
+    width: 3rem;
+    height: 3rem;
+  }
+  &-link {
+    display: block;
+    text-align: center;
+    display: block;
+    height: 100%;
+
+    &:hover,
+    &:focus {
+      .bi {
+        fill: $color;
+      }
+    }
+  }
+  .bi {
+    width: 1.125rem;
+    height: 100%;
+    fill: #555;
+  }
+}
