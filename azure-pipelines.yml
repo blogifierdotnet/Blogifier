@@ -16,4 +16,5 @@ steps:
     containerRegistry: $(dockerRegistry)
     repository: default
     arguments: '--target run'
+    Dockerfile: dockerfile
     tags: $(imageName):$(Build.BuildId)
