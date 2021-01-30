@@ -1,0 +1,19 @@
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  dockerRegistry: 'AnotherICe - Docker - Registry'
+  imageName: rusetfs-blogifier
+
+steps:
+- task: Docker@2
+  inputs:
+    command: login
+    containerRegistry: $(dockerRegistry)
+- task: Docker@2 
+  inputs:
+    command: buildAndPush
+    containerRegistry: $(dockerRegistry)
+    repository: default
+    arguments: '--target run'
+    tags: $(imageName):$(Build.BuildId)

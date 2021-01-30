@@ -237,5 +237,6 @@ src/Blogifier/Logs
 
 package-lock.json
 
+.idea
 build/tools
 build/publish
