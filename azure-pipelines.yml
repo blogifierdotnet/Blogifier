@@ -1,14 +1,19 @@
-# ASP.NET Core
-# Build and test ASP.NET Core web applications targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core
-
 pool:
   vmImage: 'Ubuntu 16.04'
 
 variables:
-  buildConfiguration: 'Release'
+  dockerRegistry: 'AnotherICe - Docker - Registry'
+  imageName: rusetfs-blogifier
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- task: Docker@2
+  inputs:
+    command: login
+    containerRegistry: $(dockerRegistry)
+- task: Docker@2 
+  inputs:
+    command: buildAndPush
+    containerRegistry: $(dockerRegistry)
+    repository: default
+    arguments: '--target run'
+    tags: $(imageName):$(Build.BuildId)
