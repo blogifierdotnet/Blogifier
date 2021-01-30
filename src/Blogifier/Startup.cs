@@ -69,6 +69,7 @@ namespace Blogifier
                 app.UseExceptionHandler("/Error");
             }
 
+            AppSettings.LocalSiteUrl = Configuration["ASPNETCORE_LOCALSITEURL"];
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;
             AppSettings.ThumbWidth = 270;
