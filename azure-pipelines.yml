@@ -3,7 +3,7 @@ pool:
 
 variables:
   dockerRegistry: 'AnotherICe - Docker - Registry'
-  imageName: rusetfs-blogifier
+  dockerRepostiory: anotherice/rusetfs-blogifier
 
 steps:
 - task: Docker@2
@@ -14,6 +14,6 @@ steps:
   inputs:
     command: buildAndPush
     containerRegistry: $(dockerRegistry)
-    repository: $(imageName)
+    repository: $(dockerRepostiory)
     arguments: '--target run'
-    Dockerfile: dockerfile
+    dockerfile: dockerfile
