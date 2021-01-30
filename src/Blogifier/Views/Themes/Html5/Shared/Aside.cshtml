@@ -1,9 +1,0 @@
-﻿@inject IDataService DataService
-<aside>
-    @foreach (var p in (await DataService.BlogPosts.GetPopular(new Pager(1))))
-    {
-        <div>
-            <h4><a href="~/posts/@p.Slug">@p.Title</a> (@p.PostViews)</h4>
-        </div>
-    }
-</aside>
