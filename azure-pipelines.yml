@@ -4,16 +4,54 @@ pool:
 variables:
   dockerRegistry: 'AnotherICe - Docker - Registry'
   dockerRepostiory: anotherice/rusetfs-blogifier
+  dockerComposeArtifact: dockerCompose
 
-steps:
-- task: Docker@2
-  inputs:
-    command: login
-    containerRegistry: $(dockerRegistry)
-- task: Docker@2 
-  inputs:
-    command: buildAndPush
-    containerRegistry: $(dockerRegistry)
-    repository: $(dockerRepostiory)
-    arguments: '--target run'
-    dockerfile: dockerfile
+stages:
+- stage: build
+  jobs:
+  - job: dockerImage
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+    - task: Docker@2
+      inputs:
+        command: login
+        containerRegistry: $(dockerRegistry)
+    - task: Docker@2 
+      inputs:
+        command: buildAndPush
+        containerRegistry: $(dockerRegistry)
+        repository: $(dockerRepostiory)
+        arguments: '--target run'
+        dockerfile: dockerfile
+  - job: dockerComposeConfiguration
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+    - publish: $(Build.SourcesDirectory)\deploy\docker-compose.yaml
+      artifact: $(dockerComposeArtifact)
+- stage: staging
+  jobs:
+  - deployment: deployOnCompose
+    environment:
+      name: Staging
+      resourceType: VirtualMachine
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+         - task: Docker@2
+           inputs:
+             command: login
+             containerRegistry: $(dockerRegistry)
+         - task: DockerCompose@0
+           inputs:
+             action: Run services
+             containerregistrytype: Container Registry
+             dockerRegistryEndpoint: $(dockerRegistry)
+             dockerComposeFile: ...............pathtofile
+             buildImages: false
+             dockerComposeFileArgs: 
+               RUSETFS_BLOGIFIER_DATA_DIR: 
+
+
