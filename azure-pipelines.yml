@@ -44,14 +44,18 @@ stages:
            inputs:
              command: login
              containerRegistry: $(dockerRegistry)
+         - task: DownloadPipelineArtifact@2
+           inputs:
+             artifactName: $(dockerComposeArtifact)
+             targetPath: $(Build.SourcesDirectory)
          - task: DockerCompose@0
            inputs:
              action: Run services
              containerregistrytype: Container Registry
              dockerRegistryEndpoint: $(dockerRegistry)
-             dockerComposeFile: ...............pathtofile
+             dockerComposeFile: $(Build.SourcesDirectory)/docker-compose.yaml
              buildImages: false
-             dockerComposeFileArgs: 
+             dockerComposeFileArgs: |
                RUSETFS_BLOGIFIER_DATA_DIR: 'd:\data\blogifier'
 
 
