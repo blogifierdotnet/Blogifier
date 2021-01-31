@@ -1,0 +1,9 @@
+﻿version: "3.9"
+services:
+  app:
+    image: anotherice/rusetfs-blogifier:latest
+    ports: 
+      - 80:80
+    volumes:
+      - ${RUSETFS_BLOGIFIER_DATA_DIR}\data.sqline:Blog.db
+      - ${RUSETFS_BLOGIFIER_DATA_DIR}\wwwroot:wwwroot
