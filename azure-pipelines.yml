@@ -28,7 +28,7 @@ stages:
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
-    - publish: $(Build.SourcesDirectory)\deploy\docker-compose.yaml
+    - publish: $(Build.SourcesDirectory)/deploy/docker-compose.yaml
       artifact: $(dockerComposeArtifact)
 - stage: staging
   jobs:
