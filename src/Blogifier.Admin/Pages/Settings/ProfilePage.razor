@@ -13,10 +13,10 @@
          <div class="form-item">
             <label class="form-item-label mb-1">@_localizer["Profile picture"]</label>
             <div class="input-group d-flex">
-               <img src="@Author.Avatar" width="48" height="48" class="rounded" alt="@Author.DisplayName" />
+               <img id="avatar" src="@Author.Avatar" width="48" height="48" class="rounded" alt="@Author.DisplayName" />
                <div class="ms-2">
                   <button class="btn btn-default btn-xs" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
-                  <button class="btn btn-default btn-xs" onclick="" type="button"> @_localizer["remove"]</button>
+                  <button class="btn btn-default btn-xs" @onclick="ResetAvatar" type="button"> @_localizer["remove"]</button>
                   <p class="mb-0 mt-2 small">Should be square and at least 250 X 250 pixel.</p>
                </div>
             </div>
@@ -97,5 +97,11 @@
    {
       Toaster.Toast(await _http.PutAsJsonAsync<RegisterModel>("api/author/changepassword", Model));
       await Load();
+   }
+
+   protected async Task ResetAvatar()
+   {
+      Author.Avatar = "img/avatar.png";
+      await SaveProfile();
    }
 }

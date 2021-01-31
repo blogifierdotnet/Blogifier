@@ -35,7 +35,7 @@
 	}
 
 	function userAvatarCallback(data) {
-		$('#avatar').val(data);
+		$('#avatar').attr("src", data);
 		$("#avatar-menu").attr("src", data);
 		$("#avatar-submenu").attr("src", data);
 	}

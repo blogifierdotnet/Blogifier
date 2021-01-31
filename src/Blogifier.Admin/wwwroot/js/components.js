@@ -273,7 +273,7 @@ function insertYoutube(editor) {
 	var id = prompt("Please enter video ID", "");
 
 	if (id !== null && id !== "") {
-		var tag = '<iframe width="640" height="480" src="http://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
+		var tag = '<iframe width="640" height="480" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
 		var cm = _editor.codemirror;
 		cm.replaceSelection(tag);
 	}
