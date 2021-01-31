@@ -52,6 +52,6 @@ stages:
              dockerComposeFile: ...............pathtofile
              buildImages: false
              dockerComposeFileArgs: 
-               RUSETFS_BLOGIFIER_DATA_DIR: 
+               RUSETFS_BLOGIFIER_DATA_DIR: 'd:\data\blogifier'
 
 
