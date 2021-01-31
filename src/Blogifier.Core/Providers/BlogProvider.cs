@@ -3,6 +3,7 @@ using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
@@ -28,7 +29,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<BlogItem> GetBlogItem()
 		{
-			var blog = await _db.Blogs.FirstAsync();
+			var blog = await _db.Blogs.AsNoTracking().OrderBy(b => b.Id).FirstAsync();
 			return new BlogItem
 			{
 				Title = blog.Title,
@@ -44,7 +45,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<Blog> GetBlog()
 		{
-			return await _db.Blogs.AsNoTracking().FirstAsync();
+			return await _db.Blogs.OrderBy(b => b.Id).AsNoTracking().FirstAsync();
 		}
 
 		public async Task<ICollection<Category>> GetBlogCategories()
@@ -54,7 +55,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<bool> Update(Blog blog)
 		{
-			var existing = await _db.Blogs.FirstAsync();
+			var existing = await _db.Blogs.OrderBy(b => b.Id).FirstAsync();
 
 			existing.Title = blog.Title;
 			existing.Description = blog.Description;
