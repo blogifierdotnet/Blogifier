@@ -5,6 +5,7 @@ variables:
   dockerRegistry: 'AnotherICe - Docker - Registry'
   dockerRepostiory: anotherice/rusetfs-blogifier
   dockerComposeArtifact: dockerCompose
+  dockerComposeFile: docker-compose.yml
 
 stages:
 - stage: build
@@ -28,7 +29,7 @@ stages:
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
-    - publish: $(Build.SourcesDirectory)/deploy/docker-compose.yaml
+    - publish: $(Build.SourcesDirectory)/deploy/$(dockerComposeFile)
       artifact: $(dockerComposeArtifact)
 - stage: staging
   jobs:
@@ -53,7 +54,7 @@ stages:
              action: Run services
              containerregistrytype: Container Registry
              dockerRegistryEndpoint: $(dockerRegistry)
-             dockerComposeFile: $(Build.SourcesDirectory)/docker-compose.yaml
+             dockerComposeFile: $(Build.SourcesDirectory)/$(dockerComposeFile)
              buildImages: false
              dockerComposeFileArgs: |
                RUSETFS_BLOGIFIER_DATA_DIR: 'd:\data\blogifier'
