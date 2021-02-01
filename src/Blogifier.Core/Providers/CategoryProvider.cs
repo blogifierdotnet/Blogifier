@@ -33,6 +33,7 @@ namespace Blogifier.Core.Providers
 			{
 				foreach (var p in _db.Posts)
 				{
+					p.Categories = await GetPostCategories(p.Id);
 					if (p.Categories != null && p.Categories.Count() > 0)
 					{
 						foreach (var pc in p.Categories)
@@ -67,8 +68,8 @@ namespace Blogifier.Core.Providers
 				_db.Categories.Add(new Category() { Content = tag, DateCreated = DateTime.UtcNow });
 				await _db.SaveChangesAsync();
 				category = await _db.Categories.Where(c => c.Content == tag).FirstOrDefaultAsync();
-			}			
-						
+			}
+
 			if (category == null)
 				return false;
 
@@ -114,7 +115,7 @@ namespace Blogifier.Core.Providers
 				{
 					return false;
 				}
-				
+
 				//foreach (var category in post.Categories)
 				//{
 				//	if (category.Id == categoryId)
