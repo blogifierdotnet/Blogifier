@@ -1,22 +1,28 @@
 @charset 'utf-8';
 
+// helpers
 @import "helpers/variables";
 @import "helpers/reset";
  
+// layouts
 @import "layout/main";
 @import "layout/header"; 
-@import "layout/nav";
-@import "layout/footer";
+@import "layout/sidebar";
 @import "layout/widgets";
+@import "layout/footer";
 
+// components
 @import "components/social";
+@import "components/admin";
+@import "components/search";
+@import "components/featured";
+@import "components/pager";
 
-@import "sections/featured";
-@import "sections/list";
-
-@import "page/post-home"; 
-@import "page/post-single"; 
+// pages
+@import "page/list";
+@import "page/post";
  
-@import "widget/posts"; 
-@import "widget/newsletter"; 
-@import "widget/categories"; 
+// widgets
+@import "widget/posts";
+@import "widget/newsletter";
+@import "widget/categories";

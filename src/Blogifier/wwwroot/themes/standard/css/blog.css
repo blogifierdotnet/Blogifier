@@ -7,11 +7,6 @@ a {
 img {
   max-width: 100%; }
 
-.nav-link {
-  color: #555; }
-  .nav-link:hover {
-    color: var(--blogifier); }
-
 .container {
   width: 64rem;
   max-width: 100%; }
@@ -33,6 +28,57 @@ img {
   .bft-header-logo {
     width: var(--bft-header-logo-width);
     height: var(--bft-header-logo-height); }
+
+.widget:not(:last-child) {
+  margin-bottom: 4rem; }
+
+.widget-title {
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #999;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem; }
+
+.widget-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.blog-footer {
+  margin-top: 5rem;
+  border-top: 1px solid #eee;
+  color: #666;
+  font-size: 0.75rem;
+  line-height: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+  .blog-footer p {
+    margin: 0; }
+  .blog-footer a {
+    color: #666; }
+    .blog-footer a:hover {
+      color: var(--bft-color); }
+
+.bft-social {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+  .bft-social-item {
+    width: 3rem;
+    height: 3rem; }
+  .bft-social-link {
+    display: block;
+    text-align: center;
+    display: block;
+    height: 100%; }
+    .bft-social-link:hover .bi, .bft-social-link:focus .bi {
+      fill: var(--bft-color); }
+  .bft-social .bi {
+    width: 1.125rem;
+    height: 100%;
+    fill: #555; }
 
 .dropdown-user-link {
   width: 3rem;
@@ -80,69 +126,6 @@ img {
       color: #fff;
       background: none;
       background-color: rgba(255, 255, 255, 0.1); }
-
-.blog-nav li:not(:last-child) {
-  margin-right: 1.5rem; }
-
-.blog-nav a {
-  font-weight: 500;
-  line-height: 2rem;
-  display: block;
-  color: #666;
-  -webkit-font-smoothing: antialiased; }
-  .blog-nav a:hover {
-    color: var(--bft-color); }
-
-.blog-footer {
-  margin-top: 5rem;
-  border-top: 1px solid #eee;
-  color: #666;
-  font-size: 0.75rem;
-  line-height: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem; }
-  .blog-footer p {
-    margin: 0; }
-  .blog-footer a {
-    color: #666; }
-    .blog-footer a:hover {
-      color: var(--bft-color); }
-
-.widget:not(:last-child) {
-  margin-bottom: 4rem; }
-
-.widget-title {
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: #999;
-  font-size: 1rem;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 1rem; }
-
-.widget-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0; }
-
-.bft-social {
-  list-style: none;
-  padding: 0;
-  margin: 0; }
-  .bft-social-item {
-    width: 3rem;
-    height: 3rem; }
-  .bft-social-link {
-    display: block;
-    text-align: center;
-    display: block;
-    height: 100%; }
-    .bft-social-link:hover .bi, .bft-social-link:focus .bi {
-      fill: var(--bft-color); }
-  .bft-social .bi {
-    width: 1.125rem;
-    height: 100%;
-    fill: #555; }
 
 .bft-featured {
   margin-bottom: 5rem; }
@@ -220,126 +203,6 @@ img {
     color: #444;
     font-weight: 400;
     display: inline-block; }
-
-.post-home {
-  margin-bottom: 4rem;
-  position: relative; }
-  .post-home:hover .post-home-cover {
-    opacity: 1;
-    box-shadow: 0 15px 45px -5px rgba(7, 10, 25, 0.25);
-    -webkit-filter: brightness(1.07);
-    filter: brightness(1.07);
-    transform: translate(0, -2px); }
-  .post-home .post-cover {
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    height: 15rem;
-    box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2), 0 22px 27px -20px rgba(7, 10, 25, 0.2);
-    transition: all 0.3s ease; }
-    .post-home .post-cover img {
-      min-height: 100%; }
-  .post-home .post-label {
-    position: absolute;
-    top: 1rem;
-    left: 2.5rem;
-    padding: 0.125rem 0.5rem;
-    background-color: #000;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 0.625rem;
-    letter-spacing: 0.125rem;
-    display: inline-block;
-    border-radius: 5rem; }
-  .post-home .post-header {
-    margin-bottom: 1rem; }
-  .post-home .post-title {
-    font-size: 1.25rem;
-    font-weight: 700; }
-    .post-home .post-title-link {
-      color: #000; }
-      .post-home .post-title-link:hover {
-        color: var(--bft-color); }
-  .post-home .post-meta {
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: #888;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    -webkit-font-smoothing: antialiased;
-    margin-bottom: 1rem; }
-  .post-home .post-body p {
-    font-size: 0.875rem;
-    text-align: justify;
-    line-height: 1.6875;
-    color: #505050;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    margin-bottom: 0.5rem; }
-  .post-home .post-more {
-    border-bottom: 1px solid #000;
-    color: #000;
-    font-size: 0.875rem;
-    font-weight: 500; }
-
-.post-single .post-cover {
-  margin-bottom: 4rem;
-  box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2), 0 22px 27px -20px rgba(7, 10, 25, 0.2);
-  min-width: 100%; }
-
-.post-single .post-header {
-  margin-bottom: 2rem; }
-
-.post-single .post-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin: 1rem 0;
-  line-height: 1.25;
-  max-width: 85%;
-  -webkit-font-smoothing: initial; }
-
-.post-single .post-meta {
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: #888;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  -webkit-font-smoothing: antialiased;
-  margin-bottom: 0;
-  line-height: 2rem; }
-  .post-single .post-meta-sep {
-    display: inline-block;
-    margin: 0 0.5rem; }
-
-.post-single .post-cats {
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: #888;
-  font-size: 0.75rem;
-  text-transform: uppercase; }
-
-.post-single .post-author-img {
-  display: inline-block;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #ccc;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem; }
-
-.post-single .post-body {
-  line-height: 1.6;
-  color: #333;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  font-size: 1.0625rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.9);
-  padding-left: 2rem;
-  padding-right: 2rem; }
-  .post-single .post-body h2,
-  .post-single .post-body h3,
-  .post-single .post-body h4 {
-    margin-top: 2rem; }
 
 .widget-posts-item {
   position: relative;
