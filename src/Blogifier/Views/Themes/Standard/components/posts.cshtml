@@ -1,0 +1,47 @@
+@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@inject IStringLocalizer<Resource> _localizer
+
+@{
+    ListModel listModel = (ListModel)Model;
+    string root = Url.Content("~/");
+}
+@if (listModel.Posts.Count() > 0)
+{
+    <div class="row">
+    @foreach (var post in listModel.Posts)
+    {
+        <div class="col-lg-4">
+            <article class="bft-post mb-4">
+                <figure class="bft-post-cover">
+                    <img class="bft-post-img" src="~/@post.Cover" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                    <figcaption class="visually-hidden">@post.Title</figcaption>
+                </figure>
+                <section class="bft-post-content">
+                    <h2 class="bft-post-title">
+                        <a class="bft-post-link" href="posts/@post.Slug">@post.Title</a>
+                    </h2>
+                    <div class="bft-post-meta">
+                        <time class="bft-post-time">@post.Published.ToFriendlyDateString()</time>
+                        <a class="bft-post-cat" href="#">Category</a>
+                    </div>
+                    <p class="bft-post-desc">
+                        @Html.Raw(post.Description)
+                    </p>
+                    <a class="bft-post-more" href="posts/@post.Slug">
+                        Read More
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                </section>
+            </article>
+        </div>
+    }
+    </div>
+}
+else
+{
+    <div class="h1 text-capitalize">@_localizer["empty"]!</div>
+}

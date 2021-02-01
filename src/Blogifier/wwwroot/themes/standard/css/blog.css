@@ -47,17 +47,11 @@ img {
   margin: 0; }
 
 .blog-footer {
+  background: #f8f9fa;
   margin-top: 5rem;
-  border-top: 1px solid #eee;
-  color: #666;
-  font-size: 0.75rem;
-  line-height: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem; }
-  .blog-footer p {
-    margin: 0; }
+  padding-top: 3rem; }
   .blog-footer a {
-    color: #666; }
+    color: #000; }
     .blog-footer a:hover {
       color: var(--bft-color); }
 
@@ -161,6 +155,21 @@ img {
     color: #666;
     line-height: 1.8;
     margin-bottom: 1.5rem; }
+
+.bft-copyright {
+  color: #666;
+  margin-top: 3rem;
+  border-top: 1px solid #eee;
+  font-size: 0.75rem;
+  line-height: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+  .bft-copyright p {
+    margin: 0; }
+  .bft-copyright a {
+    color: #666; }
+    .bft-copyright a:hover {
+      color: var(--bft-color); }
 
 .bft-post {
   margin-bottom: 1rem;

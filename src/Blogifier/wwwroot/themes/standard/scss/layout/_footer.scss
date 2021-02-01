@@ -1,18 +1,9 @@
 .blog-footer {
+  background: #f8f9fa;
   margin-top: 5rem;
-  border-top:1px solid #eee;
-  color: #666;
-  font-size: 0.75rem;
-
-  line-height: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-
-  p {
-    margin: 0;
-  }
+  padding-top: 3rem;
   a {
-    color: #666;
+    color: #000;
     &:hover {
       color: $color;
     }
