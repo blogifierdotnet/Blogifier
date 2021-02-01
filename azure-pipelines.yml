@@ -58,5 +58,6 @@ stages:
              buildImages: false
              dockerComposeFileArgs: |
                RUSETFS_BLOGIFIER_DATA_DIR=d:\data\blogifier
+               RUSETFS_BLOGIFIER_APP_VERSION=$(Build.BuildId)
 
 

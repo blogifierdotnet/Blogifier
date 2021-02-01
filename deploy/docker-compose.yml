@@ -1,7 +1,7 @@
 ﻿version: "3.9"
 services:
   app:
-    image: anotherice/rusetfs-blogifier:latest
+    image: anotherice/rusetfs-blogifier:${RUSETFS_BLOGIFIER_APP_VERSION}
     ports: 
       - 80:80
     volumes:
