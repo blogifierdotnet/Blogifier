@@ -5,5 +5,5 @@ services:
     ports: 
       - 20000:80
     volumes:
-      - ${RUSETFS_BLOGIFIER_DATA_DIR}\data.sqlite:/app/Blog.db
-      - ${RUSETFS_BLOGIFIER_DATA_DIR}\wwwroot\data:/app/wwwroot/data
+      - ${RUSETFS_BLOGIFIER_DATA_DIR}\blog.db:/app/Blog.db
+      - ${RUSETFS_BLOGIFIER_DATA_DIR}\data:/app/wwwroot/data
