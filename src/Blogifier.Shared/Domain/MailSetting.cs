@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared
 {
@@ -32,6 +33,9 @@ namespace Blogifier.Shared
 		public bool Enabled { get; set; }
 
 		public DateTime DateCreated { get; set; }
+
+		// TOTO The problem is not utc time
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime DateUpdated { get; set; }
 
 		public Blog Blog { get; set; }

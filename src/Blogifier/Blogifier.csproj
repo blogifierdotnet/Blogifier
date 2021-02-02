@@ -19,7 +19,11 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Blogifier.Admin\Blogifier.Admin.csproj" />
 		<ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
+		<ProjectReference Include="..\Blogifier.MySqlMigrations\Blogifier.MySqlMigrations.csproj" />
+		<ProjectReference Include="..\Blogifier.PostgresMigrations\Blogifier.PostgresMigrations.csproj" />
 		<ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+		<ProjectReference Include="..\Blogifier.SQLiteMigrations\Blogifier.SQLiteMigrations.csproj" />
+		<ProjectReference Include="..\Blogifier.SqlServerMigrations\Blogifier.SqlServerMigrations.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
