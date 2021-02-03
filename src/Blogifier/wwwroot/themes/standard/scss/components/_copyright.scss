@@ -1,0 +1,19 @@
+.bft-copyright {
+  color: #666;
+  margin-top: 3rem;
+  border-top: 1px solid #eee;
+  font-size: 0.75rem;
+  line-height: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  p {
+    margin: 0;
+  }
+  a {
+    color: #666;
+    &:hover {
+      color: $color;
+    }
+  }
+}

@@ -4,12 +4,18 @@
 @inject IStringLocalizer<Resource> _localizer
 
 <footer class="blog-footer">
-    <div class="container d-flex">
-        <p>
-            © @DateTime.Now.Year - Site Title
-        </p>
-       <p class="ms-auto">
-            Powered by <a href="https://blogifier.net" data-toggle="tooltip" rel="nofollow" target="_blank" title="Version - ">Blogifier</a>
-       </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <partial name="../widgets/popular.cshtml" />
+            </div>
+            <div class="col-lg-4">
+                <partial name="../widgets/categories.cshtml" />
+            </div>
+            <div class="col-lg-4">
+                <partial name="../widgets/newsletter.cshtml" />
+            </div>
+        </div>
     </div>
+    <partial name="../components/copyright.cshtml" /> 
 </footer>
