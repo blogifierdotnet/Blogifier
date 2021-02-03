@@ -138,6 +138,9 @@
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
+    [Parameter]
+    public string OfAuthor { get; set; }
+
     PageListModel pageListModel { get; set; }
     protected string SearchTerm { get; set; }
     protected int PostId { get; set; }
@@ -183,6 +186,7 @@
             if (FilterValue == PublishedStatus.Drafts) qString += "&include=D";
             if (FilterValue == PublishedStatus.Published) qString += "&include=FP";
             if (FilterValue == PublishedStatus.Featured) qString += "&include=F";
+            if (!string.IsNullOrEmpty(OfAuthor)) qString += "&author=" + OfAuthor;
 
             if (string.IsNullOrEmpty(SearchTerm))
             {

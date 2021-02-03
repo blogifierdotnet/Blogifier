@@ -42,15 +42,24 @@ namespace Blogifier.Core.Api
 
         [HttpGet("counts")]
         [Authorize]
-        public async Task<ActionResult<Totals>> Counts()
+        public async Task<ActionResult<Totals>> Counts(string author = null)
         {
             try
             {
+                var effectiveAuthor = author == null
+                    ? null
+                    :_data.Authors.Single(x => x.AppUserName == author);
+                
+                var posts = _data.BlogPosts.All();
+                var effectivePosts = effectiveAuthor == null
+                    ? posts.ToArray()
+                    : posts.Where(x => x.AuthorId == effectiveAuthor.Id).ToArray();
+                
                 Totals totals = new Totals
                 {
-                    PostCount = _data.BlogPosts.All().Count(),
-                    ViewsCount = _data.BlogPosts.All().Select(v => v.PostViews).Sum(),
-                    DraftCount = _data.BlogPosts.Find(p => p.Published == DateTime.MinValue).Count(),
+                    PostCount = effectivePosts.Count(),
+                    ViewsCount = effectivePosts.Select(v => v.PostViews).Sum(),
+                    DraftCount = effectivePosts.Count(p => p.Published == DateTime.MinValue),
                     SubsriberCount = _data.Newsletters.All().Count()
                 };
                 return Ok(await Task.FromResult(totals));
