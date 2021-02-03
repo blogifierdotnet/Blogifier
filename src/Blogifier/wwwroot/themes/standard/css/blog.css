@@ -173,31 +173,31 @@ img {
     .bft-copyright a:hover {
       color: var(--bft-color); }
 
-.bft-post {
+.bft-post-item {
   margin-bottom: 1rem;
   overflow: hidden; }
-  .bft-post-cover {
+  .bft-post-item-cover {
     margin: 0 0 1rem; }
-  .bft-post-img {
+  .bft-post-item-img {
     border-radius: .25rem; }
-  .bft-post-content {
+  .bft-post-item-content {
     padding: 0 .25rem; }
-  .bft-post-title {
+  .bft-post-item-title {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
     line-height: 1.3; }
-  .bft-post-link {
+  .bft-post-item-link {
     color: #000; }
-    .bft-post-link:hover {
+    .bft-post-item-link:hover {
       color: var(--bft-color); }
-  .bft-post-meta {
+  .bft-post-item-meta {
     margin-bottom: 0.75rem;
     color: #bbb;
     font-size: 0.875rem; }
-  .bft-post-cat {
+  .bft-post-item-cat {
     color: #bbb; }
-    .bft-post-cat::before {
+    .bft-post-item-cat::before {
       content: "";
       margin: 0 0.5rem;
       width: 0.25rem;
@@ -206,17 +206,65 @@ img {
       background-color: rgba(0, 0, 0, 0.2);
       display: inline-block;
       transform: translateY(-0.125rem); }
-    .bft-post-cat:hover {
+    .bft-post-item-cat:hover {
       color: #555; }
-  .bft-post-desc {
+  .bft-post-item-desc {
     color: #555;
     font-size: 1rem;
     margin-bottom: 0.5rem; }
-  .bft-post-more {
+  .bft-post-item-more {
     color: #444;
     font-weight: 500;
     display: inline-block;
     font-size: .875rem; }
+
+.bft-post-wrap {
+  max-width: 50rem;
+  width: 100%; }
+
+.bft-post-header {
+  margin-bottom: 2rem; }
+
+.bft-post-title {
+  margin-bottom: 2rem;
+  font-weight: 700; }
+
+.bft-post-meta {
+  color: #999;
+  font-size: 0.875rem; }
+  .bft-post-meta a {
+    color: #999; }
+    .bft-post-meta a:hover {
+      color: var(--bft-color); }
+
+.bft-post-author-name {
+  text-transform: capitalize; }
+
+.bft-post-author-img {
+  border-radius: 100%;
+  margin-right: 0.5rem; }
+
+.bft-post-cats-list {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+.bft-post-cats-item {
+  margin-right: 0.75rem; }
+
+.bft-post-description {
+  font-weight: 300;
+  font-size: 1.125rem;
+  margin-bottom: 3rem; }
+
+.bft-post-cover {
+  margin-bottom: 3rem; }
+
+.bft-post-content {
+  font-size: 1.125rem;
+  line-height: 1.8; }
+  .bft-post-content p {
+    margin-bottom: 1.5rem; }
 
 .widget-posts-item {
   position: relative;
