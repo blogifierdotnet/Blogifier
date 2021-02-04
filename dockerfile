@@ -11,6 +11,6 @@ RUN dotnet publish -c Release -o build/output
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS run
 WORKDIR /app
 COPY --from=build /app/build/output .
-ENV ASPNETCORE_LOCALSITEURL="http://localhost:80"
+# ENV ASPNETCORE_LOCALSITEURL="http://localhost:80"
 EXPOSE 80
 ENTRYPOINT ["dotnet", "Blogifier.dll"]
