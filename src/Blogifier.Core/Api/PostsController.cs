@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Core.Api
 {
@@ -240,7 +241,7 @@ namespace Blogifier.Core.Api
         /// <param name="flag">Flag; P - publish, U - unpublish</param>
         /// <returns>Success of failure</returns>
         [HttpPut("publish")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult> Publish(int id, string flag)
         {
             try
@@ -305,7 +306,7 @@ namespace Blogifier.Core.Api
         /// <param name="post">Post item</param>
         /// <returns>Saved post item</returns>
         [HttpPost]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult<PostItem>> Post(PostItem post)
         {
             try
@@ -339,7 +340,7 @@ namespace Blogifier.Core.Api
         /// <param name="id">Post ID</param>
         /// <returns>Success or failure</returns>
         [HttpDelete("remove/{id}")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<IActionResult> Remove(int id)
         {           
             try

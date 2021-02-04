@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Core.Api
 {
@@ -24,7 +25,7 @@ namespace Blogifier.Core.Api
         }
 
         [HttpGet("totals")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult<IEnumerable<StatsTotal>>> Totals([FromQuery] int days = 7)
         {
             try
@@ -41,7 +42,7 @@ namespace Blogifier.Core.Api
         }
 
         [HttpGet("counts")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult<Totals>> Counts(string author = null)
         {
             try
@@ -71,7 +72,7 @@ namespace Blogifier.Core.Api
         }
 
         [HttpGet("latestposts")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult<IEnumerable<BlogPost>>> LatestPosts()
         {
             try

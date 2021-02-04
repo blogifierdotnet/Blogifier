@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Core.Api
 {
@@ -75,7 +76,7 @@ namespace Blogifier.Core.Api
         /// <param name="post">Post ID</param>
         /// <returns>Asset Item</returns>
         [HttpGet("pick")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<AssetItem> Pick(string type, string asset, string post)
         {
             if (type == "postCover")
@@ -117,7 +118,7 @@ namespace Blogifier.Core.Api
         /// <param name="files">Selected files</param>
         /// <returns>Success or internal error</returns>
         [HttpPost("upload")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files)
         {
             try
@@ -140,7 +141,7 @@ namespace Blogifier.Core.Api
         /// <param name="url">Relative URL of the file to remove</param>
         /// <returns></returns>
         [HttpDelete("remove")]
-        [Authorize]
+        [RestrictToLocalhost]
         public IActionResult Remove(string url)
         {
             try

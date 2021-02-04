@@ -14,6 +14,7 @@ using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Controllers
 {
@@ -190,7 +191,7 @@ namespace Blogifier.Controllers
         }
 
         [HttpPost("upload/{uploadType}")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult> Upload(IFormFile file, UploadType uploadType, int postId = 0)
         {
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);

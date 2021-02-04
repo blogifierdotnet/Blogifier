@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blogifier.Core.Data;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Core.Api
 {
@@ -121,7 +122,7 @@ namespace Blogifier.Core.Api
         /// <param name="model">Author model</param>
         /// <returns>Success or 500 error</returns>
         [HttpPut("update")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult> Update(Author model)
         {
             try
@@ -155,7 +156,7 @@ namespace Blogifier.Core.Api
         /// <param name="model">Author model</param>
         /// <returns>Success or 500 error</returns>
         [HttpPut("changepwd")]
-        [Authorize]
+        [RestrictToLocalhost]
         public async Task<ActionResult> ChangePwd(ChangePasswordModel model)
         {
             try

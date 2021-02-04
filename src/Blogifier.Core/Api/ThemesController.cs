@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Blogifier.Core.FilterAttributes;
 
 namespace Blogifier.Core.Api
 {
@@ -30,7 +31,7 @@ namespace Blogifier.Core.Api
         /// </summary>
         /// <param name="page">Page number</param>
         /// <returns>List of themes</returns>
-        [Authorize]
+        [RestrictToLocalhost]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ThemeItem>>> Get(int page = 1)
         {
@@ -47,7 +48,7 @@ namespace Blogifier.Core.Api
             }
         }
 
-        [Authorize]
+        [RestrictToLocalhost]
         [HttpGet("getall")]
         public IList<string> GetAll()
         {
