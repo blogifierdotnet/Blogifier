@@ -5,13 +5,22 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Blogifier.Core.Api
 {
     public class CustomHttpClient : HttpClient
     {
+        private readonly ILogger<CustomHttpClient> _logger;
+
+        public CustomHttpClient(ILogger<CustomHttpClient> logger)
+        {
+            _logger = logger;
+        }
+        
         public async Task<T> GetJsonAsync<T>(string requestUri, HttpRequest request)
         {
+            _logger.LogInformation($"GetJsonAsync - {BaseAddress} - {requestUri}");
             HttpClientHandler clientHandler = GetHttpHandler(request);
             HttpClient httpClient = new HttpClient(clientHandler);
             var httpContent = await httpClient.GetAsync($"{BaseAddress}{requestUri}");
