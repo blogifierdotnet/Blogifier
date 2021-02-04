@@ -1,23 +1,25 @@
 @using Blogifier.Shared.Resources
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resource> _localizer
-
-<section class="widget">
-    <h5 class="widget-title">@_localizer["newsletter"]</h5>
-    <div class="widget-content">
-        <div class="blog-newsletter" id="newsletter">
-            <div id="newsletter-form">
-                <h2 id="ttlNewsletter" style="display:none">@_localizer["thank-you"]</h2>
-                <form id="frmNewsletter">
-                    <p class="blog-newsletter-desc" id="emailHelp">@_localizer["join-subscribers"]</p>
-                    <input class="form-control" id="txtEmail" name="txtEmail" placeholder="@_localizer["enter-email"]"
-                           type="email">
-                    <button id="blog-subscribe"
-                            class="btn btn-dark btn-block w-100 btn-subscribe">
-                        @_localizer["subscribe"]
-                    </button>
-                </form>
-            </div>
+@using Blogifier.Shared
+@{
+    ViewData["widgetTitle"] = "Newsletter";
+    Layout = "~/Views/Themes/Standard/layouts/_widgets.cshtml";
+}
+<!-- 
+    TODO:
+    The newsletter Thank you messages, button text, and title come from the Customize page.
+    but there should be defaults for these, which we use localize.
+ -->
+<div class="widget-newsletter" id="newsletter">
+    <div id="newsletter-form">
+        <form id="frmNewsletter" class="widget-newsletter-form">
+            <p class="widget-newsletter-desc">We notify you!</p>
+            <input class="form-control widget-newsletter-input" id="txtEmail" name="txtEmail" placeholder="youremail@example.com" type="email" required>
+            <button id="blog-subscribe" class="btn btn-dark btn-block w-100 widget-newsletter-button">
+                Subscribe
+            </button>
+        </form>
+        <div id="ttlNewsletter" class="widget-newsletter-thanks alert alert-success border-0 mb-0">
+            Thank you. You are subscribed.
         </div>
     </div>
-</section>
+</div>

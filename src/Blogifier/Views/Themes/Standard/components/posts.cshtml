@@ -15,8 +15,10 @@
         <div class="col-lg-4">
             <article class="bft-post-item mb-4">
                 <figure class="bft-post-item-cover">
-                    <img class="bft-post-item-img" src="~/@post.Cover" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
-                    <figcaption class="visually-hidden">@post.Title</figcaption>
+                    <a class="bft-post-item-coverlink" href="posts/@post.Slug">
+                        <img class="bft-post-item-img" src="~/@post.Cover" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                        <figcaption class="visually-hidden">@post.Title</figcaption>
+                    </a>
                 </figure>
                 <section class="bft-post-item-content">
                     <h2 class="bft-post-item-title">

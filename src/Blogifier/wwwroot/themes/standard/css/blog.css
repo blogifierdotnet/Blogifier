@@ -29,17 +29,14 @@ img {
     width: var(--bft-header-logo-width);
     height: var(--bft-header-logo-height); }
 
-.widget:not(:last-child) {
-  margin-bottom: 4rem; }
-
 .widget-title {
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.1em;
-  color: #999;
+  color: #aaa;
   font-size: 1rem;
   text-transform: uppercase;
   display: block;
-  margin-bottom: 1rem; }
+  margin-bottom: 2rem; }
 
 .widget-content ul {
   list-style: none;
@@ -122,11 +119,11 @@ img {
       background-color: rgba(255, 255, 255, 0.1); }
 
 .bft-featured {
-  margin-bottom: 5rem; }
+  margin-bottom: 6rem; }
   .bft-featured-figure {
     margin: 0; }
   .bft-featured-img {
-    border-radius: .25rem; }
+    border-radius: 0.25rem; }
   .bft-featured-title {
     font-size: 1.75rem;
     font-weight: 700;
@@ -266,52 +263,43 @@ img {
   .bft-post-content p {
     margin-bottom: 1.5rem; }
 
-.widget-posts-item {
-  position: relative;
-  padding-left: 5.5rem;
-  min-height: 4rem; }
-  .widget-posts-item:not(:last-child) {
+.widget-popular-item {
+  position: relative; }
+  .widget-popular-item:not(:last-child) {
     margin-bottom: 1rem; }
-  .widget-posts-item:hover .widget-posts-cover {
-    opacity: 1;
-    box-shadow: 0 15px 45px -5px rgba(7, 10, 25, 0.25);
-    -webkit-filter: brightness(1.07);
-    filter: brightness(1.07);
-    transform: translate(0, -2px); }
 
-.widget-posts-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.5;
+.widget-popular-link {
+  display: block;
+  min-height: 3rem; }
+
+.widget-popular-title {
   margin-bottom: 0rem;
+  font-size: 0.875rem;
+  line-height: 1.1;
+  padding-top: 0.25rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden; }
 
-.widget-posts-time {
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: #888;
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  display: block;
-  margin-top: 0.25rem; }
+.widget-popular-time {
+  color: #777;
+  font-size: 0.75rem;
+  line-height: 1; }
 
-.widget-posts-link {
-  display: block; }
-
-.widget-posts-cover {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4.5rem;
-  height: 4rem;
+.widget-popular-cover {
+  margin: 0;
+  position: relative;
+  min-width: 3rem;
+  max-width: 3rem;
+  flex-grow: 1;
+  height: 3rem;
   overflow: hidden;
-  box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2), 0 22px 27px -20px rgba(7, 10, 25, 0.2);
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+  border-radius: 0.25rem;
+  margin-right: 1rem; }
 
-.widget-posts-img {
+.widget-popular-img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -321,40 +309,35 @@ img {
   min-width: 100%;
   max-width: none; }
 
-.blog-newsletter-desc {
-  font-size: .875rem;
+.widget-newsletter-desc {
+  font-size: 0.875rem;
   color: #444;
   margin-bottom: 1rem; }
 
-.blog-newsletter .form-control {
+.widget-newsletter-input {
   background: none;
-  border-radius: 0;
   margin-bottom: 1rem; }
 
-.blog-newsletter .btn {
-  border-radius: 0; }
+.widget-newsletter-thanks {
+  display: none; }
 
-.widget-category {
-  border-top: 1px dashed #e5e5e5; }
-  .widget-category-item {
-    margin: 0; }
-  .widget-category-link {
-    font-size: 0.875rem;
-    font-weight: 500;
-    display: block;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    border-bottom: 1px dashed #e5e5e5;
-    color: #000;
-    text-transform: capitalize;
-    position: relative; }
-    .widget-category-link:hover {
-      color: var(--bft-color); }
-    .widget-category-link span {
-      position: absolute;
-      right: 0;
-      font-size: 0.625rem;
-      top: 50%;
-      transform: translateY(-50%); }
+.widget-category-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: block;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  color: #000;
+  text-transform: capitalize;
+  position: relative; }
+  .widget-category-link:hover {
+    color: var(--bft-color); }
+
+.widget-category-count {
+  position: absolute;
+  right: 0;
+  font-size: 0.625rem;
+  top: 50%;
+  transform: translateY(-50%); }
 
 /*# sourceMappingURL=blog.css.map */
