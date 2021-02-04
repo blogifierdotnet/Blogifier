@@ -4,41 +4,63 @@
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-    
+
 }
 
-<main class="container">
-    <article class="post-single">
-        <header class="post-header">
-            <div class="post-cats">
+<main class="container bft-post-wrap">
+    <article class="bft-post">
+        <header class="bft-post-header">
+            <h1 class="bft-post-title">@postModel.Post.Title</h1>
+            <div class="bft-post-meta d-flex align-items-center">
+                <div class="bft-post-author me-3 d-flex align-items-center">
+                    <img class="bft-post-author-img" width="18" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
+                    <span class="bft-post-author-name">@postModel.Post.Author.DisplayName</span>
+                </div>
+                <time class="bft-post-time me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                    <span>@postModel.Post.Published.ToFriendlyDateString()</span>
+                </time>
                 @if (postModel.Post.Categories != null && postModel.Post.Categories.Count > 0)
                 {
-                    foreach (var cat in postModel.Post.Categories)
-                    {
-                        <a href="@catUrl/@cat">@cat</a>
-                    }
+                    <div class="bft-post-cats me-3">
+                        <ul class="bft-post-cats-list d-flex">
+                            @foreach (var cat in postModel.Post.Categories)
+                            {
+                                <li class="bft-post-cats-item me-3">
+                                    <a class="bft-post-cats-link" href="@catUrl/@cat.Content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-hash" viewBox="0 0 16 16">
+                                            <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.188-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.512.512 0 0 0-.523-.516.539.539 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.187.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.188.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z"/>
+                                        </svg>@cat.Content
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 }
-            </div>
-            <h1 class="post-title">@postModel.Post.Title</h1>
-            <div class="post-meta d-flex">
-                <div class="post-author">
-                    <img class="post-author-img" width="24" src="~/@postModel.Post.Author.Avatar"
-                        alt="@postModel.Post.Author.DisplayName" />
-                    <span class="post-author-name">@postModel.Post.Author.DisplayName</span>
-                </div>
-                <time class="post-time"><span class="post-meta-sep">-</span>@string.Format("{0:MMM d yyyy}", postModel.Post.Published)</time>
             </div>
         </header>
 
-        <figure class="post-cover">
-            <img class="post-cover-img" src="@cover" alt="@postModel.Post.Title">
+            
+        <div class="bft-post-description">
+           @Html.Raw(postModel.Post.Description) 
+        </div> 
+
+        <figure class="bft-post-cover">
+            <img class="bft-post-cover-img" src="@cover" alt="@postModel.Post.Title">
         </figure>
 
-        <section class="post-body">
+        <section class="bft-post-content">
             @Html.Raw(postModel.Post.Content)
-        </section> 
+        </section>
 
-        @if (postModel.Older != null || postModel.Newer != null)
+        
+    </article>
+
+    <div class="container">
+    @if (postModel.Older != null || postModel.Newer != null)
         {
             <ul class="pagination justify-content-center">
                 @if (postModel.Older != null)
@@ -59,10 +81,6 @@
                 }
             </ul>
         }
-    </article>
-
-    <div class="container">
         <div id="disqus_thread"></div>
     </div>
 </main>
- 

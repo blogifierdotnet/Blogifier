@@ -370,24 +370,24 @@ namespace Blogifier.Core.Providers
 			if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
 			{
 				var drafts = author > 0 ?
-					 _db.Posts.Where(p => p.Published == DateTime.MinValue && p.AuthorId == author).ToList() :
-					 _db.Posts.Where(p => p.Published == DateTime.MinValue).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue).ToList();
 				items = items.Concat(drafts).ToList();
 			}
 
 			if (include.ToUpper().Contains("F") || string.IsNullOrEmpty(include))
 			{
 				var featured = author > 0 ?
-					 _db.Posts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(featured).ToList();
 			}
 
 			if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
 			{
 				var published = author > 0 ?
-					 _db.Posts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(published).ToList();
 			}
 

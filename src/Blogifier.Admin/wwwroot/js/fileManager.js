@@ -31,7 +31,8 @@
 	}
 
 	function postCoverCallback(data) {
-		$('#cover').val(data);
+      //$('#cover').val(data);
+      $('#cover').style.backgroundImage = data;
 	}
 
 	function userAvatarCallback(data) {

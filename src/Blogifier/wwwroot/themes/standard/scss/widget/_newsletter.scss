@@ -1,18 +1,14 @@
-.blog-newsletter {
+.widget-newsletter {
   &-desc {
-    font-size: .875rem;
+    font-size: 0.875rem;
     color: #444;
     margin-bottom: 1rem;
-
   }
-
-  .form-control {
+  &-input {
     background: none;
-    border-radius: 0;
     margin-bottom: 1rem;
   }
-
-  .btn {
-    border-radius: 0;
+  &-thanks {
+    display: none;
   }
 }

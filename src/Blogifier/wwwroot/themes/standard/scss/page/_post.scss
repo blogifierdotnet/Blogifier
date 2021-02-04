@@ -1,0 +1,88 @@
+.bft-post {
+  &-wrap {
+    max-width: 50rem;
+    width: 100%;
+  }
+
+  &-header {
+    margin-bottom: 2rem;
+  }
+
+  &-title {
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+
+  &-meta {
+    color: #999;
+    font-size: 0.875rem;
+    a {
+      color: #999;
+      &:hover {
+        color: $color;
+      }
+    }
+  }
+
+  &-author {
+    &-name {
+      text-transform: capitalize;
+    }
+    &-img {
+      border-radius: 100%;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &-time {}
+
+  &-cats {
+    &-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    &-item {
+      margin-right: 0.75rem;
+    }
+  }
+
+  &-description {
+    font-weight: 300;
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
+  }
+
+  &-cover {
+    margin-bottom: 3rem;
+  }
+
+  &-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    img {
+      border-radius: .25rem;
+    }
+    h2{
+      font-size:1.75rem;
+      font-weight: 600;
+      color:#000;
+    }
+    h3{
+      font-size:1.5rem;
+    }
+    h4{
+      font-size:1.25rem;
+    }
+    iframe{
+      width:100% !important;
+      border-radius: .25rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+}

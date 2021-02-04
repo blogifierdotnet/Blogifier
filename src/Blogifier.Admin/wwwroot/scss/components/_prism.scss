@@ -1,0 +1,189 @@
+$syntax-foreground: #212529;
+$syntax-background: #f8f9fa;
+$syntax-comments: #90a4ae;
+$syntax-red: #e53935;
+$syntax-orange: #366;
+$syntax-yellow: #c30;
+$syntax-green: #c30;
+$syntax-cyan: #212529;
+$syntax-blue: #366;
+$syntax-paleblue: #8796b0;
+$syntax-purple: #006ee0;
+$syntax-brown: #c17e70;
+$syntax-pink: #2f6f9f;
+$syntax-violet: #006ee0;
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: $syntax-foreground;
+  background: none;
+  border-radius: 0.25rem;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.875rem;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  padding: 2rem;
+  margin: 1rem 0 1.5rem;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: $syntax-background;
+}
+
+:not(pre) > code[class*="language-"] {
+  padding: 0.1rem;
+  white-space: normal;
+}
+
+.token {
+  &.script.language-javascript {
+    color: $syntax-foreground;
+  }
+
+  &.comment,
+  &.block-comment,
+  &.prolog,
+  &.doctype,
+  &.cdata {
+    color: $syntax-comments;
+  }
+
+  &.attr-name,
+  &.namespace,
+  &.deleted {
+    color: $syntax-violet;
+  }
+
+  &.function,
+  &.function-name {
+    color: $syntax-blue;
+  }
+
+  &.unit,
+  &.url,
+  &.boolean,
+  &.number {
+    color: $syntax-orange;
+  }
+
+  &.color,
+  &.hexcode,
+  &.builtin,
+  &.property,
+  &.class,
+  &.class-name,
+  &.constant,
+  &.symbol {
+    color: $syntax-yellow;
+  }
+
+  &.id,
+  &.selector,
+  &.important,
+  &.atrule,
+  &.keyword {
+    color: $syntax-purple;
+  }
+
+  &.pseudo-class,
+  &.pseudo-element,
+  &.inserted,
+  &.attribute,
+  &.string,
+  &.char,
+  &.attr-value,
+  &.regex,
+  &.variable {
+    color: $syntax-green;
+  }
+
+  &.punctuation,
+  &.operator,
+  &.entity,
+  &.url {
+    color: $syntax-cyan;
+  }
+
+  &.tag {
+    color: $syntax-pink;
+  }
+
+  &.parameter,
+  &.deleted {
+    color: $syntax-red;
+  }
+
+  &.important,
+  &.bold {
+    font-weight: bold;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+
+  &.entity {
+    cursor: help;
+  }
+}
+
+// toolbar
+.code-toolbar {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  > pre {
+    margin: 0;
+  }
+  &:hover {
+    .toolbar {
+      opacity: 1;
+      visibility: visible;
+      top: 0;
+    }
+  }
+  .toolbar {
+    visibility: hidden;
+
+    transition: all ease 0.25s;
+    padding: 1rem;
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    display: flex;
+    font-size: 0.875rem;
+    align-items: center;
+    color: #777;
+    &-item {
+      margin-left: 1rem;
+      button {
+        border: 0;
+        color: #fff;
+        border-radius: 1rem;
+        padding: 0.125rem 1rem;
+        background-color: $color;
+        &:hover {
+          background-color: #000;
+        }
+      }
+    }
+  }
+}

@@ -73,6 +73,28 @@ namespace Blogifier.Controllers
 			return Redirect($"/home?term={term}");
 		}
 
+		[HttpGet("categories/{category}")]
+		public async Task<IActionResult> Categories(string category, int page = 1)
+		{
+			var model = new ListModel { PostListType = PostListType.Category };
+			try
+			{
+				model.Blog = await _blogProvider.GetBlogItem();
+			}
+			catch
+			{
+				return Redirect("~/admin");
+			}
+
+			model.Pager = new Pager(page, model.Blog.ItemsPerPage);
+			model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
+
+			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
+			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
+
+			return View($"~/Views/Themes/{model.Blog.Theme}/List.cshtml", model);
+		}
+
 		[HttpGet("posts/{slug}")]
 		public async Task<IActionResult> Single(string slug)
 		{

@@ -18,12 +18,13 @@
 @import "components/featured";
 @import "components/pager";
 @import "components/copyright";
+@import "components/prism";
 
 // pages
 @import "page/list";
 @import "page/post";
  
 // widgets
-@import "widget/posts";
+@import "widget/popular";
 @import "widget/newsletter";
 @import "widget/categories";
