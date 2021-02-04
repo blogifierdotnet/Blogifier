@@ -58,9 +58,30 @@
   }
 
   &-content {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.8;
     p {
+      margin-bottom: 1.5rem;
+    }
+
+    img {
+      border-radius: .25rem;
+    }
+    h2{
+      font-size:1.75rem;
+      font-weight: 600;
+      color:#000;
+    }
+    h3{
+      font-size:1.5rem;
+    }
+    h4{
+      font-size:1.25rem;
+    }
+    iframe{
+      width:100% !important;
+      border-radius: .25rem;
+      margin-top: 1rem;
       margin-bottom: 1.5rem;
     }
   }

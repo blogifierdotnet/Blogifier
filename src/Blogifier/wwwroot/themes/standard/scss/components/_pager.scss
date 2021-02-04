@@ -1,0 +1,26 @@
+.bft-pager {
+  .nav-item {
+    margin-right: 0.25rem;
+  }
+  a {
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+    color: #888;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem 0.375rem;
+
+    &:hover {
+      color: #fff;
+      background-color: $color;
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: inline;
+      transform: translateY(-2px);
+    }
+  }
+}

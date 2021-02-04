@@ -56,5 +56,9 @@
     margin-bottom: 1.5rem;
   }
   &-more {
+    color:$color;
+    &:hover{
+      color:#000;
+    }
   }
 }

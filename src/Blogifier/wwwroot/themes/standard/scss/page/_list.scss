@@ -5,12 +5,11 @@
   &-cover {
     margin: 0 0 1rem;
   }
-  &-img{
-    border-radius: .25rem;
-
+  &-img {
+    border-radius: 0.25rem;
   }
   &-content {
-    padding: 0 .25rem;
+    padding: 0 0.25rem;
   }
 
   // title
@@ -66,6 +65,9 @@
     color: #444;
     font-weight: 500;
     display: inline-block;
-    font-size:.875rem;
+    font-size: 0.875rem;
+    &:hover {
+      color: $color;
+    }
   }
 }

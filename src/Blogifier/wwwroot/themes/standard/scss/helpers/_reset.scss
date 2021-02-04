@@ -1,9 +1,5 @@
 a {
-  color: $color;
   text-decoration: none;
-  &:hover {
-    color: $color-hover;
-  }
 }
 img {
   max-width: 100%;
