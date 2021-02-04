@@ -25,6 +25,7 @@ namespace Blogifier.Core.Api
             HttpClient httpClient = new HttpClient(clientHandler);
             var httpContent = await httpClient.GetAsync($"{BaseAddress}{requestUri}");
             string jsonContent = httpContent.Content.ReadAsStringAsync().Result;
+            _logger.LogInformation($"GetJsonAsync - resp - {jsonContent}");
             T obj = JsonConvert.DeserializeObject<T>(jsonContent);
             httpContent.Dispose();
             httpClient.Dispose();
