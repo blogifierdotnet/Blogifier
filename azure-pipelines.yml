@@ -62,5 +62,6 @@ stages:
              dockerComposeFileArgs: |
                RUSETFS_BLOGIFIER_DATA_DIR=d:\data\blogifier
                RUSETFS_BLOGIFIER_APP_VERSION=$(Build.BuildId)
+               ASPNETCORE_ENVIRONMENT=Staging
 
 
