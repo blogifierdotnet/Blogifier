@@ -32,7 +32,7 @@
 
    function postCoverCallback(data) {
       var cover = document.getElementById("post-cover");
-      cover.style.backgroundImage = "url('" + data + "')";
+      cover.src = data;
 	}
 
 	function userAvatarCallback(data) {

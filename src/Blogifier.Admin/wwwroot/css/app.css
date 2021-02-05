@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*
  * Bootstrap v5.0.0-beta1 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -7876,107 +7875,74 @@ body {
     .app-list-titlea:hover {
       color: #791ae6; }
 
-/* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism-dark&languages=markup+css+clike+javascript+aspnet+csharp+git+json+json5+jsonp+markdown+sass+scss+sql+yaml&plugins=line-numbers+custom-class+show-language+toolbar+copy-to-clipboard */
-/**
- * prism.js Dark theme for JavaScript, CSS and HTML
- * Based on the slides of the talk “/Reg(exp){2}lained/”
- * @author Lea Verou
- */
 code[class*="language-"],
 pre[class*="language-"] {
-  color: white;
+  color: #212529;
   background: none;
-  text-shadow: 0 -.1em .2em black;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 1em;
+  border-radius: 0.25rem;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.875rem;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  line-height: 1.5;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
+  line-height: 1.6;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none; }
 
-@media print {
-  code[class*="language-"],
-  pre[class*="language-"] {
-    text-shadow: none; } }
-
-pre[class*="language-"],
-:not(pre) > code[class*="language-"] {
-  background: #4d4033; }
-
-/* Code blocks */
 pre[class*="language-"] {
-  padding: 1em;
-  margin: .5em 0;
-  overflow: auto;
-  border: 0.3em solid #7a6652;
-  border-radius: .5em;
-  box-shadow: 1px 1px .5em black inset; }
+  padding: 2rem;
+  margin: 1rem 0 1.5rem;
+  overflow: auto; }
 
-/* Inline code */
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #f8f9fa; }
+
 :not(pre) > code[class*="language-"] {
-  padding: .15em .2em .05em;
-  border-radius: .3em;
-  border: 0.13em solid #7a6652;
-  box-shadow: 1px 1px .3em -.1em black inset;
+  padding: 0.1rem;
   white-space: normal; }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #998066; }
+.token.script.language-javascript {
+  color: #212529; }
 
-.token.punctuation {
-  opacity: .7; }
+.token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata {
+  color: #90a4ae; }
 
-.token.namespace {
-  opacity: .7; }
+.token.attr-name, .token.namespace, .token.deleted {
+  color: #006ee0; }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol {
-  color: #d1949e; }
+.token.function, .token.function-name {
+  color: #366; }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-  color: #bde052; }
+.token.unit, .token.url, .token.boolean, .token.number {
+  color: #366; }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-  color: #f5b83d; }
+.token.color, .token.hexcode, .token.builtin, .token.property, .token.class, .token.class-name, .token.constant, .token.symbol {
+  color: #c30; }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #d1949e; }
+.token.id, .token.selector, .token.important, .token.atrule, .token.keyword {
+  color: #006ee0; }
 
-.token.regex,
-.token.important {
-  color: #e90; }
+.token.pseudo-class, .token.pseudo-element, .token.inserted, .token.attribute, .token.string, .token.char, .token.attr-value, .token.regex, .token.variable {
+  color: #c30; }
 
-.token.important,
-.token.bold {
+.token.punctuation, .token.operator, .token.entity, .token.url {
+  color: #212529; }
+
+.token.tag {
+  color: #2f6f9f; }
+
+.token.parameter, .token.deleted {
+  color: #e53935; }
+
+.token.important, .token.bold {
   font-weight: bold; }
 
 .token.italic {
@@ -7985,100 +7951,37 @@ pre[class*="language-"] {
 .token.entity {
   cursor: help; }
 
-.token.deleted {
-  color: red; }
-
-pre[class*="language-"].line-numbers {
+.code-toolbar {
   position: relative;
-  padding-left: 3.8em;
-  counter-reset: linenumber; }
-
-pre[class*="language-"].line-numbers > code {
-  position: relative;
-  white-space: inherit; }
-
-.line-numbers .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-  font-size: 100%;
-  left: -3.8em;
-  width: 3em;
-  /* works for line-numbers below 1000 lines */
-  letter-spacing: -1px;
-  border-right: 1px solid #999;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; }
-
-.line-numbers-rows > span {
-  display: block;
-  counter-increment: linenumber; }
-
-.line-numbers-rows > span:before {
-  content: counter(linenumber);
-  color: #999;
-  display: block;
-  padding-right: 0.8em;
-  text-align: right; }
-
-div.code-toolbar {
-  position: relative; }
-
-div.code-toolbar > .toolbar {
-  position: absolute;
-  top: .3em;
-  right: .2em;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0; }
-
-div.code-toolbar:hover > .toolbar {
-  opacity: 1; }
-
-/* Separate line b/c rules are thrown out if selector is invalid.
-    IE11 and old Edge versions don't support :focus-within. */
-div.code-toolbar:focus-within > .toolbar {
-  opacity: 1; }
-
-div.code-toolbar > .toolbar .toolbar-item {
-  display: inline-block; }
-
-div.code-toolbar > .toolbar a {
-  cursor: pointer; }
-
-div.code-toolbar > .toolbar button {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  padding: 0;
-  -webkit-user-select: none;
-  /* for button */
-  -moz-user-select: none;
-  -ms-user-select: none; }
-
-div.code-toolbar > .toolbar a,
-div.code-toolbar > .toolbar button,
-div.code-toolbar > .toolbar span {
-  color: #bbb;
-  font-size: .8em;
-  padding: 0 .5em;
-  background: #f5f2f0;
-  background: rgba(224, 224, 224, 0.2);
-  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
-  border-radius: .5em; }
-
-div.code-toolbar > .toolbar a:hover,
-div.code-toolbar > .toolbar a:focus,
-div.code-toolbar > .toolbar button:hover,
-div.code-toolbar > .toolbar button:focus,
-div.code-toolbar > .toolbar span:hover,
-div.code-toolbar > .toolbar span:focus {
-  color: inherit;
-  text-decoration: none; }
+  overflow: hidden;
+  margin-bottom: 2rem; }
+  .code-toolbar > pre {
+    margin: 0; }
+  .code-toolbar:hover .toolbar {
+    opacity: 1;
+    visibility: visible;
+    top: 0; }
+  .code-toolbar .toolbar {
+    visibility: hidden;
+    transition: all ease 0.25s;
+    padding: 1rem;
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    display: flex;
+    font-size: 0.875rem;
+    align-items: center;
+    color: #777; }
+    .code-toolbar .toolbar-item {
+      margin-left: 1rem; }
+      .code-toolbar .toolbar-item button {
+        border: 0;
+        color: #fff;
+        border-radius: 1rem;
+        padding: 0.125rem 1rem;
+        background-color: #791ae6; }
+        .code-toolbar .toolbar-item button:hover {
+          background-color: #000; }
 
 .app-account {
   padding: 5rem 1.5rem;
