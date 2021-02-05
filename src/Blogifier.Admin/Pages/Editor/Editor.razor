@@ -11,7 +11,7 @@
 
 
         <div class="app-editor-header row">
-            <div class="col-md-7">
+            <div id="post-cover" name="post-cover" style="background-image: url(@Post.Cover)" class="col-md-7">
                 <input type="text" class="app-editor-control app-editor-control-title" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" autocomplete="off" autofocus />
                 <textarea class="app-editor-control app-editor-control-desc" @bind="Post.Description" name="description" rows="2" placeholder="@_localizer["description"]..." />
             </div>

@@ -30,9 +30,9 @@
 		$('#cover').val(data);
 	}
 
-	function postCoverCallback(data) {
-      //$('#cover').val(data);
-      $('#cover').style.backgroundImage = data;
+   function postCoverCallback(data) {
+      var cover = document.getElementById("post-cover");
+      cover.style.backgroundImage = "url('" + data + "')";
 	}
 
 	function userAvatarCallback(data) {
