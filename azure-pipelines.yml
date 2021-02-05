@@ -63,5 +63,35 @@ stages:
                RUSETFS_BLOGIFIER_DATA_DIR=d:\data\blogifier
                RUSETFS_BLOGIFIER_APP_VERSION=$(Build.BuildId)
                RUSETFS_BLOGIFIER_ENVIRONMENT=Staging
+- stage: production
+  jobs:
+  - deployment: deployOnCompose
+    environment:
+      name: Production
+      resourceType: VirtualMachine
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+         - task: Docker@2
+           inputs:
+             command: login
+             containerRegistry: $(dockerRegistry)
+         - task: DownloadPipelineArtifact@2
+           inputs:
+             artifactName: $(dockerComposeArtifact)
+             targetPath: $(Build.SourcesDirectory)
+         - task: DockerCompose@0
+           inputs:
+             action: Run services
+             containerregistrytype: Container Registry
+             dockerRegistryEndpoint: $(dockerRegistry)
+             dockerComposeFile: $(Build.SourcesDirectory)/$(dockerComposeFile)
+             buildImages: false
+             dockerComposeFileArgs: |
+               RUSETFS_BLOGIFIER_DATA_DIR=d:\data\blogifier
+               RUSETFS_BLOGIFIER_APP_VERSION=$(Build.BuildId)
+
+
 
 
