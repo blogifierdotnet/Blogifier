@@ -113,6 +113,7 @@
             margin-top: 0;
             margin-bottom: 0;
             position: relative;
+            min-width: 2.5rem;
 
             .form-check-input {
                 vertical-align: top;
@@ -130,7 +131,9 @@
             font-weight: 500;
             display: block;
             font-size: .875rem;
-
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             &:hover {
                 color: $blogifier;
             }
@@ -142,6 +145,7 @@
         &-date {
             font-size: .875rem;
             color: #aaa;
+            white-space: nowrap;
         }
 
         &-status,
@@ -153,6 +157,7 @@
             background: none;
             width: 2.5rem;
             height: 2.5rem;
+            min-width:2.5rem;
             display: block;
             text-align: center;
 

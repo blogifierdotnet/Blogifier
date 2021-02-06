@@ -1,85 +1,88 @@
-
 // List - we move it later
 $app-list-height: 2.5rem;
 
 .app-list {
+  padding: 0;
+  margin: 1rem 0;
+  list-style: none;
+  border-top: 1px solid #e6e6e6;
+
+  &-toolbar {
+    margin-bottom: 1rem;
+  }
+
+  &-item {
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  &-icon {
+    background: none;
     padding: 0;
-    margin: 1rem 0;
-    list-style: none;
-    border-top: 1px solid #e6e6e6;
+    border: 0;
+    height: 100%;
+    text-align: center;
+    width: $app-list-height;
+    height: $app-list-height;
 
-    &-toolbar {
-        margin-bottom: 1rem;
+    svg {
+      height: 100%;
     }
+  }
 
-    &-item {
-        border-bottom: 1px solid #e6e6e6;
+  &-text {
+    line-height: $app-list-height;
+    margin-left: 1rem;
+  }
+
+  &-btn {
+    background: none;
+    padding: 0;
+    border: 0;
+    height: 100%;
+    text-align: center;
+    width: $app-list-height;
+    height: $app-list-height;
+    margin-left: 1rem;
+
+    svg {
+      height: 100%;
     }
+  }
 
-    &-icon {
-        background: none;
-        padding: 0;
-        border: 0;
-        height: 100%;
-        text-align: center;
-        width: $app-list-height;
-        height: $app-list-height;
+  &-select {
+    height: $app-list-height;
+    width: $app-list-height;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
 
-        svg {
-            height: 100%;
-        }
+    .form-check-input {
+      vertical-align: top;
+      transform: translateY(-50%);
+      position: absolute;
+      top: 50%;
+      left: 0;
+      margin: 0;
     }
+  }
 
-    &-text {
-        line-height: $app-list-height;
-        margin-left: 1rem;
+  &-title {
+    flex-grow: 1;
+    line-height: 2.5rem;
+    color: #666;
+    font-weight: 500;
+    display: block;
+    font-size: 0.875rem;
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &a {
+      &:hover {
+        color: $blogifier;
+      }
     }
-
-    &-btn {
-        background: none;
-        padding: 0;
-        border: 0;
-        height: 100%;
-        text-align: center;
-        width: $app-list-height;
-        height: $app-list-height;
-        margin-left: 1rem;
-
-        svg {
-            height: 100%;
-        }
-    }
-
-    &-select {
-        height: $app-list-height;
-        width: $app-list-height;
-        padding: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        position: relative;
-
-        .form-check-input {
-            vertical-align: top;
-            transform: translateY(-50%);
-            position: absolute;
-            top: 50%;
-            left: 0;
-            margin: 0;
-        }
-    }
-
-    &-title {
-        flex-grow: 1;
-        line-height: 2.5rem;
-        color: #666;
-        font-weight: 500;
-        display: block;
-        font-size: 0.875rem;
-
-        &a {
-            &:hover {
-                color: $blogifier;
-            }
-        }
-    }
+  }
 }
