@@ -253,7 +253,7 @@ namespace Blogifier.Core.Data
                     Slug = item.Slug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
-                    Categories = item.Categories,
+                    Categories = item.Categories?.ToLower(),
                     Cover = item.Cover ?? cover,
                     AuthorId = item.Author.Id,
                     IsFeatured = item.Featured,
@@ -273,7 +273,7 @@ namespace Blogifier.Core.Data
                 post.Title = item.Title;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
-                post.Categories = item.Categories;
+                post.Categories = item.Categories?.ToLower();
                 post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
                 post.IsFeatured = item.Featured;
