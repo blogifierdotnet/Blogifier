@@ -64,7 +64,7 @@ namespace Blogifier.Core.Api
             };
         }
 
-        [HttpPut("subscribe")]
+        [HttpPost("subscribe")]
         [EnableCors("AllowOrigin")]
         public IActionResult Subscribe([FromBody] Newsletter letter)
         {
