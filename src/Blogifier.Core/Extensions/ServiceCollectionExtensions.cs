@@ -83,24 +83,18 @@ namespace Blogifier.Core.Extensions
         {
             var supportedCultures = new HashSet<CultureInfo>()
             {
-                new CultureInfo("en-US"),
-                new CultureInfo("es-ES"),
-                new CultureInfo("pt-BR"),
-                new CultureInfo("ru-RU"),
-                new CultureInfo("sv-SE"),
-                new CultureInfo("zh-cn"),
-                new CultureInfo("zh-tw")
+                new CultureInfo("ru-RU")
             };
 
             services.AddJsonLocalization(options => {
-                options.DefaultCulture = new CultureInfo("en-US");
+                options.DefaultCulture = new CultureInfo("ru-RU");
                 options.ResourcesPath = "Resources";
                 options.SupportedCultureInfos = supportedCultures;
             });
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.DefaultRequestCulture = new RequestCulture(culture: "ru-RU", uiCulture: "ru-RU");
                 options.SupportedCultures = supportedCultures.ToArray();
                 options.SupportedUICultures = supportedCultures.ToArray();
             });
