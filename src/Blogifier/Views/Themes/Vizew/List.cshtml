@@ -50,7 +50,9 @@
                                         <div class="col-12 col-lg-6">
                                             <!-- Post Thumbnail -->
                                             <div class="post-thumbnail">
-                                                <img src="~/@post.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                                                <a href="posts/@post.Slug">
+                                                    <img src="~/@post.Cover.ToThumb()" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                                                </a>
                                                 <!-- Video Duration -->
                                                 @if (post.Featured)
                                                 {
@@ -75,7 +77,9 @@
                                                     <i class="fa fa-circle" aria-hidden="true"></i>
                                                     <span class="post-date">@post.Published.ToFriendlyDateString()</span>
                                                 </div>
-                                                <p class="mb-2">@Html.Raw(post.Description)</p>
+                                                <a href="posts/@post.Slug">
+                                                    <p class="mb-2">@Html.Raw(post.Description)</p>
+                                                </a>
                                                 <div class="post-meta d-flex">
                                                     <span><i class="fa fa-eye" aria-hidden="true"></i> @post.PostViews</span>
                                                     <span>
