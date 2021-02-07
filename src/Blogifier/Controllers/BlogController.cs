@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Blogifier.Core.FilterAttributes;
+using Microsoft.Extensions.Options;
 
 namespace Blogifier.Controllers
 {
@@ -24,13 +25,20 @@ namespace Blogifier.Controllers
         protected IStorageService StorageService;
         protected SignInManager<AppUser> SignInManager;
         protected IFeedService FeedService;
+        private readonly IOptionsMonitor<AppItem> _appSettingsMonitor;
 
-        public BlogController(IDataService data, IStorageService storage, SignInManager<AppUser> signInMgr, IFeedService feedService)
+        public BlogController(
+            IDataService data,
+            IStorageService storage,
+            SignInManager<AppUser> signInMgr,
+            IFeedService feedService,
+            IOptionsMonitor<AppItem> appSettingsMonitor)
         {
             DataService = data;
             StorageService = storage;
             SignInManager = signInMgr;
             FeedService = feedService;
+            _appSettingsMonitor = appSettingsMonitor;
         }
 
         public async Task<IActionResult> Index(string term, int page = 1)
@@ -126,12 +134,17 @@ namespace Blogifier.Controllers
         [HttpGet("feed/{type}")]
         public async Task<IActionResult> Rss(string type, int count = 3)
         {
-            string host = Request.Scheme + "://" + Request.Host;
+            var sitemapBaseUri = _appSettingsMonitor.CurrentValue.SitemapBaseUri;
+            if (string.IsNullOrEmpty(_appSettingsMonitor.CurrentValue.SitemapBaseUri))
+            {
+                sitemapBaseUri = $"{Request.Scheme}://{Request.Host}";
+            }
+        
             var blog = await DataService.CustomFields.GetBlogSettings();
             var posts = await DataService.BlogPosts.GetList(count);
             var items = new List<SyndicationItem>();
 
-            host = $"{host}{Url.Content("~/")}";
+            var host = $"{sitemapBaseUri}{Url.Content("~/")}";
 
             var feed = new SyndicationFeed(
                 blog.Title, 
