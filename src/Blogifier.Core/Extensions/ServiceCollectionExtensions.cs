@@ -53,6 +53,7 @@ namespace Blogifier.Core.Extensions
 			services.AddScoped<IThemeProvider, ThemeProvider>();
 			services.AddScoped<IRssImportProvider, RssImportProvider>();
 			services.AddScoped<ISyndicationProvider, SyndicationProvider>();
+			services.AddScoped<IAboutProvider, AboutProvider>();
 
 			return services;
 		}
