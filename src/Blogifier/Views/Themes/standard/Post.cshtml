@@ -4,7 +4,6 @@
     PostModel postModel = (PostModel)Model;
     string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
     var catUrl = Url.Content("~/categories");
-
 }
 
 <main class="container bft-post-wrap">
@@ -12,9 +11,9 @@
         <header class="bft-post-header">
             <h1 class="bft-post-title">@postModel.Post.Title</h1>
             <div class="bft-post-meta d-flex align-items-center">
-                <div class="bft-post-author me-3 d-flex align-items-center">
-                    <img class="bft-post-author-img" width="18" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
-                    <span class="bft-post-author-name">@postModel.Post.Author.DisplayName</span>
+                <div class="bft-post-by me-3 d-flex align-items-center">
+                    <img class="bft-post-by-img" width="18" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
+                    <span class="bft-post-by-name">@postModel.Post.Author.DisplayName</span>
                 </div>
                 <time class="bft-post-time me-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
@@ -58,40 +57,31 @@
 
         <div class="bft-post-description">
            @Html.Raw(postModel.Post.Description) 
-        </div> 
+        </div>
 
         <figure class="bft-post-cover">
-            <img class="bft-post-cover-img" src="@cover" alt="@postModel.Post.Title">
+            <img class="bft-post-cover-img rounded" src="@cover" alt="@postModel.Post.Title">
         </figure>
 
         <section class="bft-post-content">
             @Html.Raw(postModel.Post.Content)
         </section>
-
+       
     </article>
 
-    <div class="container">
-    @if (postModel.Older != null || postModel.Newer != null)
-        {
-            <ul class="pagination justify-content-center">
-                @if (postModel.Older != null)
-                {
-                    <li class="item item-prev">
-                        <a class="item-link" href="@postModel.Older.Slug" title="@postModel.Older.Title">
-                            <i class="item-icon fa fa-angle-left"></i>
-                        </a>
-                    </li>
-                }
-                @if (postModel.Newer != null)
-                {
-                    <li class="item item-next">
-                        <a class="item-link" href="@postModel.Newer.Slug" title="@postModel.Newer.Title">
-                            <i class="item-icon fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                }
-            </ul>
-        }
-        <div id="disqus_thread"></div>
-    </div>
+    <!-- SHARE -->
+    <partial name="components/post-share.cshtml" />
+
+    <!-- AUTHOR -->
+    <partial name="components/post-author.cshtml"/>
+
+    <!-- COMMENTS -->
+    <partial name="components/post-comments.cshtml" />
+
+    <!-- RELATED -->
+    <partial name="components/post-related.cshtml" />
+
+    <!-- NAV -->
+    <partial name="components/post-nav.cshtml" />
+
 </main>

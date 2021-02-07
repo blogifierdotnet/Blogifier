@@ -7,11 +7,11 @@
     var categories = await _categoryProvider.Categories();
     var catUrl = Url.Content("~/categories");
 }
-<ul class="widget-category">
+<ul class="bft-widget-category">
     @foreach (var item in categories)
     {
-        <li class="widget-category-item">
-            <a class="widget-category-link" href="@catUrl/@item.Category">@item.Category</a>
+        <li class="bft-widget-category-item">
+            <a class="bft-widget-category-link" href="@catUrl/@item.Category">@item.Category</a>
         </li>
     }
 </ul>

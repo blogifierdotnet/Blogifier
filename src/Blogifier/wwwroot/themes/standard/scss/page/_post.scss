@@ -24,7 +24,7 @@
     }
   }
 
-  &-author {
+  &-by {
     &-name {
       text-transform: capitalize;
     }
@@ -33,8 +33,6 @@
       margin-right: 0.5rem;
     }
   }
-
-  &-time {}
 
   &-cats {
     &-list {
@@ -60,29 +58,66 @@
   &-content {
     font-size: 1rem;
     line-height: 1.8;
+    margin-bottom: 2rem;
     p {
       margin-bottom: 1.5rem;
     }
 
     img {
-      border-radius: .25rem;
+      border-radius: 0.25rem;
     }
-    h2{
-      font-size:1.75rem;
+    h2 {
+      font-size: 1.75rem;
       font-weight: 600;
-      color:#000;
+      color: #000;
     }
-    h3{
-      font-size:1.5rem;
+    h3 {
+      font-size: 1.5rem;
     }
-    h4{
-      font-size:1.25rem;
+    h4 {
+      font-size: 1.25rem;
     }
-    iframe{
-      width:100% !important;
-      border-radius: .25rem;
+    iframe {
+      width: 100% !important;
+      border-radius: 0.25rem;
       margin-top: 1rem;
       margin-bottom: 1.5rem;
+    }
+  }
+
+  &-component {
+    margin-top: 4rem;
+    &-title {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #888;
+    }
+  }
+
+  &-author {
+    &-name {
+      font-size: 1.125rem;
+      text-transform: capitalize;
+    }
+    &-bio {
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+    &-img {
+    }
+  }
+
+  &-nav {
+    &-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &-item {
+    }
+    &-link {
     }
   }
 }

@@ -10,17 +10,17 @@
     var popular = await _postProvider.GetPopular(new Pager(1, 2));
 }
 
-<ul class="widget-popular">
+<ul class="bft-widget-popular">
     @foreach (var item in popular)
     {
-        <li class="widget-popular-item">
-            <a class="widget-popular-link d-flex align-items-center" href="~/posts/@item.Slug">
-                <figure class="widget-popular-cover">
-                    <img class="widget-popular-img" src="~/@item.Cover" alt="@item.Title">
+        <li class="bft-widget-popular-item">
+            <a class="bft-widget-popular-link d-flex align-items-center" href="~/posts/@item.Slug">
+                <figure class="bft-widget-popular-cover">
+                    <img class="bft-widget-popular-img" src="~/@item.Cover" alt="@item.Title">
                 </figure>
                 <header>
-                    <h4 class="widget-popular-title">@item.Title</h4>
-                    <time class="widget-popular-time">@item.Published.ToFriendlyDateString()</time>
+                    <h4 class="bft-widget-popular-title">@item.Title</h4>
+                    <time class="bft-widget-popular-time">@item.Published.ToFriendlyDateString()</time>
                 </header>
             </a>
         </li>

@@ -6,9 +6,6 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div class="dropdown dropdown-user ms-2 my-auto">
-        <!-- <button class="dropdown-user-btn" type="button" >
-            <span>John Doe</span>
-        </button> -->
         <button class="dropdown-user-link logedin" title="@_localizer["login"]" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             <img class="rounded-circle" src="/img/avatar.png">
         </button>
