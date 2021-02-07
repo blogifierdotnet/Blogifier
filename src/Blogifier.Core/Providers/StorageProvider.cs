@@ -34,6 +34,7 @@ namespace Blogifier.Core.Providers
 
 		public bool FileExists(string path)
 		{
+			Serilog.Log.Information($"File exists: {Path.Combine(ContentRoot, path)}");
 			return File.Exists(Path.Combine(ContentRoot, path));
 		}
 
@@ -55,7 +56,7 @@ namespace Blogifier.Core.Providers
 		public async Task<ThemeSettings> GetThemeSettings(string theme)
 		{
 			var settings = new ThemeSettings();
-			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
 			if (File.Exists(fileName))
 			{
 				try
@@ -75,7 +76,7 @@ namespace Blogifier.Core.Providers
 
 		public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
 		{
-			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme}{_slash}settings.json");
+			var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
 			try
 			{
 				if (File.Exists(fileName))
