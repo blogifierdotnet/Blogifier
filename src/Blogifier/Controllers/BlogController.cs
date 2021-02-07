@@ -204,7 +204,7 @@ namespace Blogifier.Controllers
         }
 
         [HttpPost("upload/{uploadType}")]
-        [RestrictToLocalhost]
+        [Authorize]
         public async Task<ActionResult> Upload(IFormFile file, UploadType uploadType, int postId = 0)
         {
             var path = string.Format("{0}/{1}", DateTime.Now.Year, DateTime.Now.Month);
