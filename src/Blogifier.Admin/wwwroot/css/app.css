@@ -1,9 +1,4 @@
-/*
- * Bootstrap v5.0.0-beta1 (https://getbootstrap.com/)
- * Copyright 2011-2020 The Bootstrap Authors
- * Copyright 2011-2020 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+/* Bootstrap v5.0.0-beta1 */
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -5029,12 +5024,6 @@ textarea.form-control-lg {
 .border-dark {
   border-color: #212529 !important; }
 
-.border-blogifier {
-  border-color: #622aff !important; }
-
-.border-default {
-  border-color: #fff !important; }
-
 .border-white {
   border-color: #fff !important; }
 
@@ -5631,12 +5620,6 @@ textarea.form-control-lg {
 .text-dark {
   color: #212529 !important; }
 
-.text-blogifier {
-  color: #622aff !important; }
-
-.text-default {
-  color: #fff !important; }
-
 .text-white {
   color: #fff !important; }
 
@@ -5690,12 +5673,6 @@ textarea.form-control-lg {
 
 .bg-dark {
   background-color: #212529 !important; }
-
-.bg-blogifier {
-  background-color: #622aff !important; }
-
-.bg-default {
-  background-color: #fff !important; }
 
 .bg-body {
   background-color: #f5f6f6 !important; }
@@ -8355,91 +8332,6 @@ pre[class*="language-"] {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem; }
 
-.bf-editor {
-  overflow: hidden;
-  margin-bottom: 5rem; }
-  .bf-editor .editor-toolbar {
-    padding: 0;
-    display: flex;
-    border: 0;
-    border-radius: 0;
-    user-select: none;
-    position: relative;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-    .bf-editor .editor-toolbar:after, .bf-editor .editor-toolbar:before {
-      display: block;
-      content: ' ';
-      height: 1px; }
-    .bf-editor .editor-toolbar::before {
-      margin-bottom: 8px; }
-    .bf-editor .editor-toolbar::after {
-      margin-top: 8px; }
-    .bf-editor .editor-toolbar.fullscreen {
-      width: 100%;
-      box-sizing: border-box;
-      position: fixed;
-      top: 0;
-      left: 0;
-      opacity: 1;
-      z-index: 1000;
-      background: #fff; }
-    .bf-editor .editor-toolbar.sided--no-fullscreen {
-      width: 100%; }
-    .bf-editor .editor-toolbar .separator {
-      width: 1px;
-      height: 3rem;
-      background: rgba(0, 0, 0, 0.07);
-      font-size: 0;
-      transform: translateY(0); }
-      .bf-editor .editor-toolbar .separator:last-child {
-        margin-left: auto; }
-    .bf-editor .editor-toolbar button {
-      padding: 0;
-      border: 0;
-      background: #fff;
-      height: 3rem;
-      width: 3rem; }
-      .bf-editor .editor-toolbar button.active, .bf-editor .editor-toolbar button:hover {
-        background: #f8f9fa; }
-        .bf-editor .editor-toolbar button.active .bi, .bf-editor .editor-toolbar button:hover .bi {
-          fill: #622aff;
-          width: 1.125rem;
-          height: 1.125rem; }
-          .bf-editor .editor-toolbar button.active .bi-table, .bf-editor .editor-toolbar button.active .bi-arrows-fullscreen, .bf-editor .editor-toolbar button:hover .bi-table, .bf-editor .editor-toolbar button:hover .bi-arrows-fullscreen {
-            width: .875rem;
-            height: .875rem; }
-      .bf-editor .editor-toolbar button .bi {
-        width: 1rem;
-        height: 1rem;
-        fill: #212529;
-        transition: all ease .125s; }
-        .bf-editor .editor-toolbar button .bi-table, .bf-editor .editor-toolbar button .bi-arrows-fullscreen {
-          width: .75rem;
-          height: .75rem; }
-    .bf-editor .editor-toolbar.disabled-for-preview button:not(.no-disable) {
-      opacity: .6;
-      pointer-events: none; }
-    @media only screen and (max-width: 700px) {
-      .bf-editor .editor-toolbar i.no-mobile {
-        display: none; } }
-  .bf-editor .editor-statusbar {
-    padding: 8px 10px;
-    font-size: 12px;
-    color: #959694;
-    text-align: right; }
-  .bf-editor .editor-statusbar.sided--no-fullscreen {
-    width: 100%; }
-  .bf-editor .editor-statusbar span {
-    display: inline-block;
-    min-width: 4em;
-    margin-left: 1em; }
-  .bf-editor .editor-statusbar .lines:before {
-    content: 'lines: '; }
-  .bf-editor .editor-statusbar .words:before {
-    content: 'words: '; }
-  .bf-editor .editor-statusbar .characters:before {
-    content: 'characters: '; }
-
 /**
  * easymde v2.13.0
  * Copyright Jeroen Akkerman
@@ -8995,6 +8887,91 @@ span[data-img-src]::before {
 
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
   background: rgba(255, 0, 0, 0.15); }
+
+.bf-editor {
+  overflow: hidden;
+  margin-bottom: 5rem; }
+  .bf-editor .editor-toolbar {
+    padding: 0;
+    display: flex;
+    border: 0;
+    border-radius: 0;
+    user-select: none;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+    .bf-editor .editor-toolbar:after, .bf-editor .editor-toolbar:before {
+      display: block;
+      content: ' ';
+      height: 1px; }
+    .bf-editor .editor-toolbar::before {
+      margin-bottom: 8px; }
+    .bf-editor .editor-toolbar::after {
+      margin-top: 8px; }
+    .bf-editor .editor-toolbar.fullscreen {
+      width: 100%;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      z-index: 1000;
+      background: #fff; }
+    .bf-editor .editor-toolbar.sided--no-fullscreen {
+      width: 100%; }
+    .bf-editor .editor-toolbar .separator {
+      width: 1px;
+      height: 3rem;
+      background: rgba(0, 0, 0, 0.07);
+      font-size: 0;
+      transform: translateY(0); }
+      .bf-editor .editor-toolbar .separator:last-child {
+        margin-left: auto; }
+    .bf-editor .editor-toolbar button {
+      padding: 0;
+      border: 0;
+      background: #fff;
+      height: 3rem;
+      width: 3rem; }
+      .bf-editor .editor-toolbar button.active, .bf-editor .editor-toolbar button:hover {
+        background: #f8f9fa; }
+        .bf-editor .editor-toolbar button.active .bi, .bf-editor .editor-toolbar button:hover .bi {
+          fill: #622aff;
+          width: 1.125rem;
+          height: 1.125rem; }
+          .bf-editor .editor-toolbar button.active .bi-table, .bf-editor .editor-toolbar button.active .bi-arrows-fullscreen, .bf-editor .editor-toolbar button:hover .bi-table, .bf-editor .editor-toolbar button:hover .bi-arrows-fullscreen {
+            width: .875rem;
+            height: .875rem; }
+      .bf-editor .editor-toolbar button .bi {
+        width: 1rem;
+        height: 1rem;
+        fill: #212529;
+        transition: all ease .125s; }
+        .bf-editor .editor-toolbar button .bi-table, .bf-editor .editor-toolbar button .bi-arrows-fullscreen {
+          width: .75rem;
+          height: .75rem; }
+    .bf-editor .editor-toolbar.disabled-for-preview button:not(.no-disable) {
+      opacity: .6;
+      pointer-events: none; }
+    @media only screen and (max-width: 700px) {
+      .bf-editor .editor-toolbar i.no-mobile {
+        display: none; } }
+  .bf-editor .editor-statusbar {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #959694;
+    text-align: right; }
+  .bf-editor .editor-statusbar.sided--no-fullscreen {
+    width: 100%; }
+  .bf-editor .editor-statusbar span {
+    display: inline-block;
+    min-width: 4em;
+    margin-left: 1em; }
+  .bf-editor .editor-statusbar .lines:before {
+    content: 'lines: '; }
+  .bf-editor .editor-statusbar .words:before {
+    content: 'words: '; }
+  .bf-editor .editor-statusbar .characters:before {
+    content: 'characters: '; }
 
 .app-about ul {
   margin: 0;

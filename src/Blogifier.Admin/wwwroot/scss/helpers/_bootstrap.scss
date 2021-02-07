@@ -1,24 +1,11 @@
-/*
- * Bootstrap v5.0.0-beta1 (https://getbootstrap.com/)
- * Copyright 2011-2020 The Bootstrap Authors
- * Copyright 2011-2020 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+/* Bootstrap v5.0.0-beta1 */
 
-// scss-docs-start import-stack
 // Configuration
 @import "../../../node_modules/bootstrap/scss/functions";
 @import "../../../node_modules/bootstrap/scss/variables";
-
-$custom-colors: (
-  "blogifier": $blogifier,
-  "default": $default
-);
-
-$theme-colors: map-merge($theme-colors, $custom-colors);
-
 @import "../../../node_modules/bootstrap/scss/mixins";
 @import "../../../node_modules/bootstrap/scss/utilities";
+@import "middle"; // blogifier colors
 
 // Layout & components
 @import "../../../node_modules/bootstrap/scss/root";
@@ -56,4 +43,3 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 // Utilities 
 @import "../../../node_modules/bootstrap/scss/utilities/api";
-// scss-docs-end import-stack
