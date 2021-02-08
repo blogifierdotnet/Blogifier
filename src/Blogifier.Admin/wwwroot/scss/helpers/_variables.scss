@@ -1,5 +1,5 @@
 ﻿// colors
-$blogifier: #791ae6;
+$blogifier: #622aff;
 $default: #fff;
 $warning: #ff8d00;
 
@@ -9,9 +9,12 @@ $body-color: #111;
 $link-color: $blogifier;
 $link-hover-color: #444;
 
+// shadow
+$bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+
 // input
 $input-border-width: 0;
-$input-focus-box-shadow-width: 2px;
+$input-focus-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
 // active
 $component-active-bg: $blogifier;
@@ -32,9 +35,6 @@ $btn-link-hover-color: $blogifier;
 // container
 $container: 66rem;
 
-// shadow
-$bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-
 // accordion
 $accordion-border-width: 0;
 $accordion-body-padding-y: 1rem;
@@ -44,3 +44,6 @@ $accordion-button-active-bg: none;
 $accordion-button-active-color: $blogifier;
 $accordion-button-padding-y: .5rem;
 $accordion-button-padding-x: 0;
+
+// list
+$list-height: 2.75rem;

@@ -5,21 +5,18 @@
 @inject IToaster _toaster
 @inject NavigationManager _navigation
 <div class="app-editor">
-
     @if (Post != null)
     {
-
-
         <div class="app-editor-header row">
             <div class="col-md-7">
-                <input type="text" class="app-editor-control app-editor-control-title" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" autocomplete="off" autofocus />
-                <textarea class="app-editor-control app-editor-control-desc" @bind="Post.Description" name="description" rows="2" placeholder="@_localizer["description"]..." />
+                <textarea class="app-editor-control app-editor-control-title" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" rows="1" autofocus></textarea>
+                <textarea class="app-editor-control app-editor-control-desc" @bind="Post.Description" name="description" placeholder="@_localizer["description"]..." rows="1"></textarea>
             </div>
-            <div class="col-md-4 ms-auto">
+            <div class="col-md-4 ms-auto"> 
                 <div class="app-editor-actions d-flex justify-content-end">
                     @if (Post.Id > 0)
                     {
-                        <button class="btn btn-icon btn-default" @onclick="(() => Remove(Post.Id))" title="@_localizer["delete"]">
+                        <button class="btn btn-icon btn-link me-2" @onclick="(() => Remove(Post.Id))" title="@_localizer["delete"]">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -35,7 +32,7 @@
                     {
                         if (Post.Published > DateTime.MinValue)
                         {
-                            <a href="@Post.Slug" class="btn btn-icon btn-default">
+                            <a href="posts/@Post.Slug" class="btn btn-icon btn-link me-3" target="_blank">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
                                 </svg>
@@ -58,20 +55,55 @@
             {
                 <CategoriesComponent Post="Post" />
             }
-            <a class="app-editor-addcover ms-auto" disabled="@(string.IsNullOrEmpty(Post.Slug) ? true : false)" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" href="#">
+            <a class="app-editor-addcover ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@(string.IsNullOrEmpty(Post.Slug) ? true : false)" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                     <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
                 </svg>
                 <span>
-                    @_localizer["Add Cover"]
+                    @_localizer["Edit Cover"]
                 </span>
             </a>
-            <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
         </div>
 
         <div class="app-editor-content bf-editor">
             <PostEditorComponent Content="@Post.Content" />
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Cover</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="form-item">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn btn-blogifier btn-block"  onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">Change</button>
+                                    <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-danger btn-block" type="button" @onclick="() => ResetCover()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <label class="form-item-label">Preview</label>
+                            <img id="post-cover" name="post-cover" src="@Post.Cover" class="rounded-3">
+                        </div>
+                        <div class="form-item">
+                            <label class="form-item-label">Alt</label>
+                            <input type="text" class="form-control" value="@Post.Title">
+                        </div>
+                        <div class="form-item mb-0">
+                            <label class="form-item-label">URL</label>
+                            <input type="text" class="form-control" value="@Post.Cover" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     }
@@ -170,6 +202,18 @@
          Toaster.Toast(await _http.DeleteAsync($"api/post/{id}"));
          _navigation.NavigateTo($"admin");
       }
+   }
+
+   protected async Task ResetCover()
+   {
+      Post.Cover = "img/cover.png";
+      await Save();
+   }
+
+   protected async Task RemoveCover()
+   {
+      Post.Cover = null;
+      await Save();
    }
 
    protected Post NewPost()

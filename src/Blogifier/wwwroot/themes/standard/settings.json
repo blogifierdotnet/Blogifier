@@ -7,7 +7,7 @@
           "Id": "enabled",
           "Label": "Enabled",
           "Type": "checkbox",
-          "Value": "True",
+          "Value": "False",
           "Options": null
         },
         {

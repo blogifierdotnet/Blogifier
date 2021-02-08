@@ -1,4 +1,15 @@
-﻿// helpers
+﻿/*!
+    Blogifier v3
+    https://blogifier.net
+    
+    by Farzin
+    https://farzin.dev
+
+    Copyright 2012-2021
+    Licensed under MIT
+*/
+
+// helpers
 @import "helpers/variables";
 @import "helpers/bootstrap";
 @import "helpers/mixins";
@@ -10,29 +21,29 @@
 @import "layout/page";
 
 // components
-@import "components/blazor";
-@import "components/buttons";
-@import "components/forms";
-@import "components/list";
-@import "components/prism";
+@import "include/blazor";
+@import "include/buttons";
+@import "include/forms";
+@import "include/list";
+@import "include/prism";
 
 // pages > account
-@import "pages/account";
+@import "pages/account/account";
 
 // pages > dashbaord
-@import "pages/dashboard";
-@import "pages/dashboard.postlist";
-@import "pages/dashboard.totals";
+@import "pages/dashboard/dashboard";
+@import "pages/dashboard/list";
+@import "pages/dashboard/totals";
 
 // pages > editor
-@import "pages/editor";
-@import "pages/editor.editor";
-@import "pages/editor.easymde";
+@import "pages/editor/editor";
+@import "pages/editor/easymde";
+@import "pages/editor/easymde_custom";
 
 // pages > settings
-@import "pages/settings";
-@import "pages/settings.about";
-@import "pages/settings.themes";
-@import "pages/settings.customize";
-@import "pages/settings.customize.menus";
-@import "pages/settings.customize.widgets";
+@import "pages/settings/settings";
+@import "pages/settings/about";
+@import "pages/settings/themes";
+@import "pages/settings/customize";
+@import "pages/settings/customize_menus";
+@import "pages/settings/customize_widgets";

@@ -1,0 +1,43 @@
+.bft-related {
+  margin-top: 5rem;
+  &-title {
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    color: #999;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+  &-item {
+    height: 100%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    min-height: 10rem;
+    border-radius: 0.25rem;
+    background-color: #eee;
+    color: #000;
+
+    &-title {
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      padding: 1.5rem 1.5rem 0.5rem;
+    }
+    &-time {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      padding: 0 1.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    &-img {
+      display: block;
+      width: 100%;
+    }
+
+    &:hover {
+      color: $color;
+    }
+  }
+}

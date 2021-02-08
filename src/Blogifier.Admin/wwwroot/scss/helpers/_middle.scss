@@ -1,0 +1,7 @@
+// included in the _bootstrap.scss
+$custom-colors: (
+  "blogifier": $blogifier,
+  "default": $default,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);

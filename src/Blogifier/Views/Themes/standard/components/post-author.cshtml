@@ -1,0 +1,19 @@
+@using Blogifier.Shared
+@{
+    PostModel postModel = (PostModel)Model;
+}
+ <section class="bft-post-component">
+    <h4 class="bft-post-component-title">Author</h4>
+    <div class="bft-post-author d-flex align-items-center">
+        <figure class="me-4 mb-0">
+            <img class="bft-post-author-img rounded" width="100" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
+        </figure>
+        <div>
+            <h5 class="bft-post-author-name">@postModel.Post.Author.DisplayName</h5>
+            <p class="bft-post-author-bio">
+            <!-- @postModel.Post.Author.Bio -->
+            If so and the relay is off, then the relay gets turned on, the water pump starts watering the plant, and a success status is returned.
+            </p>
+        </div>
+    </div>
+</section>

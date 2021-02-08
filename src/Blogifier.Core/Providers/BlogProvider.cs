@@ -30,6 +30,7 @@ namespace Blogifier.Core.Providers
 		public async Task<BlogItem> GetBlogItem()
 		{
 			var blog = await _db.Blogs.AsNoTracking().OrderBy(b => b.Id).FirstAsync();
+			blog.Theme = blog.Theme.ToLower();
 			return new BlogItem
 			{
 				Title = blog.Title,

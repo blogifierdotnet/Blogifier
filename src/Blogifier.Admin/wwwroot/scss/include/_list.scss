@@ -1,0 +1,102 @@
+.list {
+  padding: 0;
+  margin: 1rem 0;
+  list-style: none;
+  border-top: 1px solid #e6e6e6;
+
+  &-toolbar {
+    margin-bottom: 1rem;
+  }
+
+  // items
+  &-item {
+    border-bottom: 1px solid $gray-200;
+    display: flex;
+    align-items: center;
+    &:hover {
+      background-image: linear-gradient(
+        90deg,
+        transparent,
+        rgba(#fff, 0.2),
+        transparent
+      );
+    }
+    .-link {
+      &:hover {
+        color: $blogifier;
+      }
+    }
+  }
+
+  &-check {
+    height: $list-height;
+    width: 2rem;
+    min-width: 2rem;
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+    .form-check-input {
+      vertical-align: top;
+      transform: translateY(-50%);
+      position: absolute;
+      top: 50%;
+      left: 0;
+      margin: 0;
+    }
+  }
+
+  &-title {
+    display: block;
+    flex-grow: 1;
+    margin-right: 0.5rem;
+    line-height: $list-height;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $gray-800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-text {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    color: $gray-700;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    &.ms-auto {
+      text-align: right;
+    }
+  }
+
+  .-nowrap {
+    white-space: nowrap;
+  }
+
+  &-btn {
+    background: none;
+    padding: 0 0.5rem;
+    border: 0;
+    text-align: center;
+    height: $list-height;
+    color: $gray-600;
+
+    .bi {
+      height: 100%;
+    }
+  }
+
+  &-icon {
+    background: none;
+    padding: 0 0.5rem;
+    border: 0;
+    text-align: center;
+    height: $list-height;
+    color: $gray-600;
+
+    .bi {
+      height: 100%;
+    }
+  }
+}

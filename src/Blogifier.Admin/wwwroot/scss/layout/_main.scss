@@ -1,9 +1,13 @@
 ﻿body {
-    cursor: default;
-    overflow-y:scroll;
+  cursor: default;
+  overflow-y: scroll;
 }
 
 .container {
-    width: $container;
-    max-width: 100%;
+  width: $container;
+  max-width: 100%;
+}
+
+.blogifier {
+  // app
 }
