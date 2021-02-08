@@ -1,7 +1,7 @@
 ﻿@using Blogifier.Core
 @{
     var request = Url.ActionContext.HttpContext.Request;
-    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var absoluteUrl = request.ExtractAbsoluteUri();
 
     if (Model.ToString().EndsWith("PostModel"))
     {

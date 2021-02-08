@@ -134,11 +134,7 @@ namespace Blogifier.Controllers
         [HttpGet("feed/{type}")]
         public async Task<IActionResult> Rss(string type, int count = 3)
         {
-            var sitemapBaseUri = _appSettingsMonitor.CurrentValue.SitemapBaseUri;
-            if (string.IsNullOrEmpty(_appSettingsMonitor.CurrentValue.SitemapBaseUri))
-            {
-                sitemapBaseUri = $"{Request.Scheme}://{Request.Host}";
-            }
+            var sitemapBaseUri = Request.ExtractAbsoluteUri();
         
             var blog = await DataService.CustomFields.GetBlogSettings();
             var posts = await DataService.BlogPosts.GetList(count);

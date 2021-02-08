@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
+using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Services;
 using Blogifier.Models;
@@ -45,11 +46,7 @@ namespace Blogifier.Controllers
 
         public string GetPostUrl(BlogPost post)
         {
-            var sitemapBaseUri = _appSettingsMonitor.CurrentValue.SitemapBaseUri;
-            if (string.IsNullOrEmpty(_appSettingsMonitor.CurrentValue.SitemapBaseUri))
-            {
-                sitemapBaseUri = $"{Request.Scheme}://{Request.Host}";
-            }
+            var sitemapBaseUri = Request.ExtractAbsoluteUri();
 
             return $"{sitemapBaseUri}/posts/{post.Slug}";
         }

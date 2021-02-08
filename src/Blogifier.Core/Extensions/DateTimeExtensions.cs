@@ -1,4 +1,8 @@
 ﻿using System;
+using Blogifier.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Blogifier.Core
 {
@@ -40,6 +44,18 @@ namespace Blogifier.Core
                 FormattedDate = date.ToString("MMMM dd, yyyy");
             }
             return FormattedDate;
+        }
+    }
+
+    public static class RequestExtensions
+    {
+        public static string ExtractAbsoluteUri(this HttpRequest request)
+        {
+            var appItem = request.HttpContext.RequestServices.GetRequiredService<IOptionsMonitor<AppItem>>();
+            if (appItem.CurrentValue.SitemapBaseUri != null)
+                return appItem.CurrentValue.SitemapBaseUri;
+            
+            return $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
         }
     }
 }

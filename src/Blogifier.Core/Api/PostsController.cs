@@ -402,7 +402,7 @@ namespace Blogifier.Core.Api
             var emails = newsletters.Select(i => i.Email).ToList();
             if (emails != null && emails.Count > 0)
             {
-                var siteUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+                var siteUrl = Request.ExtractAbsoluteUri();
                 await _newsletter.SendNewsletters(post, emails, siteUrl);
             }
         }

@@ -128,7 +128,7 @@ namespace Blogifier.Core.Api
             if (emails.Count > 0)
             {
                 var blogPost = _data.BlogPosts.Single(p => p.Id == postId);
-                string baseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/";
+                string baseUrl = Request.ExtractAbsoluteUri();
                 count = await _newsletterService.SendNewsletters(blogPost, emails, baseUrl);
             }
             return count;
