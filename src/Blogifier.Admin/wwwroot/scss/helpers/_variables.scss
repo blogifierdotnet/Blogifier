@@ -9,9 +9,12 @@ $body-color: #111;
 $link-color: $blogifier;
 $link-hover-color: #444;
 
+// shadow
+$bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+
 // input
 $input-border-width: 0;
-$input-focus-box-shadow-width: 2px;
+$input-focus-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 
 // active
 $component-active-bg: $blogifier;
@@ -31,9 +34,6 @@ $btn-link-hover-color: $blogifier;
 
 // container
 $container: 66rem;
-
-// shadow
-$bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
 
 // accordion
 $accordion-border-width: 0;

@@ -1,3 +1,13 @@
+/*!
+    Blogifier v3
+    https://blogifier.net
+    
+    by Farzin
+    https://farzin.dev
+
+    Copyright 2012-2021
+    Licensed under MIT
+*/
 /* Bootstrap v5.0.0-beta1 */
 :root {
   --bs-blue: #0d6efd;
@@ -1522,7 +1532,7 @@ progress {
     background-color: #fff;
     border-color: #b195ff;
     outline: 0;
-    box-shadow: 0 0 0 2px rgba(98, 42, 255, 0.25); }
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25); }
   .form-control::-webkit-date-and-time-value {
     height: 1.5em; }
   .form-control::placeholder {
@@ -1764,9 +1774,9 @@ textarea.form-control-lg {
   .form-range:focus {
     outline: none; }
     .form-range:focus::-webkit-slider-thumb {
-      box-shadow: 0 0 0 1px #f5f6f6, 0 0 0 2px rgba(98, 42, 255, 0.25); }
+      box-shadow: 0 0 0 1px #f5f6f6, 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25); }
     .form-range:focus::-moz-range-thumb {
-      box-shadow: 0 0 0 1px #f5f6f6, 0 0 0 2px rgba(98, 42, 255, 0.25); }
+      box-shadow: 0 0 0 1px #f5f6f6, 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25); }
   .form-range::-moz-focus-outer {
     border: 0; }
   .form-range::-webkit-slider-thumb {
@@ -7738,6 +7748,8 @@ body {
   .btn-link {
     font-weight: 500;
     box-shadow: none; }
+    .btn-link:focus {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25); }
   .btn-default:hover {
     background-color: #f8f9fa; }
   .btn-outline-default {
