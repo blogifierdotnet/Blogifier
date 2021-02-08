@@ -82,22 +82,26 @@
 
    @if (Posts != null && Posts.Count > 0)
    {
-      <ul class="app-posts-list" aria-label="posts">
+      <ul class="list" aria-label="posts">
          <Virtualize Items="Posts" Context="post">
-            <li class="app-posts-item d-flex align-items-center">
-               @{
-                  string title = post.Title.Length < 60 ? post.Title : post.Title.Substring(0, 57) + "...";
-                  string pubStatus = post.Published > DateTime.MinValue ? "published" : "draft";
-                  string pubDate = post.Published > DateTime.MinValue ? post.Published.ToFriendlyShortDateString() : "Draft";
-                  string featured = post.IsFeatured ? "featured" : "";
-               }
-               <label class="app-posts-item-select form-check">
-                  <input type="checkbox" @bind="post.Selected" class="form-check-input">
-               </label>
-               <a class="app-posts-item-link flex-grow-1 me-3" href="/admin/editor/@post.Slug">@title</a>
-               <span class="app-posts-item-date ms-auto me-2 d-none d-lg-block">@pubDate</span>
-               <button class="app-posts-item-status app-posts-item-status-@pubStatus" @onclick="(async () => await Publish(post))" data-toggle="tooltip" title="Status">
 
+            @{
+               string pubDate = post.Published > DateTime.MinValue ? post.Published.ToFriendlyShortDateString() : "Draft";
+               string pubStatus = post.Published > DateTime.MinValue ? "published" : "draft";
+               string featured = post.IsFeatured ? "featured" : "";
+            }
+
+            <li class="list-item">
+               <label class="list-check form-check">
+                  <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
+               </label>
+               <a class="list-title -link" href="/admin/editor/@post.Slug">
+                  @post.Title
+               </a>
+               <span class="list-text -nowrap ms-auto">
+                  @pubDate
+               </span>
+               <button class="list-btn" @onclick="(async () => await Publish(post))" data-toggle="tooltip" title="Status">
                   @if (@pubStatus == "published")
                   {
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
@@ -113,23 +117,24 @@
                      </svg>
                   }
                </button>
-               <button class="app-posts-item-featured " @onclick="(async () => await Featured(post))" data-toggle="tooltip" title="Featured">
+               <button class="list-btn" @onclick="(async () => await Featured(post))" data-toggle="tooltip" title="Featured">
                   @if (@featured == "featured")
                   {
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
-                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star text-warning" viewBox="0 0 16 16">
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                      </svg>
                   }
                   else
                   {
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star text-muted" viewBox="0 0 16 16">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                         <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                      </svg>
                   }
                </button>
-               <a class="app-posts-item-external" href="posts/@post.Slug" target="_blank" data-toggle="tooltip" title="Link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-circle text-muted" viewBox="0 0 16 16">
-                     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z" />
+               <a class="list-btn" href="posts/@post.Slug" target="_blank" data-toggle="tooltip" title="Link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                     <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                     <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z"/>
                   </svg>
                </a>
             </li>
