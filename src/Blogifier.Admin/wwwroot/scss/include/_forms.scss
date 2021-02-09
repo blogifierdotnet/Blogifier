@@ -6,23 +6,26 @@
 .form-item {
   margin-bottom: 1.375rem;
 
-  &-label {
+  .form-label {
     margin-bottom: 0.25rem;
     font-size: 0.875rem;
     font-weight: 500;
+    color: $gray-700;
   }
 
   &-desc {
     padding-left: 0.1rem;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: $gray-600;
   }
 
   &-error,
   .validation-message {
-    color: $danger;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 500;
+    color: $danger;
+    margin-top: .125rem;
+
   }
 }
 

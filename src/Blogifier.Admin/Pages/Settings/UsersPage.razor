@@ -112,22 +112,22 @@
       <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
          <DataAnnotationsValidator />
          <div class="form-item">
-            <label class="form-item-label">@_localizer["email"]</label>
+            <label class="form-label">@_localizer["email"]</label>
             <input class="form-control" type="email" @bind="SelectedAuthor.Email" placeholder="you@mail.com" />
             <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["name"]</label>
+            <label class="form-label">@_localizer["name"]</label>
             <input class="form-control" @bind="SelectedAuthor.DisplayName" placeholder="@_localizer["name"]" />
             <ValidationMessage For="@(() => SelectedAuthor.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["password"]</label>
+            <label class="form-label">@_localizer["password"]</label>
             <input class="form-control" type="password" @bind="SelectedAuthor.Password" placeholder="@_localizer["password"]" />
             <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["user-bio"]</label>
+            <label class="form-label">@_localizer["user-bio"]</label>
             <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" name="bio" />
          </div>
          <div class="form-item">

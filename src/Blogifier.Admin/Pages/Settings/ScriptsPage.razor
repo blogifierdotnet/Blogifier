@@ -10,11 +10,11 @@
     {
         <EditForm Model="@Blog" OnValidSubmit="Save">
             <div class="form-item">
-                <label class="form-item-label">Header script</label>
+                <label class="form-label">Header script</label>
                 <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.HeaderScript" name="headerScript" />
             </div>
             <div class="form-item">
-                <label class="form-item-label">Footer script</label>
+                <label class="form-label">Footer script</label>
                 <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.FooterScript" name="footerScrip" />
             </div>
             <div class="form-item">

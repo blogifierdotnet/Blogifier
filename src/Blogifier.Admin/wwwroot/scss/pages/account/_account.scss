@@ -1,62 +1,68 @@
-.app-account {
-    padding: 5rem 1.5rem;
-    width: 20rem;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 100%;
+.account {
+  width: 20rem;
+  max-width: 100%;
+  padding: 5rem 1.5rem;
+  margin-right: auto;
+  margin-left: auto;
 
-    &-message {
-        margin-bottom: 2rem;
-        font-size: .875rem;
-        padding: .5rem 1rem;
+  &-header {
+    margin-bottom: 3rem;
+  }
+
+  &-message {
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+
+    &.-error {
+      background-color: $danger;
+      color: #fff;
     }
 
-    &-header {
-        margin-bottom: 3rem;
+    &.-warning {
+      background-color: $warning;
+      color: #fff;
     }
-
-    &-footer {
-        margin-top: 1rem;
+    &.-success {
+      background-color: $success;
+      color: #fff;
     }
+  }
 
-    &-backtoblog {
-        font-size: .875rem;
-        color: $gray-600;
+  &-footer {
+    margin-top: 2rem;
 
-        .bi {
-            width: 1.25rem;
-            position: relative;
-            top: -1px;
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .item {
+        margin-bottom: .5rem;
+    }
+    .item-link {
+        font-size:.875rem;
+        font-weight: 500;
+        color:$gray-600;
+        &:hover{
+            color:$blogifier;
         }
     }
+  }
 
-    .app-logo {
-        opacity: .125;
-        display: block;
-        width: 1rem;
-        height: 1rem;
-        margin: 4rem auto 0;
+  .blogifier-logo {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin: 4rem auto 0;
 
-        &:hover {
-            opacity: 1;
-        }
-
-        &-img {
-            width: 1rem;
-        }
+    &:hover {
+      transform: scale(1.1);
     }
 
-    &-links {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+    &-img {
+      width: 1rem;
     }
-
-    &-reset {
-        &-link {
-            font-size: .75rem;
-            color: $gray-600;
-            font-weight:500;
-        }
-    }
+  }
 }

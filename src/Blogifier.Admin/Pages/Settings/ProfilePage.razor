@@ -22,17 +22,17 @@
             </div>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["name"]</label>
+            <label class="form-label">@_localizer["name"]</label>
             <input class="form-control" @bind="Author.DisplayName" placeholder="@_localizer["name"]" />
             <ValidationMessage For="@(() => Author.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["email"]</label>
+            <label class="form-label">@_localizer["email"]</label>
             <input class="form-control" type="email" @bind="Author.Email" placeholder="you@mail.com" />
             <ValidationMessage For="@(() => Author.Email)"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["user-bio"]</label>
+            <label class="form-label">@_localizer["user-bio"]</label>
             <textarea class="form-control" rows="4" @bind="Author.Bio" name="bio" />
          </div>
          <div class="form-item">
@@ -50,12 +50,12 @@
       <EditForm Model="@Model" OnValidSubmit="SavePassword">
          <DataAnnotationsValidator />
          <div class="form-item">
-            <label class="form-item-label">@_localizer["password"]</label>
+            <label class="form-label">@_localizer["password"]</label>
             <input class="form-control" type="password" @bind="Model.Password" placeholder="@_localizer["password"]" />
             <ValidationMessage For="@(() => Model.Password)"></ValidationMessage>
          </div>
          <div class="form-item">
-            <label class="form-item-label">@_localizer["confirm-password"]</label>
+            <label class="form-label">@_localizer["confirm-password"]</label>
             <input class="form-control" type="password" @bind="Model.PasswordConfirm" placeholder="@_localizer["confirm-password"]" />
             <ValidationMessage For="@(() => Model.PasswordConfirm)"></ValidationMessage>
          </div>

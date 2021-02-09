@@ -20,7 +20,7 @@
                      <div class="form-item">
                         @if (field.Type == "select")
                         {
-                           <label class="form-item-label">@field.Label</label>
+                           <label class="form-label">@field.Label</label>
                            <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
                               @foreach (var item in field.Options)
                               {
@@ -45,12 +45,12 @@
                         }
                         else if (field.Type == "textarea")
                         {
-                           <label class="form-item-label">@field.Label</label>
+                           <label class="form-label">@field.Label</label>
                            <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
                         }
                         else
                         {
-                           <label class="form-item-label">@field.Label</label>
+                           <label class="form-label">@field.Label</label>
                            <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
                         }
                      </div>

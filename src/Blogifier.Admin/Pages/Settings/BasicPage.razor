@@ -10,11 +10,11 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="form-item">
-                <label class="form-item-label">@_localizer["title"]</label>
+                <label class="form-label">@_localizer["title"]</label>
                 <input type="text" class="form-control" @bind="Blog.Title" name="title" />
             </div>
             <div class="form-item">
-                <label class="form-item-label">@_localizer["description"]</label>
+                <label class="form-label">@_localizer["description"]</label>
                 <textarea class="form-control" cols="30" rows="5" @bind="Blog.Description" name="description"></textarea>
             </div>
             <div class="form-item">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="form-item">
-                <label class="form-item-label">@_localizer["items-per-page"]</label>
+                <label class="form-label">@_localizer["items-per-page"]</label>
                 <input type="text" class="form-control" @bind="Blog.ItemsPerPage" name="pageitems" />
             </div>
             <div class="form-item">
