@@ -8123,31 +8123,33 @@ pre[class*="language-"] {
     color: #6c757d;
     font-weight: 500; }
 
-.app-widget {
+.dashboard-widget {
   margin-bottom: 2rem; }
-  .app-widget-card {
+  .dashboard-widget-card {
     background: #fff;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
     border-radius: 0.5rem; }
 
-.app-widget-stats-item {
-  height: 6rem;
+.dashboard-stats-item {
+  height: 5.5rem;
   flex: 1;
   text-align: center;
-  color: #6c757d; }
-  .app-widget-stats-item:not(:last-child) {
+  color: #6c757d;
+  user-select: none; }
+  .dashboard-stats-item:not(:last-child) {
     margin-right: 1rem; }
-  .app-widget-stats-item span {
+  .dashboard-stats-item span {
     display: block; }
 
-.app-widget-stats-number {
+.dashboard-stats-number {
   font-size: 2rem;
   font-weight: 300;
-  height: 4rem;
+  height: 3.5rem;
   line-height: 4rem; }
 
-.app-widget-stats-title {
-  font-size: 0.75rem; }
+.dashboard-stats-title {
+  font-size: 0.75rem;
+  height: 1.5rem; }
 
 .app-editor-header {
   margin-bottom: 2rem; }

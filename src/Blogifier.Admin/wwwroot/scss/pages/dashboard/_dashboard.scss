@@ -1,14 +1,9 @@
-﻿.app-dashboard {
-  &-posts {
-  }
-  &-widgets {
-  }
-}
+﻿.dashboard {
+  &-widget {
+    margin-bottom: 2rem;
 
-.app-widget {
-  margin-bottom: 2rem;
-
-  &-card {
-    @include bf-card(0.5rem);
+    &-card {
+      @include bf-card(0.5rem);
+    }
   }
 }
