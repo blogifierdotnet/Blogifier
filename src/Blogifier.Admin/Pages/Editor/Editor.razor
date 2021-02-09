@@ -4,6 +4,9 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
+
+<PageTitle Title="@_localizer["Editor"]" />
+
 <div class="app-editor">
     @if (Post != null)
     {

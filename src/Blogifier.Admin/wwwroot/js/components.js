@@ -286,3 +286,8 @@ function jumpTab(d) {
     selectJumpTab.show() 
 }
 
+// set page title
+// Shared/PageTitle.razor
+window.setTitle = (title) => {
+    document.title = title + " | Blogifier";
+}

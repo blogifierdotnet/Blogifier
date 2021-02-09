@@ -4,6 +4,8 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<Resource> localizer
 
+<PageTitle Title="@localizer["login"]" />
+
 @if (showError)
 {
     <div class="account-message -error">@localizer["login-failed"].</div>
