@@ -16,8 +16,8 @@
       text-transform: capitalize;
     }
 
-    .-new-post {
-      width: 7rem;
+    .-add {
+      min-width: 7rem;
     }
   }
 
@@ -166,11 +166,11 @@
     }
   }
   &-notfound {
-    text-align: center;
     color: $gray-600;
     padding: 1rem 0;
     text-transform: capitalize;
     &.-crazy {
+      text-align: center;
       padding: 4rem 0;
       .bi {
         margin-bottom: 1rem;

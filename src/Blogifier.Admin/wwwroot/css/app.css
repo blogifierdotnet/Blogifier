@@ -7863,8 +7863,8 @@ body {
       padding-right: 1rem;
       padding-left: 1rem;
       text-transform: capitalize; }
-    .list-toolbar .-new-post {
-      width: 7rem; }
+    .list-toolbar .-add {
+      min-width: 7rem; }
   .list-search {
     background: none;
     border: 1px solid #ced4da;
@@ -7963,11 +7963,11 @@ body {
     .list-icon .bi {
       height: 100%; }
   .list-notfound {
-    text-align: center;
     color: #6c757d;
     padding: 1rem 0;
     text-transform: capitalize; }
     .list-notfound.-crazy {
+      text-align: center;
       padding: 4rem 0; }
       .list-notfound.-crazy .bi {
         margin-bottom: 1rem;
