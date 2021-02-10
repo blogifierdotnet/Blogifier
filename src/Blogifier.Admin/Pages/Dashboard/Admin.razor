@@ -1,14 +1,12 @@
 ﻿@page "/admin"
 @inject IStringLocalizer<Resource> localizer
 <PageTitle Title="@localizer["dashboard"]" />
-<div class="container">
-    <div class="app-dashboard row no-gutters">
-        <div class="app-dashboard-posts col-lg-7">
-            <PostListComponent />
-        </div>
-        <div class="app-dashboard-widgets col-lg-5">
-            <TotalsComponent />
-            <BarChartComponent />
-        </div>
+<div class="dashboard row no-gutters">
+    <div class="app-dashboard-posts col-lg-7">
+        <PostListComponent />
+    </div>
+    <div class="dashboard-widgets col-lg-5">
+        <TotalsComponent />
+        <BarChartComponent />
     </div>
 </div>

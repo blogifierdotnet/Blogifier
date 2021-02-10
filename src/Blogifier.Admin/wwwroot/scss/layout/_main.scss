@@ -1,6 +1,7 @@
 ﻿body {
   cursor: default;
   overflow-y: scroll;
+  background-color: $gray-100;
 }
 
 .container {
@@ -10,4 +11,9 @@
 
 .blogifier {
   // app
+}
+
+.content {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
