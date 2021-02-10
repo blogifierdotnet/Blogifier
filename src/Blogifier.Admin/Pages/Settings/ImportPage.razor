@@ -5,80 +5,63 @@
 @inject IToaster _toaster
 @inject IJSRuntime JSRuntime
 
-<h1 class="app-section-title">Import</h1>
-<div class="app-section-content">
-
-    <div class="app-settings-wrap-50">
-        <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
-            <DataAnnotationsValidator />
-            <div class="form-item">
-                <label class="form-label">Import from RSS feed URL</label>
-                <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
-                <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
-                <!-- This buttoon - in case we select the file from local - otherwise remove it. -->
-                @*<button class="btn btn-outline-secondary" type="button">Select</button>*@
-            </div>
-            <div class="form-item">
-                <label class="form-label">Import from Base URL</label>
-                <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
-                <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
-            </div>
-            <div class="form-item">
-                <button class="btn btn-blogifier px-5" type="submit">Get Data</button>
-            </div>
-        </EditForm>
-    </div>
-
-    @if (Posts != null)
-    {
-        <p class="lead">@Posts.Count posts are found and ready to be imported.</p>
-        <div class="app-list-toolbar d-flex">
-            <label class="form-check me-3 my-auto" data-toggle="tooltip" title="Select All">
-                <input type="checkbox" class="form-check-input ml-2" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
-                <span>Import all</span>
-            </label>
-            @*<div class="app-posts-actions dropdown ml-3">
-                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-                    All Categories
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
-                    <a class="dropdown-item" href="#"> Category name</a>
-                    <a class="dropdown-item" href="#"> Category name</a>
-                    <a class="dropdown-item" href="#"> Category name</a>
-                    <a class="dropdown-item" href="#"> Category name</a>
-                    <a class="dropdown-item" href="#"> Category name</a>
-                </div>
-            </div>*@
-        </div>
-        <ul id="import-list" class="app-list">
-
-            @foreach (var post in Posts)
-            {
-                <li class="app-list-item d-flex">
-                    <label class="app-posts-item-select form-check">
-                        <input id="@post.Slug" type="checkbox" class="form-check-input" style="display: block" @bind="post.Selected">
-                        <svg id="s-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" style="color: green; margin-top: 12px; display: none" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                        </svg>
-                        <svg id="f-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" style="color: red; margin-top: 12px; display: none" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
-                        </svg>
-                    </label>
-                    <div class="app-list-title">@post.Title</div>
-                    <div class="app-list-text">@post.Published.ToFriendlyShortDateString()</div>
-                </li>
-            }
-        </ul>
-        <p class="lead">@StatusMsg</p>
+<h1 class="section-title">Import</h1>
+<div class="section-content -half">
+    <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
+        <DataAnnotationsValidator />
         <div class="form-item">
-            <button class="btn btn-blogifier px-5" type="button" @onclick="Import">@_localizer["import"]</button>
-            <button class="btn btn-secondary px-5" type="button" @onclick="Load">@_localizer["cancel"]</button>
+            <label class="form-label">Import from RSS feed URL</label>
+            <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
+            <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
         </div>
-    }
-
+        <div class="form-item">
+            <label class="form-label">Import from Base URL</label>
+            <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
+            <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
+        </div>
+        <div class="form-item">
+            <button class="btn btn-blogifier px-5" type="submit">Get Data</button>
+        </div>
+    </EditForm>
 </div>
+
+@if (Posts != null)
+{
+    <div class="section-content">
+            <p class="section-title">@Posts.Count posts are found and ready to be imported.</p>
+            <div class="list-toolbar">
+                <label class="list-check form-check" data-toggle="tooltip" title="Select All">
+                    <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
+                    <span>Import all</span>
+                </label>
+            </div>
+            <ul id="import-list" class="list">
+                @foreach (var post in Posts)
+                {
+                    <li class="list-item">
+                        <label class="list-check form-check">
+                            <input id="@post.Slug" type="checkbox" class="list-check-input form-check-input" style="display: block" @bind="post.Selected">
+                            <svg id="s-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" style="color: green; margin-top: 12px; display: none" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                            </svg>
+                            <svg id="f-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" style="color: red; margin-top: 12px; display: none" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                            </svg>
+                        </label>
+                        <div class="list-title">@post.Title</div>
+                        <div class="list-text ms-auto">@post.Published.ToFriendlyShortDateString()</div>
+                    </li>
+                }
+            </ul>
+            <p class="lead">@StatusMsg</p>
+            <div class="form-item">
+                <button class="btn btn-blogifier px-5" type="button" @onclick="Import">@_localizer["import"]</button>
+                <button class="btn btn-secondary px-5" type="button" @onclick="Load">@_localizer["cancel"]</button>
+            </div>
+    </div>
+}
 
 @code {
     protected ImportModel ImportModel { get; set; }

@@ -1,0 +1,34 @@
+.tab {
+  display: flex;
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    padding-right: 2rem;
+    font-size:1rem;
+
+    > a {
+      line-height: 2rem;
+      color: $gray-600;
+
+      &:hover {
+        color: $dark;
+      }
+
+      &.active {
+        font-weight: 500;
+        color: $gray-900;
+      }
+    }
+
+    hr {
+      background: linear-gradient(90deg, $gray-600, transparent);
+      width: 65%;
+    }
+  }
+
+  &-content {
+    flex-grow: 1;
+    width:100%;
+  }
+}

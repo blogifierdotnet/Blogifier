@@ -3,8 +3,8 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<h1 class="app-section-title">Email Settings</h1>
-<div class="app-section-content">
+<h1 class="section-title">Email Settings</h1>
+<div class="section-content -half">
     @if (Mail != null)
     {
         <EditForm model="@Mail" OnValidSubmit="Save">

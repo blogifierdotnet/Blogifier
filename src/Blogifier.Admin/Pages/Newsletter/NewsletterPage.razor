@@ -4,8 +4,8 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<h1 class="app-section-title">Newesletters</h1>
-<div class="app-section-content mw-100">
+<h1 class="section-title">Newesletters</h1>
+<div class="section-content">
     @if (Newsletters == null || Newsletters.Count == 0)
     {
         <p class="list-notfound">@_localizer["not-found"]</p>

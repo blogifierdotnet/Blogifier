@@ -49,7 +49,7 @@
 body {
   margin: 0;
   font-family: var(--bs-font-sans-serif);
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
   color: #111;
@@ -77,34 +77,28 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   line-height: 1.2; }
 
 h1, .h1 {
-  font-size: calc(1.375rem + 1.5vw); }
+  font-size: calc(1.27812rem + 0.3375vw); }
   @media (min-width: 1200px) {
     h1, .h1 {
-      font-size: 2.5rem; } }
+      font-size: 1.53125rem; } }
 
 h2, .h2 {
-  font-size: calc(1.325rem + 0.9vw); }
+  font-size: calc(1.25625rem + 0.075vw); }
   @media (min-width: 1200px) {
     h2, .h2 {
-      font-size: 2rem; } }
+      font-size: 1.3125rem; } }
 
 h3, .h3 {
-  font-size: calc(1.3rem + 0.6vw); }
-  @media (min-width: 1200px) {
-    h3, .h3 {
-      font-size: 1.75rem; } }
+  font-size: 1.09375rem; }
 
 h4, .h4 {
-  font-size: calc(1.275rem + 0.3vw); }
-  @media (min-width: 1200px) {
-    h4, .h4 {
-      font-size: 1.5rem; } }
+  font-size: 0.98438rem; }
 
 h5, .h5 {
-  font-size: 1.25rem; }
+  font-size: 0.875rem; }
 
 h6, .h6 {
-  font-size: 1rem; }
+  font-size: 0.875rem; }
 
 p {
   margin-top: 0;
@@ -375,7 +369,7 @@ progress {
   display: none !important; }
 
 .lead {
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   font-weight: 300; }
 
 .display-1 {
@@ -445,7 +439,7 @@ progress {
 
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1.25rem; }
+  font-size: 1.09375rem; }
   .blockquote > :last-child {
     margin-bottom: 0; }
 
@@ -1494,12 +1488,12 @@ progress {
 .col-form-label-lg {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: 1.25rem; }
+  font-size: 1.09375rem; }
 
 .col-form-label-sm {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-size: 0.875rem; }
+  font-size: 0.76562rem; }
 
 .form-text {
   margin-top: 0.25rem;
@@ -1595,7 +1589,7 @@ progress {
 .form-control-sm {
   min-height: calc(1.5em + 0.5rem);
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   border-radius: 0.2rem; }
   .form-control-sm::file-selector-button {
     padding: 0.25rem 0.5rem;
@@ -1609,7 +1603,7 @@ progress {
 .form-control-lg {
   min-height: calc(1.5em + 1rem);
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   border-radius: 0.3rem; }
   .form-control-lg::file-selector-button {
     padding: 0.5rem 1rem;
@@ -1677,17 +1671,17 @@ textarea.form-control-lg {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
-  font-size: 0.875rem; }
+  font-size: 0.76562rem; }
 
 .form-select-lg {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1.25rem; }
+  font-size: 1.09375rem; }
 
 .form-check {
   display: block;
-  min-height: 1.5rem;
+  min-height: 1.3125rem;
   padding-left: 1.5em;
   margin-bottom: 0.125rem; }
   .form-check .form-check-input {
@@ -1908,7 +1902,7 @@ textarea.form-control-lg {
 .input-group-lg > .input-group-text,
 .input-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   border-radius: 0.3rem; }
 
 .input-group-sm > .form-control,
@@ -1916,7 +1910,7 @@ textarea.form-control-lg {
 .input-group-sm > .input-group-text,
 .input-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   border-radius: 0.2rem; }
 
 .input-group-lg > .form-select,
@@ -1953,7 +1947,7 @@ textarea.form-control-lg {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   color: #fff;
   background-color: rgba(25, 135, 84, 0.9);
   border-radius: 0.25rem; }
@@ -2016,7 +2010,7 @@ textarea.form-control-lg {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   color: #fff;
   background-color: rgba(220, 53, 69, 0.9);
   border-radius: 0.25rem; }
@@ -2593,12 +2587,12 @@ textarea.form-control-lg {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   border-radius: 0.3rem; }
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   border-radius: 0.2rem; }
 
 .fade {
@@ -2649,7 +2643,7 @@ textarea.form-control-lg {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: #111;
   text-align: left;
   list-style: none;
@@ -2829,7 +2823,7 @@ textarea.form-control-lg {
   display: block;
   padding: 0.5rem 1rem;
   margin-bottom: 0;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   color: #6c757d;
   white-space: nowrap; }
 
@@ -3024,10 +3018,10 @@ textarea.form-control-lg {
     justify-content: space-between; }
 
 .navbar-brand {
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  padding-top: 0.33594rem;
+  padding-bottom: 0.33594rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   white-space: nowrap; }
 
 .navbar-nav {
@@ -3052,7 +3046,7 @@ textarea.form-control-lg {
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1.09375rem;
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
@@ -3370,7 +3364,7 @@ textarea.form-control-lg {
   align-items: center;
   width: 100%;
   padding: 0.5rem 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: #111;
   background-color: transparent;
   border: 0 solid rgba(0, 0, 0, 0.125);
@@ -3524,7 +3518,7 @@ textarea.form-control-lg {
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
-  font-size: 1.25rem; }
+  font-size: 1.09375rem; }
 
 .pagination-lg .page-item:first-child .page-link {
   border-top-left-radius: 0.3rem;
@@ -3536,7 +3530,7 @@ textarea.form-control-lg {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem; }
+  font-size: 0.76562rem; }
 
 .pagination-sm .page-item:first-child .page-link {
   border-top-left-radius: 0.2rem;
@@ -3568,7 +3562,7 @@ textarea.form-control-lg {
   position: relative;
   padding: 1rem 1rem;
   margin-bottom: 1rem;
-  border: 1px solid transparent;
+  border: 0 solid transparent;
   border-radius: 0.25rem; }
 
 .alert-heading {
@@ -3664,7 +3658,7 @@ textarea.form-control-lg {
   display: flex;
   height: 1rem;
   overflow: hidden;
-  font-size: 0.75rem;
+  font-size: 0.65625rem;
   background-color: #e9ecef;
   border-radius: 0.25rem; }
 
@@ -4281,7 +4275,7 @@ textarea.form-control-lg {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   word-wrap: break-word;
   opacity: 0; }
   .tooltip.show {
@@ -4366,7 +4360,7 @@ textarea.form-control-lg {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.76562rem;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: padding-box;
@@ -4455,7 +4449,7 @@ textarea.form-control-lg {
 .popover-header {
   padding: 0.5rem 1rem;
   margin-bottom: 0;
-  font-size: 1rem;
+  font-size: 0.875rem;
   background-color: #f0f0f0;
   border-bottom: 1px solid #d8d8d8;
   border-top-left-radius: calc(0.3rem - 1px);
@@ -5556,22 +5550,22 @@ textarea.form-control-lg {
   padding-left: 3rem !important; }
 
 .fs-1 {
-  font-size: calc(1.375rem + 1.5vw) !important; }
+  font-size: calc(1.27812rem + 0.3375vw) !important; }
 
 .fs-2 {
-  font-size: calc(1.325rem + 0.9vw) !important; }
+  font-size: calc(1.25625rem + 0.075vw) !important; }
 
 .fs-3 {
-  font-size: calc(1.3rem + 0.6vw) !important; }
+  font-size: 1.09375rem !important; }
 
 .fs-4 {
-  font-size: calc(1.275rem + 0.3vw) !important; }
+  font-size: 0.98438rem !important; }
 
 .fs-5 {
-  font-size: 1.25rem !important; }
+  font-size: 0.875rem !important; }
 
 .fs-6 {
-  font-size: 1rem !important; }
+  font-size: 0.875rem !important; }
 
 .fst-italic {
   font-style: italic !important; }
@@ -7498,37 +7492,21 @@ textarea.form-control-lg {
 
 @media (min-width: 1200px) {
   .fs-1 {
-    font-size: 2.5rem !important; }
+    font-size: 1.53125rem !important; }
   .fs-2 {
-    font-size: 2rem !important; }
-  .fs-3 {
-    font-size: 1.75rem !important; }
-  .fs-4 {
-    font-size: 1.5rem !important; }
+    font-size: 1.3125rem !important; }
   .fs-sm-1 {
-    font-size: 2.5rem !important; }
+    font-size: 1.53125rem !important; }
   .fs-sm-2 {
-    font-size: 2rem !important; }
-  .fs-sm-3 {
-    font-size: 1.75rem !important; }
-  .fs-sm-4 {
-    font-size: 1.5rem !important; }
+    font-size: 1.3125rem !important; }
   .fs-md-1 {
-    font-size: 2.5rem !important; }
+    font-size: 1.53125rem !important; }
   .fs-md-2 {
-    font-size: 2rem !important; }
-  .fs-md-3 {
-    font-size: 1.75rem !important; }
-  .fs-md-4 {
-    font-size: 1.5rem !important; }
+    font-size: 1.3125rem !important; }
   .fs-lg-1 {
-    font-size: 2.5rem !important; }
+    font-size: 1.53125rem !important; }
   .fs-lg-2 {
-    font-size: 2rem !important; }
-  .fs-lg-3 {
-    font-size: 1.75rem !important; }
-  .fs-lg-4 {
-    font-size: 1.5rem !important; } }
+    font-size: 1.3125rem !important; } }
 
 @media print {
   .d-print-inline {
@@ -7656,46 +7634,6 @@ body {
       left: .25rem;
       transform: translateY(-50%); }
 
-.app-tab-nav {
-  width: 13rem;
-  padding-right: 2rem; }
-  .app-tab-nav > a {
-    line-height: 2rem;
-    color: #6c757d; }
-    .app-tab-nav > a:hover {
-      color: #000; }
-    .app-tab-nav > a.active {
-      font-weight: 500;
-      color: #333; }
-  .app-tab-nav hr {
-    background: linear-gradient(to right, #6c757d, #f5f6f6);
-    width: 60%; }
-
-.app-tab-body {
-  flex: 1;
-  font-size: .875rem; }
-
-.app-section-content {
-  width: 100%;
-  max-width: 26rem;
-  margin-bottom: 4rem; }
-
-.app-section-title {
-  font-size: 1.25rem;
-  font-weight: 500;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem; }
-
-.app-section-desc {
-  font-size: .875rem;
-  color: #6c757d; }
-
-.app-section-subtitle {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem; }
-
 #blazor-error-ui {
   display: none; }
 
@@ -7757,6 +7695,52 @@ body {
       transform: scale(1.25); }
     .blazorui-error-btn:hover .bi-arrow-clockwise {
       transform: scale(1.25) rotate(360deg); }
+
+.tab {
+  display: flex; }
+  .tab-nav {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    padding-right: 2rem;
+    font-size: 1rem; }
+    .tab-nav > a {
+      line-height: 2rem;
+      color: #6c757d; }
+      .tab-nav > a:hover {
+        color: #212529; }
+      .tab-nav > a.active {
+        font-weight: 500;
+        color: #212529; }
+    .tab-nav hr {
+      background: linear-gradient(90deg, #6c757d, transparent);
+      width: 65%; }
+  .tab-content {
+    flex-grow: 1;
+    width: 100%; }
+
+.section-content {
+  width: 100%;
+  margin-bottom: 4rem; }
+  .section-content.-full {
+    max-width: 100%; }
+  .section-content.-half {
+    max-width: 50%; }
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem; }
+
+.section-desc:not(.alert) {
+  color: #6c757d; }
+
+.section-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem; }
 
 .btn-rounded {
   border-radius: 5rem; }

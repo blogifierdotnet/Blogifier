@@ -3,9 +3,9 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<h1 class="app-section-title">Scripts Settings</h1>
-<p class="app-section-desc">@_localizer["include-scripts"]</p>
-<div class="app-section-content">
+<h1 class="section-title">Scripts Settings</h1>
+<p class="section-desc">@_localizer["include-scripts"]</p>
+<div class="section-content">
     @if (Blog != null)
     {
         <EditForm Model="@Blog" OnValidSubmit="Save">

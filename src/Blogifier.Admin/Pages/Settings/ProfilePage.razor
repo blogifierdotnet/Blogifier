@@ -4,8 +4,8 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<h1 class="app-section-title">Public profile</h1>
-<div class="app-section-content">
+<h1 class="section-title">Public profile</h1>
+<div class="section-content -half">
    @if (Author != null)
    {
       <EditForm Model="@Author" OnValidSubmit="SaveProfile">
@@ -43,8 +43,8 @@
 
 </div>
 
-<h1 class="app-section-title">Change password</h1>
-<div class="app-section-content">
+<h1 class="section-title">Change password</h1>
+<div class="section-content">
    @if (Author != null)
    {
       <EditForm Model="@Model" OnValidSubmit="SavePassword">

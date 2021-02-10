@@ -5,6 +5,7 @@ $warning: #ff8d00;
 
 // body
 $body-bg: #f5f6f6;
+$font-size-base: .875rem;
 $body-color: #111;
 $link-color: $blogifier;
 $link-hover-color: #444;
@@ -47,3 +48,14 @@ $accordion-button-padding-x: 0;
 
 // list
 $list-height: 2.75rem;
+
+// headings
+$h1-font-size: $font-size-base * 1.75;
+$h2-font-size: $font-size-base * 1.5;
+$h3-font-size: $font-size-base * 1.25;
+$h4-font-size: $font-size-base * 1.125;
+$h5-font-size: $font-size-base * 1;
+$h6-font-size: $font-size-base;
+
+// alerts
+$alert-border-width: 0;
