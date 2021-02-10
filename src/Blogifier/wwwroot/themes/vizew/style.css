@@ -50,19 +50,20 @@ a:focus {
   font-size: 14px;
   font-family: "Roboto", sans-serif; }
 
-/*ul {*/
-/*  margin: 0; }*/
-/*  ul li {*/
-/*    list-style: none; }*/
 ul {
+  margin: 0; }
+  ul li {
+    list-style: none; }
+
+.blog-content ul {
    padding-left: 40px;
 }
 
-blockquote {
+.blog-content blockquote {
   background-color: darkslategray;
   padding: 10px;
 }
-blockquote p:last-child {
+.blog-content blockquote p:last-child {
   margin-bottom: 0;
 }
 
