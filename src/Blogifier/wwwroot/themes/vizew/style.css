@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
 /* :: 2.0 Import All CSS Plugins */
 @import url(css/bootstrap.min.css);
-@import url(css/classy-nav.css);
+/*@import url(css/classy-nav.css);*/
 @import url(css/font-awesome.min.css);
 @import url(css/themify-icons.css);
 @import url(css/owl.carousel.min.css);
@@ -50,10 +50,21 @@ a:focus {
   font-size: 14px;
   font-family: "Roboto", sans-serif; }
 
+/*ul {*/
+/*  margin: 0; }*/
+/*  ul li {*/
+/*    list-style: none; }*/
 ul {
-  margin: 0; }
-  ul li {
-    list-style: none; }
+   padding-left: 40px;
+}
+
+blockquote {
+  background-color: darkslategray;
+  padding: 10px;
+}
+blockquote p:last-child {
+  margin-bottom: 0;
+}
 
 img {
   height: auto;
