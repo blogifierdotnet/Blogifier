@@ -18,21 +18,23 @@
 // layout
 @import "layout/main";
 @import "layout/header";
-@import "layout/page";
 
 // components
 @import "include/blazor";
+@import "include/tab";
+@import "include/section";
 @import "include/buttons";
 @import "include/forms";
 @import "include/list";
 @import "include/prism";
+@import "include/toaster";
+
 
 // pages > account
 @import "pages/account/account";
 
 // pages > dashbaord
 @import "pages/dashboard/dashboard";
-@import "pages/dashboard/list";
 @import "pages/dashboard/totals";
 
 // pages > editor

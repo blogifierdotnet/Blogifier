@@ -3,11 +3,11 @@ name: Deploy to demo branch
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy-demo:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
 
     - name: Checkout

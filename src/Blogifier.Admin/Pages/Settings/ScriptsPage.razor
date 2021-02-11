@@ -3,18 +3,18 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<h1 class="app-section-title">Scripts Settings</h1>
-<p class="app-section-desc">@_localizer["include-scripts"]</p>
-<div class="app-section-content">
+<h1 class="section-title">Scripts Settings</h1>
+<p class="section-desc">@_localizer["include-scripts"]</p>
+<div class="section-content">
     @if (Blog != null)
     {
         <EditForm Model="@Blog" OnValidSubmit="Save">
             <div class="form-item">
-                <label class="form-item-label">Header script</label>
+                <label class="form-label">Header script</label>
                 <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.HeaderScript" name="headerScript" />
             </div>
             <div class="form-item">
-                <label class="form-item-label">Footer script</label>
+                <label class="form-label">Footer script</label>
                 <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.FooterScript" name="footerScrip" />
             </div>
             <div class="form-item">

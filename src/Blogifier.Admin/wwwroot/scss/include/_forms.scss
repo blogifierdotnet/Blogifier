@@ -1,65 +1,97 @@
-
 .form-control,
 .form-select {
-    box-shadow: $bf-shadow;
+  box-shadow: $bf-shadow;
 }
 
 .form-item {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.375rem;
 
-    &-label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-bottom: .25rem;
-    }
+  .form-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-700;
+  }
 
-    &-desc {
-        font-size: 0.75rem;
-        color: $gray-600;
-        padding-left: 0.1rem;
-    }
+  &-desc {
+    padding-left: 0.1rem;
+    font-size: 0.875rem;
+    color: $gray-600;
+  }
 
-    .validation-message, &-error {
-        color: $danger;
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
+  &-error,
+  .validation-message {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $danger;
+    margin-top: .125rem;
+
+  }
 }
 
 .modal {
-    .form-select, .form-control {
-        box-shadow: none;
-        border: 1px solid $gray-400;
-    }
+  .form-select,
+  .form-control {
+    box-shadow: none;
+    border: 1px solid $gray-400;
+  }
 }
-
 
 // dropdown
 .dropdown-full {
-    .dropdown-toggle {
-        width: 100%;
-        text-align: left;
-        display: flex;
+  .dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    display: flex;
 
-        &::after {
-            margin-left: auto;
-            margin-top: auto;
-            margin-bottom: auto;
-        }
+    &::after {
+      margin-left: auto;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    width: 100%;
+  }
+
+  .dropdown-item {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+}
+
+.dropdown-flush {
+  .dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    margin-top: 0.5rem !important;
+    @include bf-card();
+  }
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-bottom: 1px solid $gray-100;
+
+    &:active {
+      color: #fff !important;
+      .bi {
+        fill: #fff !important;
+      }
     }
 
-    .dropdown-menu {
-        padding: 0;
-        width: 100%;
+    .bi {
+      margin-right: 0.5rem;
+      margin-left: -0.25rem;
+      transform: translateY(-1px);
     }
-
-    .dropdown-item {
-        font-size: .875rem;
-        font-weight: 500;
-        padding: .5rem 1rem;
-
-        &:not(:last-child) {
-            border-bottom: 1px solid $gray-200;
-        }
-    }
+  }
 }

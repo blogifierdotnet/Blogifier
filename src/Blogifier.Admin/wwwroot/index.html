@@ -6,7 +6,6 @@
     <title>Blogifier</title>
     <base href="/" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="_content/Sotsera.Blazor.Toaster/toastr.min.css" rel="stylesheet" />
     <!--<link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />-->
 </head>
 
@@ -46,6 +45,12 @@
         <input type="file" name="file" id="file" onchange="fileManager.uploadSubmit(); return false;" />
         <input type="submit" value="Upload" />
     </form>
+
+    <div class="footer">
+        <div class="container">
+            &copy; <a href="https://blogifier.net" target="_blank" ref="nofollow">Blogifier v3.0</a>
+        </div>
+    </div>
 
     <script src="js/frameworks/jquery.min.js"></script>
     <script src="js/frameworks/bootstrap.bundle.min.js"></script>

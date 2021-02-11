@@ -1,6 +1,12 @@
-﻿body {
+﻿html {
+  height: 100%;
+}
+body {
   cursor: default;
   overflow-y: scroll;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
@@ -10,4 +16,24 @@
 
 .blogifier {
   // app
+}
+
+.content {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.footer {
+  text-align: right;
+  font-size: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-top: auto;
+  color: $gray-500;
+  a {
+    color: $gray-500;
+    &:hover {
+      color: $blogifier;
+    }
+  }
 }

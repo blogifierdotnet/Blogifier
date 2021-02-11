@@ -4,6 +4,9 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
+
+<PageTitle Title="@_localizer["Editor"]" />
+
 <div class="app-editor">
     @if (Post != null)
     {
@@ -90,15 +93,15 @@
                             </div>
                         </div>
                         <div class="form-item">
-                            <label class="form-item-label">Preview</label>
+                            <label class="form-label">Preview</label>
                             <img id="post-cover" name="post-cover" src="@Post.Cover" class="rounded-3">
                         </div>
                         <div class="form-item">
-                            <label class="form-item-label">Alt</label>
+                            <label class="form-label">Alt</label>
                             <input type="text" class="form-control" value="@Post.Title">
                         </div>
                         <div class="form-item mb-0">
-                            <label class="form-item-label">URL</label>
+                            <label class="form-label">URL</label>
                             <input type="text" class="form-control" value="@Post.Cover" disabled>
                         </div>
                     </div>

@@ -1,139 +1,141 @@
-﻿$icon-wh: 1.25rem;
-$link-wh: 3rem;
+﻿.header {
+  background-color: #fff;
+  padding-top: 1.5rem;
+  border-bottom: 1px solid $gray-200;
+}
+.header-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0 -1rem;
 
-.app-nav {
-    padding-top: .75rem + 0.75rem;
-    padding-bottom: .75rem;
+  &-link {
+    display: block;
+    width: 3rem;
+    height: 3.25rem;
+    line-height: 2.75rem;
+    text-align: center;
     position: relative;
-    margin-bottom: 4rem;
-    background: #fff;
-    //
-    // The bar on the top
-    &::before {
-        content: "";
-        display: block;
-        height: 0.75rem;
-        background: $blogifier;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+    color: $gray-600;
+    outline: none !important;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 1.25rem;
+      height: 0.125rem;
+      background-color: transparent;
+      position: absolute;
+      bottom: -0.0625rem;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 1rem;
     }
-    //
-    // <ul>
-    &-list {
-        position: relative;
-        margin-bottom: 0;
-        list-style: none;
+    &:focus,
+    &:hover {
+      color: $gray-900;
     }
-    // <a>
-    &-link {
-        color: #888;
-        width: $link-wh;
-        height: $link-wh;
-        display: block;
-        text-align: center;
-        line-height: $link-wh - .25rem;
 
-        .bi {
-            width: $icon-wh;
-            height: $icon-wh;
-        }
-        // Dashboard icon
-        .bi-grid-1x2 {
-            width: $icon-wh - .125rem;
-            height: $icon-wh - .125rem;
-        }
-
-        &.active {
-            color: $blogifier;
-        }
+    &:focus {
+      &::after {
+        background-color: rgba(#000, 0.1);
+      }
     }
-    //
-    // <li> profile dropdown
-    &-profile {
-        &-button {
-            background: none;
-            padding: 0;
-            border: 1rem;
-            width: $link-wh;
-            height: $link-wh;
-            line-height: 1;
 
-            &-img {
-                width: $icon-wh;
-                height: $icon-wh;
-                vertical-align: middle;
-                border-radius:5rem;
-            }
-        }
-
-        &-content {
-            margin-top: 1rem;
-            width: 16rem;
-            padding: 2rem;
-            border: 0;
-            box-shadow: 0 0 10rem rgba(0,0,0,0.3);
-        }
-
-        &-info {
-            text-align: center;
-            margin-bottom: 2rem;
-
-            span {
-                display: block;
-            }
-        }
-
-        &-avatar {
-            border-radius: 100%;
-            width: 4rem;
-            height: 4rem;
-            display: block;
-            margin: 0 auto 1rem;
-        }
-
-        &-name {
-            font-weight: 500;
-            line-height: 1.25;
-        }
-
-        &-email {
-            font-size: .75rem;
-            color: #666;
-        }
-
-        &-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-            li {
-                border-top: 1px solid #eee;
-            }
-
-            a {
-                color: #666;
-                padding: .5rem 0 .5rem 2rem;
-                display: block;
-                position: relative;
-                font-size: .875rem;
-                font-weight: 500;
-                cursor: pointer;
-
-                &:hover {
-                    color: $blogifier;
-                }
-            }
-
-            .bi {
-                width: 1rem;
-                height: 1rem;
-                position: absolute;
-                top: 50%;
-                left: .25rem;
-                transform: translateY(-50%);
-            }
-        }
+    &.active {
+      color: $blogifier;
+      &::after {
+        background-color: $blogifier;
+      }
     }
-} 
+  }
+  &-icon {
+    line-height: 2rem;
+  }
+  &-img {
+    border-radius: 100%;
+  }
+}
+
+.user-nav {
+  width: 15rem;
+  box-shadow: -1rem 1rem 5rem rgba(#000, 0.2);
+  margin-top: 0.875rem !important;
+  border: 0;
+  padding: 2rem 2rem 1rem;
+  border-radius: 0.75rem;
+
+  &-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  &-img {
+    display: block;
+    border-radius: 100%;
+    margin: 0 auto 0.75rem;
+    width: 4rem;
+  }
+  &-name {
+    display: block;
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+  &-email {
+    display: block;
+    font-size: 0.75rem;
+    color: $gray-600;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-item {
+    border-top: 1px solid $gray-100;
+  }
+  &-link {
+    display: block;
+    line-height: 2.5rem;
+    padding: 0;
+    color: $gray-600;
+    font-weight: 500;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    &:focus,
+    &:hover {
+      color: $blogifier;
+    }
+    &.-logout {
+      &:focus,
+      &:hover {
+        color: $danger;
+      }
+    }
+  }
+
+  &-icon {
+    margin-right: 1rem;
+    width: 1rem;
+  }
+
+  &-blogifier {
+    border-top: 1px solid $gray-200;
+    display: block;
+    text-align: center;
+    color: $gray-500;
+    line-height: 3rem;
+  }
+}
+
+@media screen and (max-width: $container + 2rem) {
+  // remove the negative margin on .header-nav when it's alsmost near the contianer width.
+  .header-nav {
+    margin: 0;
+  }
+}

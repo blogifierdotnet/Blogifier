@@ -3,22 +3,22 @@
 
 @if (_model != null)
 {
-	<div class="app-widget app-widget-stats  d-flex">
-		<div class="app-widget-card app-widget-stats-item">
-			<span class="app-widget-stats-number">@_model.TotalPosts</span>
-			<span class="app-widget-stats-title">@_localizer["posts"]</span>
+	<div class="dashboard-widget d-flex">
+		<div class="dashboard-widget-card dashboard-stats-item">
+			<span class="dashboard-stats-number">@_model.TotalPosts</span>
+			<span class="dashboard-stats-title">@_localizer["posts"]</span>
 		</div>
-		<div class="app-widget-card app-widget-stats-item">
-			<span class="app-widget-stats-number">0</span>
-			<span class="app-widget-stats-title">@_localizer["pages"]</span>
+		<div class="dashboard-widget-card dashboard-stats-item">
+			<span class="dashboard-stats-number">0</span>
+			<span class="dashboard-stats-title">@_localizer["pages"]</span>
 		</div>
-		<div class="app-widget-card app-widget-stats-item">
-			<span class="app-widget-stats-number">@_model.TotalViews</span>
-			<span class="app-widget-stats-title">@_localizer["views"]</span>
+		<div class="dashboard-widget-card dashboard-stats-item">
+			<span class="dashboard-stats-number">@_model.TotalViews</span>
+			<span class="dashboard-stats-title">@_localizer["views"]</span>
 		</div>
-		<div class="app-widget-card app-widget-stats-item">
-			<span class="app-widget-stats-number">@_model.TotalSubscribers</span>
-			<span class="app-widget-stats-title">@_localizer["subscribers"]</span>
+		<div class="dashboard-widget-card dashboard-stats-item">
+			<span class="dashboard-stats-number">@_model.TotalSubscribers</span>
+			<span class="dashboard-stats-title">@_localizer["subscribers"]</span>
 		</div>
 	</div>
 }

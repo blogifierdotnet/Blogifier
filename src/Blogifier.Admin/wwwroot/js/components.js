@@ -50,9 +50,10 @@ window.commonJsFunctions = {
 		document.cookie = name + "=" + value + expires + "; path=/";
 	},
 	setTooltip: function (args) {
-		$(document).ready(function () {
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		});
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
 	},
 	loadEditor: function () {
 		easymde = getEditor();
@@ -286,3 +287,8 @@ function jumpTab(d) {
     selectJumpTab.show() 
 }
 
+// set page title
+// Shared/PageTitle.razor
+window.setTitle = (title) => {
+    document.title = title + " | Blogifier";
+}
