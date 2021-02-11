@@ -50,9 +50,10 @@ window.commonJsFunctions = {
 		document.cookie = name + "=" + value + expires + "; path=/";
 	},
 	setTooltip: function (args) {
-		$(document).ready(function () {
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		});
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
 	},
 	loadEditor: function () {
 		easymde = getEditor();

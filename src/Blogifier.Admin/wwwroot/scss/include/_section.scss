@@ -1,9 +1,9 @@
 .section {
- 
-
   &-content {
     width: 100%;
-    margin-bottom: 4rem;
+    &:not(:last-child) {
+      margin-bottom: 4rem;
+    }
     &.-full {
       max-width: 100%;
     }
