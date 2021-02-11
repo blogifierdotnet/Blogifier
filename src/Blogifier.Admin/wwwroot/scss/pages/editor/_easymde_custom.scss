@@ -1,139 +1,138 @@
 .bf-editor {
-    overflow: hidden;
-    margin-bottom: 5rem;
+  overflow: hidden;
+  margin-bottom: 5rem;
 
-    .editor-toolbar {
-        padding: 0;
-        display: flex;
-        border: 0;
-        border-radius: 0;
-        user-select: none;
-        position: relative;
-        border-bottom: 1px solid rgba(#000, .1);
+  .editor-toolbar {
+    padding: 0;
+    display: flex;
+    border: 0;
+    border-radius: 0;
+    user-select: none;
+    position: relative;
+    border-bottom: 1px solid rgba(#000, 0.1);
 
-
-
-        &:after, &:before {
-            display: block;
-            content: ' ';
-            height: 1px
-        }
-
-        &::before {
-            margin-bottom: 8px
-        }
-
-        &::after {
-            margin-top: 8px
-        }
-
-        &.fullscreen {
-            width: 100%;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            left: 0;
-            opacity: 1;
-            z-index: 1000;
-            background: #fff;
-        }
-
-        &.sided--no-fullscreen {
-            width: 100%
-        }
-
-        .separator {
-            &:last-child {
-                margin-left: auto;
-            }
-
-            width: 1px;
-            height: 3rem;
-            background: rgba(#000, .07);
-            font-size: 0;
-            transform: translateY(0);
-        }
-
-        button {
-            padding: 0;
-            border: 0;
-            background: #fff;
-            height: 3rem;
-            width: 3rem;
-
-            &.active,
-            &:hover {
-                background: $gray-100;
-
-                .bi {
-                    fill: $blogifier;
-                    width: 1.125rem;
-                    height: 1.125rem;
-
-                    &-table,
-                    &-arrows-fullscreen {
-                        width: .875rem;
-                        height: .875rem;
-                    }
-                }
-            }
-
-            .bi {
-                width: 1rem;
-                height: 1rem;
-                fill: $dark;
-                transition: all ease .125s;
-
-                &-table,
-                &-arrows-fullscreen {
-                    width: .75rem;
-                    height: .75rem;
-                }
-            }
-        }
-        // when toolbar is disabled for preview
-        &.disabled-for-preview {
-            button {
-                &:not(.no-disable) {
-                    opacity: .6;
-                    pointer-events: none
-                }
-            }
-        }
-        @media only screen and (max-width:700px) {
-            i.no-mobile {
-                display: none
-            }
-        }
-    }
-    // END of toolbar
-    .editor-statusbar {
-        padding: 8px 10px;
-        font-size: 12px;
-        color: #959694;
-        text-align: right
+    &:after,
+    &:before {
+      display: block;
+      content: " ";
+      height: 1px;
     }
 
-    .editor-statusbar.sided--no-fullscreen {
-        width: 100%
+    &::before {
+      margin-bottom: 8px;
     }
 
-    .editor-statusbar span {
-        display: inline-block;
-        min-width: 4em;
-        margin-left: 1em
+    &::after {
+      margin-top: 8px;
     }
 
-    .editor-statusbar .lines:before {
-        content: 'lines: '
+    &.fullscreen {
+      width: 100%;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      z-index: 1000;
+      background: #fff;
     }
 
-    .editor-statusbar .words:before {
-        content: 'words: '
+    &.sided--no-fullscreen {
+      width: 100%;
     }
 
-    .editor-statusbar .characters:before {
-        content: 'characters: '
+    .separator {
+      &:last-child {
+        margin-left: auto;
+      }
+
+      width: 1px;
+      height: 3rem;
+      background: rgba(#000, 0.07);
+      font-size: 0;
+      transform: translateY(0);
     }
-    //
+
+    button {
+      padding: 0;
+      border: 0;
+      background: #fff;
+      height: 3rem;
+      width: 3rem;
+
+      &.active,
+      &:hover {
+        background: $gray-100;
+
+        .bi {
+          fill: $blogifier;
+          width: 1.125rem;
+          height: 1.125rem;
+
+          &-table,
+          &-arrows-fullscreen {
+            width: 0.875rem;
+            height: 0.875rem;
+          }
+        }
+      }
+
+      .bi {
+        width: 1rem;
+        height: 1rem;
+        fill: $dark;
+        transition: all ease 0.125s;
+
+        &-table,
+        &-arrows-fullscreen {
+          width: 0.75rem;
+          height: 0.75rem;
+        }
+      }
+    }
+    // when toolbar is disabled for preview
+    &.disabled-for-preview {
+      button {
+        &:not(.no-disable) {
+          opacity: 0.6;
+          pointer-events: none;
+        }
+      }
+    }
+    @media only screen and (max-width: 700px) {
+      i.no-mobile {
+        display: none;
+      }
+    }
+  }
+  // END of toolbar
+  .editor-statusbar {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #959694;
+    text-align: right;
+  }
+
+  .editor-statusbar.sided--no-fullscreen {
+    width: 100%;
+  }
+
+  .editor-statusbar span {
+    display: inline-block;
+    min-width: 4em;
+    margin-left: 1em;
+  }
+
+  .editor-statusbar .lines:before {
+    content: "lines: ";
+  }
+
+  .editor-statusbar .words:before {
+    content: "words: ";
+  }
+
+  .editor-statusbar .characters:before {
+    content: "characters: ";
+  }
+  //
 }

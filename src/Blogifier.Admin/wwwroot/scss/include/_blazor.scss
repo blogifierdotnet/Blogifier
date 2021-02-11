@@ -1,95 +1,92 @@
-
 #blazor-error-ui {
-    display: none;
+  display: none;
 }
 
 .blazorui {
+  &-loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #fff;
+  }
 
-    &-loading {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: 10000;
-        background: #fff;
+  &-error {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    background: $danger;
+    height: 3rem;
+    line-height: 3rem;
+    z-index: 10001;
+
+    .container {
+      position: relative;
     }
 
-    &-error {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        color: #fff;
-        background: $danger;
-        height: 3rem;
-        line-height: 3rem;
-        z-index: 10001;
+    &-message {
+      font-weight: 500;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
 
+      .bi-bug {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: 1rem;
+        animation: slidein 3s infinite;
+      }
 
-        .container {
-            position: relative;
+      @keyframes slidein {
+        0% {
+          transform: translateY(3rem);
         }
 
-        &-message {
-            font-weight: 500;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-
-            .bi-bug {
-                width: 1.25rem;
-                height: 1.25rem;
-                margin-right: 1rem;
-                animation: slidein 3s infinite;
-            }
-
-            @keyframes slidein {
-                0% {
-                    transform: translateY(3rem);
-                }
-
-                50% {
-                    transform: translateY(0);
-                }
-
-                100% {
-                    transform: translateY(-3rem);
-                }
-            }
+        50% {
+          transform: translateY(0);
         }
 
-        &-btn {
-            padding: 0;
-            margin: 0;
-            border: 0;
-            background: none;
-            width: 3rem;
-            line-height: 3rem;
-            vertical-align: top;
-
-            .bi {
-                fill: #fff;
-                transition: all ease .5s;
-            }
-
-            .bi-x {
-                width: 1.75rem;
-                height: 1.75rem;
-            }
-
-            .bi-arrow-clockwise {
-                width: 1.125rem;
-                height: 1.125rem;
-            }
-
-            &:hover {
-                .bi {
-                    opacity: 1;
-                    transform: scale(1.25);
-                }
-
-                .bi-arrow-clockwise {
-                    transform: scale(1.25) rotate(360deg);
-                }
-            }
+        100% {
+          transform: translateY(-3rem);
         }
+      }
     }
+
+    &-btn {
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: none;
+      width: 3rem;
+      line-height: 3rem;
+      vertical-align: top;
+
+      .bi {
+        fill: #fff;
+        transition: all ease 0.5s;
+      }
+
+      .bi-x {
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+
+      .bi-arrow-clockwise {
+        width: 1.125rem;
+        height: 1.125rem;
+      }
+
+      &:hover {
+        .bi {
+          opacity: 1;
+          transform: scale(1.25);
+        }
+
+        .bi-arrow-clockwise {
+          transform: scale(1.25) rotate(360deg);
+        }
+      }
+    }
+  }
 }
