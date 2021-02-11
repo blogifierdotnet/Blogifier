@@ -8,43 +8,47 @@
 {
     <h1 class="section-title">Themes</h1>
     <div class="section-content">
-        <div class="row stg-themes-installed">
+        <div class="row themes">
             <div class="col-md-6 col-lg-4">
-                <div class="stg-themes-installed-item">
-                    <div class="stg-themes-installed-cover">
-                        <img src="@CurrentTheme.Cover" class="stg-themes-installed-img" alt="@CurrentTheme.Title">
+                <div class="themes-item">
+                    <div class="themes-cover">
+                        <img src="@CurrentTheme.Cover" class="themes-img" alt="@CurrentTheme.Title">
                     </div>
-                    <div class="stg-themes-installed-details">
-                        <div class="stg-themes-installed-title">@CurrentTheme.Title (Current)</div>
-                        <ul class="stg-themes-installed-info">
-                            <li>Designed by <a href="#">John Doe</a></li>
-                            <li>Version 2.1</li>
+                    <div class="themes-details">
+                        <div class="themes-title">@CurrentTheme.Title (Current)</div>
+                        <ul class="themes-info">
+                            <li class="themes-info-item">Designed by <a href="#">John Doe</a></li>
+                            <li class="themes-info-item">Version 2.1</li>
                         </ul>
-                        <div class="d-flex">
-                            <a href="/admin/settings/customize/" class="btn btn-blogifier flex-grow-1 me-2">@_localizer["Customize"]</a>
-                        </div>
+                        <a href="/admin/settings/customize/" class="btn btn-blogifier btn-block">@_localizer["Customize"]</a>
                     </div>
                 </div>
             </div>
             @foreach (var item in Themes)
             {
                 <div class="col-md-6 col-lg-4">
-                    <div class="stg-themes-installed-item">
-                        <div class="stg-themes-installed-cover">
-                            <img src="@item.Cover" class="stg-themes-installed-img" alt="@item.Title">
+                    <div class="themes-item">
+                        <div class="themes-cover">
+                            <img src="@item.Cover" class="themes-img" alt="@item.Title">
                         </div>
-                        <div class="stg-themes-installed-details">
-                            <div class="stg-themes-installed-title">@item.Title</div>
-                            <ul class="stg-themes-installed-info">
-                                <li>Designed by <a href="#">John Doe</a></li>
-                                <li>Version 2.1</li>
+                        <div class="themes-details">
+                            <div class="themes-title">@item.Title</div>
+                            <ul class="themes-info">
+                                <li class="themes-info-item">Designed by <a href="#">John Doe</a></li>
+                                <li class="themes-info-item">Version 2.1</li>
                             </ul>
                             <div class="d-flex">
                                 <button type="button" class="btn btn-outline-default flex-grow-1 me-2" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@_localizer["select"]</button>
-                                <button type="button" class="btn btn-outline-default">
+                                <button type="button" class="btn btn-outline-default me-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-outline-default" data-bs-toggle="modal" data-bs-target="#themeInfo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                                     </svg>
                                 </button>
                             </div>
@@ -55,6 +59,33 @@
         </div>
     </div>
 }
+
+<div class="modal fade" id="themeInfo" tabindex="-1" aria-labelledby="themeInfoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="themeInfoLabel">Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="themes-modal">
+                    <div class="themes-modal-title">Theme Name</div>
+                    <p class="themes-modal-desc">
+                        This is a test description, one paragraph long description for you guys, there should not be a break line in this description, otherwise, it doesn't look good, and it gets messy. Also, we have 3 links.
+                    </p>
+                    <ul class="themes-modal-info">
+                        <li>Version 2.1</li>
+                        <li>By John Doe</li>
+                        <li><a href="#">Website</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Other Link</a></li>
+                    </ul>
+                    <img src="themes/standard/screenshot.png" class="themes-modal-img" alt="Theme Name">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <ToasterComponent @ref="Toaster" />
 

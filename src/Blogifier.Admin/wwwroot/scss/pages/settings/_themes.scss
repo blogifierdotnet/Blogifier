@@ -1,40 +1,73 @@
-.stg-themes {
-  &-installed {
-    margin-top: 1.5rem;
+.themes {
+  margin-top: 1.5rem;
 
-    &-item {
-      @include bf-card();
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
+  &-item {
+    @include bf-card();
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
 
-    &-cover {
-      max-height: 15rem;
-      min-width: 100%;
-      overflow: hidden;
-      border-bottom: 1px solid $gray-200;
-    }
+  &-cover {
+    max-height: 15rem;
+    overflow: hidden;
+    border-bottom: 1px solid $gray-200;
+  }
 
-    &-details {
-      padding: 1.5rem;
+  &-img {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  &-details {
+    padding: 1.5rem;
+  }
+
+  &-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.875rem;
+  }
+
+  &-info {
+    font-size: 0.75rem;
+    list-style: none;
+    padding: 0;
+    color: $gray-600;
+    margin-bottom: 1rem;
+
+    a {
+      color: $gray-600;
+      &:hover {
+        color: $gray-900;
+      }
     }
+  }
+
+  &-modal {
+    padding: 1rem;
 
     &-title {
-      margin-bottom: 0.5rem;
-      font-size: 0.875rem;
+      font-size: 1.5rem;
       font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    &-desc {
+      margin-bottom: 1rem;
     }
 
     &-info {
-      font-size: 0.75rem;
       list-style: none;
       padding: 0;
-      color: #000;
-      margin-bottom: 0.75rem;
-
-      a {
-        color: #000;
+      margin: 0 0 2rem;
+      > li {
+        margin-bottom: .5rem;
       }
+    }
+
+    &-img {
+      border-radius: 0.25rem;
+      border: 1px solid $gray-200;
+      width: 100%;
     }
   }
 }

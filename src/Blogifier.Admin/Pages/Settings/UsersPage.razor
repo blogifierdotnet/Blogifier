@@ -6,50 +6,49 @@
 
 @if (!showForm)
 {
-   <h1 class="section-title">Users Settings</h1>
-   <div class="section-content">
-      <div class="list-toolbar">
-         <label class="list-check form-check" data-toggle="tooltip" title="Select All">
-            @* TODO: Add check all: *@
-            <input type="checkbox" class="list-check-input form-check-input">
-         </label>
-         <button class="btn btn-outline-blogifier -add me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>
-         @_localizer["new-user"]
-         </button>
-         <div class="dropdown dropdown-flush">
-            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-               Action
+    <h1 class="section-title">Users Settings</h1>
+    <div class="section-content">
+        <div class="list-toolbar">
+            <label class="list-check form-check" data-toggle="tooltip" title="Select All">
+                <input type="checkbox" class="list-check-input form-check-input">
+            </label>
+            <button class="btn btn-outline-blogifier -add me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>
+                @_localizer["new-user"]
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
-               <button type="button" class="dropdown-item text-success">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+            <div class="dropdown dropdown-flush">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
+                    Action
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
+                <button type="button" class="dropdown-item text-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                     </svg>
-                  <span>Active</span>
-               </button>
-               <button type="button" class="dropdown-item text-warning">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
-                     <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
-                     <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                  </svg>
-                  <span>Suspend</span>
-               </button>
-               <button type="button" class="dropdown-item text-danger" @onclick="(()=> RemoveSelected())">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
-                     <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
-                  </svg>
-                  <span>Remove</span>
-               </button>
-               <button type="button" class="dropdown-item text-blogifier">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check" viewBox="0 0 16 16">
-                     <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
-                  </svg>
-                  <span>Admin</span>
-               </button>
+                    </svg>
+                    <span>Active</span>
+                </button>
+                <button type="button" class="dropdown-item text-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    <span>Suspend</span>
+                </button>
+                <button type="button" class="dropdown-item text-danger" @onclick="(()=> RemoveSelected())">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                    <span>Remove</span>
+                </button>
+                <button type="button" class="dropdown-item text-blogifier">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-check" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
+                    </svg>
+                    <span>Admin</span>
+                </button>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
 
       @if (AuthorItems != null)
       {
@@ -58,11 +57,10 @@
             {
                <li class="list-item">
                   <label class="list-check form-check">
-                     @* TODO: Add check all: *@
-                     <input type="checkbox" class="form-check-input" @bind="item.Selected">
+                     <input type="checkbox" class="list-check-input form-check-input" @bind="item.Selected">
                   </label>
                   <a class="list-title -link" href="#" @onclick="(()=> LoadForm(item.Author.Email))" @onclick:preventDefault>@item.Author.DisplayName</a>
-                  <span class="list-text text-muted ms-auto">@item.Author.Email</span>
+                  <span class="list-text ms-auto">@item.Author.Email</span>
 
                   @if (!item.Author.IsAdmin)
                   {
@@ -108,33 +106,33 @@
 @if (showForm && SelectedAuthor != null)
 {
    <h1 class="section-title">Add User</h1>
-   <div class="section-content">
-      <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
-         <DataAnnotationsValidator />
-         <div class="form-item">
-            <label class="form-label">@_localizer["email"]</label>
-            <input class="form-control" type="email" @bind="SelectedAuthor.Email" placeholder="you@mail.com" />
-            <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
-         </div>
-         <div class="form-item">
-            <label class="form-label">@_localizer["name"]</label>
-            <input class="form-control" @bind="SelectedAuthor.DisplayName" placeholder="@_localizer["name"]" />
-            <ValidationMessage For="@(() => SelectedAuthor.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
-         </div>
-         <div class="form-item">
-            <label class="form-label">@_localizer["password"]</label>
-            <input class="form-control" type="password" @bind="SelectedAuthor.Password" placeholder="@_localizer["password"]" />
-            <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
-         </div>
-         <div class="form-item">
-            <label class="form-label">@_localizer["user-bio"]</label>
-            <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" name="bio" />
-         </div>
-         <div class="form-item">
-            <button type="submit" @onclick="Save" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-            <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
-         </div>
-      </EditForm>
+   <div class="section-content -half">
+        <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <div class="form-item">
+                <label class="form-label">@_localizer["email"]</label>
+                <input class="form-control" type="email" @bind="SelectedAuthor.Email" />
+                <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
+            </div>
+            <div class="form-item">
+                <label class="form-label">@_localizer["name"]</label>
+                <input class="form-control" @bind="SelectedAuthor.DisplayName" />
+                <ValidationMessage For="@(() => SelectedAuthor.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+            </div>
+            <div class="form-item">
+                <label class="form-label">@_localizer["password"]</label>
+                <input class="form-control" type="password" @bind="SelectedAuthor.Password" />
+                <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
+            </div>
+            <div class="form-item">
+                <label class="form-label">@_localizer["user-bio"]</label>
+                <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" />
+            </div>
+            <div class="form-item">
+                <button type="submit" @onclick="Save" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+                <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
+            </div>
+        </EditForm>
    </div>
 }
 

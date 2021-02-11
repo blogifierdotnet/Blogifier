@@ -4,36 +4,42 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<h1 class="section-title">Public profile</h1>
+<h1 class="section-title">Public Profile</h1>
 <div class="section-content -half">
    @if (Author != null)
    {
       <EditForm Model="@Author" OnValidSubmit="SaveProfile">
          <DataAnnotationsValidator />
          <div class="form-item">
-            <label class="form-item-label mb-1">@_localizer["Profile picture"]</label>
-            <div class="input-group d-flex">
-               <img id="avatar" src="@Author.Avatar" width="48" height="48" class="rounded" alt="@Author.DisplayName" />
-               <div class="ms-2">
-                  <button class="btn btn-default btn-xs" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button"> @_localizer["select"]</button>
-                  <button class="btn btn-default btn-xs" @onclick="ResetAvatar" type="button"> @_localizer["remove"]</button>
-                  <p class="mb-0 mt-2 small">Should be square and at least 250 X 250 pixel.</p>
-               </div>
+            <label class="form-label mb-1">@_localizer["Profile picture"]</label>
+            <div class="d-flex">
+                <img id="avatar" src="@Author.Avatar" width="39" height="39" class="rounded me-3" alt="@Author.DisplayName" />
+                <button title="Upload" class="btn btn-link" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                    </svg>
+                </button>
+                <button title="Reset" class="btn btn-link" @onclick="ResetAvatar" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
             </div>
          </div>
          <div class="form-item">
             <label class="form-label">@_localizer["name"]</label>
-            <input class="form-control" @bind="Author.DisplayName" placeholder="@_localizer["name"]" />
-            <ValidationMessage For="@(() => Author.DisplayName)" Class="mt-2 sm:ml-4 font-semibold text-red-600"></ValidationMessage>
+            <input class="form-control" @bind="Author.DisplayName" />
+            <ValidationMessage For="@(() => Author.DisplayName)"></ValidationMessage>
          </div>
          <div class="form-item">
             <label class="form-label">@_localizer["email"]</label>
-            <input class="form-control" type="email" @bind="Author.Email" placeholder="you@mail.com" />
+            <input class="form-control" type="email" @bind="Author.Email" />
             <ValidationMessage For="@(() => Author.Email)"></ValidationMessage>
          </div>
          <div class="form-item">
             <label class="form-label">@_localizer["user-bio"]</label>
-            <textarea class="form-control" rows="4" @bind="Author.Bio" name="bio" />
+            <textarea class="form-control" rows="4" @bind="Author.Bio" />
          </div>
          <div class="form-item">
             <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
@@ -43,20 +49,20 @@
 
 </div>
 
-<h1 class="section-title">Change password</h1>
-<div class="section-content">
+<h1 class="section-title">Change Password</h1>
+<div class="section-content -half">
    @if (Author != null)
    {
       <EditForm Model="@Model" OnValidSubmit="SavePassword">
          <DataAnnotationsValidator />
          <div class="form-item">
             <label class="form-label">@_localizer["password"]</label>
-            <input class="form-control" type="password" @bind="Model.Password" placeholder="@_localizer["password"]" />
+            <input class="form-control" type="password" @bind="Model.Password" />
             <ValidationMessage For="@(() => Model.Password)"></ValidationMessage>
          </div>
          <div class="form-item">
             <label class="form-label">@_localizer["confirm-password"]</label>
-            <input class="form-control" type="password" @bind="Model.PasswordConfirm" placeholder="@_localizer["confirm-password"]" />
+            <input class="form-control" type="password" @bind="Model.PasswordConfirm" />
             <ValidationMessage For="@(() => Model.PasswordConfirm)"></ValidationMessage>
          </div>
          <div class="form-item">

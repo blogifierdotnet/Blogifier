@@ -9234,33 +9234,55 @@ span[data-img-src]::before {
   .about-info-value {
     color: #343a40; }
 
-.stg-themes-installed {
+.themes {
   margin-top: 1.5rem; }
-  .stg-themes-installed-item {
+  .themes-item {
     background: #fff;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
     border-radius: 0.25rem;
     overflow: hidden;
     margin-bottom: 2rem; }
-  .stg-themes-installed-cover {
+  .themes-cover {
     max-height: 15rem;
-    min-width: 100%;
     overflow: hidden;
     border-bottom: 1px solid #e9ecef; }
-  .stg-themes-installed-details {
+  .themes-img {
+    min-width: 100%;
+    max-width: 100%; }
+  .themes-details {
     padding: 1.5rem; }
-  .stg-themes-installed-title {
-    margin-bottom: 0.5rem;
+  .themes-title {
     font-size: 0.875rem;
-    font-weight: 500; }
-  .stg-themes-installed-info {
+    font-weight: 500;
+    margin-bottom: 0.875rem; }
+  .themes-info {
     font-size: 0.75rem;
     list-style: none;
     padding: 0;
-    color: #000;
-    margin-bottom: 0.75rem; }
-    .stg-themes-installed-info a {
-      color: #000; }
+    color: #6c757d;
+    margin-bottom: 1rem; }
+    .themes-info a {
+      color: #6c757d; }
+      .themes-info a:hover {
+        color: #212529; }
+  .themes-modal {
+    padding: 1rem; }
+    .themes-modal-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem; }
+    .themes-modal-desc {
+      margin-bottom: 1rem; }
+    .themes-modal-info {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem; }
+      .themes-modal-info > li {
+        margin-bottom: .5rem; }
+    .themes-modal-img {
+      border-radius: 0.25rem;
+      border: 1px solid #e9ecef;
+      width: 100%; }
 
 .stg-customize-head {
   border-bottom: 1px solid #e9ecef;
