@@ -7759,6 +7759,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 15rem;
+    min-width: 15rem;
     padding-right: 2rem;
     font-size: 1rem; }
     .tab-nav > a {
@@ -7774,7 +7775,8 @@ body {
       width: 65%; }
   .tab-content {
     flex-grow: 1;
-    width: 100%; }
+    width: 100%;
+    max-width: 100%; }
 
 .section-content {
   width: 100%; }
@@ -9191,37 +9193,46 @@ span[data-img-src]::before {
   .bf-editor .editor-statusbar .characters:before {
     content: "characters: "; }
 
-.app-about ul {
+.about-blogifier {
   margin: 0;
   padding: 0;
   list-style: none; }
+  .about-blogifier-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .about-blogifier-nav li {
+      font-weight: 500;
+      display: inline-block;
+      margin-right: 2rem; }
+    .about-blogifier-nav a {
+      display: inline-block; }
+    .about-blogifier-nav .bi {
+      margin-right: 0.125rem;
+      transform: translateY(-0.125rem); }
+  .about-blogifier-desc {
+    font-size: 1rem;
+    width: 100%;
+    max-width: 28rem; }
 
-.app-about-info li {
-  margin-bottom: 0.5rem; }
-  .app-about-info li span:nth-child(1) {
-    display: inline-block;
-    min-width: 8rem;
-    font-weight: 500; }
+.about-info {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
 
-.app-about-nav li {
-  font-size: 1rem;
-  font-weight: 500;
-  display: inline-block;
-  margin-right: 2rem; }
-
-.app-about-nav a {
-  line-height: 2rem;
-  display: inline-block; }
-
-.app-about-nav .bi {
-  margin-right: 0.125rem;
-  height: 2rem;
-  transform: translateY(-0.125rem); }
-
-.app-about-desc {
-  font-size: 1rem;
-  width: 100%;
-  max-width: 28rem; }
+.about-info {
+  padding: 0;
+  background: none;
+  border: 0;
+  width: 100%; }
+  .about-info-item {
+    margin-bottom: 0.5rem;
+    display: flex; }
+  .about-info-label {
+    font-weight: 500;
+    min-width: 10rem; }
+  .about-info-value {
+    color: #343a40; }
 
 .stg-themes-installed {
   margin-top: 1.5rem; }
