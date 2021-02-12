@@ -62,6 +62,9 @@ ul {
 .blog-content ul li {
   list-style: initial;
 }
+.blog-content a {
+  color: #007bff;
+}
 
 .blog-content blockquote {
   background-color: darkslategray;
