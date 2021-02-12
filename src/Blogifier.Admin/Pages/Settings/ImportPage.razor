@@ -28,7 +28,7 @@
 @if (Posts != null)
 {
     <div class="section-content">
-            <p class="section-title">@Posts.Count posts are found and ready to be imported.</p>
+            <div class="section-title">@Posts.Count posts are found and ready to be imported.</div>
             <div class="list-toolbar">
                 <label class="list-check form-check" data-toggle="tooltip" title="Select All">
                     <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">

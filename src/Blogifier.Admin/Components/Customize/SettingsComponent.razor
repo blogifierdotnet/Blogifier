@@ -14,49 +14,48 @@
                </button>
             </h2>
             <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
-               <div class="accordion-body">
-                  @foreach (var field in section.Fields)
-                  {
-                     <div class="form-item">
-                        @if (field.Type == "select")
-                        {
-                           <label class="form-label">@field.Label</label>
-                           <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
-                              @foreach (var item in field.Options)
-                              {
-                                 if (field.Value == item)
-                                 {
-                                    <option value="@item" selected>@item</option>
-                                 }
-                                 else
-                                 {
-                                    <option value="@item">@item</option>
-                                 }
-                              }
-                           </select>
-                        }
-                        else if (field.Type == "checkbox")
-                        {
-
-                           <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
-                              <label class="form-check-label" for="@field.Id">@field.Label</label>
-                           </div>
-                        }
-                        else if (field.Type == "textarea")
-                        {
-                           <label class="form-label">@field.Label</label>
-                           <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
-                        }
-                        else
-                        {
-                           <label class="form-label">@field.Label</label>
-                           <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
-                        }
-                     </div>
-                  }
-
-               </div>
+                <!-- Test if this -half is good for this section, theme developers may need full width -->
+                <div class="accordion-body section-content -half">
+                    @foreach (var field in section.Fields)
+                    {
+                        <div class="form-item">
+                            @if (field.Type == "select")
+                            {
+                                <label class="form-label">@field.Label</label>
+                                <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
+                                    @foreach (var item in field.Options)
+                                    {
+                                        if (field.Value == item)
+                                        {
+                                            <option value="@item" selected>@item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    }
+                                </select>
+                            }
+                            else if (field.Type == "checkbox")
+                            {
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
+                                    <label class="form-check-label" for="@field.Id">@field.Label</label>
+                                </div>
+                            }
+                            else if (field.Type == "textarea")
+                            {
+                                <label class="form-label">@field.Label</label>
+                                <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
+                            }
+                            else
+                            {
+                                <label class="form-label">@field.Label</label>
+                                <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
+                            }
+                        </div>
+                    }
+                </div>
             </div>
          </div>
       }

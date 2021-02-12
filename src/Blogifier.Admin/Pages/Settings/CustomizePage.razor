@@ -5,56 +5,51 @@
 @inject IJSRuntime JSRuntime
 <h1 class="section-title">Customize</h1>
 <div class="section-content">
-   <div class="stg-customize">
-      @if (CurrentTheme != null)
-      {
-         <div class="stg-customize-head d-flex">
-            <div>
-               <div class="stg-customize-head-cover shadow-sm">
-                  <img src="@CurrentTheme.Cover" class="stg-customize-head-img" alt="@CurrentTheme.Title">
-               </div>
+    @if (CurrentTheme != null)
+    {
+        <div class="customize-info d-flex">
+            <div class="customize-info-cover">
+                <img src="@CurrentTheme.Cover" class="customize-info-img" alt="@CurrentTheme.Title">
             </div>
-            <div class="stg-customize-head-details">
-               <div class="stg-customize-head-title">@CurrentTheme.Title</div>
-               <p class="stg-customize-head-desc">This is a test description, one paragraph long description for you guys, there should not be a break line in this description, otherwise, it doesn't look good, and it gets messy. Also, we have 3 links.</p>
-               <ul class="stg-customize-head-info">
-                  <li>Version 2.1</li>
-                  <li>By John Doe</li>
-                  <li><a href="#">Website</a></li>
-                  <li><a href="#">GitHub</a></li>
-                  <li><a href="#">Other Link</a></li>
-               </ul>
+            <div class="customize-info-details">
+                <div class="customize-info-title">@CurrentTheme.Title</div>
+                <p class="customize-info-desc">This is a test description, one paragraph long description for you, there should not be a break line in this description.</p>
+                <ul class="customize-info-list">
+                    <li>Version 2.1</li>
+                    <li>By John Doe</li>
+                    <li><a href="#">Website</a></li>
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Other Link</a></li>
+                </ul>
             </div>
-         </div>
-      }
+        </div>
+    }
 
-      <div class="stg-customize-settings">
-         <div class="stg-customize-settings-nav d-flex">
-            <div class="nav nav-pills flex-grow-1" id="customize-tab" role="tablist">
-               <a class="nav-link active" id="customize-settings-tab" data-bs-toggle="pill" href="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="false">Settings</a>
-               <a class="nav-link" id="customize-widgets-tab" data-bs-toggle="pill" href="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="true">Widgets</a>
-               <a class="nav-link" id="customize-menu-tab" data-bs-toggle="pill" href="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">Menu</a>
-            </div>
-            <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-3 my-auto">Save Changes</button>
-         </div>
-
-         <div class="tab-content" id="customize-tabContent">
-
-            <!--Settings -->
+    <div class="customize-tab">
+        <div class="customize-tab-nav nav nav-tabs flex-grow-1 mb-4" id="customize-tab" role="tablist">
+            <button type="button" class="nav-link active" id="customize-settings-tab" data-bs-toggle="tab" data-bs-target="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="true">Settings</button>
+            <button type="button" class="nav-link" id="customize-widgets-tab" data-bs-toggle="tab" data-bs-target="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="false">Widgets</button>
+            <button type="button" class="nav-link" id="customize-menu-tab" data-bs-toggle="tab" data-bs-target="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">Menus</button>
+            <button type="button" class="nav-link ms-auto" id="customize-about-tab" data-bs-toggle="tab" data-bs-target="#customize-about" role="tab" aria-controls="customize-about" aria-selected="false">About</button>
+        </div>
+        <div class="customize-tab-content tab-content" id="customize-tabContent">
             <div class="tab-pane fade show active" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
                <SettingsComponent @ref="ChildSettings" />
+               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-3 mt-4">Save Changes</button>
             </div>
-            <!--/Settings -->
             <div class="tab-pane fade" id="customize-widgets" role="tabpanel" aria-labelledby="customize-widgets-tab">
                <WidgetsComponent />
+               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-3 mt-4">Save Changes</button>
             </div>
             <div class="tab-pane fade" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">
                <MenusComponent />
+               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-3 mt-4">Save Changes</button>
             </div>
-
-         </div>
-      </div>
-   </div>
+            <div class="tab-pane fade" id="customize-about" role="tabpanel" aria-labelledby="customize-about-tab">
+                <AboutThemeComponent />
+            </div>
+        </div>
+    </div>
 </div>
 
 <ToasterComponent @ref="Toaster" />
