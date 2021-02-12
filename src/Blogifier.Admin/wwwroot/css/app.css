@@ -7957,13 +7957,15 @@ body {
     .list-item .-link:hover {
       color: #622aff; }
   .list-check {
-    height: 2.75rem;
-    width: 2rem;
-    min-width: 2rem;
     padding: 0;
     margin: 0;
-    position: relative; }
-    .list-check .form-check-input {
+    height: 2.75rem;
+    line-height: 2.75rem;
+    min-width: 2rem;
+    padding-left: 2rem;
+    position: relative;
+    font-weight: 500; }
+    .list-check .list-check-input {
       vertical-align: top;
       transform: translateY(-50%);
       position: absolute;

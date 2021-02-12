@@ -11,11 +11,11 @@
         <EditForm Model="@Blog" OnValidSubmit="Save">
             <div class="form-item">
                 <label class="form-label">Header script</label>
-                <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.HeaderScript" name="headerScript" />
+                <textarea readonly="@(isDemo)" class="form-control" rows="7" @bind="Blog.HeaderScript" name="headerScript" />
             </div>
             <div class="form-item">
                 <label class="form-label">Footer script</label>
-                <textarea readonly="@(isDemo)" class="form-control txt-area" rows="7" @bind="Blog.FooterScript" name="footerScrip" />
+                <textarea readonly="@(isDemo)" class="form-control" rows="7" @bind="Blog.FooterScript" name="footerScrip" />
             </div>
             <div class="form-item">
                 <button disabled="@(isDemo)" class="btn btn-blogifier px-5" type="submit">@_localizer["save"]</button>
