@@ -1,8 +1,8 @@
 ﻿@page "/admin"
-@inject IStringLocalizer<Resource> localizer
-<PageTitle Title="@localizer["dashboard"]" />
+@inject IStringLocalizer<Resource> _localizer
+<PageTitle Title="@_localizer["dashboard"]" />
 <div class="dashboard row no-gutters">
-    <div class="app-dashboard-posts col-lg-7">
+    <div class="dashboard-posts col-lg-7">
         <PostListComponent />
     </div>
     <div class="dashboard-widgets col-lg-5">

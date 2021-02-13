@@ -2,18 +2,17 @@
 @page "/admin/register"
 @inject HttpClient Http
 @inject NavigationManager _navigationManager
-@inject IStringLocalizer<Resource> localizer
-<PageTitle Title="@localizer["register"]" />
+@inject IStringLocalizer<Resource> _localizer
+<PageTitle Title="@_localizer["register"]" />
 <!--
     TODO: work on the headers.
     <div class="app-account-header">
-        <h1>@localizer["registration"]</h1>
+        <h1>@_localizer["register"]</h1>
     </div>
 -->
-
 @if (showError)
 {
-    <div class="account-message -error">@localizer["register-failed"].</div>
+    <div class="account-message -error">@_localizer["register-failed"].</div>
 }
 
 @if (model != null)
@@ -21,27 +20,27 @@
     <EditForm Model="@model" OnValidSubmit="RegisterUser">
         <DataAnnotationsValidator />
         <div class="form-item">
-            <label class="form-label">@localizer["email"]</label>
+            <label class="form-label">@_localizer["email"]</label>
             <input class="form-control" type="email" @bind="model.Email" autofocus>
             <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
-        </div> 
+        </div>
         <div class="form-item">
-            <label class="form-label">@localizer["name"]</label>
-            <input class="form-control" @bind="model.Name">
+            <label class="form-label">@_localizer["name"]</label>
+            <input class="form-control" type="text" @bind="model.Name">
             <ValidationMessage For="@(() => model.Name)"></ValidationMessage>
         </div>
         <div class="form-item">
-            <label class="form-label">@localizer["password"]</label>
+            <label class="form-label">@_localizer["password"]</label>
             <input class="form-control" type="password" @bind="model.Password">
             <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
         </div>
         <div class="form-item">
-            <label class="form-label">@localizer["confirm-password"]</label>
+            <label class="form-label">@_localizer["confirm-password"]</label>
             <input class="form-control" type="password" @bind="model.PasswordConfirm">
             <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
         </div>
         <div class="form-item">
-            <button type="submit" class="btn btn-blogifier btn-block">@localizer["register"]</button>
+            <button type="submit" class="btn btn-blogifier btn-block">@_localizer["register"]</button>
         </div>
     </EditForm>
 }
@@ -53,7 +52,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                 </svg>
-                <span>Login</span>
+                <span>@_localizer["login"]</span>
             </a>
         </li>
         <li class="item">
@@ -61,7 +60,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                 </svg>
-                <span>Back to Blog Name</span>
+                <span>@_localizer["back-to"] Blog Name</span>
             </a>
         </li>
     </ul>
