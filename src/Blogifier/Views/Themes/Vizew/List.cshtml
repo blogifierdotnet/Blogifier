@@ -204,21 +204,16 @@
                             <div class="footer-widget">
                                 @if (cats.Any())
                                 {
-                                    var cnt = 1;
-                                    foreach (var cat in cats)
+                                    foreach (var cat in cats.Take(5))  
                                     {
-                                        if (cnt < 6)
-                                        {
-                                            <div class="single-blog-post d-flex">
-                                                <div class="category-thumbnail">
-                                                    <i class="fa fa-tags" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="post-content">
-                                                    <a href="~/categories/@cat.Category" class="post-title">@cat.Category (@cat.PostCount)</a>
-                                                </div>
+                                        <div class="single-blog-post d-flex">
+                                            <div class="category-thumbnail">
+                                                <i class="fa fa-tags" aria-hidden="true"></i>
                                             </div>
-                                        }
-                                        cnt++;
+                                            <div class="post-content">
+                                                <a href="~/categories/@cat.Category" class="post-title">@cat.Category (@cat.PostCount)</a>
+                                            </div>
+                                        </div>
                                     }
                                 }
                             </div>
