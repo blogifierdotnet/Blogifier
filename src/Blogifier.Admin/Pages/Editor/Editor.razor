@@ -154,7 +154,7 @@
    protected async Task SavePost(PostAction postAction)
    {
        Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-       Post.Cover = "img/cover.png";
+       Post.Cover = Constants.DefaultCover;
        Post.PostType = _stateprovider.PostType;
 
        if (string.IsNullOrEmpty(Post.Description))
@@ -220,7 +220,7 @@
 
    protected async Task ResetCover()
    {
-       Post.Cover = "img/cover.png";
+       Post.Cover = Constants.DefaultCover;
        await Save();
    }
 

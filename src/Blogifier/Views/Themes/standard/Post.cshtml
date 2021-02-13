@@ -1,9 +1,9 @@
-﻿@using Blogifier.Shared
+@using Blogifier.Shared
 @{
-    Layout = "~/Views/Themes/Standard/layouts/_layout.cshtml";
-    PostModel postModel = (PostModel)Model;
-    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
-    var catUrl = Url.Content("~/categories");
+   Layout = "~/Views/Themes/Standard/layouts/_layout.cshtml";
+   PostModel postModel = (PostModel)Model;
+   string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
+   var catUrl = Url.Content("~/categories");
 }
 
 <main class="container bft-post-wrap">
@@ -12,7 +12,7 @@
             <h1 class="bft-post-title">@postModel.Post.Title</h1>
             <div class="bft-post-meta d-flex align-items-center">
                 <div class="bft-post-by me-3 d-flex align-items-center">
-                    <img class="bft-post-by-img" width="18" src="~/@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
+                    <img class="bft-post-by-img" width="18" src="@postModel.Post.Author.Avatar" alt="@postModel.Post.Author.DisplayName" />
                     <span class="bft-post-by-name">@postModel.Post.Author.DisplayName</span>
                 </div>
                 <time class="bft-post-time me-3">

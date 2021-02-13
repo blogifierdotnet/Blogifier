@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -110,7 +110,7 @@ namespace Blogifier.Core.Providers
 				Email = model.Email,
 				Password = model.Password.Hash(_salt),
 				IsAdmin = isAdmin,
-				Avatar = "img/avatar.png",
+				Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
 				Bio = "The short author bio.",
 				DateCreated = DateTime.UtcNow
 			};
@@ -140,7 +140,7 @@ namespace Blogifier.Core.Providers
 
 			author.IsAdmin = false;
 			author.Password = author.Password.Hash(_salt);
-			author.Avatar = "img/avatar.png";
+			author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
 			author.DateCreated = DateTime.UtcNow;
 
 			await _db.Authors.AddAsync(author);

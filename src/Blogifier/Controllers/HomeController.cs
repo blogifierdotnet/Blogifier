@@ -113,7 +113,10 @@ namespace Blogifier.Controllers
 				model.Post.Description = model.Post.Description.MdToHtml();
 				model.Post.Content = model.Post.Content.MdToHtml();
 
-				return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
+                if(!model.Post.Author.Avatar.StartsWith("data:"))
+                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+
+                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
 			}
 			catch
 			{

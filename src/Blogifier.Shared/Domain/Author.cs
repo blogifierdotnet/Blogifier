@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,7 +22,7 @@ namespace Blogifier.Shared
       public string DisplayName { get; set; }
       [StringLength(2000)]
       public string Bio { get; set; }
-      [StringLength(160)]
+      [StringLength(400)]
       public string Avatar { get; set; }
       public bool IsAdmin { get; set; }
 

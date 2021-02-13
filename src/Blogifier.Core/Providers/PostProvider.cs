@@ -140,7 +140,7 @@ namespace Blogifier.Core.Providers
 					Content = post.Content,
 					Slug = post.Slug,
 					Author = _db.Authors.Where(a => a.Id == post.AuthorId).First(),
-					Cover = string.IsNullOrEmpty(post.Cover) ? "img/cover.png" : post.Cover,
+					Cover = string.IsNullOrEmpty(post.Cover) ? Constants.DefaultCover : post.Cover,
 					Published = post.Published,
 					PostViews = post.PostViews,
 					Featured = post.IsFeatured
@@ -360,9 +360,10 @@ namespace Blogifier.Core.Providers
 
 			if (post.Author != null)
 			{
-				post.Author.Avatar = string.IsNullOrEmpty(post.Author.Avatar) ?
-					 "img/avatar.png" : post.Author.Avatar;
-				post.Author.Email = sanitize ? "donotreply@us.com" : post.Author.Email;
+				if(string.IsNullOrEmpty(post.Author.Avatar))
+                    string.Format(Constants.AvatarDataImage, post.Author.DisplayName.Substring(0, 1).ToUpper());
+
+                post.Author.Email = sanitize ? "donotreply@us.com" : post.Author.Email;
 			}
 			return await Task.FromResult(post);
 		}
@@ -372,7 +373,7 @@ namespace Blogifier.Core.Providers
 			var items = new List<Post>();
 			var pubfeatured = new List<Post>();
 
-			if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
+			if (include.ToUpper().Contains(Constants.PostDraft) || string.IsNullOrEmpty(include))
 			{
 				var drafts = author > 0 ?
 					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author && p.PostType == PostType.Post).ToList() :
@@ -380,7 +381,7 @@ namespace Blogifier.Core.Providers
 				items = items.Concat(drafts).ToList();
 			}
 
-			if (include.ToUpper().Contains("F") || string.IsNullOrEmpty(include))
+			if (include.ToUpper().Contains(Constants.PostFeatured) || string.IsNullOrEmpty(include))
 			{
 				var featured = author > 0 ?
 					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
@@ -388,7 +389,7 @@ namespace Blogifier.Core.Providers
 				pubfeatured = pubfeatured.Concat(featured).ToList();
 			}
 
-			if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
+			if (include.ToUpper().Contains(Constants.PostPublished) || string.IsNullOrEmpty(include))
 			{
 				var published = author > 0 ?
 					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
