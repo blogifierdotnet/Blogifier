@@ -11,8 +11,13 @@
     var flist = await DataService.BlogPosts.GetList(new Pager(1), 0, "", "F");
     var featured = flist.ToList();
     var popular = await DataService.BlogPosts.GetPopular(new Pager(1, 4));
+
+    var catsUnordered = await DataService.BlogPosts.Categories();
+    var cats = catsUnordered.OrderByDescending(c => c.PostCount);
 }
 @inject IJsonStringLocalizer<ListModel> Localizer
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -188,6 +193,33 @@
                                 }
                             }
                         </div>
+
+                        <!-- ***** Single Widget ***** -->
+                        <div class="single-widget mb-50">
+                            <!-- Section Heading -->
+                            <div class="section-heading style-2 mb-30">
+                                <h4>Темы</h4>
+                                <div class="line"></div>
+                            </div>
+                            <div class="footer-widget">
+                                @if (cats.Any())
+                                {
+                                    foreach (var cat in cats.Take(5))  
+                                    {
+                                        <div class="single-blog-post d-flex">
+                                            <div class="category-thumbnail">
+                                                <i class="fa fa-tags" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="post-content">
+                                                <a href="~/categories/@cat.Category" class="post-title">@cat.Category (@cat.PostCount)</a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+
 
                     </div>
                 </div>
