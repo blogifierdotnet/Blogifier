@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Extensions;
+using Blogifier.Core.Extensions;
 using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -121,7 +121,7 @@ namespace Blogifier.Controllers
 			}
 		}
 
-		[ResponseCache(Duration = 1200)]
+        [ResponseCache(Duration = 1200)]
 		[HttpGet("feed/{type}")]
 		public async Task<IActionResult> Rss(string type)
 		{

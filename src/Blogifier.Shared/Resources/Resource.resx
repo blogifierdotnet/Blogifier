@@ -358,7 +358,7 @@
     <value>Name</value>
   </data>
   <data name="post-title" xml:space="preserve">
-    <value>Post title...</value>
+    <value>Post title</value>
   </data>
   <data name="type-here" xml:space="preserve">
     <value>Type here...</value>
@@ -485,5 +485,8 @@
   </data>
   <data name="scripts" xml:space="preserve">
     <value>Scripts</value>
+  </data>
+  <data name="page-title" xml:space="preserve">
+    <value>Page title</value>
   </data>
 </root>

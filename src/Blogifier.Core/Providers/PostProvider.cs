@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -151,43 +151,48 @@ namespace Blogifier.Core.Providers
 		}
 
 		public async Task<PostModel> GetPostModel(string slug)
-		{
-			var model = new PostModel();
+        {
+            var model = new PostModel();
 
-			var all = _db.Posts
-				.AsNoTracking()
-				.Include(p => p.Categories)
-				.OrderByDescending(p => p.IsFeatured)
-				.ThenByDescending(p => p.Published).ToList();
+            var all = _db.Posts
+               .AsNoTracking()
+               .Include(p => p.Categories)
+               .OrderByDescending(p => p.IsFeatured)
+               .ThenByDescending(p => p.Published).ToList();
 
-			if (all != null && all.Count > 0)
-			{
-				for (int i = 0; i < all.Count; i++)
-				{
-					if (all[i].Slug == slug)
-					{
-						model.Post = await PostToItem(all[i]);
+            await SetOlderNewerPosts(slug, model, all);
 
-						if (i > 0 && all[i - 1].Published > DateTime.MinValue)
-							model.Newer = await PostToItem(all[i - 1]);
+            var post = _db.Posts.Single(p => p.Slug == slug);
+            post.PostViews++;
+            await _db.SaveChangesAsync();
+            // await SaveStatsTotals(post.Id);
 
-						if (i + 1 < all.Count && all[i + 1].Published > DateTime.MinValue)
-							model.Older = await PostToItem(all[i + 1]);
+            return await Task.FromResult(model);
+        }
 
-						break;
-					}
-				}
-			}
+        private async Task SetOlderNewerPosts(string slug, PostModel model, List<Post> all)
+        {
+            if (all != null && all.Count > 0)
+            {
+                for (int i = 0; i < all.Count; i++)
+                {
+                    if (all[i].Slug == slug)
+                    {
+                        model.Post = await PostToItem(all[i]);
 
-			var post = _db.Posts.Single(p => p.Slug == slug);
-			post.PostViews++;
-			await _db.SaveChangesAsync();
-			// await SaveStatsTotals(post.Id);
+                        if (i > 0 && all[i - 1].Published > DateTime.MinValue)
+                            model.Newer = await PostToItem(all[i - 1]);
 
-			return await Task.FromResult(model);
-		}
+                        if (i + 1 < all.Count && all[i + 1].Published > DateTime.MinValue)
+                            model.Older = await PostToItem(all[i + 1]);
 
-		public async Task<Post> GetPostBySlug(string slug)
+                        break;
+                    }
+                }
+            }
+        }
+
+        public async Task<Post> GetPostBySlug(string slug)
 		{
 			return await _db.Posts.Where(p => p.Slug == slug).FirstOrDefaultAsync();
 		}
@@ -370,24 +375,24 @@ namespace Blogifier.Core.Providers
 			if (include.ToUpper().Contains("D") || string.IsNullOrEmpty(include))
 			{
 				var drafts = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author && p.PostType == PostType.Post).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.PostType == PostType.Post).ToList();
 				items = items.Concat(drafts).ToList();
 			}
 
 			if (include.ToUpper().Contains("F") || string.IsNullOrEmpty(include))
 			{
 				var featured = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(featured).ToList();
 			}
 
 			if (include.ToUpper().Contains("P") || string.IsNullOrEmpty(include))
 			{
 				var published = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(published).ToList();
 			}
 
