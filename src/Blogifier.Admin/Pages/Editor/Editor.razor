@@ -66,7 +66,7 @@
                     <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
                 </svg>
                 <span>
-                    @_localizer["Edit Cover"]
+                    @_localizer["cover"]
                 </span>
             </a>
         </div>
@@ -79,23 +79,23 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Cover</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">@_localizer["cover"]</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-5">
                         <div class="form-item">
                             <div class="row">
                                 <div class="col-6">
-                                    <button class="btn btn-blogifier btn-block" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">Change</button>
+                                    <button class="btn btn-blogifier btn-block" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">@_localizer["change"]</button>
                                     <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-danger btn-block" type="button" @onclick="() => ResetCover()">Reset</button>
+                                    <button class="btn btn-danger btn-block" type="button" @onclick="() => ResetCover()">@_localizer["reset"]</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-item">
-                            <label class="form-label">Preview</label>
+                            <label class="form-label">@_localizer["preview"]</label>
                             <img id="post-cover" name="post-cover" src="@Post.Cover" class="rounded-3">
                         </div>
                         <div class="form-item">
@@ -103,7 +103,7 @@
                             <input type="text" class="form-control" value="@Post.Title">
                         </div>
                         <div class="form-item mb-0">
-                            <label class="form-label">URL</label>
+                            <label class="form-label">@_localizer["url"]</label>
                             <input type="text" class="form-control" value="@Post.Cover" disabled>
                         </div>
                     </div>

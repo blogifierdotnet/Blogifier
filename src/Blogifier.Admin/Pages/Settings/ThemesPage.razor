@@ -6,7 +6,7 @@
 
 @if (CurrentTheme != null)
 {
-    <h1 class="section-title">Themes</h1>
+    <h1 class="section-title">@_localizer["themes"]</h1>
     <div class="section-content">
         <div class="row themes">
             <div class="col-md-6 col-lg-4">
@@ -15,12 +15,12 @@
                         <img src="@CurrentTheme.Cover" class="themes-img" alt="@CurrentTheme.Title">
                     </div>
                     <div class="themes-details">
-                        <div class="themes-title">@CurrentTheme.Title (Current)</div>
+                        <div class="themes-title">@CurrentTheme.Title (@_localizer["current"])</div>
                         <ul class="themes-info">
-                            <li class="themes-info-item">Designed by <a href="#">John Doe</a></li>
-                            <li class="themes-info-item">Version 2.1</li>
+                            <li class="themes-info-item">@_localizer["designed-by"] <a href="#">John Doe</a></li>
+                            <li class="themes-info-item">@_localizer["version"] 2.1</li>
                         </ul>
-                        <a href="/admin/settings/customize/" class="btn btn-blogifier btn-block">@_localizer["Customize"]</a>
+                        <a href="/admin/settings/customize/" class="btn btn-blogifier btn-block">@_localizer["customize"]</a>
                     </div>
                 </div>
             </div>
@@ -34,18 +34,18 @@
                         <div class="themes-details">
                             <div class="themes-title">@item.Title</div>
                             <ul class="themes-info">
-                                <li class="themes-info-item">Designed by <a href="#">John Doe</a></li>
-                                <li class="themes-info-item">Version 2.1</li>
+                                <li class="themes-info-item">@_localizer["designed-by"] <a href="#">John Doe</a></li>
+                                <li class="themes-info-item">@_localizer["version"] 2.1</li>
                             </ul>
                             <div class="d-flex">
                                 <button type="button" class="btn btn-outline-default flex-grow-1 me-2" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@_localizer["select"]</button>
-                                <button type="button" class="btn btn-outline-default me-2">
+                                <button type="button" class="btn btn-outline-default me-2" title="@_localizer["delete"]">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-outline-default" data-bs-toggle="modal" data-bs-target="#themeInfo">
+                                <button type="button" class="btn btn-outline-default" data-bs-toggle="modal" data-bs-target="#themeInfo" title="@_localizer["info"]">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                         <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
@@ -64,7 +64,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="themeInfoLabel">Info</h5>
+                <h5 class="modal-title" id="themeInfoLabel">@_localizer["info"]</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -74,8 +74,8 @@
                         This is a test description, one paragraph long description for you guys, there should not be a break line in this description, otherwise, it doesn't look good, and it gets messy. Also, we have 3 links.
                     </p>
                     <ul class="themes-modal-info">
-                        <li>Version 2.1</li>
-                        <li>By John Doe</li>
+                        <li>@_localizer["designed-by"] John Doe</li>
+                        <li>@_localizer["version"] 2.1</li>
                         <li><a href="#">Website</a></li>
                         <li><a href="#">GitHub</a></li>
                         <li><a href="#">Other Link</a></li>
