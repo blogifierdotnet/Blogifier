@@ -1,4 +1,4 @@
-﻿@layout SettingsLayout
+@layout SettingsLayout
 @page "/admin/settings/users/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
@@ -129,92 +129,85 @@
                 <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" />
             </div>
             <div class="form-item">
-                <button type="submit" @onclick="Save" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+                <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
                 <button type="button" @onclick="Cancel" class="btn btn-outline-default px-3">@_localizer["cancel"]</button>
             </div>
         </EditForm>
    </div>
 }
-
+<ToasterComponent @ref="Toaster" />
 
 @code {
    protected List<Author> Authors { get; set; }
    protected List<AuthorItem> AuthorItems { get; set; }
    protected Author SelectedAuthor { get; set; }
    protected bool showForm = false;
+   protected ToasterComponent Toaster;
 
    protected override async Task OnInitializedAsync()
    {
-      await Load();
+       await Load();
    }
 
    protected async Task Load()
    {
-      Authors = await _http.GetFromJsonAsync<List<Author>>("api/author/all");
+       Authors = await _http.GetFromJsonAsync<List<Author>>("api/author/all");
 
-      AuthorItems = new List<AuthorItem>();
-      foreach (var author in Authors)
-      {
-         AuthorItems.Add(new AuthorItem { Selected = false, Author = author });
-      }
-      SelectedAuthor = BlankAuthor();
-      showForm = false;
+       AuthorItems = new List<AuthorItem>();
+       foreach (var author in Authors)
+       {
+           AuthorItems.Add(new AuthorItem { Selected = false, Author = author });
+       }
+       SelectedAuthor = BlankAuthor();
+       showForm = false;
    }
 
    protected async Task RemoveSelected()
    {
-      foreach (var item in AuthorItems)
-      {
-         if (item.Selected)
-            await Remove(item.Author.Id);
-      }
+       foreach (var item in AuthorItems)
+       {
+           if (item.Selected)
+               await Remove(item.Author.Id);
+       }
    }
 
    protected async Task Remove(int id)
    {
-      Toast(await _http.DeleteAsync($"api/author/{id}"));
-      await Load();
+       Toaster.Toast(await _http.DeleteAsync($"api/author/{id}"));
+       await Load();
    }
 
    protected async Task Save()
    {
-      if (SelectedAuthor.Id == 0)
-         Toast(await _http.PostAsJsonAsync<Author>("api/author/add", SelectedAuthor));
-      else
-         Toast(await _http.PutAsJsonAsync<Author>("api/author/update", SelectedAuthor));
-      await Load();
+       if (SelectedAuthor.Id == 0)
+           Toaster.Toast(await _http.PostAsJsonAsync<Author>("api/author/add", SelectedAuthor));
+       else
+           Toaster.Toast(await _http.PutAsJsonAsync<Author>("api/author/update", SelectedAuthor));
+       await Load();
    }
 
    protected async Task LoadForm(string email)
    {
-      if (string.IsNullOrEmpty(email))
-         SelectedAuthor = BlankAuthor();
-      else
-         SelectedAuthor = await _http.GetFromJsonAsync<Author>($"api/author/email/{email}");
-      showForm = true;
+       if (string.IsNullOrEmpty(email))
+           SelectedAuthor = BlankAuthor();
+       else
+           SelectedAuthor = await _http.GetFromJsonAsync<Author>($"api/author/email/{email}");
+       showForm = true;
    }
 
    protected void Cancel()
    {
-      SelectedAuthor = BlankAuthor();
-      showForm = false;
-   }
-
-   protected void Toast(HttpResponseMessage msg)
-   {
-      if (msg.IsSuccessStatusCode)
-         _toaster.Success(_localizer["completed"]);
-      else
-         _toaster.Error(_localizer["generic-error"]);
+       SelectedAuthor = BlankAuthor();
+       showForm = false;
    }
 
    protected Author BlankAuthor()
    {
-      return new Author
-      {
-         DisplayName = "",
-         Email = "",
-         Password = ""
-      };
+       return new Author
+       {
+           DisplayName = "",
+           Email = "",
+           Password = ""
+       };
    }
 }
