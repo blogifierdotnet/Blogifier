@@ -6,7 +6,7 @@
 
 @if (!showForm)
 {
-    <h1 class="section-title">@_localizer["users-settings"]</h1>
+    <h1 class="section-title">@_localizer["User settings"]</h1>
     <div class="section-content">
         <div class="list-toolbar">
             <label class="list-check form-check" data-toggle="tooltip" title="@_localizer["select-all"]">
@@ -17,7 +17,7 @@
             </button>
             <div class="dropdown dropdown-flush">
                 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
+                    @_localizer["Action"]
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
                 <button type="button" class="dropdown-item text-blogifier" @onclick="(()=> SetAsAdmin(true))">
@@ -30,7 +30,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                     </svg>
-                    <span>@_localizer["user"]</span>
+                    <span>@_localizer["User"]</span>
                 </button>
                 <button type="button" class="dropdown-item text-danger" @onclick="(()=> RemoveSelected())">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">

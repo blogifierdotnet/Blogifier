@@ -489,4 +489,85 @@
   <data name="page-title" xml:space="preserve">
     <value>Page title</value>
   </data>
+  <data name="About Blogifier" xml:space="preserve">
+    <value>About Blogifier</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Advanced settings" xml:space="preserve">
+    <value>Advanced settings</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>Basic settings</value>
+  </data>
+  <data name="blogifier-desc" xml:space="preserve">
+    <value>Blogifier is an open-source publishing platform built with .NET Core 5.0 and the latest technologies.</value>
+  </data>
+  <data name="Comments settings" xml:space="preserve">
+    <value>Comments settings</value>
+  </data>
+  <data name="Edit profile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="Home page" xml:space="preserve">
+    <value>Home page</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="New page" xml:space="preserve">
+    <value>New page</value>
+  </data>
+  <data name="New post" xml:space="preserve">
+    <value>New post</value>
+  </data>
+  <data name="Operating system" xml:space="preserve">
+    <value>Operating system</value>
+  </data>
+  <data name="Profile picture" xml:space="preserve">
+    <value>Profile picture</value>
+  </data>
+  <data name="RSS feed Url" xml:space="preserve">
+    <value>RSS feed Url</value>
+  </data>
+  <data name="Script footer" xml:space="preserve">
+    <value>Script footer</value>
+  </data>
+  <data name="Script header" xml:space="preserve">
+    <value>Script header</value>
+  </data>
+  <data name="Script settings" xml:space="preserve">
+    <value>Script settings</value>
+  </data>
+  <data name="Specification" xml:space="preserve">
+    <value>Specification</value>
+  </data>
+  <data name="This list is empty" xml:space="preserve">
+    <value>Nothing to show - this list is empty</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="User settings" xml:space="preserve">
+    <value>User settings</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Website Url" xml:space="preserve">
+    <value>Website Url</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>Widgets</value>
+  </data>
 </root>

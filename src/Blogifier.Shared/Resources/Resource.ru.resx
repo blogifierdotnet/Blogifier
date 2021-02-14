@@ -486,4 +486,85 @@
   <data name="scripts" xml:space="preserve">
     <value>Скрипты</value>
   </data>
+  <data name="About Blogifier" xml:space="preserve">
+    <value>О проекте Blogifier</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="Advanced settings" xml:space="preserve">
+    <value>Дополнительные настройки</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Основное</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>Базовые настройки</value>
+  </data>
+  <data name="blogifier-desc" xml:space="preserve">
+    <value>Blogifier - это платформа с открытым исходным кодом предназначенная для публикации интернет сообщений. Использует кросс-платформенные технологии на основе .NET Core 5.0</value>
+  </data>
+  <data name="Comments settings" xml:space="preserve">
+    <value>Настройки комментариев</value>
+  </data>
+  <data name="Edit profile" xml:space="preserve">
+    <value>Редактировать профиль</value>
+  </data>
+  <data name="Home page" xml:space="preserve">
+    <value>Домашняя страница</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>Меню</value>
+  </data>
+  <data name="New page" xml:space="preserve">
+    <value>Новая страница</value>
+  </data>
+  <data name="New post" xml:space="preserve">
+    <value>Новое сообщение</value>
+  </data>
+  <data name="Operating system" xml:space="preserve">
+    <value>Операционная система</value>
+  </data>
+  <data name="Profile picture" xml:space="preserve">
+    <value>Изображение</value>
+  </data>
+  <data name="RSS feed Url" xml:space="preserve">
+    <value>Ссылка на RSS канал</value>
+  </data>
+  <data name="Script footer" xml:space="preserve">
+    <value>Под-страничный скрипт</value>
+  </data>
+  <data name="Script header" xml:space="preserve">
+    <value>Над-страничный скрипт</value>
+  </data>
+  <data name="Script settings" xml:space="preserve">
+    <value>Настройки скрипта</value>
+  </data>
+  <data name="Specification" xml:space="preserve">
+    <value>Спецификация</value>
+  </data>
+  <data name="This list is empty" xml:space="preserve">
+    <value>Пустой лист - не на что смотреть</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="User settings" xml:space="preserve">
+    <value>Пользовательские настройки</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Website Url" xml:space="preserve">
+    <value>Ссылка на сайт</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>Виджеты</value>
+  </data>
 </root>
