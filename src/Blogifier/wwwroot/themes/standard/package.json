@@ -1,0 +1,14 @@
+{
+  "name": "theme",
+  "version": "1.0.0",
+  "description": "only for compiling sass files",
+  "author": "Farzin",
+  "private": true,
+  "scripts": {
+    "sass": "node-sass --watch scss -o css --source-map true"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.0.0-beta2",
+    "node-sass": "^5.0.0"
+  }
+}

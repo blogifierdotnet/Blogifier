@@ -39,15 +39,15 @@
       list-style: none;
     }
     .item {
-        margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
     .item-link {
-        font-size:.875rem;
-        font-weight: 500;
-        color:$gray-600;
-        &:hover{
-            color:$blogifier;
-        }
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $gray-600;
+      &:hover {
+        color: $blogifier;
+      }
     }
   }
 

@@ -1,29 +1,38 @@
-﻿using Blogifier.Shared;
+using Blogifier.Core.Data;
+using Blogifier.Shared;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
 {
-   public interface IAboutProvider
-	{
-      Task<AboutModel> GetAboutModel();
-   }
+    public interface IAboutProvider
+    {
+        Task<AboutModel> GetAboutModel();
+    }
 
-	public class AboutProvider : IAboutProvider
-	{
-      public async Task<AboutModel> GetAboutModel()
-		{
-         var model = new AboutModel();
+    public class AboutProvider : IAboutProvider
+    {
+        private readonly AppDbContext _db;
 
-         model.Version = typeof(AboutProvider)
-                .GetTypeInfo()
-                .Assembly
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
+        public AboutProvider(AppDbContext db)
+        {
+            _db = db;
+        }
+        public async Task<AboutModel> GetAboutModel()
+        {
+            var model = new AboutModel();
 
-         model.OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+            model.Version = typeof(AboutProvider)
+                   .GetTypeInfo()
+                   .Assembly
+                   .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                   .InformationalVersion;
 
-         return await Task.FromResult(model);
-      }
-   }
+            model.DatabaseProvider = _db.Database.ProviderName;
+
+            model.OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+
+            return await Task.FromResult(model);
+        }
+    }
 }

@@ -2,7 +2,7 @@
 @page "/admin/settings/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-<h1 class="section-title">Basic Settings</h1>
+<h1 class="section-title">@_localizer["basic-settings"]</h1>
 <div class="section-content -half">
     @if (Blog != null)
     {

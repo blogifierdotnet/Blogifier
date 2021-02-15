@@ -1,50 +1,57 @@
-.app-about {
-
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    &-info {
-
-        li {
-            margin-bottom: .5rem;
-
-            span {
-                &:nth-child(1) {
-                    display: inline-block;
-                    min-width: 8rem;
-                    font-weight: 500;
-                }
-            }
-        }
-    }
-
+.about {
+  &-blogifier {
+    margin: 0;
+    padding: 0;
+    list-style: none;
     &-nav {
-        li {
-            font-size: 1rem;
-            font-weight: 500;
-            display: inline-block;
-            margin-right: 2rem;
-        }
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        font-weight: 500;
+        display: inline-block;
+        margin-right: 2rem;
+      }
 
-        a {
-            line-height: 2rem;
-            display: inline-block;
-        }
+      a {
+        display: inline-block;
+      }
 
-        .bi {
-            margin-right: .125rem;
-            height: 2rem;
-            transform: translateY(-.125rem);
-        }
+      .bi {
+        margin-right: 0.125rem;
+        transform: translateY(-0.125rem);
+      }
     }
-
 
     &-desc {
-        font-size: 1rem;
-        width: 100%;
-        max-width: 28rem;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 28rem;
     }
+  }
+
+  &-info {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-info {
+    padding: 0;
+    background: none;
+    border: 0;
+    width: 100%;
+
+    &-item {
+      margin-bottom: 0.5rem;
+      display: flex;
+    }
+    &-label {
+      font-weight: 500;
+      min-width: 10rem;
+    }
+    &-value {
+      color: $gray-800;
+    }
+  }
 }

@@ -3,11 +3,11 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 @{
-    Layout = "~/Views/Themes/Standard/layouts/_layout.cshtml";
+    Layout = "layouts/_layout.cshtml";
 }
 
 <main class="container">
-    <partial name="components/post-featured.cshtml" />
-    <partial name="components/post-list.cshtml" />
-    <partial name="components/global-pager.cshtml" />
+    <partial name="components/post/featured.cshtml" />
+    <partial name="components/post/list.cshtml" />
+    <partial name="components/pager.cshtml" />
 </main>

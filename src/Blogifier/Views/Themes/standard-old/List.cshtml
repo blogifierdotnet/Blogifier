@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Localization
 @using Blogifier.Shared.Resources
 @using Blogifier.Shared
 @inject IStringLocalizer<Resource> _localizer
@@ -7,7 +7,7 @@
 	ListModel listModel = (ListModel)Model;
 	Pager pgr = listModel.Pager;
 	string root = Url.Content("~/");
-	string cover = $"{root}img/cover.png"; // $"{root}{listModel.Blog.Cover}";
+	string cover = $"{root}{Constants.DefaultCover}";
 }
 <!DOCTYPE html>
 <html lang="en">

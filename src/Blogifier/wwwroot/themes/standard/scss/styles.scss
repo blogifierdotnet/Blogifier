@@ -3,11 +3,10 @@
 // helpers
 @import "helpers/variables";
 @import "helpers/reset";
- 
+@import "helpers/base";
+
 // layouts
-@import "layout/main";
-@import "layout/header"; 
-@import "layout/sidebar";
+@import "layout/header";
 @import "layout/widgets";
 @import "layout/footer";
 
@@ -25,7 +24,7 @@
 // pages
 @import "page/list";
 @import "page/post";
- 
+
 // widgets
 @import "widget/popular";
 @import "widget/newsletter";

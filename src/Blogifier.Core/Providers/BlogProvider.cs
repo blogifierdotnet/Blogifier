@@ -1,14 +1,13 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
 {
-	public interface IBlogProvider
+    public interface IBlogProvider
 	{
 		Task<Blog> GetBlog();
 		Task<ICollection<Category>> GetBlogCategories();
@@ -38,8 +37,8 @@ namespace Blogifier.Core.Providers
 				Theme = blog.Theme,
 				ItemsPerPage = blog.ItemsPerPage,
 				SocialFields = new List<SocialField>(),
-				Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : "img/cover.png",
-				Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : "img/logo.png",
+				Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : Constants.DefaultCover,
+				Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : Constants.DefaultLogo,
 				values = await GetValues(blog.Theme)
 			};
 		}

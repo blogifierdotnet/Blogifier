@@ -1,65 +1,70 @@
-﻿@layout SettingsLayout
+@layout SettingsLayout
 @page "/admin/settings/import/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 @inject IJSRuntime JSRuntime
 
-<h1 class="section-title">Import</h1>
-<div class="section-content -half">
-    <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
-        <DataAnnotationsValidator />
-        <div class="form-item">
-            <label class="form-label">Import from RSS feed URL</label>
-            <input class="form-control" type="text" name="url" @bind="ImportModel.FeedUrl" placeholder="http://rtur.net/feed/rss" />
-            <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
-        </div>
-        <div class="form-item">
-            <label class="form-label">Import from Base URL</label>
-            <input class="form-control" type="text" name="url" @bind="ImportModel.BaseUrl" placeholder="http://rtur.net" />
-            <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
-        </div>
-        <div class="form-item">
-            <button class="btn btn-blogifier px-5" type="submit">Get Data</button>
-        </div>
-    </EditForm>
-</div>
-
-@if (Posts != null)
+@if (Posts == null)
 {
-    <div class="section-content">
-            <p class="section-title">@Posts.Count posts are found and ready to be imported.</p>
-            <div class="list-toolbar">
-                <label class="list-check form-check" data-toggle="tooltip" title="Select All">
-                    <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
-                    <span>Import all</span>
-                </label>
-            </div>
-            <ul id="import-list" class="list">
-                @foreach (var post in Posts)
-                {
-                    <li class="list-item">
-                        <label class="list-check form-check">
-                            <input id="@post.Slug" type="checkbox" class="list-check-input form-check-input" style="display: block" @bind="post.Selected">
-                            <svg id="s-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" style="color: green; margin-top: 12px; display: none" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                            </svg>
-                            <svg id="f-@post.Slug" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" style="color: red; margin-top: 12px; display: none" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
-                            </svg>
-                        </label>
-                        <div class="list-title">@post.Title</div>
-                        <div class="list-text ms-auto">@post.Published.ToFriendlyShortDateString()</div>
-                    </li>
-                }
-            </ul>
-            <p class="lead">@StatusMsg</p>
+    <h1 class="section-title">@_localizer["import"]</h1>
+    <div class="section-content -half">
+        <EditForm Model="@ImportModel" OnValidSubmit="GetEntries">
+            <DataAnnotationsValidator />
             <div class="form-item">
-                <button class="btn btn-blogifier px-5" type="button" @onclick="Import">@_localizer["import"]</button>
-                <button class="btn btn-secondary px-5" type="button" @onclick="Load">@_localizer["cancel"]</button>
+                <label class="form-label">@_localizer["Website Url"]</label>
+                <input class="form-control" type="text" @bind="ImportModel.BaseUrl" placeholder="https://example.com" />
+                <ValidationMessage For="@(() => ImportModel.BaseUrl)"></ValidationMessage>
             </div>
+            <div class="form-item">
+                <label class="form-label">@_localizer["RSS feed Url"]</label>
+                <input class="form-control" type="text" @bind="ImportModel.FeedUrl" placeholder="https://example.com/feed.xml" />
+                <ValidationMessage For="@(() => ImportModel.FeedUrl)"></ValidationMessage>
+            </div>
+            <div class="form-item">
+                <button class="btn btn-blogifier px-5" type="submit">@_localizer["Load"]</button>
+            </div>
+        </EditForm>
+    </div>
+}
+else {
+    <div class="section-content">
+        <div class="section-title">@Posts.Count @_localizer["import-message-found"] (Posts are found and ready to be imported).</div>
+        <div class="list-toolbar">
+            <label class="list-check form-check" data-toggle="tooltip" title="Select All">
+                <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
+                <span>@_localizer["import-all"]</span>
+            </label>
+        </div>
+        <ul id="import-list" class="list mb-4">
+            @foreach (var post in Posts)
+            {
+                <li class="list-item">
+                    <label class="list-check form-check" id="@post.Slug">
+                        <input type="checkbox" class="list-check-input form-check-input" style="display: block" @bind="post.Selected">
+                    </label>
+                    <span class="list-icon ps-0 pe-3" id="s-@post.Slug" style="display:none;">
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle hide text-success" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                        </svg>
+                    </span>
+                    <span class="list-icon ps-0 pe-3" id="f-@post.Slug" style="display:none;">
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle hide text-danger" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                        </svg>
+                    </span>
+                    <div class="list-title">@post.Title</div>
+                    <div class="list-text ms-auto">@post.Published.ToFriendlyShortDateString()</div>
+                </li>
+            }
+        </ul>
+        <div class="alert @StatusMsgCss mb-4">@StatusMsg</div>
+        <div class="form-item">
+            <button class="btn btn-blogifier px-5 me-3" type="button" @onclick="Import">@_localizer["import"]</button>
+            <button class="btn btn-default" type="button" @onclick="Load">@_localizer["cancel"]</button>
+        </div>
     </div>
 }
 
@@ -67,6 +72,7 @@
     protected ImportModel ImportModel { get; set; }
     protected List<Post> Posts { get; set; }
     protected string StatusMsg { get; set; }
+    protected string StatusMsgCss { get; set; }
 
     protected override void OnInitialized()
     {
@@ -78,6 +84,7 @@
         ImportModel = new ImportModel { FeedUrl = "" };
         Posts = null;
         StatusMsg = "";
+        StatusMsgCss = "d-none";
     }
 
     protected async Task GetEntries()
@@ -108,10 +115,14 @@
             }
         }
 
-        if (failedCnt == 0 && successCnt > 0)
+        if (failedCnt == 0 && successCnt > 0) {
             StatusMsg = $"Imported {successCnt} posts.";
-        else
+            StatusMsgCss = $"alert-success";
+        }
+        else {
             StatusMsg = $"Imported {successCnt} posts out of {successCnt + failedCnt}. Please check logs for errors.";
+            StatusMsgCss = $"alert-warning";
+        }
     }
 
     public void CheckAll(object checkValue)

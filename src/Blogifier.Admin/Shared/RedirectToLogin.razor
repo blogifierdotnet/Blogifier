@@ -1,23 +1,28 @@
-﻿@inject HttpClient _http
+@inject HttpClient _http
 @inject NavigationManager _navigationManager
 @inject IJSRuntime JSRuntime
 
 @code {
-	protected override async Task OnInitializedAsync()
-	{
-		try
-		{
-			await JSRuntime.InvokeAsync<string>("commonJsFunctions.hideLoader", "blazor-loading-ui");
+   protected override async Task OnInitializedAsync()
+   {
+       try
+       {
+           Blog blog = null;
+           try
+           {
+               blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+               await JSRuntime.InvokeAsync<string>("commonJsFunctions.hideLoader", "blazor-loading-ui");
+           }
+           catch { }
 
-			Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-			if (blog == null)
-				_navigationManager.NavigateTo("admin/register");
-			else
-				_navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
-		}
-		catch
-		{
-			_navigationManager.NavigateTo("admin/login");
-		}
-	}
+           if (blog == null)
+               _navigationManager.NavigateTo("admin/register");
+           else
+               _navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+       }
+       catch (Exception ex)
+       {
+           _navigationManager.NavigateTo($"admin/login?error={ex.Message}");
+       }
+   }
 }

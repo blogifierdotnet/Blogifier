@@ -31,6 +31,8 @@ namespace Blogifier.Admin
 				config.NewestOnTop = false;
 			});
 
+            builder.Services.AddSingleton<BlogStateProvider>();
+
 			await builder.Build().RunAsync();
 		}
 	}

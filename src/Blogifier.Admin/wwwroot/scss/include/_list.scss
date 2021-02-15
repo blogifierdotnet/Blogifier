@@ -95,14 +95,16 @@
   }
 
   &-check {
-    height: $list-height;
-    width: 2rem;
-    min-width: 2rem;
     padding: 0;
     margin: 0;
+    height: $list-height;
+    line-height: $list-height;
+    min-width: 2rem;
+    padding-left: 2rem;
     position: relative;
+    font-weight: 500;
 
-    .form-check-input {
+    .list-check-input {
       vertical-align: top;
       transform: translateY(-50%);
       position: absolute;

@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,6 @@ namespace Blogifier.Core.Providers
 	{
 		private readonly AppDbContext _dbContext;
 		private readonly IStorageProvider _storageProvider;
-		private readonly string _defaultCover = "img/cover.png";
 
 		private static int _userId;
 		private static string _webRoot;
@@ -105,7 +104,7 @@ namespace Blogifier.Core.Providers
 				Slug = await GetSlug(syndicationItem.Title.Text),
 				Description = GetDescription(syndicationItem.Title.Text),
 				Content = syndicationItem.Summary.Text,
-				Cover = $"{_defaultCover}",
+				Cover = Constants.DefaultCover,
 				Published = syndicationItem.PublishDate.DateTime,
 				DateCreated = syndicationItem.PublishDate.DateTime,
 				DateUpdated = syndicationItem.LastUpdatedTime.DateTime
@@ -149,7 +148,7 @@ namespace Blogifier.Core.Providers
 			if (string.IsNullOrEmpty(post.Content))
 				return;
 
-			if(post.Cover != $"{_defaultCover}")
+			if(post.Cover != Constants.DefaultCover)
 			{
 				var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 

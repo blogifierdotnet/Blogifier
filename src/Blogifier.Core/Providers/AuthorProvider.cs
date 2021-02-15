@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -71,15 +71,15 @@ namespace Blogifier.Core.Providers
 		public async Task<bool> Register(RegisterModel model)
 		{
 			bool isAdmin = false;
-			var existingAuthor = await _db.Authors.Where(a => a.Email == model.Email).FirstOrDefaultAsync();
-			if (existingAuthor != null)
+			var author = await _db.Authors.Where(a => a.Email == model.Email).FirstOrDefaultAsync();
+			if (author != null)
 				return false;
 
-			var existingBlog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
-			if (existingBlog == null)
+			var blog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
+			if (blog == null)
 			{
 				isAdmin = true; // first blog record - set user as admin
-				Blog blog = new Blog
+				blog = new Blog
 				{
 					Title = "Blog Title",
 					Description = "Short Blog Description",
@@ -100,60 +100,44 @@ namespace Blogifier.Core.Providers
 				}
 			}
 
-			existingBlog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
-			if (existingBlog == null)
+			blog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
+			if (blog == null)
 				return false;
 
-			Author author = new Author
+			author = new Author
 			{
 				DisplayName = model.Name,
 				Email = model.Email,
 				Password = model.Password.Hash(_salt),
 				IsAdmin = isAdmin,
-				Avatar = "img/avatar.png",
+				Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
 				Bio = "The short author bio.",
 				DateCreated = DateTime.UtcNow
 			};
 
-			await _db.Authors.AddAsync(author);
-			await _db.SaveChangesAsync();
+			blog.Authors.Add(author);
 
-			existingAuthor = await _db.Authors.Where(a => a.Email == model.Email).FirstOrDefaultAsync();
-			if (existingAuthor == null)
-				return false;
-
-			existingBlog.Authors.Add(existingAuthor);
-			await _db.SaveChangesAsync();
-
-			return true;
+			return await _db.SaveChangesAsync() > 0;
 		}
 
 		public async Task<bool> Add(Author author)
 		{
-			var existingAuthor = await _db.Authors.Where(a => a.Email == author.Email).FirstOrDefaultAsync();
-			if (existingAuthor != null)
+			var existing = await _db.Authors.Where(a => a.Email == author.Email).OrderBy(a => a.Id).FirstOrDefaultAsync();
+			if (existing != null)
 				return false;
 
-			var existingBlog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
-			if (existingBlog == null)
+			var blog = await _db.Blogs.Include(b => b.Authors).OrderBy(b => b.Id).FirstOrDefaultAsync();
+			if (blog == null)
 				return false;
 
-			author.IsAdmin = false;
-			author.Password = author.Password.Hash(_salt);
-			author.Avatar = "img/avatar.png";
-			author.DateCreated = DateTime.UtcNow;
+            author.IsAdmin = false;
+            author.Password = author.Password.Hash(_salt);
+            author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
+            author.DateCreated = DateTime.UtcNow;
 
-			await _db.Authors.AddAsync(author);
-			await _db.SaveChangesAsync();
+			blog.Authors.Add(author);
 
-			existingAuthor = await _db.Authors.Where(a => a.Email == author.Email).FirstOrDefaultAsync();
-			if (existingAuthor == null)
-				return false;
-
-			existingBlog.Authors.Add(existingAuthor);
-			await _db.SaveChangesAsync();
-
-			return true;
+			return await _db.SaveChangesAsync() > 0;
 		}
 
 		public async Task<bool> Update(Author author)
@@ -165,10 +149,18 @@ namespace Blogifier.Core.Providers
 			if (existing == null)
 				return false;
 
+            if(existing.IsAdmin && !author.IsAdmin)
+            {
+                // do not remove last admin account
+                if (_db.Authors.Where(a => a.IsAdmin).Count() == 1)
+                    return false;
+            }
+
 			existing.Email = author.Email;
 			existing.DisplayName = author.DisplayName;
 			existing.Bio = author.Bio;
 			existing.Avatar = author.Avatar;
+            existing.IsAdmin = author.IsAdmin;
 
 			return await _db.SaveChangesAsync() > 0;
 		}

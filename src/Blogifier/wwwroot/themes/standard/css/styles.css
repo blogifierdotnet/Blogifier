@@ -8,23 +8,26 @@ img {
   width: 64rem;
   max-width: 100%; }
 
-.bft-header {
+.header {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
   margin-bottom: 5rem;
   border-bottom: 1px solid #f7f7f7; }
-  .bft-header-sign {
+  .header-sign {
     margin-right: 1rem; }
-    .bft-header-sign:hover .bft-header-title, .bft-header-sign:focus .bft-header-title {
-      color: var(--bft-header-title-hover); }
-  .bft-header-title {
+  .header-title {
+    display: block;
     margin: 0;
     font-size: var(--bft-header-title-size);
     font-weight: var(--bft-header-title-weight);
     color: var(--bft-header-title-color); }
-  .bft-header-logo {
-    width: var(--bft-header-logo-width);
-    height: var(--bft-header-logo-height); }
+    .header-title:hover, .header-title:focus {
+      color: var(--bft-header-title-hover); }
+  .header-logo {
+    display: block; }
+    .header-logo-img {
+      width: var(--bft-header-logo-width);
+      height: var(--bft-header-logo-height); }
 
 .bft-widget-title {
   font-weight: 300;
@@ -575,4 +578,4 @@ pre[class*="language-"] {
   top: 50%;
   transform: translateY(-50%); }
 
-/*# sourceMappingURL=blog.css.map */
+/*# sourceMappingURL=styles.css.map */
