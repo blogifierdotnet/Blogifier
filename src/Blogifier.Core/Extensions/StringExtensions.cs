@@ -1,10 +1,18 @@
 ﻿using Markdig;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Xml.Linq;
+using Markdig.Helpers;
+using Markdig.Parsers;
+using Markdig.Renderers;
+using Markdig.Renderers.Html.Inlines;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 
 namespace Blogifier.Core
 {
@@ -100,6 +108,86 @@ namespace Blogifier.Core
                 .Build();
 
             return Markdown.ToHtml(str, mpl);
+        }
+
+        public class ZenImageMarkdownOptions
+        {
+            public Uri Host { get; set; }
+            public List<LinkInline> RenderedLinks { get; } = new List<LinkInline>();
+        }
+        
+        public class ZenImageMarkdownExtensions : IMarkdownExtension
+        {
+            private readonly ZenImageMarkdownOptions _options;
+
+            public ZenImageMarkdownExtensions(ZenImageMarkdownOptions options)
+            {
+                _options = options;
+            }
+            
+            public void Setup(MarkdownPipelineBuilder pipeline)
+            {
+                // pipeline.InlineParsers.Insert(0, new ZenImageInlineParser());
+            }
+
+            public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+            {
+                if (renderer is HtmlRenderer htmlRenderer)
+                {
+                    var inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
+                    if (inlineRenderer != null)
+                    {
+                        inlineRenderer.TryWriters.Remove(TryLinkInlineRenderer);
+                        inlineRenderer.TryWriters.Add(TryLinkInlineRenderer);
+                    }
+                }
+            }
+            
+            private bool TryLinkInlineRenderer(HtmlRenderer renderer, LinkInline linkInline)
+            {
+                if (!linkInline.IsImage || linkInline.Url == null)
+                {
+                    return false;
+                }
+
+                var figureElement = new XElement(
+                    "figure",
+                    new XElement(
+                        "img",
+                        new XAttribute("src", _options.Host + linkInline.Url)),
+                    new XElement("figcaption", linkInline.Title));
+
+                renderer.Write(figureElement.ToString());
+                
+                _options.RenderedLinks.Add(linkInline);
+
+                return true;
+                /*
+               
+               
+               
+               <figure>     
+   <img src="http://example.com/pic1.jpg" width="1200" height="900">
+   <figcaption>
+      Первый андроид-фермер смотрит на свои угодья
+   </figcaption>  
+ </figure>
+               */
+            }
+        }
+     
+        
+        public static (string content, LinkInline[] images) MdToZen(this string str, Uri host)
+        {
+            var zenImageMarkdownOptions = new ZenImageMarkdownOptions{Host = host};
+            var mpl = new MarkdownPipelineBuilder()
+                .Use(new ZenImageMarkdownExtensions(zenImageMarkdownOptions))
+                .UsePipeTables()
+                .UseAdvancedExtensions()
+                .Build();
+
+            var content = Markdown.ToHtml(str, mpl);
+            return (content, zenImageMarkdownOptions.RenderedLinks.ToArray());
         }
 
         public static bool Contains(this string source, string toCheck, StringComparison comp)
