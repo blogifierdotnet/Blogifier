@@ -1,6 +1,6 @@
 @using Blogifier.Shared
 @{
-   Layout = "~/Views/Themes/Standard/layouts/_layout.cshtml";
+   Layout = "layouts/_layout.cshtml";
    PostModel postModel = (PostModel)Model;
    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
    var catUrl = Url.Content("~/categories");
@@ -56,7 +56,7 @@
         </header>
 
         <div class="bft-post-description">
-           @Html.Raw(postModel.Post.Description) 
+           @Html.Raw(postModel.Post.Description)
         </div>
 
         <figure class="bft-post-cover">
@@ -66,22 +66,13 @@
         <section class="bft-post-content">
             @Html.Raw(postModel.Post.Content)
         </section>
-       
+
     </article>
 
-    <!-- SHARE -->
-    <partial name="components/post-share.cshtml" />
-
-    <!-- AUTHOR -->
-    <partial name="components/post-author.cshtml"/>
-
-    <!-- COMMENTS -->
-    <partial name="components/post-comments.cshtml" />
-
-    <!-- RELATED -->
-    <partial name="components/post-related.cshtml" />
-
-    <!-- NAV -->
-    <partial name="components/post-nav.cshtml" />
+    <partial name="components/post/share.cshtml" />
+    <partial name="components/post/author.cshtml"/>
+    <partial name="components/post/comments.cshtml" />
+    <partial name="components/post/related.cshtml" />
+    <partial name="components/post/nav.cshtml" />
 
 </main>
