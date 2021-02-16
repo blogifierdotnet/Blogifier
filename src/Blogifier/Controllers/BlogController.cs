@@ -139,7 +139,7 @@ namespace Blogifier.Controllers
 			var sitemapBaseUri = Request.ExtractAbsoluteUri();
 
 			var blog = await DataService.CustomFields.GetBlogSettings();
-			var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.UtcNow.AddDays(-14), new Pager(1, 100));
+			var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.UtcNow.AddDays(-50), new Pager(1, 100));
 
 			var host = $"{sitemapBaseUri}{Url.Content("~/")}";
 
@@ -147,6 +147,8 @@ namespace Blogifier.Controllers
 			{
 				case "zen":
 					return ZenFeed(blog, host, posts.ToArray());
+				case "turbo":
+					return TurboFeed(blog, host, posts.ToArray());
 				default:
 					return await RssFeed(blog, host, posts.ToArray());
 			}
@@ -203,6 +205,51 @@ namespace Blogifier.Controllers
 						new XElement("link", feedUri),
 						new XElement("description", blog.Description),
 						new XElement("language", "ru"),
+						itemElements)));
+
+			return new ContentResult
+			{
+				Content = rssDocument.ToString(),
+				ContentType = "text/xml",
+				StatusCode = 200
+			};
+		}
+
+		private IActionResult TurboFeed(BlogItem blog, string host, PostItem[] posts)
+		{
+			XNamespace yandexNamespace = "http://news.yandex.ru";
+			XNamespace mediaNamespace = "http://search.yahoo.com/mrss/";
+			XNamespace turboNamespace = "http://turbo.yandex.ru";
+
+			var feedUri = new Uri(host);
+
+			var itemElements = posts
+				.Select(post =>
+				{
+					var header = new XElement(
+						"header",
+						new XElement("h1", post.Title),
+						new XElement(
+							"figure",
+							new XElement("img", new XAttribute("src", feedUri + post.Cover)))).ToString();
+					var contentBody = post.Content.MdToHtml();
+
+					return new XElement(
+						"item",
+						new XElement("link", feedUri + $"posts/{post.Slug}"),
+						new XElement(turboNamespace + "content", new XCData(header + Environment.NewLine + contentBody)));
+				});
+			
+			var rssDocument = new XDocument(
+				new XDeclaration("1.0", "UTF-8", "yes"),
+				new XElement(
+					"rss",
+					new XAttribute("version", "2.0"),
+					new XAttribute(XNamespace.Xmlns + "media", mediaNamespace),
+					new XAttribute(XNamespace.Xmlns + "yandex", yandexNamespace),
+					new XAttribute(XNamespace.Xmlns + "turbo", turboNamespace),
+					new XElement(
+						"channel",
 						itemElements)));
 
 			return new ContentResult
