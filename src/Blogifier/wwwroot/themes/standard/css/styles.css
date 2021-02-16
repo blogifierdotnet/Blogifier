@@ -12,10 +12,8 @@ img {
   max-width: 100%; }
 
 .header {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  margin-bottom: 5rem;
-  border-bottom: 1px solid #f7f7f7; }
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
   .header-sign {
     margin-right: 1rem; }
   .header-title {
@@ -51,13 +49,28 @@ img {
   padding: 0;
   margin: 0; }
 
-.blog-footer {
+.footer {
   background: #f8f9fa;
   margin-top: 5rem;
   padding-top: 3rem; }
-  .blog-footer a {
+  .footer a {
     color: #000; }
-    .blog-footer a:hover {
+    .footer a:hover {
+      color: var(--bft-color); }
+
+.footer-copyright {
+  color: #666;
+  margin-top: 3rem;
+  border-top: 1px solid #eee;
+  font-size: 0.75rem;
+  line-height: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+  .footer-copyright p {
+    margin: 0; }
+  .footer-copyright a {
+    color: #666; }
+    .footer-copyright a:hover {
       color: var(--bft-color); }
 
 .bft-social {
@@ -129,28 +142,46 @@ img {
       background: none;
       background-color: rgba(255, 255, 255, 0.1); }
 
-.bft-featured {
-  margin-bottom: 6rem; }
-  .bft-featured-figure {
-    margin: 0; }
-  .bft-featured-img {
+.featured {
+  margin-bottom: 4rem; }
+  .featured-cover {
+    margin: 0;
+    max-height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #eee;
     border-radius: 0.25rem; }
-  .bft-featured-title {
+    @media screen and (max-width: 991px) {
+      .featured-cover {
+        height: 20rem; } }
+  .featured-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; }
+  .featured-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem; }
+  .featured-title {
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
     line-height: 1.3; }
-  .bft-featured-link {
+  .featured-link {
     color: #000; }
-    .bft-featured-link:hover {
+    .featured-link:hover {
       color: var(--bft-color); }
-  .bft-featured-meta {
+  .featured-meta {
     margin-bottom: 1.5rem;
     color: #999;
     font-size: 0.875rem; }
-  .bft-featured-cat {
+  .featured-cat {
     color: #999; }
-    .bft-featured-cat::before {
+    .featured-cat::before {
       content: "";
       margin: 0 0.5rem;
       width: 0.25rem;
@@ -159,16 +190,71 @@ img {
       background-color: rgba(0, 0, 0, 0.2);
       display: inline-block;
       transform: translateY(-0.125rem); }
-    .bft-featured-cat:hover {
+    .featured-cat:hover {
       color: var(--bft-color); }
-  .bft-featured-desc {
+  .featured-desc {
     color: #666;
     line-height: 1.8;
     margin-bottom: 1.5rem; }
-  .bft-featured-more {
+  .featured-more {
     color: var(--bft-color); }
-    .bft-featured-more:hover {
+    .featured-more:hover {
       color: #000; }
+
+.bft-share {
+  padding-top: 4rem;
+  margin-bottom: 4rem; }
+  .bft-share-list {
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+  .bft-share-item {
+    margin-right: 1rem; }
+  .bft-share-link {
+    text-align: center;
+    display: block;
+    height: 100%; }
+    .bft-share-link .bi {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: #555; }
+    .bft-share-link:hover .bi, .bft-share-link:focus .bi {
+      fill: var(--bft-color); }
+
+.bft-related {
+  margin-top: 5rem; }
+  .bft-related-title {
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    color: #999;
+    font-size: 1.25rem;
+    letter-spacing: 1px; }
+  .bft-related-item {
+    height: 100%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    min-height: 10rem;
+    border-radius: 0.25rem;
+    background-color: #eee;
+    color: #000; }
+    .bft-related-item-title {
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      padding: 1.5rem 1.5rem 0.5rem; }
+    .bft-related-item-time {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      padding: 0 1.5rem;
+      margin-bottom: 1.5rem;
+      display: block; }
+    .bft-related-item-img {
+      display: block;
+      width: 100%; }
+    .bft-related-item:hover {
+      color: var(--bft-color); }
 
 .bft-pager .nav-item {
   margin-right: 0.25rem; }
@@ -189,21 +275,6 @@ img {
     height: 1.25rem;
     display: inline;
     transform: translateY(-2px); }
-
-.bft-copyright {
-  color: #666;
-  margin-top: 3rem;
-  border-top: 1px solid #eee;
-  font-size: 0.75rem;
-  line-height: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem; }
-  .bft-copyright p {
-    margin: 0; }
-  .bft-copyright a {
-    color: #666; }
-    .bft-copyright a:hover {
-      color: var(--bft-color); }
 
 :not(pre) > code {
   color: #e53935;
@@ -317,61 +388,6 @@ pre[class*="language-"] {
         background-color: var(--bft-color); }
         .code-toolbar .toolbar-item button:hover {
           background-color: #000; }
-
-.bft-share {
-  padding-top: 4rem;
-  margin-bottom: 4rem; }
-  .bft-share-list {
-    list-style: none;
-    padding: 0;
-    margin: 0; }
-  .bft-share-item {
-    margin-right: 1rem; }
-  .bft-share-link {
-    text-align: center;
-    display: block;
-    height: 100%; }
-    .bft-share-link .bi {
-      width: 1.5rem;
-      height: 1.5rem;
-      fill: #555; }
-    .bft-share-link:hover .bi, .bft-share-link:focus .bi {
-      fill: var(--bft-color); }
-
-.bft-related {
-  margin-top: 5rem; }
-  .bft-related-title {
-    text-transform: uppercase;
-    margin-bottom: 3rem;
-    font-weight: 300;
-    color: #999;
-    font-size: 1.25rem;
-    letter-spacing: 1px; }
-  .bft-related-item {
-    height: 100%;
-    position: relative;
-    display: block;
-    overflow: hidden;
-    min-height: 10rem;
-    border-radius: 0.25rem;
-    background-color: #eee;
-    color: #000; }
-    .bft-related-item-title {
-      margin-bottom: 0.5rem;
-      font-size: 1.125rem;
-      font-weight: 600;
-      padding: 1.5rem 1.5rem 0.5rem; }
-    .bft-related-item-time {
-      font-size: 0.75rem;
-      opacity: 0.7;
-      padding: 0 1.5rem;
-      margin-bottom: 1.5rem;
-      display: block; }
-    .bft-related-item-img {
-      display: block;
-      width: 100%; }
-    .bft-related-item:hover {
-      color: var(--bft-color); }
 
 .bft-post-item {
   margin-bottom: 1rem;
