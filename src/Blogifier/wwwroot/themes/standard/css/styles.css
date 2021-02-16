@@ -201,38 +201,76 @@ img {
       color: #000; }
 
 .post-grid {
-  height: 100%; }
+  padding: 1.5rem;
+  height: 100%;
+  border: 1px solid #e5e5e5;
+  position: relative;
+  transition: box-shadow ease-in-out 0.3s; }
   .post-grid-cover {
-    display: block; }
+    display: block;
+    margin: -1.5rem -1.5rem 1.5rem; }
   .post-grid-img {
     min-width: 100%;
-    height: 14rem;
+    height: 10rem;
     object-fit: cover;
     object-position: center; }
-  .post-grid-body {
-    border: 1px solid #e5e5e5;
-    border-top-width: 0;
-    padding: 1.5rem;
-    height: 100%; }
   .post-grid-meta {
     font-size: 0.75rem;
-    color: #888;
-    margin-bottom: 1rem; }
+    color: #555;
+    margin-bottom: 1.5rem;
+    opacity: 0.7; }
     .post-grid-meta a {
-      color: #888; }
-      .post-grid-meta a:hover {
-        color: var(--bft-color); }
+      color: #555; }
+  .post-grid-author {
+    display: flex;
+    align-items: center;
+    margin-right: 0.875rem; }
+    .post-grid-author-img {
+      border-radius: 50rem;
+      margin-right: 0.25rem;
+      filter: grayscale(100%); }
+    .post-grid-author-name {
+      text-transform: capitalize; }
+  .post-grid-date {
+    display: flex;
+    align-items: center; }
+    .post-grid-date-icon {
+      margin-right: 0.375rem; }
   .post-grid-title {
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 1rem; }
   .post-grid-link {
-    color: #000; }
+    color: #000;
+    transition: color ease-in-out 0.2s; }
     .post-grid-link:hover {
       color: var(--bft-color); }
   .post-grid-desc {
     font-size: 0.875rem;
-    color: #777; }
+    color: #777;
+    margin: 0;
+    line-height: 1.75;
+    transition: color ease-in-out 0.2s; }
+  .post-grid-more:focus {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    bottom: -1px;
+    right: -1px;
+    background: none; }
+  .post-grid:hover {
+    box-shadow: 0 0 10rem rgba(0, 0, 0, 0.1); }
+    .post-grid:hover .post-grid-link {
+      color: var(--bft-color); }
+    .post-grid:hover .post-grid-desc {
+      color: #000; }
+    .post-grid:hover .post-grid-more {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: none; }
 
 .bft-share {
   padding-top: 4rem;

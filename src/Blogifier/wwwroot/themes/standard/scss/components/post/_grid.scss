@@ -1,45 +1,53 @@
 .post-grid {
+  padding: 1.5rem;
   height: 100%;
+  border: 1px solid #e5e5e5;
+  position: relative;
+  transition: box-shadow ease-in-out 0.3s;
+
   // cover
   &-cover {
     display: block;
+    margin: -1.5rem -1.5rem 1.5rem;
   }
   &-img {
     min-width: 100%;
-    height: 14rem;
+    height: 10rem;
     object-fit: cover;
     object-position: center;
-    // border-top-right-radius: 0.5rem;
-    // border-top-left-radius: 0.5rem;
-  }
-
-  // body
-  &-body {
-    border: 1px solid #e5e5e5;
-    border-top-width: 0;
-    padding: 1.5rem;
-    // border-bottom-right-radius: 0.5rem;
-    // border-bottom-left-radius: 0.5rem;
-    height: 100%;
   }
 
   // meta
   &-meta {
     font-size: 0.75rem;
-    color: #888;
-    margin-bottom: 1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
     a {
-      color: #888;
-      &:hover {
-        color: $color;
-      }
+      color: #555;
     }
   }
   &-author {
+    display: flex;
+    align-items: center;
+    margin-right: 0.875rem;
+    &-img {
+      border-radius: 50rem;
+      margin-right: 0.25rem;
+      filter: grayscale(100%);
+    }
+    &-name {
+      text-transform: capitalize;
+    }
   }
-  &-time {
-  }
-  &-cat {
+  &-date {
+    display: flex;
+    align-items: center;
+    &-icon {
+      margin-right: 0.375rem;
+    }
+    &-time {
+    }
   }
 
   // title
@@ -51,6 +59,7 @@
 
   &-link {
     color: #000;
+    transition: color ease-in-out 0.2s;
     &:hover {
       color: $color;
     }
@@ -60,11 +69,37 @@
   &-desc {
     font-size: 0.875rem;
     color: #777;
+    margin: 0;
+    line-height: 1.75;
+    transition: color ease-in-out 0.2s;
   }
   &-more {
+    &:focus {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: none;
+    }
   }
 
   // hover item
   &:hover {
+    box-shadow: 0 0 10rem rgba(#000, 0.1);
+    .post-grid-link {
+      color: $color;
+    }
+    .post-grid-desc {
+      color: #000;
+    }
+    .post-grid-more {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: none;
+    }
   }
 }
