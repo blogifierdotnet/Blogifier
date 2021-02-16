@@ -1,5 +1,24 @@
 .featured {
   margin-bottom: 5rem;
+  &-prev,
+  &-next {
+    width: 3rem;
+    opacity: 0;
+  }
+  &-prev {
+    left: -4rem;
+  }
+
+  &-next {
+    right: -3.5rem;
+  }
+
+  &:hover {
+    .featured-next,
+    .featured-prev {
+      opacity: .2;
+    }
+  }
 
   &-cover {
     margin: 0;
@@ -25,6 +44,7 @@
   &-content {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    padding-left: 2rem;
   }
 
   // title
