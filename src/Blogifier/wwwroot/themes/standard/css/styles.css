@@ -1,3 +1,6 @@
+:root {
+  --bs-gutter-x: 1rem; }
+
 a {
   text-decoration: none; }
 
@@ -5,7 +8,7 @@ img {
   max-width: 100%; }
 
 .container {
-  width: 64rem;
+  width: 55.75rem;
   max-width: 100%; }
 
 .header {
@@ -20,9 +23,14 @@ img {
     margin: 0;
     font-size: var(--bft-header-title-size);
     font-weight: var(--bft-header-title-weight);
-    color: var(--bft-header-title-color); }
+    color: var(--bft-header-title-color);
+    line-height: 1.2; }
     .header-title:hover, .header-title:focus {
       color: var(--bft-header-title-hover); }
+  .header-desc {
+    margin: 0;
+    font-weight: 300;
+    color: var(--bft-header-desc-color, #666); }
   .header-logo {
     display: block; }
     .header-logo-img {
@@ -60,10 +68,13 @@ img {
     width: 3rem;
     height: 3rem; }
   .bft-social-link {
-    display: block;
+    width: 100%;
+    height: 100%;
     text-align: center;
-    display: block;
-    height: 100%; }
+    display: block; }
+    .bft-social-link.-btn {
+      background: none;
+      border: 0; }
     .bft-social-link:hover .bi, .bft-social-link:focus .bi {
       fill: var(--bft-color); }
   .bft-social .bi {
