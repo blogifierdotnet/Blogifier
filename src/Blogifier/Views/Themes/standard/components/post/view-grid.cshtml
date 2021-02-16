@@ -7,36 +7,35 @@
     ListModel listModel = (ListModel)Model;
     string root = Url.Content("~/");
 }
+
 @if (listModel.Posts.Count() > 0)
 {
-    <div class="row g-5">
+    <div class="row row-cols-3 g-4">
     @foreach (var post in listModel.Posts)
     {
-        <div class="col-lg-4">
-            <article class="bft-post-item mb-4">
-                <figure class="bft-post-item-cover">
-                    <a class="bft-post-item-coverlink" href="~/posts/@post.Slug">
-                        <img class="bft-post-item-img" src="~/@post.Cover" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
-                        <figcaption class="visually-hidden">@post.Title</figcaption>
-                    </a>
-                </figure>
-                <section class="bft-post-item-content">
-                    <h2 class="bft-post-item-title">
-                        <a class="bft-post-item-link" href="posts/@post.Slug">@post.Title</a>
-                    </h2>
-                    <div class="bft-post-item-meta">
-                        <time class="bft-post-item-time">@post.Published.ToFriendlyDateString()</time>
-                        <a class="bft-post-item-cat" href="#">Category</a>
+        <div class="col">
+            <article class="post-grid d-flex flex-column">
+                <a class="post-grid-cover" href="~/posts/@post.Slug">
+                    <img class="post-grid-img" src="~/@post.Cover" onerror="this.onerror=null;this.src='@root@post.Cover';" alt="@post.Title">
+                </a>
+                <section class="post-grid-body">
+                    <div class="post-grid-meta">
+                        <span class="post-grid-author me-3">by John Doe</span>
+                        <time class="post-grid-time me-3">@post.Published.ToFriendlyDateString()</time>
+                        <!-- <a class="post-grid-cat" href="#">Category</a> -->
                     </div>
-                    <p class="bft-post-item-desc">
-                        @Html.Raw(post.Description)
-                    </p>
-                    <a class="bft-post-item-more" href="posts/@post.Slug">
-                        Read More
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg>
-                    </a>
+                    <h2 class="post-grid-title">
+                        <a class="post-grid-link" href="posts/@post.Slug">@post.Title</a>
+                    </h2>
+                    <div class="post-grid-desc">
+                        <p>@Html.Raw(post.Description)</p>
+                        <a class="post-grid-more" href="posts/@post.Slug">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                        </a>
+                    </div>
                 </section>
             </article>
         </div>

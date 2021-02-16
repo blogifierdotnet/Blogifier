@@ -1,0 +1,70 @@
+.post-grid {
+  height: 100%;
+  // cover
+  &-cover {
+    display: block;
+  }
+  &-img {
+    min-width: 100%;
+    height: 14rem;
+    object-fit: cover;
+    object-position: center;
+    // border-top-right-radius: 0.5rem;
+    // border-top-left-radius: 0.5rem;
+  }
+
+  // body
+  &-body {
+    border: 1px solid #e5e5e5;
+    border-top-width: 0;
+    padding: 1.5rem;
+    // border-bottom-right-radius: 0.5rem;
+    // border-bottom-left-radius: 0.5rem;
+    height: 100%;
+  }
+
+  // meta
+  &-meta {
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 1rem;
+    a {
+      color: #888;
+      &:hover {
+        color: $color;
+      }
+    }
+  }
+  &-author {
+  }
+  &-time {
+  }
+  &-cat {
+  }
+
+  // title
+  &-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &-link {
+    color: #000;
+    &:hover {
+      color: $color;
+    }
+  }
+
+  // desc
+  &-desc {
+    font-size: 0.875rem;
+    color: #777;
+  }
+  &-more {
+  }
+
+  // hover item
+  &:hover {
+  }
+}

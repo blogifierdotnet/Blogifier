@@ -1,5 +1,5 @@
 .featured {
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 
   &-cover {
     margin: 0;
@@ -8,7 +8,6 @@
     overflow: hidden;
     position: relative;
     border: 1px solid #eee;
-    border-radius: 0.25rem;
 
     @media screen and (max-width: 991px) {
       height: 20rem;
