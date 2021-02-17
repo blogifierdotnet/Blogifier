@@ -1,4 +1,5 @@
 $post-width: 43.75rem;
+
 .post {
   &-cover {
     margin: 0;
@@ -148,28 +149,19 @@ $post-width: 43.75rem;
     }
   }
 
-  // desc
-
-  &-description {
-    font-weight: 300;
-    font-size: 1.125rem;
-    margin-bottom: 3rem;
-  }
-
-  // content //
+  // content
   &-content {
     font-size: 1rem;
     line-height: 1.8;
     margin-bottom: 4rem;
+    hyphens: auto;
     a {
       text-decoration: underline;
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
     p {
       margin-bottom: 1.5rem;
-    }
-
-    img {
-      border-radius: 0.25rem;
     }
     h2 {
       font-size: 1.75rem;
@@ -182,10 +174,7 @@ $post-width: 43.75rem;
     h4 {
       font-size: 1.25rem;
     }
-    iframe {
-      width: 100% !important;
-      border-radius: 0.25rem;
-      margin-top: 1rem;
+    figure {
       margin-bottom: 1.5rem;
     }
   }
@@ -198,7 +187,6 @@ $post-width: 43.75rem;
     display: flex;
     align-items: center;
     margin-bottom: 4rem;
-
     &-name {
       margin: 0 0 0.25rem;
       font-size: 1.125rem;
@@ -215,22 +203,9 @@ $post-width: 43.75rem;
       min-width: 5rem;
     }
     &-img {
-      border-radius: 100%;
       width: 5rem;
       height: 5rem;
-    }
-  }
-
-  &-nav {
-    &-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    &-item {
-    }
-    &-link {
+      border-radius: 100%;
     }
   }
 }

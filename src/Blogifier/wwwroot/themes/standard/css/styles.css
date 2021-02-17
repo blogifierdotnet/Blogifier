@@ -7,6 +7,37 @@ a {
 img {
   max-width: 100%; }
 
+iframe {
+  width: 100% !important;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem; }
+
+blockquote {
+  font-weight: 300;
+  position: relative;
+  padding: 1rem 3rem;
+  text-align: justify; }
+  blockquote::before, blockquote::after {
+    position: absolute;
+    content: "";
+    font-size: 5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDM0aDZsNC04di0xMmgtMTJ2MTJoNnptMTYgMGg2bDQtOHYtMTJoLTEydjEyaDZ6Ii8+PHBhdGggZD0iTTAgMGg0OHY0OGgtNDh6IiBmaWxsPSJub25lIi8+PC9zdmc+");
+    display: block;
+    background-size: 2.5rem;
+    background-repeat: no-repeat;
+    opacity: 0.1; }
+  blockquote::before {
+    top: 0.75rem;
+    left: 0;
+    transform: rotate(180deg); }
+  blockquote::after {
+    bottom: 0.75rem;
+    right: 0; }
+  blockquote p:last-child {
+    margin-bottom: 0; }
+
 .container {
   width: 59.75rem;
   max-width: 100%; }
@@ -375,41 +406,6 @@ img {
     color: #fff;
     text-align: center; }
 
-.bft-related {
-  margin-top: 5rem; }
-  .bft-related-title {
-    text-transform: uppercase;
-    margin-bottom: 3rem;
-    font-weight: 300;
-    color: #999;
-    font-size: 1.25rem;
-    letter-spacing: 1px; }
-  .bft-related-item {
-    height: 100%;
-    position: relative;
-    display: block;
-    overflow: hidden;
-    min-height: 10rem;
-    border-radius: 0.25rem;
-    background-color: #eee;
-    color: #000; }
-    .bft-related-item-title {
-      margin-bottom: 0.5rem;
-      font-size: 1.125rem;
-      font-weight: 600;
-      padding: 1.5rem 1.5rem 0.5rem; }
-    .bft-related-item-time {
-      font-size: 0.75rem;
-      opacity: 0.7;
-      padding: 0 1.5rem;
-      margin-bottom: 1.5rem;
-      display: block; }
-    .bft-related-item-img {
-      display: block;
-      width: 100%; }
-    .bft-related-item:hover {
-      color: var(--bft-color); }
-
 .pager {
   list-style: none;
   padding: 0;
@@ -460,13 +456,12 @@ img {
 :not(pre) > code {
   color: #e53935;
   background: #f8f9fa;
-  padding: .125rem .25rem; }
+  padding: 0.125rem 0.25rem; }
 
 code[class*="language-"],
 pre[class*="language-"] {
   color: #212529;
   background: none;
-  border-radius: 0.25rem;
   font-family: var(--bs-font-monospace);
   font-size: 0.875rem;
   text-align: left;
@@ -485,8 +480,16 @@ pre[class*="language-"] {
 
 pre[class*="language-"] {
   padding: 2rem;
-  margin: 1rem 0 1.5rem;
+  margin: 1rem 0 2rem;
   overflow: auto; }
+
+pre:not([class*="language-"]) {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  margin: 1rem 0 2rem;
+  overflow: auto;
+  font-size: 0.875rem;
+  line-height: 1.6; }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
@@ -725,21 +728,17 @@ pre[class*="language-"] {
     .post-meta-cats-item:not(:last-child) .post-meta-cats-link::after {
       content: ","; }
 
-.post-description {
-  font-weight: 300;
-  font-size: 1.125rem;
-  margin-bottom: 3rem; }
-
 .post-content {
   font-size: 1rem;
   line-height: 1.8;
-  margin-bottom: 4rem; }
+  margin-bottom: 4rem;
+  hyphens: auto; }
   .post-content a {
-    text-decoration: underline; }
+    text-decoration: underline;
+    overflow-wrap: break-word;
+    word-break: break-all; }
   .post-content p {
     margin-bottom: 1.5rem; }
-  .post-content img {
-    border-radius: 0.25rem; }
   .post-content h2 {
     font-size: 1.75rem;
     font-weight: 600;
@@ -748,10 +747,7 @@ pre[class*="language-"] {
     font-size: 1.5rem; }
   .post-content h4 {
     font-size: 1.25rem; }
-  .post-content iframe {
-    width: 100% !important;
-    border-radius: 0.25rem;
-    margin-top: 1rem;
+  .post-content figure {
     margin-bottom: 1.5rem; }
 
 .post-footer {
@@ -774,14 +770,9 @@ pre[class*="language-"] {
     margin: 0 1.5rem 0 0;
     min-width: 5rem; }
   .post-author-img {
-    border-radius: 100%;
     width: 5rem;
-    height: 5rem; }
-
-.post-nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0; }
+    height: 5rem;
+    border-radius: 100%; }
 
 .bft-widget-popular-item {
   position: relative; }
