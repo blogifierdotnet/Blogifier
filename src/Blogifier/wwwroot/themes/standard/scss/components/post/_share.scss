@@ -27,6 +27,7 @@
       color: #666;
       background-color: rgba(#444, 0.03);
       border-radius: 0.25rem;
+      transition: all ease-in-out 0.2s;
       &-label {
         display: block;
         font-size: 0.75rem;
@@ -35,6 +36,7 @@
         width: 1.5rem;
         height: 1.5rem;
         margin-bottom: 0.5rem;
+        transition: fill ease 0.1s;
       }
 
       &:hover {
@@ -73,6 +75,7 @@
       border-radius: 0.25rem;
       cursor: pointer;
       color: #666;
+      transition: all ease-in-out 0.3s;
       &:hover {
         color: #111;
         background-color: rgba(#444, 0.07);
