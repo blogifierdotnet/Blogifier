@@ -310,25 +310,67 @@ img {
       right: -1px;
       background: none; }
 
-.bft-share {
-  padding-top: 4rem;
-  margin-bottom: 4rem; }
-  .bft-share-list {
-    list-style: none;
-    padding: 0;
-    margin: 0; }
-  .bft-share-item {
-    margin-right: 1rem; }
-  .bft-share-link {
-    text-align: center;
+.share-modal .modal-dialog {
+  max-width: 25rem; }
+
+.share-modal .modal-title {
+  font-size: 0.875rem; }
+
+.share-modal .btn-close {
+  background-size: 0.75rem; }
+
+.share-modal-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem; }
+
+.share-modal-link {
+  padding: 1.25rem 0 1.25rem;
+  display: block;
+  text-align: center;
+  color: #666;
+  background-color: rgba(68, 68, 68, 0.03);
+  border-radius: 0.25rem; }
+  .share-modal-link-label {
     display: block;
-    height: 100%; }
-    .bft-share-link .bi {
-      width: 1.5rem;
-      height: 1.5rem;
-      fill: #555; }
-    .bft-share-link:hover .bi, .bft-share-link:focus .bi {
-      fill: var(--bft-color); }
+    font-size: 0.75rem; }
+  .share-modal-link-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 0.5rem; }
+  .share-modal-link:hover {
+    color: #fff;
+    background-color: #444; }
+  .share-modal-link.-facebook {
+    color: #4267B2;
+    background-color: rgba(66, 103, 178, 0.05); }
+    .share-modal-link.-facebook:hover {
+      color: #fff;
+      background-color: #4267B2; }
+  .share-modal-link.-twitter {
+    color: #1DA1F2;
+    background-color: rgba(29, 161, 242, 0.05); }
+    .share-modal-link.-twitter:hover {
+      color: #fff;
+      background-color: #1DA1F2; }
+
+.share-modal-input {
+  border: 0;
+  background-color: rgba(68, 68, 68, 0.04);
+  width: 100%;
+  padding: 0.75rem 1rem;
+  outline: none !important;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  color: #666; }
+  .share-modal-input:hover {
+    color: #111;
+    background-color: rgba(68, 68, 68, 0.07); }
+  .share-modal-input.copied {
+    background-color: #000;
+    color: #fff;
+    text-align: center; }
 
 .bft-related {
   margin-top: 5rem; }
@@ -644,7 +686,8 @@ pre[class*="language-"] {
     text-align: center; }
     .post-meta-btn .bi {
       width: 1.25rem;
-      height: 100%; }
+      height: 100%;
+      fill: #888; }
     .post-meta-btn:hover .bi {
       fill: var(--bft-color); }
   .post-meta-author {

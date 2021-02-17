@@ -5,3 +5,18 @@ var myInput = document.getElementById('searchFormInput')
 myModal.addEventListener('shown.bs.modal', function () {
   myInput.focus()
 })
+
+// copy input
+function copyInput(elm) {
+  var copyText = document.getElementById(elm);
+  var copyTextStore = copyText.value;
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  copyText.value= "Copied!";
+  copyText.classList.add("copied");
+  setTimeout(function () {
+    copyText.value= copyTextStore;
+    copyText.classList.remove("copied");
+  }, 1000);
+}
