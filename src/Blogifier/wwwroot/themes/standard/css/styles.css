@@ -17,6 +17,7 @@ blockquote {
   font-weight: 300;
   position: relative;
   padding: 1rem 3rem;
+  margin-bottom: 1.5rem;
   text-align: justify; }
   blockquote::before, blockquote::after {
     position: absolute;
@@ -778,7 +779,8 @@ pre[class*="language-"] {
   font-size: 0.875rem;
   font-weight: 300;
   color: #666;
-  cursor: default; }
+  cursor: default;
+  white-space: nowrap; }
   .post-meta-item:not(:last-of-type) {
     margin-right: 1.75rem; }
   .post-meta-label {
@@ -811,14 +813,16 @@ pre[class*="language-"] {
       border-radius: 100%; }
     .post-meta-author-name {
       text-transform: capitalize; }
-  .post-meta-cats-list {
-    margin: 0;
-    padding: 0;
-    list-style: none; }
-  .post-meta-cats-item:not(:last-child) {
-    margin-right: 0.1rem; }
-    .post-meta-cats-item:not(:last-child) .post-meta-cats-link::after {
-      content: ","; }
+  .post-meta-cats {
+    word-break: keep-all; }
+    .post-meta-cats-list {
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+    .post-meta-cats-item:not(:last-child) {
+      margin-right: 0.1rem; }
+      .post-meta-cats-item:not(:last-child) .post-meta-cats-link::after {
+        content: ","; }
 
 .post-content {
   font-size: 1rem;
@@ -831,18 +835,25 @@ pre[class*="language-"] {
     word-break: break-all; }
   .post-content p {
     margin-bottom: 1.5rem; }
+  .post-content h1 {
+    font-size: 2rem; }
   .post-content h2 {
+    margin-top: 1.5rem;
     font-size: 1.75rem;
     font-weight: 600;
     color: #000; }
   .post-content h3 {
+    margin-top: 1.5rem;
     font-size: 1.5rem; }
   .post-content h4 {
+    margin-top: 1.5rem;
     font-size: 1.25rem; }
   .post-content figure {
     margin-bottom: 1.5rem; }
   .post-content img {
     border-radius: 0.125rem; }
+  .post-content table {
+    width: 100%; }
 
 .post-footer {
   margin-bottom: 8rem;
