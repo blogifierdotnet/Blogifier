@@ -24,6 +24,7 @@ $post-width: 43.75rem;
       font-size: 0.625rem;
       text-align: right;
       a {
+        border-radius: 0.125rem;
         display: inline-block;
         padding: 0.125rem 0.375rem;
         opacity: 0.7;
@@ -47,6 +48,8 @@ $post-width: 43.75rem;
       bottom: 0;
       transform: translateX(-50%);
       background-color: #fff;
+      border-top-left-radius: 0.125rem;
+      border-top-right-radius: 0.125rem;
     }
   }
 
@@ -57,6 +60,7 @@ $post-width: 43.75rem;
     margin-left: auto;
   }
 
+  // header
   &-header {
     background-color: #fff;
   }
@@ -177,16 +181,32 @@ $post-width: 43.75rem;
     figure {
       margin-bottom: 1.5rem;
     }
+    img {
+      border-radius: 0.125rem;
+    }
   }
 
+  // footer
   &-footer {
     margin-bottom: 8rem;
+    padding-top: 4rem;
+    position: relative;
+    &::before {
+      content: "";
+      height: 1px;
+      width: 20%;
+      background: #f1f1f1;
+      display: block;
+      top: 0;
+      right: 0;
+      position: absolute;
+    }
   }
 
+  // author
   &-author {
     display: flex;
     align-items: center;
-    margin-bottom: 4rem;
     &-name {
       margin: 0 0 0.25rem;
       font-size: 1.125rem;

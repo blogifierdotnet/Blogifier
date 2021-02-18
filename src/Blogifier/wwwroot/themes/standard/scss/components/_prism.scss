@@ -19,7 +19,6 @@ $syntax-violet: #006ee0;
   padding: 0.125rem 0.25rem;
 }
 
-
 code[class*="language-"],
 pre[class*="language-"] {
   color: $syntax-foreground;
@@ -41,6 +40,8 @@ pre[class*="language-"] {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+
+  border-radius: 0.125rem;
 }
 
 pre[class*="language-"] {
@@ -56,6 +57,7 @@ pre:not([class*="language-"]) {
   overflow: auto;
   font-size: 0.875rem;
   line-height: 1.6;
+  border-radius: 0.125rem;
 }
 
 :not(pre) > code[class*="language-"],
@@ -165,6 +167,9 @@ pre[class*="language-"] {
   position: relative;
   overflow: hidden;
   margin-bottom: 2rem;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(#000, 0.04);
+
   > pre {
     margin: 0;
   }

@@ -8,98 +8,45 @@
     - Title (Related Posts)
     - How many items
  -->
- <section class="container">
-    <h4 class="mb-4">Related Posts</h4>
-    <div class="row row-cols-3 g-4">
-        <!-- item -->
-        <div class="col">
-            <article class="post-grid d-flex flex-column">
-                <figure class="post-grid-cover">
-                    <img class="post-grid-img" src="https://source.unsplash.com/400x200/?laptop,typing" alt="title">
-                </figure>
-                <div class="post-grid-meta d-flex">
-                    <div class="post-grid-author">
-                        <img class="post-grid-author-img" src="https://source.unsplash.com/16x16/?face" width="16" height="16" alt="John Doe">
-                        <span class="post-grid-author-name">John Doe</span>
-                    </div>
-                    <div class="post-grid-date">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
-                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                        </svg>
-                        <time class="post-grid-date-time">Jan 27, 2021</time>
-                    </div>
-                </div>
-                <h2 class="post-grid-title">
-                    <a class="post-grid-link" href="#">The Post Title Goes Here</a>
-                </h2>
-                <p class="post-grid-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut dolorum placeat beatae minus non molestias?</p>
-                <a class="post-grid-more" href="#">
-                    <span class="visually-hidden">Read More</span>
-                </a>
-            </article>
+ <div class="related">
+    <section class="container">
+        <header class="related-header">
+            <h3 class="related-header-title">Related Posts</h4>
+            <a class="related-header-link ms-auto" href="~/">
+                View All
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+            </a>
+        </header>
+        <div class="row row-cols-3 g-4">
+            <!-- item -->
+            <div class="col">
+                <article class="related-item">
+                    <img class="related-cover" src="https://source.unsplash.com/400x200/?laptop" alt="title">
+                    <time class="related-date">Jan 27, 2021</time>
+                    <h4 class="related-title"><a class="related-link" href="#">The Post Title Goes Here</a></h4>
+                </article>
+            </div>
+            <!--/item -->
+            <!-- item -->
+            <div class="col">
+                <article class="related-item">
+                    <img class="related-cover" src="https://source.unsplash.com/400x200/?typing" alt="title">
+                    <time class="related-date">Jan 27, 2021</time>
+                    <h4 class="related-title"><a class="related-link" href="#">The Post Title Goes Here</a></h4>
+                </article>
+            </div>
+            <!--/item -->
+            <!-- item -->
+            <div class="col">
+                <article class="related-item">
+                    <img class="related-cover" src="https://source.unsplash.com/400x200/?desk" alt="title">
+                    <time class="related-date">Jan 27, 2021</time>
+                    <h4 class="related-title"><a class="related-link" href="#">The Post Title Goes Here</a></h4>
+                </article>
+            </div>
+            <!--/item -->
         </div>
-        <!--/item -->
-
-        <!-- item -->
-        <div class="col">
-            <article class="post-grid d-flex flex-column">
-                <figure class="post-grid-cover">
-                    <img class="post-grid-img" src="https://source.unsplash.com/400x200/?tech" alt="title">
-                </figure>
-                <div class="post-grid-meta d-flex">
-                    <div class="post-grid-author">
-                        <img class="post-grid-author-img" src="https://source.unsplash.com/16x16/?face" width="16" height="16" alt="John Doe">
-                        <span class="post-grid-author-name">John Doe</span>
-                    </div>
-                    <div class="post-grid-date">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
-                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                        </svg>
-                        <time class="post-grid-date-time">Jan 27, 2021</time>
-                    </div>
-                </div>
-                <h2 class="post-grid-title">
-                    <a class="post-grid-link" href="#">The Post Title Goes Here</a>
-                </h2>
-                <p class="post-grid-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut dolorum placeat beatae minus non molestias?</p>
-                <a class="post-grid-more" href="#">
-                    <span class="visually-hidden">Read More</span>
-                </a>
-            </article>
-        </div>
-        <!--/item -->
-
-        <!-- item -->
-        <div class="col">
-            <article class="post-grid d-flex flex-column">
-                <figure class="post-grid-cover">
-                    <img class="post-grid-img" src="https://source.unsplash.com/400x200/?apple" alt="title">
-                </figure>
-                <div class="post-grid-meta d-flex">
-                    <div class="post-grid-author">
-                        <img class="post-grid-author-img" src="https://source.unsplash.com/16x16/?face" width="16" height="16" alt="John Doe">
-                        <span class="post-grid-author-name">John Doe</span>
-                    </div>
-                    <div class="post-grid-date">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
-                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                        </svg>
-                        <time class="post-grid-date-time">Jan 27, 2021</time>
-                    </div>
-                </div>
-                <h2 class="post-grid-title">
-                    <a class="post-grid-link" href="#">The Post Title Goes Here</a>
-                </h2>
-                <p class="post-grid-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut dolorum placeat beatae minus non molestias?</p>
-                <a class="post-grid-more" href="#">
-                    <span class="visually-hidden">Read More</span>
-                </a>
-            </article>
-        </div>
-        <!--/item -->
-
-    </div>
-</section>
+    </section>
+</div>

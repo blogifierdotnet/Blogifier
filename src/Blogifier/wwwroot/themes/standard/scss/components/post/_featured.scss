@@ -8,13 +8,27 @@
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    border: 1px solid #eee;
+    border-radius: 0.125rem;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background: none;
+      box-shadow: inset 0 0 0 1px rgba(#000, 0.05);
+      border-radius: 0.125rem;
+    }
 
     @media screen and (max-width: 991px) {
       height: 20rem;
     }
   }
   &-img {
+    border-radius: 0.125rem;
     position: absolute;
     top: 0;
     left: 0;
