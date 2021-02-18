@@ -1,0 +1,123 @@
+.post-grid {
+  padding: 1.5rem;
+  height: 100%;
+  border: 1px solid #e5e5e5;
+  position: relative;
+  transition: all ease-in-out 0.3s;
+  border-radius: 0.125rem;
+
+  // cover
+  &-cover {
+    display: block;
+    margin: -1.5625rem -1.5625rem 1.5rem;
+
+    position: relative;
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background: none;
+      box-shadow: inset 0 0 0 1px rgba(#000, 0.125);
+      border-radius: 0.125rem;
+    }
+  }
+  &-img {
+    min-width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    object-position: center;
+    border-top-left-radius: 0.125rem;
+    border-top-right-radius: 0.125rem;
+  }
+
+  // meta
+  &-meta {
+    font-size: 0.75rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+    a {
+      color: #555;
+    }
+  }
+  &-author {
+    display: flex;
+    align-items: center;
+    margin-right: 0.875rem;
+    &-img {
+      border-radius: 50rem;
+      margin-right: 0.25rem;
+      filter: grayscale(100%);
+    }
+    &-name {
+      text-transform: capitalize;
+    }
+  }
+  &-date {
+    display: flex;
+    align-items: center;
+    &-icon {
+      margin-right: 0.375rem;
+    }
+    &-time {
+    }
+  }
+
+  // title
+  &-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &-link {
+    color: #000;
+    transition: color ease-in-out 0.2s;
+    &:hover {
+      color: $color;
+    }
+  }
+
+  // desc
+  &-desc {
+    font-size: 0.875rem;
+    color: #777;
+    margin: 0;
+    line-height: 1.75;
+    transition: color ease-in-out 0.2s;
+  }
+  &-more {
+    &:focus {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: none;
+    }
+  }
+
+  // hover item
+  &:hover {
+    box-shadow: 0 0 10rem rgba(#000, 0.1);
+    border-color: #fff;
+    .post-grid-link {
+      color: $color;
+    }
+    .post-grid-desc {
+      color: #000;
+    }
+    .post-grid-more {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: none;
+    }
+  }
+}

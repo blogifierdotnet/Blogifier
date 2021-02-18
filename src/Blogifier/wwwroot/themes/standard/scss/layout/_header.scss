@@ -1,8 +1,6 @@
 .header {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  margin-bottom: 5rem;
-  border-bottom: 1px solid #f7f7f7;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 
   &-sign {
     margin-right: 1rem;
@@ -14,10 +12,17 @@
     font-size: var(--bft-header-title-size);
     font-weight: var(--bft-header-title-weight);
     color: var(--bft-header-title-color);
+    line-height: 1.2;
     &:hover,
     &:focus {
       color: var(--bft-header-title-hover);
     }
+  }
+
+  &-desc {
+    margin: 0;
+    font-weight: 300;
+    color: var(--bft-header-desc-color, #666);
   }
 
   &-logo {

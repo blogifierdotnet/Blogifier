@@ -3,7 +3,9 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 
-<footer class="blog-footer">
+<partial name="../components/search.cshtml" />
+
+<footer class="footer">
     <div class="container">
         <div class="row g-5">
             <div class="col-lg-4">
@@ -17,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="bft-copyright">
+    <div class="footer-copyright">
         <div class="container d-flex">
             <p>&copy; @DateTime.Now.Year - Site Title</p>
             <p class="ms-auto">

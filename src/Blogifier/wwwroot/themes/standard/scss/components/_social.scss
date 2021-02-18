@@ -8,10 +8,15 @@
     height: 3rem;
   }
   &-link {
-    display: block;
+    width:100%;
+    height: 100%;
     text-align: center;
     display: block;
-    height: 100%;
+
+    &.-btn {
+      background: none;
+      border: 0;
+    }
 
     &:hover,
     &:focus {
@@ -20,6 +25,7 @@
       }
     }
   }
+
   .bi {
     width: 1.125rem;
     height: 100%;

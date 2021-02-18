@@ -14,12 +14,12 @@
 @import "components/social";
 @import "components/admin";
 @import "components/search";
-@import "components/featured";
+@import "components/post/featured";
+@import "components/post/grid";
+@import "components/post/share";
+@import "components/post/related";
 @import "components/pager";
-@import "components/copyright";
 @import "components/prism";
-@import "components/share";
-@import "components/related";
 
 // pages
 @import "page/list";
