@@ -1,7 +1,7 @@
 /*!
     Blogifier v3
     https://blogifier.net
-    
+
     by Farzin
     https://farzin.dev
 
@@ -8024,19 +8024,21 @@ body {
         height: 2rem;
         fill: #adb5bd; }
 
-code[class*="language-"],
-pre[class*="language-"] {
+pre > code {
+  display: block;
+  overflow-x: auto;
+  padding: 2rem;
   color: #212529;
-  background: none;
-  border-radius: 0.25rem;
+  background: #f8f9fa;
+  margin: 0;
   font-family: var(--bs-font-monospace);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  line-height: 1.6;
+  line-height: 1.4;
   -moz-tab-size: 2;
   -o-tab-size: 2;
   tab-size: 2;
@@ -8045,92 +8047,60 @@ pre[class*="language-"] {
   -ms-hyphens: none;
   hyphens: none; }
 
-pre[class*="language-"] {
-  padding: 2rem;
-  margin: 1rem 0 1.5rem;
-  overflow: auto; }
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-  background: #f8f9fa; }
-
-:not(pre) > code[class*="language-"] {
-  padding: 0.1rem;
-  white-space: normal; }
-
-.token.script.language-javascript {
-  color: #212529; }
-
-.token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata {
+.hljs-comment {
   color: #90a4ae; }
 
-.token.attr-name, .token.namespace, .token.deleted {
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-section,
+.hljs-selector-class,
+.hljs-meta,
+.hljs-selector-pseudo,
+.hljs-attr {
   color: #006ee0; }
 
-.token.function, .token.function-name {
-  color: #366; }
+.hljs-attribute {
+  color: #803378; }
 
-.token.unit, .token.url, .token.boolean, .token.number {
-  color: #366; }
+.hljs-name {
+  color: #168174; }
 
-.token.color, .token.hexcode, .token.builtin, .token.property, .token.class, .token.class-name, .token.constant, .token.symbol {
+.hljs-type,
+.hljs-number,
+.hljs-selector-id,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-literal {
+  color: #168174; }
+
+.hljs-title,
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-meta-string {
   color: #c30; }
 
-.token.id, .token.selector, .token.important, .token.atrule, .token.keyword {
-  color: #006ee0; }
+.hljs-bullet,
+.hljs-code {
+  color: #cccccc; }
 
-.token.pseudo-class, .token.pseudo-element, .token.inserted, .token.attribute, .token.string, .token.char, .token.attr-value, .token.regex, .token.variable {
-  color: #c30; }
+.hljs-deletion {
+  color: #de7176; }
 
-.token.punctuation, .token.operator, .token.entity, .token.url {
-  color: #212529; }
+.hljs-addition {
+  color: #76c490; }
 
-.token.tag {
-  color: #2f6f9f; }
-
-.token.parameter, .token.deleted {
-  color: #e53935; }
-
-.token.important, .token.bold {
-  font-weight: bold; }
-
-.token.italic {
+.hljs-emphasis {
   font-style: italic; }
 
-.token.entity {
-  cursor: help; }
-
-.code-toolbar {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 2rem; }
-  .code-toolbar > pre {
-    margin: 0; }
-  .code-toolbar:hover .toolbar {
-    opacity: 1;
-    visibility: visible;
-    top: 0; }
-  .code-toolbar .toolbar {
-    visibility: hidden;
-    transition: all ease 0.25s;
-    padding: 1rem;
-    position: absolute;
-    top: -3rem;
-    right: 0;
-    display: flex;
-    font-size: 0.875rem;
-    align-items: center;
-    color: #777; }
-    .code-toolbar .toolbar-item {
-      margin-left: 1rem; }
-      .code-toolbar .toolbar-item button {
-        border: 0;
-        color: #fff;
-        border-radius: 1rem;
-        padding: 0.125rem 1rem;
-        background-color: #622aff; }
-        .code-toolbar .toolbar-item button:hover {
-          background-color: #000; }
+.hljs-strong {
+  font-weight: bold; }
 
 .toast-title {
   font-weight: 700; }
@@ -8543,13 +8513,11 @@ pre[class*="language-"] {
  * @license MIT
  */
 .CodeMirror {
-  font-family: monospace;
-  height: 300px;
-  color: #000;
   direction: ltr; }
 
 .CodeMirror-lines {
-  padding: 4px 0; }
+  padding: 0;
+  color: #111; }
 
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
@@ -8950,7 +8918,6 @@ span.CodeMirror-selectedtext {
   box-sizing: border-box;
   height: auto;
   padding: 2rem;
-  font: inherit;
   z-index: 0;
   word-wrap: break-word; }
 
@@ -9021,14 +8988,14 @@ span.CodeMirror-selectedtext {
 
 .editor-preview {
   padding: 2.25rem;
-  background: #fafafa; }
+  background: #fff; }
 
 .editor-preview > p {
-  margin-top: 0; }
+  margin-top: 0;
+  margin-bottom: 1.5rem; }
 
 .editor-preview pre {
-  background: #eee;
-  margin-bottom: 10px; }
+  margin-bottom: 1.5rem; }
 
 .editor-preview table td,
 .editor-preview table th {
@@ -9036,13 +9003,13 @@ span.CodeMirror-selectedtext {
   padding: 5px; }
 
 .cm-s-easymde .cm-tag {
-  color: #63a35c; }
+  color: #168174; }
 
 .cm-s-easymde .cm-attribute {
-  color: #795da3; }
+  color: #006ee0; }
 
 .cm-s-easymde .cm-string {
-  color: #183691; }
+  color: #c30; }
 
 .cm-s-easymde .cm-header-1 {
   font-size: 200%;
@@ -9061,14 +9028,15 @@ span.CodeMirror-selectedtext {
   line-height: 110%; }
 
 .cm-s-easymde .cm-comment {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 2px; }
+  color: #212529;
+  padding: 0.25rem 0;
+  background-color: #e9ecef; }
 
-.cm-s-easymde .cm-link {
-  color: #7f8c8d; }
+.cm-s-easymde .cm-link:not(.cm-string) {
+  color: #168174; }
 
 .cm-s-easymde .cm-url {
-  color: #aab2b3; }
+  color: #006ee0; }
 
 .cm-s-easymde .cm-quote {
   color: #7f8c8d;
