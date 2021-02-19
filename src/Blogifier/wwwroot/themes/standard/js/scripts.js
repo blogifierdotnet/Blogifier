@@ -1,3 +1,6 @@
+// enable highlight
+hljs.initHighlightingOnLoad();
+
 // search modal auto focus
 var myModal = document.getElementById('searchModal')
 var myInput = document.getElementById('searchFormInput')
