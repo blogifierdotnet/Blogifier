@@ -5,14 +5,12 @@
  * @license MIT
  */
 .CodeMirror {
-  font-family: monospace;
-  height: 300px;
-  color: #000;
   direction: ltr;
 }
 
 .CodeMirror-lines {
-  padding: 4px 0;
+  padding: 0;
+  color: $body-color;
 }
 
 .CodeMirror pre.CodeMirror-line,
@@ -509,7 +507,6 @@ span.CodeMirror-selectedtext {
   box-sizing: border-box;
   height: auto;
   padding: 2rem;
-  font: inherit;
   z-index: 0;
   word-wrap: break-word;
 }
@@ -592,16 +589,16 @@ span.CodeMirror-selectedtext {
 
 .editor-preview {
   padding: 2.25rem;
-  background: #fafafa;
+  background: #fff;
 }
 
 .editor-preview > p {
   margin-top: 0;
+  margin-bottom: 1.5rem;
 }
 
 .editor-preview pre {
-  background: #eee;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
 }
 
 .editor-preview table td,
@@ -611,15 +608,15 @@ span.CodeMirror-selectedtext {
 }
 
 .cm-s-easymde .cm-tag {
-  color: #63a35c;
+  color: $hljs-green;
 }
 
 .cm-s-easymde .cm-attribute {
-  color: #795da3;
+  color: $hljs-blue;
 }
 
 .cm-s-easymde .cm-string {
-  color: #183691;
+  color: $hljs-red;
 }
 
 .cm-s-easymde .cm-header-1 {
@@ -643,16 +640,17 @@ span.CodeMirror-selectedtext {
 }
 
 .cm-s-easymde .cm-comment {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 2px;
+  color: $gray-900;
+  padding: 0.25rem 0;
+  background-color: $gray-200;
 }
 
-.cm-s-easymde .cm-link {
-  color: #7f8c8d;
+.cm-s-easymde .cm-link:not(.cm-string) {
+  color: $hljs-green;
 }
 
 .cm-s-easymde .cm-url {
-  color: #aab2b3;
+  color: $hljs-blue;
 }
 
 .cm-s-easymde .cm-quote {

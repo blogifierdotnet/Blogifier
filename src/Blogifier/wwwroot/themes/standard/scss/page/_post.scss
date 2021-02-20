@@ -82,6 +82,7 @@ $post-width: 43.75rem;
     font-weight: 300;
     color: #666;
     cursor: default;
+    white-space: nowrap;
     &-item {
       &:not(:last-of-type) {
         margin-right: 1.75rem;
@@ -135,6 +136,7 @@ $post-width: 43.75rem;
     }
 
     &-cats {
+      word-break: keep-all;
       &-list {
         margin: 0;
         padding: 0;
@@ -167,15 +169,21 @@ $post-width: 43.75rem;
     p {
       margin-bottom: 1.5rem;
     }
+    h1 {
+      font-size: 2rem;
+    }
     h2 {
+      margin-top: 1.5rem;
       font-size: 1.75rem;
       font-weight: 600;
       color: #000;
     }
     h3 {
+      margin-top: 1.5rem;
       font-size: 1.5rem;
     }
     h4 {
+      margin-top: 1.5rem;
       font-size: 1.25rem;
     }
     figure {
@@ -183,6 +191,9 @@ $post-width: 43.75rem;
     }
     img {
       border-radius: 0.125rem;
+    }
+    table {
+      width: 100%;
     }
   }
 
