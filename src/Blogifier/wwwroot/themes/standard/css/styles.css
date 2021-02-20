@@ -881,9 +881,13 @@ pre > code {
 
 .newsletter {
   background-color: #000;
-  padding: 4rem;
   color: #aaa;
   border-radius: 0.1rem; }
+  .newsletter-body {
+    padding: 3rem; }
+    @media screen and (min-width: 991px) {
+      .newsletter-body {
+        padding: 4rem; } }
   .newsletter-title {
     font-size: 1.75rem;
     font-weight: 600;
@@ -899,10 +903,10 @@ pre > code {
     background: none;
     border: 0;
     flex-grow: 1;
+    width: 100%;
     padding: 0.5rem 1rem;
     color: #fff;
-    outline: none !important;
-    min-width: 14rem; }
+    outline: none !important; }
   .newsletter-btn {
     background: none;
     border: 0;
@@ -911,15 +915,21 @@ pre > code {
     display: block;
     border-left: 1px solid #222; }
   .newsletter-message {
-    display: none; }
+    display: none;
+    padding: 3rem;
+    text-align: center;
+    background-color: var(--bs-dark); }
+    @media screen and (min-width: 991px) {
+      .newsletter-message {
+        padding: 4rem; } }
     .newsletter-message.-show {
       display: block;
       padding: 2rem;
       color: #fff; }
     .newsletter-message.-success {
-      background-color: green; }
+      background-color: var(--bs-success); }
     .newsletter-message.-error {
-      background-color: red; }
+      background-color: var(--bs-danger); }
 
 .bft-widget-category-item {
   display: inline-block;

@@ -1,10 +1,14 @@
 .newsletter {
   background-color: #000;
-  padding: 4rem;
   color: #aaa;
   border-radius: 0.1rem;
 
   &-body {
+    padding: 3rem;
+
+    @media screen and (min-width: 991px) {
+      padding: 4rem;
+    }
   }
 
   &-title {
@@ -28,10 +32,10 @@
     background: none;
     border: 0;
     flex-grow: 1;
+    width: 100%;
     padding: 0.5rem 1rem;
     color: #fff;
     outline: none !important;
-    min-width: 14rem;
   }
   &-btn {
     background: none;
@@ -44,16 +48,23 @@
 
   &-message {
     display: none;
+    padding: 3rem;
+    text-align: center;
+    background-color: var(--bs-dark);
+    @media screen and (min-width: 991px) {
+      padding: 4rem;
+    }
+
     &.-show {
       display: block;
       padding: 2rem;
       color: #fff;
     }
     &.-success {
-      background-color: green;
+      background-color: var(--bs-success);
     }
     &.-error {
-      background-color: red;
+      background-color: var(--bs-danger);
     }
   }
 }
