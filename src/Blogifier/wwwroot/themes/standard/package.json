@@ -5,7 +5,7 @@
   "author": "Farzin",
   "private": true,
   "scripts": {
-    "sass": "node-sass --watch scss -o css --source-map true"
+    "start": "node-sass --watch scss -o css --source-map true"
   },
   "devDependencies": {
     "bootstrap": "^5.0.0-beta2",

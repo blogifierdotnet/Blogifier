@@ -83,28 +83,17 @@ blockquote {
   margin: 0; }
 
 .footer {
-  background: #f8f9fa;
+  border-top: 1px solid #eee;
   margin-top: 4rem;
-  padding-top: 4rem; }
+  padding: 3rem 0;
+  color: #444;
+  font-size: 0.75rem; }
   .footer a {
-    color: #000; }
+    color: #666; }
     .footer a:hover {
       color: var(--bft-color); }
-
-.footer-copyright {
-  color: #666;
-  margin-top: 3rem;
-  border-top: 1px solid #eee;
-  font-size: 0.75rem;
-  line-height: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem; }
-  .footer-copyright p {
+  .footer p {
     margin: 0; }
-  .footer-copyright a {
-    color: #666; }
-    .footer-copyright a:hover {
-      color: var(--bft-color); }
 
 .bft-social {
   list-style: none;
@@ -426,7 +415,8 @@ blockquote {
 
 .related {
   border-top: 1px solid #f1f1f1;
-  padding-top: 3rem; }
+  padding-top: 3rem;
+  margin-bottom: 4rem; }
   .related-header {
     margin-bottom: 3rem;
     align-items: center;
@@ -889,17 +879,47 @@ pre > code {
   min-width: 100%;
   max-width: none; }
 
-.bft-widget-newsletter-desc {
-  font-size: 0.875rem;
-  color: #444;
-  margin-bottom: 1rem; }
-
-.bft-widget-newsletter-input {
-  background: none;
-  margin-bottom: 1rem; }
-
-.bft-widget-newsletter-thanks {
-  display: none; }
+.newsletter {
+  background-color: #000;
+  padding: 4rem;
+  color: #aaa;
+  border-radius: 0.1rem; }
+  .newsletter-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #fff; }
+  .newsletter-desc {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 300; }
+  .newsletter-form {
+    border: 2px solid #222;
+    border-radius: 0.1rem; }
+  .newsletter-input {
+    background: none;
+    border: 0;
+    flex-grow: 1;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    outline: none !important;
+    min-width: 14rem; }
+  .newsletter-btn {
+    background: none;
+    border: 0;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    display: block;
+    border-left: 1px solid #222; }
+  .newsletter-message {
+    display: none; }
+    .newsletter-message.-show {
+      display: block;
+      padding: 2rem;
+      color: #fff; }
+    .newsletter-message.-success {
+      background-color: green; }
+    .newsletter-message.-error {
+      background-color: red; }
 
 .bft-widget-category-item {
   display: inline-block;
