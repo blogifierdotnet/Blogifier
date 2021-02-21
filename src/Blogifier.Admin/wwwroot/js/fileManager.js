@@ -1,4 +1,4 @@
-﻿var fileManager = function (dataService) {
+var fileManager = function (dataService) {
 	var callBack;
 	var uplType;
 	var postId;
@@ -31,15 +31,17 @@
 	}
 
    function postCoverCallback(data) {
-      var cover = document.getElementById("post-cover");
-      cover.src = data;
+     var cover = document.getElementById("post-cover");
+     cover.src = data;
+
+     $('#post-cover-txt').val(data);
 	}
 
-	function userAvatarCallback(data) {
-		$('#avatar').attr("src", data);
-		$("#avatar-menu").attr("src", data);
-		$("#avatar-submenu").attr("src", data);
-	}
+  function userAvatarCallback(data) {
+    $('#avatar').attr("src", data);
+    $("#avatar-menu").attr("src", data);
+    $("#avatar-submenu").attr("src", data);
+  }
 
 	function insertImgCallback(data) {
 		var cm = _editor.codemirror;

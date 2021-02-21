@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-item mb-0">
                             <label class="form-label">@_localizer["url"]</label>
-                            <input type="text" class="form-control" value="@Post.Cover" disabled>
+                            <input id="post-cover-txt" name="post-cover-txt" type="text" class="form-control" value="@Post.Cover" disabled>
                         </div>
                     </div>
                 </div>
@@ -154,8 +154,11 @@
    protected async Task SavePost(PostAction postAction)
    {
        Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-       Post.Cover = Constants.DefaultCover;
        Post.PostType = _stateprovider.PostType;
+
+       Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getTxtValue", "post-cover-txt");
+       if(string.IsNullOrEmpty(Post.Cover))
+           Post.Cover = Constants.DefaultCover;
 
        if (string.IsNullOrEmpty(Post.Description))
            Post.Description = Post.Title;
@@ -244,7 +247,8 @@
            Description = "",
            Content = "",
            AuthorId = Author.Id,
-           PostType = PostType.Post
+           PostType = PostType.Post,
+           Cover = Constants.DefaultCover
        };
    }
 

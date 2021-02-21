@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +18,7 @@ namespace Blogifier.Controllers
 		private readonly IBlogProvider _blogProvider;
 		private readonly IPostProvider _postProvider;
 
-		public StorageController(IStorageProvider storageProvider, IAuthorProvider authorProvider, IBlogProvider blogProvider, IPostProvider postProvider)
+        public StorageController(IStorageProvider storageProvider, IAuthorProvider authorProvider, IBlogProvider blogProvider, IPostProvider postProvider)
 		{
 			_storageProvider = storageProvider;
 			_authorProvider = authorProvider;
@@ -67,8 +67,8 @@ namespace Blogifier.Controllers
 						return (await _blogProvider.Update(blog)) ? new JsonResult(fileName) : BadRequest();
 					case UploadType.PostCover:
 						post.Cover = fileName;
-						return (await _postProvider.Update(post)) ? new JsonResult(fileName) : BadRequest();
-					case UploadType.PostImage:
+                        return new JsonResult(fileName);
+                    case UploadType.PostImage:
 						return new JsonResult(fileName);
 				}
 				return Ok();
