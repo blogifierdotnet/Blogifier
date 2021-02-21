@@ -802,20 +802,12 @@ pre > code {
 .post-footer {
   margin-bottom: 8rem;
   padding-top: 4rem;
-  position: relative; }
-  .post-footer::before {
-    content: "";
-    height: 1px;
-    width: 20%;
-    background: #f1f1f1;
-    display: block;
-    top: 0;
-    right: 0;
-    position: absolute; }
+  border-top: 1px solid var(--bs-light); }
 
 .post-author {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  margin-bottom: 4rem; }
   .post-author-name {
     margin: 0 0 0.25rem;
     font-size: 1.125rem;
@@ -832,6 +824,12 @@ pre > code {
     width: 5rem;
     height: 5rem;
     border-radius: 100%; }
+
+.post #disqus_thread:not(:empty) {
+  padding: 3rem;
+  background-color: var(--bs-light); }
+  .post #disqus_thread:not(:empty) > iframe {
+    margin: 0 !important; }
 
 .bft-widget-popular-item {
   position: relative; }
