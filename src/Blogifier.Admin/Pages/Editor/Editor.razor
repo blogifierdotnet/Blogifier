@@ -56,10 +56,9 @@
         </div>
 
         <div class="app-editor-meta d-flex">
-            @if (!string.IsNullOrEmpty(Post.Slug))
-            {
-                <CategoriesComponent Post="Post" />
-            }
+
+            <CategoriesComponent Post="Post" @ref="Categories" />
+
             <a class="app-editor-addcover ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled="@(string.IsNullOrEmpty(Post.Slug) ? true : false)" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -119,6 +118,7 @@
    protected Author Author { get; set; }
    protected Post Post { get; set; }
    protected ToasterComponent Toaster;
+   protected CategoriesComponent Categories;
    protected string Confirm { get; set; }
    protected string PostTile
    {
@@ -177,9 +177,11 @@
            Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
            Toaster.Toast(await _http.PostAsJsonAsync<Post>($"api/post/add", Post));
 
+           Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
+           await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
+
            if (postAction == PostAction.Publish)
            {
-               Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
                await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
            }
 
@@ -189,6 +191,9 @@
        else
        {
            Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
+
+           await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
+
            await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
            await Load();
        }

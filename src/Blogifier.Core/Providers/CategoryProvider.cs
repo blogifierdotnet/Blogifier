@@ -13,7 +13,9 @@ namespace Blogifier.Core.Providers
 		Task<IEnumerable<CategoryItem>> Categories();
 		Task<ICollection<Category>> GetPostCategories(int postId);
 		Task<bool> AddCategory(int postId, string tag);
-		Task<bool> RemoveCategory(int postId, int categoryId);
+        Task<bool> SavePostCategories(int postId, List<Category> categories);
+
+        Task<bool> RemoveCategory(int postId, int categoryId);
 	}
 
 	public class CategoryProvider : ICategoryProvider
@@ -103,6 +105,26 @@ namespace Blogifier.Core.Providers
 
 			return false;
 		}
+
+        public async Task<bool> SavePostCategories(int postId, List<Category> categories)
+        {
+            List<PostCategory> existingPostCategories = await _db.PostCategories.AsNoTracking()
+                .Where(pc => pc.PostId == postId).ToListAsync();
+
+            foreach (var pc in existingPostCategories)
+            {
+                await RemoveCategory(postId, pc.CategoryId);
+            }
+
+            await _db.SaveChangesAsync();
+
+            foreach (var cat in categories)
+            {
+                await AddCategory(postId, cat.Content);
+            }
+
+            return await _db.SaveChangesAsync() > 0;
+        }
 
 		public async Task<bool> RemoveCategory(int postId, int categoryId)
 		{
