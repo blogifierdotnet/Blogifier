@@ -55,7 +55,7 @@ namespace Blogifier.Core.Data.Migrations
                     Password = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     DisplayName = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     Bio = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    Avatar = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
+                    Avatar = table.Column<string>(type: "TEXT", maxLength: 400, nullable: true),
                     IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
@@ -166,30 +166,6 @@ namespace Blogifier.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryPost",
-                columns: table => new
-                {
-                    CategoriesId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PostsId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryPost", x => new { x.CategoriesId, x.PostsId });
-                    table.ForeignKey(
-                        name: "FK_CategoryPost_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryPost_Posts_PostsId",
-                        column: x => x.PostsId,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Newsletters",
                 columns: table => new
                 {
@@ -211,15 +187,34 @@ namespace Blogifier.Core.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PostCategories",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostCategories", x => new { x.PostId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_PostCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostCategories_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_BlogId",
                 table: "Authors",
                 column: "BlogId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryPost_PostsId",
-                table: "CategoryPost",
-                column: "PostsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MailSettings_BlogId",
@@ -230,6 +225,11 @@ namespace Blogifier.Core.Data.Migrations
                 name: "IX_Newsletters_PostId",
                 table: "Newsletters",
                 column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostCategories_CategoryId",
+                table: "PostCategories",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",
@@ -250,13 +250,13 @@ namespace Blogifier.Core.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CategoryPost");
-
-            migrationBuilder.DropTable(
                 name: "MailSettings");
 
             migrationBuilder.DropTable(
                 name: "Newsletters");
+
+            migrationBuilder.DropTable(
+                name: "PostCategories");
 
             migrationBuilder.DropTable(
                 name: "Subscribers");

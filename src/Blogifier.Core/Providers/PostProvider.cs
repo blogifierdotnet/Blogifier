@@ -32,10 +32,12 @@ namespace Blogifier.Core.Providers
 	public class PostProvider : IPostProvider
 	{
 		private readonly AppDbContext _db;
+        private readonly ICategoryProvider _categoryProvider;
 
-		public PostProvider(AppDbContext db)
+		public PostProvider(AppDbContext db, ICategoryProvider categoryProvider)
 		{
 			_db = db;
+            _categoryProvider = categoryProvider;
 		}
 
 		public async Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType)
@@ -81,13 +83,13 @@ namespace Blogifier.Core.Providers
 				{
 					if (termItem.Length < 4 && rank > 0) continue;
 
-					if (p.Categories != null && p.Categories.Count > 0)
+					if (p.PostCategories != null && p.PostCategories.Count > 0)
 					{
-						foreach (var catItem in p.Categories)
-						{
-							if (catItem.Content == termItem) rank += 10;
-						}
-					}
+                        foreach (var pc in p.PostCategories)
+                        {
+                            if (pc.Category.Content.ToLower() == termItem) rank += 10;
+                        }
+                    }
 					if (p.Title.ToLower().Contains(termItem))
 					{
 						hits = Regex.Matches(p.Title.ToLower(), termItem).Count;
@@ -156,7 +158,7 @@ namespace Blogifier.Core.Providers
 
             var all = _db.Posts
                .AsNoTracking()
-               .Include(p => p.Categories)
+               .Include(p => p.PostCategories)
                .OrderByDescending(p => p.IsFeatured)
                .ThenByDescending(p => p.Published).ToList();
 
@@ -281,17 +283,17 @@ namespace Blogifier.Core.Providers
 				}
 				else
 				{
-					if (p.Categories != null && p.Categories.Count > 0)
-					{
-						foreach (var item in p.Categories)
-						{
-							if(item.Content.ToLower() == category.ToLower())
-							{
-								posts.Add(p);
-							}
-						}
-					}
-				}
+                    if (p.PostCategories != null && p.PostCategories.Count > 0)
+                    {
+                        foreach (var pc in p.PostCategories)
+                        {
+                            if (pc.Category.Content.ToLower() == category.ToLower())
+                            {
+                                posts.Add(p);
+                            }
+                        }
+                    }
+                }
 			}
 			pager.Configure(posts.Count);
 
@@ -348,7 +350,7 @@ namespace Blogifier.Core.Providers
 				Title = p.Title,
 				Description = p.Description,
 				Content = p.Content,
-				Categories = p.Categories,
+				Categories = await _categoryProvider.GetPostCategories(p.Id),
 				Cover = p.Cover,
 				PostViews = p.PostViews,
 				Rating = p.Rating,
@@ -368,7 +370,7 @@ namespace Blogifier.Core.Providers
 			return await Task.FromResult(post);
 		}
 
-		List<Post> GetPosts(string include, int author)
+        List<Post> GetPosts(string include, int author)
 		{
 			var items = new List<Post>();
 			var pubfeatured = new List<Post>();
@@ -376,24 +378,24 @@ namespace Blogifier.Core.Providers
 			if (include.ToUpper().Contains(Constants.PostDraft) || string.IsNullOrEmpty(include))
 			{
 				var drafts = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author && p.PostType == PostType.Post).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published == DateTime.MinValue && p.PostType == PostType.Post).ToList();
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published == DateTime.MinValue && p.AuthorId == author && p.PostType == PostType.Post).ToList() :
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published == DateTime.MinValue && p.PostType == PostType.Post).ToList();
 				items = items.Concat(drafts).ToList();
 			}
 
 			if (include.ToUpper().Contains(Constants.PostFeatured) || string.IsNullOrEmpty(include))
 			{
 				var featured = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published > DateTime.MinValue && p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(featured).ToList();
 			}
 
 			if (include.ToUpper().Contains(Constants.PostPublished) || string.IsNullOrEmpty(include))
 			{
 				var published = author > 0 ?
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
-					 _db.Posts.Include(p => p.Categories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList() :
+					 _db.Posts.Include(p => p.PostCategories).Where(p => p.Published > DateTime.MinValue && !p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.Published).ToList();
 				pubfeatured = pubfeatured.Concat(published).ToList();
 			}
 

@@ -23,7 +23,7 @@ namespace Blogifier.Core.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Avatar")
-                        .HasMaxLength(160)
+                        .HasMaxLength(400)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Bio")
@@ -300,6 +300,21 @@ namespace Blogifier.Core.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>
+                {
+                    b.Property<int>("PostId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PostId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("PostCategories");
+                });
+
             modelBuilder.Entity("Blogifier.Shared.Subscriber", b =>
                 {
                     b.Property<int>("Id")
@@ -339,21 +354,6 @@ namespace Blogifier.Core.Data.Migrations
                     b.HasIndex("BlogId");
 
                     b.ToTable("Subscribers");
-                });
-
-            modelBuilder.Entity("CategoryPost", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PostsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("CategoriesId", "PostsId");
-
-                    b.HasIndex("PostsId");
-
-                    b.ToTable("CategoryPost");
                 });
 
             modelBuilder.Entity("Blogifier.Shared.Author", b =>
@@ -398,6 +398,25 @@ namespace Blogifier.Core.Data.Migrations
                     b.Navigation("Blog");
                 });
 
+            modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>
+                {
+                    b.HasOne("Blogifier.Shared.Category", "Category")
+                        .WithMany("PostCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Blogifier.Shared.Post", "Post")
+                        .WithMany("PostCategories")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("Blogifier.Shared.Subscriber", b =>
                 {
                     b.HasOne("Blogifier.Shared.Blog", "Blog")
@@ -405,21 +424,6 @@ namespace Blogifier.Core.Data.Migrations
                         .HasForeignKey("BlogId");
 
                     b.Navigation("Blog");
-                });
-
-            modelBuilder.Entity("CategoryPost", b =>
-                {
-                    b.HasOne("Blogifier.Shared.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Blogifier.Shared.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Blogifier.Shared.Author", b =>
@@ -432,6 +436,16 @@ namespace Blogifier.Core.Data.Migrations
                     b.Navigation("Authors");
 
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Blogifier.Shared.Category", b =>
+                {
+                    b.Navigation("PostCategories");
+                });
+
+            modelBuilder.Entity("Blogifier.Shared.Post", b =>
+                {
+                    b.Navigation("PostCategories");
                 });
 #pragma warning restore 612, 618
         }

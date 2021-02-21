@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,111 +31,106 @@ namespace Blogifier.Core.Providers
 
 			if (_db.Posts != null && _db.Posts.Count() > 0)
 			{
-				foreach (var p in _db.Posts)
+				foreach (var pc in _db.PostCategories.Include(pc => pc.Category).AsNoTracking())
 				{
-					p.Categories = await GetPostCategories(p.Id);
-					if (p.Categories != null && p.Categories.Count() > 0)
-					{
-						foreach (var pc in p.Categories)
-						{
-							if (!cats.Exists(c => c.Category.ToLower() == pc.Content.ToLower()))
-							{
-								cats.Add(new CategoryItem { Category = pc.Content, PostCount = 1 });
-							}
-							else
-							{
-								// update post count
-								var tmp = cats.Where(c => c.Category.ToLower() == pc.Content.ToLower()).FirstOrDefault();
-								tmp.PostCount++;
-							}
-						}
-					}
-				}
-			}
+                    if (!cats.Exists(c => c.Category.ToLower() == pc.Category.Content.ToLower()))
+                    {
+                        cats.Add(new CategoryItem { Category = pc.Category.Content.ToLower(), PostCount = 1 });
+                    }
+                    else
+                    {
+                        // update post count
+                        var tmp = cats.Where(c => c.Category.ToLower() == pc.Category.Content.ToLower()).FirstOrDefault();
+                        tmp.PostCount++;
+                    }
+                }
+            }
 			return await Task.FromResult(cats);
 		}
 
 		public async Task<ICollection<Category>> GetPostCategories(int postId)
 		{
-			return await _db.Posts.Where(p => p.Id == postId).SelectMany(p => p.Categories).ToListAsync();
+            return await _db.PostCategories.AsNoTracking()
+                .Where(pc => pc.PostId == postId)
+                .Select(pc => pc.Category)
+                .ToListAsync();
 		}
 
 		public async Task<bool> AddCategory(int postId, string tag)
 		{
-			var category = await _db.Categories.AsNoTracking().Where(c => c.Content == tag).FirstOrDefaultAsync();
+			Category category = await _db.Categories
+                .AsNoTracking()
+                .Where(c => c.Content == tag)
+                .FirstOrDefaultAsync();
+
 			if (category == null)
 			{
-				_db.Categories.Add(new Category() { Content = tag, DateCreated = DateTime.UtcNow });
+				_db.Categories.Add(new Category() {
+                    Content = tag,
+                    DateCreated = DateTime.UtcNow
+                });
 				await _db.SaveChangesAsync();
-				category = await _db.Categories.Where(c => c.Content == tag).FirstOrDefaultAsync();
+
+				category = await _db.Categories
+                    .Where(c => c.Content == tag)
+                    .FirstOrDefaultAsync();
 			}
 
 			if (category == null)
 				return false;
 
-			var post = await _db.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+			Post post = await _db.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
 			if (post == null)
 				return false;
 
-			if (post.Categories == null)
-				post.Categories = new List<Category>();
+            if (post.PostCategories == null)
+                post.PostCategories = new List<PostCategory>();
 
-			post.Categories.Add(category);
-			try
-			{
-				await _db.SaveChangesAsync();
-			}
-			catch (Exception ex)
-			{
-				var x = ex.Message;
-				return false;
-			}
-			return true;
+            PostCategory postCategory = await _db.PostCategories
+                .AsNoTracking()
+                .Where(pc => pc.CategoryId == category.Id)
+                .Where(pc => pc.PostId == postId)
+                .FirstOrDefaultAsync();
+
+            if(postCategory == null)
+            {
+                _db.PostCategories.Add(new PostCategory {
+                    CategoryId = category.Id,
+                    PostId = postId
+                });
+                return await _db.SaveChangesAsync() > 0;
+            }
+
+			return false;
 		}
 
 		public async Task<bool> RemoveCategory(int postId, int categoryId)
 		{
-			Post post = await _db.Posts.Include(p => p.Categories)
-				.Where(p => p.Id == postId)
-				.FirstOrDefaultAsync();
+            PostCategory postCategory = await _db.PostCategories
+                .AsNoTracking()
+                .Where(pc => pc.CategoryId == categoryId)
+                .Where(pc => pc.PostId == postId)
+                .FirstOrDefaultAsync();
 
-			if (post != null)
-			{
-				var category = post.Categories.Where(c => c.Id == categoryId).FirstOrDefault();
+            if(postCategory != null)
+            {
+                _db.PostCategories.Remove(postCategory);
 
-				try
-				{
-					if (category != null)
-					{
-						post.Categories.Remove(category);
-						await _db.SaveChangesAsync();
-					}
-				}
-				catch
-				{
-					return false;
-				}
+                int postCount = await _db.PostCategories.AsNoTracking()
+                    .Where(pc => pc.CategoryId == categoryId).CountAsync();
 
-				//foreach (var category in post.Categories)
-				//{
-				//	if (category.Id == categoryId)
-				//	{
-				//		var tag = category.Content;
-				//		post.Categories.Remove(category);
-				//		if (await _db.SaveChangesAsync() > 0)
-				//		{
-				//			//if (LastCategory(tag))
-				//			//{
-				//			//	var cat = _db.Categories.AsNoTracking().Where(c => c.Content == tag).FirstOrDefault();
-				//			//	_db.Categories.Remove(cat);
-				//			//	return await _db.SaveChangesAsync() > 0;
-				//			//}
-				//		}
-				//		return true;
-				//	}
-				//}
-			}
-			return true;
+                if(postCount == 1)
+                {
+                    Category category = _db.Categories
+                        .Where(c => c.Id == categoryId)
+                        .FirstOrDefault();
+                    _db.Categories.Remove(category);
+                }
+
+                return await _db.SaveChangesAsync() > 0;
+            }
+
+            return true;
 		}
 	}
 }
