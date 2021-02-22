@@ -17,6 +17,9 @@ window.commonJsFunctions = {
       return document.getElementById(field.id).value;
     }
   },
+  getTxtValue: function (txt) {
+      return document.getElementById(txt).value;
+  },
   focusElement: function (id) {
     setTimeout(function () {
       const element = document.getElementById(id);

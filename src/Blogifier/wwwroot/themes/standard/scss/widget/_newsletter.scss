@@ -1,14 +1,71 @@
-.bft-widget-newsletter {
-  &-desc {
-    font-size: 0.875rem;
-    color: #444;
-    margin-bottom: 1rem;
+.newsletter {
+  background-color: #000;
+  color: #aaa;
+  border-radius: 0.1rem;
+  margin-top: 4rem;
+
+  &-body {
+    padding: 3rem;
+
+    @media screen and (min-width: 991px) {
+      padding: 4rem;
+    }
   }
+
+  &-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  &-desc {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 300;
+  }
+
+  &-form {
+    border: 2px solid #222;
+    border-radius: 0.1rem;
+  }
+
   &-input {
     background: none;
-    margin-bottom: 1rem;
+    border: 0;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    outline: none !important;
   }
-  &-thanks {
+  &-btn {
+    background: none;
+    border: 0;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    display: block;
+    border-left: 1px solid #222;
+  }
+
+  &-message {
     display: none;
+    padding: 3rem;
+    text-align: center;
+    background-color: var(--bs-dark);
+    @media screen and (min-width: 991px) {
+      padding: 4rem;
+    }
+
+    &.-show {
+      display: block;
+      padding: 2rem;
+      color: #fff;
+    }
+    &.-success {
+      background-color: var(--bs-success);
+    }
+    &.-error {
+      background-color: var(--bs-danger);
+    }
   }
 }

@@ -122,23 +122,23 @@ namespace Blogifier.Core.Providers
 				}
 			}
 
-			if (syndicationItem.Categories != null)
-			{
-				if (post.Categories == null)
-					post.Categories = new List<Category>();
+            if (syndicationItem.Categories != null)
+            {
+                if (post.PostCategories == null)
+                    post.PostCategories = new List<PostCategory>();
 
-				foreach (var category in syndicationItem.Categories)
-				{
-					post.Categories.Add(new Category()
-					{
-						Content = category.Name,
-						DateCreated = DateTime.UtcNow,
-						DateUpdated = DateTime.UtcNow
-					});
-				}
-			}
+                foreach (var category in syndicationItem.Categories)
+                {
+                    //post.Categories.Add(new Category()
+                    //{
+                    //    Content = category.Name,
+                    //    DateCreated = DateTime.UtcNow,
+                    //    DateUpdated = DateTime.UtcNow
+                    //});
+                }
+            }
 
-			return post;
+            return post;
 		}
 
 		async Task ImportImages(Post post)

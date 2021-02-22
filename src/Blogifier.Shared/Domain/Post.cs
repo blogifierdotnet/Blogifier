@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -37,6 +37,6 @@ namespace Blogifier.Shared
 		public DateTime DateUpdated { get; set; }
 
 		public Blog Blog { get; set; }
-		public virtual ICollection<Category> Categories { get; set; }
-	}
+        public List<PostCategory> PostCategories { get; set; }
+    }
 }
