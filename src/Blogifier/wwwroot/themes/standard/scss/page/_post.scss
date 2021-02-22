@@ -201,7 +201,7 @@ $post-width: 43.75rem;
   &-footer {
     margin-bottom: 8rem;
     padding-top: 4rem;
-    border-top:1px solid var(--bs-light);
+    border-top: 1px solid var(--bs-light);
   }
 
   // author
@@ -242,6 +242,20 @@ $post-width: 43.75rem;
       > iframe {
         margin: 0 !important;
       }
+    }
+  }
+
+  // nav
+  &-nav {
+    .post-card-item {
+      min-height: 10rem;
+    }
+    .bi {
+      z-index: 3;
+      width: 2rem;
+      height: 2rem;
+      fill: #fff;
+      opacity: 0.5;
     }
   }
 }
