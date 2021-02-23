@@ -50,7 +50,7 @@ blockquote {
   .header-sign {
     margin-right: 1rem; }
   .header-title {
-    display: block;
+    display: inline-block;
     margin: 0;
     font-size: var(--bft-header-title-size);
     font-weight: var(--bft-header-title-weight);
@@ -67,6 +67,29 @@ blockquote {
     .header-logo-img {
       width: var(--bft-header-logo-width);
       height: var(--bft-header-logo-height); }
+  .header-nav-button {
+    text-decoration: none;
+    color: #000;
+    height: 3rem;
+    border: 0;
+    background: none;
+    padding: 0 1rem; }
+    .header-nav-button:hover, .header-nav-button:focus {
+      color: var(--bft-color); }
+  .header-nav-list {
+    border-radius: 0.125rem;
+    box-shadow: 0 0 3rem rgba(0, 0, 0, 0.2);
+    border: none; }
+  .header-nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 0.5rem 1rem;
+    color: #555;
+    transition: all ease-in-out 0.2s; }
+    .header-nav-link:active, .header-nav-link:hover {
+      color: #000;
+      background-color: var(--bs-light); }
 
 .bft-widget-title {
   font-weight: 300;

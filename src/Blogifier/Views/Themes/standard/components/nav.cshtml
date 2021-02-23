@@ -1,0 +1,32 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@inject ICategoryProvider _categoryProvider
+@{
+    var categories = await _categoryProvider.Categories();
+    var catUrl = Url.Content("~/categories");
+}
+
+@*
+    TODO:
+
+    From the Customize page, admin should be able to:
+    1. Enable or disable.
+    2. Change the "Topics" to something else.
+*@
+
+<nav class="header-nav dropdown">
+  <button class="header-nav-button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Topics
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end header-nav-list" aria-labelledby="dropdownMenuButton1">
+     @foreach (var item in categories)
+    {
+        <li>
+            <a class="dropdown-item header-nav-link" href="@catUrl/@item.Category">@item.Category</a>
+        </li>
+    }
+  </ul>
+</nav>
