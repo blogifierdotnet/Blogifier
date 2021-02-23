@@ -215,6 +215,7 @@ namespace Blogifier.Core.Data
                     if(all[i].Slug == slug)
                     {
                         model.Post = await PostToItem(all[i]);
+                        model.SocialFields = await this._customFieldRepository.GetSocial(model.Post.Author.Id);
 
                         if(i > 0 && all[i - 1].Published > DateTime.MinValue)
                         {

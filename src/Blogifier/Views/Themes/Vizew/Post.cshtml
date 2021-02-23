@@ -185,7 +185,7 @@
                                 <img class="author-avatar" src="~/@postModel.Post.Author.Avatar" alt="">
                                 <a href="#" class="author-name">@postModel.Post.Author.DisplayName</a>
                                 <div class="author-social-info">
-                                    @foreach (var field in postModel.Blog.SocialFields)
+                                    @foreach (var field in postModel.SocialFields ?? postModel.Blog.SocialFields)
                                     {
                                     <a href="@field.Content"><i class="fa @field.Icon" aria-hidden="true"></i></a>
                                     }

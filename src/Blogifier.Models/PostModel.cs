@@ -10,6 +10,8 @@ namespace Blogifier.Models
         public PostItem Post { get; set; }
         public PostItem Older { get; set; }
         public PostItem Newer { get; set; }
+        
+        public List<SocialField> SocialFields { get; set; }
     }
 
     public class ListModel
