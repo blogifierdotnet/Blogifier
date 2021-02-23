@@ -2,6 +2,7 @@
 services:
   app:
     image: anotherice/rusetfs-blogifier:${RUSETFS_BLOGIFIER_APP_VERSION}
+    restart: always
     ports: 
       - 20000:80
     environment:
