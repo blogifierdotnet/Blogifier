@@ -3,6 +3,9 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
+
+<PageTitle Title="@_localizer["Customize"]" />
+
 <h1 class="section-title">@_localizer["customize"]</h1>
 <div class="section-content">
     @if (CurrentTheme != null)

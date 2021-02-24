@@ -1,0 +1,14 @@
+@page "/admin/logout/"
+@inject HttpClient _http
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Resource> _localizer
+
+<PageTitle Title="@_localizer["Logout"]" />
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await _http.GetFromJsonAsync<bool>("api/author/logout");
+        _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
+    }
+}

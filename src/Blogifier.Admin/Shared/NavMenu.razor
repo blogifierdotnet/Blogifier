@@ -7,8 +7,8 @@
 @if (author != null)
 {
     <header class="header">
-        <div class="container">
-            <ul class="header-nav">
+        <div class="container d-flex">
+            <ul class="header-nav me-auto">
                 <li class="header-nav-item">
                     <NavLink class="header-nav-link" href="/admin/" Match="NavLinkMatch.All" title="@_localizer["dashboard"]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="header-nav-icon bi bi-grid-1x2" viewBox="0 0 16 16">
@@ -33,7 +33,12 @@
                             </svg>
                         </NavLink>
                     </li>
-                    <li class="header-nav-item ms-auto">
+                }
+            </ul>
+            <ul class="header-nav">
+                @if (author.IsAdmin)
+                {
+                    <li class="header-nav-item">
                         <NavLink class="header-nav-link" href="/admin/settings/" title="@_localizer["settings"]">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="header-nav-icon bi bi-gear" viewBox="0 0 16 16">
                                 <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
@@ -42,7 +47,7 @@
                         </NavLink>
                     </li>
                 }
-                <li class="header-nav-item dropdown @cssAuto">
+                <li class="header-nav-item dropdown">
                     <a class="header-nav-link" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
                         <img class="header-nav-img" width="20" id="avatar-menu" src="@author.Avatar" alt="DisplayName">
                     </a>
@@ -63,7 +68,7 @@
                                         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                                         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                                     </svg>
-                                     @_localizer["Home page"]
+                                        @_localizer["Home page"]
                                 </a>
                             </li>
                             <li class="user-nav-item">
@@ -75,7 +80,7 @@
                                 </a>
                             </li>
                             <li class="user-nav-item">
-                                <a class="user-nav-link -logout" @onclick="Logout" href="#">
+                                <a class="user-nav-link -logout" href="/admin/logout/">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-box-arrow-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
                                         <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -92,18 +97,13 @@
 }
 
 @code {
-    private bool collapseNavMenu = true;
     private Author author;
-    private string cssAuto = "";
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     protected override async Task OnInitializedAsync()
     {
         var state = await _stateProvider.GetAuthenticationStateAsync();
         var identity = state.User.Identity;
         author = await _http.GetFromJsonAsync<Author>($"api/author/email/{identity.Name}");
-        cssAuto = author.IsAdmin ? "" : "ms-auto";
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -112,16 +112,5 @@
         {
             await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
         }
-    }
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-    private async Task Logout()
-    {
-        await _http.GetFromJsonAsync<bool>("api/author/logout");
-        _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
     }
 }
