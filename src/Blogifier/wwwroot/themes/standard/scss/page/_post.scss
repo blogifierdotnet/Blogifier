@@ -1,10 +1,8 @@
-$post-width: 43.75rem;
-
 .post {
   &-cover {
-    margin: 0;
     width: 100%;
-    height: 20rem;
+    height: 20rem; // TODO: maybe make it possible to customize it from admin panel?
+    margin: 0; // reset the figure margin
     position: relative;
     background-color: #000;
     &-img {
@@ -12,21 +10,24 @@ $post-width: 43.75rem;
       width: 100%;
       object-fit: cover;
       object-position: center;
-      opacity: 0.9;
+      opacity: 0.9; // For when we have a very white cover.
     }
     &-caption {
+      display: block;
       max-width: 100%;
-      width: $post-width + 8rem;
-      margin: 0 auto;
+      width: calc(var(--post-width) + var(--post-gap));
       position: relative;
-      bottom: 6.5rem;
+      bottom: calc(var(--post-gap) / 2);
+      margin: -1.5rem auto 0;
       color: #fff;
       font-size: 0.625rem;
       text-align: right;
-      a {
-        border-radius: 0.125rem;
+      line-height: 1rem;
+      a,
+      span {
+        border-radius: $radius;
         display: inline-block;
-        padding: 0.125rem 0.375rem;
+        padding: 0 0.25rem;
         opacity: 0.7;
         color: #fff;
         background-color: rgba(0, 0, 0, 0.3);
@@ -37,38 +38,38 @@ $post-width: 43.75rem;
       }
     }
 
+    // This ::after make a white header background on the top of the post title.
     &::after {
       content: "";
       display: block;
-      width: $post-width + 8rem;
+      height: calc(var(--post-gap) / 2);
+      width: calc(var(--post-width) + var(--post-gap));
       max-width: 100%;
-      height: 5rem;
       position: absolute;
       left: 50%;
       bottom: 0;
       transform: translateX(-50%);
       background-color: #fff;
-      border-top-left-radius: 0.125rem;
-      border-top-right-radius: 0.125rem;
+      border-top-left-radius: $radius;
+      border-top-right-radius: $radius;
     }
   }
 
   &-container {
-    max-width: $post-width;
+    max-width: calc(
+      var(--post-width) + 2rem
+    ); // calc and maintain the actual with
     width: 100%;
     margin-right: auto;
     margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
 
   // header
-  &-header {
-    background-color: #fff;
-  }
-
   &-title {
     margin-bottom: 2.5rem;
     line-height: 1.1;
-    word-spacing: 2px;
     letter-spacing: -1px;
     font-weight: 700;
     font-size: 3.25rem;
@@ -81,13 +82,15 @@ $post-width: 43.75rem;
     font-size: 0.875rem;
     font-weight: 300;
     color: #666;
-    cursor: default;
     white-space: nowrap;
+    cursor: default;
+
     &-item {
       &:not(:last-of-type) {
         margin-right: 1.75rem;
       }
     }
+
     &-label {
       display: block;
       font-size: 0.75rem;
@@ -144,7 +147,7 @@ $post-width: 43.75rem;
       }
       &-item {
         &:not(:last-child) {
-          margin-right: 0.1rem;
+          margin-right: 0.125rem;
           .post-meta-cats-link {
             &::after {
               content: ",";
@@ -157,12 +160,10 @@ $post-width: 43.75rem;
 
   // content
   &-content {
-    font-size: 1rem;
     line-height: 1.8;
     margin-bottom: 4rem;
     hyphens: auto;
     a {
-      text-decoration: underline;
       overflow-wrap: break-word;
       word-break: break-all;
     }
@@ -194,6 +195,10 @@ $post-width: 43.75rem;
     }
     table {
       width: 100%;
+    }
+    ul,
+    ol {
+      margin-bottom: 1.5rem;
     }
   }
 
@@ -232,8 +237,6 @@ $post-width: 43.75rem;
   }
 
   // comments
-  &-comments {
-  }
   #disqus_thread {
     &:not(:empty) {
       padding: 3rem;
