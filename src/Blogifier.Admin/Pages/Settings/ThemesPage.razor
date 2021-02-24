@@ -4,6 +4,8 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
+<PageTitle Title="@_localizer["Themes"]" />
+
 @if (CurrentTheme != null)
 {
     <h1 class="section-title">@_localizer["themes"]</h1>

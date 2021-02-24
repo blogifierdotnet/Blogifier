@@ -152,8 +152,6 @@ blockquote {
   border: 0;
   background: none; }
   .dropdown-user-link.logedin img {
-    width: 1.5rem;
-    height: 1.5rem;
     padding: 0; }
   .dropdown-user-link:hover .bi, .dropdown-user-link:focus .bi {
     fill: var(--bft-color); }
@@ -173,20 +171,20 @@ blockquote {
     transform: translateX(-0.135rem); }
 
 .dropdown-user-menu {
-  margin-top: 0.5rem !important;
-  background-color: #622aff;
-  width: 10rem;
-  min-width: 100%;
-  border: 0; }
+  border-radius: 0.125rem;
+  box-shadow: 0 0 3rem rgba(0, 0, 0, 0.2);
+  border: none;
+  width: 10rem; }
   .dropdown-user-menu .dropdown-item {
-    color: rgba(255, 255, 255, 0.85);
     font-size: 0.875rem;
-    padding: 0.25rem 1rem;
-    text-transform: capitalize; }
-    .dropdown-user-menu .dropdown-item:hover, .dropdown-user-menu .dropdown-item:focus {
-      color: #fff;
-      background: none;
-      background-color: rgba(255, 255, 255, 0.1); }
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 0.5rem 1rem;
+    color: #555;
+    transition: all ease-in-out 0.2s; }
+    .dropdown-user-menu .dropdown-item:active, .dropdown-user-menu .dropdown-item:hover {
+      color: #000;
+      background-color: var(--bs-light); }
 
 .featured {
   margin-bottom: 5rem; }

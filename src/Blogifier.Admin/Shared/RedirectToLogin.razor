@@ -16,13 +16,13 @@
            catch { }
 
            if (blog == null)
-               _navigationManager.NavigateTo("admin/register");
+               _navigationManager.NavigateTo("admin/register/");
            else
-               _navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+               _navigationManager.NavigateTo($"admin/login/?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
        }
        catch (Exception ex)
        {
-           _navigationManager.NavigateTo($"admin/login?error={ex.Message}");
+           _navigationManager.NavigateTo($"admin/login/?error={ex.Message}");
        }
    }
 }
