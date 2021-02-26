@@ -1,0 +1,12 @@
+.popular {
+  margin-bottom: 4rem;
+  &-header {
+    margin-bottom: 2rem;
+    align-items: center;
+    display: flex;
+  }
+  &-title {
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+}
