@@ -51,6 +51,7 @@
     line-height: 1.3;
   }
   &-link {
+    text-decoration: none;
     color: #000;
     &:hover {
       color: $color;
@@ -101,6 +102,9 @@
     &-icon {
       margin-right: 0rem;
     }
+    &-title{
+      text-decoration: none;
+    }
   }
 
   // desc
@@ -114,6 +118,7 @@
     font-weight: 500;
     font-size: 0.875rem;
     color: $color;
+    text-decoration: none;
     &:hover {
       color: #000;
     }

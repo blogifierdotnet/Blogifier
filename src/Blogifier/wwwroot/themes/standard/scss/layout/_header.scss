@@ -13,6 +13,7 @@
     font-weight: var(--bft-header-title-weight);
     color: var(--bft-header-title-color);
     line-height: 1.2;
+    text-decoration: none;
     &:hover,
     &:focus {
       color: var(--bft-header-title-hover);
@@ -35,7 +36,6 @@
 
   &-nav {
     &-button {
-      text-decoration: none;
       color: #000;
       height: 3rem;
       border: 0;

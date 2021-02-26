@@ -1,4 +1,8 @@
-@charset 'utf-8';
+/*!
+    Author: https://farzin.dev
+*/
+
+@charset "utf-8";
 
 // helpers
 @import "helpers/variables";
@@ -10,18 +14,20 @@
 @import "layout/widgets";
 @import "layout/footer";
 
-// components
+// components - global
 @import "components/social";
 @import "components/admin";
 @import "components/search";
-@import "components/post/featured";
-@import "components/post/card";
-@import "components/post/grid";
-@import "components/post/list";
-@import "components/post/share";
-@import "components/post/related";
 @import "components/pager";
 @import "components/highlight";
+
+// components - global
+@import "components/post/featured";
+@import "components/post/card";
+@import "components/post/view-grid";
+@import "components/post/view-list";
+@import "components/post/share";
+@import "components/post/related";
 
 // pages
 @import "page/list";
