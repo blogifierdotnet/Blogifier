@@ -7811,7 +7811,7 @@ body {
   .btn-link {
     font-weight: 500;
     box-shadow: none; }
-    .btn-link:focus {
+    .btn-link.active, .btn-link:active, .btn-link:focus {
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.25); }
   .btn-default:hover {
     background-color: #f8f9fa; }
@@ -7983,6 +7983,9 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
+    .compact .list-title {
+      line-height: 2rem;
+      font-size: .75rem; }
   .list-text {
     font-size: 0.75rem;
     line-height: 1.1;
