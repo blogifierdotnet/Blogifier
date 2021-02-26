@@ -236,6 +236,7 @@ namespace Blogifier.Controllers
 
 					return new XElement(
 						"item",
+						new XAttribute("turbo", true),
 						new XElement("link", feedUri + $"posts/{post.Slug}"),
 						new XElement(turboNamespace + "content", new XCData(header + Environment.NewLine + contentBody)));
 				});
