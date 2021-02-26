@@ -21,18 +21,18 @@
 @import "components/pager";
 @import "components/highlight";
 
-// components - global
-@import "components/post/featured";
-@import "components/post/card";
-@import "components/post/view-grid";
-@import "components/post/view-list";
-@import "components/post/share";
-@import "components/post/related";
-@import "components/post/popular";
+// post
+@import "post/post";
+@import "post/featured";
+@import "post/card";
+@import "post/view-grid";
+@import "post/view-list";
+@import "post/share";
+@import "post/related";
+@import "post/popular";
 
 // pages
-@import "page/list";
-@import "page/post";
+@import "page/home";
 
 // widgets
 @import "widget/popular";
