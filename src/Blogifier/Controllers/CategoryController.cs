@@ -26,9 +26,9 @@ namespace Blogifier.Controllers
 
 		[Authorize]
 		[HttpPost("{postId:int}/{tag}")]
-		public async Task<ActionResult<bool>> AddCategory(int postId, string tag)
+		public async Task<ActionResult<bool>> AddPostCategory(int postId, string tag)
 		{
-			return await _categoryProvider.AddCategory(postId, tag);
+			return await _categoryProvider.AddPostCategory(postId, tag);
 		}
 
         [Authorize]
