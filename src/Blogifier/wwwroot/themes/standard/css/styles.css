@@ -922,16 +922,6 @@ pre > code {
       .related-header-link:hover {
         color: var(--bft-color); }
 
-.popular {
-  margin-bottom: 4rem; }
-  .popular-header {
-    margin-bottom: 2rem;
-    align-items: center;
-    display: flex; }
-  .popular-title {
-    margin-bottom: 0;
-    font-size: 1rem; }
-
 .bft-widget-popular-item {
   position: relative; }
   .bft-widget-popular-item:not(:last-child) {
