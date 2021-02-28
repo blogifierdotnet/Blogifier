@@ -50,8 +50,8 @@
       bottom: 0;
       transform: translateX(-50%);
       background-color: #fff;
-      border-top-left-radius: $radius;
-      border-top-right-radius: $radius;
+      border-top-left-radius: $radius-var;
+      border-top-right-radius: $radius-var;
     }
   }
 
@@ -99,6 +99,7 @@
 
     a {
       color: #666;
+      text-decoration: none;
       &:hover {
         color: $color;
       }

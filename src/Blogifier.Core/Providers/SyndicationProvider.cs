@@ -23,14 +23,14 @@ namespace Blogifier.Core.Providers
 		private readonly AppDbContext _dbContext;
 		private readonly IStorageProvider _storageProvider;
 
-		private static int _userId;
+        private static int _userId;
 		private static string _webRoot;
 		private static Uri _baseUrl;
 
 		public SyndicationProvider(AppDbContext dbContext, IStorageProvider storageProvider)
 		{
 			_dbContext = dbContext;
-			_storageProvider = storageProvider;
+            _storageProvider = storageProvider;
 		}
 
 		public async Task<List<Post>> GetPosts(string feedUrl, int userId, Uri baseUrl, string webRoot = "/")
@@ -129,12 +129,15 @@ namespace Blogifier.Core.Providers
 
                 foreach (var category in syndicationItem.Categories)
                 {
-                    //post.Categories.Add(new Category()
-                    //{
-                    //    Content = category.Name,
-                    //    DateCreated = DateTime.UtcNow,
-                    //    DateUpdated = DateTime.UtcNow
-                    //});
+                    post.PostCategories.Add(new PostCategory()
+                    {
+                        Category = new Category
+                        {
+                            Content = category.Name,
+                            DateCreated = DateTime.UtcNow,
+                            DateUpdated = DateTime.UtcNow
+                        }
+                    });
                 }
             }
 

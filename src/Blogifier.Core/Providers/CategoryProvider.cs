@@ -12,7 +12,9 @@ namespace Blogifier.Core.Providers
 	{
 		Task<IEnumerable<CategoryItem>> Categories();
 		Task<ICollection<Category>> GetPostCategories(int postId);
-		Task<bool> AddCategory(int postId, string tag);
+        Task<Category> SaveCategory(string tag);
+
+        Task<bool> AddPostCategory(int postId, string tag);
         Task<bool> SavePostCategories(int postId, List<Category> categories);
 
         Task<bool> RemoveCategory(int postId, int categoryId);
@@ -58,32 +60,37 @@ namespace Blogifier.Core.Providers
                 .ToListAsync();
 		}
 
-		public async Task<bool> AddCategory(int postId, string tag)
+		public async Task<Category> SaveCategory(string tag)
 		{
 			Category category = await _db.Categories
                 .AsNoTracking()
                 .Where(c => c.Content == tag)
                 .FirstOrDefaultAsync();
 
-			if (category == null)
-			{
-				_db.Categories.Add(new Category() {
-                    Content = tag,
-                    DateCreated = DateTime.UtcNow
-                });
-				await _db.SaveChangesAsync();
+            if (category != null)
+                return category;
 
-				category = await _db.Categories
-                    .Where(c => c.Content == tag)
-                    .FirstOrDefaultAsync();
-			}
+            category = new Category()
+            {
+                Content = tag,
+                DateCreated = DateTime.UtcNow
+            };
+            _db.Categories.Add(category);
+			await _db.SaveChangesAsync();
 
-			if (category == null)
-				return false;
+            return category;
+		}
 
-			Post post = await _db.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
-			if (post == null)
-				return false;
+        public async Task<bool> AddPostCategory(int postId, string tag)
+        {
+            Category category = await SaveCategory(tag);
+
+            if (category == null)
+                return false;
+
+            Post post = await _db.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+            if (post == null)
+                return false;
 
             if (post.PostCategories == null)
                 post.PostCategories = new List<PostCategory>();
@@ -94,17 +101,18 @@ namespace Blogifier.Core.Providers
                 .Where(pc => pc.PostId == postId)
                 .FirstOrDefaultAsync();
 
-            if(postCategory == null)
+            if (postCategory == null)
             {
-                _db.PostCategories.Add(new PostCategory {
+                _db.PostCategories.Add(new PostCategory
+                {
                     CategoryId = category.Id,
                     PostId = postId
                 });
                 return await _db.SaveChangesAsync() > 0;
             }
 
-			return false;
-		}
+            return false;
+        }
 
         public async Task<bool> SavePostCategories(int postId, List<Category> categories)
         {
@@ -120,7 +128,7 @@ namespace Blogifier.Core.Providers
 
             foreach (var cat in categories)
             {
-                await AddCategory(postId, cat.Content);
+                await AddPostCategory(postId, cat.Content);
             }
 
             return await _db.SaveChangesAsync() > 0;

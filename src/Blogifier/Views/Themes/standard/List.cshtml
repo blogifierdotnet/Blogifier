@@ -1,22 +1,19 @@
-﻿@using Blogifier.Shared.Resources
-@using Blogifier.Shared
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resource> _localizer
+﻿@using Blogifier.Shared
 @{
     Layout = "layouts/_layout.cshtml";
 }
 
 <main class="container">
-    <partial name="components/post/featured.cshtml" />
-    <!--
+    <partial name="post/featured.cshtml" />
+    @*
         TODO:
-        add custom field for view-grid or view-list.
-        from the customize page users should be able to choose which view they want.
-        we have a view-grid.cshtml and view-list.cshtml
+        Custom fields:
+        - Post list style options:
+            1. view-grid (default)
+            2. view-list
+    *@
+    <partial name="post/view-grid.cshtml" />
+    @* <partial name="post/view-list.cshtml" /> *@
 
-        default is view-grid.cshtml
-     -->
-    <partial name="components/post/view-grid.cshtml" />
-    <!-- <partial name="components/post/view-list.cshtml" /> -->
-    <partial name="components/pager.cshtml" />
+    <partial name="components/pagination.cshtml" />
 </main>

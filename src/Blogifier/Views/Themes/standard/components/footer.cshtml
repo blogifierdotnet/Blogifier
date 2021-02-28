@@ -3,10 +3,19 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 
-<partial name="../components/search.cshtml" />
+
+<div class="modal fade search-modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog mt-5">
+    <div class="modal-content">
+        <form id="searchForm" class="search-form" role="search" asp-controller="Blog" asp-action="Search" method="post">
+            <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg" placeholder="Search..." autocomplete="off" autofocus>
+        </form>
+    </div>
+  </div>
+</div>
 
 <footer class="container">
-    <partial name="../widgets/newsletter.cshtml" />
+    <partial name="../components/newsletter.cshtml" />
     <section class="footer d-flex">
         <p>&copy; @DateTime.Now.Year - Site Title</p>
         <p class="ms-auto">

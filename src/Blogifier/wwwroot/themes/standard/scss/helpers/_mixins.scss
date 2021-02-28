@@ -1,0 +1,29 @@
+@mixin background-hover(
+  $class,
+  $color,
+  $color-hover,
+  $color-text,
+  $color-text-hover
+) {
+  #{$class} {
+    background-color: $color;
+    color: $color-text;
+
+    &:hover {
+      background-color: $color-hover;
+      color: $color-text-hover;
+    }
+  }
+}
+
+@mixin text-hover($class, $color, $color-hover) {
+  #{$class} {
+    @if $color {
+      color: $color;
+    }
+
+    &:hover {
+      color: $color-hover;
+    }
+  }
+}

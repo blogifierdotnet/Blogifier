@@ -285,9 +285,13 @@ namespace Blogifier.Core.Providers
 				{
                     if (p.PostCategories != null && p.PostCategories.Count > 0)
                     {
+                        Category cat = _db.Categories.Single(c => c.Content.ToLower() == category.ToLower());
+                        if (cat == null)
+                            continue;
+
                         foreach (var pc in p.PostCategories)
                         {
-                            if (pc.Category.Content.ToLower() == category.ToLower())
+                            if (pc.CategoryId == cat.Id)
                             {
                                 posts.Add(p);
                             }

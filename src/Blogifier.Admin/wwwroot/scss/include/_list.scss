@@ -125,6 +125,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    .compact & {
+      line-height:2rem;
+      font-size:.75rem;
+    }
+
   }
 
   &-text {

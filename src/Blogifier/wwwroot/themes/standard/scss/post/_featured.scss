@@ -8,7 +8,7 @@
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    border-radius: 0.125rem;
+    border-radius: $radius-var;
 
     &::after {
       content: "";
@@ -20,7 +20,7 @@
       display: block;
       background: none;
       box-shadow: inset 0 0 0 1px rgba(#000, 0.05);
-      border-radius: 0.125rem;
+      border-radius: $radius-var;
     }
 
     @media screen and (max-width: 991px) {
@@ -28,7 +28,7 @@
     }
   }
   &-img {
-    border-radius: 0.125rem;
+    border-radius: $radius-var;
     position: absolute;
     top: 0;
     left: 0;
@@ -51,6 +51,7 @@
     line-height: 1.3;
   }
   &-link {
+    text-decoration: none;
     color: #000;
     &:hover {
       color: $color;
@@ -101,6 +102,9 @@
     &-icon {
       margin-right: 0rem;
     }
+    &-title{
+      text-decoration: none;
+    }
   }
 
   // desc
@@ -114,6 +118,7 @@
     font-weight: 500;
     font-size: 0.875rem;
     color: $color;
+    text-decoration: none;
     &:hover {
       color: #000;
     }

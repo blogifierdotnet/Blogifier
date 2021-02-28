@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +51,6 @@ namespace Blogifier.Core.Extensions
 			services.AddScoped<INewsletterProvider, NewsletterProvider>();
 			services.AddScoped<IEmailProvider, MailKitProvider>();
 			services.AddScoped<IThemeProvider, ThemeProvider>();
-			services.AddScoped<IRssImportProvider, RssImportProvider>();
 			services.AddScoped<ISyndicationProvider, SyndicationProvider>();
 			services.AddScoped<IAboutProvider, AboutProvider>();
 
