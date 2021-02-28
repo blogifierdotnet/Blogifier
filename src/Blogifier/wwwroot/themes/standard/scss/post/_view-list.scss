@@ -93,6 +93,16 @@
     &:hover {
       color: $color;
     }
+
+    &::before {
+      content: "";
+      display: block;
+      width: 20rem;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
   }
 
   // desc
@@ -123,9 +133,6 @@
 
   // hover item
   &:hover {
-    .post-list-link {
-      color: $color;
-    }
     .post-list-desc {
       color: #000;
     }
