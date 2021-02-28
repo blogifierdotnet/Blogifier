@@ -899,11 +899,11 @@ pre > code {
     color: #fff;
     background-color: #444; }
   .share-modal-link.-facebook {
-    color: #4267b2;
-    background-color: rgba(66, 103, 178, 0.05); }
+    color: #1678f2;
+    background-color: rgba(22, 120, 242, 0.05); }
     .share-modal-link.-facebook:hover {
       color: #fff;
-      background-color: #4267b2; }
+      background-color: #1678f2; }
   .share-modal-link.-twitter {
     color: #1da1f2;
     background-color: rgba(29, 161, 242, 0.05); }

@@ -1,13 +1,20 @@
+// colors
 $color: var(--bft-color);
 $color-hover: #888;
 
-$radius: .125rem;
-$radius-var: var(--bf-radius);
-
-$color-facebook: #4267b2;
+// brands colors
+$color-blogifier: #622aff;
+$color-facebook: #1678f2;
 $color-twitter: #1da1f2;
+$color-github: #171617;
+$color-pinterest: #E60023;
+$color-linkedin: #0a66c2;
+$color-instagram:#b900b4;
+$color-instagram-g: linear-gradient(-135deg,#1400c8,#b900b4,#f50000);
+$color-whatsapp: #25D366;
+$color-telegram: #0088CC;
 
-//
+// highlighter
 $hljs-foreground: #212529;
 $hljs-background: #f8f9fa;
 $hljs-comments: #90a4ae;
@@ -15,3 +22,7 @@ $hljs-blue: #006ee0;
 $hljs-red: #c30;
 $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
+
+// radius
+$radius: .125rem;
+$radius-var: var(--bf-radius);
