@@ -8,7 +8,7 @@
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    border-radius: 0.125rem;
+    border-radius: $radius-var;
 
     &::after {
       content: "";
@@ -20,7 +20,7 @@
       display: block;
       background: none;
       box-shadow: inset 0 0 0 1px rgba(#000, 0.05);
-      border-radius: 0.125rem;
+      border-radius: $radius-var;
     }
 
     @media screen and (max-width: 991px) {
@@ -28,7 +28,7 @@
     }
   }
   &-img {
-    border-radius: 0.125rem;
+    border-radius: $radius-var;
     position: absolute;
     top: 0;
     left: 0;

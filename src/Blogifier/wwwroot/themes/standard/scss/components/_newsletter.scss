@@ -1,7 +1,7 @@
 .newsletter {
   background-color: #000;
   color: #aaa;
-  border-radius: 0.1rem;
+  border-radius: $radius-var;
   margin-top: 4rem;
 
   &-body {
@@ -26,7 +26,7 @@
 
   &-form {
     border: 2px solid #222;
-    border-radius: 0.1rem;
+    border-radius: $radius-var;
   }
 
   &-input {

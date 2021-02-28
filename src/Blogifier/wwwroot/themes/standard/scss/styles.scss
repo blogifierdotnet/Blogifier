@@ -20,6 +20,7 @@
 @import "components/search";
 @import "components/pager";
 @import "components/highlight";
+@import "components/newsletter";
 
 // post
 @import "post/post";
@@ -32,8 +33,3 @@
 
 // pages
 @import "page/home";
-
-// widgets
-@import "widget/popular";
-@import "widget/newsletter";
-@import "widget/categories";

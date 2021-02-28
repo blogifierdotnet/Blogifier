@@ -1,17 +1,17 @@
 .post-grid {
   padding: 1.5rem;
   height: 100%;
-  border: 1px solid #e5e5e5;
   position: relative;
-  transition: all ease-in-out 0.3s;
-  border-radius: 0.125rem;
+  transition: box-shadow ease-in-out 0.3s;
+  border-radius: $radius-var;
+  box-shadow: 0 0 0rem 1px rgba(#000, 0.05);
 
   // cover
   &-cover {
     display: block;
     margin: -1.5625rem -1.5625rem 1.5rem;
-
     position: relative;
+
     &::after {
       content: "";
       width: 100%;
@@ -22,16 +22,17 @@
       display: block;
       background: none;
       box-shadow: inset 0 0 0 1px rgba(#000, 0.125);
-      border-radius: 0.125rem;
+      border-top-left-radius: $radius-var;
+      border-top-right-radius: $radius-var;
     }
   }
   &-img {
     min-width: 100%;
-    height: 10rem;
+    height: 11rem;
     object-fit: cover;
     object-position: center;
-    border-top-left-radius: 0.125rem;
-    border-top-right-radius: 0.125rem;
+    border-top-left-radius: $radius-var;
+    border-top-right-radius: $radius-var;
   }
 
   // meta
