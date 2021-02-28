@@ -35,35 +35,60 @@
   }
 
   &-nav {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    &-link,
     &-button {
       color: #000;
-      height: 3rem;
+      height: 2.75rem;
+      line-height: 2.75rem;
       border: 0;
       background: none;
-      padding: 0 1rem;
+      display: inline-block;
+      border-radius: $radius;
+      transition: background ease-in-out 0.15s;
+      text-align: center;
+      border-radius: 0.25rem;
 
       &:hover,
       &:focus {
         color: $color;
+        background-color: var(--bs-light);
       }
-    }
-    &-list {
-      border-radius: $radius;
-      box-shadow: 0 0 3rem rgba(#000, 0.2);
-      border: none;
+      > .bi,
+      > img {
+        transform: translateY(-0.1rem);
+      }
     }
 
     &-link {
-      font-size: 0.875rem;
+      padding: 0 1rem;
       font-weight: 500;
-      text-transform: capitalize;
-      padding: 0.5rem 1rem;
-      color: #555;
-      transition: all ease-in-out 0.2s;
-      &:active,
-      &:hover {
-        color: #000;
-        background-color: var(--bs-light);
+    }
+    &-button {
+      padding: 0;
+      width: 2.75rem;
+    }
+
+    .-login {
+      position: relative;
+      &::after {
+        content: "";
+        width: 1px;
+        height: 1rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -0.75rem;
+        background-color: rgba(#000, 0.1);
+        display: block;
+      }
+      .bi-box-arrow-in-right {
+        transform: translateX(-0.125rem);
       }
     }
   }
