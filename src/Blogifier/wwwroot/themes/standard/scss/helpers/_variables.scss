@@ -7,12 +7,25 @@ $color-blogifier: #622aff;
 $color-facebook: #1678f2;
 $color-twitter: #1da1f2;
 $color-github: #171617;
-$color-pinterest: #E60023;
+$color-pinterest: #e60023;
 $color-linkedin: #0a66c2;
-$color-instagram:#b900b4;
-$color-instagram-g: linear-gradient(-135deg,#1400c8,#b900b4,#f50000);
-$color-whatsapp: #25D366;
-$color-telegram: #0088CC;
+$color-instagram: #b900b4;
+$color-youtube: #ff0300;
+$color-telegram: #0088cc;
+$color-whatsapp: #25d366;
+
+$brands: (
+  "blogifier": $color-blogifier,
+  "facebook": $color-facebook,
+  "twitter": $color-twitter,
+  "github": $color-github,
+  "pinterest": $color-pinterest,
+  "linkedin": $color-linkedin,
+  "instagram": $color-instagram,
+  "telegram": $color-telegram,
+  "youtube": $color-youtube,
+  "whatsapp": $color-whatsapp,
+);
 
 // highlighter
 $hljs-foreground: #212529;
@@ -24,5 +37,5 @@ $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
 
 // radius
-$radius: .125rem;
+$radius: 0.125rem;
 $radius-var: var(--bf-radius);
