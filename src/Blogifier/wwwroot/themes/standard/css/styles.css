@@ -833,8 +833,6 @@ pre > code {
     .post-grid-more:hover, .post-grid-more:focus {
       height: 2.75rem;
       opacity: 1;
-      color: #444; }
-    .post-grid-more:focus {
       color: var(--bft-color); }
     .post-grid-more .bi {
       margin-left: auto;
