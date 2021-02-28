@@ -924,7 +924,8 @@ pre > code {
   color: #666;
   background-color: rgba(68, 68, 68, 0.03);
   border-radius: 0.25rem;
-  transition: all ease-in-out 0.2s; }
+  transition: all ease-in-out 0.2s;
+  text-decoration: none; }
   .share-modal-link-label {
     display: block;
     font-size: 0.75rem; }
@@ -936,18 +937,66 @@ pre > code {
   .share-modal-link:hover {
     color: #fff;
     background-color: #444; }
+  .share-modal-link.-blogifier {
+    background-color: rgba(98, 42, 255, 0.07);
+    color: #622aff; }
+    .share-modal-link.-blogifier:hover {
+      background-color: #622aff;
+      color: #fff; }
   .share-modal-link.-facebook {
-    color: #1678f2;
-    background-color: rgba(22, 120, 242, 0.05); }
+    background-color: rgba(22, 120, 242, 0.07);
+    color: #1678f2; }
     .share-modal-link.-facebook:hover {
-      color: #fff;
-      background-color: #1678f2; }
+      background-color: #1678f2;
+      color: #fff; }
   .share-modal-link.-twitter {
-    color: #1da1f2;
-    background-color: rgba(29, 161, 242, 0.05); }
+    background-color: rgba(29, 161, 242, 0.07);
+    color: #1da1f2; }
     .share-modal-link.-twitter:hover {
-      color: #fff;
-      background-color: #1da1f2; }
+      background-color: #1da1f2;
+      color: #fff; }
+  .share-modal-link.-github {
+    background-color: rgba(23, 22, 23, 0.07);
+    color: #171617; }
+    .share-modal-link.-github:hover {
+      background-color: #171617;
+      color: #fff; }
+  .share-modal-link.-pinterest {
+    background-color: rgba(230, 0, 35, 0.07);
+    color: #e60023; }
+    .share-modal-link.-pinterest:hover {
+      background-color: #e60023;
+      color: #fff; }
+  .share-modal-link.-linkedin {
+    background-color: rgba(10, 102, 194, 0.07);
+    color: #0a66c2; }
+    .share-modal-link.-linkedin:hover {
+      background-color: #0a66c2;
+      color: #fff; }
+  .share-modal-link.-instagram {
+    background-color: rgba(185, 0, 180, 0.07);
+    color: #b900b4; }
+    .share-modal-link.-instagram:hover {
+      background-color: #b900b4;
+      color: #fff; }
+  .share-modal-link.-telegram {
+    background-color: rgba(0, 136, 204, 0.07);
+    color: #0088cc; }
+    .share-modal-link.-telegram:hover {
+      background-color: #0088cc;
+      color: #fff; }
+  .share-modal-link.-youtube {
+    background-color: rgba(255, 3, 0, 0.07);
+    color: #ff0300; }
+    .share-modal-link.-youtube:hover {
+      background-color: #ff0300;
+      color: #fff; }
+  .share-modal-link.-whatsapp {
+    background-color: rgba(37, 211, 102, 0.07);
+    color: #25d366; }
+    .share-modal-link.-whatsapp:hover {
+      background-color: #25d366;
+      color: #fff; }
 
 .share-modal-input {
   border: 0;
