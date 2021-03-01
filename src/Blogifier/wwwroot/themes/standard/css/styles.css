@@ -364,7 +364,9 @@ pre > code {
     display: none;
     padding: 3rem;
     text-align: center;
-    background-color: var(--bs-dark); }
+    background-color: var(--bs-dark);
+    border-bottom-left-radius: var(--bf-radius);
+    border-bottom-right-radius: var(--bf-radius); }
     @media screen and (min-width: 991px) {
       .newsletter-message {
         padding: 4rem; } }

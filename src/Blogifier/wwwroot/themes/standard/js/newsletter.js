@@ -1,61 +1,63 @@
-window.addEventListener("DOMContentLoaded", function () {
+// get the newsletter form elements
+var form = document.getElementById("newsletter");
+var form_email = document.getElementById("newsletter_email");
+var form_status = document.getElementById("newsletter_status");
 
-  // get the form elements defined in your form HTML above
-
-  var form = document.getElementById("newsletter");
-  var form_body = document.getElementById("newsletter");
-  var form_email = document.getElementById("newsletter_email");
-  var form_status = document.getElementById("newsletter_status");
-
-  // Success and Error functions for after the form is submitted
-
-  function success() {
-    form.reset();
-    form_status.classList.add("-show", "-success");
-    form_status.innerHTML = "Thanks!";
-  }
-
-  function loading(){
-    form_status.classList.add("-show", "-loading");
-    form_status.innerHTML = "Loading...";
-  }
-
-  function error() {
-    form_status.classList.add("-show", "-error");
-    form_status.innerHTML = "Oops! There was a problem.";
-  }
-
-  // handle the form submission event
-
-  form.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    loading();
-    fetch('https://ipapi.co/json/')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        var info = data.ip + '|' + data.country_name + '|' + data.region;
-        var obj = { Email: form_email.value, Ip: info };
-        var data = JSON.stringify(obj);
-        ajax(form.method, form.action, data, success, error);
-      });
-  });
-});
-
-// helper function for sending an AJAX request
-
-function ajax(method, url, data, success, error) {
-  var xhr = new XMLHttpRequest();
-  xhr.open(method, url);
-  xhr.setRequestHeader("Accept", "application/json");
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState !== XMLHttpRequest.DONE) return;
-    if (xhr.status === 200) {
-      success(xhr.response, xhr.responseType);
-    } else {
-      error(xhr.status, xhr.response, xhr.responseType);
-    }
-  };
-  xhr.send(data);
+// Success, Loading and Error functions
+function success() {
+  form.reset();
+  form_status.classList.add("-show", "-success");
+  form_status.innerHTML = form_status.dataset.success;
 }
+function loading() {
+  form_status.classList.add("-show", "-loading");
+}
+function error(msg) {
+  form_status.classList.add("-show", "-error");
+  form_status.innerHTML = form_status.dataset.error + " " + msg;
+}
+
+// subscribe function
+function subscribe(url, data) {
+  var options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }
+  fetch(url, options)
+    .then((response) => {
+      if (response.status == 200) {
+        return response.json();
+      } else {
+        throw new Error('Something is wrong!');
+      }
+    })
+    .then(() => {
+      success();
+    })
+    .catch((err) => {
+      error(err.message);
+    });
+}
+
+// handle the form submission event
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  loading();
+  fetch('https://ipapi.co/json/')
+    .then((response) => {
+      if (response.status == 200) {
+        return response.json();
+      } else {
+        throw new Error('We can not get your location!');
+      }
+    })
+    .then((loc) => {
+      var subscriber_loc = loc.ip + '|' + loc.country_name + '|' + loc.region;
+      var subscriber_data = { Email: form_email.value, Ip: subscriber_loc };
+      subscribe(form.action, subscriber_data);
+    })
+    .catch((err) => {
+      error(err.message);
+    });
+});
