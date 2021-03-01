@@ -1,19 +1,28 @@
-﻿<header class="header">
+﻿@{
+    @* TODO: Customfield *@
+    var siteMark = "title";
+    var siteLogo = "/themes/standard/img/logo-black.png";
+}
+
+<header class="header">
     <div class="container d-flex align-items-center">
-        <!--
-            TODO:
-            User can select logo or title from the customize page.
-            by default it's title.
-         -->
-        <section class="header-sign me-auto">
-            <a class="header-title" href="/">Site Title</a>
-            @* <p class="header-desc">The site description goes here.</p> *@
-        </section>
-        <!--
-        <a class="header-logo" href="/">
-            <img class="header-logo-img" src="~/themes/standard/img/logo-black.png" alt="Site Title">
-        </a>
-        -->
+        @if (siteMark == "logo")
+        {
+            <a class="header-logo me-auto" href="/">
+                <img class="header-logo-img" src="@siteLogo" alt="Site Title">
+            </a>
+        }
+        else if (siteMark == "title")
+        {
+            <a class="header-title me-auto" href="/">Site Title</a>
+        }
+        else if (siteMark == "titleFull")
+        {
+            <section class="header-sign me-auto">
+                <a class="header-title" href="/">Site Title</a>
+                <p class="header-desc">The site description goes here.</p>
+            </section>
+        }
         <partial name="../components/nav.cshtml" />
     </div>
 </header>
