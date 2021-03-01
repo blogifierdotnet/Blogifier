@@ -1,10 +1,6 @@
 /*!
     Author: https://farzin.dev
 */
-:root {
-  --bs-gutter-x: 1rem;
-  --post-gap: 8rem; }
-
 img {
   max-width: 100%; }
 
@@ -74,22 +70,23 @@ blockquote {
   .header-title {
     display: inline-block;
     margin: 0;
-    font-size: var(--bft-header-title-size);
-    font-weight: var(--bft-header-title-weight);
-    color: var(--bft-header-title-color);
+    font-size: var(--bf-header-title-size);
+    font-weight: var(--bf-header-title-weight);
+    color: var(--bf-header-title-color);
     line-height: 1.2;
     text-decoration: none; }
     .header-title:hover, .header-title:focus {
-      color: var(--bft-header-title-hover); }
+      color: var(--bf-header-title-hover); }
   .header-desc {
     margin: 0;
-    font-weight: 300;
-    color: var(--bft-header-desc-color, #666); }
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--bf-header-desc-color, #666); }
   .header-logo {
     display: block; }
     .header-logo-img {
-      width: var(--bft-header-logo-width);
-      height: var(--bft-header-logo-height); }
+      width: var(--bf-header-logo-width);
+      height: var(--bf-header-logo-height); }
 
 .header-nav ul {
   list-style: none;
@@ -98,15 +95,16 @@ blockquote {
 
 .header-nav-link, .header-nav-button {
   color: #444;
-  height: 2.75rem;
-  line-height: 2.75rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
   border: 0;
   background: none;
   display: inline-block;
   border-radius: 0.125rem;
   transition: all ease-in-out 0.15s;
   text-align: center;
-  border-radius: 0.25rem; }
+  border-radius: 0.25rem;
+  font-size: 1rem; }
   .header-nav-link:hover, .header-nav-link:focus, .header-nav-button:hover, .header-nav-button:focus {
     color: #000;
     background-color: var(--bs-light); }
@@ -124,7 +122,7 @@ blockquote {
 
 .header-nav-button {
   padding: 0;
-  width: 2.75rem; }
+  width: 2.5rem; }
 
 .header-nav .-login {
   position: relative; }
@@ -199,52 +197,37 @@ blockquote {
   .footer p {
     margin: 0; }
 
-.pager {
-  list-style: none;
-  padding: 0;
-  margin: 4rem 0 4rem;
-  text-align: center;
-  height: 3rem; }
-  .pager::after {
-    content: "";
-    height: 1px;
-    width: 50%;
-    margin: 0 auto;
-    background-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
-    display: block;
-    transform: translateY(-1.5rem);
-    transition: width ease-in-out 0.5s; }
-  .pager:hover::after {
-    width: 100%;
-    background-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent); }
-  .pager:hover .pager-link {
-    opacity: 1; }
-  .pager-item {
-    display: inline-block;
-    margin: 0 0.25rem;
-    background-color: #fff;
-    position: relative;
+.pagination {
+  margin: 4rem auto 4rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center; }
+  .pagination-item {
+    margin: 0 0.5rem;
     z-index: 5; }
-  .pager-link {
+  .pagination-link {
     display: block;
     color: #888;
     font-weight: 500;
     font-size: 0.875rem;
-    text-transform: uppercase;
-    width: 3rem;
     height: 3rem;
     line-height: 3rem;
+    text-decoration: none;
+    text-transform: uppercase;
     transition: opacity ease 0.2s;
     opacity: 0.5; }
-    .pager-link:hover {
+    .pagination-link:hover {
+      opacity: 1;
       color: var(--bft-color); }
-      .pager-link:hover .bi {
-        width: 2rem;
-        height: 2rem; }
-    .pager-link .bi {
-      width: 1.5rem;
-      height: 1.5rem;
-      transition: all ease 0.2s; }
+      .pagination-link:hover .bi {
+        width: 1.375rem;
+        height: 1.375rem; }
+    .pagination-link .bi {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: all ease 0.2s;
+      margin: 0 0.25rem;
+      transform: translateY(-0.0625rem); }
 
 pre > code {
   display: block;
@@ -394,9 +377,9 @@ pre > code {
   .post-cover-caption {
     display: block;
     max-width: 100%;
-    width: calc(var(--post-width) + var(--post-gap));
+    width: calc(var(--bf-post-width) + 8rem);
     position: relative;
-    bottom: calc(var(--post-gap) / 2);
+    bottom: calc(8rem / 2);
     margin: -1.5rem auto 0;
     color: #fff;
     font-size: 0.625rem;
@@ -417,8 +400,8 @@ pre > code {
   .post-cover::after {
     content: "";
     display: block;
-    height: calc(var(--post-gap) / 2);
-    width: calc(var(--post-width) + var(--post-gap));
+    height: calc(8rem / 2);
+    width: calc(var(--bf-post-width) + 8rem);
     max-width: 100%;
     position: absolute;
     left: 50%;
@@ -429,7 +412,7 @@ pre > code {
     border-top-right-radius: var(--bf-radius); }
 
 .post-container {
-  max-width: calc( var(--post-width) + 2rem);
+  max-width: calc( var(--bf-post-width) + 2rem);
   width: 100%;
   margin-right: auto;
   margin-left: auto;
