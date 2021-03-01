@@ -3,8 +3,7 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 @{
-    @* TODO: Site Title And Version *@
-    var siteTitle = "Site Title";
+    var siteTitle = Model.Blog.Title;
     var version = "v" + "3.0";
 }
 

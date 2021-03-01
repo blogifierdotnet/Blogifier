@@ -14,7 +14,7 @@ function loading() {
 }
 function error(msg) {
   form_status.classList.add("-show", "-error");
-  form_status.innerHTML = form_status.dataset.error + " " + msg;
+  form_status.innerHTML = form_status.dataset.error;
 }
 
 // subscribe function
@@ -29,7 +29,7 @@ function subscribe(url, data) {
       if (response.status == 200) {
         return response.json();
       } else {
-        throw new Error('Something is wrong!');
+        throw new Error('The Newsletter is not working!');
       }
     })
     .then(() => {
@@ -37,7 +37,8 @@ function subscribe(url, data) {
       success();
     })
     .catch((err) => {
-      error(err.message);
+      error();
+      console.error(err);
     });
 }
 
@@ -50,7 +51,7 @@ form.addEventListener("submit", function (e) {
       if (response.status == 200) {
         return response.json();
       } else {
-        throw new Error('We can not get your location!');
+        throw new Error('Not sure where you are!');
       }
     })
     .then((loc) => {
@@ -59,6 +60,7 @@ form.addEventListener("submit", function (e) {
       subscribe(form.action, subscriber_data);
     })
     .catch((err) => {
-      error(err.message);
+      error();
+      console.error(err);
     });
 });

@@ -1,6 +1,12 @@
 ﻿@{
+    var request = Url.ActionContext.HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+
+    var siteTitle = Model.Blog.Title;
+    var siteDesc = Model.Blog.Description;
+
     @* TODO: Customfield *@
-    var siteMark = "title";
+    var siteMark = "titleDesc";
     var siteLogo = "/themes/standard/img/logo-black.png";
 }
 
@@ -8,19 +14,19 @@
     <div class="container d-flex align-items-center">
         @if (siteMark == "logo")
         {
-            <a class="header-logo me-auto" href="/">
-                <img class="header-logo-img" src="@siteLogo" alt="Site Title">
+            <a class="header-logo me-auto" href="@absoluteUrl">
+                <img class="header-logo-img" src="@siteLogo" alt="@siteTitle">
             </a>
         }
         else if (siteMark == "title")
         {
-            <a class="header-title me-auto" href="/">Site Title</a>
+            <a class="header-title me-auto" href="@absoluteUrl">@siteTitle</a>
         }
-        else if (siteMark == "titleFull")
+        else if (siteMark == "titleDesc")
         {
             <section class="header-sign me-auto">
-                <a class="header-title" href="/">Site Title</a>
-                <p class="header-desc">The site description goes here.</p>
+                <a class="header-title" href="@absoluteUrl">@siteTitle</a>
+                <p class="header-desc">@siteDesc</p>
             </section>
         }
         <partial name="../components/nav.cshtml" />
