@@ -186,13 +186,13 @@ blockquote {
   margin: 0; }
 
 .footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   margin-top: 4rem;
   padding: 3rem 0;
   color: #444;
   font-size: 0.75rem; }
   .footer a {
-    color: #666;
+    color: #444;
     text-decoration: none; }
     .footer a:hover {
       color: var(--bft-color); }

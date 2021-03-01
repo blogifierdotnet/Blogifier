@@ -33,6 +33,7 @@ function subscribe(url, data) {
       }
     })
     .then(() => {
+      form.reset()
       success();
     })
     .catch((err) => {
