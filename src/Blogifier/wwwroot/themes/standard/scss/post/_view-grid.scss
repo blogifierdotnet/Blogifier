@@ -10,22 +10,9 @@
   // cover
   &-cover {
     display: block;
-    margin: -1.5625rem -1.5625rem 1.5rem;
+    margin: -1.5rem -1.5rem 1.5rem;
     position: relative;
-
-    &::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      background: none;
-      box-shadow: inset 0 0 0 1px rgba(#000, 0.125);
-      border-top-left-radius: $radius-var;
-      border-top-right-radius: $radius-var;
-    }
+    border-bottom: 1px solid rgba(#000, 0.05);
   }
   &-img {
     min-width: 100%;
@@ -125,7 +112,7 @@
     overflow: hidden;
     height: 0;
     background-color: #fff;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(#000, 0.05);
     font-weight: 500;
     font-size: 0.875rem;
     text-decoration: none;
@@ -133,6 +120,7 @@
     color: $color;
     transition: all ease-in 0.1s;
     opacity: 0;
+
     &:hover,
     &:focus {
       height: 2.75rem;

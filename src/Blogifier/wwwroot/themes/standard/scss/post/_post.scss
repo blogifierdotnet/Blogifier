@@ -248,18 +248,4 @@
       }
     }
   }
-
-  // nav
-  &-nav {
-    .post-card-item {
-      min-height: 10rem;
-    }
-    .bi {
-      z-index: 3;
-      width: 2rem;
-      height: 2rem;
-      fill: #fff;
-      opacity: 0.5;
-    }
-  }
 }
