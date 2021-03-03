@@ -551,30 +551,27 @@ pre > code {
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    border-radius: var(--bf-radius); }
-    .featured-cover::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      background: none;
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-      border-radius: var(--bf-radius); }
+    border-radius: var(--bf-radius);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
     @media screen and (max-width: 991px) {
       .featured-cover {
         height: 20rem; } }
-  .featured-img {
-    border-radius: var(--bf-radius);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center; }
+    .featured-cover-link {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; }
+    .featured-cover-img {
+      border-radius: var(--bf-radius);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center; }
   .featured-content {
     padding-top: 2rem;
     padding-bottom: 2rem;
