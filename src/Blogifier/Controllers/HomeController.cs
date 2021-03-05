@@ -10,6 +10,7 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace Blogifier.Controllers
 {
@@ -21,8 +22,11 @@ namespace Blogifier.Controllers
 		protected readonly IAuthorProvider _authorProvider;
 		protected readonly IThemeProvider _themeProvider;
 		protected readonly IStorageProvider _storageProvider;
+        protected readonly ICompositeViewEngine _compositeViewEngine;
 
-		public HomeController(IBlogProvider blogProvider, IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider, IThemeProvider themeProvider, IStorageProvider storageProvider)
+        public HomeController(IBlogProvider blogProvider,
+            IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider, IThemeProvider themeProvider,
+            IStorageProvider storageProvider, ICompositeViewEngine compositeViewEngine)
 		{
 			_blogProvider = blogProvider;
 			_postProvider = postProvider;
@@ -30,6 +34,7 @@ namespace Blogifier.Controllers
 			_authorProvider = authorProvider;
 			_themeProvider = themeProvider;
 			_storageProvider = storageProvider;
+            _compositeViewEngine = compositeViewEngine;
 		}
 
 		public async Task<IActionResult> Index(string term, int page = 1)
@@ -64,7 +69,14 @@ namespace Blogifier.Controllers
 			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
 			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
 
-			return View($"~/Views/Themes/{model.Blog.Theme}/List.cshtml", model);
+            if (!string.IsNullOrEmpty(term))
+            {
+                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
+                if (IsViewExists(viewPath))
+                    return View(viewPath, model);
+            }
+
+			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
 		[HttpPost]
@@ -92,7 +104,12 @@ namespace Blogifier.Controllers
 			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
 			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
 
-			return View($"~/Views/Themes/{model.Blog.Theme}/List.cshtml", model);
+            string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
+
+            if (IsViewExists(viewPath))
+                return View(viewPath, model);
+
+            return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
 		[HttpGet("posts/{slug}")]
@@ -115,6 +132,13 @@ namespace Blogifier.Controllers
 
                 if(!model.Post.Author.Avatar.StartsWith("data:"))
                     model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+
+                if(model.Post.PostType == PostType.Page)
+                {
+                    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
+                    if (IsViewExists(viewPath))
+                        return View(viewPath, model);
+                }
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
 			}
@@ -178,5 +202,11 @@ namespace Blogifier.Controllers
 				return File(stream.ToArray(), "application/xml; charset=utf-8");
 			}
 		}
+
+        private bool IsViewExists(string viewPath)
+        {
+            var result = _compositeViewEngine.GetView("", viewPath, false);
+            return result.Success;
+        }
 	}
 }

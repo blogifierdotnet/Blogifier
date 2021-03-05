@@ -68,21 +68,23 @@ namespace Blogifier.Core.Providers
 
 		public async Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
 		{
-			var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
+            term = term.ToLower();
+            var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
 			var results = new List<SearchResult>();
 			var termList = term.ToLower().Split(' ').ToList();
+            var categories = await _db.Categories.ToListAsync();
 
 			foreach (var p in GetPosts(include, author))
 			{
 				var rank = 0;
 				var hits = 0;
-				term = term.ToLower();
-
+				
 				foreach (var termItem in termList)
 				{
 					if (termItem.Length < 4 && rank > 0) continue;
 
+                    //var postCategories = categories.Where(c => c.)
 					if (p.PostCategories != null && p.PostCategories.Count > 0)
 					{
                         foreach (var pc in p.PostCategories)
@@ -350,6 +352,7 @@ namespace Blogifier.Core.Providers
 			var post = new PostItem
 			{
 				Id = p.Id,
+                PostType = p.PostType,
 				Slug = p.Slug,
 				Title = p.Title,
 				Description = p.Description,
