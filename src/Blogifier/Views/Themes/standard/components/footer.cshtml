@@ -1,4 +1,4 @@
-﻿@using Blogifier.Shared.Resources
+@using Blogifier.Shared.Resources
 @using Blogifier.Shared
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
@@ -7,7 +7,7 @@
 <div class="modal fade search-modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
   <div class="modal-dialog mt-5">
     <div class="modal-content">
-        <form id="searchForm" class="search-form" role="search" asp-controller="Blog" asp-action="Search" method="post">
+        <form id="searchForm" class="search-form" role="search" asp-controller="Home" asp-action="Search" method="post">
             <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg" placeholder="Search..." autocomplete="off" autofocus>
         </form>
     </div>

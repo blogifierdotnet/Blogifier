@@ -61,7 +61,7 @@ namespace Blogifier.Core.Providers
 				return await _db.Posts.ToListAsync();
 
 			return await _db.Posts
-				.AsNoTracking()			
+				.AsNoTracking()
 				.Where(p => p.Title.ToLower().Contains(term.ToLower()))
 				.ToListAsync();
 		}
@@ -87,7 +87,7 @@ namespace Blogifier.Core.Providers
 					{
                         foreach (var pc in p.PostCategories)
                         {
-                            if (pc.Category.Content.ToLower() == termItem) rank += 10;
+                            if (pc?.Category?.Content.ToLower() == termItem) rank += 10;
                         }
                     }
 					if (p.Title.ToLower().Contains(termItem))
