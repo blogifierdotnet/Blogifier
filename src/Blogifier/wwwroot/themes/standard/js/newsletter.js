@@ -55,8 +55,12 @@ form.addEventListener("submit", function (e) {
       }
     })
     .then((loc) => {
-      var subscriber_loc = loc.ip + '|' + loc.country_name + '|' + loc.region;
-      var subscriber_data = { Email: form_email.value, Ip: subscriber_loc };
+      var subscriber_data = {
+        Email: form_email.value,
+        Ip: loc.ip,
+        Country: loc.country_name,
+        Region: loc.region
+      };
       subscribe(form.action, subscriber_data);
     })
     .catch((err) => {

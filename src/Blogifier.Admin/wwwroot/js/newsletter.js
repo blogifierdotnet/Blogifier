@@ -16,7 +16,7 @@ var subscribe = function (url, email) {
 		var obj = { Email: email, Ip: ip, Country: country, Region: region };
 		var options = {
 			url: "/" + url,
-			type: "PUT",
+			type: "POST",
 			data: JSON.stringify(obj),
 			contentType: "application/json",
 			dataType: "html",
