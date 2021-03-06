@@ -45,7 +45,13 @@ function subscribeNewsletter(url, data) {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   loadingNewsletter();
-  fetch('https://ipapi.co/json/')
+  var subscriber_data = {
+    Email: form_email.value,
+    Ip: "unknown",
+    Country: "unknown",
+    Region: "unknown"
+  };
+  fetch('https://ipapixxx.co/json/')
     .then((response) => {
       if (response.status == 200) {
         return response.json();
@@ -54,15 +60,12 @@ form.addEventListener("submit", function (e) {
       }
     })
     .then((loc) => {
-      var subscriber_data = {
-        Email: form_email.value,
-        Ip: loc.ip,
-        Country: loc.country_name,
-        Region: loc.region
-      };
+      subscriber_data.Ip = loc.ip;
+      subscriber_data.Country = loc.country_name;
+      subscriber_data.Region = loc.region;
       subscribeNewsletter(form.action, subscriber_data);
     })
     .catch((err) => {
-      errorNewsletter(err);
+      subscribeNewsletter(form.action, subscriber_data);
     });
 });

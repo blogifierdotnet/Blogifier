@@ -169,7 +169,9 @@ namespace Blogifier.Core.Providers
             var post = _db.Posts.Single(p => p.Slug == slug);
             post.PostViews++;
             await _db.SaveChangesAsync();
-            // await SaveStatsTotals(post.Id);
+
+            model.Related = await Search(new Pager(1), model.Post.Title, 0, "PF", true);
+            model.Related = model.Related.Where(r => r.Id != model.Post.Id).ToList();
 
             return await Task.FromResult(model);
         }
