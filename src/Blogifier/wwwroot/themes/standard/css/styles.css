@@ -310,8 +310,9 @@ pre > code {
 .newsletter {
   background-color: #000;
   color: #aaa;
-  border-radius: var(--bf-radius);
-  margin-top: 4rem; }
+  border-radius: var(--bf-radius, 0.125rem);
+  margin-top: 4rem;
+  position: relative; }
   .newsletter-body {
     padding: 3rem; }
     @media screen and (min-width: 991px) {
@@ -327,7 +328,7 @@ pre > code {
     font-weight: 300; }
   .newsletter-form {
     border: 2px solid #222;
-    border-radius: var(--bf-radius); }
+    border-radius: var(--bf-radius, 0.125rem); }
   .newsletter-input {
     background: none;
     border: 0;
@@ -343,24 +344,26 @@ pre > code {
     color: #fff;
     display: block;
     border-left: 1px solid #222; }
-  .newsletter-message {
-    display: none;
-    padding: 3rem;
+    .newsletter-btn:focus, .newsletter-btn:hover {
+      outline: none;
+      background: #222; }
+  .newsletter-msg {
+    padding: 2rem;
     text-align: center;
-    background-color: var(--bs-dark);
-    border-bottom-left-radius: var(--bf-radius);
-    border-bottom-right-radius: var(--bf-radius); }
-    @media screen and (min-width: 991px) {
-      .newsletter-message {
-        padding: 4rem; } }
-    .newsletter-message.-show {
-      display: block;
-      padding: 2rem;
+    background-color: #000;
+    border-radius: var(--bf-radius, 0.125rem);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: #fff;
+    cursor: pointer; }
+    .newsletter-msg .spinner-border {
       color: #fff; }
-    .newsletter-message.-success {
-      background-color: var(--bs-success); }
-    .newsletter-message.-error {
-      background-color: var(--bs-danger); }
 
 .post-cover {
   width: 100%;
@@ -408,8 +411,8 @@ pre > code {
     bottom: 0;
     transform: translateX(-50%);
     background-color: #fff;
-    border-top-left-radius: var(--bf-radius);
-    border-top-right-radius: var(--bf-radius); }
+    border-top-left-radius: var(--bf-radius, 0.125rem);
+    border-top-right-radius: var(--bf-radius, 0.125rem); }
 
 .post-container {
   max-width: calc( var(--bf-post-width) + 2rem);
@@ -551,7 +554,7 @@ pre > code {
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    border-radius: var(--bf-radius);
+    border-radius: var(--bf-radius, 0.125rem);
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
     @media screen and (max-width: 991px) {
       .featured-cover {
@@ -564,7 +567,7 @@ pre > code {
       width: 100%;
       height: 100%; }
     .featured-cover-img {
-      border-radius: var(--bf-radius);
+      border-radius: var(--bf-radius, 0.125rem);
       position: absolute;
       top: 0;
       left: 0;
@@ -646,7 +649,7 @@ pre > code {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border-radius: var(--bf-radius);
+  border-radius: var(--bf-radius, 0.125rem);
   padding: 2rem;
   background-color: #fff;
   transition: all ease-in-out 0.25s;
@@ -720,7 +723,7 @@ pre > code {
   height: 100%;
   position: relative;
   transition: box-shadow ease-in-out 0.3s;
-  border-radius: var(--bf-radius);
+  border-radius: var(--bf-radius, 0.125rem);
   box-shadow: 0 0 0rem 1px rgba(0, 0, 0, 0.05);
   overflow: hidden; }
   .post-grid-cover {
@@ -733,8 +736,8 @@ pre > code {
     height: 11rem;
     object-fit: cover;
     object-position: center;
-    border-top-left-radius: var(--bf-radius);
-    border-top-right-radius: var(--bf-radius); }
+    border-top-left-radius: var(--bf-radius, 0.125rem);
+    border-top-right-radius: var(--bf-radius, 0.125rem); }
   .post-grid-meta {
     font-size: 0.75rem;
     color: #555;
@@ -841,7 +844,7 @@ pre > code {
     display: block;
     width: 20rem;
     height: 100%;
-    border-radius: var(--bf-radius);
+    border-radius: var(--bf-radius, 0.125rem);
     overflow: hidden; }
     .post-list-cover::after {
       content: "";
@@ -852,7 +855,7 @@ pre > code {
       left: 0;
       display: block;
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-      border-radius: var(--bf-radius); }
+      border-radius: var(--bf-radius, 0.125rem); }
   .post-list-img {
     width: 100%;
     height: 100%;
