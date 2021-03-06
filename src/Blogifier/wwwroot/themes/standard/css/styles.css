@@ -719,7 +719,6 @@ pre > code {
     color: #000; }
 
 .post-grid {
-  padding: 1.5rem;
   height: 100%;
   position: relative;
   transition: box-shadow ease-in-out 0.3s;
@@ -728,7 +727,7 @@ pre > code {
   overflow: hidden; }
   .post-grid-cover {
     display: block;
-    margin: -1.5rem -1.5rem 1.5rem;
+    margin: 0 0 1.5rem;
     position: relative;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
   .post-grid-img {
@@ -738,40 +737,26 @@ pre > code {
     object-position: center;
     border-top-left-radius: var(--bf-radius, 0.125rem);
     border-top-right-radius: var(--bf-radius, 0.125rem); }
-  .post-grid-meta {
-    font-size: 0.75rem;
-    color: #555;
-    margin-bottom: 1.5rem;
-    opacity: 0.7; }
-    .post-grid-meta a {
-      color: #555; }
-  .post-grid-author {
+  .post-grid-cats {
+    padding: 0 1rem;
+    line-height: 1.4;
     display: flex;
-    align-items: center;
-    margin-right: 0.875rem; }
-    .post-grid-author-img {
-      border-radius: 50rem;
-      margin-right: 0.25rem;
-      filter: grayscale(100%); }
-    .post-grid-author-name {
-      text-transform: capitalize; }
-  .post-grid-date {
-    display: flex;
-    align-items: center;
-    margin-right: 0.875rem; }
-    .post-grid-date-icon {
-      margin-right: 0.375rem; }
-  .post-grid-cat {
-    display: flex;
-    align-items: center; }
-    .post-grid-cat-icon {
-      margin-right: 0rem; }
-    .post-grid-cat-title {
-      text-decoration: none; }
+    flex-wrap: wrap; }
+    .post-grid-cats-link {
+      text-decoration: none;
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+      color: #999; }
+      .post-grid-cats-link::before {
+        content: "#";
+        display: inline-block;
+        margin-right: 0.1rem; }
+      .post-grid-cats-link:hover {
+        color: var(--bf-color); }
   .post-grid-title {
     font-size: 1.125rem;
     font-weight: 600;
-    margin-bottom: 1rem; }
+    padding: 1rem 1rem 0; }
   .post-grid-link {
     color: #000;
     transition: color ease-in-out 0.2s;
@@ -792,43 +777,61 @@ pre > code {
     color: #777;
     margin: 0;
     line-height: 1.75;
-    transition: color ease-in-out 0.2s; }
-  .post-grid-more {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    transition: color ease-in-out 0.2s;
+    padding: .5rem 1rem 1rem; }
+  .post-grid-meta {
+    font-size: 0.75rem;
+    color: #555;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    opacity: 0.7;
+    padding: 1rem;
+    margin-top: auto;
+    position: relative; }
+    .post-grid-meta a {
+      text-decoration: none;
+      color: #555; }
+      .post-grid-meta a:hover, .post-grid-meta a:focus {
+        color: var(--bf-color); }
+  .post-grid-author {
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
-    line-height: 2.75rem;
-    overflow: hidden;
-    height: 0;
-    background-color: #fff;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-right: 0.875rem; }
+    .post-grid-author-img {
+      border-radius: 50rem;
+      margin-right: 0.25rem;
+      filter: grayscale(100%); }
+    .post-grid-author-name {
+      text-transform: capitalize; }
+  .post-grid-date {
+    display: flex;
+    align-items: center;
+    margin-right: 0.875rem; }
+    .post-grid-date-icon {
+      margin-right: 0.375rem; }
+  .post-grid-more {
     font-weight: 500;
-    font-size: 0.875rem;
-    text-decoration: none;
-    outline: none !important;
-    color: var(--bf-color);
-    transition: all ease-in 0.1s;
-    opacity: 0; }
-    .post-grid-more:hover, .post-grid-more:focus {
-      height: 2.75rem;
-      opacity: 1;
-      color: var(--bf-color); }
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 2.5rem;
+    height: 100%;
+    line-height: 3.125rem;
+    font-weight: 500; }
     .post-grid-more .bi {
-      margin-left: auto;
-      width: 1.25rem;
-      height: 1.25rem; }
+      margin-left: 0.1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%); }
   .post-grid:hover {
     box-shadow: 0 0 10rem rgba(0, 0, 0, 0.1);
     border-color: #fff; }
+    .post-grid:hover .post-grid-link {
+      color: var(--bf-color); }
     .post-grid:hover .post-grid-desc {
       color: #000; }
-    .post-grid:hover .post-grid-more {
-      opacity: 1;
-      height: 2.75rem; }
 
 .post-list {
   align-items: center;
