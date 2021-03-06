@@ -51,7 +51,7 @@ form.addEventListener("submit", function (e) {
     Country: "unknown",
     Region: "unknown"
   };
-  fetch('https://ipapixxx.co/json/')
+  fetch('https://ipapi.co/json/')
     .then((response) => {
       if (response.status == 200) {
         return response.json();
