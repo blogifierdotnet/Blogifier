@@ -1,25 +1,34 @@
+@{
+   PostModel _model = (PostModel)Model;
+}
 <div class="container">
     <div class="post-nav row row-cols-2 g-4">
         <!-- Prev item -->
         <div class="col">
-            <article class="post-nav-item text-start">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                </svg>
-                <time class="post-nav-date">Jan 27, 2021</time>
-                <h4 class="post-nav-title"><a class="post-nav-link" href="#">The Post Title Goes Here</a></h4>
-            </article>
+            @if (Model.Newer != null)
+            {
+                <article class="post-nav-item text-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    </svg>
+                    <time class="post-nav-date">@_model.Newer.Published.ToFriendlyShortDateString()</time>
+                    <h4 class="post-nav-title"><a class="post-nav-link" href="~/posts/@_model.Newer.Slug">@_model.Newer.Title</a></h4>
+                </article>
+            }
         </div>
         <!--/Prev item -->
         <!-- Next item -->
         <div class="col">
-            <article class="post-nav-item text-end">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-                <time class="post-nav-date">Jan 27, 2021</time>
-                <h4 class="post-nav-title"><a class="post-nav-link" href="#">The Post Title Goes Here</a></h4>
-            </article>
+            @if (Model.Older != null)
+            {
+                <article class="post-nav-item text-end">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                    <time class="post-nav-date">@_model.Older.Published.ToFriendlyShortDateString()</time>
+                    <h4 class="post-nav-title"><a class="post-nav-link" href="~/posts/@_model.Older.Slug">@_model.Older.Title</a></h4>
+                </article>
+            }
         </div>
         <!--/Next item -->
     </div>
