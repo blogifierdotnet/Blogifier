@@ -144,9 +144,27 @@ namespace Blogifier.Controllers
 			}
 			catch
 			{
-				return Redirect("~/error");
-			}
+                return Redirect("~/error");
+            }
 		}
+
+        [HttpGet("error")]
+        public async Task<IActionResult> Error()
+        {
+            try
+            {
+                PostModel model = new PostModel();
+                model.Blog = await _blogProvider.GetBlogItem();
+                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/404.cshtml";
+                if (IsViewExists(viewPath))
+                    return View(viewPath, model);
+                return View($"~/Views/Error.cshtml");
+            }
+            catch
+            {
+                return View($"~/Views/Error.cshtml");
+            }
+        }
 
         [ResponseCache(Duration = 1200)]
 		[HttpGet("feed/{type}")]
