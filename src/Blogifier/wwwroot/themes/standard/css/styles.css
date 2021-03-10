@@ -65,8 +65,6 @@ blockquote {
 .header {
   padding-top: 4rem;
   padding-bottom: 4rem; }
-  .header-sign {
-    margin-right: 1rem; }
   .header-title {
     display: inline-block;
     margin: 0;
@@ -87,6 +85,11 @@ blockquote {
     .header-logo-img {
       width: var(--bf-header-logo-width);
       height: var(--bf-header-logo-height); }
+  @media (max-width: 767px) {
+    .header {
+      padding: 0;
+      margin-bottom: 2rem;
+      background-color: var(--bs-light); } }
 
 .header-nav ul {
   list-style: none;
@@ -138,6 +141,13 @@ blockquote {
     display: block; }
   .header-nav .-login .bi-box-arrow-in-right {
     transform: translateX(-0.125rem); }
+
+@media (max-width: 767px) {
+  .header-nav {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    padding: 0.25rem 0.75rem;
+    margin: 0 -0.75rem 1rem; } }
 
 .social-link-blogifier:hover {
   color: #622aff; }

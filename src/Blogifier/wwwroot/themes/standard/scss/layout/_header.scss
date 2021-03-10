@@ -2,10 +2,6 @@
   padding-top: 4rem;
   padding-bottom: 4rem;
 
-  &-sign {
-    margin-right: 1rem;
-  }
-
   &-title {
     display: inline-block;
     margin: 0;
@@ -34,73 +30,10 @@
       height: var(--bf-header-logo-height);
     }
   }
-}
 
-.header-nav {
-  ul {
-    list-style: none;
-    margin: 0;
+  @media (max-width: 767px) {
     padding: 0;
+    margin-bottom: 2rem;
+    background-color: var(--bs-light);
   }
-
-  &-link,
-  &-button {
-    color: #444;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    border: 0;
-    background: none;
-    display: inline-block;
-    border-radius: $radius;
-    transition: all ease-in-out 0.15s;
-    text-align: center;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-
-    &:hover,
-    &:focus {
-      color: #000;
-      background-color: var(--bs-light);
-    }
-    > .bi,
-    > img {
-      transform: translateY(-0.1rem);
-    }
-  }
-
-  &-link {
-    padding: 0 1rem;
-    font-weight: 500;
-    .bi-chevron-down {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-  }
-  &-button {
-    padding: 0;
-    width: 2.5rem;
-  }
-
-  .-login {
-    position: relative;
-    &::after {
-      content: "";
-      width: 1px;
-      height: 1rem;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: -0.75rem;
-      background-color: rgba(#000, 0.1);
-      display: block;
-    }
-    .bi-box-arrow-in-right {
-      transform: translateX(-0.125rem);
-    }
-  }
-}
-
-// social links
-@each $name, $item in $brands {
-  @include text-hover(".social-link-#{$name}", null, $item);
 }

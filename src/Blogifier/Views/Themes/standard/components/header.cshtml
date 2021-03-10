@@ -12,23 +12,24 @@
 
 <header class="header">
     <div class="container d-md-flex align-items-md-center">
-        @if (siteMark == "logo")
-        {
-            <a class="header-logo me-auto" href="@absoluteUrl">
-                <img class="header-logo-img" src="@siteLogo" alt="@siteTitle">
-            </a>
-        }
-        else if (siteMark == "title")
-        {
-            <a class="header-title me-auto" href="@absoluteUrl">@siteTitle</a>
-        }
-        else if (siteMark == "titleDesc")
-        {
-            <section class="header-sign me-auto">
+        <section class="header-sign py-4 py-md-0 text-center text-md-start me-md-auto">
+            @if (siteMark == "logo")
+            {
+                <a class="header-logo" href="@absoluteUrl">
+                    <img class="header-logo-img" src="@siteLogo" alt="@siteTitle">
+                </a>
+            }
+            else if (siteMark == "title")
+            {
                 <a class="header-title" href="@absoluteUrl">@siteTitle</a>
-                <p class="header-desc d-none d-lg-block">@siteDesc</p>
-            </section>
-        }
+            }
+            else if (siteMark == "titleDesc")
+            {
+                <a class="header-title" href="@absoluteUrl">@siteTitle</a>
+                <p class="header-desc">@siteDesc</p>
+            }
+        </section>
+
         <partial name="../components/nav.cshtml" />
     </div>
 </header>
