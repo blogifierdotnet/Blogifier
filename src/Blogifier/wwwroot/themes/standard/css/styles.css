@@ -200,7 +200,6 @@ blockquote {
 .footer {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   margin-top: 4rem;
-  padding: 3rem 0;
   color: #444;
   font-size: 0.75rem; }
   .footer a {
@@ -656,6 +655,23 @@ pre > code {
   .featured:hover .featured-next,
   .featured:hover .featured-prev {
     opacity: 0.2; }
+  @media screen and (max-width: 767px) {
+    .featured {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+      margin: -2rem -1.5rem 2rem;
+      background-color: var(--bs-light); }
+      .featured-item {
+        padding: 1.5rem; }
+      .featured-content {
+        padding: 0;
+        padding: 1rem 1rem 0; }
+      .featured-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500; }
+      .featured-desc {
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem; } }
 
 .post-nav-item {
   position: relative;

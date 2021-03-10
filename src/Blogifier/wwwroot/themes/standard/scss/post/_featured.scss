@@ -93,7 +93,6 @@
     &-time {
     }
   }
-
   &-cat {
     display: flex;
     align-items: center;
@@ -111,7 +110,6 @@
     line-height: 1.8;
     margin-bottom: 1.5rem;
   }
-
   &-more {
     font-weight: 500;
     font-size: 0.875rem;
@@ -131,15 +129,41 @@
   &-prev {
     left: -4rem;
   }
-
   &-next {
     right: -3.5rem;
   }
 
+  // hover
   &:hover {
     .featured-next,
     .featured-prev {
       opacity: 0.2;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    border-bottom: 1px solid rgba(#000, 0.03);
+    margin: -2rem -1.5rem 2rem;
+    background-color: var(--bs-light);
+
+    &-item {
+      padding: 1.5rem;
+    }
+    // content
+    &-content {
+      padding: 0;
+      padding: 1rem 1rem 0;
+    }
+    // title
+    &-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    // desc
+    &-desc {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
     }
   }
 }
