@@ -12,19 +12,20 @@
 
 // layouts
 @import "layout/header";
+@import "layout/nav";
 @import "layout/widgets";
 @import "layout/footer";
 
 // components - global
 @import "components/search";
-@import "components/pager";
+@import "components/pagination";
 @import "components/highlight";
 @import "components/newsletter";
 
 // post
 @import "post/post";
 @import "post/featured";
-@import "post/card";
+@import "post/nav";
 @import "post/view-grid";
 @import "post/view-list";
 @import "post/share";

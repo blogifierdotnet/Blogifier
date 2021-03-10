@@ -1,14 +1,17 @@
-﻿@using Blogifier.Shared.Resources
+@using Blogifier.Shared.Resources
 @using Blogifier.Shared
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
-
+@{
+    var siteTitle = Model.Blog.Title;
+    var version = "v" + "3.0";
+}
 
 <div class="modal fade search-modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
   <div class="modal-dialog mt-5">
     <div class="modal-content">
-        <form id="searchForm" class="search-form" role="search" asp-controller="Blog" asp-action="Search" method="post">
-            <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg" placeholder="Search..." autocomplete="off" autofocus>
+        <form id="searchForm" class="search-form" role="search" asp-controller="Home" asp-action="Search" method="post">
+            <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg border-0 shadow-none" placeholder="@_localizer["Search"]..." autocomplete="off" autofocus>
         </form>
     </div>
   </div>
@@ -16,10 +19,10 @@
 
 <footer class="container">
     <partial name="../components/newsletter.cshtml" />
-    <section class="footer d-flex">
-        <p>&copy; @DateTime.Now.Year - Site Title</p>
-        <p class="ms-auto">
-            Powered by <a href="https://blogifier.net" rel="nofollow" target="_blank" title="Blogifier v3.0 - An open-source publishing platform.">Blogifier</a>
+    <section class="footer d-md-flex text-center text-md-start py-4 py-md-5">
+        <p>&copy; @DateTime.Now.Year - @siteTitle</p>
+        <p class="ms-md-auto mt-2 mt-md-0">
+            @_localizer["Powered by"] <a href="https://blogifier.net" rel="nofollow" target="_blank" title="@_localizer["Blogifier"] - @version">@_localizer["Blogifier"]</a>
         </p>
     </section>
 </footer>

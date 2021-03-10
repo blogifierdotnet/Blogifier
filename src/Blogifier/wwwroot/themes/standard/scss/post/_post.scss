@@ -15,9 +15,9 @@
     &-caption {
       display: block;
       max-width: 100%;
-      width: calc(var(--post-width) + var(--post-gap));
+      width: calc(var(--bf-post-width) + 8rem);
       position: relative;
-      bottom: calc(var(--post-gap) / 2);
+      bottom: calc(8rem / 2);
       margin: -1.5rem auto 0;
       color: #fff;
       font-size: 0.625rem;
@@ -42,8 +42,8 @@
     &::after {
       content: "";
       display: block;
-      height: calc(var(--post-gap) / 2);
-      width: calc(var(--post-width) + var(--post-gap));
+      height: calc(8rem / 2);
+      width: calc(var(--bf-post-width) + 8rem);
       max-width: 100%;
       position: absolute;
       left: 50%;
@@ -57,13 +57,13 @@
 
   &-container {
     max-width: calc(
-      var(--post-width) + 2rem
+      var(--bf-post-width) + 3rem
     ); // calc and maintain the actual with
     width: 100%;
     margin-right: auto;
     margin-left: auto;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
   }
 
   // header
@@ -249,17 +249,47 @@
     }
   }
 
-  // nav
-  &-nav {
-    .post-card-item {
-      min-height: 10rem;
+  @media screen and (max-width: 767px) {
+    margin-top: -2rem;
+
+    &-cover {
+      margin-bottom: 2rem;
+      height: 14rem;
+      &-caption {
+        display: none;
+      }
+      &::after {
+        border-radius: 0;
+        display: none;
+      }
     }
-    .bi {
-      z-index: 3;
-      width: 2rem;
-      height: 2rem;
-      fill: #fff;
-      opacity: 0.5;
+
+    &-title {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+    }
+
+    &-meta {
+      font-size: 0.75rem;
+      &-item {
+        &:not(:last-of-type) {
+          margin-right: 1rem;
+        }
+      }
+      &-cats {
+        &-link {
+          &::after {
+            display: none;
+          }
+        }
+        &-item {
+          display: none;
+
+          &:nth-child(1) {
+            display: block;
+          }
+        }
+      }
     }
   }
 }

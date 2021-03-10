@@ -35,6 +35,7 @@ namespace Blogifier.Core.Providers
 				Title = blog.Title,
 				Description = blog.Description,
 				Theme = blog.Theme,
+                IncludeFeatured = blog.IncludeFeatured,
 				ItemsPerPage = blog.ItemsPerPage,
 				SocialFields = new List<SocialField>(),
 				Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : Constants.DefaultCover,

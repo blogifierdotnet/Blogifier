@@ -1,32 +1,52 @@
+@{
+    var request = Url.ActionContext.HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+
+    var siteTitle = Model.Blog.Title;
+    var siteDesc = Model.Blog.Description;
+    var siteFeed = absoluteUrl + "/feed/rss";
+
+    var pageTitle = siteTitle + " | " + siteDesc;
+    var pageDesc = siteDesc;
+    var pageCanonical = absoluteUrl;
+
+    if (Model.ToString().EndsWith("PostModel"))
+    {
+        PostModel postModel = (PostModel)Model;
+        pageTitle = postModel.Post.Title + " | " +  siteTitle;
+        pageDesc = postModel.Post.Description.StripHtml();
+        pageCanonical = absoluteUrl + "/posts/" + postModel.Post.Slug;
+    }
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Site Title | Site Description</title>
-    <meta name="description" content="Site Description">
-    <link rel="alternate" type="application/rss+xml" title="" href="/feed/rss" />
-    <link rel="canonical" href="" />
+
+    <title>@pageTitle</title>
+    <meta name="description" content="@pageDesc">
+    <link rel="alternate" type="application/rss+xml" title="@siteTitle" href="@siteFeed" />
+    <link rel="canonical" href="@pageCanonical" />
 
     <!-- TODO: These variables comes from customfiedls -->
     <style>
         :root {
             /* accent color */
-            --bft-color: #622aff;
+            --bf-color: #622aff;
             /* header */
-            --bft-header-title-size: 1.75rem;
-            --bft-header-title-weight: 700;
-            --bft-header-title-color: #000;
-            --bft-header-title-hover: #622aff;
+            --bf-header-title-size: 1.5rem;
+            --bf-header-title-weight: 700;
+            --bf-header-title-color: #000;
+            --bf-header-title-hover: #622aff;
             /* logo */
-            --bft-header-logo-width: auto;
-            --bft-header-logo-height: 1.5rem;
-
+            --bf-header-logo-width: auto;
+            --bf-header-logo-height: 1.5rem;
             /* post */
-            --post-width: 43.75rem;
-
+            --bf-post-width: 43.75rem;
             /* radius */
-            --bf-radius: .75rem;
+            --bf-radius: .5rem;
         }
     </style>
 
@@ -46,7 +66,8 @@
     <script src="~/themes/standard/js/highlight.js" asp-append-version="true"></script>
     <script src="~/themes/standard/js/scripts.js" asp-append-version="true"></script>
     <script src="~/themes/standard/js/newsletter.js" asp-append-version="true"></script>
-    <partial name="~/Views/shared/FooterScript.cshtml" />
+
+    @Html.Raw(Model.Blog.FooterScript)
 </body>
 
 </html>

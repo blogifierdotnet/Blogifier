@@ -1,5 +1,5 @@
 // colors
-$color: var(--bft-color);
+$color: var(--bf-color);
 $color-hover: #888;
 
 // brands colors
@@ -38,4 +38,4 @@ $hljs-sky: #2f6f9f;
 
 // radius
 $radius: 0.125rem;
-$radius-var: var(--bf-radius);
+$radius-var: var(--bf-radius, $radius);

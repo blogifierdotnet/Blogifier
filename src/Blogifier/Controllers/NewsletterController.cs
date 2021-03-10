@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace Blogifier.Controllers
 			_newsletterProvider = newsletterProvider;
 		}
 
-		[HttpPut("subscribe")]
+		[HttpPost("subscribe")]
 		public async Task<ActionResult<bool>> Subscribe([FromBody] Subscriber subscriber)
 		{
 			return await _newsletterProvider.AddSubscriber(subscriber);

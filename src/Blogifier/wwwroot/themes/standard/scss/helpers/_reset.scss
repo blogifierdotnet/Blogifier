@@ -1,12 +1,3 @@
-// MOVE TO BOOTSTRAP.
-
-:root {
-  --bs-gutter-x: 1rem;
-  --post-gap: 8rem;
-}
-
-a {
-}
 img {
   max-width: 100%;
 }
@@ -58,7 +49,6 @@ blockquote {
 }
 
 //
-
 .dropdown-menu {
   border-radius: $radius;
   box-shadow: 0 0 3rem rgba(#000, 0.2);
@@ -79,7 +69,7 @@ blockquote {
   }
 }
 .dropdown-divider {
-  background:none;
+  background: none;
   border-top: 1px solid rgba(#000, 0.3);
-  margin:0;
+  margin: 0;
 }

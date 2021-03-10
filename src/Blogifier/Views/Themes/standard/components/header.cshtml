@@ -1,19 +1,35 @@
-﻿<header class="header">
-    <div class="container d-flex align-items-center">
-        <!--
-            TODO:
-            User can select logo or title from the customize page.
-            by default it's title.
-         -->
-        <section class="header-sign me-auto">
-            <a class="header-title" href="/">Site Title</a>
-            @* <p class="header-desc">The site description goes here.</p> *@
+﻿@{
+    var request = Url.ActionContext.HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+
+    var siteTitle = Model.Blog.Title;
+    var siteDesc = Model.Blog.Description;
+
+    @* TODO: Customfield *@
+    var siteMark = "titleDesc";
+    var siteLogo = "/themes/standard/img/logo-black.png";
+}
+
+<header class="header">
+    <div class="container d-md-flex align-items-md-center">
+        <section class="header-sign py-4 py-md-0 text-center text-md-start me-md-auto">
+            @if (siteMark == "logo")
+            {
+                <a class="header-logo" href="@absoluteUrl">
+                    <img class="header-logo-img" src="@siteLogo" alt="@siteTitle">
+                </a>
+            }
+            else if (siteMark == "title")
+            {
+                <a class="header-title" href="@absoluteUrl">@siteTitle</a>
+            }
+            else if (siteMark == "titleDesc")
+            {
+                <a class="header-title" href="@absoluteUrl">@siteTitle</a>
+                <p class="header-desc">@siteDesc</p>
+            }
         </section>
-        <!--
-        <a class="header-logo" href="/">
-            <img class="header-logo-img" src="~/themes/standard/img/logo-black.png" alt="Site Title">
-        </a>
-        -->
+
         <partial name="../components/nav.cshtml" />
     </div>
 </header>

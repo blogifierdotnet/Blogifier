@@ -1,6 +1,6 @@
 @using Blogifier.Shared
 @{
-   Layout = "layouts/_layout.cshtml";
+   Layout = "layouts/_main.cshtml";
    PostModel postModel = (PostModel)Model;
    var post = postModel.Post;
    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
@@ -21,7 +21,7 @@
 
             <div class="post-meta d-flex align-items-center">
                 <div class="post-meta-item post-meta-author">
-                    <img class="post-meta-author-img" width="32" height="32" src="@post.Author.Avatar" alt="@post.Author.DisplayName" />
+                    <img class="post-meta-author-img d-none d-md-block" width="32" height="32" src="@post.Author.Avatar" alt="@post.Author.DisplayName" />
                     <div class="post-meta-author-details">
                         <span class="post-meta-label">Written by</span>
                         <a class="post-meta-author-name" href="#">@post.Author.DisplayName</a>

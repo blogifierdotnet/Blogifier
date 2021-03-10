@@ -2,103 +2,38 @@
   padding-top: 4rem;
   padding-bottom: 4rem;
 
-  &-sign {
-    margin-right: 1rem;
-  }
-
   &-title {
     display: inline-block;
     margin: 0;
-    font-size: var(--bft-header-title-size);
-    font-weight: var(--bft-header-title-weight);
-    color: var(--bft-header-title-color);
+    font-size: var(--bf-header-title-size);
+    font-weight: var(--bf-header-title-weight);
+    color: var(--bf-header-title-color);
     line-height: 1.2;
     text-decoration: none;
     &:hover,
     &:focus {
-      color: var(--bft-header-title-hover);
+      color: var(--bf-header-title-hover);
     }
   }
 
   &-desc {
     margin: 0;
-    font-weight: 300;
-    color: var(--bft-header-desc-color, #666);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--bf-header-desc-color, #666);
   }
 
   &-logo {
     display: block;
     &-img {
-      width: var(--bft-header-logo-width);
-      height: var(--bft-header-logo-height);
+      width: var(--bf-header-logo-width);
+      height: var(--bf-header-logo-height);
     }
   }
-}
 
-.header-nav {
-  ul {
-    list-style: none;
-    margin: 0;
+  @media (max-width: 767px) {
     padding: 0;
+    margin-bottom: 2rem;
+    background-color: var(--bs-light);
   }
-
-  &-link,
-  &-button {
-    color: #444;
-    height: 2.75rem;
-    line-height: 2.75rem;
-    border: 0;
-    background: none;
-    display: inline-block;
-    border-radius: $radius;
-    transition: all ease-in-out 0.15s;
-    text-align: center;
-    border-radius: 0.25rem;
-
-    &:hover,
-    &:focus {
-      color: #000;
-      background-color: var(--bs-light);
-    }
-    > .bi,
-    > img {
-      transform: translateY(-0.1rem);
-    }
-  }
-
-  &-link {
-    padding: 0 1rem;
-    font-weight: 500;
-    .bi-chevron-down {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-  }
-  &-button {
-    padding: 0;
-    width: 2.75rem;
-  }
-
-  .-login {
-    position: relative;
-    &::after {
-      content: "";
-      width: 1px;
-      height: 1rem;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: -0.75rem;
-      background-color: rgba(#000, 0.1);
-      display: block;
-    }
-    .bi-box-arrow-in-right {
-      transform: translateX(-0.125rem);
-    }
-  }
-}
-
-// social links
-@each $name, $item in $brands {
-  @include text-hover(".social-link-#{$name}", null, $item);
 }

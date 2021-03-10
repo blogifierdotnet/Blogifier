@@ -9,34 +9,32 @@
     overflow: hidden;
     position: relative;
     border-radius: $radius-var;
-
-    &::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      background: none;
-      box-shadow: inset 0 0 0 1px rgba(#000, 0.05);
-      border-radius: $radius-var;
-    }
+    box-shadow: inset 0 0 0 1px rgba(#000, 0.05);
 
     @media screen and (max-width: 991px) {
       height: 20rem;
     }
+    &-link {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    &-img {
+      border-radius: $radius-var;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
-  &-img {
-    border-radius: $radius-var;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+
+  // content
   &-content {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -95,14 +93,13 @@
     &-time {
     }
   }
-
   &-cat {
     display: flex;
     align-items: center;
     &-icon {
       margin-right: 0rem;
     }
-    &-title{
+    &-title {
       text-decoration: none;
     }
   }
@@ -113,7 +110,6 @@
     line-height: 1.8;
     margin-bottom: 1.5rem;
   }
-
   &-more {
     font-weight: 500;
     font-size: 0.875rem;
@@ -133,15 +129,41 @@
   &-prev {
     left: -4rem;
   }
-
   &-next {
     right: -3.5rem;
   }
 
+  // hover
   &:hover {
     .featured-next,
     .featured-prev {
       opacity: 0.2;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    border-bottom: 1px solid rgba(#000, 0.03);
+    margin: -2rem -1.5rem 2rem;
+    background-color: var(--bs-light);
+
+    &-item {
+      padding: 1.5rem;
+    }
+    // content
+    &-content {
+      padding: 0;
+      padding: 1rem 1rem 0;
+    }
+    // title
+    &-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    // desc
+    &-desc {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

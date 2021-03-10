@@ -1,61 +1,71 @@
-window.addEventListener("DOMContentLoaded", function () {
+// get the newsletter form elements
+const form = document.getElementById("newsletter");
+const form_email = document.getElementById("newsletter_email");
+const form_status = document.getElementById("newsletter_status");
+const newsletterSucessMsg = form_status.dataset.success, newsletterErrorMsg = form_status.dataset.error;
 
-  // get the form elements defined in your form HTML above
-
-  var form = document.getElementById("newsletter");
-  var form_body = document.getElementById("newsletter");
-  var form_email = document.getElementById("newsletter_email");
-  var form_status = document.getElementById("newsletter_status");
-
-  // Success and Error functions for after the form is submitted
-
-  function success() {
-    form.reset();
-    form_status.classList.add("-show", "-success");
-    form_status.innerHTML = "Thanks!";
-  }
-
-  function loading(){
-    form_status.classList.add("-show", "-loading");
-    form_status.innerHTML = "Loading...";
-  }
-
-  function error() {
-    form_status.classList.add("-show", "-error");
-    form_status.innerHTML = "Oops! There was a problem.";
-  }
-
-  // handle the form submission event
-
-  form.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    loading();
-    fetch('https://ipapi.co/json/')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        var info = data.ip + '|' + data.country_name + '|' + data.region;
-        var obj = { Email: form_email.value, Ip: info };
-        var data = JSON.stringify(obj);
-        ajax(form.method, form.action, data, success, error);
-      });
-  });
-});
-
-// helper function for sending an AJAX request
-
-function ajax(method, url, data, success, error) {
-  var xhr = new XMLHttpRequest();
-  xhr.open(method, url);
-  xhr.setRequestHeader("Accept", "application/json");
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState !== XMLHttpRequest.DONE) return;
-    if (xhr.status === 200) {
-      success(xhr.response, xhr.responseType);
-    } else {
-      error(xhr.status, xhr.response, xhr.responseType);
-    }
-  };
-  xhr.send(data);
+// Success, Loading and Error functions
+function successNewsletter() {
+  form_status.innerHTML = `<div class="newsletter-msg bg-success"><div class="m-auto"> ${newsletterSucessMsg} </div></div>`;
+  setTimeout(resetNewsletter, 2000);
 }
+function loadingNewsletter() {
+  form_status.innerHTML = '<div class="newsletter-msg"><div class="m-auto spinner-border" role="status"></div></div>'
+}
+function errorNewsletter(msg) {
+  form_status.innerHTML = `<div class="newsletter-msg bg-danger"><div class="m-auto">${newsletterErrorMsg} <br> ${msg}</div></div>`;
+}
+function resetNewsletter() {
+  form.reset();
+  form_status.innerHTML = "";
+}
+
+function subscribeNewsletter(url, data) {
+  var options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }
+  fetch(url, options)
+    .then((response) => {
+      if (response.status == 200) {
+        return response.json();
+      } else {
+        throw new Error('The Newsletter is not working!');
+      }
+    })
+    .then(() => {
+      successNewsletter();
+    })
+    .catch((err) => {
+      errorNewsletter(err);
+    });
+}
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  loadingNewsletter();
+  var subscriber_data = {
+    Email: form_email.value,
+    Ip: "unknown",
+    Country: "unknown",
+    Region: "unknown"
+  };
+  fetch('https://ipapi.co/json/')
+    .then((response) => {
+      if (response.status == 200) {
+        return response.json();
+      } else {
+        throw new Error('Not sure where you are!');
+      }
+    })
+    .then((loc) => {
+      subscriber_data.Ip = loc.ip;
+      subscriber_data.Country = loc.country_name;
+      subscriber_data.Region = loc.region;
+      subscribeNewsletter(form.action, subscriber_data);
+    })
+    .catch((err) => {
+      subscribeNewsletter(form.action, subscriber_data);
+    });
+});

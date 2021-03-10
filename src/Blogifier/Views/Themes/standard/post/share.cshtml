@@ -1,11 +1,17 @@
 @using Blogifier.Shared
 @{
+    var request = Url.ActionContext.HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+
     PostModel postModel = (PostModel)Model;
     var post = postModel.Post;
 
-    var share_facebook = "https://www.facebook.com/sharer/sharer.php?u=" + post.Slug;
-    var share_twitter = "https://twitter.com/intent/tweet?text=" + post.Title + "&url=" + post.Slug;
-    var share_email =  "mailto:?&subject=" + post.Title + "&cc=&bcc=&body=" + post.Title + "%0" + post.Slug;
+    var postTitle = post.Title;
+    var postSlug = absoluteUrl + "/posts/" + post.Slug;
+
+    var share_facebook = "https://www.facebook.com/sharer/sharer.php?u=" + postSlug;
+    var share_twitter = "https://twitter.com/intent/tweet?text=" + postTitle + "&url=" + postSlug;
+    var share_email =  "mailto:?&subject=" + postTitle + "&cc=&bcc=&body=" + postTitle + "%0" + postSlug;
 }
 
 <div class="modal fade share-modal" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
@@ -42,7 +48,7 @@
                         </a>
                     </li>
                 </ul>
-                <input id="pageShareLink" onclick="copyInput('pageShareLink')" title="click to copy!" type="text" class="share-modal-input" aria-label="Page Link" value="@post.Slug" readonly>
+                <input id="pageShareLink" onclick="copyInput('pageShareLink')" title="click to copy!" type="text" class="share-modal-input" aria-label="Page Link" value="@postSlug" readonly>
             </div>
         </div>
     </div>

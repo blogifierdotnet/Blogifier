@@ -3,6 +3,7 @@
   color: #aaa;
   border-radius: $radius-var;
   margin-top: 4rem;
+  position: relative;
 
   &-body {
     padding: 3rem;
@@ -45,27 +46,31 @@
     color: #fff;
     display: block;
     border-left: 1px solid #222;
+    &:focus,
+    &:hover {
+      outline: none;
+      background: #222;
+    }
   }
 
-  &-message {
-    display: none;
-    padding: 3rem;
+  &-msg {
+    padding: 2rem;
     text-align: center;
-    background-color: var(--bs-dark);
-    @media screen and (min-width: 991px) {
-      padding: 4rem;
-    }
+    background-color: #000;
+    border-radius: $radius-var;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: #fff;
+    cursor: pointer;
 
-    &.-show {
-      display: block;
-      padding: 2rem;
+    .spinner-border {
       color: #fff;
-    }
-    &.-success {
-      background-color: var(--bs-success);
-    }
-    &.-error {
-      background-color: var(--bs-danger);
     }
   }
 }
