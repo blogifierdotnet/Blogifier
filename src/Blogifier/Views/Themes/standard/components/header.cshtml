@@ -11,7 +11,7 @@
 }
 
 <header class="header">
-    <div class="container d-flex align-items-center">
+    <div class="container d-md-flex align-items-md-center">
         @if (siteMark == "logo")
         {
             <a class="header-logo me-auto" href="@absoluteUrl">
@@ -26,7 +26,7 @@
         {
             <section class="header-sign me-auto">
                 <a class="header-title" href="@absoluteUrl">@siteTitle</a>
-                <p class="header-desc">@siteDesc</p>
+                <p class="header-desc d-none d-lg-block">@siteDesc</p>
             </section>
         }
         <partial name="../components/nav.cshtml" />
