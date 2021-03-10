@@ -59,8 +59,12 @@ blockquote {
   margin: 0; }
 
 .container {
-  width: 59.75rem;
+  width: 61.5rem;
   max-width: 100%; }
+
+@media (max-width: 991px) {
+  :root {
+    --bs-gutter-x: 1.5rem; } }
 
 .header {
   padding-top: 4rem;
@@ -147,7 +151,7 @@ blockquote {
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     border-top: 1px solid rgba(0, 0, 0, 0.03);
     padding: 0.25rem 0.75rem;
-    margin: 0 -0.75rem 1rem; } }
+    margin: 0 -1.5rem 1rem; } }
 
 .social-link-blogifier:hover {
   color: #622aff; }
@@ -425,12 +429,12 @@ pre > code {
     border-top-right-radius: var(--bf-radius, 0.125rem); }
 
 .post-container {
-  max-width: calc( var(--bf-post-width) + 2rem);
+  max-width: calc( var(--bf-post-width) + 3rem);
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 1rem;
-  padding-left: 1rem; }
+  padding-right: 1.5rem;
+  padding-left: 1.5rem; }
 
 .post-title {
   margin-bottom: 2.5rem;
