@@ -1,6 +1,6 @@
 @using Blogifier.Shared
 @{
-   Layout = "layouts/_layout.cshtml";
+   Layout = "layouts/_main.cshtml";
    PostModel postModel = (PostModel)Model;
    var post = postModel.Post;
    string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
