@@ -559,6 +559,31 @@ pre > code {
   .post #disqus_thread:not(:empty) > iframe {
     margin: 0 !important; }
 
+@media screen and (max-width: 767px) {
+  .post {
+    margin-top: -2rem; }
+    .post-cover {
+      margin-bottom: 2rem;
+      height: 14rem; }
+      .post-cover-caption {
+        display: none; }
+      .post-cover::after {
+        border-radius: 0;
+        display: none; }
+    .post-title {
+      font-size: 1.5rem;
+      letter-spacing: 0; }
+    .post-meta {
+      font-size: 0.75rem; }
+      .post-meta-item:not(:last-of-type) {
+        margin-right: 1rem; }
+      .post-meta-cats-link::after {
+        display: none; }
+      .post-meta-cats-item {
+        display: none; }
+        .post-meta-cats-item:nth-child(1) {
+          display: block; } }
+
 .featured {
   margin-bottom: 5rem; }
   .featured-cover {

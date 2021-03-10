@@ -248,4 +248,48 @@
       }
     }
   }
+
+  @media screen and (max-width: 767px) {
+    margin-top: -2rem;
+
+    &-cover {
+      margin-bottom: 2rem;
+      height: 14rem;
+      &-caption {
+        display: none;
+      }
+      &::after {
+        border-radius: 0;
+        display: none;
+      }
+    }
+
+    &-title {
+      font-size: 1.5rem;
+      letter-spacing: 0;
+    }
+
+    &-meta {
+      font-size: 0.75rem;
+      &-item {
+        &:not(:last-of-type) {
+          margin-right: 1rem;
+        }
+      }
+      &-cats {
+        &-link {
+          &::after {
+            display: none;
+          }
+        }
+        &-item {
+          display: none;
+
+          &:nth-child(1) {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 }
