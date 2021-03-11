@@ -168,38 +168,17 @@
       overflow-wrap: break-word;
       word-break: break-all;
     }
-    p {
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 2rem;
-    }
-    h2 {
-      margin-top: 1.5rem;
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: #000;
-    }
-    h3 {
-      margin-top: 1.5rem;
-      font-size: 1.5rem;
-    }
-    h4 {
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
-    }
-    figure {
-      margin-bottom: 1.5rem;
-    }
+    iframe,
+    video,
     img {
       border-radius: 0.125rem;
     }
-    table {
+
+    audio,
+    video {
+      margin-bottom: 1rem;
       width: 100%;
-    }
-    ul,
-    ol {
-      margin-bottom: 1.5rem;
+      max-width: 100%;
     }
   }
 

@@ -19,15 +19,16 @@
 // components - global
 @import "components/search";
 @import "components/pagination";
-@import "components/highlight";
 @import "components/newsletter";
+@import "components/dropdowns";
+@import "components/highlight";
 
 // post
-@import "post/post";
 @import "post/featured";
-@import "post/nav";
 @import "post/view-grid";
 @import "post/view-list";
+@import "post/post";
+@import "post/nav";
 @import "post/share";
 @import "post/related";
 
