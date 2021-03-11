@@ -772,7 +772,7 @@ pre > code {
   line-height: 1.1;
   letter-spacing: -1px;
   font-weight: 700;
-  font-size: 3.25rem;
+  font-size: 2.75rem;
   color: #000; }
 
 .post-meta {
@@ -846,13 +846,13 @@ pre > code {
 
 .post-footer {
   margin-bottom: 8rem;
-  padding-top: 4rem;
-  border-top: 1px solid var(--bs-light); }
+  padding-top: 4rem; }
 
 .post-author {
-  display: flex;
-  align-items: center;
-  margin-bottom: 4rem; }
+  margin-bottom: 4rem;
+  border: 1px solid var(--bs-light);
+  padding: 1.5rem;
+  border-radius: var(--bf-radius); }
   .post-author-name {
     margin: 0 0 0.25rem;
     font-size: 1.125rem;
