@@ -139,18 +139,26 @@ namespace Blogifier.Controllers
 			var sitemapBaseUri = Request.ExtractAbsoluteUri();
 
 			var blog = await DataService.CustomFields.GetBlogSettings();
-			var posts = await DataService.BlogPosts.GetList(p => p.Published > DateTime.UtcNow.AddDays(-50), new Pager(1, 100));
+			
 
 			var host = $"{sitemapBaseUri}{Url.Content("~/")}";
 
 			switch (type)
 			{
 				case "zen":
-					return ZenFeed(blog, host, posts.ToArray());
+					var zenPosts = await GetPosts(DateTime.UtcNow.AddYears(-2));
+					return ZenFeed(blog, host, zenPosts.ToArray());
 				case "turbo":
-					return TurboFeed(blog, host, posts.ToArray());
+					var turboPosts = await GetPosts(DateTime.UtcNow.AddYears(-2));
+					return TurboFeed(blog, host, turboPosts.ToArray());
 				default:
-					return await RssFeed(blog, host, posts.ToArray());
+					var rssPosts = await GetPosts(DateTime.UtcNow.AddMonths(-2));
+					return await RssFeed(blog, host, rssPosts.ToArray());
+			}
+
+			Task<IEnumerable<PostItem>> GetPosts(DateTime since)
+			{
+				return DataService.BlogPosts.GetList(p => p.Published > since, new Pager(1, 100));
 			}
 		}
 
