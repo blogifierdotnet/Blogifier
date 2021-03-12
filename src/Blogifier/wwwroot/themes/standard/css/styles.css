@@ -845,14 +845,13 @@ pre > code {
     max-width: 100%; }
 
 .post-footer {
-  margin-bottom: 8rem;
-  padding-top: 4rem; }
+  margin-bottom: 4rem; }
 
 .post-author {
   margin-bottom: 4rem;
-  border: 1px solid var(--bs-light);
-  padding: 1.5rem;
-  border-radius: var(--bf-radius); }
+  padding: 2rem;
+  border-radius: var(--bf-radius);
+  background-color: var(--bs-light); }
   .post-author-name {
     margin: 0 0 0.25rem;
     font-size: 1.125rem;
@@ -871,8 +870,9 @@ pre > code {
     border-radius: 100%; }
 
 .post #disqus_thread:not(:empty) {
-  padding: 3rem;
-  background-color: var(--bs-light); }
+  padding: 2rem;
+  background-color: var(--bs-light);
+  margin-bottom: 4rem; }
   .post #disqus_thread:not(:empty) > iframe {
     margin: 0 !important; }
 
@@ -901,24 +901,24 @@ pre > code {
         .post-meta-cats-item:nth-child(1) {
           display: block; } }
 
-.post-nav-item {
-  position: relative;
-  color: #000;
-  text-decoration: none;
-  display: block; }
-  .post-nav-item:hover {
-    color: var(--bf-color); }
-
-.post-nav-title {
-  z-index: 2;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin: 0; }
-
-.post-nav-text {
-  opacity: 0.5;
-  text-transform: uppercase;
-  font-size: 0.75rem; }
+.post-nav {
+  margin-bottom: 4rem; }
+  .post-nav-item {
+    position: relative;
+    color: #000;
+    text-decoration: none;
+    display: block; }
+    .post-nav-item:hover {
+      color: var(--bf-color); }
+  .post-nav-title {
+    z-index: 2;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0; }
+  .post-nav-text {
+    opacity: 0.5;
+    text-transform: uppercase;
+    font-size: 0.75rem; }
 
 .share-modal .modal-dialog {
   max-width: 25rem; }
