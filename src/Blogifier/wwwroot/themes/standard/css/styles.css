@@ -903,78 +903,22 @@ pre > code {
 
 .post-nav-item {
   position: relative;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border-radius: var(--bf-radius, 0.125rem);
-  padding: 2rem;
-  background-color: #fff;
-  transition: all ease-in-out 0.25s;
-  box-shadow: 0 0 0rem 1px rgba(0, 0, 0, 0.05); }
-  .post-nav-item:hover {
-    box-shadow: 0 0 10rem rgba(0, 0, 0, 0.1);
-    top: -0.125rem; }
-    .post-nav-item:hover .post-nav-cover {
-      opacity: 1; }
-  .post-nav-item.text-start {
-    padding-left: 5rem; }
-    .post-nav-item.text-start .bi {
-      left: 2rem; }
-  .post-nav-item.text-end {
-    padding-right: 5rem; }
-    .post-nav-item.text-end .bi {
-      right: 2rem; }
-  .post-nav-item .bi {
-    z-index: 3;
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: #000;
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%); }
-
-.post-nav-cover {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-  object-position: center;
-  opacity: 0;
-  transition: all ease-in-out 0.3s; }
-
-.post-nav-date {
-  font-size: 0.75rem;
   color: #000;
-  position: relative;
-  z-index: 2;
-  opacity: 0.7;
-  margin-bottom: 0.5rem; }
+  text-decoration: none;
+  display: block; }
+  .post-nav-item:hover {
+    color: var(--bf-color); }
 
 .post-nav-title {
   z-index: 2;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   margin: 0; }
 
-.post-nav-link {
-  color: #000;
-  text-decoration: none; }
-  .post-nav-link::after {
-    content: "";
-    display: block;
-    background: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1000; }
-  .post-nav-link:hover {
-    color: #000; }
+.post-nav-text {
+  opacity: 0.5;
+  text-transform: uppercase;
+  font-size: 0.75rem; }
 
 .share-modal .modal-dialog {
   max-width: 25rem; }
