@@ -72,7 +72,7 @@
     line-height: 1.1;
     letter-spacing: -1px;
     font-weight: 700;
-    font-size: 3.25rem;
+    font-size: 2.75rem;
     color: #000;
   }
 
@@ -168,53 +168,31 @@
       overflow-wrap: break-word;
       word-break: break-all;
     }
-    p {
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 2rem;
-    }
-    h2 {
-      margin-top: 1.5rem;
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: #000;
-    }
-    h3 {
-      margin-top: 1.5rem;
-      font-size: 1.5rem;
-    }
-    h4 {
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
-    }
-    figure {
-      margin-bottom: 1.5rem;
-    }
+    iframe,
+    video,
     img {
       border-radius: 0.125rem;
     }
-    table {
+
+    audio,
+    video {
+      margin-bottom: 1rem;
       width: 100%;
-    }
-    ul,
-    ol {
-      margin-bottom: 1.5rem;
+      max-width: 100%;
     }
   }
 
   // footer
   &-footer {
-    margin-bottom: 8rem;
-    padding-top: 4rem;
-    border-top: 1px solid var(--bs-light);
+    margin-bottom: 4rem;
   }
 
   // author
   &-author {
-    display: flex;
-    align-items: center;
     margin-bottom: 4rem;
+    padding: 2rem;
+    border-radius: var(--bf-radius);
+    background-color: var(--bs-light);
     &-name {
       margin: 0 0 0.25rem;
       font-size: 1.125rem;
@@ -240,8 +218,9 @@
   // comments
   #disqus_thread {
     &:not(:empty) {
-      padding: 3rem;
+      padding: 2rem;
       background-color: var(--bs-light);
+      margin-bottom: 4rem;
 
       > iframe {
         margin: 0 !important;

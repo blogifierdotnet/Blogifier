@@ -1,0 +1,25 @@
+//
+.dropdown-menu {
+  border-radius: $radius;
+  box-shadow: 0 0 3rem rgba(#000, 0.2);
+  border: none;
+}
+
+.dropdown-item {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  padding: 0.5rem 1rem;
+  color: #555;
+  transition: all ease-in-out 0.2s;
+  &:active,
+  &:hover {
+    color: #000;
+    background-color: var(--bs-light);
+  }
+}
+.dropdown-divider {
+  background: none;
+  border-top: 1px solid rgba(#000, 0.3);
+  margin: 0;
+}
