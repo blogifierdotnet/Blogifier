@@ -5,7 +5,7 @@
 
 @if(_featured != null)
 {
-<div id="carouselFeatured" class="featured carousel slide carousel-dark" data-bs-ride="carousel">
+<div id="carouselFeatured" class="featured carousel slide carousel-dark" data-bs-ride="carousel" aria-label="Slideshow">
     <div class="carousel-inner">
         @for (int i = 0; i < _featured.Count; i++)
         {
@@ -15,8 +15,8 @@
             <div class="carousel-item @active">
                 <article class="featured-item row">
                     <section class="col-lg-7">
-                        <figure class="featured-cover">
-                            <a href="~/posts/@item.Slug" class="featured-cover-link">
+                        <figure class="featured-cover" aria-hidden="true">
+                            <a href="~/posts/@item.Slug" class="featured-cover-link" tabindex="-1">
                                 <img class="featured-cover-img" alt="POST_TITLE" src="~/@item.Cover">
                             </a>
                             <figcaption class="visually-hidden">@item.Title</figcaption>
@@ -46,7 +46,7 @@
                                 </svg>
                                 @foreach (var cat in item.Categories)
                                 {
-                                <a class="featured-cat-title" href="~/categories/@cat.Content">@cat.Content</a>
+                                <a class="featured-cat-title" href="~/categories/@cat.Content" tabindex="-1">@cat.Content</a>
                                 }
                             </div>
                             }
