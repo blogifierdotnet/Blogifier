@@ -11,7 +11,7 @@ myModal.addEventListener('shown.bs.modal', function () {
 // copy input
 function copyInput(elm) {
   var copyText = document.getElementById(elm);
-  var copyTextStore = copyText.value;
+  var copyTextStore = copyText.dataset.link;
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
@@ -20,5 +20,5 @@ function copyInput(elm) {
   setTimeout(function () {
     copyText.value = copyTextStore;
     copyText.classList.remove("copied");
-  }, 1000);
+  }, 500);
 }

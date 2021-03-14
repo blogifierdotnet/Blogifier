@@ -48,7 +48,7 @@
                         </a>
                     </li>
                 </ul>
-                <input id="pageShareLink" onclick="copyInput('pageShareLink')" title="click to copy!" type="text" class="share-modal-input" aria-label="Page Link" value="@postSlug" readonly>
+                <input id="pageShareLink" onclick="copyInput('pageShareLink')" onkeydown="copyInput('pageShareLink')" title="click to copy!" type="text" class="share-modal-input" aria-label="Press enter to copy the page link" value="@postSlug" data-link="@postSlug" readonly>
             </div>
         </div>
     </div>
