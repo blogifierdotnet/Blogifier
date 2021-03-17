@@ -1512,6 +1512,14 @@ pre code {
       .pager-article .post-title {
         font-size: 14px !important; } }
 
+@media only screen and (max-width: 767px)
+{
+  .vizew-pager-prev,
+  .vizew-pager-next {
+    display: none;
+  }
+}
+
 .vizew-pager-prev,
 .vizew-pager-next {
   position: fixed;
