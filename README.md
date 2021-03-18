@@ -1,4 +1,3 @@
-
 ## Blogifier
 Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.
 
@@ -12,6 +11,8 @@ The latest stable source code is in the [master branch](https://github.com/blogi
 We have an online demo that you can take a look.
 
 [**Blogifier Demo »**](https://demo.blogifier.net/)
+
+[![demo](https://github.com/blogifierdotnet/Blogifier/actions/workflows/demo.yml/badge.svg)](https://github.com/blogifierdotnet/Blogifier/actions/workflows/demo.yml)
 
 
 ## Docs
