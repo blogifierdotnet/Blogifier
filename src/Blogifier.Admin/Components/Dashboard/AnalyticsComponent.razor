@@ -1,4 +1,4 @@
-﻿@using ChartJs.Blazor
+@using ChartJs.Blazor
 @using ChartJs.Blazor.Common
 @using ChartJs.Blazor.Common.Enums
 @using ChartJs.Blazor.Util
@@ -25,17 +25,16 @@
             </div>
         </div>
         <!--/Time -->
-
         <!-- Toggle between list or chart  -->
         <div class="btn-group ms-auto" role="group" aria-label="Chart or List">
-            <button type="button" class="btn btn-link rounded-3">
+            <button type="button" class="btn btn-link rounded-3" @onclick="() => ToggleAnalyticsView(true)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z"/>
+                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z" />
                 </svg>
             </button>
-            <button type="button" class="btn btn-link rounded-3 active">
+            <button type="button" class="btn btn-link rounded-3 active" @onclick="() => ToggleAnalyticsView(false)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                 </svg>
             </button>
         </div>
@@ -44,7 +43,6 @@
     </div>
 
     <!-- List -->
-
     <!--
         The list of posts/pages in the selected time,
         sorting by the higher visits.
@@ -52,102 +50,104 @@
         Note:
         A single visitor maybe visits 10 pages, so that's why we have Visits and Visitors.
     -->
-
-    <ul class="list compact">
+    <ul hidden="@_hideList" class="list compact">
         <li class="list-item">
             <span class="list-title">Title</span>
             <span class="list-text text-end col-2">Visits</span>
-            <span class="list-text text-end col-2">Visitors</span>
         </li>
-        <li class="list-item">
-            <span class="list-title">Some post here</span>
-            <span class="list-text text-end col-2">700</span>
-            <span class="list-text text-end col-2">455</span>
-        </li>
-        <li class="list-item">
-            <span class="list-title">Some page here</span>
-            <span class="list-text text-end col-2">532</span>
-            <span class="list-text text-end col-2">125</span>
-        </li>
-        <li class="list-item">
-            <span class="list-title">Some post here</span>
-            <span class="list-text text-end col-2">245</span>
-            <span class="list-text text-end col-2">120</span>
-        </li>
-        <li class="list-item">
-            <span class="list-title">Some page here</span>
-            <span class="list-text text-end col-2">251</span>
-            <span class="list-text text-end col-2">100</span>
-        </li>
+        @if (_visits != null && _visits.Count > 0)
+        {
+            foreach (var visit in _visits)
+            {
+            <li class="list-item">
+                <span class="list-title">@visit.Name</span>
+                <span class="list-text text-end col-2">@visit.Value</span>
+            </li>
+            }
+         }
     </ul>
-
     <!--/List -->
 
     <!-- Chart -->
-
     <!--
         Chart must show visits per day not by the title of the post.
     -->
-	<Chart Config="_config"></Chart>
+    <div hidden="@_hideGraph">
+        <Chart Config="_config"></Chart>
+    </div>
     <!--/Chart -->
 
 </div>
 
 @code {
-    private BarConfig _config;
+   private BarConfig _config;
+   protected List<PostVisit> _visits;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _config = new BarConfig
-        {
-            Options = new BarOptions
-            {
-                Responsive = true,
-                Legend = new Legend
-                {
-                    Position = Position.Top
-                }
-            }
-        };
+   protected bool _hideGraph = true;
+   protected bool _hideList = false;
 
-        IDataset<int> dataset = new BarDataset<int>()
-        {
-            Label = "Latest Post Views",
-            BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
-            BorderWidth = 0
-        };
+   protected override async Task OnInitializedAsync()
+   {
+       _config = new BarConfig
+       {
+           Options = new BarOptions
+           {
+               Responsive = true,
+               Legend = new Legend
+               {
+                   Position = Position.Top
+               }
+           }
+       };
 
-        var model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
+       IDataset<int> dataset = new BarDataset<int>()
+       {
+           Label = "Latest Post Views",
+           BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
+           BorderWidth = 0
+       };
 
-        if(model == null || model.LatestPostViews == null)
-        {
-            LoadData(dataset, TestData());
-        }
-        else
-        {
-            LoadData(dataset, model.LatestPostViews);
-        }
-        _config.Data.Datasets.Add(dataset);
-    }
+       var model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
 
-    protected void LoadData(IDataset<int> dataset, BarChartModel model)
-    {
-        foreach (var label in model.Labels)
-        {
-            _config.Data.Labels.Add(label);
-        }
-        foreach (var item in model.Data)
-        {
-            dataset.Add(item);
-        }
-    }
+       if (model == null || model.LatestPostViews == null)
+       {
+           LoadData(dataset, TestData());
+       }
+       else
+       {
+           LoadData(dataset, model.LatestPostViews);
+       }
+       _config.Data.Datasets.Add(dataset);
+   }
 
-    protected BarChartModel TestData()
-    {
-        return new BarChartModel()
-        {
-            Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
-            Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
-        };
-    }
+   protected void LoadData(IDataset<int> dataset, BarChartModel model)
+   {
+       _visits = new List<PostVisit>();
+       var labels = model.Labels.ToList();
+       var values = model.Data.ToList();
+
+       for (int i = 0; i < labels.Count; i++)
+       {
+           _config.Data.Labels.Add(labels[i]);
+           dataset.Add(values[i]);
+
+           _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
+       }
+       _visits = _visits.OrderByDescending(v => v.Value).ToList();
+   }
+
+   protected async Task ToggleAnalyticsView(bool isGraph)
+   {
+       _hideGraph = await Task.FromResult(!isGraph);
+       _hideList = isGraph;
+   }
+
+   protected BarChartModel TestData()
+   {
+       return new BarChartModel()
+       {
+           Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
+           Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
+       };
+   }
 }
