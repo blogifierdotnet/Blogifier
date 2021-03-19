@@ -15,5 +15,6 @@ jobs:
           host: ${{ secrets.DEMO_HOST_SECRET }}
           username: ${{ secrets.DEMO_USER_SECRET }}
           privateKey: ${{ secrets.DEMO_KEY_SECRET}}
+          passphrase: ${{secrets.DEMO_PASS_SECRET}}
           command: |
             & "c:\demo.ps1"
