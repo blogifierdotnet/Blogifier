@@ -15,7 +15,6 @@ jobs:
           host: ${{ secrets.DEMO_HOST_SECRET }}
           port: 22
           username: ${{ secrets.DEMO_USER_SECRET }}
-          passphrase: ${{secrets.DEMO_PASS_SECRET}}
-          privateKey: ${{ secrets.DEMO_KEY_SECRET}}
+          password: ${{secrets.DEMO_PASS_SECRET}}
           command: |
             & "c:\demo.ps1"
