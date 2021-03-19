@@ -1,15 +1,13 @@
-name: demo
-
+name: Demo
 on:
   push:
     branches:
       - demo
-
 jobs:
   deploy-demo:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - name: Build The Demo
+      - name: Update Demo Website
         uses: garygrossgarten/github-action-ssh@release
         with:
           host: ${{ secrets.DEMO_HOST_SECRET }}
