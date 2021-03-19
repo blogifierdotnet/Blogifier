@@ -3,18 +3,17 @@ name: demo
 on:
   push:
     branches:
-      - main
+      - demo
 
 jobs:
   deploy-demo:
     runs-on: ubuntu-latest
     steps:
-      - name: Build the demo
+      - name: Build The Demo
         uses: garygrossgarten/github-action-ssh@release
         with:
           host: ${{ secrets.DEMO_HOST_SECRET }}
-          port: 22
           username: ${{ secrets.DEMO_USER_SECRET }}
-          password: ${{secrets.DEMO_PASS_SECRET}}
+          password: ${{ secrets.DEMO_PASS_SECRET }}
           command: |
-            & "c:\demo.ps1"
+            & "c:/github/demo.ps1"
