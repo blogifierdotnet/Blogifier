@@ -16,11 +16,5 @@ jobs:
     - name: Publish Blogifier
       run: dotnet publish -c Release -o release --nologo
 
-    - name: stop the app
-      run: New-Item -Path C:/inetpub/demo.blogifier.net -Name "app_offline.htm" -ItemType "file"
-
     - name: Copy The Release Folder
       run: Copy-Item C:\Websites/demo.blogifier.net/_work/Blogifier/Blogifier/release/* C:/inetpub/demo.blogifier.net -Recurse -Force
-
-    - name: start the app
-      run: Remove-Item -Path C:/inetpub/demo.blogifier.net/app_offline.htm
