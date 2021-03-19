@@ -7,14 +7,12 @@ on:
 
 jobs:
   deploy-demo:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-
-    - name: Checkout
-      uses: actions/checkout@v2.3.1
-
-    - name: Publish Blogifier
-      run: dotnet publish -c Release -o release --nologo
-
-    - name: Copy The Release Folder
-      run: Copy-Item C:\Websites/demo.blogifier.net/_work/Blogifier/Blogifier/release/* C:/inetpub/demo.blogifier.net -Recurse -Force
+      - name: Build the demo
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          host: ${{ secrets.DEMO_HOST_SECRET }}
+          username: ${{ secrets.DEMO_USER_SECRET }}
+          privateKey: ${{ secrets.DEMO_KEY_SECRET}}
+          command: & "c:\demo.ps1"
