@@ -7,7 +7,7 @@
 
 <h3 align="center">Blogifier</h3>
 <p align="center">
-    Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.<br><br>
+    Blogifier is an open-source publishing platform written in .NET 5.0 and Blazor WebAssembly.<br><br>
     <a href="https://blogifier.net/"><b>Official Website »</b></a>
     &nbsp;&nbsp;
     <a href="https://demo.blogifier.net/"><b>Live Demo »</b></a>
@@ -36,22 +36,22 @@ This version is built and compiled, and ready to use:
 1. Download.
 2. Unzip and copy to your host server.<br>
 3. Restart your website.
-4. Open your website and only the first time you'll be redirected to the register page. `example.com/admin/register/`
-5. Register, and then log in. `example.com/admin/login/`
+4. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
+5. Register, and then log in.<br> `example.com/admin/login/`
 6. Done, enjoy.
 
 ## Quick Start - The Source Code:
 
 If you want to customize the Blogifier, or help us in the development:
 
-1. [Download](https://dotnet.microsoft.com/download/dotnet/5.0) and Install .NET SDK 5.0 and above.
-2. Clone the repository.
+1. [Download](https://dotnet.microsoft.com/download/dotnet/5.0) and Install .NET SDK 5.0 or above.
+2. Download or Clone the repository.
 3. Open the project with your favorite IDE (VS Code, Visual Studio, Atom, etc).
 4. Run the app with your IDE or these commands:
 
 First cd to the Blogifier project folder:
 ```
-$ cd /your-local-path/blogifier/src/blogifier/
+$ cd /your-local-path/Blogifier/src/Blogifier/
 ```
 Then:
 ```
@@ -63,7 +63,6 @@ Also login to the admin panel `http://localhost:5000/admin/`
 username: admin@example.com
 password: admin
 ```
-
 
 ## Docs
 We publish docs on the Blogifier website.<br>
