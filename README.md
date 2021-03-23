@@ -1,6 +1,6 @@
 <br><br><br>
 <p align="center">
-  <a href="https://getbootstrap.com/">
+  <a href="https://blogifier.net/">
     <img src="https://blogifier.net/files/brand/logo.svg" alt="Blogifier Logo" width="100" height="100">
   </a>
 </p>
@@ -10,7 +10,7 @@
     Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.<br><br>
     <a href="https://blogifier.net/"><b>Official Website »</b></a>
     &nbsp;&nbsp;
-    <a href="https://blogifier.net/"><b>Live Demo »</b></a>
+    <a href="https://demo.blogifier.net/"><b>Live Demo »</b></a>
 </p>
 
 <p align="center">
