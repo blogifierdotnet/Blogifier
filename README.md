@@ -33,7 +33,7 @@ This version is built and compiled, and ready to use:
 
 > **The only requirement:** .NET Core Runtime 5.0 or above should be installed on your host server.
 
-1. Download.
+1. [Download](https://github.com/blogifierdotnet/Blogifier/releases) the latest release.
 2. Unzip and copy to your host server.<br>
 3. Restart your website.
 4. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
