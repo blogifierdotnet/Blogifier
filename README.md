@@ -21,23 +21,23 @@
 
 <br><br><br>
 
-### Blogifier is under developement
+## Blogifier is under developement
 Code in the main branch is under development and some features are not yet implemented and may not work as expected.
 If you are looking for a stable application, please use [latest release](https://github.com/blogifierdotnet/Blogifier/releases).
 The latest stable source code is in the [master branch](https://github.com/blogifierdotnet/Blogifier/tree/5c9bab69788a1f7a0bd82c6a864e159eff5b1b72). Please note that newest code uses Blazor Web Assembly and not compatible with previous versions.
 
 
-### Docs
+## Docs
 We publish docs on the Blogifier website.
 
 [**Explore Blogifier Docs »**](https://blogifier.net/docs/)
 
-### Team
+## Team
 
 [![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
 [![@rxtur](https://avatars.githubusercontent.com/u/1932785?s=60&v=4)](https://github.com/rxtur)
 
 
-### Copyright and License
+## Copyright and License
 Code released under the MIT License. Docs released under Creative Commons.<br>
 Copyright 2017–2021 Blogifier
