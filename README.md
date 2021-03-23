@@ -63,6 +63,13 @@ Then in your browser:
 ```
 http://localhost:5000
 ```
+You can login to the admin panel:
+```
+http://localhost:5000/admin/
+```
+username: &nbsp; <b>admin@example.com</b>
+<br>
+password: &nbsp; <b>admin</b>
 
 
 ## Docs
