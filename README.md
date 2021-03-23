@@ -27,9 +27,7 @@ If you are looking for a stable application, please use [latest release](https:/
 The latest stable source code is in the [master branch](https://github.com/blogifierdotnet/Blogifier/tree/5c9bab69788a1f7a0bd82c6a864e159eff5b1b72). Please note that newest code uses Blazor Web Assembly and not compatible with previous versions.
 
 
-## Quick Start
-
-**read-to-use**
+## Quick Start - Ready-To-Use:
 
 This version is built and compiled, and ready to use:
 
@@ -42,7 +40,7 @@ This version is built and compiled, and ready to use:
 5. Register, and then log in. `example.com/admin/login/`
 6. Done, enjoy.
 
-**The Source Code**
+## Quick Start - The Source Code:
 
 If you want to customize the Blogifier, or help us in the development:
 
@@ -51,7 +49,7 @@ If you want to customize the Blogifier, or help us in the development:
 3. Open the project with your favorite IDE (VS Code, Visual Studio, Atom, etc).
 4. Run the app with your IDE or these commands:
 
-First go to the Blogifier project folder:
+First cd to the Blogifier project folder:
 ```
 $ cd /your-local-path/blogifier/src/blogifier/
 ```
@@ -59,17 +57,12 @@ Then:
 ```
 $ dotnet run
 ```
-Then in your browser:
+Then you can open `http://localhost:5000` with your browser.<br>
+Also login to the admin panel `http://localhost:5000/admin/`
 ```
-http://localhost:5000
+username: admin@example.com
+password: admin
 ```
-You can login to the admin panel:
-```
-http://localhost:5000/admin/
-```
-username: &nbsp; <b>admin@example.com</b>
-<br>
-password: &nbsp; <b>admin</b>
 
 
 ## Docs
