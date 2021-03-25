@@ -55,17 +55,7 @@
             </div>
         </div>
 
-        <div class="dropdown dropdown-flush ms-auto ms-3">
-            <button class="btn btn-link dropdown-toggle" type="button" id="filterByType" data-bs-toggle="dropdown" aria-expanded="false">
-                @PostTypeLabel
-            </button>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByType">
-                <button @onclick="GetPosts" class="dropdown-item">@_localizer["posts"]</button>
-                <button @onclick="GetPages" class="dropdown-item">@_localizer["pages"]</button>
-            </div>
-        </div>
-
-        <div class="dropdown dropdown-flush">
+        <div class="dropdown dropdown-flush  ms-auto ms-3">
             <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
                 @FilterLabel
             </button>
