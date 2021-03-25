@@ -1,12 +1,14 @@
 ﻿/*!
-    Blogifier v3
-    https://blogifier.net
+
+    Blogifier v3.0 (https://blogifier.net)
+    Copyright 2012-2021
 
     by Farzin
     https://farzin.dev
 
-    Copyright 2012-2021
-    Licensed under MIT
+    Using:
+    - Bootstrap v5.0.0-beta3 (https://getbootstrap.com/)
+
 */
 
 // helpers
@@ -28,7 +30,6 @@
 @import "include/list";
 @import "include/highlight";
 @import "include/toaster";
-
 
 // pages > account
 @import "pages/account/account";

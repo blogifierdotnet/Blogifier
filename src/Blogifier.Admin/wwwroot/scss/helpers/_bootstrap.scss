@@ -1,10 +1,16 @@
-/* Bootstrap v5.0.0-beta2 */
+/*
+ * Bootstrap v5.0.0-beta3 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
 
+// scss-docs-start import-stack
 // Configuration
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
-@import "middle"; // blogifier colors
 @import "../../node_modules/bootstrap/scss/mixins";
+@import "colors";
 @import "../../node_modules/bootstrap/scss/utilities";
 
 // Layout & components
@@ -37,9 +43,11 @@
 @import "../../node_modules/bootstrap/scss/popover";
 @import "../../node_modules/bootstrap/scss/carousel";
 @import "../../node_modules/bootstrap/scss/spinners";
+@import "../../node_modules/bootstrap/scss/offcanvas";
 
 // Helpers
 @import "../../node_modules/bootstrap/scss/helpers";
 
 // Utilities
 @import "../../node_modules/bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
