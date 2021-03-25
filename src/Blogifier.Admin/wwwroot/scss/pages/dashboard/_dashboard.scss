@@ -1,9 +1,49 @@
-﻿.dashboard {
+﻿.dash {
   &-widget {
-    margin-bottom: 2rem;
+    @include bf-card(0.5rem);
+    margin-bottom: 1.5rem;
 
-    &-card {
-      @include bf-card(0.5rem);
+    // sizes
+
+    &-medium {
+    }
+    &-wide {
+    }
+    &-large {
+    }
+
+    // styles
+    &-link {
+      padding: 2rem 0.5rem;
+      display: block;
+      text-align: center;
+      color: $gray-600;
+      &-icon {
+        display: block;
+        margin: 0 auto 1rem;
+      }
+      &-name {
+        display: block;
+      }
+      &:hover {
+        color: $blogifier;
+      }
+    }
+
+    &-info {
+      padding: 2rem 0.5rem;
+      display: block;
+      text-align: center;
+      color: $gray-600;
+      &-icon {
+        font-size: 1.5rem;
+        font-weight: 300;
+        display: block;
+        margin-bottom: 1rem;
+      }
+      &-name {
+        display: block;
+      }
     }
   }
 }

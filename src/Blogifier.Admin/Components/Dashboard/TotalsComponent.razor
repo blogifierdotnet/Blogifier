@@ -3,24 +3,26 @@
 
 @if (_model != null)
 {
-	<div class="dashboard-widget d-flex">
-		<div class="dashboard-widget-card dashboard-stats-item">
-			<span class="dashboard-stats-number">@_model.TotalPosts</span>
-			<span class="dashboard-stats-title">@_localizer["posts"]</span>
-		</div>
-		<div class="dashboard-widget-card dashboard-stats-item">
-			<span class="dashboard-stats-number">0</span>
-			<span class="dashboard-stats-title">@_localizer["pages"]</span>
-		</div>
-		<div class="dashboard-widget-card dashboard-stats-item">
-			<span class="dashboard-stats-number">@_model.TotalViews</span>
-			<span class="dashboard-stats-title">@_localizer["views"]</span>
-		</div>
-		<div class="dashboard-widget-card dashboard-stats-item">
-			<span class="dashboard-stats-number">@_model.TotalSubscribers</span>
-			<span class="dashboard-stats-title">@_localizer["subscribers"]</span>
-		</div>
-	</div>
+     <div class="row">
+        <div class="col-4">
+            <div class="dash-widget dash-widget-info">
+                <span class="dash-widget-info-icon">@_model.TotalPosts</span>
+                <span class="dash-widget-info-name">@_localizer["posts"]</span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="dash-widget dash-widget-info">
+                <span class="dash-widget-info-icon">0</span>
+                <span class="dash-widget-info-name">@_localizer["pages"]</span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="dash-widget dash-widget-info">
+                <span class="dash-widget-info-icon">@_model.TotalSubscribers</span>
+                <span class="dash-widget-info-name">@_localizer["subscribers"]</span>
+            </div>
+        </div>
+    </div>
 }
 
 @code {

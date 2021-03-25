@@ -1,0 +1,31 @@
+﻿@page "/admin/"
+@inject IStringLocalizer<Resource> _localizer
+<PageTitle Title="@_localizer["dashboard"]" />
+
+<div class="dashboard row no-gutters">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-6">
+                <a class="dash-widget dash-widget-link" href="/admin/editor/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="dash-widget-link-icon bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                    <span class="dash-widget-link-name">@_localizer["New Post"]</span>
+                </a>
+            </div>
+            <div class="col-6">
+                <a class="dash-widget dash-widget-link" href="/admin/editor/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="dash-widget-link-icon bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                    </svg>
+                    <span class="dash-widget-link-name">@_localizer["New Page"]</span>
+                </a>
+            </div>
+        </div>
+        <TotalsComponent />
+    </div>
+    <div class="col-md-6">
+        <AnalyticsComponent />
+    </div>
+</div>
