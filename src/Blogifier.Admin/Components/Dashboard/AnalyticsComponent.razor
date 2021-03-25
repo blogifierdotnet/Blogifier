@@ -27,14 +27,14 @@
         <!--/Time -->
         <!-- Toggle between list or chart  -->
         <div class="btn-group ms-auto" role="group" aria-label="Chart or List">
-            <button type="button" class="btn btn-link rounded-3" @onclick="() => ToggleAnalyticsView(true)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z" />
-                </svg>
-            </button>
-            <button type="button" class="btn btn-link rounded-3 active" @onclick="() => ToggleAnalyticsView(false)">
+            <button type="button" class="btn btn-link rounded-3 @(_hideList ? "" : "text-blogifier")" @onclick="() => ToggleAnalyticsView(false)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                </svg>
+            </button>
+            <button type="button" class="btn btn-link rounded-3 @(_hideGraph ? "" : "text-blogifier")" @onclick="() => ToggleAnalyticsView(true)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5z" />
                 </svg>
             </button>
         </div>
@@ -83,8 +83,8 @@
    private BarConfig _config;
    protected List<PostVisit> _visits;
 
-   protected bool _hideGraph = true;
-   protected bool _hideList = false;
+   protected bool _hideGraph = false;
+   protected bool _hideList = true;
 
    protected override async Task OnInitializedAsync()
    {
@@ -140,6 +140,7 @@
    {
        _hideGraph = await Task.FromResult(!isGraph);
        _hideList = isGraph;
+
    }
 
    protected BarChartModel TestData()
