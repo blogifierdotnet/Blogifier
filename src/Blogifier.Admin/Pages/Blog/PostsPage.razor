@@ -1,5 +1,4 @@
 @page "/admin/blog/"
-
 @using Blogifier.Shared
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
@@ -8,6 +7,8 @@
 @inject NavigationManager _navigation
 @inject BlogStateProvider _stateprovider
 @implements IDisposable
+
+<PageTitle Title="@_localizer["Blog"]" />
 
 <div class="app-posts pr-0 pr-lg-5">
 

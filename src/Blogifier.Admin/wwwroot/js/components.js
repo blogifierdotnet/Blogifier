@@ -293,5 +293,5 @@ function jumpTab(d) {
 // set page title
 // Shared/PageTitle.razor
 window.setTitle = (title) => {
-  document.title = title + " | Blogifier";
+  document.title = title + " - Blogifier";
 }
