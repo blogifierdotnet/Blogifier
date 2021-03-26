@@ -34,9 +34,6 @@ $input-btn-focus-width: 2px;
 $btn-link-color: #666;
 $btn-link-hover-color: $blogifier;
 
-// container
-$container: 66rem;
-
 // accordion
 $accordion-border-width: 0;
 $accordion-body-padding-y: 1rem;
@@ -78,3 +75,10 @@ $hljs-blue: #006ee0;
 $hljs-red: #c30;
 $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
+
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px
+);

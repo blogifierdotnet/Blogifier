@@ -2,6 +2,7 @@
   background-color: #fff;
   padding-top: 1.5rem;
   border-bottom: 1px solid $gray-200;
+  margin-bottom: 3rem;
 }
 .header-nav {
   display: flex;
@@ -133,9 +134,9 @@
   }
 }
 
-@media screen and (max-width: $container + 2rem) {
+@media screen and (max-width: 960px) {
   // remove the negative margin on .header-nav when it's alsmost near the contianer width.
   .header-nav {
-    margin: 0;
+    margin: 0 -.5rem;
   }
 }

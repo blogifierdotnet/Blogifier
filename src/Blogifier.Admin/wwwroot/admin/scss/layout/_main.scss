@@ -9,18 +9,12 @@ body {
   flex-direction: column;
 }
 
-.container {
-  width: $container;
-  max-width: 100%;
-}
-
 .blogifier {
   // app
 }
 
 .content {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
 .footer {
