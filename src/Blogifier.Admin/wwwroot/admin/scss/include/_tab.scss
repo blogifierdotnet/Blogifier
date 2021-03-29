@@ -3,8 +3,8 @@
   &-nav {
     display: flex;
     flex-direction: column;
-    width: 15rem;
-    min-width: 15rem;
+    width: 12rem;
+    min-width: 12rem;
     padding-right: 2rem;
     font-size: 1rem;
 
@@ -31,6 +31,6 @@
   &-content {
     flex-grow: 1;
     width: 100%;
-    max-width:100%;
+    max-width: 100%;
   }
 }
