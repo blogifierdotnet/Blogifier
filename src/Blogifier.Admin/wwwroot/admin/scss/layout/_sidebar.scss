@@ -10,20 +10,55 @@
     margin-left: 10rem;
   }
 
+  // separate
+
+  .separate {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(90deg, $gray-200, transparent);
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .-separate {
+    &-after {
+      &::after {
+        @extend .separate;
+      }
+    }
+    &-before {
+      &::before {
+        @extend .separate;
+      }
+    }
+  }
+
   // one
   &-list {
     @include list-unstyled;
     margin: 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+    padding-left: 0;
+    height: 100%; // TODO: review this for responsive
   }
   &-item {
   }
+
   &-link {
     padding-left: 2rem;
     line-height: 2rem;
     height: 2rem;
     position: relative;
+    color: $gray-600;
+    font-weight: 500;
+    display: block;
 
     &.active {
+      color: $blogifier;
       + .sidebar-sublist {
         display: block;
       }
@@ -37,6 +72,10 @@
     transform: translateY(-50%);
   }
 
+  &-img {
+    border-radius: 100%;
+  }
+
   // two
   &-sublist {
     @include list-unstyled;
@@ -47,5 +86,9 @@
   &-subitem {
   }
   &-sublink {
+    color: $gray-600;
+    &.active {
+      color: $gray-800;
+    }
   }
 }

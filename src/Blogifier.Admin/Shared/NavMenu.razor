@@ -7,42 +7,15 @@
 @if (author != null)
 {
     <nav class="sidebar">
-        <ul class="sidebar-list">
-            <li class="sidebar-item dropdown">
-                <a class="sidebar-link" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                    <img class="sidebar-img" width="20" id="avatar-menu" src="@author.Avatar" alt="DisplayName">
-                    @author.DisplayName
+        <ul class="sidebar-list d-flex flex-column">
+            <li class="sidebar-item -separate-after">
+                <a class="sidebar-link" href="@_navigationManager.BaseUri" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="sidebar-icon bi bi-house" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                        @_localizer["Home page"]
                 </a>
-                <div class="user-nav dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdownMenu">
-                    <div class="user-nav-info">
-                        <AuthorizeView>
-                            <Authorized>
-                                <img class="user-nav-img" id="avatar-submenu" width="64" src="@author.Avatar" alt="@author.DisplayName">
-                                <span class="user-nav-name">@author.DisplayName</span>
-                                <span class="user-nav-email">@author.Email</span>
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
-                    <ul class="user-nav-list">
-                        <li class="user-nav-item">
-                            <a class="user-nav-link" href="@_navigationManager.BaseUri" target="_blank">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-house" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                                </svg>
-                                    @_localizer["Home page"]
-                            </a>
-                        </li>
-                        <li class="user-nav-item">
-                            <a class="user-nav-link" href="/admin/settings/profile/">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
-                                </svg>
-                                @_localizer["Edit profile"]
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </li>
             <li class="sidebar-item">
                 <NavLink class="sidebar-link" href="/admin/" Match="NavLinkMatch.All">
@@ -102,7 +75,6 @@
                 </NavLink>
                 <ul class="sidebar-sublist">
                     <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/" Match="NavLinkMatch.All">@_localizer["Basic"]</NavLink></li>
-                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/profile/">@_localizer["profile"]</NavLink></li>
                     <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/comments/">@_localizer["comments"]</NavLink></li>
                     <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/users/">@_localizer["users"]</NavLink></li>
                     <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/themes/">@_localizer["themes"]</NavLink></li>
@@ -116,6 +88,14 @@
             </li>
             }
 
+
+
+            <li class="sidebar-item mt-auto -separate-before">
+                <NavLink class="sidebar-link" href="/admin/profile/">
+                   <img class="sidebar-img" id="avatar-submenu" width="20" height="20" src="@author.Avatar" alt="@author.DisplayName">
+                    @author.DisplayName
+                </NavLink>
+            </li>
             <li class="sidebar-item">
                 <a class="sidebar-link -logout" href="/admin/logout/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="sidebar-icon bi bi-box-arrow-right" viewBox="0 0 16 16">
