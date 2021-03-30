@@ -41,15 +41,6 @@
                                 @_localizer["Edit profile"]
                             </a>
                         </li>
-                        <li class="user-nav-item">
-                            <a class="user-nav-link -logout" href="/admin/logout/">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                </svg>
-                                @_localizer["Logout"]
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>
@@ -69,6 +60,10 @@
                     </svg>
                     @_localizer["blog"]
                 </NavLink>
+                <ul class="sidebar-sublist">
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/blog/" Match="NavLinkMatch.All">@_localizer["Posts"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/blog/categories/">@_localizer["Categories"]</NavLink></li>
+                </ul>
             </li>
             <li class="sidebar-item">
                 <NavLink class="sidebar-link" href="/admin/pages/">
@@ -88,6 +83,11 @@
                     </svg>
                     @_localizer["newsletter"]
                     </NavLink>
+                    <ul class="sidebar-sublist">
+                        <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/newsletter/" Match="NavLinkMatch.All">@_localizer["newsletter"]</NavLink></li>
+                        <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/newsletter/subscribers/" Match="NavLinkMatch.All">@_localizer["subscribers"]</NavLink></li>
+                        <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/newsletter/settings/">@_localizer["settings"]</NavLink></li>
+                    </ul>
                 </li>
             }
             @if (author.IsAdmin)
@@ -101,15 +101,30 @@
                     @_localizer["settings"]
                 </NavLink>
                 <ul class="sidebar-sublist">
-                    <li class="sidebar-subitem"><a class="sidebar-sublink" href="#">Test One</a></li>
-                    <li class="sidebar-subitem"><a class="sidebar-sublink" href="#">Test Two</a></li>
-                    <li class="sidebar-subitem"><a class="sidebar-sublink" href="#">Test Three</a></li>
-                    <li class="sidebar-subitem"><a class="sidebar-sublink" href="#">Test Four</a></li>
-                    <li class="sidebar-subitem"><a class="sidebar-sublink" href="#">Test Five</a></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/" Match="NavLinkMatch.All">@_localizer["Basic"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/profile/">@_localizer["profile"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/comments/">@_localizer["comments"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/users/">@_localizer["users"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/themes/">@_localizer["themes"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/customize/">@_localizer["customize"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/scripts/">@_localizer["scripts"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/import/">@_localizer["import"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/error/">@_localizer["Error Page"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/advanced/">@_localizer["advanced"]</NavLink></li>
+                    <li class="sidebar-subitem"><NavLink class="sidebar-sublink" href="/admin/settings/about/">@_localizer["about"]</NavLink></li>
                 </ul>
             </li>
             }
 
+            <li class="sidebar-item">
+                <a class="sidebar-link -logout" href="/admin/logout/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="sidebar-icon bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                    @_localizer["Logout"]
+                </a>
+            </li>
         </ul>
     </nav>
 }

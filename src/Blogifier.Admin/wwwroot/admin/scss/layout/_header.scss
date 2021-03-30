@@ -22,6 +22,12 @@
     line-height: 2rem;
     height: 2rem;
     position: relative;
+
+    &.active {
+      + .sidebar-sublist {
+        display: block;
+      }
+    }
   }
   &-img,
   &-icon {
@@ -36,6 +42,7 @@
     @include list-unstyled;
     margin: 0;
     padding-left: 2rem;
+    display: none;
   }
   &-subitem {
   }
