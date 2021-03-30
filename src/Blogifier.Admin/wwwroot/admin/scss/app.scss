@@ -18,11 +18,10 @@
 
 // layout
 @import "layout/main";
-@import "layout/header";
+@import "layout/sidebar";
 
 // components
 @import "include/blazor";
-@import "include/tab";
 @import "include/section";
 @import "include/buttons";
 @import "include/forms";
