@@ -1,14 +1,5 @@
 ﻿.sidebar {
-  &::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #f8f9fa;
-    z-index: -1;
-    margin-left: 10rem;
-  }
+
 
   // separate
 
@@ -39,10 +30,7 @@
   &-list {
     @include list-unstyled;
     margin: 0;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-right: 2rem;
-    padding-left: 0;
+    padding: 2rem;
     height: 100%; // TODO: review this for responsive
   }
   &-item {

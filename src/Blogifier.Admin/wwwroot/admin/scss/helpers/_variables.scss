@@ -4,7 +4,7 @@ $default: #fff;
 $warning: #ff8d00;
 
 // body
-$body-bg: #fff;
+$body-bg: #f8f9fa;
 $font-size-base: .875rem;
 $body-color: #111;
 $link-color: $blogifier;
@@ -78,8 +78,5 @@ $hljs-sky: #2f6f9f;
 
 
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1200px
+  xl: 1280px
 );

@@ -7,21 +7,45 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: 1200px) {
+    background-color: #fff;
+  }
 }
 
 .blogifier {
   height: 100%;
+  padding: 0;
   // app
 }
 
 .content {
-  margin-bottom: 3rem;
   flex-grow: 1;
-  padding-left: 2rem;
-  padding-top: 2rem;
+  padding: 2rem;
+
+  @media screen and (min-width: 1200px) {
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #f8f9fa;
+      z-index: -1;
+      margin-left: -2rem;
+    }
+  }
 }
 .sidebar {
-  min-width: 10rem;
+  min-width: 12rem;
+  background-color: #fff;
+  @media screen and (max-width: 1199px) {
+    z-index: 1000;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
 }
 
 .footer {
