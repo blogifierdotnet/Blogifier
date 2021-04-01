@@ -1,3 +1,4 @@
+@layout ProfileLayout
 @page "/admin/profile/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
@@ -50,28 +51,6 @@
 
 </div>
 
-<h1 class="section-title">@_localizer["change-password"]</h1>
-<div class="section-content -half">
-   @if (Author != null)
-   {
-      <EditForm Model="@Model" OnValidSubmit="SavePassword">
-         <DataAnnotationsValidator />
-         <div class="form-item">
-            <label class="form-label">@_localizer["password"]</label>
-            <input class="form-control" type="password" @bind="Model.Password" />
-            <ValidationMessage For="@(() => Model.Password)"></ValidationMessage>
-         </div>
-         <div class="form-item">
-            <label class="form-label">@_localizer["confirm-password"]</label>
-            <input class="form-control" type="password" @bind="Model.PasswordConfirm" />
-            <ValidationMessage For="@(() => Model.PasswordConfirm)"></ValidationMessage>
-         </div>
-         <div class="form-item">
-            <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
-         </div>
-      </EditForm>
-   }
-</div>
 <ToasterComponent @ref="Toaster" />
 
 @code {
@@ -97,12 +76,6 @@
    protected async Task SaveProfile()
    {
        Toaster.Toast(await _http.PutAsJsonAsync<Author>("api/author/update", Author));
-       await Load();
-   }
-
-   protected async Task SavePassword()
-   {
-       Toaster.Toast(await _http.PutAsJsonAsync<RegisterModel>("api/author/changepassword", Model));
        await Load();
    }
 
