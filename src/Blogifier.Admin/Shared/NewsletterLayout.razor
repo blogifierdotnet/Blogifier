@@ -1,0 +1,17 @@
+@layout MainLayout
+@inherits LayoutComponentBase
+@inject NavigationManager _navigationManager
+@inject IJSRuntime _jsRuntime
+@inject IStringLocalizer<Resource> _localizer
+
+<div class="sidebar">
+    <div class="sidebar-nav">
+        <NavLink class="sidebar-link" href="/admin/newsletter/" Match="NavLinkMatch.All">@_localizer["newsletter"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/newsletter/subscribers/" Match="NavLinkMatch.All">@_localizer["subscribers"]</NavLink>
+        <hr>
+        <NavLink class="sidebar-link" href="/admin/newsletter/settings/">@_localizer["settings"]</NavLink>
+    </div>
+    <div class="sidebar-content">
+        @Body
+    </div>
+</div>

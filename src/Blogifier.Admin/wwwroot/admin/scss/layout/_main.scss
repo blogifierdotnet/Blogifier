@@ -7,10 +7,6 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  @media screen and (min-width: 1200px) {
-    background-color: #fff;
-  }
 }
 
 .blogifier {
@@ -20,45 +16,9 @@ body {
 }
 
 .content {
-  flex-grow: 1;
-  padding: 2rem;
 
-  @media screen and (min-width: 1200px) {
-    &::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #f8f9fa;
-      z-index: -1;
-      margin-left: -2rem;
-    }
-  }
 }
-.sidebar {
-  min-width: 12rem;
-  background-color: #fff;
-  @media screen and (max-width: 1199px) {
-    z-index: 1000;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    display: none;
-  }
+.menu {
 }
 
-.footer {
-  text-align: right;
-  font-size: 0.75rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  margin-top: auto;
-  color: $gray-500;
-  a {
-    color: $gray-500;
-    &:hover {
-      color: $blogifier;
-    }
-  }
-}
+

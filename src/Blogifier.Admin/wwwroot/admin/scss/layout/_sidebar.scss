@@ -1,82 +1,35 @@
 ﻿.sidebar {
-
-
-  // separate
-
-  .separate {
-    content: "";
-    width: 100%;
-    height: 1px;
-    background-image: linear-gradient(90deg, $gray-200, transparent);
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .-separate {
-    &-after {
-      &::after {
-        @extend .separate;
-      }
+  display: flex;
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+    min-width: 12rem;
+    padding-right: 2rem;
+    font-size: 1rem;
+    hr {
+      background: linear-gradient(90deg, $gray-600, transparent);
+      width: 65%;
     }
-    &-before {
-      &::before {
-        @extend .separate;
-      }
-    }
-  }
-
-  // one
-  &-list {
-    @include list-unstyled;
-    margin: 0;
-    padding: 2rem;
-    height: 100%; // TODO: review this for responsive
-  }
-  &-item {
   }
 
   &-link {
-    padding-left: 2rem;
     line-height: 2rem;
-    height: 2rem;
-    position: relative;
     color: $gray-600;
-    font-weight: 500;
-    display: block;
+
+    &:hover {
+      color: $dark;
+    }
 
     &.active {
-      color: $blogifier;
-      + .sidebar-sublist {
-        display: block;
-      }
+      font-weight: 500;
+      color: $gray-900;
     }
   }
-  &-img,
-  &-icon {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-  }
 
-  &-img {
-    border-radius: 100%;
-  }
-
-  // two
-  &-sublist {
-    @include list-unstyled;
-    margin: 0;
-    padding-left: 2rem;
-    display: none;
-  }
-  &-subitem {
-  }
-  &-sublink {
-    color: $gray-600;
-    &.active {
-      color: $gray-800;
-    }
+  &-content {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 100%;
   }
 }

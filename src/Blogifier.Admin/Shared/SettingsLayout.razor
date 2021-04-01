@@ -1,0 +1,26 @@
+@layout MainLayout
+@inherits LayoutComponentBase
+@inject NavigationManager _navigationManager
+@inject IJSRuntime _jsRuntime
+@inject IStringLocalizer<Resource> _localizer
+
+<div class="sidebar">
+    <div class="sidebar-nav">
+        <NavLink class="sidebar-link" href="/admin/settings/" Match="NavLinkMatch.All">@_localizer["Basic"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/comments/">@_localizer["comments"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/users/">@_localizer["users"]</NavLink>
+        <hr>
+        <NavLink class="sidebar-link" href="/admin/settings/themes/">@_localizer["themes"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/customize/">@_localizer["customize"]</NavLink>
+        <hr>
+        <NavLink class="sidebar-link" href="/admin/settings/scripts/">@_localizer["scripts"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/import/">@_localizer["import"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/error/">@_localizer["Error Page"]</NavLink>
+        <NavLink class="sidebar-link" href="/admin/settings/advanced/">@_localizer["advanced"]</NavLink>
+        <hr>
+        <NavLink class="sidebar-link" href="/admin/settings/about/">@_localizer["about"]</NavLink>
+    </div>
+    <div class="sidebar-content">
+        @Body
+    </div>
+</div>

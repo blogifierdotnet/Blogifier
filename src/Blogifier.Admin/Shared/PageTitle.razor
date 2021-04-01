@@ -11,6 +11,6 @@
 
     private async Task setTitle()
     {
-        await _jsRuntime.InvokeVoidAsync("setTitle", Title );
+        await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title );
     }
 }

@@ -1,7 +1,12 @@
 var easymde = {};
 
 window.commonJsFunctions = {
+  setTitle: function (title) {
+    document.title = title + " - Blogifier";
+  },
+  setPageTitle: function () {
 
+  },
   showPrompt: function (message) {
     return prompt(message, 'Type anything here');
   },
@@ -288,10 +293,4 @@ function insertYoutube(editor) {
 function jumpTab(d) {
   var selectJumpTab = new bootstrap.Tab(document.querySelector(d))
   selectJumpTab.show()
-}
-
-// set page title
-// Shared/PageTitle.razor
-window.setTitle = (title) => {
-  document.title = title + " - Blogifier";
 }
