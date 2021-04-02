@@ -4,14 +4,6 @@
 @inject IJSRuntime _jsRuntime
 @inject IStringLocalizer<Resource> _localizer
 
-@* <nav class="navmenu d-flex d-xl-none" id="navmenu">
-    <button class="navmenu-toggle @(toggleMenuStatus ? "active" : "")" @onclick="@toggleMenu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-        </svg>
-    </button>
-    <div class="navmenu-title" id="pageTitle">Page Title</div>
-</nav> *@
 
 @if (author != null)
 {
@@ -129,12 +121,5 @@
         {
             await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
         }
-    }
-
-    private bool toggleMenuStatus { get; set; } = false;
-
-    private void toggleMenu()
-    {
-        toggleMenuStatus = !toggleMenuStatus;
     }
 }

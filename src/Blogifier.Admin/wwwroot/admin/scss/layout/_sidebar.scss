@@ -1,21 +1,32 @@
 ﻿.sidebar {
-  display: flex;
-  &-nav {
-    display: flex;
-    flex-direction: column;
-    width: 12rem;
-    min-width: 12rem;
-    padding-right: 2rem;
-    font-size: 1rem;
-    hr {
-      background: linear-gradient(90deg, $gray-600, transparent);
-      width: 65%;
+  font-size: 1rem;
+  hr {
+    background: linear-gradient(90deg, $gray-600, transparent);
+    width: 65%;
+  }
+
+  &-toggle {
+    width: 100%;
+    display: block;
+    height: 3rem;
+    border: 0;
+    text-align: left;
+    padding: 0 0.75rem;
+    background: none;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+
+    .bi {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
     }
   }
 
   &-link {
-    line-height: 2rem;
     color: $gray-600;
+    display: block;
 
     &:hover {
       color: $dark;
@@ -26,10 +37,43 @@
       color: $gray-900;
     }
   }
+}
+@media screen and (min-width: 992px) {
+  .sidebar {
+    width: 12rem;
+    min-width: 12rem;
+    padding-right: 2rem;
 
-  &-content {
-    flex-grow: 1;
-    width: 100%;
-    max-width: 100%;
+    &-link {
+      line-height: 2rem;
+    }
+  }
+}
+@media screen and (max-width: 991px) {
+  .sidebar {
+    position: relative;
+    margin: -2rem -0.75rem 2rem;
+
+    &-nav {
+      display: none;
+      width: 100%;
+      position: absolute;
+      z-index: 100;
+      top: 3rem;
+      left: 0;
+
+      @include bf-card;
+      &.active,
+      &.-active {
+        display: block;
+      }
+    }
+    hr {
+      display: none;
+    }
+    &-link {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
   }
 }

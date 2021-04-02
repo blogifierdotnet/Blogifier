@@ -16,7 +16,7 @@ namespace Blogifier.Admin.Pages.Account
 			if (result.IsSuccessStatusCode)
 			{
 				showError = false;
-				_navigationManager.NavigateTo("admin", true);
+				_navigationManager.NavigateTo("admin/", true);
 			}
 			else
 			{

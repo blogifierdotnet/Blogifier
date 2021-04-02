@@ -4,11 +4,14 @@
     &:not(:last-child) {
       margin-bottom: 4rem;
     }
-    &.-full {
-      max-width: 100%;
-    }
-    &.-half {
-      max-width: 50%;
+
+    @media screen and (min-width: 992px) {
+      &.-full {
+        max-width: 100%;
+      }
+      &.-half {
+        max-width: 50%;
+      }
     }
   }
 
