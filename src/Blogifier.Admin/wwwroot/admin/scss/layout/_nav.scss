@@ -1,14 +1,11 @@
 .menu {
   background-color: #fff;
   margin-bottom: 2rem;
-  padding-top: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.075);
-
+  box-shadow: $bf-shadow;
   // one
   &-list {
     @include list-unstyled;
     margin: 0;
-    height: 100%; // TODO: review this for responsive
     margin: 0 -0.875rem;
   }
 
@@ -16,8 +13,8 @@
   }
 
   &-link {
-    line-height: 2.75rem;
-    height: 3.25rem;
+    line-height: 4rem;
+    height: 4rem;
     width: 3rem;
     position: relative;
     color: $gray-600;
@@ -47,7 +44,7 @@
       content: "";
       display: block;
       width: 1.25rem;
-      height: 0.125rem;
+      height: 0.0625rem;
       background-color: transparent;
       position: absolute;
       bottom: -0.0625rem;
@@ -56,32 +53,7 @@
       border-radius: 1rem;
     }
   }
-  &-img,
-  &-icon {
-  }
-
-  &-img {
-    border-radius: 100%;
-  }
-
-  // two
-  &-sublist {
-    @include list-unstyled;
-    margin: 0;
-    padding-left: 2rem;
-    display: none;
-  }
-  &-subitem {
-  }
-  &-sublink {
-    color: $gray-600;
-    &.active {
-      color: $gray-800;
-    }
-  }
 }
-
-
 
 .user-nav {
   width: 15rem;

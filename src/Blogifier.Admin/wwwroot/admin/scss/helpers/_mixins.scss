@@ -1,5 +1,5 @@
-@mixin bf-card($radius: .25rem) {
-    background: #fff;
-    box-shadow: $bf-shadow;
-    border-radius: $radius;
-} 
+@mixin bf-shadow($rad: .25rem, $shad: $bf-shadow, $bg: #fff) {
+    background: $bg;
+    box-shadow: $shad;
+    border-radius: $rad;
+}

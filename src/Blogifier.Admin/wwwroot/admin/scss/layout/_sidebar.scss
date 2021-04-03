@@ -62,7 +62,7 @@
       top: 3rem;
       left: 0;
 
-      @include bf-card;
+      @include bf-shadow;
       &.active,
       &.-active {
         display: block;

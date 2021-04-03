@@ -1,6 +1,6 @@
 ﻿.dash {
   &-widget {
-    @include bf-card(0.5rem);
+    @include bf-shadow(0.5rem);
     margin-bottom: 1.5rem;
 
     // sizes

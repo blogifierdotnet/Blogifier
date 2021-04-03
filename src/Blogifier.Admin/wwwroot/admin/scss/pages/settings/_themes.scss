@@ -2,7 +2,7 @@
   margin-top: 1.5rem;
 
   &-item {
-    @include bf-card();
+    @include bf-shadow();
     overflow: hidden;
     margin-bottom: 2rem;
   }

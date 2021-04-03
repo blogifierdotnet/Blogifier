@@ -9,16 +9,15 @@ body {
   flex-direction: column;
 }
 
+// index.html
 .blogifier {
   height: 100%;
-  padding: 0;
-  // app
 }
 
+// shared/MainLayout.razor
 .content {
-
 }
+
+// shared/NavMenu.razor
 .menu {
 }
-
-
