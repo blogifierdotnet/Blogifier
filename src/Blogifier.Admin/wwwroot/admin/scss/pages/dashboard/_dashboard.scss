@@ -42,15 +42,55 @@
 
   &-pan {
     &-header {
-      border-bottom: 1px solid var(--bs-light);
-      padding: 0.75rem;
+      border-bottom: 1px solid $gray-200;
+      padding: 0 1rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      color: $gray-700;
+    }
+    &-title {
+      font-weight: 500;
     }
     &-body {
-      padding: 0.75rem;
+      padding: 1rem;
     }
   }
 
   &-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
+    &-item {
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $gray-100;
+      }
+    }
+
+    &-title {
+      display: block;
+      flex-grow: 1;
+      margin-right: 0.5rem;
+      line-height: 2.75rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #343a40;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-text {
+      font-size: 0.75rem;
+      line-height: 1.1;
+      color: #495057;
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
   }
 }

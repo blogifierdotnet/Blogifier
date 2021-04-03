@@ -8,13 +8,13 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<div class="dash-widget p-4">
-    <div class="list-toolbar">
+<div class="dash-widget dash-pan">
+    <div class="dash-pan-header">
+        <div class="dash-pan-title">@_localizer["Analytics"]</div>
 
-        <!--Time -->
         <div class="dropdown dropdown-flush">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
-                @_localizer["last"] 7 @_localizer["days"]
+               Chart -  7 @_localizer["days"]
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
                 <button type="button" class="dropdown-item"><span>@_localizer["today"]</span></button>
@@ -24,8 +24,6 @@
                 <button type="button" class="dropdown-item"><span>@_localizer["last"] 90 @_localizer["days"]</span></button>
             </div>
         </div>
-        <!--/Time -->
-        <!-- Toggle between list or chart  -->
         <div class="btn-group ms-auto" role="group" aria-label="Chart or List">
             <button type="button" class="btn btn-link rounded-3 @(_hideList ? "" : "text-blogifier")" @onclick="() => ToggleAnalyticsView(false)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
@@ -38,8 +36,6 @@
                 </svg>
             </button>
         </div>
-        <!--/Toggle -->
-
     </div>
 
     <!-- List -->
@@ -50,18 +46,18 @@
         Note:
         A single visitor maybe visits 10 pages, so that's why we have Visits and Visitors.
     -->
-    <ul hidden="@_hideList" class="list compact">
-        <li class="list-item">
-            <span class="list-title">Title</span>
-            <span class="list-text text-end col-2">Visits</span>
+    <ul hidden="@_hideList" class="dash-list">
+        <li class="dash-list-item">
+            <strong class="dash-list-title">Title</strong>
+            <strong class="dash-list-text">Visits</strong>
         </li>
         @if (_visits != null && _visits.Count > 0)
         {
             foreach (var visit in _visits)
             {
-            <li class="list-item">
-                <span class="list-title">@visit.Name</span>
-                <span class="list-text text-end col-2">@visit.Value</span>
+            <li class="dash-list-item">
+                <span class="dash-list-title">@visit.Name</span>
+                <span class="dash-list-text pe-2">@visit.Value</span>
             </li>
             }
          }
@@ -72,7 +68,7 @@
     <!--
         Chart must show visits per day not by the title of the post.
     -->
-    <div hidden="@_hideGraph">
+    <div class="dash-pan-body" hidden="@_hideGraph">
         <Chart Config="_config"></Chart>
     </div>
     <!--/Chart -->
