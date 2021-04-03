@@ -76,7 +76,11 @@ $hljs-red: #c30;
 $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
 
-
 $container-max-widths: (
   xl: 1024px
 );
+
+:root {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}

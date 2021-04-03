@@ -11,15 +11,18 @@
     height: 3rem;
     border: 0;
     text-align: left;
-    padding: 0 0.75rem;
+    padding: 0 1.5rem;
     background: none;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid #f1f1f1;
+    box-shadow: $bf-shadow;
     background-color: #fff;
+    font-size: 0.876rem;
+    font-weight: 500;
 
     .bi {
       position: absolute;
       top: 50%;
-      right: 1rem;
+      right: 1.5rem;
       transform: translateY(-50%);
     }
   }
@@ -52,28 +55,28 @@
 @media screen and (max-width: 991px) {
   .sidebar {
     position: relative;
-    margin: -2rem -0.75rem 2rem;
+    margin: -2rem -1.5rem 2rem;
 
     &-nav {
       display: none;
       width: 100%;
       position: absolute;
       z-index: 100;
-      top: 3rem;
+      top: 3.0625rem;
       left: 0;
-
-      @include bf-shadow;
+      padding: 1rem 1.5rem;
+      @include bf-shadow(0);
       &.active,
       &.-active {
         display: block;
       }
     }
     hr {
-      display: none;
+      margin: 0.75rem 0;
     }
     &-link {
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #eee;
+      padding: 0;
+      font-size: 0.875rem;
     }
   }
 }

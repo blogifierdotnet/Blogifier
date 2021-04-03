@@ -2,48 +2,55 @@
   &-widget {
     @include bf-shadow(0.5rem);
     margin-bottom: 1.5rem;
+  }
 
-    // sizes
+  &-link {
+    padding: 2rem 0.5rem;
+    display: block;
+    text-align: center;
+    color: $gray-600;
+    transition: box-shadow ease-in-out 0.25s;
+    &:hover {
+      @include bf-shadow(0.5rem, 0px 1px 2px 0px rgba(0, 0, 0, 0.2));
+      color: $blogifier;
+    }
+  }
 
-    &-medium {
-    }
-    &-wide {
-    }
-    &-large {
-    }
-
-    // styles
-    &-link {
-      padding: 2rem 0.5rem;
+  &-btn {
+    .bi {
       display: block;
-      text-align: center;
-      color: $gray-600;
-      &-icon {
-        display: block;
-        margin: 0 auto 1rem;
-      }
-      &-name {
-        display: block;
-      }
-      &:hover {
-        color: $blogifier;
-      }
+      height: 3rem;
     }
-
-    &-info {
-      padding: 2rem 0.5rem;
+    &-name {
       display: block;
-      text-align: center;
-      color: $gray-600;
-      &-icon {
-        font-size: 1.5rem;
-        font-weight: 300;
-        display: block;
-        margin-bottom: 1rem;
-      }
-      &-name {
-        display: block;
-      }
+      font-weight: 500;
     }
+  }
+
+  &-stats {
+    &-value {
+      font-size: 1.5rem;
+      font-weight: 300;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    &-name {
+      display: block;
+      font-weight: 500;
+    }
+  }
+
+  &-pan {
+    &-header {
+      border-bottom: 1px solid var(--bs-light);
+      padding: 0.75rem;
+    }
+    &-body {
+      padding: 0.75rem;
+    }
+  }
+
+  &-list {
+
   }
 }
