@@ -72,7 +72,7 @@
     overflow: hidden;
     border: 0;
     margin-top: 0.5rem !important;
-    @include bf-shadow();
+    box-shadow: -1rem 1rem 5rem rgba(#000, .25);
   }
   .dropdown-item {
     padding: 0.5rem 1rem;

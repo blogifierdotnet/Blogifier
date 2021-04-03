@@ -48,6 +48,19 @@
       display: flex;
       align-items: center;
       color: $gray-700;
+
+      [data-bs-toggle="dropdown"] {
+        .bi {
+          transition: transform ease 0.25s;
+        }
+        &[aria-expanded="true"] {
+          color: $blogifier !important;
+          .bi-chevron-down {
+            transition: transform ease 0.25s;
+            transform: scaleY(-1);
+          }
+        }
+      }
     }
     &-title {
       font-weight: 500;
@@ -76,7 +89,7 @@
       display: block;
       flex-grow: 1;
       margin-right: 0.5rem;
-      line-height: 2.75rem;
+      line-height: 2.25rem;
       font-weight: 500;
       font-size: 0.875rem;
       color: #343a40;
