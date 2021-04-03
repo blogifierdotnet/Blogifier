@@ -19,7 +19,7 @@
             <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
         </label>
 
-        <a class="btn btn-blogifier me-3 -add" href="/admin/editor">@NewPostLabel</a>
+        <a class="btn btn-blogifier me-3 -add" href="/admin/editor">@_localizer["New post"]</a>
 
         <div class="dropdown dropdown-flush">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
@@ -168,11 +168,6 @@
    protected string PostTypeLabel { get; set; }
    protected string PostTypeButton { get; set; }
    protected PostType PostTypeValue { get; set; }
-
-   protected string NewPostLabel
-   {
-       get { return PostTypeValue == PostType.Post ? _localizer["New post"] : _localizer["New page"]; }
-   }
 
    protected override async Task OnInitializedAsync()
    {

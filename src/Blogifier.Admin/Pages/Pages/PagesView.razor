@@ -18,42 +18,39 @@
             <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
         </label>
 
-        <a class="btn btn-blogifier me-3 -add" href="/admin/editor">@NewPostLabel</a>
+        <a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["New page"]</a>
 
-        <div class="dropdown dropdown-flush">
-            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
-                @_localizer["Action"]
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
-                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Feature))" class="dropdown-item text-blogifier">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                    </svg>
-                    <span>@_localizer["featured"]</span>
-              </button>
-                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item text-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                    </svg>
-                    <span>@_localizer["publish"]</span>
-              </button>
-                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item text-warning">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                    </svg>
-                    <span>@_localizer["unpublish"]</span>
-              </button>
-                <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
-                    <span>@_localizer["delete"]</span>
-              </button>
+        @if (Posts != null && Posts.Count > 0)
+        {
+            <div class="dropdown dropdown-flush">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
+                    @_localizer["Action"]
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
+                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item text-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                        </svg>
+                        <span>@_localizer["publish"]</span>
+                    </button>
+                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item text-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        </svg>
+                        <span>@_localizer["unpublish"]</span>
+                    </button>
+                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <span>@_localizer["delete"]</span>
+                    </button>
+                </div>
             </div>
-        </div>
+        }
 
         <div class="dropdown dropdown-flush  ms-auto ms-3">
             <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +60,6 @@
                 <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@_localizer["all"]</button>
                 <button @onclick="(async ()=> await Filter(PublishedStatus.Drafts))" class="dropdown-item">@_localizer["draft", true]</button>
                 <button @onclick="(async ()=> await Filter(PublishedStatus.Published))" class="dropdown-item">@_localizer["published"]</button>
-                <button @onclick="(async ()=> await Filter(PublishedStatus.Featured))" class="dropdown-item">@_localizer["featured"]</button>
             </div>
         </div>
 
@@ -90,14 +86,13 @@
                 @{
                     string pubDate = post.Published > DateTime.MinValue ? post.Published.ToFriendlyShortDateString() : "Draft";
                     string pubStatus = post.Published > DateTime.MinValue ? "published" : "draft";
-                    string featured = post.IsFeatured ? "featured" : "";
                 }
 
                 <li class="list-item">
                     <label class="list-check form-check">
                         <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
                     </label>
-                    <a class="list-title -link" href="/admin/editor/@post.Slug">
+                    <a class="list-title -link" href="/admin/pages/editor/@post.Slug">
                         @post.Title
                     </a>
                     <span class="list-text -nowrap ms-auto">
@@ -116,20 +111,6 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                            </svg>
-                        }
-                    </button>
-                    <button class="list-btn" @onclick="(async () => await Featured(post))" data-toggle="tooltip" title="Featured">
-                        @if (@featured == "featured")
-                        {
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star text-blogifier" viewBox="0 0 16 16">
-                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                            </svg>
-                        }
-                        else
-                        {
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                             </svg>
                         }
                     </button>
@@ -156,173 +137,145 @@
 </div>
 
 @code {
-   protected List<Post> Posts { get; set; }
-   protected Author Author { get; set; }
+    protected List<Post> Posts { get; set; }
+    protected Author Author { get; set; }
 
-   protected string SearchTerm { get; set; }
+    protected string SearchTerm { get; set; }
 
-   protected string FilterLabel { get; set; }
-   protected PublishedStatus FilterValue { get; set; }
+    protected string FilterLabel { get; set; }
+    protected PublishedStatus FilterValue { get; set; }
 
-   protected string PostTypeLabel { get; set; }
-   protected string PostTypeButton { get; set; }
-   protected PostType PostTypeValue { get; set; }
+    protected string PostTypeLabel { get; set; }
+    protected string PostTypeButton { get; set; }
 
-   protected string NewPostLabel
-   {
-       get { return PostTypeValue == PostType.Post ? _localizer["New post"] : _localizer["New page"]; }
-   }
+    protected override async Task OnInitializedAsync()
+    {
+        Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
 
-   protected override async Task OnInitializedAsync()
-   {
-       Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
+        FilterLabel = _localizer["all"];
+        PostTypeLabel = _localizer["posts"];
+        PostTypeButton = _localizer["post"];
 
-       FilterLabel = _localizer["all"];
-       PostTypeLabel = _localizer["posts"];
-       PostTypeButton = _localizer["post"];
+        _stateprovider.OnChange += StateHasChanged;
+        _stateprovider.PostType = PostType.Post;
 
-       _stateprovider.OnChange += StateHasChanged;
-       _stateprovider.PostType = PostType.Post;
-       PostTypeValue = PostType.Post;
+        await Load();
+    }
 
-       await Load();
-   }
+    protected async Task Load()
+    {
+        Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostType.Page}");
+    }
 
-   protected async Task Load()
-   {
-       Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostTypeValue}");
-   }
+    public void CheckAll(object checkValue)
+    {
+        bool isChecked = (bool)checkValue;
+        Posts.ForEach(p => p.Selected = isChecked);
+        StateHasChanged();
+    }
 
-   public void CheckAll(object checkValue)
-   {
-       bool isChecked = (bool)checkValue;
-       Posts.ForEach(p => p.Selected = isChecked);
-       StateHasChanged();
-   }
+    public async Task RunAction(GroupAction action)
+    {
+        string confirm = _localizer["confirm-delete"];
+        bool confirmed = false;
 
-   public async Task RunAction(GroupAction action)
-   {
-       string confirm = _localizer["confirm-delete"];
-       bool confirmed = false;
+        if (action == GroupAction.Delete)
+        {
+            confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
+            if (!confirmed)
+                return;
+        }
 
-       if (action == GroupAction.Delete)
-       {
-           confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
-           if (!confirmed)
-               return;
-       }
+        foreach (var post in Posts)
+        {
+            if (post.Selected)
+            {
+                switch (action)
+                {
+                    case GroupAction.Publish:
+                        await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
+                        break;
+                    case GroupAction.Unpublish:
+                        await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
+                        break;
+                    case GroupAction.Delete:
+                        await _http.DeleteAsync($"api/post/{post.Id}");
+                        break;
+                }
+            }
+        }
+        await Load();
+    }
 
-       foreach (var post in Posts)
-       {
-           if (post.Selected)
-           {
-               switch (action)
-               {
-                   case GroupAction.Publish:
-                       await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
-                       break;
-                   case GroupAction.Unpublish:
-                       await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
-                       break;
-                   case GroupAction.Feature:
-                       await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured);
-                       break;
-                   case GroupAction.Delete:
-                       await _http.DeleteAsync($"api/post/{post.Id}");
-                       break;
-               }
-           }
-       }
-       await Load();
-   }
+    protected async Task SearchKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+            await SearchPosts();
+    }
 
-   protected async Task SearchKeyPress(KeyboardEventArgs e)
-   {
-       if (e.Key == "Enter")
-           await SearchPosts();
-   }
+    protected async Task SearchPosts()
+    {
+        if (string.IsNullOrEmpty(SearchTerm))
+            SearchTerm = "*";
 
-   protected async Task SearchPosts()
-   {
-       if (string.IsNullOrEmpty(SearchTerm))
-           SearchTerm = "*";
+        Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
+        SearchTerm = "";
+    }
 
-       Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
-       SearchTerm = "";
-   }
+    protected async Task GetPages()
+    {
+        PostTypeLabel = _localizer["pages"];
+        PostTypeButton = _localizer["page"];
+        _stateprovider.SetPostType(PostType.Page);
+        await Load();
+    }
 
-   protected async Task GetPosts()
-   {
-       PostTypeLabel = _localizer["posts"];
-       PostTypeButton = _localizer["post"];
-       PostTypeValue = PostType.Post;
-       _stateprovider.SetPostType(PostType.Post);
-       await Load();
-   }
+    public async Task Filter(PublishedStatus filter)
+    {
+        FilterValue = filter;
+        switch (filter)
+        {
+            case PublishedStatus.Published:
+                FilterLabel = _localizer["published"];
+                break;
+            case PublishedStatus.Drafts:
+                FilterLabel = _localizer["draft", true];
+                break;
+            default:
+                FilterLabel = _localizer["all"];
+                break;
+        }
+        await Load();
+    }
 
-   protected async Task GetPages()
-   {
-       PostTypeLabel = _localizer["pages"];
-       PostTypeButton = _localizer["page"];
-       PostTypeValue = PostType.Page;
-       _stateprovider.SetPostType(PostType.Page);
-       await Load();
-   }
+    public async Task Publish(Post post)
+    {
+        Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.Published == DateTime.MinValue)));
+        await Load();
+    }
 
-   public async Task Filter(PublishedStatus filter)
-   {
-       FilterValue = filter;
-       switch (filter)
-       {
-           case PublishedStatus.Published:
-               FilterLabel = _localizer["published"];
-               break;
-           case PublishedStatus.Drafts:
-               FilterLabel = _localizer["draft", true];
-               break;
-           case PublishedStatus.Featured:
-               FilterLabel = _localizer["featured"];
-               break;
-           default:
-               FilterLabel = _localizer["all"];
-               break;
-       }
-       await Load();
-   }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+        }
+    }
 
-   public async Task Publish(Post post)
-   {
-       Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.Published == DateTime.MinValue)));
-       await Load();
-   }
+    protected void Toast(HttpResponseMessage msg)
+    {
+        if (msg.IsSuccessStatusCode)
+            _toaster.Success(_localizer["completed"]);
+        else
+            _toaster.Error(_localizer["generic-error"]);
+    }
 
-   public async Task Featured(Post post)
-   {
-       Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
-       await Load();
-   }
+    protected void Open()
+    {
+    }
 
-   protected override async Task OnAfterRenderAsync(bool firstRender)
-   {
-       if (firstRender)
-       {
-           await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-       }
-   }
-
-   protected void Toast(HttpResponseMessage msg)
-   {
-       if (msg.IsSuccessStatusCode)
-           _toaster.Success(_localizer["completed"]);
-       else
-           _toaster.Error(_localizer["generic-error"]);
-   }
-
-   protected void Open() {
-   }
-
-   public void Dispose()
-   {
-       _stateprovider.OnChange -= StateHasChanged;
-   }
+    public void Dispose()
+    {
+        _stateprovider.OnChange -= StateHasChanged;
+    }
 }

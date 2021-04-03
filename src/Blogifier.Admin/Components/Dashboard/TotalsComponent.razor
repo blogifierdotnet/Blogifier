@@ -1,4 +1,4 @@
-﻿@inject HttpClient _http
+@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
 @if (_model != null)
@@ -12,7 +12,7 @@
         </div>
         <div class="col-4">
             <div class="dash-widget dash-widget-info">
-                <span class="dash-widget-info-icon">0</span>
+                <span class="dash-widget-info-icon">@_model.TotalPages</span>
                 <span class="dash-widget-info-name">@_localizer["pages"]</span>
             </div>
         </div>

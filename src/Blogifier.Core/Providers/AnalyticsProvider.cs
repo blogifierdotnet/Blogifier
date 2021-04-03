@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +26,8 @@ namespace Blogifier.Core.Providers
 		{
 			var model = new AnalyticsModel()
 			{
-				TotalPosts = _db.Posts.Count(),
+				TotalPosts = _db.Posts.Where(p => p.PostType == PostType.Post).Count(),
+                TotalPages = _db.Posts.Where(p => p.PostType == PostType.Page).Count(),
 				TotalViews = _db.Posts.Select(v => v.PostViews).Sum(),
 				TotalSubscribers = _db.Subscribers.Count(),
 				LatestPostViews = GetLatestPostViews()
