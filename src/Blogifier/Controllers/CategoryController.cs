@@ -24,12 +24,37 @@ namespace Blogifier.Controllers
 			return await _categoryProvider.GetPostCategories(postId);
 		}
 
-		[Authorize]
+        [HttpGet("byId/{categoryId:int}")]
+        public async Task<Category> GetCategory(int categoryId)
+        {
+            return await _categoryProvider.GetCategory(categoryId);
+        }
+
+        [HttpGet]
+        public async Task<List<CategoryItem>> GetCategories()
+        {
+            return await _categoryProvider.Categories();
+        }
+
+        [HttpGet("{term}")]
+        public async Task<List<CategoryItem>> SearchCategories(string term = "*")
+        {
+            return await _categoryProvider.SearchCategories(term);
+        }
+
+        [Authorize]
 		[HttpPost("{postId:int}/{tag}")]
 		public async Task<ActionResult<bool>> AddPostCategory(int postId, string tag)
 		{
 			return await _categoryProvider.AddPostCategory(postId, tag);
 		}
+
+        [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<bool>> SaveCategory(Category category)
+        {
+            return await _categoryProvider.SaveCategory(category);
+        }
 
         [Authorize]
         [HttpPut("{postId:int}")]
@@ -39,10 +64,10 @@ namespace Blogifier.Controllers
         }
 
         [Authorize]
-		[HttpDelete("{postId:int}/{categoryId:int}")]
-		public async Task<ActionResult<bool>> RemoveCategory(int postId, int categoryId)
-		{
-			return await _categoryProvider.RemoveCategory(postId, categoryId);
-		}
-	}
+        [HttpDelete("{categoryId:int}")]
+        public async Task<ActionResult<bool>> RemoveCategory(int categoryId)
+        {
+            return await _categoryProvider.RemoveCategory(categoryId);
+        }
+    }
 }

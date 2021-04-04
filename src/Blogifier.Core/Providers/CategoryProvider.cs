@@ -10,15 +10,20 @@ namespace Blogifier.Core.Providers
 {
 	public interface ICategoryProvider
 	{
-		Task<IEnumerable<CategoryItem>> Categories();
-		Task<ICollection<Category>> GetPostCategories(int postId);
+        Task<List<CategoryItem>> Categories();
+        Task<List<CategoryItem>> SearchCategories(string term);
+
+        Task<Category> GetCategory(int categoryId);
+        Task<ICollection<Category>> GetPostCategories(int postId);
+
+        Task<bool> SaveCategory(Category category);
         Task<Category> SaveCategory(string tag);
 
         Task<bool> AddPostCategory(int postId, string tag);
         Task<bool> SavePostCategories(int postId, List<Category> categories);
 
-        Task<bool> RemoveCategory(int postId, int categoryId);
-	}
+        Task<bool> RemoveCategory(int categoryId);
+    }
 
 	public class CategoryProvider : ICategoryProvider
 	{
@@ -29,17 +34,24 @@ namespace Blogifier.Core.Providers
 			_db = db;
 		}
 
-		public async Task<IEnumerable<CategoryItem>> Categories()
-		{
-			var cats = new List<CategoryItem>();
+        public async Task<List<CategoryItem>> Categories()
+        {
+            var cats = new List<CategoryItem>();
 
-			if (_db.Posts != null && _db.Posts.Count() > 0)
-			{
-				foreach (var pc in _db.PostCategories.Include(pc => pc.Category).AsNoTracking())
-				{
+            if (_db.Posts != null && _db.Posts.Count() > 0)
+            {
+                foreach (var pc in _db.PostCategories.Include(pc => pc.Category).AsNoTracking())
+                {
                     if (!cats.Exists(c => c.Category.ToLower() == pc.Category.Content.ToLower()))
                     {
-                        cats.Add(new CategoryItem { Category = pc.Category.Content.ToLower(), PostCount = 1 });
+                        cats.Add(new CategoryItem
+                        {
+                            Selected = false,
+                            Id = pc.CategoryId,
+                            Category = pc.Category.Content.ToLower(),
+                            PostCount = 1,
+                            DateCreated = pc.Category.DateCreated
+                        });
                     }
                     else
                     {
@@ -49,16 +61,51 @@ namespace Blogifier.Core.Providers
                     }
                 }
             }
-			return await Task.FromResult(cats);
-		}
+            return await Task.FromResult(cats);
+        }
 
-		public async Task<ICollection<Category>> GetPostCategories(int postId)
+        public async Task<List<CategoryItem>> SearchCategories(string term)
+        {
+            var cats = await Categories();
+
+            if (term == "*")
+                return cats;
+
+            return cats.Where(c => c.Category.ToLower().Contains(term.ToLower())).ToList();
+        }
+
+        public async Task<Category> GetCategory(int categoryId)
+        {
+            return await _db.Categories.AsNoTracking()
+                .Where(c => c.Id == categoryId)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<ICollection<Category>> GetPostCategories(int postId)
 		{
             return await _db.PostCategories.AsNoTracking()
                 .Where(pc => pc.PostId == postId)
                 .Select(pc => pc.Category)
                 .ToListAsync();
 		}
+
+        public async Task<bool> SaveCategory(Category category)
+        {
+            Category existing = await _db.Categories.AsNoTracking()
+                .Where(c => c.Content.ToLower() == category.Content.ToLower()).FirstOrDefaultAsync();
+
+            if (existing != null)
+                return false; // already exists category with the same title
+
+            Category dbCategory = await _db.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
+            if (dbCategory == null)
+                return false;
+
+            dbCategory.Content = category.Content;
+            dbCategory.DateUpdated = DateTime.UtcNow;
+
+            return await _db.SaveChangesAsync() > 0;
+        }
 
 		public async Task<Category> SaveCategory(string tag)
 		{
@@ -119,10 +166,7 @@ namespace Blogifier.Core.Providers
             List<PostCategory> existingPostCategories = await _db.PostCategories.AsNoTracking()
                 .Where(pc => pc.PostId == postId).ToListAsync();
 
-            foreach (var pc in existingPostCategories)
-            {
-                await RemoveCategory(postId, pc.CategoryId);
-            }
+            _db.PostCategories.RemoveRange(existingPostCategories);
 
             await _db.SaveChangesAsync();
 
@@ -134,33 +178,20 @@ namespace Blogifier.Core.Providers
             return await _db.SaveChangesAsync() > 0;
         }
 
-		public async Task<bool> RemoveCategory(int postId, int categoryId)
-		{
-            PostCategory postCategory = await _db.PostCategories
+        public async Task<bool> RemoveCategory(int categoryId)
+        {
+            List<PostCategory> postCategories = await _db.PostCategories
                 .AsNoTracking()
                 .Where(pc => pc.CategoryId == categoryId)
-                .Where(pc => pc.PostId == postId)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
+            _db.PostCategories.RemoveRange(postCategories);
 
-            if(postCategory != null)
-            {
-                _db.PostCategories.Remove(postCategory);
-
-                int postCount = await _db.PostCategories.AsNoTracking()
-                    .Where(pc => pc.CategoryId == categoryId).CountAsync();
-
-                if(postCount == 1)
-                {
-                    Category category = _db.Categories
+            Category category = _db.Categories
                         .Where(c => c.Id == categoryId)
                         .FirstOrDefault();
-                    _db.Categories.Remove(category);
-                }
+            _db.Categories.Remove(category);
 
-                return await _db.SaveChangesAsync() > 0;
-            }
-
-            return true;
-		}
-	}
+            return await _db.SaveChangesAsync() > 0;
+        }
+    }
 }

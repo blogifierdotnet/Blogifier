@@ -6,8 +6,6 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
-@inject BlogStateProvider _stateprovider
-@implements IDisposable
 
 <PageTitle Title="@_localizer["Categories"]" />
 
@@ -19,9 +17,9 @@
             <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
         </label>
 
-        <a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["New Category"]</a>
+        @*<a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["New Category"]</a>*@
 
-        @if (Posts != null && Posts.Count > 0)
+        @if (Categories != null && Categories.Count > 0)
         {
             <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="btn btn-link text-danger" title="@_localizer["delete"]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
@@ -41,29 +39,26 @@
 
     <div class="list-search collapse" id="collapseSearch">
         <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="list-search-input" type="search">
-        <button @onclick="(async () => await SearchPosts())" class="list-search-button" type="button">
+        <button @onclick="(async () => await SearchCategories())" class="list-search-button" type="button">
             @_localizer["search"]
         </button>
     </div>
 
-    @if (Posts != null && Posts.Count > 0)
+    @if (Categories != null && Categories.Count > 0)
     {
         <ul class="list mb-5" aria-label="posts">
-            <Virtualize Items="Posts" Context="post">
-
-                @{
-                    string pubDate = post.Published > DateTime.MinValue ? post.Published.ToFriendlyShortDateString() : "Draft";
-                    string pubStatus = post.Published > DateTime.MinValue ? "published" : "draft";
-                }
-
+            <Virtualize Items="Categories" Context="category">
                 <li class="list-item">
                     <label class="list-check form-check">
-                        <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
+                        <input type="checkbox" @bind="category.Selected" class="list-check-input form-check-input">
                     </label>
-                    <a class="list-title -link" href="/admin/pages/editor/@post.Slug">
-                        @post.Title
+                    <a class="list-title -link" href="" @onclick="async ()=> await ShowEdit(category.Id)" @onclick:preventDefault>
+                        @category.Category
                     </a>
-                    <a class="list-btn" href="posts/@post.Slug" target="_blank" data-toggle="tooltip" title="Link">
+                    <span class="list-text -nowrap ms-auto">
+                        @category.PostCount
+                    </span>
+                    <a class="list-btn" href="categories/@category.Category" target="_blank" data-toggle="tooltip" title="Link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
                             <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
                             <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
@@ -85,167 +80,117 @@
     }
 
     <!-- New or Edit -->
+    @if(IsEdit && CurrentCategory != null)
+    {
     <div>
-        <h1 class="section-title">@_localizer["New Category"]</h1>
+        <h1 class="section-title">@_localizer["Edit Category"]</h1>
         <div class="section-content -half">
             <div class="form-item">
                 <label class="form-label">@_localizer["title"]</label>
-                <input type="text" class="form-control" name="title" />
+                <input type="text" class="form-control" name="title" @bind="CurrentCategory.Content" />
             </div>
-            <div class="form-item">
+            @*<div class="form-item">
                 <label class="form-label">@_localizer["description"]</label>
                 <textarea class="form-control" cols="30" rows="5" name="description"></textarea>
-            </div>
+            </div>*@
             <div class="form-item">
-                <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-                <button type="button" class="btn btn-default px-4">@_localizer["cancel"]</button>
+                <button type="submit" class="btn btn-blogifier px-5 me-3" @onclick="SaveEdit">@_localizer["save"]</button>
+                <button type="button" class="btn btn-default px-4" @onclick="CancelEdit">@_localizer["cancel"]</button>
             </div>
         </div>
     </div>
+    }
     <!--/ -->
 
 </div>
+<ToasterComponent @ref="Toaster" />
 
 @code {
-    protected List<Post> Posts { get; set; }
-    protected Author Author { get; set; }
+   protected ToasterComponent Toaster;
+   protected List<CategoryItem> Categories { get; set; }
+   protected Category CurrentCategory { get; set; }
+   protected string SearchTerm { get; set; }
+   protected bool IsEdit = false;
 
-    protected string SearchTerm { get; set; }
+   protected override async Task OnInitializedAsync()
+   {
+       await Load();
+   }
 
-    protected string FilterLabel { get; set; }
-    protected PublishedStatus FilterValue { get; set; }
+   protected async Task Load()
+   {
+       Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category");
+   }
 
-    protected string PostTypeLabel { get; set; }
-    protected string PostTypeButton { get; set; }
+   protected async Task ShowEdit(int categoryId)
+   {
+       CurrentCategory = await _http.GetFromJsonAsync<Category>($"api/category/byId/{categoryId}");
+       IsEdit = true;
+   }
 
-    protected override async Task OnInitializedAsync()
-    {
-        Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
+   protected void CancelEdit()
+   {
+       CurrentCategory = null;
+       IsEdit = false;
+   }
 
-        FilterLabel = _localizer["all"];
-        PostTypeLabel = _localizer["posts"];
-        PostTypeButton = _localizer["post"];
+   protected async Task SaveEdit()
+   {
+       Toaster.Toast(await _http.PutAsJsonAsync<Category>("api/category", CurrentCategory));
+       CurrentCategory = null;
+       IsEdit = false;
+       await Load();
+   }
 
-        _stateprovider.OnChange += StateHasChanged;
-        _stateprovider.PostType = PostType.Post;
+   public void CheckAll(object checkValue)
+   {
+       bool isChecked = (bool)checkValue;
+       Categories.ForEach(p => p.Selected = isChecked);
+       StateHasChanged();
+   }
 
-        await Load();
-    }
+   public async Task RunAction(GroupAction action)
+   {
+       string confirm = _localizer["confirm-delete"];
+       bool confirmed = false;
 
-    protected async Task Load()
-    {
-        Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostType.Page}");
-    }
+       if (action == GroupAction.Delete)
+       {
+           confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
+           if (!confirmed)
+               return;
+       }
 
-    public void CheckAll(object checkValue)
-    {
-        bool isChecked = (bool)checkValue;
-        Posts.ForEach(p => p.Selected = isChecked);
-        StateHasChanged();
-    }
+       foreach (var category in Categories)
+       {
+           if (category.Selected)
+           {
+               await _http.DeleteAsync($"api/category/{category.Id}");
+           }
+       }
+       await Load();
+   }
 
-    public async Task RunAction(GroupAction action)
-    {
-        string confirm = _localizer["confirm-delete"];
-        bool confirmed = false;
+   protected async Task SearchKeyPress(KeyboardEventArgs e)
+   {
+       if (e.Key == "Enter")
+           await SearchCategories();
+   }
 
-        if (action == GroupAction.Delete)
-        {
-            confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
-            if (!confirmed)
-                return;
-        }
+   protected async Task SearchCategories()
+   {
+       if (string.IsNullOrEmpty(SearchTerm))
+           SearchTerm = "*";
 
-        foreach (var post in Posts)
-        {
-            if (post.Selected)
-            {
-                switch (action)
-                {
-                    case GroupAction.Publish:
-                        await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
-                        break;
-                    case GroupAction.Unpublish:
-                        await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
-                        break;
-                    case GroupAction.Delete:
-                        await _http.DeleteAsync($"api/post/{post.Id}");
-                        break;
-                }
-            }
-        }
-        await Load();
-    }
+       Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category/{SearchTerm}");
+       SearchTerm = "";
+   }
 
-    protected async Task SearchKeyPress(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter")
-            await SearchPosts();
-    }
-
-    protected async Task SearchPosts()
-    {
-        if (string.IsNullOrEmpty(SearchTerm))
-            SearchTerm = "*";
-
-        Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
-        SearchTerm = "";
-    }
-
-    protected async Task GetPages()
-    {
-        PostTypeLabel = _localizer["pages"];
-        PostTypeButton = _localizer["page"];
-        _stateprovider.SetPostType(PostType.Page);
-        await Load();
-    }
-
-    public async Task Filter(PublishedStatus filter)
-    {
-        FilterValue = filter;
-        switch (filter)
-        {
-            case PublishedStatus.Published:
-                FilterLabel = _localizer["published"];
-                break;
-            case PublishedStatus.Drafts:
-                FilterLabel = _localizer["draft", true];
-                break;
-            default:
-                FilterLabel = _localizer["all"];
-                break;
-        }
-        await Load();
-    }
-
-    public async Task Publish(Post post)
-    {
-        Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.Published == DateTime.MinValue)));
-        await Load();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-        }
-    }
-
-    protected void Toast(HttpResponseMessage msg)
-    {
-        if (msg.IsSuccessStatusCode)
-            _toaster.Success(_localizer["completed"]);
-        else
-            _toaster.Error(_localizer["generic-error"]);
-    }
-
-    protected void Open()
-    {
-    }
-
-    public void Dispose()
-    {
-        _stateprovider.OnChange -= StateHasChanged;
-    }
+   protected override async Task OnAfterRenderAsync(bool firstRender)
+   {
+       if (firstRender)
+       {
+           await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+       }
+   }
 }
