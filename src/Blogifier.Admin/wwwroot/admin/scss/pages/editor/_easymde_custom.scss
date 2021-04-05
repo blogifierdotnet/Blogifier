@@ -9,7 +9,7 @@
     border-radius: 0;
     user-select: none;
     position: relative;
-    border-bottom: 1px solid rgba(#000, 0.1);
+    border-bottom: 1px solid $gray-300;
 
     &:after,
     &:before {

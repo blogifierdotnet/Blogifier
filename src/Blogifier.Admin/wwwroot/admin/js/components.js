@@ -65,7 +65,7 @@ window.commonJsFunctions = {
   },
   loadEditor: function () {
     easymde = getEditor();
-    autosize(document.querySelectorAll('textarea'));
+    autosize(document.querySelectorAll('.autosize'));
   },
   setEditorValue: function (txt) {
     easymde.value(txt

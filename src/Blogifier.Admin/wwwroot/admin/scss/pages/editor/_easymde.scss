@@ -258,9 +258,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 
 .CodeMirror-scroll {
   overflow: scroll !important;
-  margin-bottom: -50px;
-  margin-right: -50px;
-  padding-bottom: 50px;
+  margin-right: -4.125rem;
+  margin-bottom: -4.125rem;
+  padding-bottom: 4.125rem;
   height: 100%;
   outline: 0;
   position: relative;
@@ -506,7 +506,7 @@ span.CodeMirror-selectedtext {
 .EasyMDEContainer .CodeMirror {
   box-sizing: border-box;
   height: auto;
-  padding: 2rem;
+  padding: 3rem;
   z-index: 0;
   word-wrap: break-word;
 }
@@ -587,8 +587,13 @@ span.CodeMirror-selectedtext {
   display: block;
 }
 
+// TODO: Review this
+.disabled-for-preview + .CodeMirror-wrap {
+  padding: 6rem;
+}
+
 .editor-preview {
-  padding: 2.25rem;
+  padding: 3rem 3.25rem;
   background: #fff;
 }
 
