@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,5 +23,19 @@ namespace Blogifier.Controllers
 		{
 			return await _analyticsProvider.GetAnalytics();
 		}
-	}
+
+        [Authorize]
+        [HttpPut("displayType/{typeId:int}")]
+        public async Task<ActionResult<bool>> SaveDisplayType(int typeId)
+        {
+            return await _analyticsProvider.SaveDisplayType(typeId);
+        }
+
+        [Authorize]
+        [HttpPut("displayPeriod/{typeId:int}")]
+        public async Task<ActionResult<bool>> SaveDisplayPeriod(int typeId)
+        {
+            return await _analyticsProvider.SaveDisplayPeriod(typeId);
+        }
+    }
 }

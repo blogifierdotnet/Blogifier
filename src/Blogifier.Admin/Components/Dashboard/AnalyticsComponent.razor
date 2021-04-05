@@ -29,9 +29,23 @@
                 </ul>
                 <div class="mb-1 text-muted">View:</div>
                 <div class="btn-group w-100" role="group" aria-label="Basic radio toggle button group">
+                    @if(_hideList)
+                    {
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked @onchange="() => ToggleAnalyticsView(true)">
+                    }
+                    else
+                    {
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" @onchange="() => ToggleAnalyticsView(true)">
+                    }
                     <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio1">@_localizer["Chart"]</label>
+                    @if(_hideGraph)
+                    {
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked @onchange="() => ToggleAnalyticsView(false)">
+                    }
+                    else
+                    {
                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" @onchange="() => ToggleAnalyticsView(false)">
+                    }
                     <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio2">@_localizer["List"]</label>
                 </div>
             </div>
@@ -70,13 +84,17 @@
     </div>
 
 </div>
+<ToasterComponent @ref="Toaster" />
 
 @code {
+   protected ToasterComponent Toaster;
    private BarConfig _config;
    protected List<PostVisit> _visits;
 
    protected bool _hideGraph = false;
    protected bool _hideList = true;
+   string _checkedGraph = "checked";
+   string _checkedList = "";
 
    protected override async Task OnInitializedAsync()
    {
@@ -107,6 +125,9 @@
        }
        else
        {
+           _hideList = model.DisplayType == AnalyticsListType.Graph;
+           _hideGraph = model.DisplayType == AnalyticsListType.List;
+
            LoadData(dataset, model.LatestPostViews);
        }
        _config.Data.Datasets.Add(dataset);
@@ -133,6 +154,9 @@
        _hideGraph = await Task.FromResult(!isGraph);
        _hideList = isGraph;
 
+       int typeId = isGraph ? 2 : 1;
+
+       Toaster.Toast(await _http.PutAsJsonAsync<int>($"api/analytics/displayType/{typeId}", typeId));
    }
 
    protected BarChartModel TestData()

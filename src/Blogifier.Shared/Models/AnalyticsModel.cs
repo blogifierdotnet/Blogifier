@@ -7,6 +7,9 @@ namespace Blogifier.Shared
 		public int TotalViews { get; set; }
 		public int TotalSubscribers { get; set; }
 
+        public AnalyticsListType DisplayType { get; set; }
+        public AnalyticsPeriod DisplayPeriod { get; set; }
+
 		public BarChartModel LatestPostViews { get; set; }
 	}
 }

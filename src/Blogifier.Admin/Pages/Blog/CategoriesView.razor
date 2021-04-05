@@ -84,20 +84,24 @@
     {
     <div>
         <h1 class="section-title">@_localizer["Edit Category"]</h1>
-        <div class="section-content -half">
-            <div class="form-item">
-                <label class="form-label">@_localizer["title"]</label>
-                <input type="text" class="form-control" name="title" @bind="CurrentCategory.Content" />
+        <EditForm model="@CurrentCategory" OnValidSubmit="SaveEdit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="section-content -half">
+                <div class="form-item">
+                    <label class="form-label">@_localizer["title"]</label>
+                    <input type="text" class="form-control" name="title" @bind="CurrentCategory.Content" />
+                </div>
+                <div class="form-item">
+                    <label class="form-label">@_localizer["description"]</label>
+                    <textarea class="form-control" cols="30" rows="5" name="description" @bind="CurrentCategory.Description"></textarea>
+                </div>
+                <div class="form-item">
+                    <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+                    <button type="button" class="btn btn-default px-4" @onclick="CancelEdit">@_localizer["cancel"]</button>
+                </div>
             </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["description"]</label>
-                <textarea class="form-control" cols="30" rows="5" name="description" @bind="CurrentCategory.Description"></textarea>
-            </div>
-            <div class="form-item">
-                <button type="submit" class="btn btn-blogifier px-5 me-3" @onclick="SaveEdit">@_localizer["save"]</button>
-                <button type="button" class="btn btn-default px-4" @onclick="CancelEdit">@_localizer["cancel"]</button>
-            </div>
-        </div>
+        </EditForm>
     </div>
     }
     <!--/ -->
