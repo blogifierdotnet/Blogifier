@@ -72,6 +72,12 @@ namespace Blogifier.Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AnalyticsListType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AnalyticsPeriod")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Cover")
                         .HasMaxLength(160)
                         .HasColumnType("TEXT");
@@ -137,6 +143,10 @@ namespace Blogifier.Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("DATE('now')");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

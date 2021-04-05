@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,6 +23,9 @@ namespace Blogifier.Shared
 		public string HeaderScript { get; set; }
 		[StringLength(2000)]
 		public string FooterScript { get; set; }
+
+        public int AnalyticsListType { get; set; }
+        public int AnalyticsPeriod { get; set; }
 
 		public DateTime DateCreated { get; set; }
 		public DateTime DateUpdated { get; set; }

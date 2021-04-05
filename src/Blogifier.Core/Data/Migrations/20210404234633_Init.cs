@@ -22,6 +22,8 @@ namespace Blogifier.Core.Data.Migrations
                     Logo = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
                     HeaderScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
                     FooterScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
+                    AnalyticsListType = table.Column<int>(type: "INTEGER", nullable: false),
+                    AnalyticsPeriod = table.Column<int>(type: "INTEGER", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
                 },
@@ -37,6 +39,7 @@ namespace Blogifier.Core.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Content = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
                 },

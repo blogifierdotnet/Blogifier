@@ -91,17 +91,18 @@ namespace Blogifier.Core.Providers
 
         public async Task<bool> SaveCategory(Category category)
         {
-            Category existing = await _db.Categories.AsNoTracking()
-                .Where(c => c.Content.ToLower() == category.Content.ToLower()).FirstOrDefaultAsync();
+            //Category existing = await _db.Categories.AsNoTracking()
+            //    .Where(c => c.Content.ToLower() == category.Content.ToLower()).FirstOrDefaultAsync();
 
-            if (existing != null)
-                return false; // already exists category with the same title
+            //if (existing != null)
+            //    return false; // already exists category with the same title
 
             Category dbCategory = await _db.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
             if (dbCategory == null)
                 return false;
 
             dbCategory.Content = category.Content;
+            dbCategory.Description = category.Description;
             dbCategory.DateUpdated = DateTime.UtcNow;
 
             return await _db.SaveChangesAsync() > 0;

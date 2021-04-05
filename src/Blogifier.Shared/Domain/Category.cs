@@ -12,6 +12,8 @@ namespace Blogifier.Shared
 		[Required]
 		[StringLength(120)]
 		public string Content { get; set; }
+        [StringLength(255)]
+        public string Description { get; set; }
 
 		public DateTime DateCreated { get; set; }
 		public DateTime DateUpdated { get; set; }
