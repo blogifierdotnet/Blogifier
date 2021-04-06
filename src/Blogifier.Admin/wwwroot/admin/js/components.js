@@ -23,7 +23,10 @@ window.commonJsFunctions = {
     }
   },
   getTxtValue: function (txt) {
-      return document.getElementById(txt).value;
+    return document.getElementById(txt).value;
+  },
+  getSrcValue: function (src) {
+    return document.getElementById(src).src;
   },
   focusElement: function (id) {
     setTimeout(function () {
