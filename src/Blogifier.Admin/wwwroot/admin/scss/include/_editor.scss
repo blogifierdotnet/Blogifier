@@ -10,7 +10,7 @@
   box-sizing: border-box;
   height: auto;
   border: none;
-  padding: 3rem;
+  padding: 0;
   font: inherit;
   z-index: 0;
   word-wrap: break-word;
@@ -29,6 +29,10 @@
   z-index: 8;
   border-right: none !important;
   border-bottom-right-radius: 0 !important;
+
+  .CodeMirror-lines {
+    padding-bottom: 10rem;
+  }
 }
 .EasyMDEContainer .CodeMirror-sided {
   width: 50% !important;
@@ -179,6 +183,11 @@
   border: 1px solid #ddd;
   word-wrap: break-word;
 }
+.editor-preview-side {
+  iframe {
+    max-width: 100%;
+  }
+}
 .editor-preview-active-side {
   display: block;
 }
@@ -191,8 +200,9 @@
   display: block;
 }
 .editor-preview {
-  padding: 10px;
-  background: #fafafa;
+  font-size: 1rem;
+  padding: 3rem;
+  background: #fff;
 }
 .editor-preview > p {
   margin-top: 0;

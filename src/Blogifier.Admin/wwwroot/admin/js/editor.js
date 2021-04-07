@@ -16,6 +16,7 @@ const
   , editorIcon_clear = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16"><path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/></svg>`
   , editorIcon_preview = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>`
   , editorIcon_sidebyside = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-split" viewBox="0 0 16 16"><path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm8.5-1v12H14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H8.5zm-1 0H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h5.5V2z"/></svg>`
+  , editorIcon_fullscreen = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z"/></svg>`
   ;
 
 const
@@ -105,7 +106,7 @@ const
   },
   editorToolbar_preview = {
     name: "editor-toolbar-preview",
-    action: EasyMDE.togglePreview,
+    action: previewAction,
     icon: editorIcon_preview,
     title: "Toggle Preview",
     noDisable: true,
@@ -115,6 +116,13 @@ const
     action: EasyMDE.toggleSideBySide,
     icon: editorIcon_sidebyside,
     title: "Toggle Side by Side",
+    noDisable: true,
+  },
+  editorToolbar_fullscreen = {
+    name: "editor-toolbar-fullscreen",
+    action: EasyMDE.toggleFullScreen,
+    icon: editorIcon_fullscreen,
+    title: "Toggle Fullscreen",
     noDisable: true,
   };
 
@@ -153,6 +161,8 @@ function getEditor() {
       editorToolbar_clear,
       editorToolbar_preview,
       editorToolbar_sidebyside,
+      editorToolbar_fullscreen,
+
     ]
   });
   return easyMDE;
@@ -173,5 +183,16 @@ function insertYoutube(editor) {
     var tag = '<iframe width="640" height="480" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
     var cm = _editor.codemirror;
     cm.replaceSelection(tag);
+  }
+}
+
+function previewAction() {
+  let editable = document.querySelector('.CodeMirror-scroll');
+  if (easymde.isPreviewActive()) {
+    easymde.togglePreview();
+    editable.classList.remove('d-none');
+  } else {
+    editable.classList.add('d-none');
+    easymde.togglePreview();
   }
 }
