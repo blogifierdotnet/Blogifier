@@ -9,10 +9,8 @@
 .EasyMDEContainer .CodeMirror {
   box-sizing: border-box;
   height: auto;
-  border: 1px solid #ddd;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  padding: 10px;
+  border: none;
+  padding: 3rem;
   font: inherit;
   z-index: 0;
   word-wrap: break-word;
@@ -49,17 +47,9 @@
 }
 .editor-toolbar {
   position: relative;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-  padding: 9px 10px;
-  border-top: 1px solid #bbb;
-  border-left: 1px solid #bbb;
-  border-right: 1px solid #bbb;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  // user-select: none;
+  border-bottom: 1px solid $gray-200;
+  display: flex;
 }
 .editor-toolbar.fullscreen {
   width: 100%;
@@ -78,21 +68,6 @@
 .editor-toolbar.fullscreen::before {
   width: 20px;
   height: 50px;
-  background: -moz-linear-gradient(left, #fff 0, rgba(255, 255, 255, 0) 100%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(0, #fff),
-    color-stop(100%, rgba(255, 255, 255, 0))
-  );
-  background: -webkit-linear-gradient(
-    left,
-    #fff 0,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background: -o-linear-gradient(left, #fff 0, rgba(255, 255, 255, 0) 100%);
-  background: -ms-linear-gradient(left, #fff 0, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 100%);
   position: fixed;
   top: 0;
@@ -103,21 +78,6 @@
 .editor-toolbar.fullscreen::after {
   width: 20px;
   height: 50px;
-  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0, #fff 100%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(0, rgba(255, 255, 255, 0)),
-    color-stop(100%, #fff)
-  );
-  background: -webkit-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0,
-    #fff 100%
-  );
-  background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0, #fff 100%);
-  background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0, #fff 100%);
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0, #fff 100%);
   position: fixed;
   top: 0;
@@ -130,24 +90,21 @@
 }
 .editor-toolbar .easymde-dropdown,
 .editor-toolbar button {
-  background: 0 0;
+  background: none;
+  border: 0;
   display: inline-block;
   text-align: center;
   text-decoration: none !important;
-  height: 30px;
+  height: 3rem;
+  width: 3rem;
   margin: 0;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 3px;
   cursor: pointer;
-}
-.editor-toolbar button {
-  width: 30px;
+  flex-grow: 1;
 }
 .editor-toolbar button.active,
 .editor-toolbar button:hover {
-  background: #fcfcfc;
-  border-color: #95a5a6;
+  background: $gray-100;
 }
 .editor-toolbar i.separator {
   display: inline-block;
@@ -165,21 +122,7 @@
   position: relative;
   top: 2px;
 }
-.editor-toolbar button.heading-1:after {
-  content: "1";
-}
-.editor-toolbar button.heading-2:after {
-  content: "2";
-}
-.editor-toolbar button.heading-3:after {
-  content: "3";
-}
-.editor-toolbar button.heading-bigger:after {
-  content: "▲";
-}
-.editor-toolbar button.heading-smaller:after {
-  content: "▼";
-}
+
 .editor-toolbar.disabled-for-preview button:not(.no-disable) {
   opacity: 0.6;
   pointer-events: none;
@@ -308,43 +251,6 @@
   color: #999;
 }
 
-
-
-.editor-toolbar .easymde-dropdown {
-  position: relative;
-  background: linear-gradient(
-    to bottom right,
-    #fff 0,
-    #fff 84%,
-    #333 50%,
-    #333 100%
-  );
-  border-radius: 0;
-  border: 1px solid #fff;
-}
-.editor-toolbar .easymde-dropdown:hover {
-  background: linear-gradient(
-    to bottom right,
-    #fff 0,
-    #fff 84%,
-    #333 50%,
-    #333 100%
-  );
-}
-.easymde-dropdown-content {
-  display: block;
-  visibility: hidden;
-  position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  padding: 8px;
-  z-index: 2;
-  top: 30px;
-}
-.easymde-dropdown:active .easymde-dropdown-content,
-.easymde-dropdown:focus .easymde-dropdown-content {
-  visibility: visible;
-}
 span[data-img-src]::after {
   content: "";
   background-image: var(--bg-image);
