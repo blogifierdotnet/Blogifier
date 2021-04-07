@@ -1,8 +1,6 @@
 .CodeMirror {
   font-family: monospace;
   direction: ltr;
-  // height: 300px;
-  // color: #000;
 
   &-cursor {
     width: 1px;
@@ -10,14 +8,11 @@
   }
 }
 
-// if  (indentWithTabs: false) is set true.
 .cm-tab {
   display: inline-block;
   text-decoration: inherit;
 }
 
-
-// theme
 .cm-header,
 .cm-strong {
   font-weight: 500;
@@ -129,17 +124,12 @@
 .CodeMirror-gutter-wrapper ::selection {
   background-color: transparent;
 }
-.CodeMirror-gutter-wrapper ::-moz-selection {
-  background-color: transparent;
-}
 .CodeMirror-lines {
   cursor: text;
   min-height: 1px;
 }
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
   border-radius: 0;
   border-width: 0;
   background: 0 0;
@@ -153,8 +143,6 @@
   z-index: 2;
   position: relative;
   overflow: visible;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-variant-ligatures: contextual;
   font-variant-ligatures: contextual;
 }
 .CodeMirror-wrap pre.CodeMirror-line,
@@ -187,7 +175,6 @@
 .CodeMirror-linenumber,
 .CodeMirror-scroll,
 .CodeMirror-sizer {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 .CodeMirror-measure {
@@ -229,11 +216,7 @@ div.CodeMirror-dragcursors {
 .CodeMirror-line > span > span::selection {
   background: #d7d4f0;
 }
-.CodeMirror-line::-moz-selection,
-.CodeMirror-line > span::-moz-selection,
-.CodeMirror-line > span > span::-moz-selection {
-  background: #d7d4f0;
-}
+
 .cm-searching {
   background-color: #ffa;
   background-color: rgba(255, 255, 0, 0.4);
