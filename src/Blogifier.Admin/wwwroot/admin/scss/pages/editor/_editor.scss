@@ -1,4 +1,6 @@
 .editor {
+  padding-bottom: 2rem;
+
   &-actions {
   }
 
@@ -15,6 +17,7 @@
     border-top-right-radius: 0.25rem;
     border-top-left-radius: 0.25rem;
     color: #fff;
+    z-index: 6;
 
     &-inner {
       position: relative;
@@ -80,9 +83,4 @@
       }
     }
   }
-}
-
-/**/
-.app-editor-content {
-  border-top: 1px solid $gray-300;
 }

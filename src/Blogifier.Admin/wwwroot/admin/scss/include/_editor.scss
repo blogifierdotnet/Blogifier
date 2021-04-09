@@ -1,6 +1,8 @@
 .EasyMDEContainer {
   display: block;
   position: relative;
+  margin-bottom: 4rem;
+  padding-top: 3rem;
 
   .CodeMirror {
     box-sizing: border-box;
@@ -59,10 +61,15 @@
 }
 
 .editor-toolbar {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   user-select: none;
   border-bottom: 1px solid $gray-200;
   display: flex;
+  z-index: 5;
+
   &.fullscreen {
     width: 100%;
     height: 50px;
@@ -98,6 +105,18 @@
     &.active,
     &:hover {
       background: $gray-100;
+      .bi {
+        fill: $gray-800;
+      }
+    }
+
+    .bi {
+      fill: $gray-600;
+      &-blockquote-left,
+      &-table,
+      &-image {
+        fill: $gray-600;
+      }
     }
   }
 
