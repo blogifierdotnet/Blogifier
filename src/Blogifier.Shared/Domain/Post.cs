@@ -17,7 +17,6 @@ namespace Blogifier.Shared
 		[StringLength(160)]
 		public string Title { get; set; }
 		[Required]
-		[RegularExpression("^[a-z0-9-]+$", ErrorMessage = "Slug format not valid.")]
 		[StringLength(160)]
 		public string Slug { get; set; }
 		[Required]

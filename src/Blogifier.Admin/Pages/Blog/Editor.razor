@@ -162,18 +162,23 @@
        if (Post.Id == 0)
        {
            Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
-           Toaster.Toast(await _http.PostAsJsonAsync<Post>($"api/post/add", Post));
+           HttpResponseMessage result = await _http.PostAsJsonAsync<Post>($"api/post/add", Post);
 
-           Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
-           await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
-
-           if (postAction == PostAction.Publish)
+           if(result.IsSuccessStatusCode)
            {
-               await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+               Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
+               await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
+
+               if (postAction == PostAction.Publish)
+               {
+                   await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+               }
+
+               _navigation.NavigateTo($"/admin/editor/{Post.Slug}");
+               await Load();
            }
 
-           _navigation.NavigateTo($"/admin/editor/{Post.Slug}");
-           await Load();
+           Toaster.Toast(result);
        }
        else
        {
