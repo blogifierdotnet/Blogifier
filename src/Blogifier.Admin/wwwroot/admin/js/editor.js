@@ -20,105 +20,105 @@ const
 
 const
   editorToolbar_heading = {
-    name: "editor-toolbar-heading",
+    name: "heading",
     action: EasyMDE.toggleHeadingSmaller,
     icon: editorIcon_heading,
     title: "Heading",
   },
   editorToolbar_bold = {
-    name: "editor-toolbar-bold",
+    name: "bold",
     action: EasyMDE.toggleBold,
     icon: editorIcon_bold,
     title: "Bold",
   },
   editorToolbar_italic = {
-    name: "editor-toolbar-italic",
+    name: "italic",
     action: EasyMDE.toggleItalic,
     icon: editorIcon_italic,
     title: "Italic",
   },
   editorToolbar_strike = {
-    name: "editor-toolbar-strikethrough",
+    name: "strikethrough",
     action: EasyMDE.toggleStrikethrough,
     icon: editorIcon_strikethrough,
     title: "Strikethrough",
   },
   editorToolbar_ul = {
-    name: "editor-toolbar-ul",
+    name: "unordered-list",
     action: EasyMDE.toggleUnorderedList,
     icon: editorIcon_ul,
     title: "List",
   },
   editorToolbar_ol = {
-    name: "editor-toolbar-ol",
+    name: "ordered-list",
     action: EasyMDE.toggleOrderedList,
     icon: editorIcon_ol,
     title: "Numbered List",
   },
   editorToolbar_quote = {
-    name: "editor-toolbar-quote",
+    name: "quote",
     action: EasyMDE.toggleBlockquote,
     icon: editorIcon_blockquote,
     title: "Quote",
   },
   editorToolbar_link = {
-    name: "editor-toolbar-link",
+    name: "link",
     action: EasyMDE.drawLink,
     icon: editorIcon_link,
     title: "Create Link",
   },
   editorToolbar_image = {
-    name: "editor-toolbar-image",
+    name: "image",
     action: insertImage,
     icon: editorIcon_image,
     title: "Insert Image",
   },
   editorToolbar_video = {
-    name: "editor-toolbar-video",
+    name: "insertYoutube",
     action: insertYoutube,
     icon: editorIcon_video,
     title: "Insert Video",
   },
   editorToolbar_table = {
-    name: "editor-toolbar-table",
+    name: "table",
     action: EasyMDE.drawTable,
     icon: editorIcon_table,
     title: "Insert Table",
   },
   editorToolbar_code = {
-    name: "editor-toolbar-code",
+    name: "code",
     action: EasyMDE.toggleCodeBlock,
     icon: editorIcon_code,
     title: "Insert Code",
   },
   editorToolbar_hr = {
-    name: "editor-toolbar-hr",
+    name: "horizontal-rule",
     action: EasyMDE.drawHorizontalRule,
     icon: editorIcon_hr,
     title: "Horizontal Line",
   },
   editorToolbar_clear = {
-    name: "editor-toolbar-clear",
+    name: "clean-block",
     action: EasyMDE.cleanBlock,
     icon: editorIcon_clear,
     title: "Clean block",
   },
   editorToolbar_preview = {
-    name: "editor-toolbar-preview",
-    action: previewAction,
+    name: "preview",
+    action: EasyMDE.togglePreview,
     icon: editorIcon_preview,
     title: "Toggle Preview",
     noDisable: true,
   },
   editorToolbar_sidebyside = {
-    name: "editor-toolbar-sidebyside",
+    name: "side-by-side",
     action: EasyMDE.toggleSideBySide,
     icon: editorIcon_sidebyside,
     title: "Toggle Side by Side",
     noDisable: true,
   },
   editorToolbar_fullscreen = {
-    name: "editor-toolbar-fullscreen",
+    name: "fullscreen",
     action: EasyMDE.toggleFullScreen,
     icon: editorIcon_fullscreen,
     title: "Toggle Fullscreen",
@@ -136,7 +136,6 @@ function getEditor() {
     minHeight: "500px",
     parsingConfig: {
       allowAtxHeaderWithoutSpace: true,
-      strikethrough: false,
       underscoresBreakWords: true
     },
     renderingConfig: {
@@ -185,13 +184,14 @@ function insertYoutube(editor) {
   }
 }
 
-function previewAction() {
-  let editable = document.querySelector('.CodeMirror-scroll');
-  if (easymde.isPreviewActive()) {
-    easymde.togglePreview();
-    editable.classList.remove('d-none');
-  } else {
-    editable.classList.add('d-none');
-    easymde.togglePreview();
-  }
-}
+// function previewAction() {
+//   let editable = document.querySelector('.CodeMirror-scroll');
+//   if (easymde.isPreviewActive()) {
+//     easymde.togglePreview();
+//     editable.classList.remove('d-none');
+//   } else {
+//     editable.classList.add('d-none');
+//     easymde.togglePreview();
+//   }
+// }
+
