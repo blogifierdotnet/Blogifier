@@ -207,13 +207,13 @@
 // THEME
 .cm-s-easymde {
   .cm-tag {
-    color: #63a35c;
+    color: $hljs-green;
   }
   .cm-attribute {
-    color: #795da3;
+    color: $hljs-blue;
   }
   .cm-string {
-    color: #183691;
+    color: $hljs-red;
   }
   .cm-header-1 {
     font-size: 200%;
@@ -236,17 +236,17 @@
     border-radius: 2px;
   }
   .cm-link {
-    color: #7f8c8d;
+    color: $hljs-blue;
   }
   .cm-url {
-    color: #aab2b3;
+    color: $hljs-blue;
   }
   .cm-quote {
-    color: #7f8c8d;
+    color: $hljs-comments;
     font-style: italic;
   }
   .cm-hr {
-    color: #999;
+    color: $hljs-comments;
   }
 }
 
