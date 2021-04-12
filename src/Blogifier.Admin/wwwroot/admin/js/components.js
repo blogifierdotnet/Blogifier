@@ -69,6 +69,7 @@ window.commonJsFunctions = {
   loadEditor: function () {
     easymde = getEditor();
     autosize(document.querySelectorAll('.autosize'));
+    window.onscroll = function () { stickyToolbar() };
   },
   setEditorValue: function (txt) {
     easymde.value(txt

@@ -64,15 +64,41 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   user-select: none;
   border-bottom: 1px solid $gray-200;
   display: flex;
   z-index: 5;
+  height: 3rem;
+
+  &.-sticky {
+    width: 61rem;
+    position: fixed;
+    top: 0;
+    left: auto;
+    background-color: #fff;
+    border-bottom-color: $gray-100;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: -2rem;
+      left: 0;
+      height: 2rem;
+      background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
+      z-index: 6;
+    }
+    @media screen and (max-width: 1199px) {
+      width: 100%;
+      left: 0;
+    }
+  }
 
   &.fullscreen {
     width: 100%;
-    height: 4rem;
+    height: 3rem;
     box-sizing: border-box;
     background: #fff;
     position: fixed;
@@ -81,7 +107,18 @@
     opacity: 1;
     z-index: 100;
     button {
-      height: 4rem;
+      height: 3rem;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      position: absolute;
+      bottom: -2rem;
+      left: 0;
+      height: 2rem;
+      background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
+      z-index: 6;
     }
   }
 
@@ -101,14 +138,25 @@
     padding: 0;
     cursor: pointer;
     flex-grow: 1;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
 
     &:not(:last-child) {
-      border-right: 1px solid #fff;
+      margin-right: 1px;
     }
 
-    &.active,
     &:hover {
-      background: rgba($blogifier, 0.1);
+      background-color: $gray-100;
+      border-bottom-color: $gray-300;
+
+      .bi {
+        fill: $gray-900;
+      }
+    }
+
+    &.active {
+      background-color: rgba($blogifier, 0.1);
+      border-bottom-color: rgba($blogifier, 0.2);
       .bi {
         fill: $blogifier;
       }
@@ -116,11 +164,6 @@
 
     .bi {
       fill: $gray-800;
-      &-blockquote-left,
-      &-table,
-      &-image {
-        fill: $gray-800;
-      }
     }
   }
 
@@ -128,11 +171,14 @@
     button:not(.no-disable) {
       opacity: 0.6;
       pointer-events: none;
+      background-color: #fff !important;
+      border-bottom-color: transparent !important;
+      .bi {
+        fill: $gray-800 !important;
+      }
     }
   }
 }
-
-
 
 //
 .editor-preview {
@@ -155,6 +201,7 @@
   iframe {
     max-width: 100%;
   }
+
   &-full {
     position: absolute;
     width: 100%;
