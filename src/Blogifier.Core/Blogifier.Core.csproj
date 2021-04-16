@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-		<Version>2.9.1.3</Version>
+		<Version>2.9.1.4</Version>
 		<Authors>blogifierdotnet</Authors>
 		<Description>Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.</Description>
 		<Copyright>Blogifier.Net</Copyright>

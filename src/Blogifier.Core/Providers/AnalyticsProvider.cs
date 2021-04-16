@@ -49,14 +49,17 @@ namespace Blogifier.Core.Providers
 
         public async Task<bool> SaveDisplayPeriod(int period)
         {
-            var blog = await _db.Blogs.FirstOrDefaultAsync();
+            var blog = await _db.Blogs.OrderBy(b => b.Id).FirstAsync();
             blog.AnalyticsPeriod = period;
             return await _db.SaveChangesAsync() > 0;
         }
 
         private BarChartModel GetLatestPostViews()
 		{
-			var posts = _db.Posts.AsNoTracking().Where(p => p.Published > DateTime.MinValue).OrderByDescending(p => p.Published).Take(7);
+            var blog = _db.Blogs.OrderBy(b => b.Id).First();
+            var period = blog.AnalyticsPeriod == 0 ? 3 : blog.AnalyticsPeriod;
+
+            var posts = _db.Posts.AsNoTracking().Where(p => p.Published > DateTime.MinValue).OrderByDescending(p => p.Published).Take(GetDays(period));
 			if (posts == null || posts.Count() < 3)
 				return null;
 
@@ -68,5 +71,24 @@ namespace Blogifier.Core.Providers
 				Data = posts.Select(p => p.PostViews).ToList()
 			};
 		}
+
+        private int GetDays(int id)
+        {
+            switch ((AnalyticsPeriod)id)
+            {
+                case AnalyticsPeriod.Today:
+                    return 1;
+                case AnalyticsPeriod.Yesterday:
+                    return 2;
+                case AnalyticsPeriod.Days7:
+                    return 7;
+                case AnalyticsPeriod.Days30:
+                    return 30;
+                case AnalyticsPeriod.Days90:
+                    return 90;
+                default:
+                    throw new ApplicationException("Unknown analytics period");
+            }
+        }
 	}
 }

@@ -69,6 +69,8 @@ namespace Blogifier.Core.Providers
 			existing.Logo = blog.Logo;
             existing.HeaderScript = blog.HeaderScript;
             existing.FooterScript = blog.FooterScript;
+            existing.AnalyticsListType = blog.AnalyticsListType;
+            existing.AnalyticsPeriod = blog.AnalyticsPeriod;
 
 			return await _db.SaveChangesAsync() > 0;
 		}
