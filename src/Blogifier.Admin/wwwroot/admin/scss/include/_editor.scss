@@ -298,8 +298,13 @@
       height: 1px;
       background-color: $gray-500;
       z-index: 1;
-      box-shadow: 3px 0 0 3px #fff;
     }
+  }
+}
+
+.cm-formatting {
+  &-list {
+    padding-left: 1.5rem;
   }
 }
 
