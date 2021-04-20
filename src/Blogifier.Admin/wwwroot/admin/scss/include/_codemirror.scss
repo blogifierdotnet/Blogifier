@@ -8,7 +8,7 @@
   }
 
   .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word):not(.cm-string):not(.cm-attribute) {
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid #ff8e8e;
     padding-bottom: 0.125rem;
   }
 }
