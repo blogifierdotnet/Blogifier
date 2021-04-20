@@ -143,7 +143,7 @@
   margin: 0;
   white-space: pre;
   word-wrap: normal;
-  line-height: inherit;
+  line-height: 1.618;
   color: inherit;
   z-index: 2;
   position: relative;
@@ -207,19 +207,14 @@ div.CodeMirror-dragcursors {
 .CodeMirror-focused div.CodeMirror-cursors {
   visibility: visible;
 }
-.CodeMirror-selected {
-  background: #d9d9d9;
-}
-.CodeMirror-focused .CodeMirror-selected {
-  background: #d7d4f0;
-}
+
 .CodeMirror-crosshair {
   cursor: crosshair;
 }
 .CodeMirror-line::selection,
 .CodeMirror-line > span::selection,
 .CodeMirror-line > span > span::selection {
-  background: #d7d4f0;
+  background: rgb(188, 219, 255);
 }
 
 .cm-searching {
@@ -236,7 +231,4 @@ div.CodeMirror-dragcursors {
 }
 .cm-tab-wrap-hack:after {
   content: "";
-}
-span.CodeMirror-selectedtext {
-  background: 0 0;
 }
