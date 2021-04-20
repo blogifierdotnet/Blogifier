@@ -60,6 +60,9 @@
     &-focused .CodeMirror-selected {
       background-color: $gray-300;
     }
+    &-selectedtext {
+      color: #000;
+    }
   }
 }
 
@@ -278,7 +281,25 @@
     font-style: italic;
   }
   .cm-hr {
-    color: $hljs-comments;
+    display: block;
+    color: $gray-500;
+    font-size: 0.785rem;
+    width: 100%;
+    position: absolute;
+    text-rendering: geometricPrecision;
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin-top: 0;
+      left: 1.25rem;
+      right: 0;
+      height: 1px;
+      background-color: $gray-500;
+      z-index: 1;
+      box-shadow: 3px 0 0 3px #fff;
+    }
   }
 }
 

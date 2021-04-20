@@ -159,9 +159,11 @@ function getEditor() {
       editorToolbar_clear,
       editorToolbar_preview,
       editorToolbar_sidebyside,
-      editorToolbar_fullscreen,
-
-    ]
+      editorToolbar_fullscreen
+    ],
+    insertTexts: {
+      horizontalRule: ["", "\n---\n"]
+    }
   });
   return easyMDE;
 }
