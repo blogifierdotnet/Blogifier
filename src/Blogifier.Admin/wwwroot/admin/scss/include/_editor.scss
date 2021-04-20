@@ -277,8 +277,19 @@
     color: $hljs-blue;
   }
   .cm-quote {
-    color: $hljs-comments;
+    color: $gray-800;
+    font-weight: 300;
     font-style: italic;
+    &::after {
+      content: "";
+      display: block;
+      width: 2px;
+      position: absolute;
+      left: -0.75rem;
+      top: 0;
+      bottom: 0;
+      background-color: $gray-500;
+    }
   }
   .cm-hr {
     display: block;
