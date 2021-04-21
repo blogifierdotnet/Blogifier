@@ -3,6 +3,8 @@
   position: relative;
   margin-bottom: 4rem;
   padding-top: 3rem;
+  @include bf-shadow(0.25rem);
+  overflow: hidden;
 }
 
 .CodeMirror {
@@ -379,6 +381,35 @@
     }
   }
 }
+
+.cm-tab {
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+.cm-header,
+.cm-strong {
+  font-weight: 500;
+}
+.cm-em {
+  font-style: italic;
+}
+.cm-link {
+  text-decoration: underline;
+}
+.cm-strikethrough {
+  text-decoration: line-through;
+}
+.cm-invalidchar {
+  color: red;
+}
+.cm-negative {
+  color: #d44;
+}
+.cm-positive {
+  color: #292;
+}
+
 
 .cm-formatting {
   &-list {

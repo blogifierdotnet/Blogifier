@@ -5,8 +5,10 @@
   }
 
   &-wrap {
-    background: #fff;
-    @include bf-shadow(0.25rem);
+    .EasyMDEContainer {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
   }
 
   &-header {
