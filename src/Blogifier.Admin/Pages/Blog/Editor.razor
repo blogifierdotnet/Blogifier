@@ -54,7 +54,7 @@
         </div>
         <div class="editor-wrap">
             <div class="editor-header">
-                <img class="editor-cover" src="@Post.Cover" alt="Cover" id="post-cover">
+                <img class="editor-cover" src="@Post.Cover" alt="Cover" id="postCover">
 
                 <div class="editor-header-inner">
 
@@ -139,7 +139,7 @@
        Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
        Post.PostType = _stateprovider.PostType;
 
-       Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "post-cover");
+       Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
 
        if(string.IsNullOrEmpty(Post.Cover))
            Post.Cover = Constants.DefaultCover;

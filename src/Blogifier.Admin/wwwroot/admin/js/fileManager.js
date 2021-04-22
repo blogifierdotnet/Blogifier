@@ -34,9 +34,10 @@ let fileManager = function (dataService) {
   }
 
   function userAvatarCallback(data) {
-    $('#avatar').attr("src", data);
-    $("#avatar-menu").attr("src", data);
-    $("#avatar-submenu").attr("src", data);
+    let profilePicture = document.querySelectorAll('.profilePicture');
+    for (i = 0; i < profilePicture.length; i++) {
+      profilePicture[i].src = data;
+    }
   }
 
   function insertImgCallback(data) {

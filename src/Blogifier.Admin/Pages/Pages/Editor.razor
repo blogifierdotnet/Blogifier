@@ -52,7 +52,7 @@
         </div>
         <div class="editor-wrap">
             <div class="editor-header">
-                <img class="editor-cover" src="@Post.Cover" alt="Cover" id="post-cover">
+                <img class="editor-cover" src="@Post.Cover" alt="Cover" id="postCover">
                 <div class="editor-header-inner">
                     <textarea class="editor-header-textarea editor-header-title autosize" @bind="Post.Title" name="title" placeholder="@_localizer["page-title"]" rows="1" autofocus></textarea>
                     <textarea class="editor-header-textarea editor-header-desc autosize" @bind="Post.Description" name="description" placeholder="@_localizer["description"]..." rows="1"></textarea>
@@ -119,7 +119,7 @@
        Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
        Post.PostType = PostType.Page;
 
-       Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "post-cover");
+       Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
        if(string.IsNullOrEmpty(Post.Cover))
            Post.Cover = Constants.DefaultCover;
 

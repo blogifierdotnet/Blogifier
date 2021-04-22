@@ -67,13 +67,13 @@
                 </li>
                 <li class="menu-item dropdown">
                     <NavLink class="menu-link" href="/admin/profile/" role="button" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="rounded-circle" id="avatar-submenu" width="22" height="22" src="@author.Avatar" alt="@author.DisplayName">
+                        <img class="rounded-circle profilePicture" width="22" height="22" src="@author.Avatar" alt="@author.DisplayName">
                     </NavLink>
                     <div class="user-nav dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdownMenu">
                         <div class="user-nav-info">
                             <AuthorizeView>
                                 <Authorized>
-                                    <img class="user-nav-img" id="avatar-submenu" width="64" src="@author.Avatar" alt="@author.DisplayName">
+                                    <img class="user-nav-img profilePicture" width="64" src="@author.Avatar" alt="@author.DisplayName">
                                     <span class="user-nav-name">@author.DisplayName</span>
                                     <span class="user-nav-email">@author.Email</span>
                                 </Authorized>
