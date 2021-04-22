@@ -127,7 +127,7 @@ const
 
 function getEditor() {
   let bf_editor = document.getElementById('bf_editor');
-  var easyMDE = new EasyMDE({
+  let easyMDE = new EasyMDE({
     element: bf_editor,
     autoDownloadFontAwesome: false,
     indentWithTabs: false,
@@ -167,33 +167,31 @@ function getEditor() {
   return easyMDE;
 }
 
-var _editor = {};
+let _editor = {};
 
+// Image Upload
 function insertImage(editor) {
   _editor = editor;
   fileManager.uploadClick('PostImage');
 }
 
+// TODO: insert video or embed not only YouTube.
 function insertYoutube(editor) {
   _editor = editor;
-  var id = prompt("Please enter video ID", "");
+  let id = prompt("Please enter video ID", "");
 
   if (id !== null && id !== "") {
-    var tag = '<iframe width="640" height="480" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
-    var cm = _editor.codemirror;
+    let tag = '<iframe width="640" height="480" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
+    let cm = _editor.codemirror;
     cm.replaceSelection(tag);
   }
 }
 
-// stick the toolbar to the top
-
+// Stick the toolbar to the top
 function stickyToolbar() {
-  var toolbar = document.querySelector(".editor-toolbar");
-  var editor = document.querySelector(".editor-editor");
-
-
-  var sticky = editor.offsetTop;
-
+  let toolbar = document.querySelector(".editor-toolbar");
+  let editor = document.querySelector(".editor-editor");
+  let sticky = editor.offsetTop;
   if (window.pageYOffset > sticky) {
     toolbar.classList.add("-sticky");
   } else {

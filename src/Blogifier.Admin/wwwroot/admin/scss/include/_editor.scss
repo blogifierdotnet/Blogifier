@@ -40,7 +40,6 @@
   z-index: 0;
   word-wrap: break-word;
 }
-
 .CodeMirror-scroll {
   overflow: scroll !important;
   margin-bottom: -4.0625rem;
@@ -108,7 +107,6 @@
   white-space: pre-wrap;
   word-break: normal;
 }
-
 .CodeMirror-rtl pre {
   direction: rtl;
 }
@@ -147,12 +145,10 @@ div.CodeMirror-dragcursors {
 .cm-tab-wrap-hack:after {
   content: "";
 }
-
 .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word):not(.cm-string):not(.cm-attribute):not(.cm-image-alt-text) {
   border-bottom: 1px solid #ff8e8e;
   padding-bottom: 0.125rem;
 }
-
 .CodeMirror-cursor {
   width: 1px;
   background-color: #000;
@@ -207,7 +203,6 @@ div.CodeMirror-dragcursors {
     left: auto;
     background-color: #fff;
     border-bottom-color: $gray-100;
-
     &::after {
       content: "";
       display: block;
@@ -224,7 +219,6 @@ div.CodeMirror-dragcursors {
       left: 0;
     }
   }
-
   &.fullscreen {
     width: 100%;
     height: 3rem;
@@ -250,7 +244,6 @@ div.CodeMirror-dragcursors {
       z-index: 6;
     }
   }
-
   button {
     background: none;
     border: 0;
@@ -269,7 +262,6 @@ div.CodeMirror-dragcursors {
     &:not(:last-child) {
       margin-right: 1px;
     }
-
     &:hover {
       background-color: $gray-100;
       border-bottom-color: $gray-300;
@@ -278,7 +270,6 @@ div.CodeMirror-dragcursors {
         fill: $gray-900;
       }
     }
-
     &.active {
       background-color: rgba($blogifier, 0.1);
       border-bottom-color: rgba($blogifier, 0.2);
@@ -291,7 +282,6 @@ div.CodeMirror-dragcursors {
       fill: $gray-800;
     }
   }
-
   &.disabled-for-preview {
     button:not(.no-disable) {
       opacity: 0.6;
@@ -313,7 +303,6 @@ div.CodeMirror-dragcursors {
   padding: 3rem;
   background: #fff;
   line-height: 1.618;
-
   a {
     color: $primary;
     text-decoration: underline;
@@ -321,7 +310,6 @@ div.CodeMirror-dragcursors {
       color: rgba($primary, 0.8);
     }
   }
-
   blockquote,
   pre,
   ul,
@@ -329,7 +317,6 @@ div.CodeMirror-dragcursors {
   p {
     margin-bottom: 2rem;
   }
-
   blockquote {
     font-weight: 300;
     position: relative;
@@ -358,18 +345,15 @@ div.CodeMirror-dragcursors {
       bottom: 0;
       right: 0;
     }
-
     p {
       &:last-child {
         margin-bottom: 0;
       }
     }
   }
-
   pre {
     background: $gray-100;
   }
-
   table td,
   table th {
     border: 1px solid $gray-200;
@@ -380,7 +364,6 @@ div.CodeMirror-dragcursors {
   iframe {
     max-width: 100%;
   }
-
   table,
   iframe,
   audio,
@@ -388,7 +371,6 @@ div.CodeMirror-dragcursors {
     margin-bottom: 2rem;
     width: 100%;
   }
-
   &-full {
     position: absolute;
     width: 100%;
@@ -419,7 +401,6 @@ div.CodeMirror-dragcursors {
     display: block;
   }
 }
-
 
 //
 // EasyMDE Theme
@@ -471,7 +452,6 @@ div.CodeMirror-dragcursors {
     padding-bottom: 0.25rem;
     border-radius: 0.125rem;
     color: $gray-900;
-
     &.cm-formatting:not(.cm-comment + .cm-formatting) {
       font-weight: 500;
       padding-left: 0.25rem;
@@ -545,6 +525,20 @@ div.CodeMirror-dragcursors {
   }
 }
 
+// preview image
+span[data-img-src]::after {
+  display: block;
+  content: "";
+  height: 0;
+  background-image: var(--bg-image);
+  background-repeat: no-repeat;
+  background-size: contain;
+  max-height: 100%;
+  max-width: 100%;
+  padding-top: var(--height);
+  width: var(--width);
+}
+
 .cm-formatting {
   &-list {
     padding-left: 1.5rem;
@@ -599,7 +593,7 @@ div.CodeMirror-dragcursors {
 .editor-statusbar {
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
-  color: #959694;
+  color: $gray-700;
   text-align: right;
   span {
     display: inline-block;
@@ -615,18 +609,4 @@ div.CodeMirror-dragcursors {
   .characters:before {
     content: "characters: ";
   }
-}
-
-//
-span[data-img-src]::after {
-  content: "";
-  background-image: var(--bg-image);
-  display: block;
-  max-height: 100%;
-  max-width: 100%;
-  background-size: contain;
-  height: 0;
-  padding-top: var(--height);
-  width: var(--width);
-  background-repeat: no-repeat;
 }
