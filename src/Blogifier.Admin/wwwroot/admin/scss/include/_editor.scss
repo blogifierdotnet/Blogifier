@@ -8,17 +8,14 @@
 }
 
 .CodeMirror {
-  box-sizing: border-box;
+  // TODO: Check this
+  // box-sizing: border-box;
   height: auto;
   border: none;
   padding: 0;
   font: inherit;
   z-index: 0;
   word-wrap: break-word;
-
-  &-scroll {
-    cursor: text;
-  }
 
   &-fullscreen {
     background: #fff;
@@ -55,6 +52,7 @@
     color: #000;
   }
 }
+
 .editor-toolbar {
   position: absolute;
   top: 0;
@@ -283,6 +281,22 @@
 }
 
 .cm-s-easymde {
+  .cm-tab {
+    display: inline-block;
+    text-decoration: inherit;
+  }
+
+  .cm-header,
+  .cm-strong {
+    font-weight: 500;
+  }
+  .cm-em {
+    font-style: italic;
+  }
+  .cm-strikethrough {
+    text-decoration: line-through;
+  }
+
   .cm-tag {
     color: $hljs-green;
   }
@@ -380,42 +394,22 @@
       z-index: 1;
     }
   }
-}
 
-.cm-tab {
-  display: inline-block;
-  text-decoration: inherit;
+  .cm-invalidchar {
+    color: $hljs-red;
+  }
+  .cm-negative {
+    color: $hljs-red;
+  }
+  .cm-positive {
+    color: $hljs-green;
+  }
 }
-
-.cm-header,
-.cm-strong {
-  font-weight: 500;
-}
-.cm-em {
-  font-style: italic;
-}
-.cm-link {
-  text-decoration: underline;
-}
-.cm-strikethrough {
-  text-decoration: line-through;
-}
-.cm-invalidchar {
-  color: red;
-}
-.cm-negative {
-  color: #d44;
-}
-.cm-positive {
-  color: #292;
-}
-
 
 .cm-formatting {
   &-list {
     padding-left: 1.5rem;
   }
-
   &-link {
     &.cm-link {
       font-weight: 600;
@@ -433,14 +427,12 @@
         }
       }
     }
-
     &-string {
       &.cm-url {
         font-weight: 600 !important;
       }
     }
   }
-
   &-image {
     &.cm-image {
       font-weight: 600;
@@ -476,14 +468,14 @@ span[data-img-src]::after {
 }
 
 .editor-statusbar {
-  padding: 8px 10px;
-  font-size: 12px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
   color: #959694;
   text-align: right;
   span {
     display: inline-block;
-    min-width: 4em;
-    margin-left: 1em;
+    min-width: 4rem;
+    margin-left: 1rem;
   }
   .lines:before {
     content: "lines: ";

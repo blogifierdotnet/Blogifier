@@ -1,13 +1,16 @@
+//
+// CodeMirror
+//
 .CodeMirror {
+  position: relative;
+  overflow: hidden;
+
   &-cursor {
     width: 1px;
     background-color: #000;
   }
 
-  .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word):not(.cm-string):not(.cm-attribute):not(.cm-image-alt-text) {
-    border-bottom: 1px solid #ff8e8e;
-    padding-bottom: 0.125rem;
-  }
+
 }
 
 .CodeMirror-composing {
@@ -15,11 +18,7 @@
 }
 
 // STOP
-.CodeMirror {
-  position: relative;
-  overflow: hidden;
-  background: #fff;
-}
+
 .CodeMirror-scroll {
   overflow: scroll !important;
   margin-bottom: -4.0625rem;
@@ -30,6 +29,7 @@
   height: 100%;
   outline: 0;
   position: relative;
+  cursor: text;
 }
 .CodeMirror-sizer {
   position: relative;
@@ -125,3 +125,12 @@ div.CodeMirror-dragcursors {
 .cm-tab-wrap-hack:after {
   content: "";
 }
+
+.cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word):not(.cm-string):not(.cm-attribute):not(.cm-image-alt-text) {
+  border-bottom: 1px solid #ff8e8e;
+  padding-bottom: 0.125rem;
+}
+
+//
+// EasyMDE
+//

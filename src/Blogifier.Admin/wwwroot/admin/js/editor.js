@@ -156,7 +156,6 @@ function getEditor() {
       editorToolbar_video,
       editorToolbar_table,
       editorToolbar_code,
-      editorToolbar_clear,
       editorToolbar_preview,
       editorToolbar_sidebyside,
       editorToolbar_fullscreen
