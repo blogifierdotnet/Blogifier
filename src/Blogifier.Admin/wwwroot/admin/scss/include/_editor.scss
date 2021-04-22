@@ -1,3 +1,22 @@
+/*
+
+  This file includes the CodeMirror and EasyMDE Styles.
+  And we customized it heavily to fit the Blogifier
+
+  github.com/blogifierdotnet/Blogifier
+  github.com/farzindev
+
+  1. Container
+  2. CodeMirror
+  3. EasyMDE
+  4. EasyMDE Toolbar
+  5. EasyMDE Preview
+  6. EasyMDE Theme
+  7. EasyMDE Statusbar
+
+*/
+
+// Container
 .EasyMDEContainer {
   display: block;
   position: relative;
@@ -7,52 +26,169 @@
   overflow: hidden;
 }
 
+//
+// CodeMirror
+//
 .CodeMirror {
-  // TODO: Check this
-  // box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  // box-sizing: border-box; // TODO: Check this
   height: auto;
   border: none;
   padding: 0;
   font: inherit;
   z-index: 0;
   word-wrap: break-word;
-
-  &-fullscreen {
-    background: #fff;
-    position: fixed !important;
-    top: 3rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: auto;
-    z-index: 8;
-    border-right: none !important;
-    border-bottom-right-radius: 0 !important;
-
-    .CodeMirror-lines {
-      padding-bottom: 10rem;
-    }
-  }
-
-  &-sided {
-    width: 50% !important;
-  }
-
-  &-placeholder {
-    opacity: 0.5;
-  }
-
-  &-selected {
-    background-color: $gray-200;
-  }
-  &-focused .CodeMirror-selected {
-    background-color: $gray-300;
-  }
-  &-selectedtext {
-    color: #000;
-  }
 }
 
+.CodeMirror-scroll {
+  overflow: scroll !important;
+  margin-bottom: -4.0625rem;
+  margin-right: -4.0625rem;
+  padding-bottom: 4.0625rem;
+  padding-right: 1rem;
+  padding: 3rem 4rem 6rem 3rem;
+  height: 100%;
+  outline: 0;
+  position: relative;
+  cursor: text;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 4.0625rem solid transparent;
+}
+.CodeMirror-hscrollbar,
+.CodeMirror-scrollbar-filler,
+.CodeMirror-vscrollbar {
+  position: absolute;
+  z-index: 6;
+  display: none;
+  outline: 0;
+}
+.CodeMirror-vscrollbar {
+  right: 0;
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0;
+  left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0;
+  bottom: 0;
+}
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px;
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  border-radius: 0;
+  border-width: 0;
+  background: 0 0;
+  font-family: inherit;
+  font-size: 1rem;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: 1.618;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-rtl pre {
+  direction: rtl;
+}
+.CodeMirror-code {
+  outline: 0;
+}
+.CodeMirror-scroll,
+.CodeMirror-sizer {
+  box-sizing: content-box;
+}
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre {
+  position: static;
+}
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+.cm-tab-wrap-hack:after {
+  content: "";
+}
+
+.cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word):not(.cm-string):not(.cm-attribute):not(.cm-image-alt-text) {
+  border-bottom: 1px solid #ff8e8e;
+  padding-bottom: 0.125rem;
+}
+
+.CodeMirror-cursor {
+  width: 1px;
+  background-color: #000;
+}
+
+//
+// EasyMDE
+//
+.CodeMirror-fullscreen {
+  background: #fff;
+  position: fixed !important;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  z-index: 8;
+  border-right: none !important;
+  border-bottom-right-radius: 0 !important;
+}
+.CodeMirror-sided {
+  width: 50% !important;
+}
+.CodeMirror-placeholder {
+  opacity: 0.5;
+}
+.CodeMirror-selected {
+  background-color: $gray-200;
+}
+.CodeMirror-selectedtext {
+  color: #000;
+}
+
+//
+// EasyMDE Toolbar
+//
 .editor-toolbar {
   position: absolute;
   top: 0;
@@ -114,6 +250,7 @@
       z-index: 6;
     }
   }
+
   button {
     background: none;
     border: 0;
@@ -168,6 +305,9 @@
   }
 }
 
+//
+// EasyMDE Preview
+//
 .editor-preview {
   font-size: 1rem;
   padding: 3rem;
@@ -280,12 +420,15 @@
   }
 }
 
+
+//
+// EasyMDE Theme
+//
 .cm-s-easymde {
   .cm-tab {
     display: inline-block;
     text-decoration: inherit;
   }
-
   .cm-header,
   .cm-strong {
     font-weight: 500;
@@ -296,7 +439,6 @@
   .cm-strikethrough {
     text-decoration: line-through;
   }
-
   .cm-tag {
     color: $hljs-green;
   }
@@ -344,14 +486,12 @@
     color: $hljs-blue;
     text-decoration: none;
   }
-
   .cm-image {
     color: $hljs-green;
     ~ .cm-url {
       color: $hljs-green;
     }
   }
-
   .cm-url {
     color: $hljs-blue;
 
@@ -394,7 +534,6 @@
       z-index: 1;
     }
   }
-
   .cm-invalidchar {
     color: $hljs-red;
   }
@@ -454,19 +593,9 @@
   }
 }
 
-span[data-img-src]::after {
-  content: "";
-  background-image: var(--bg-image);
-  display: block;
-  max-height: 100%;
-  max-width: 100%;
-  background-size: contain;
-  height: 0;
-  padding-top: var(--height);
-  width: var(--width);
-  background-repeat: no-repeat;
-}
-
+//
+// EasyMDE Statusbar
+//
 .editor-statusbar {
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
@@ -486,4 +615,18 @@ span[data-img-src]::after {
   .characters:before {
     content: "characters: ";
   }
+}
+
+//
+span[data-img-src]::after {
+  content: "";
+  background-image: var(--bg-image);
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  background-size: contain;
+  height: 0;
+  padding-top: var(--height);
+  width: var(--width);
+  background-repeat: no-repeat;
 }
