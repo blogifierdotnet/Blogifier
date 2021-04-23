@@ -29,7 +29,7 @@ let fileManager = function (dataService) {
   }
 
   function postCoverCallback(data) {
-    var postCover = document.getElementById("postCover");
+    let postCover = document.getElementById("postCover");
     postCover.src = data;
   }
 
@@ -41,23 +41,21 @@ let fileManager = function (dataService) {
   }
 
   function insertImgCallback(data) {
-    var cm = _editor.codemirror;
-    var url = data;
-    var output = url + '](' + url + ')';
+    let cm = _editor.codemirror;
+    let url = data;
+    let output = url + '](' + url + ')';
 
     if (url.toLowerCase().match(/.(mp4|ogv|webm)$/i)) {
-      var extv = 'mp4';
+      let extv = 'mp4';
       if (url.toLowerCase().match(/.(ogv)$/i)) { extv = 'ogg'; }
       if (url.toLowerCase().match(/.(webm)$/i)) { extv = 'webm'; }
-      output = '<video width="320" height="240" controls>\r\n  <source src="' + url;
-      output += '" type="video/' + extv + '">Your browser does not support the video tag.\r\n</video>';
+      output = `<video width="700" height="350" controls>\r\n\t\t<source src="${url}" type="video/${extv}">\r\n\t\tYour browser does not support the video tag.\r\n</video>`;
     }
     else if (url.toLowerCase().match(/.(mp3|ogg|wav)$/i)) {
-      var exta = 'mp3';
+      let exta = 'mp3';
       if (url.toLowerCase().match(/.(ogg)$/i)) { exta = 'ogg'; }
       if (url.toLowerCase().match(/.(wav)$/i)) { exta = 'wav'; }
-      output = '<audio controls>\r\n  <source src="' + url;
-      output += '" type="audio/' + exta + '">Your browser does not support the audio tag.\r\n</audio>';
+      output = `<audio controls>\r\n\t\t<source src="${url}" type="audio/${exta}">\r\n\t\tYour browser does not support the audio tag.\r\n</audio>`;
     }
     else if (url.toLowerCase().match(/.(jpg|jpeg|png|gif)$/i)) {
       output = '\r\n![' + output;
@@ -65,7 +63,7 @@ let fileManager = function (dataService) {
     else {
       output = '\r\n[' + output;
     }
-    var selectedText = cm.getSelection();
+    let selectedText = cm.getSelection();
     cm.replaceSelection(output);
   }
 

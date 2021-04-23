@@ -1,18 +1,14 @@
-var DataService = function () {
-    var upload = function (url, obj, done, fail) {
-        $.ajax({
-            type: "POST",
-            url: url,
-            enctype: 'multipart/form-data',
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: obj,
-            success: done,
-            error: fail
-        });
-    };
-    return {
-        upload: upload
-    };
+let DataService = function () {
+  let upload = function (url, obj, success, fail) {
+    fetch(url, {
+      method: 'POST',
+      body: obj
+    })
+      .then(response => response.json())
+      .then(data => success(data))
+      .catch(error => fail(error));
+  };
+  return {
+    upload: upload
+  };
 }();
