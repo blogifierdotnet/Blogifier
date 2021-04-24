@@ -185,21 +185,7 @@ div.CodeMirror-dragcursors {
 // EasyMDE Toolbar
 //
 
-.editor-wrapper {
-  .toolbar-sticky {
-    width: 61rem;
-    position: fixed;
-    top: 0;
-    left: auto;
-    background-color: #fff;
-    border-bottom-color: $gray-100;
 
-    @media screen and (max-width: 1199px) {
-      width: 100%;
-      left: 0;
-    }
-  }
-}
 .editor-toolbar {
   position: absolute;
   top: 0;
@@ -210,8 +196,6 @@ div.CodeMirror-dragcursors {
   display: flex;
   z-index: 5;
   height: 3rem;
-
-
 
   &.fullscreen {
     width: 100%;
@@ -234,7 +218,7 @@ div.CodeMirror-dragcursors {
       bottom: -2rem;
       left: 0;
       height: 2rem;
-      background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
+      background-image: linear-gradient(180deg, rgba(#000, 0.07), transparent);
       z-index: 6;
     }
   }
@@ -250,7 +234,6 @@ div.CodeMirror-dragcursors {
     padding: 0;
     cursor: pointer;
     flex-grow: 1;
-    border-bottom: 1px solid transparent;
     border-radius: 0;
 
     &:not(:last-child) {
@@ -258,15 +241,12 @@ div.CodeMirror-dragcursors {
     }
     &:hover {
       background-color: $gray-100;
-      border-bottom-color: $gray-300;
-
       .bi {
         fill: $gray-900;
       }
     }
     &.active {
       background-color: rgba($blogifier, 0.1);
-      border-bottom-color: rgba($blogifier, 0.2);
       .bi {
         fill: $blogifier;
       }
@@ -285,6 +265,22 @@ div.CodeMirror-dragcursors {
       .bi {
         fill: $gray-800 !important;
       }
+    }
+  }
+}
+
+.toolbar-sticky {
+  .editor-toolbar {
+    width: 61rem;
+    position: fixed;
+    top: 0;
+    left: auto;
+    background-color: #fff;
+    border-bottom-color: $gray-100;
+
+    @media screen and (max-width: 1199px) {
+      width: 100%;
+      left: 0;
     }
   }
 }
