@@ -2,6 +2,8 @@
   background-color: #fff;
   margin-bottom: 2rem;
   box-shadow: $bf-shadow;
+  position: relative;
+  z-index: 15;
   // one
   &-list {
     @include list-unstyled;

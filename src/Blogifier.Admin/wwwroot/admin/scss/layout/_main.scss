@@ -12,6 +12,8 @@ body {
 // index.html
 .blogifier {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 // shared/MainLayout.razor

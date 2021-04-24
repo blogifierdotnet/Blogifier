@@ -1,6 +1,8 @@
 ﻿@inject IJSRuntime JSRuntime
 @inject IStringLocalizer<Resource> _localizer
-<textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["Type here..."]"></textarea>
+<div class="easymde-wrapper">
+    <textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["Type here..."]"></textarea>
+</div>
 
 @code {
     [Parameter] public string Content { get; set; }

@@ -20,10 +20,10 @@
 .EasyMDEContainer {
   display: block;
   position: relative;
-  margin-bottom: 4rem;
-  padding-top: 3rem;
-  @include bf-shadow(0.25rem);
+  // margin-bottom: 4rem;
+  padding-top: 6rem;
   overflow: hidden;
+  background-color: #fff;
 }
 
 //
@@ -42,11 +42,10 @@
 }
 .CodeMirror-scroll {
   overflow: scroll !important;
-  margin-bottom: -4.0625rem;
-  margin-right: -4.0625rem;
-  padding-bottom: 4.0625rem;
-  padding-right: 1rem;
-  padding: 3rem 4rem 6rem 3rem;
+  margin-bottom: -50px;
+  margin-right: -50px;
+  padding: 0;
+  padding-bottom: 100px;
   height: 100%;
   outline: 0;
   position: relative;
@@ -185,6 +184,22 @@ div.CodeMirror-dragcursors {
 //
 // EasyMDE Toolbar
 //
+
+.editor-wrapper {
+  .toolbar-sticky {
+    width: 61rem;
+    position: fixed;
+    top: 0;
+    left: auto;
+    background-color: #fff;
+    border-bottom-color: $gray-100;
+
+    @media screen and (max-width: 1199px) {
+      width: 100%;
+      left: 0;
+    }
+  }
+}
 .editor-toolbar {
   position: absolute;
   top: 0;
@@ -196,29 +211,8 @@ div.CodeMirror-dragcursors {
   z-index: 5;
   height: 3rem;
 
-  &.-sticky {
-    width: 61rem;
-    position: fixed;
-    top: 0;
-    left: auto;
-    background-color: #fff;
-    border-bottom-color: $gray-100;
-    &::after {
-      content: "";
-      display: block;
-      width: 100%;
-      position: absolute;
-      bottom: -2rem;
-      left: 0;
-      height: 2rem;
-      background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
-      z-index: 6;
-    }
-    @media screen and (max-width: 1199px) {
-      width: 100%;
-      left: 0;
-    }
-  }
+
+
   &.fullscreen {
     width: 100%;
     height: 3rem;

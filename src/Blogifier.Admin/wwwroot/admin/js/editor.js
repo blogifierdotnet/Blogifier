@@ -189,12 +189,12 @@ function insertYoutube(editor) {
 
 // Stick the toolbar to the top
 function stickyToolbar() {
-  let toolbar = document.querySelector(".editor-toolbar");
-  let editor = document.querySelector(".editor-editor");
-  let sticky = editor.offsetTop;
+  let body = document.querySelector("body");
+  let editorWrapper = document.querySelector(".easymde-wrapper");
+  let sticky = editorWrapper.offsetTop;
   if (window.pageYOffset > sticky) {
-    toolbar.classList.add("-sticky");
+    body.classList.add("toolbar-sticky");
   } else {
-    toolbar.classList.remove("-sticky");
+    body.classList.remove("toolbar-sticky");
   }
 }
