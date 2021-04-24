@@ -109,6 +109,7 @@ const
     icon: editorIcon_preview,
     title: "Toggle Preview",
     noDisable: true,
+    className: "ms-auto"
   },
   editorToolbar_sidebyside = {
     name: "side-by-side",
@@ -125,7 +126,46 @@ const
     noDisable: true,
   };
 
-function getEditor() {
+
+const fullToolbar = [
+  editorToolbar_heading,
+  editorToolbar_bold,
+  editorToolbar_italic,
+  editorToolbar_strike,
+  editorToolbar_ul,
+  editorToolbar_ol,
+  editorToolbar_quote,
+  editorToolbar_hr,
+  editorToolbar_link,
+  editorToolbar_image,
+  editorToolbar_video,
+  editorToolbar_table,
+  editorToolbar_code,
+  editorToolbar_preview,
+  editorToolbar_sidebyside,
+  editorToolbar_fullscreen
+];
+
+const miniToolbar = [
+  editorToolbar_heading,
+  editorToolbar_bold,
+  editorToolbar_italic,
+  editorToolbar_strike,
+  editorToolbar_ul,
+  editorToolbar_ol,
+  editorToolbar_quote,
+  editorToolbar_link,
+  editorToolbar_image,
+  editorToolbar_video,
+  editorToolbar_preview,
+];
+
+function getEditor(_toolbar) {
+  let selectedToolbar = fullToolbar;
+  if (_toolbar == "miniToolbar") {
+    selectedToolbar = miniToolbar;
+  }
+
   let bf_editor = document.getElementById('bf_editor');
   let easyMDE = new EasyMDE({
     element: bf_editor,
@@ -142,24 +182,7 @@ function getEditor() {
       singleLineBreaks: false,
       codeSyntaxHighlighting: true
     },
-    toolbar: [
-      editorToolbar_heading,
-      editorToolbar_bold,
-      editorToolbar_italic,
-      editorToolbar_strike,
-      editorToolbar_ul,
-      editorToolbar_ol,
-      editorToolbar_quote,
-      editorToolbar_hr,
-      editorToolbar_link,
-      editorToolbar_image,
-      editorToolbar_video,
-      editorToolbar_table,
-      editorToolbar_code,
-      editorToolbar_preview,
-      editorToolbar_sidebyside,
-      editorToolbar_fullscreen
-    ],
+    toolbar: selectedToolbar,
     insertTexts: {
       horizontalRule: ["", "\n---\n"]
     }

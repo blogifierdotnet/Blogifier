@@ -66,8 +66,8 @@ window.commonJsFunctions = {
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
   },
-  loadEditor: function () {
-    easymde = getEditor();
+  loadEditor: function (toolbar) {
+    easymde = getEditor(toolbar);
     autosize(document.querySelectorAll('.autosize'));
     window.onscroll = function () { stickyToolbar() };
   },

@@ -6,14 +6,15 @@
 
 @code {
     [Parameter] public string Content { get; set; }
+    [Parameter] public string Toolbar { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", "");
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
         }
 
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content );
     }
 }

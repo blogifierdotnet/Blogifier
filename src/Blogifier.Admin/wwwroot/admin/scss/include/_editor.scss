@@ -185,7 +185,6 @@ div.CodeMirror-dragcursors {
 // EasyMDE Toolbar
 //
 
-
 .editor-toolbar {
   position: absolute;
   top: 0;
@@ -228,6 +227,8 @@ div.CodeMirror-dragcursors {
     display: inline-block;
     text-align: center;
     text-decoration: none !important;
+    max-width: 3rem;
+
     height: 3rem;
     width: 3rem;
     margin: 0;
@@ -245,6 +246,7 @@ div.CodeMirror-dragcursors {
         fill: $gray-900;
       }
     }
+
     &.active {
       background-color: rgba($blogifier, 0.1);
       .bi {
