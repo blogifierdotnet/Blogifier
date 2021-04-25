@@ -1,14 +1,11 @@
-.toolbar-sticky{
+.toolbar-sticky {
   .bfeditor-header {
-    background-image: linear-gradient(
-      180deg,
-      rgba(#000, 0.025),
-      transparent
-    );
+    background-image: linear-gradient(180deg, rgba(#000, 0.025), transparent);
 
-    &::after{
+    &::after {
+      height: 1rem;
       position: fixed;
-      top:3rem;
+      top: 3rem;
       bottom: auto;
       background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
     }
@@ -19,13 +16,13 @@
   flex-grow: 1;
   background-color: #fff;
 
-  .EasyMDEContainer{
+  .EasyMDEContainer {
     box-shadow: none;
     border-radius: 0;
   }
 
-  .CodeMirror-lines{
-    padding:3rem 0;
+  .CodeMirror-lines {
+    padding: 3rem 0;
   }
 
   .easymde-wrapper {
@@ -74,10 +71,10 @@
       display: block;
       width: 100%;
       position: absolute;
-      bottom: -4rem + .0625rem;
+      bottom: -3rem;
       left: 0;
-      height: 1rem;
-      border-top:1px solid $gray-200;
+      height: 1px;
+      border-top: 1px solid $gray-200;
     }
 
     &-inner {
