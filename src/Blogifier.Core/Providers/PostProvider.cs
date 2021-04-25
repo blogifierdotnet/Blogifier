@@ -1,7 +1,9 @@
 using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
+using Blogifier.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,11 +35,13 @@ namespace Blogifier.Core.Providers
 	{
 		private readonly AppDbContext _db;
         private readonly ICategoryProvider _categoryProvider;
+        private readonly IConfiguration _configuration;
 
-		public PostProvider(AppDbContext db, ICategoryProvider categoryProvider)
+        public PostProvider(AppDbContext db, ICategoryProvider categoryProvider, IConfiguration configuration)
 		{
 			_db = db;
             _categoryProvider = categoryProvider;
+            _configuration = configuration;
 		}
 
 		public async Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType)
@@ -231,6 +235,10 @@ namespace Blogifier.Core.Providers
 			post.Blog = _db.Blogs.First();
 			post.DateCreated = DateTime.UtcNow;
 
+            // sanitize HTML fields
+            post.Content = post.Content.RemoveScriptTags();
+            post.Description = post.Description.RemoveScriptTags();
+
 			await _db.Posts.AddAsync(post);
 			return await _db.SaveChangesAsync() > 0;
 		}
@@ -243,8 +251,8 @@ namespace Blogifier.Core.Providers
 
 			existing.Slug = post.Slug;
 			existing.Title = post.Title;
-			existing.Description = post.Description;
-			existing.Content = post.Content;
+			existing.Description = post.Description.RemoveScriptTags();
+			existing.Content = post.Content.RemoveScriptTags();
 			existing.Cover = post.Cover;
 			existing.PostType = post.PostType;
 			existing.Published = post.Published;
@@ -413,6 +421,11 @@ namespace Blogifier.Core.Providers
 
 			return items;
 		}
+
+        bool IsDemo()
+        {
+            return _configuration.GetSection("Blogifier").GetValue<bool>("DemoMode");
+        }
 
 		#endregion
 	}
