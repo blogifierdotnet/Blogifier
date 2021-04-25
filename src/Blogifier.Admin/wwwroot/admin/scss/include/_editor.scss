@@ -20,10 +20,9 @@
 .EasyMDEContainer {
   display: block;
   position: relative;
-  // margin-bottom: 4rem;
-  padding-top: 6rem;
+  padding-top: 3rem;
   overflow: hidden;
-  background-color: #fff;
+  @include bf-shadow;
 }
 
 //
@@ -42,18 +41,18 @@
 }
 .CodeMirror-scroll {
   overflow: scroll !important;
-  margin-bottom: -50px;
-  margin-right: -50px;
-  padding: 0;
-  padding-bottom: 100px;
   height: 100%;
   outline: 0;
   position: relative;
   cursor: text;
+  // hide the scrollbar
+  margin-right: -15px;
+  margin-bottom: -15px;
+  padding-bottom: 50px;
 }
 .CodeMirror-sizer {
   position: relative;
-  border-right: 4.0625rem solid transparent;
+  border-right: 0 !important;
 }
 .CodeMirror-hscrollbar,
 .CodeMirror-scrollbar-filler,
@@ -82,6 +81,7 @@
 .CodeMirror-lines {
   cursor: text;
   min-height: 1px;
+  padding: 1rem;
 }
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {

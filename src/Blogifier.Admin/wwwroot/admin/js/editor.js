@@ -166,14 +166,15 @@ function getEditor(_toolbar) {
     selectedToolbar = miniToolbar;
   }
 
+
   let bf_editor = document.getElementById('bf_editor');
   let easyMDE = new EasyMDE({
     element: bf_editor,
     autoDownloadFontAwesome: false,
     indentWithTabs: false,
     status: false,
-    height: "500px",
-    minHeight: "500px",
+    height: "200px",
+    minHeight: "200px",
     parsingConfig: {
       allowAtxHeaderWithoutSpace: true,
       underscoresBreakWords: true
@@ -221,3 +222,4 @@ function stickyToolbar() {
     body.classList.remove("toolbar-sticky");
   }
 }
+

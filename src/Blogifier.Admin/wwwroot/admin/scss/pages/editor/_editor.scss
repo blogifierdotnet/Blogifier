@@ -19,6 +19,15 @@
   flex-grow: 1;
   background-color: #fff;
 
+  .EasyMDEContainer{
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .CodeMirror-lines{
+    padding:3rem 0;
+  }
+
   .easymde-wrapper {
     // width: $container;
     max-width: 1024px;
@@ -27,8 +36,6 @@
     padding-left: 1.5rem;
     margin-right: auto;
     margin-left: auto;
-
-
   }
 
   .editor-toolbar {
