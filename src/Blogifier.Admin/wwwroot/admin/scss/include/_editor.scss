@@ -39,6 +39,12 @@
   z-index: 0;
   word-wrap: break-word;
 }
+
+// hide the CodeMirror-scroll when we are in preview.
+.disabled-for-preview + .CodeMirror > .CodeMirror-scroll {
+  display: none !important;
+}
+
 .CodeMirror-scroll {
   overflow: scroll !important;
   height: 100%;
@@ -164,10 +170,22 @@ div.CodeMirror-dragcursors {
   right: 0;
   bottom: 0;
   height: auto;
-  z-index: 8;
+  z-index: 15;
   border-right: none !important;
   border-bottom-right-radius: 0 !important;
+
+  @media screen and (min-width: 1024px) {
+    .CodeMirror-lines {
+      padding: 2.5rem 2.5rem 20rem !important;
+    }
+  }
+  @media screen and (max-width: 1023px) {
+    .CodeMirror-lines {
+      padding: 1.5rem 1.5rem 20rem !important;
+    }
+  }
 }
+
 .CodeMirror-sided {
   width: 50% !important;
 }
@@ -260,7 +278,7 @@ div.CodeMirror-dragcursors {
   }
   &.disabled-for-preview {
     button:not(.no-disable) {
-      opacity: 0.6;
+      opacity: 0.5;
       pointer-events: none;
       background-color: #fff !important;
       border-bottom-color: transparent !important;
@@ -278,7 +296,7 @@ div.CodeMirror-dragcursors {
     top: 0;
     left: auto;
     background-color: #fff;
-    border-bottom-color: $gray-100;
+    border-bottom-color: $gray-300;
 
     @media screen and (max-width: 1199px) {
       width: 100%;
@@ -292,9 +310,48 @@ div.CodeMirror-dragcursors {
 //
 .editor-preview {
   font-size: 1rem;
-  padding: 3rem;
+  padding: 1rem;
   background: #fff;
   line-height: 1.618;
+
+  &-full {
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    overflow: auto;
+    display: none;
+    box-sizing: border-box;
+  }
+  &-side {
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    top: 3rem;
+    right: 0;
+    z-index: 15;
+    overflow: auto;
+    display: none;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    border-left: 1px solid $gray-200;
+    @media screen and (min-width: 1024px) {
+      padding: 2.5rem 2.5rem 20rem !important;
+    }
+    @media screen and (max-width: 1023px) {
+      padding: 1.5rem 1.5rem 20rem !important;
+    }
+
+    p {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &-active-side,
+  &-active {
+    display: block;
+  }
+
   a {
     color: $primary;
     text-decoration: underline;
@@ -362,35 +419,6 @@ div.CodeMirror-dragcursors {
   video {
     margin-bottom: 2rem;
     width: 100%;
-  }
-  &-full {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 7;
-    overflow: auto;
-    display: none;
-    box-sizing: border-box;
-  }
-  &-side {
-    position: fixed;
-    bottom: 0;
-    width: 50%;
-    top: 3rem;
-    right: 0;
-    z-index: 9;
-    overflow: auto;
-    display: none;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    border-left: 1px solid $gray-200;
-    padding-bottom: 7rem;
-  }
-  &-active-side,
-  &-active {
-    display: block;
   }
 }
 
