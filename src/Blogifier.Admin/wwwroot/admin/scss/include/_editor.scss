@@ -211,6 +211,7 @@ div.CodeMirror-dragcursors {
   user-select: none;
   border-bottom: 1px solid $gray-200;
   display: flex;
+  align-items: center;
   z-index: 5;
   height: 3rem;
 
@@ -239,6 +240,15 @@ div.CodeMirror-dragcursors {
       z-index: 6;
     }
   }
+  i.separator {
+    font-size: 0;
+    width: 1px;
+    height: 100%;
+    background: #e8ecef;
+    &:not(:first-child):not(:last-child) {
+      // margin: 0 .25rem;
+    }
+  }
   button {
     background: none;
     border: 0;
@@ -246,7 +256,6 @@ div.CodeMirror-dragcursors {
     text-align: center;
     text-decoration: none !important;
     max-width: 3rem;
-
     height: 3rem;
     width: 3rem;
     margin: 0;
@@ -254,14 +263,14 @@ div.CodeMirror-dragcursors {
     cursor: pointer;
     flex-grow: 1;
     border-radius: 0;
-
     &:not(:last-child) {
       margin-right: 1px;
     }
+
     &:hover {
       background-color: $gray-100;
       svg {
-        fill: $gray-900;
+        fill: #000;
       }
     }
 
@@ -273,7 +282,7 @@ div.CodeMirror-dragcursors {
     }
 
     svg {
-      fill: $gray-600;
+      fill: $gray-700;
     }
   }
   &.disabled-for-preview {

@@ -34,6 +34,20 @@
   }
   .editor-toolbar {
     border-bottom: 0;
+    button {
+      position: relative;
+      &:last-child::after {
+        font-size: 0;
+        width: 1px;
+        height: 100%;
+        background: #e8ecef;
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
   }
   .editor-preview {
     padding: 3rem 0;
