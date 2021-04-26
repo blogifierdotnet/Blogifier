@@ -22,10 +22,9 @@
     border-radius: 0;
   }
   .CodeMirror-lines {
-    padding: 3rem 0;
+    padding: 3rem 0 20rem;
   }
   .easymde-wrapper {
-    // width: $container;
     max-width: 1024px;
     width: 100%;
     padding-right: 1.5rem;
@@ -35,6 +34,9 @@
   }
   .editor-toolbar {
     border-bottom: 0;
+  }
+  .editor-preview {
+    padding: 3rem 0;
   }
 
   //
