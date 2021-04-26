@@ -260,20 +260,20 @@ div.CodeMirror-dragcursors {
     }
     &:hover {
       background-color: $gray-100;
-      .bi {
+      svg {
         fill: $gray-900;
       }
     }
 
     &.active {
       background-color: rgba($blogifier, 0.1);
-      .bi {
+      svg {
         fill: $blogifier;
       }
     }
 
-    .bi {
-      fill: $gray-800;
+    svg {
+      fill: $gray-600;
     }
   }
   &.disabled-for-preview {
@@ -282,7 +282,7 @@ div.CodeMirror-dragcursors {
       pointer-events: none;
       background-color: #fff !important;
       border-bottom-color: transparent !important;
-      .bi {
+      svg {
         fill: $gray-800 !important;
       }
     }
