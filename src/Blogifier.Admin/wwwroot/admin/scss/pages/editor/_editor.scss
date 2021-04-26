@@ -17,13 +17,6 @@
   background-color: #fff;
 
   // custom editor
-  .EasyMDEContainer {
-    box-shadow: none;
-    border-radius: 0;
-  }
-  .CodeMirror-lines {
-    padding: 3rem 0 20rem;
-  }
   .easymde-wrapper {
     max-width: 1024px;
     width: 100%;
@@ -32,11 +25,21 @@
     margin-right: auto;
     margin-left: auto;
   }
+  .EasyMDEContainer {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .CodeMirror-lines {
+    padding: 3rem 0 20rem;
+  }
   .editor-toolbar {
     border-bottom: 0;
   }
   .editor-preview {
     padding: 3rem 0;
+  }
+  .CodeMirror-fullscreen .editor-preview {
+    padding: 2.5rem;
   }
 
   //
