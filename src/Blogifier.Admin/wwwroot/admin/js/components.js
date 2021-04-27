@@ -69,9 +69,7 @@ window.commonJsFunctions = {
   loadEditor: function (toolbar) {
     easymde = getEditor(toolbar);
     autosize(document.querySelectorAll('.autosize'));
-    if (toolbar != "miniToolbar") {
-      window.onscroll = function () { stickyToolbar() };
-    }
+    window.onscroll = function () { stickyToolbar(toolbar) };
   },
   setEditorValue: function (txt) {
     easymde.value(txt

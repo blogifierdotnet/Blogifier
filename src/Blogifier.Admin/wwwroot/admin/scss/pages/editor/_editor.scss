@@ -1,13 +1,21 @@
 .toolbar-sticky {
   .bfeditor-header {
-    background-image: linear-gradient(180deg, rgba(#000, 0.025), transparent);
-
     &::after {
       height: 1rem;
       position: fixed;
-      top: 3rem;
+      top: 3.5rem;
       bottom: auto;
-      background-image: linear-gradient(180deg, rgba(#000, 0.1), transparent);
+      border: 0;
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0) 30%
+      );
+    }
+  }
+  @media screen and (max-width: 1199px) {
+    .editor-toolbar {
+      padding: 0 0.5rem;
     }
   }
 }
@@ -15,7 +23,6 @@
 .bfeditor {
   flex-grow: 1;
   background-color: #fff;
-
   // custom editor
   .easymde-wrapper {
     max-width: 1024px;
@@ -28,24 +35,31 @@
   .EasyMDEContainer {
     box-shadow: none;
     border-radius: 0;
+    padding-top: 3.5rem;
   }
   .CodeMirror-lines {
     padding: 3rem 0 20rem;
   }
   .editor-toolbar {
+    height: 3.5rem;
     border-bottom: 0;
+
+    &.fullscreen {
+      height: 3rem;
+      padding: 0 0.25rem;
+    }
+    i.separator {
+      height: 1rem;
+      margin: 0 0.75rem;
+    }
     button {
+      border-radius: 0.5rem;
       position: relative;
-      &:last-child::after {
-        font-size: 0;
-        width: 1px;
-        height: 100%;
-        background: #e8ecef;
-        content: "";
-        display: block;
-        position: absolute;
-        right: 0;
-        top: 0;
+      &:not(:last-child) {
+        margin-right: 0.25rem;
+      }
+      + i.separator {
+        margin-left: 0.5rem;
       }
     }
   }
@@ -72,24 +86,12 @@
     color: #fff;
     z-index: 6;
 
-    // &::after {
-    //   content: "";
-    //   width: 100%;
-    //   height: 1px;
-    //   background-color: $gray-200;
-    //   display: block;
-    //   position: absolute;
-    //   bottom: -(3rem + 0.0625rem);
-    //   left: 0;
-    //   z-index: -1;
-    // }
-
     &::after {
       content: "";
       display: block;
       width: 100%;
       position: absolute;
-      bottom: -3rem;
+      bottom: -3.5rem;
       left: 0;
       height: 1px;
       border-top: 1px solid $gray-200;
