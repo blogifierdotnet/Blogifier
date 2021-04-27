@@ -168,8 +168,7 @@ const fullToolbar = [
   "|",
   editorToolbar_preview,
   editorToolbar_sidebyside,
-  editorToolbar_fullscreen,
-  "|"
+  editorToolbar_fullscreen
 ];
 
 const miniToolbar = [
@@ -177,12 +176,15 @@ const miniToolbar = [
   editorToolbar_bold,
   editorToolbar_strike,
   editorToolbar_italic,
+  "|",
   editorToolbar_ol,
   editorToolbar_ul,
+  "|",
   editorToolbar_hr,
   editorToolbar_link,
   editorToolbar_image,
   editorToolbar_video,
+  "|",
   editorToolbar_preview,
 ];
 
