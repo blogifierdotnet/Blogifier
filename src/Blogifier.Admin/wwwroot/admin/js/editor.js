@@ -210,7 +210,7 @@ function insertYoutube(editor) {
   let id = prompt("Please enter video ID", "");
 
   if (id !== null && id !== "") {
-    let tag = '<iframe width="640" height="480" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe>';
+    let tag = `<iframe width="700" height="400" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     let cm = _editor.codemirror;
     cm.replaceSelection(tag);
   }
