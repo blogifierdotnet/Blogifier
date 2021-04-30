@@ -9,32 +9,36 @@
 
 <PageTitle Title="@_localizer["Categories"]" />
 
-<div class="app-posts pr-0 pr-lg-5">
-
+@if (!IsEdit)
+{
+<div class="section-content">
     <div class="list-toolbar">
-
         <label class="list-check form-check" data-toggle="tooltip" title="Select All">
             <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
         </label>
-
         @*<a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["New Category"]</a>*@
-
         @if (Categories != null && Categories.Count > 0)
         {
-            <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="btn btn-link text-danger" title="@_localizer["delete"]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </button>
+            <div class="dropdown dropdown-flush">
+                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownAction" data-bs-toggle="dropdown" aria-expanded="false">
+                    @_localizer["Action"]
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownAction">
+                    <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        <span>@_localizer["delete"]</span>
+                    </button>
+                </div>
+            </div>
         }
-
         <button type="button" class="btn btn-link list-search-toggle ms-auto" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
         </button>
-
     </div>
 
     <div class="list-search collapse" id="collapseSearch">
@@ -78,35 +82,32 @@
             <p>@_localizer["This list is empty"]</p>
         </div>
     }
-
-    <!-- New or Edit -->
-    @if(IsEdit && CurrentCategory != null)
-    {
-    <div>
-        <h1 class="section-title">@_localizer["Edit Category"]</h1>
-        <EditForm model="@CurrentCategory" OnValidSubmit="SaveEdit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="section-content -half">
-                <div class="form-item">
-                    <label class="form-label">@_localizer["title"]</label>
-                    <input type="text" class="form-control" name="title" @bind="CurrentCategory.Content" />
-                </div>
-                <div class="form-item">
-                    <label class="form-label">@_localizer["description"]</label>
-                    <textarea class="form-control" cols="30" rows="5" name="description" @bind="CurrentCategory.Description"></textarea>
-                </div>
-                <div class="form-item">
-                    <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-                    <button type="button" class="btn btn-default px-4" @onclick="CancelEdit">@_localizer["cancel"]</button>
-                </div>
-            </div>
-        </EditForm>
-    </div>
-    }
-    <!--/ -->
-
 </div>
+}
+
+@if(IsEdit && CurrentCategory != null)
+{
+    <h1 class="section-title">@_localizer["Edit Category"]</h1>
+    <EditForm model="@CurrentCategory" OnValidSubmit="SaveEdit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="section-content -half">
+            <div class="form-item">
+                <label class="form-label">@_localizer["title"]</label>
+                <input type="text" class="form-control" name="title" @bind="CurrentCategory.Content" />
+            </div>
+            <div class="form-item">
+                <label class="form-label">@_localizer["description"]</label>
+                <textarea class="form-control" cols="30" rows="5" name="description" @bind="CurrentCategory.Description"></textarea>
+            </div>
+            <div class="form-item">
+                <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+                <button type="button" class="btn btn-default px-4" @onclick="CancelEdit">@_localizer["cancel"]</button>
+            </div>
+        </div>
+    </EditForm>
+}
+
 <ToasterComponent @ref="Toaster" />
 
 @code {
