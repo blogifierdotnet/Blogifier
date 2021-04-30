@@ -6,7 +6,7 @@
    Layout = "layouts/_main.cshtml";
    PostModel postModel = (PostModel)Model;
    var post = postModel.Post;
-   string cover = $"{Url.Content("~/")}{postModel.Post.Cover}";
+   string cover = postModel.Post.Cover;
    var catUrl = Url.Content("~/categories");
 }
 
