@@ -59,13 +59,14 @@ $h6-font-size: $font-size-base;
 $alert-border-width: 0;
 
 // tooltips
-$tooltip-font-size: 0.75rem;
-$tooltip-bg: #000;
+$tooltip-font-size: 0.625rem;
+$tooltip-bg: #57606b;
 $tooltip-border-radius: 5rem;
 $tooltip-padding-y: 0.125rem;
 $tooltip-arrow-color: transparent;
 $tooltip-arrow-width: 0;
 $tooltip-arrow-height: 0;
+$tooltip-opacity: 1;
 
 // dropdown
 $dropdown-link-hover-bg: #f8f9fa;

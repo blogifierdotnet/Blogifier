@@ -230,3 +230,13 @@ function stickyToolbar(tool) {
   }
 }
 
+function editorToolbarTooltip() {
+  console.log('x');
+  let buttons = document.querySelectorAll('.editor-toolbar button');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].setAttribute('data-bs-toggle', 'tooltip');
+    buttons[i].setAttribute('data-bs-placement', 'bottom');
+  }
+  // TODO: remove this later:
+  commonJsFunctions.setTooltip();
+}
