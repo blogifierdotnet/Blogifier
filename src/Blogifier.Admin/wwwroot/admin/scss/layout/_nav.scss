@@ -17,22 +17,22 @@
   &-link {
     line-height: 4rem;
     height: 4rem;
-    width: 3rem;
+    width: 3.25rem;
     position: relative;
-    color: $gray-600;
+    color: #8e98a3;
     font-weight: 500;
     display: block;
     text-align: center;
 
     &:focus,
     &:hover {
-      color: #212529;
+      color: $gray-800;
     }
 
     &:focus {
       outline: none;
       &:after {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.3);
       }
     }
     &.active {
