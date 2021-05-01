@@ -5,7 +5,7 @@ $warning: #ff8d00;
 
 // body
 $body-bg: #f8f9fa;
-$font-size-base: .875rem;
+$font-size-base: 0.875rem;
 $body-color: #111;
 $link-color: $blogifier;
 $link-hover-color: #444;
@@ -26,8 +26,8 @@ $link-decoration: none;
 $btn-font-weight: 500;
 
 // buttons
-$input-btn-font-size: .875rem;
-$input-btn-padding-y: .5rem;
+$input-btn-font-size: 0.875rem;
+$input-btn-padding-y: 0.5rem;
 $input-btn-focus-width: 2px;
 
 // button link
@@ -41,7 +41,7 @@ $accordion-body-padding-x: 0;
 $accordion-button-focus-box-shadow: none;
 $accordion-button-active-bg: none;
 $accordion-button-active-color: $blogifier;
-$accordion-button-padding-y: .5rem;
+$accordion-button-padding-y: 0.5rem;
 $accordion-button-padding-x: 0;
 
 // list
@@ -59,10 +59,13 @@ $h6-font-size: $font-size-base;
 $alert-border-width: 0;
 
 // tooltips
-$tooltip-font-size: .75rem;
-$tooltip-bg: #212529;
+$tooltip-font-size: 0.75rem;
+$tooltip-bg: #000;
 $tooltip-border-radius: 5rem;
+$tooltip-padding-y: 0.125rem;
 $tooltip-arrow-color: transparent;
+$tooltip-arrow-width: 0;
+$tooltip-arrow-height: 0;
 
 // dropdown
 $dropdown-link-hover-bg: #f8f9fa;
@@ -77,7 +80,7 @@ $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
 
 $container-max-widths: (
-  xl: 1024px
+  xl: 1024px,
 );
 
 :root {
