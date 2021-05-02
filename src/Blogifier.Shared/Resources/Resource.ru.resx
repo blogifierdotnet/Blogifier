@@ -510,13 +510,13 @@
   <data name="edit-profile" xml:space="preserve">
     <value>Редактировать профиль</value>
   </data>
-  <data name="Home page" xml:space="preserve">
+  <data name="home-page" xml:space="preserve">
     <value>Домашняя страница</value>
   </data>
   <data name="load" xml:space="preserve">
     <value>Загрузить</value>
   </data>
-  <data name="Logout" xml:space="preserve">
+  <data name="logout" xml:space="preserve">
     <value>Выйти</value>
   </data>
   <data name="menus" xml:space="preserve">

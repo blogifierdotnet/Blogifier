@@ -513,13 +513,13 @@
   <data name="edit-profile" xml:space="preserve">
     <value>ویرایش نمایه</value>
   </data>
-  <data name="Home page" xml:space="preserve">
+  <data name="home-page" xml:space="preserve">
     <value>خانه</value>
   </data>
   <data name="load" xml:space="preserve">
     <value>بارگیری</value>
   </data>
-  <data name="Logout" xml:space="preserve">
+  <data name="logout" xml:space="preserve">
     <value>خروج</value>
   </data>
   <data name="menus" xml:space="preserve">

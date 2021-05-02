@@ -513,13 +513,13 @@
     <data name="edit-profile" xml:space="preserve">
         <value>Edit profile</value>
     </data>
-    <data name="Home page" xml:space="preserve">
+    <data name="home-page" xml:space="preserve">
         <value>Home page</value>
     </data>
     <data name="load" xml:space="preserve">
         <value>Load</value>
     </data>
-    <data name="Logout" xml:space="preserve">
+    <data name="logout" xml:space="preserve">
         <value>Logout</value>
     </data>
     <data name="menus" xml:space="preserve">
@@ -686,5 +686,8 @@
     </data>
     <data name="database-provider" xml:space="preserve">
         <value>Database provider</value>
+    </data>
+    <data name="back-to-website" xml:space="preserve">
+        <value>Back to website</value>
     </data>
 </root>
