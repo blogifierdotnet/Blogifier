@@ -630,5 +630,25 @@
     <data name="resend" xml:space="preserve">
         <value>Resend</value>
     </data>
-
+    <data name="newsletter-settings" xml:space="preserve">
+        <value>Newsletter Settings</value>
+    </data>
+    <data name="host" xml:space="preserve">
+        <value>Host</value>
+    </data>
+    <data name="to-name" xml:space="preserve">
+        <value>to-name</value>
+    </data>
+    <data name="from-name" xml:space="preserve">
+        <value>from-name</value>
+    </data>
+    <data name="from-email" xml:space="preserve">
+        <value>from-email</value>
+    </data>
+    <data name="enabled" xml:space="preserve">
+        <value>Enabled</value>
+    </data>
+    <data name="disabled" xml:space="preserve">
+        <value>Disabled</value>
+    </data>
 </root>
