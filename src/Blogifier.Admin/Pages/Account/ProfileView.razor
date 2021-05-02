@@ -4,16 +4,16 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<PageTitle Title="@_localizer["Edit Profile"]" />
+<PageTitle Title="@_localizer["edit-profile"]" />
 
-<h1 class="section-title">@_localizer["Edit profile"]</h1>
+<h1 class="section-title">@_localizer["edit-profile"]</h1>
 <div class="section-content -half">
    @if (Author != null)
    {
       <EditForm Model="@Author" OnValidSubmit="SaveProfile">
          <DataAnnotationsValidator />
          <div class="form-item">
-            <label class="form-label mb-1">@_localizer["Profile picture"]</label>
+            <label class="form-label mb-1">@_localizer["profile-picture"]</label>
             <div class="d-flex">
                 <img src="@Author.Avatar" width="39" height="39" class="profilePicture rounded me-3" alt="@Author.DisplayName" />
                 <button class="btn btn-link" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button" title="@_localizer["upload"]" data-bs-toggle="tooltip">

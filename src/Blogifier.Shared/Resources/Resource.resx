@@ -510,7 +510,7 @@
     <data name="comments-settings" xml:space="preserve">
         <value>Comments settings</value>
     </data>
-    <data name="Edit profile" xml:space="preserve">
+    <data name="edit-profile" xml:space="preserve">
         <value>Edit profile</value>
     </data>
     <data name="Home page" xml:space="preserve">
@@ -531,7 +531,7 @@
     <data name="operating-system" xml:space="preserve">
         <value>Operating system</value>
     </data>
-    <data name="Profile picture" xml:space="preserve">
+    <data name="profile-picture" xml:space="preserve">
         <value>Profile picture</value>
     </data>
     <data name="feed-URL" xml:space="preserve">
