@@ -7,21 +7,21 @@
 @inject IToaster _toaster
 @inject NavigationManager _navigation
 
-<PageTitle Title="@_localizer["Categories"]" />
+<PageTitle Title="@_localizer["categories"]" />
 
 @if (!IsEdit)
 {
 <div class="section-content">
     <div class="list-toolbar">
-        <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["Select All"]">
+        <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
             <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
         </label>
-        @*<a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["New Category"]</a>*@
+        @*<a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["new-category"]</a>*@
         @if (Categories != null && Categories.Count > 0)
         {
             <div class="dropdown dropdown-flush">
                 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownAction" data-bs-toggle="dropdown" aria-expanded="false">
-                    @_localizer["Action"]
+                    @_localizer["actions"]
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownAction">
                     <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
@@ -35,7 +35,7 @@
             </div>
         }
         <button type="button" class="btn btn-link list-search-toggle ms-auto" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["Search"]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["search"]">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
         </button>
@@ -53,7 +53,7 @@
         <ul class="list mb-5" aria-label="posts">
             <Virtualize Items="Categories" Context="category">
                 <li class="list-item">
-                    <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["Select"]">
+                    <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select"]">
                         <input type="checkbox" @bind="category.Selected" class="list-check-input form-check-input">
                     </label>
                     <a class="list-title -link" href="" @onclick="async ()=> await ShowEdit(category.Id)" @onclick:preventDefault>
@@ -62,7 +62,7 @@
                     <span class="list-text -nowrap ms-auto">
                         @category.PostCount
                     </span>
-                    <a class="list-btn" href="categories/@category.Category" target="_blank" data-bs-toggle="tooltip" title="@_localizer["View"]">
+                    <a class="list-btn" href="categories/@category.Category" target="_blank" data-bs-toggle="tooltip" title="@_localizer["view"]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
                             <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
                             <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
@@ -79,7 +79,7 @@
                 <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0-1a8 8 0 1 1 0 16A8 8 0 0 1 8 0z" />
                 <path d="M4.285 6.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 4.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 3.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 9.5C7 8.672 6.552 8 6 8s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5z" />
             </svg>
-            <p>@_localizer["This list is empty"]</p>
+            <p>@_localizer["list-is-empty"]</p>
         </div>
     }
 </div>
@@ -87,7 +87,7 @@
 
 @if(IsEdit && CurrentCategory != null)
 {
-    <h1 class="section-title">@_localizer["Edit Category"]</h1>
+    <h1 class="section-title">@_localizer["edit-category"]</h1>
     <EditForm model="@CurrentCategory" OnValidSubmit="SaveEdit">
         <DataAnnotationsValidator />
         <ValidationSummary />

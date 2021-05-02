@@ -618,5 +618,11 @@
     <data name="add-category" xml:space="preserve">
         <value>Add category</value>
     </data>
+    <data name="new-category" xml:space="preserve">
+        <value>New category</value>
+    </data>
+    <data name="edit-category" xml:space="preserve">
+        <value>Edit category</value>
+    </data>
 
 </root>
