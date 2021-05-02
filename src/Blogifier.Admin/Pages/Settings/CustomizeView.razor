@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
-<PageTitle Title="@_localizer["Customize"]" />
+<PageTitle Title="@_localizer["customize"]" />
 
 <h1 class="section-title">@_localizer["customize"]</h1>
 <div class="section-content">
@@ -18,7 +18,7 @@
                 <div class="customize-info-title">@CurrentTheme.Title</div>
                 <p class="customize-info-desc">This is a test description, one paragraph long description for you, there should not be a break line in this description.</p>
                 <ul class="customize-info-list">
-                    <li>Version 2.1</li>
+                    <li>@_localizer["version"] 2.1</li>
                     <li>@_localizer["by"] John Doe</li>
                     <li><a href="#">Website</a></li>
                     <li><a href="#">GitHub</a></li>

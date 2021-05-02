@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
-<PageTitle Title="@_localizer["Themes"]" />
+<PageTitle Title="@_localizer["themes"]" />
 
 @if (CurrentTheme != null)
 {
@@ -19,7 +19,7 @@
                     <div class="themes-details">
                         <div class="themes-title">@CurrentTheme.Title (@_localizer["current"])</div>
                         <ul class="themes-info">
-                            <li class="themes-info-item">@_localizer["designed-by"] <a href="#">John Doe</a></li>
+                            <li class="themes-info-item">@_localizer["developer"] <a href="#">John Doe</a></li>
                             <li class="themes-info-item">@_localizer["version"] 2.1</li>
                         </ul>
                         <a href="/admin/settings/customize/" class="btn btn-blogifier btn-block">@_localizer["customize"]</a>
@@ -36,7 +36,7 @@
                         <div class="themes-details">
                             <div class="themes-title">@item.Title</div>
                             <ul class="themes-info">
-                                <li class="themes-info-item">@_localizer["designed-by"] <a href="#">John Doe</a></li>
+                                <li class="themes-info-item">@_localizer["developer"] <a href="#">John Doe</a></li>
                                 <li class="themes-info-item">@_localizer["version"] 2.1</li>
                             </ul>
                             <div class="d-flex">
@@ -76,7 +76,7 @@
                         This is a test description, one paragraph long description for you guys, there should not be a break line in this description, otherwise, it doesn't look good, and it gets messy. Also, we have 3 links.
                     </p>
                     <ul class="themes-modal-info">
-                        <li>@_localizer["designed-by"] John Doe</li>
+                        <li>@_localizer["developer"] John Doe</li>
                         <li>@_localizer["version"] 2.1</li>
                         <li><a href="#">Website</a></li>
                         <li><a href="#">GitHub</a></li>

@@ -489,16 +489,16 @@
     <data name="page-title" xml:space="preserve">
         <value>Page title</value>
     </data>
-    <data name="About Blogifier" xml:space="preserve">
+    <data name="about-blogifier" xml:space="preserve">
         <value>About Blogifier</value>
     </data>
     <data name="actions" xml:space="preserve">
         <value>Actions</value>
     </data>
-    <data name="Advanced settings" xml:space="preserve">
+    <data name="advanced-settings" xml:space="preserve">
         <value>Advanced settings</value>
     </data>
-    <data name="Basic" xml:space="preserve">
+    <data name="basic" xml:space="preserve">
         <value>Basic</value>
     </data>
     <data name="basic-settings" xml:space="preserve">
@@ -507,7 +507,7 @@
     <data name="blogifier-desc" xml:space="preserve">
         <value>Blogifier is an open-source publishing platform built with .NET Core 5.0 and the latest technologies.</value>
     </data>
-    <data name="Comments settings" xml:space="preserve">
+    <data name="comments-settings" xml:space="preserve">
         <value>Comments settings</value>
     </data>
     <data name="Edit profile" xml:space="preserve">
@@ -516,7 +516,7 @@
     <data name="Home page" xml:space="preserve">
         <value>Home page</value>
     </data>
-    <data name="Load" xml:space="preserve">
+    <data name="load" xml:space="preserve">
         <value>Load</value>
     </data>
     <data name="Logout" xml:space="preserve">
@@ -528,40 +528,40 @@
     <data name="new-page" xml:space="preserve">
         <value>New page</value>
     </data>
-    <data name="Operating system" xml:space="preserve">
+    <data name="operating-system" xml:space="preserve">
         <value>Operating system</value>
     </data>
     <data name="Profile picture" xml:space="preserve">
         <value>Profile picture</value>
     </data>
-    <data name="RSS feed Url" xml:space="preserve">
+    <data name="feed-URL" xml:space="preserve">
         <value>RSS feed Url</value>
     </data>
-    <data name="Script footer" xml:space="preserve">
+    <data name="script-footer" xml:space="preserve">
         <value>Script footer</value>
     </data>
-    <data name="Script header" xml:space="preserve">
+    <data name="script-header" xml:space="preserve">
         <value>Script header</value>
     </data>
-    <data name="Script settings" xml:space="preserve">
+    <data name="script-settings" xml:space="preserve">
         <value>Script settings</value>
     </data>
-    <data name="Specification" xml:space="preserve">
+    <data name="specification" xml:space="preserve">
         <value>Specification</value>
     </data>
     <data name="list-is-empty" xml:space="preserve">
         <value>Nothing to show - this list is empty</value>
     </data>
-    <data name="User" xml:space="preserve">
+    <data name="user" xml:space="preserve">
         <value>User</value>
     </data>
-    <data name="User settings" xml:space="preserve">
-        <value>User settings</value>
+    <data name="users-settings" xml:space="preserve">
+        <value>Users settings</value>
     </data>
-    <data name="Version" xml:space="preserve">
+    <data name="version" xml:space="preserve">
         <value>Version</value>
     </data>
-    <data name="Website Url" xml:space="preserve">
+    <data name="website-URL" xml:space="preserve">
         <value>Website Url</value>
     </data>
     <data name="widgets" xml:space="preserve">
@@ -650,5 +650,41 @@
     </data>
     <data name="disabled" xml:space="preserve">
         <value>Disabled</value>
+    </data>
+    <data name="default-cover" xml:space="preserve">
+        <value>Default cover</value>
+    </data>
+    <data name="under-development" xml:space="preserve">
+        <value>Under development</value>
+    </data>
+    <data name="learn-more" xml:space="preserve">
+        <value>Learn more</value>
+    </data>
+    <data name="add-user" xml:space="preserve">
+        <value>Add user</value>
+    </data>
+    <data name="current" xml:space="preserve">
+        <value>Current</value>
+    </data>
+    <data name="developer" xml:space="preserve">
+        <value>Developer</value>
+    </data>
+    <data name="by" xml:space="preserve">
+        <value>By</value>
+    </data>
+    <data name="import-message-found" xml:space="preserve">
+        <value>Posts are found and ready to be imported</value>
+    </data>
+    <data name="import-all" xml:space="preserve">
+        <value>Import All</value>
+    </data>
+   <data name="error-page" xml:space="preserve">
+        <value>Error Page</value>
+    </data>
+    <data name="website" xml:space="preserve">
+        <value>Website</value>
+    </data>
+    <data name="database-provider" xml:space="preserve">
+        <value>Database provider</value>
     </data>
 </root>

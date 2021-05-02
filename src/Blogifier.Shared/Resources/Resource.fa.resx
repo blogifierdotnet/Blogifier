@@ -489,16 +489,16 @@
   <data name="page-title" xml:space="preserve">
     <value>عنوان صفحه</value>
   </data>
-  <data name="About Blogifier" xml:space="preserve">
+  <data name="about-blogifier" xml:space="preserve">
     <value>درباره Blogifier</value>
   </data>
   <data name="actions" xml:space="preserve">
     <value>عملیات</value>
   </data>
-  <data name="Advanced settings" xml:space="preserve">
+  <data name="advanced-settings" xml:space="preserve">
     <value>تنظیمات پیشرفته</value>
   </data>
-  <data name="Basic" xml:space="preserve">
+  <data name="basic" xml:space="preserve">
     <value>پایه</value>
   </data>
   <data name="basic-settings" xml:space="preserve">
@@ -507,7 +507,7 @@
   <data name="blogifier-desc" xml:space="preserve">
     <value>Blogifier یک پلت فرم انتشار منبع باز است که با دات نت Core 5.0 و جدیدترین فناوری ها ساخته شده است.</value>
   </data>
-  <data name="Comments settings" xml:space="preserve">
+  <data name="comments-settings" xml:space="preserve">
     <value>تنظیمات نظرات</value>
   </data>
   <data name="Edit profile" xml:space="preserve">
@@ -516,7 +516,7 @@
   <data name="Home page" xml:space="preserve">
     <value>خانه</value>
   </data>
-  <data name="Load" xml:space="preserve">
+  <data name="load" xml:space="preserve">
     <value>بارگیری</value>
   </data>
   <data name="Logout" xml:space="preserve">
@@ -531,40 +531,40 @@
   <data name="new-post" xml:space="preserve">
     <value>پست جدید</value>
   </data>
-  <data name="Operating system" xml:space="preserve">
+  <data name="operating-system" xml:space="preserve">
     <value>سیستم عامل</value>
   </data>
   <data name="Profile picture" xml:space="preserve">
     <value>عکس نمایه</value>
   </data>
-  <data name="RSS feed Url" xml:space="preserve">
+  <data name="feed-URL" xml:space="preserve">
     <value>آدرس RSS</value>
   </data>
-  <data name="Script footer" xml:space="preserve">
+  <data name="script-footer" xml:space="preserve">
     <value>اسکریپت پانویس</value>
   </data>
-  <data name="Script header" xml:space="preserve">
+  <data name="script-header" xml:space="preserve">
     <value>اسکریپت سربزگ</value>
   </data>
-  <data name="Script settings" xml:space="preserve">
+  <data name="script-settings" xml:space="preserve">
     <value>تنظیمات اسکریپت</value>
   </data>
-  <data name="Specification" xml:space="preserve">
+  <data name="specification" xml:space="preserve">
     <value>مشخصات</value>
   </data>
   <data name="list-is-empty" xml:space="preserve">
     <value>موردی برای نمایش وجود ندارد - این لیست خالی است</value>
   </data>
-  <data name="User" xml:space="preserve">
+  <data name="user" xml:space="preserve">
     <value>کاربر</value>
   </data>
-  <data name="User settings" xml:space="preserve">
+  <data name="users-settings" xml:space="preserve">
     <value>تنظیمات کاربری</value>
   </data>
-  <data name="Version" xml:space="preserve">
+  <data name="version" xml:space="preserve">
     <value>نسخه</value>
   </data>
-  <data name="Website Url" xml:space="preserve">
+  <data name="website-URL" xml:space="preserve">
     <value>آدرس وب سایت</value>
   </data>
   <data name="widgets" xml:space="preserve">
