@@ -16,7 +16,7 @@
 
         <div class="list-toolbar">
 
-            <label class="list-check form-check" data-toggle="tooltip" title="Select All">
+            <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["Select All"]">
                 <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
             </label>
 
@@ -66,7 +66,7 @@
             </div>
 
             <button type="button" class="btn btn-link list-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["Search"]">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
             </button>
@@ -91,7 +91,7 @@
                     }
 
                     <li class="list-item">
-                        <label class="list-check form-check">
+                        <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["Select"]">
                             <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
                         </label>
                         <a class="list-title -link" href="/admin/pages/editor/@post.Slug">
@@ -100,24 +100,24 @@
                         <span class="list-text -nowrap ms-auto">
                             @pubDate
                         </span>
-                        <button class="list-btn" @onclick="(async () => await Publish(post))" data-toggle="tooltip" title="Status">
+                        <button class="list-btn" @onclick="(async () => await Publish(post))">
                             @if (@pubStatus == "published")
                             {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["Published"]">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
                                 </svg>
                             }
                             else
                             {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["Draft"]">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                                 </svg>
                             }
                         </button>
-                        <a class="list-btn" href="posts/@post.Slug" target="_blank" data-toggle="tooltip" title="Link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                        <a class="list-btn" href="posts/@post.Slug" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["View"]">
                                 <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
                                 <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
                             </svg>
