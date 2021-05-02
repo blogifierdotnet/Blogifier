@@ -139,7 +139,7 @@
         <value>Import</value>
     </data>
     <data name="new-post" xml:space="preserve">
-        <value>new-post</value>
+        <value>New post</value>
     </data>
     <data name="posts" xml:space="preserve">
         <value>Posts</value>
@@ -528,9 +528,6 @@
     <data name="new-page" xml:space="preserve">
         <value>New page</value>
     </data>
-    <data name="new-post" xml:space="preserve">
-        <value>New post</value>
-    </data>
     <data name="Operating system" xml:space="preserve">
         <value>Operating system</value>
     </data>
@@ -612,4 +609,14 @@
     <data name="not-featured" xml:space="preserve">
         <value>Not featured</value>
     </data>
+    <data name="change" xml:space="preserve">
+        <value>Change</value>
+    </data>
+    <data name="reset" xml:space="preserve">
+        <value>Reset</value>
+    </data>
+    <data name="add-category" xml:space="preserve">
+        <value>Add category</value>
+    </data>
+
 </root>
