@@ -492,8 +492,8 @@
     <data name="About Blogifier" xml:space="preserve">
         <value>About Blogifier</value>
     </data>
-    <data name="Action" xml:space="preserve">
-        <value>Action</value>
+    <data name="actions" xml:space="preserve">
+        <value>Actions</value>
     </data>
     <data name="Advanced settings" xml:space="preserve">
         <value>Advanced settings</value>
@@ -552,7 +552,7 @@
     <data name="Specification" xml:space="preserve">
         <value>Specification</value>
     </data>
-    <data name="This list is empty" xml:space="preserve">
+    <data name="list-is-empty" xml:space="preserve">
         <value>Nothing to show - this list is empty</value>
     </data>
     <data name="User" xml:space="preserve">
@@ -602,5 +602,14 @@
     </data>
     <data name="yesterday" xml:space="preserve">
         <value>Yesterday</value>
+    </data>
+    <data name="drive" xml:space="preserve">
+        <value>Drive</value>
+    </data>
+    <data name="select-all" xml:space="preserve">
+        <value>Select all</value>
+    </data>
+    <data name="not-featured" xml:space="preserve">
+        <value>Not featured</value>
     </data>
 </root>

@@ -489,7 +489,7 @@
   <data name="About Blogifier" xml:space="preserve">
     <value>О проекте Blogifier</value>
   </data>
-  <data name="Action" xml:space="preserve">
+  <data name="actions" xml:space="preserve">
     <value>Действие</value>
   </data>
   <data name="Advanced settings" xml:space="preserve">
@@ -549,7 +549,7 @@
   <data name="Specification" xml:space="preserve">
     <value>Спецификация</value>
   </data>
-  <data name="This list is empty" xml:space="preserve">
+  <data name="list-is-empty" xml:space="preserve">
     <value>Пустой лист - не на что смотреть</value>
   </data>
   <data name="User" xml:space="preserve">

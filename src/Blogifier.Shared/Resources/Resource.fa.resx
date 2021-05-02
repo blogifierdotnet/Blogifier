@@ -492,7 +492,7 @@
   <data name="About Blogifier" xml:space="preserve">
     <value>درباره Blogifier</value>
   </data>
-  <data name="Action" xml:space="preserve">
+  <data name="actions" xml:space="preserve">
     <value>عملیات</value>
   </data>
   <data name="Advanced settings" xml:space="preserve">
@@ -552,7 +552,7 @@
   <data name="Specification" xml:space="preserve">
     <value>مشخصات</value>
   </data>
-  <data name="This list is empty" xml:space="preserve">
+  <data name="list-is-empty" xml:space="preserve">
     <value>موردی برای نمایش وجود ندارد - این لیست خالی است</value>
   </data>
   <data name="User" xml:space="preserve">
