@@ -525,10 +525,10 @@
   <data name="menus" xml:space="preserve">
     <value>منوها</value>
   </data>
-  <data name="New page" xml:space="preserve">
+  <data name="new-page" xml:space="preserve">
     <value>صفحه جدید</value>
   </data>
-  <data name="New post" xml:space="preserve">
+  <data name="new-post" xml:space="preserve">
     <value>پست جدید</value>
   </data>
   <data name="Operating system" xml:space="preserve">

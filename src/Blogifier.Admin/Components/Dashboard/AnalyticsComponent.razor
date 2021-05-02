@@ -10,17 +10,17 @@
 
 <div class="dash-widget dash-pan">
     <div class="dash-pan-header">
-        <div class="dash-pan-title me-auto">@_localizer["Analytics"]</div>
+        <div class="dash-pan-title me-auto">@_localizer["analytics"]</div>
         <div class="dropdown dropdown-flush">
             <a class="text-muted" type="button" id="dropdownAnalytics" data-bs-toggle="dropdown" aria-expanded="false" href="#">
-                <span>@(_hideList ? "Chart" : "List")</span> - <span>@PeriodLabel()</span>
+                <span>@(_hideList ? _localizer["chart"] : _localizer["list"])</span> - <span>@PeriodLabel()</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                 </svg>
             </a>
 
             <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="dropdownAnalytics">
-                <div class="mb-1 text-muted">Date:</div>
+                <div class="mb-1 text-muted">@_localizer["date"]:</div>
                 <ul class="mb-3 list-unstyled">
                     @if (_dateOptions != null && _model != null)
                     {
@@ -31,7 +31,7 @@
                         }
                     }
                 </ul>
-                <div class="mb-1 text-muted">View:</div>
+                <div class="mb-1 text-muted">@_localizer["view"]:</div>
                 <div class="btn-group w-100" role="group" aria-label="Basic radio toggle button group">
                     @if (_hideList)
                     {
@@ -41,7 +41,7 @@
                     {
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" @onchange="() => ToggleAnalyticsView(true)">
                     }
-                    <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio1">@_localizer["Chart"]</label>
+                    <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio1">@_localizer["chart"]</label>
                     @if (_hideGraph)
                     {
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked @onchange="() => ToggleAnalyticsView(false)">
@@ -50,7 +50,7 @@
                     {
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" @onchange="() => ToggleAnalyticsView(false)">
                     }
-                    <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio2">@_localizer["List"]</label>
+                    <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio2">@_localizer["list"]</label>
                 </div>
             </div>
 
@@ -66,8 +66,8 @@
     -->
     <ul hidden="@_hideList" class="dash-list">
         <li class="dash-list-item">
-            <strong class="dash-list-title">Title</strong>
-            <strong class="dash-list-text">Visits</strong>
+            <strong class="dash-list-title">@_localizer["title"]</strong>
+            <strong class="dash-list-text">@_localizer["visits"]</strong>
         </li>
         @if (_visits != null && _visits.Count > 0)
         {
@@ -107,11 +107,11 @@
        _config = GetConfig();
 
        _dateOptions = new List<OptionItem>();
-       _dateOptions.Add(new OptionItem { Id = 1, Title = "Today" });
-       _dateOptions.Add(new OptionItem { Id = 2, Title = "Yesterday" });
-       _dateOptions.Add(new OptionItem { Id = 3, Title = "7 days" });
-       _dateOptions.Add(new OptionItem { Id = 4, Title = "30 days" });
-       _dateOptions.Add(new OptionItem { Id = 5, Title = "90 days" });
+       _dateOptions.Add(new OptionItem { Id = 1, Title = _localizer["today"] });
+       _dateOptions.Add(new OptionItem { Id = 2, Title = _localizer["yesterday"] });
+       _dateOptions.Add(new OptionItem { Id = 3, Title = _localizer["7-days"] });
+       _dateOptions.Add(new OptionItem { Id = 4, Title = _localizer["30-days"] });
+       _dateOptions.Add(new OptionItem { Id = 5, Title = _localizer["90-days"] });
 
        await Load();
    }
