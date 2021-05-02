@@ -4,9 +4,9 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<PageTitle Title="@_localizer["Newsletters"]" />
+<PageTitle Title="@_localizer["newsletters"]" />
 
-<h1 class="section-title">@_localizer["Newsletters"]</h1>
+<h1 class="section-title">@_localizer["newsletters"]</h1>
 <div class="section-content">
     @if (Newsletters == null || Newsletters.Count == 0)
     {
@@ -21,7 +21,7 @@
                     @{
                         string title = $"{newsletter.Post.Title}";
                         string pubDate = newsletter.DateCreated.ToLocalTime().ToFriendlyDateTimeString();
-                        string pubStatus = newsletter.Success ? "published" : "draft";
+                        string pubStatus = newsletter.Success ? "published" : "";
                     }
                     <span class="list-title">@title</span>
                     <button class="list-btn" @onclick="(async () => await Resend(newsletter.PostId))" data-bs-toggle="tooltip" title="@_localizer["resend"]">

@@ -624,5 +624,11 @@
     <data name="edit-category" xml:space="preserve">
         <value>Edit category</value>
     </data>
+    <data name="newsletters" xml:space="preserve">
+        <value>Newsletters</value>
+    </data>
+    <data name="resend" xml:space="preserve">
+        <value>Resend</value>
+    </data>
 
 </root>
