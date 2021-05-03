@@ -138,9 +138,6 @@
     <data name="import" xml:space="preserve">
         <value>Импорт</value>
     </data>
-    <data name="new-post" xml:space="preserve">
-        <value>Новое сообщение</value>
-    </data>
     <data name="posts" xml:space="preserve">
         <value>Сообщения</value>
     </data>

@@ -657,6 +657,12 @@
     <data name="learn-more" xml:space="preserve">
         <value>بیشتر بدانید</value>
     </data>
+    <data name="read-more" xml:space="preserve">
+        <value>بیشتر بخوانید</value>
+    </data>
+    <data name="more-info" xml:space="preserve">
+        <value>اطلاعات بیشتر</value>
+    </data>
     <data name="add-user" xml:space="preserve">
         <value>افزودن کاربر</value>
     </data>
@@ -719,5 +725,26 @@
     </data>
     <data name="telegram" xml:space="preserve">
         <value>تلگرام</value>
+    </data>
+    <data name="powered-by" xml:space="preserve">
+        <value>قدرت گرفته از</value>
+    </data>
+    <data name="copyright" xml:space="preserve">
+        <value>حقّ تکثیر</value>
+    </data>
+    <data name="next-page" xml:space="preserve">
+        <value>صفحه بعد</value>
+    </data>
+    <data name="previous-page" xml:space="preserve">
+        <value>صفحه قبل</value>
+    </data>
+    <data name="page-not-found" xml:space="preserve">
+        <value>صفحه پیدا نشد</value>
+    </data>
+    <data name="share" xml:space="preserve">
+        <value>اشتراک گذاری</value>
+    </data>
+    <data name="author" xml:space="preserve">
+        <value>نویسنده</value>
     </data>
 </root>

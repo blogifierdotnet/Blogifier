@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Blogifier.Shared
+@using Blogifier.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+@{
     var request = Url.ActionContext.HttpContext.Request;
     var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
 
@@ -16,7 +20,7 @@
             @if (siteMark == "logo")
             {
                 <a class="header-logo" href="@absoluteUrl">
-                    <img class="header-logo-img" src="@siteLogo" alt="@siteTitle Logo">
+                    <img class="header-logo-img" src="@siteLogo" alt="@siteTitle @_localizer["logo"]">
                 </a>
             }
             else if (siteMark == "title")

@@ -657,6 +657,12 @@
     <data name="learn-more" xml:space="preserve">
         <value>Learn more</value>
     </data>
+    <data name="read-more" xml:space="preserve">
+        <value>Read more</value>
+    </data>
+    <data name="more-info" xml:space="preserve">
+        <value>More info</value>
+    </data>
     <data name="add-user" xml:space="preserve">
         <value>Add user</value>
     </data>
@@ -719,5 +725,26 @@
     </data>
     <data name="telegram" xml:space="preserve">
         <value>Telegram</value>
+    </data>
+    <data name="powered-by" xml:space="preserve">
+        <value>Powered by</value>
+    </data>
+    <data name="copyright" xml:space="preserve">
+        <value>Copyright</value>
+    </data>
+    <data name="next-page" xml:space="preserve">
+        <value>Next page</value>
+    </data>
+    <data name="previous-page" xml:space="preserve">
+        <value>Previous page</value>
+    </data>
+    <data name="page-not-found" xml:space="preserve">
+        <value>Page not found</value>
+    </data>
+    <data name="share" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="author" xml:space="preserve">
+        <value>Author</value>
     </data>
 </root>
