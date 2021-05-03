@@ -1,4 +1,4 @@
-<br><br>
+<br>
 <p align="center">
   <a href="https://blogifier.net/">
     <img src="https://blogifier.net/files/brand/logo.svg" alt="Blogifier Logo" width="100" height="100">
@@ -28,20 +28,19 @@ If you are looking for a stable application, please use [latest release](https:/
 The latest stable source code is in the [master branch](https://github.com/blogifierdotnet/Blogifier/tree/5c9bab69788a1f7a0bd82c6a864e159eff5b1b72). Please note that newest code uses Blazor Web Assembly and not compatible with previous versions.
 
 
-## Installation / Ready-To-Use:
+## Installation
 
 This version is built and compiled, and ready to use:
 
-> **The only requirement:** .NET Core Runtime 5.0 or above should be installed on your host server.
+1. .NET Core Runtime 5.0 or above must be installed on your host server.
+2. [Download](https://github.com/blogifierdotnet/Blogifier/releases) the latest release.
+3. Unzip and copy to your host server.<br>
+4. Restart your website.
+5. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
+6. Register, and then log in.<br> `example.com/admin/login/`
+7. Done, enjoy.
 
-1. [Download](https://github.com/blogifierdotnet/Blogifier/releases) the latest release.
-2. Unzip and copy to your host server.<br>
-3. Restart your website.
-4. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
-5. Register, and then log in.<br> `example.com/admin/login/`
-6. Done, enjoy.
-
-## Installation / The Source Code:
+## Development
 
 If you want to customize the Blogifier, or contribute:
 
@@ -50,22 +49,17 @@ If you want to customize the Blogifier, or contribute:
 3. Open the project with your favorite IDE (VS Code, Visual Studio, Atom, etc).
 4. Run the app with your IDE or these commands:
 
-First cd to the Blogifier project folder:
 ```
 $ cd /your-local-path/Blogifier/src/Blogifier/
-```
-Then:
-```
 $ dotnet run
 ```
-Then you can open `http://localhost:5000` with your browser.<br>
-Also login to the admin panel `http://localhost:5000/admin/`
+Then you can open `localhost:5000` with your browser, Also login to the admin panel `localhost:5000/admin/`.
 ```
 username: admin@example.com
 password: admin
 ```
 
-## Docs
+## Documentation
 We are working on the [version 3.0](https://github.com/blogifierdotnet/Blogifier/projects/1) and after we release this version, we'll begin to write all the documents.<br>
 We publish docs on the Blogifier website.<br>
 [**Explore Blogifier Docs »**](https://blogifier.net/docs/)
