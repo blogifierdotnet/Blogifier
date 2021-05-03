@@ -6,9 +6,9 @@ Here is the list of things that you can contribute:
 1. [Translation](#translation)
 2. [Test and report bugs](#test-and-report-bugs)
 
-## Translation
+# Translation
 
-In the "[/src/Blogifier.Shared/Resouces/]()" we keep all the resources.
+In the "[/src/Blogifier.Shared/Resouces/](https://github.com/blogifierdotnet/Blogifier/tree/main/src/Blogifier.Shared/Resources)" folder we keep all the resources files.
 
 The `Resource.resx` is the main English language that you can copy and create another Resource file for any other languages.
 
@@ -19,7 +19,7 @@ So if your language is not in the Resources folder, copy the `Resource.resx` and
 ### With Visual Studio
 Visual studio has a built-in GUI for the .resx files which shows you the name and value. which you only edit/translate the value.
 
-![resx](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization/_static/hola.png)
+![resx](https://user-images.githubusercontent.com/6384978/116900447-fd79a880-ac4d-11eb-89e3-a4dc1f250720.png)
 
 ### With VS Code or any other IDE
 Open the `.resx` file and scroll down and you'll see lines like this:
@@ -35,7 +35,7 @@ Basically, you just need to translate what's in the `<value>` tag.
 ### Testing
 1. In Google Chrome or any other browser, go to the browser settings and add the language to the top of the list.
 2. Run the Blogifier with `dotnet watch run` command on the `/src/blogifier/`.
-3. login to the admin panel. and see the results as you are translating.
+3. login to the blogifier admin panel. and see the results as you are translating.
 
 ### Pull request
 After It's done and ready, please give it a pull request and we review it and merge it with the main branch.

@@ -28,7 +28,7 @@ If you are looking for a stable application, please use [latest release](https:/
 The latest stable source code is in the [master branch](https://github.com/blogifierdotnet/Blogifier/tree/5c9bab69788a1f7a0bd82c6a864e159eff5b1b72). Please note that newest code uses Blazor Web Assembly and not compatible with previous versions.
 
 
-## Quick Start - Ready-To-Use:
+## Installation / Ready-To-Use:
 
 This version is built and compiled, and ready to use:
 
@@ -41,12 +41,12 @@ This version is built and compiled, and ready to use:
 5. Register, and then log in.<br> `example.com/admin/login/`
 6. Done, enjoy.
 
-## Quick Start - The Source Code:
+## Installation - The Source Code:
 
-If you want to customize the Blogifier, or help us in the development:
+If you want to customize the Blogifier, or contribute:
 
 1. [Download](https://dotnet.microsoft.com/download/dotnet/5.0) and Install .NET SDK 5.0 or above.
-2. Download or Clone the repository.
+2. Download, fork, or clone the repository.
 3. Open the project with your favorite IDE (VS Code, Visual Studio, Atom, etc).
 4. Run the app with your IDE or these commands:
 
@@ -68,6 +68,9 @@ password: admin
 ## Docs
 We publish docs on the Blogifier website.<br>
 [**Explore Blogifier Docs »**](https://blogifier.net/docs/)
+
+## Contributing
+Any contribution is welcome, please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md). we have a list of things that you can help us with.
 
 ## Team
 [![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
