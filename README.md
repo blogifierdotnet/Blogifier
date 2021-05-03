@@ -25,7 +25,8 @@
 Code in the main branch is under development and some features are not yet implemented and may not work as expected.
 If you are looking for a stable application, please use [latest release](https://github.com/blogifierdotnet/Blogifier/releases).
 The latest stable source code is in the [master branch](https://github.com/blogifierdotnet/Blogifier/tree/5c9bab69788a1f7a0bd82c6a864e159eff5b1b72). Please note that newest code uses Blazor Web Assembly and not compatible with previous versions.
-<br><br><br>
+
+<br><br>
 ## Installation
 
 This version is built and compiled, and ready to use:
@@ -37,9 +38,9 @@ This version is built and compiled, and ready to use:
 5. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
 6. Register, and then log in.<br> `example.com/admin/login/`
 7. Done, enjoy.
-<br><br><br>
-## Development
 
+<br><br>
+## Development
 If you want to customize the Blogifier, or contribute:
 
 1. [Download](https://dotnet.microsoft.com/download/dotnet/5.0) and Install .NET SDK 5.0 or above.
@@ -56,18 +57,22 @@ Then you can open `localhost:5000` with your browser, Also login to the admin pa
 username: admin@example.com
 password: admin
 ```
-<br><br><br>
+
+<br><br>
 ## Documentation
 We are working on the [version 3.0](https://github.com/blogifierdotnet/Blogifier/projects/1) and after we release this version, we'll begin to write all the documents.<br>
-We publish docs on the [Blogifier website](https://blogifier.net/docs/).<br>
-<br><br><br>
+We publish docs on the [Blogifier website](https://blogifier.net/docs/).
+
+<br><br>
 ## Contributing
 Please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md). We have a list of things there that you can help us with.
-<br><br><br>
+
+<br><br>
 ## Team
 [![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
 [![@rxtur](https://avatars.githubusercontent.com/u/1932785?s=60&v=4)](https://github.com/rxtur)
-<br><br><br>
+
+<br><br>
 ## Copyright and License
 Code released under the MIT License. Docs released under Creative Commons.<br>
 Copyright 2017–2021 Blogifier
