@@ -41,7 +41,7 @@ This version is built and compiled, and ready to use:
 5. Register, and then log in.<br> `example.com/admin/login/`
 6. Done, enjoy.
 
-## Installation - The Source Code:
+## Installation / The Source Code:
 
 If you want to customize the Blogifier, or contribute:
 
@@ -66,11 +66,14 @@ password: admin
 ```
 
 ## Docs
+We are working on the [version 3.0](https://github.com/blogifierdotnet/Blogifier/projects/1) and after we release this version, we'll begin to write all the documents.<br>
 We publish docs on the Blogifier website.<br>
 [**Explore Blogifier Docs »**](https://blogifier.net/docs/)
 
 ## Contributing
-Any contribution is welcome, please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md). we have a list of things that you can help us with.
+Any contribution is welcome,<br>
+Please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md).<br>
+We have a list of things there that you can help us with.
 
 ## Team
 [![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
