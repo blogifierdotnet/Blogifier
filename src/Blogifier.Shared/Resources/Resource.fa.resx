@@ -1,573 +1,723 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
+    <!--
+        Microsoft ResX Schema
 
-    Version 2.0
+        Version 2.0
 
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
-    associated with the data types.
+        The primary goals of this format is to allow a simple XML format
+        that is mostly human readable. The generation and parsing of the
+        various data types are done through the TypeConverter classes
+        associated with the data types.
 
-    Example:
+        Example:
 
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
+        ... ado.net/XML headers & schema ...
+        <resheader name="resmimetype">text/microsoft-resx</resheader>
+        <resheader name="version">2.0</resheader>
+        <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+        <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+        <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+        <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+        <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+            <value>[base64 mime encoded serialized .NET Framework object]</value>
+        </data>
+        <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+            <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+            <comment>This is a comment</comment>
+        </data>
+
+        There are any number of "resheader" rows that contain simple
+        name/value pairs.
+
+        Each data row contains a name, and value. The row also contains a
+        type or mimetype. Type corresponds to a .NET class that support
+        text/value conversion through the TypeConverter architecture.
+        Classes that don't support this are serialized and stored with the
+        mimetype set.
+
+        The mimetype is used for serialized objects, and tells the
+        ResXResourceReader how to depersist the object. This is currently not
+        extensible. For a given mimetype the value must be set accordingly:
+
+        Note - application/x-microsoft.net.object.binary.base64 is the format
+        that the ResXResourceWriter will generate, however the reader can
+        read any of the formats listed below.
+
+        mimetype: application/x-microsoft.net.object.binary.base64
+        value   : The object must be serialized with
+                : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+                : and then encoded with base64 encoding.
+
+        mimetype: application/x-microsoft.net.object.soap.base64
+        value   : The object must be serialized with
+                : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+                : and then encoded with base64 encoding.
+
+        mimetype: application/x-microsoft.net.object.bytearray.base64
+        value   : The object must be serialized into a byte array
+                : using a System.ComponentModel.TypeConverter
+                : and then encoded with base64 encoding.
+        -->
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
+        <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="metadata">
+                <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+                <xsd:attribute name="name" use="required" type="xsd:string" />
+                <xsd:attribute name="type" type="xsd:string" />
+                <xsd:attribute name="mimetype" type="xsd:string" />
+                <xsd:attribute ref="xml:space" />
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="assembly">
+                <xsd:complexType>
+                <xsd:attribute name="alias" type="xsd:string" />
+                <xsd:attribute name="name" type="xsd:string" />
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="data">
+                <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                    <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                </xsd:sequence>
+                <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                <xsd:attribute ref="xml:space" />
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="resheader">
+                <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                </xsd:sequence>
+                <xsd:attribute name="name" type="xsd:string" use="required" />
+                </xsd:complexType>
+            </xsd:element>
+            </xsd:choice>
+        </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="general" xml:space="preserve">
+        <value>عمومی</value>
     </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
+    <data name="profile" xml:space="preserve">
+        <value>پروفایل</value>
     </data>
-
-    There are any number of "resheader" rows that contain simple
-    name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
-    mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
-    extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
-    read any of the formats listed below.
-
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="general" xml:space="preserve">
-    <value>عمومی</value>
-  </data>
-  <data name="profile" xml:space="preserve">
-    <value>نمایه</value>
-  </data>
-  <data name="password" xml:space="preserve">
-    <value>رمز عبور</value>
-  </data>
-  <data name="themes" xml:space="preserve">
-    <value>پوسته ها</value>
-  </data>
-  <data name="users" xml:space="preserve">
-    <value>کاربران</value>
-  </data>
-  <data name="new-user" xml:space="preserve">
-    <value>کاربر جدید</value>
-  </data>
-  <data name="import" xml:space="preserve">
-    <value>بارگزاری</value>
-  </data>
-  <data name="new-post" xml:space="preserve">
-    <value>پست جدید</value>
-  </data>
-  <data name="posts" xml:space="preserve">
-    <value>پست ها</value>
-  </data>
-  <data name="settings" xml:space="preserve">
-    <value>تنظیمات</value>
-  </data>
-  <data name="notifications" xml:space="preserve">
-    <value>اعلانات</value>
-  </data>
-  <data name="visit-blog" xml:space="preserve">
-    <value>بازدید بلاگ</value>
-  </data>
-  <data name="sign-out" xml:space="preserve">
-    <value>خروج از سیستم</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>عنوان</value>
-  </data>
-  <data name="description" xml:space="preserve">
-    <value>توضیحات</value>
-  </data>
-  <data name="items-per-page" xml:space="preserve">
-    <value>مورد در هر صفحه</value>
-  </data>
-  <data name="logo" xml:space="preserve">
-    <value>تصویر لوگو</value>
-  </data>
-  <data name="cover" xml:space="preserve">
-    <value>تصویر پوشش</value>
-  </data>
-  <data name="language" xml:space="preserve">
-    <value>زبان</value>
-  </data>
-  <data name="save" xml:space="preserve">
-    <value>ذخیره</value>
-  </data>
-  <data name="select" xml:space="preserve">
-    <value>انتخاب</value>
-  </data>
-  <data name="selected" xml:space="preserve">
-    <value>انتخاب شده</value>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>جستجو</value>
-  </data>
-  <data name="all" xml:space="preserve">
-    <value>همه</value>
-  </data>
-  <data name="published" xml:space="preserve">
-    <value>منتشر شده</value>
-  </data>
-  <data name="draft" xml:space="preserve">
-    <value>پیش نویس</value>
-  </data>
-  <data name="status" xml:space="preserve">
-    <value>وضعیت</value>
-  </data>
-  <data name="not-found" xml:space="preserve">
-    <value>پیدا نشد</value>
-  </data>
-  <data name="publish" xml:space="preserve">
-    <value>انتشار</value>
-  </data>
-  <data name="unpublish" xml:space="preserve">
-    <value>لغو انتشار</value>
-  </data>
-  <data name="featured" xml:space="preserve">
-    <value>ویژه</value>
-  </data>
-  <data name="add-to-featured" xml:space="preserve">
-    <value>افزودن به موارد ویژه</value>
-  </data>
-  <data name="cancel" xml:space="preserve">
-    <value>لغو</value>
-  </data>
-  <data name="delete" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="categories" xml:space="preserve">
-    <value>دسته بندی ها</value>
-  </data>
-  <data name="view" xml:space="preserve">
-    <value>دیدن</value>
-  </data>
-  <data name="user-name" xml:space="preserve">
-    <value>نام کاربری</value>
-  </data>
-  <data name="email" xml:space="preserve">
-    <value>ایمیل</value>
-  </data>
-  <data name="user-bio" xml:space="preserve">
-    <value>بیوگرافی یوزر</value>
-  </data>
-  <data name="avatar" xml:space="preserve">
-    <value>آواتار</value>
-  </data>
-  <data name="remove" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="removed" xml:space="preserve">
-    <value>حذف شده</value>
-  </data>
-  <data name="new-password" xml:space="preserve">
-    <value>رمز عبور جدید</value>
-  </data>
-  <data name="confirm-password" xml:space="preserve">
-    <value>تایید رمز عبور</value>
-  </data>
-  <data name="close" xml:space="preserve">
-    <value>بستن</value>
-  </data>
-  <data name="set-as-admin" xml:space="preserve">
-    <value>انتخاب به عنوان مدیر</value>
-  </data>
-  <data name="select-rss-file" xml:space="preserve">
-    <value>فایل RSS (.xml) را برای بارگزاری پست از آن انتخاب کنید</value>
-  </data>
-  <data name="images" xml:space="preserve">
-    <value>تصاویر</value>
-  </data>
-  <data name="attachements" xml:space="preserve">
-    <value>پیوست ها</value>
-  </data>
-  <data name="upload" xml:space="preserve">
-    <value>بارگزاری</value>
-  </data>
-  <data name="filters" xml:space="preserve">
-    <value>فیلترها</value>
-  </data>
-  <data name="change-password" xml:space="preserve">
-    <value>ویرایش رمز عبور</value>
-  </data>
-  <data name="theme" xml:space="preserve">
-    <value>پوسته</value>
-  </data>
-  <data name="read" xml:space="preserve">
-    <value>خواندن</value>
-  </data>
-  <data name="updated" xml:space="preserve">
-    <value>بروز شده</value>
-  </data>
-  <data name="created" xml:space="preserve">
-    <value>ایجاد شده</value>
-  </data>
-  <data name="about" xml:space="preserve">
-    <value>درباره</value>
-  </data>
-  <data name="newsletter" xml:space="preserve">
-    <value>خبرنامه</value>
-  </data>
-  <data name="newsletter-subscribers" xml:space="preserve">
-    <value>لیست مشترکان ایمیل</value>
-  </data>
-  <data name="contact" xml:space="preserve">
-    <value>مخاطب</value>
-  </data>
-  <data name="dashboard" xml:space="preserve">
-    <value>داشبورد</value>
-  </data>
-  <data name="popular" xml:space="preserve">
-    <value>محبوب</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>خالی</value>
-  </data>
-  <data name="edit" xml:space="preserve">
-    <value>ویرایش</value>
-  </data>
-  <data name="details" xml:space="preserve">
-    <value>جزئیات</value>
-  </data>
-  <data name="custom-field" xml:space="preserve">
-    <value>فیلد سفارشی</value>
-  </data>
-  <data name="error-msg" xml:space="preserve">
-    <value>با عرض پوزش ، مشکلی پیش آمد یا در این آدرس چیزی وجود ندارد.</value>
-  </data>
-  <data name="send" xml:space="preserve">
-    <value>ارسال</value>
-  </data>
-  <data name="send-to" xml:space="preserve">
-    <value>ارسال به</value>
-  </data>
-  <data name="subject" xml:space="preserve">
-    <value>موضوع</value>
-  </data>
-  <data name="content" xml:space="preserve">
-    <value>محتوا</value>
-  </data>
-  <data name="completed" xml:space="preserve">
-    <value>تکمیل شده</value>
-  </data>
-  <data name="email-info" xml:space="preserve">
-    <value>در اینجا می توانید تنظیمات خبرنامه را با ارسال ایمیل آزمایشی تأیید کنید</value>
-  </data>
-  <data name="disqus-info" xml:space="preserve">
-    <value>در اینجا می توانید سایت و اسکریپت را وارد یا به روز کنید تا نظرات Disqus را اضافه کنید</value>
-  </data>
-  <data name="demo-disabled" xml:space="preserve">
-    <value>در حالت نمایشی غیرفعال است</value>
-  </data>
-  <data name="email-sent-success" xml:space="preserve">
-    <value>ایمیل با موفقیت ارسال شد</value>
-  </data>
-  <data name="email-sent-error" xml:space="preserve">
-    <value>خطا در ارسال ایمیل ، لاگ ها را برای جزئیات بررسی کنید</value>
-  </data>
-  <data name="email-sent-count" xml:space="preserve">
-    <value>ارسال {0} خبرنامه</value>
-  </data>
-  <data name="social-accounts" xml:space="preserve">
-    <value>حسابهای اجتماعی</value>
-  </data>
-  <data name="name" xml:space="preserve">
-    <value>نام</value>
-  </data>
-  <data name="post-title" xml:space="preserve">
-    <value>عنوان پست</value>
-  </data>
-  <data name="type-here" xml:space="preserve">
-    <value>اینجا را تایپ کنید ...</value>
-  </data>
-  <data name="thank-you" xml:space="preserve">
-    <value>متشکریم</value>
-  </data>
-  <data name="enter-email" xml:space="preserve">
-    <value>ایمیل را وارد کنید</value>
-  </data>
-  <data name="subscribe" xml:space="preserve">
-    <value>مشترک شدن</value>
-  </data>
-  <data name="join-subscribers" xml:space="preserve">
-    <value>به لیست مشترکین ما بپیوندید تا آخرین اخبار و به روزرسانی ها را مستقیماً در صندوق ورودی خود دریافت کنید.</value>
-  </data>
-  <data name="login" xml:space="preserve">
-    <value>وارد شدن</value>
-  </data>
-  <data name="home" xml:space="preserve">
-    <value>خانه</value>
-  </data>
-  <data name="blog" xml:space="preserve">
-    <value>بلاگ</value>
-  </data>
-  <data name="admin" xml:space="preserve">
-    <value>مدیر</value>
-  </data>
-  <data name="tag" xml:space="preserve">
-    <value>برچسب</value>
-  </data>
-  <data name="quick-links" xml:space="preserve">
-    <value>لینک های سریع</value>
-  </data>
-  <data name="navigation" xml:space="preserve">
-    <value>پیمایش</value>
-  </data>
-  <data name="previous" xml:space="preserve">
-    <value>قبلی</value>
-  </data>
-  <data name="next" xml:space="preserve">
-    <value>بعدی</value>
-  </data>
-  <data name="confirm-delete" xml:space="preserve">
-    <value>پست حذف شود؟</value>
-  </data>
-  <data name="include-featured" xml:space="preserve">
-    <value>شامل موارد ویژه در لیست</value>
-  </data>
-  <data name="include-scripts" xml:space="preserve">
-    <value>اسکریپت هایی که باید در عنوان و پاورقی صفحه وارد شوند (Disqus، Analytics و غیره)</value>
-  </data>
-  <data name="subscribers" xml:space="preserve">
-    <value>مشترکان</value>
-  </data>
-  <data name="last-week" xml:space="preserve">
-    <value>هفته گذشته</value>
-  </data>
-  <data name="last-month" xml:space="preserve">
-    <value>ماه گذشته</value>
-  </data>
-  <data name="email-provider" xml:space="preserve">
-    <value>ارائه دهنده ایمیل</value>
-  </data>
-  <data name="sendgrid-key" xml:space="preserve">
-    <value>کلید Sendgrid</value>
-  </data>
-  <data name="server" xml:space="preserve">
-    <value>سرور</value>
-  </data>
-  <data name="port" xml:space="preserve">
-    <value>پورت</value>
-  </data>
-  <data name="smtp-email" xml:space="preserve">
-    <value>ایمیل SMTP</value>
-  </data>
-  <data name="send-test-email" xml:space="preserve">
-    <value>ارسال ایمیل آزمایشی</value>
-  </data>
-  <data name="unsubscribe" xml:space="preserve">
-    <value>لغو اشتراک</value>
-  </data>
-  <data name="login-failed" xml:space="preserve">
-    <value>ورود ناموفق بود ، لطفاً دوباره امتحان کنید</value>
-  </data>
-  <data name="welcome" xml:space="preserve">
-    <value>خوش‌آمدید</value>
-  </data>
-  <data name="you-can-sign-in" xml:space="preserve">
-    <value>می توانید وارد شوید یا بروید به &lt;a href="/"&gt;بازگشت به بلاگ &lt;/a&gt;</value>
-  </data>
-  <data name="register" xml:space="preserve">
-    <value>ثبت نام</value>
-  </data>
-  <data name="you-can-register" xml:space="preserve">
-    <value>می توانید ثبت نام کنید یا بروید به &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
-  </data>
-  <data name="registration" xml:space="preserve">
-    <value>ثبت نام</value>
-  </data>
-  <data name="generic-error" xml:space="preserve">
-    <value>مشکلی رخ داد، لطفا چند لحظه دیگر دوباره امتحان کنید!</value>
-  </data>
-  <data name="title-content-required" xml:space="preserve">
-    <value>عنوان و محتوا لازم است.</value>
-  </data>
-  <data name="views" xml:space="preserve">
-    <value>بازدیدها</value>
-  </data>
-  <data name="pages" xml:space="preserve">
-    <value>صفحات</value>
-  </data>
-  <data name="advanced" xml:space="preserve">
-    <value>پیشرفته</value>
-  </data>
-  <data name="comments" xml:space="preserve">
-    <value>نظرات</value>
-  </data>
-  <data name="customize" xml:space="preserve">
-    <value>سفارشی سازی</value>
-  </data>
-  <data name="info" xml:space="preserve">
-    <value>اطلاعات</value>
-  </data>
-  <data name="scripts" xml:space="preserve">
-    <value>اسکریپت ها</value>
-  </data>
-  <data name="page-title" xml:space="preserve">
-    <value>عنوان صفحه</value>
-  </data>
-  <data name="about-blogifier" xml:space="preserve">
-    <value>درباره Blogifier</value>
-  </data>
-  <data name="actions" xml:space="preserve">
-    <value>عملیات</value>
-  </data>
-  <data name="advanced-settings" xml:space="preserve">
-    <value>تنظیمات پیشرفته</value>
-  </data>
-  <data name="basic" xml:space="preserve">
-    <value>پایه</value>
-  </data>
-  <data name="basic-settings" xml:space="preserve">
-    <value>تنظیمات پایه</value>
-  </data>
-  <data name="blogifier-desc" xml:space="preserve">
-    <value>Blogifier یک پلت فرم انتشار منبع باز است که با دات نت Core 5.0 و جدیدترین فناوری ها ساخته شده است.</value>
-  </data>
-  <data name="comments-settings" xml:space="preserve">
-    <value>تنظیمات نظرات</value>
-  </data>
-  <data name="edit-profile" xml:space="preserve">
-    <value>ویرایش نمایه</value>
-  </data>
-  <data name="home-page" xml:space="preserve">
-    <value>خانه</value>
-  </data>
-  <data name="load" xml:space="preserve">
-    <value>بارگیری</value>
-  </data>
-  <data name="logout" xml:space="preserve">
-    <value>خروج</value>
-  </data>
-  <data name="menus" xml:space="preserve">
-    <value>منوها</value>
-  </data>
-  <data name="new-page" xml:space="preserve">
-    <value>صفحه جدید</value>
-  </data>
-  <data name="new-post" xml:space="preserve">
-    <value>پست جدید</value>
-  </data>
-  <data name="operating-system" xml:space="preserve">
-    <value>سیستم عامل</value>
-  </data>
-  <data name="profile-picture" xml:space="preserve">
-    <value>عکس نمایه</value>
-  </data>
-  <data name="feed-URL" xml:space="preserve">
-    <value>آدرس RSS</value>
-  </data>
-  <data name="script-footer" xml:space="preserve">
-    <value>اسکریپت پانویس</value>
-  </data>
-  <data name="script-header" xml:space="preserve">
-    <value>اسکریپت سربزگ</value>
-  </data>
-  <data name="script-settings" xml:space="preserve">
-    <value>تنظیمات اسکریپت</value>
-  </data>
-  <data name="specification" xml:space="preserve">
-    <value>مشخصات</value>
-  </data>
-  <data name="list-is-empty" xml:space="preserve">
-    <value>موردی برای نمایش وجود ندارد - این لیست خالی است</value>
-  </data>
-  <data name="user" xml:space="preserve">
-    <value>کاربر</value>
-  </data>
-  <data name="users-settings" xml:space="preserve">
-    <value>تنظیمات کاربری</value>
-  </data>
-  <data name="version" xml:space="preserve">
-    <value>نسخه</value>
-  </data>
-  <data name="website-URL" xml:space="preserve">
-    <value>آدرس وب سایت</value>
-  </data>
-  <data name="widgets" xml:space="preserve">
-    <value>ابزارک ها</value>
-  </data>
+    <data name="password" xml:space="preserve">
+        <value>گذرواژه</value>
+    </data>
+    <data name="themes" xml:space="preserve">
+        <value>پوسته ها</value>
+    </data>
+    <data name="users" xml:space="preserve">
+        <value>کاربران</value>
+    </data>
+    <data name="new-user" xml:space="preserve">
+        <value>کاربر جدید</value>
+    </data>
+    <data name="import" xml:space="preserve">
+        <value>بارگزاری</value>
+    </data>
+    <data name="posts" xml:space="preserve">
+        <value>پست ها</value>
+    </data>
+    <data name="settings" xml:space="preserve">
+        <value>تنظیمات</value>
+    </data>
+    <data name="notifications" xml:space="preserve">
+        <value>اعلانات</value>
+    </data>
+    <data name="visit-blog" xml:space="preserve">
+        <value>بازدید بلاگ</value>
+    </data>
+    <data name="title" xml:space="preserve">
+        <value>عنوان</value>
+    </data>
+    <data name="description" xml:space="preserve">
+        <value>توضیحات</value>
+    </data>
+    <data name="items-per-page" xml:space="preserve">
+        <value>پست در هر صفحه</value>
+    </data>
+    <data name="logo" xml:space="preserve">
+        <value>لوگو</value>
+    </data>
+    <data name="cover" xml:space="preserve">
+        <value>کاور</value>
+    </data>
+    <data name="language" xml:space="preserve">
+        <value>زبان</value>
+    </data>
+    <data name="save" xml:space="preserve">
+        <value>ذخیره</value>
+    </data>
+    <data name="select" xml:space="preserve">
+        <value>انتخاب</value>
+    </data>
+    <data name="selected" xml:space="preserve">
+        <value>انتخاب شده</value>
+    </data>
+    <data name="search" xml:space="preserve">
+        <value>جستجو</value>
+    </data>
+    <data name="all" xml:space="preserve">
+        <value>همه</value>
+    </data>
+    <data name="published" xml:space="preserve">
+        <value>منتشر شده</value>
+    </data>
+    <data name="draft" xml:space="preserve">
+        <value>پیش نویس</value>
+    </data>
+    <data name="status" xml:space="preserve">
+        <value>وضعیت</value>
+    </data>
+    <data name="not-found" xml:space="preserve">
+        <value>پیدا نشد</value>
+    </data>
+    <data name="publish" xml:space="preserve">
+        <value>انتشار</value>
+    </data>
+    <data name="unpublish" xml:space="preserve">
+        <value>لغو انتشار</value>
+    </data>
+    <data name="featured" xml:space="preserve">
+        <value>ویژه</value>
+    </data>
+    <data name="add-to-featured" xml:space="preserve">
+        <value>افزودن به موارد ویژه</value>
+    </data>
+    <data name="cancel" xml:space="preserve">
+        <value>لغو</value>
+    </data>
+    <data name="delete" xml:space="preserve">
+        <value>حذف</value>
+    </data>
+    <data name="categories" xml:space="preserve">
+        <value>دسته‌بندی‌ها</value>
+    </data>
+    <data name="view" xml:space="preserve">
+        <value>مشاهده</value>
+    </data>
+    <data name="user-name" xml:space="preserve">
+        <value>نام کاربری</value>
+    </data>
+    <data name="email" xml:space="preserve">
+        <value>ایمیل</value>
+    </data>
+    <data name="user-bio" xml:space="preserve">
+        <value>بیوگرافی کاربر</value>
+    </data>
+    <data name="avatar" xml:space="preserve">
+        <value>آواتار</value>
+    </data>
+    <data name="remove" xml:space="preserve">
+        <value>حذف</value>
+    </data>
+    <data name="removed" xml:space="preserve">
+        <value>حذف شده</value>
+    </data>
+    <data name="new-password" xml:space="preserve">
+        <value>گذرواژه جدید</value>
+    </data>
+    <data name="confirm-password" xml:space="preserve">
+        <value>تایید گذرواژه</value>
+    </data>
+    <data name="close" xml:space="preserve">
+        <value>بستن</value>
+    </data>
+    <data name="set-as-admin" xml:space="preserve">
+        <value>انتخاب به عنوان مدیر</value>
+    </data>
+    <data name="select-rss-file" xml:space="preserve">
+        <value>فایل RSS (.xml) را برای بارگزاری پست از آن انتخاب کنید</value>
+    </data>
+    <data name="images" xml:space="preserve">
+        <value>تصاویر</value>
+    </data>
+    <data name="attachments" xml:space="preserve">
+        <value>پیوست‌ها</value>
+    </data>
+    <data name="upload" xml:space="preserve">
+        <value>آپلود</value>
+    </data>
+    <data name="filters" xml:space="preserve">
+        <value>فیلترها</value>
+    </data>
+    <data name="change-password" xml:space="preserve">
+        <value>تغییر گذرواژه</value>
+    </data>
+    <data name="theme" xml:space="preserve">
+        <value>پوسته</value>
+    </data>
+    <data name="read" xml:space="preserve">
+        <value>خواندن</value>
+    </data>
+    <data name="updated" xml:space="preserve">
+        <value>بروز شده</value>
+    </data>
+    <data name="created" xml:space="preserve">
+        <value>ایجاد شده</value>
+    </data>
+    <data name="about" xml:space="preserve">
+        <value>درباره</value>
+    </data>
+    <data name="newsletter" xml:space="preserve">
+        <value>خبرنامه</value>
+    </data>
+    <data name="newsletter-subscribers" xml:space="preserve">
+        <value>لیست مشترکین خبرنامه</value>
+    </data>
+    <data name="contact" xml:space="preserve">
+        <value>تماس</value>
+    </data>
+    <data name="dashboard" xml:space="preserve">
+        <value>داشبورد</value>
+    </data>
+    <data name="popular" xml:space="preserve">
+        <value>محبوب</value>
+    </data>
+    <data name="empty" xml:space="preserve">
+        <value>خالی</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>ویرایش</value>
+    </data>
+    <data name="details" xml:space="preserve">
+        <value>جزئیات</value>
+    </data>
+    <data name="custom-field" xml:space="preserve">
+        <value>فیلد سفارشی</value>
+    </data>
+    <data name="error-msg" xml:space="preserve">
+        <value>با عرض پوزش ، مشکلی پیش آمد یا در این آدرس چیزی وجود ندارد.</value>
+    </data>
+    <data name="send" xml:space="preserve">
+        <value>ارسال</value>
+    </data>
+    <data name="send-to" xml:space="preserve">
+        <value>ارسال به</value>
+    </data>
+    <data name="subject" xml:space="preserve">
+        <value>موضوع</value>
+    </data>
+    <data name="content" xml:space="preserve">
+        <value>محتوا</value>
+    </data>
+    <data name="completed" xml:space="preserve">
+        <value>تکمیل شده</value>
+    </data>
+    <data name="email-info" xml:space="preserve">
+        <value>در اینجا می توانید تنظیمات خبرنامه را با ارسال ایمیل آزمایشی تأیید کنید</value>
+    </data>
+    <data name="disqus-info" xml:space="preserve">
+        <value>در اینجا می توانید سایت و اسکریپت را وارد یا به روز کنید تا نظرات Disqus را اضافه کنید</value>
+    </data>
+    <data name="demo-disabled" xml:space="preserve">
+        <value>در حالت نمایشی غیرفعال است</value>
+    </data>
+    <data name="email-sent-success" xml:space="preserve">
+        <value>ایمیل با موفقیت ارسال شد</value>
+    </data>
+    <data name="email-sent-error" xml:space="preserve">
+        <value>خطا در ارسال ایمیل ، لاگ‌ها را برای جزئیات بررسی کنید</value>
+    </data>
+    <data name="email-sent-count" xml:space="preserve">
+        <value>ارسال {0} خبرنامه</value>
+    </data>
+    <data name="social-accounts" xml:space="preserve">
+        <value>حسابهای اجتماعی</value>
+    </data>
+    <data name="name" xml:space="preserve">
+        <value>نام</value>
+    </data>
+    <data name="post-title" xml:space="preserve">
+        <value>عنوان پست</value>
+    </data>
+    <data name="type-here" xml:space="preserve">
+        <value>متن ...</value>
+    </data>
+    <data name="thank-you" xml:space="preserve">
+        <value>متشکریم</value>
+    </data>
+    <data name="enter-email" xml:space="preserve">
+        <value>ایمیل را وارد کنید</value>
+    </data>
+    <data name="subscribe" xml:space="preserve">
+        <value>اشتراک</value>
+    </data>
+    <data name="join-subscribers" xml:space="preserve">
+        <value>به لیست مشترکین ما بپیوندید تا آخرین اخبار و به روزرسانی ها را مستقیماً در صندوق ورودی خود دریافت کنید.</value>
+    </data>
+    <data name="login" xml:space="preserve">
+        <value>ورود به سیستم</value>
+    </data>
+    <data name="home" xml:space="preserve">
+        <value>خانه</value>
+    </data>
+    <data name="blog" xml:space="preserve">
+        <value>بلاگ</value>
+    </data>
+    <data name="admin" xml:space="preserve">
+        <value>مدیر</value>
+    </data>
+    <data name="tag" xml:space="preserve">
+        <value>برچسب</value>
+    </data>
+    <data name="quick-links" xml:space="preserve">
+        <value>لینک‌های سریع</value>
+    </data>
+    <data name="navigation" xml:space="preserve">
+        <value>پیمایش</value>
+    </data>
+    <data name="previous" xml:space="preserve">
+        <value>قبلی</value>
+    </data>
+    <data name="next" xml:space="preserve">
+        <value>بعدی</value>
+    </data>
+    <data name="confirm-delete" xml:space="preserve">
+        <value>حذف شود؟</value>
+    </data>
+    <data name="include-featured" xml:space="preserve">
+        <value>شامل موارد ویژه در لیست</value>
+    </data>
+    <data name="include-scripts" xml:space="preserve">
+        <value>اسکریپت هایی که باید در عنوان و پاورقی صفحه وارد شوند (Disqus، Analytics و غیره)</value>
+    </data>
+    <data name="subscribers" xml:space="preserve">
+        <value>مشترکین</value>
+    </data>
+    <data name="last-week" xml:space="preserve">
+        <value>هفته گذشته</value>
+    </data>
+    <data name="last-month" xml:space="preserve">
+        <value>ماه گذشته</value>
+    </data>
+    <data name="email-provider" xml:space="preserve">
+        <value>ارائه دهنده ایمیل</value>
+    </data>
+    <data name="sendgrid-key" xml:space="preserve">
+        <value>کلید Sendgrid</value>
+    </data>
+    <data name="server" xml:space="preserve">
+        <value>سرور</value>
+    </data>
+    <data name="port" xml:space="preserve">
+        <value>پورت</value>
+    </data>
+    <data name="smtp-email" xml:space="preserve">
+        <value>ایمیل SMTP</value>
+    </data>
+    <data name="send-test-email" xml:space="preserve">
+        <value>ارسال ایمیل آزمایشی</value>
+    </data>
+    <data name="unsubscribe" xml:space="preserve">
+        <value>لغو اشتراک</value>
+    </data>
+    <data name="login-failed" xml:space="preserve">
+        <value>ورود ناموفق بود، لطفاً دوباره امتحان کنید</value>
+    </data>
+    <data name="welcome" xml:space="preserve">
+        <value>خوش آمدید</value>
+    </data>
+    <data name="you-can-sign-in" xml:space="preserve">
+        <value>می توانید وارد شوید یا بروید به &lt;a href="/"&gt;بازگشت به بلاگ &lt;/a&gt;</value>
+    </data>
+    <data name="register" xml:space="preserve">
+        <value>ثبت نام</value>
+    </data>
+    <data name="you-can-register" xml:space="preserve">
+        <value>می توانید ثبت نام کنید یا بروید به &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
+    </data>
+    <data name="registration" xml:space="preserve">
+        <value>ثبت نام</value>
+    </data>
+    <data name="generic-error" xml:space="preserve">
+        <value>مشکلی رخ داد، لطفا چند لحظه دیگر دوباره امتحان کنید!</value>
+    </data>
+    <data name="title-content-required" xml:space="preserve">
+        <value>عنوان و محتوا لازم است.</value>
+    </data>
+    <data name="views" xml:space="preserve">
+        <value>بازدیدها</value>
+    </data>
+    <data name="pages" xml:space="preserve">
+        <value>صفحات</value>
+    </data>
+    <data name="advanced" xml:space="preserve">
+        <value>پیشرفته</value>
+    </data>
+    <data name="comments" xml:space="preserve">
+        <value>نظرات</value>
+    </data>
+    <data name="customize" xml:space="preserve">
+        <value>سفارشی سازی</value>
+    </data>
+    <data name="info" xml:space="preserve">
+        <value>اطلاعات</value>
+    </data>
+    <data name="scripts" xml:space="preserve">
+        <value>اسکریپت‌ها</value>
+    </data>
+    <data name="page-title" xml:space="preserve">
+        <value>عنوان صفحه</value>
+    </data>
+    <data name="about-blogifier" xml:space="preserve">
+        <value>درباره Blogifier</value>
+    </data>
+    <data name="actions" xml:space="preserve">
+        <value>عملیات</value>
+    </data>
+    <data name="advanced-settings" xml:space="preserve">
+        <value>تنظیمات پیشرفته</value>
+    </data>
+    <data name="basic" xml:space="preserve">
+        <value>پایه</value>
+    </data>
+    <data name="basic-settings" xml:space="preserve">
+        <value>تنظیمات پایه</value>
+    </data>
+    <data name="blogifier-desc" xml:space="preserve">
+        <value>Blogifier یک پلت فرم انتشار منبع باز است که با دات نت Core 5.0 و جدیدترین فناوری‌ها ساخته شده است.</value>
+    </data>
+    <data name="comments-settings" xml:space="preserve">
+        <value>تنظیمات نظرات</value>
+    </data>
+    <data name="edit-profile" xml:space="preserve">
+        <value>ویرایش پروفایل</value>
+    </data>
+    <data name="home-page" xml:space="preserve">
+        <value>خانه</value>
+    </data>
+    <data name="load" xml:space="preserve">
+        <value>بارگذاری</value>
+    </data>
+    <data name="logout" xml:space="preserve">
+        <value>خروج از سیستم</value>
+    </data>
+    <data name="menus" xml:space="preserve">
+        <value>منوها</value>
+    </data>
+    <data name="new-page" xml:space="preserve">
+        <value>صفحه جدید</value>
+    </data>
+    <data name="new-post" xml:space="preserve">
+        <value>پست جدید</value>
+    </data>
+    <data name="operating-system" xml:space="preserve">
+        <value>سیستم عامل</value>
+    </data>
+    <data name="profile-picture" xml:space="preserve">
+        <value>عکس پروفایل</value>
+    </data>
+    <data name="feed-URL" xml:space="preserve">
+        <value>آدرس RSS</value>
+    </data>
+    <data name="script-footer" xml:space="preserve">
+        <value>اسکریپت پانویس</value>
+    </data>
+    <data name="script-header" xml:space="preserve">
+        <value>اسکریپت سربرگ</value>
+    </data>
+    <data name="script-settings" xml:space="preserve">
+        <value>تنظیمات اسکریپت</value>
+    </data>
+    <data name="specification" xml:space="preserve">
+        <value>مشخصات</value>
+    </data>
+    <data name="list-is-empty" xml:space="preserve">
+        <value>موردی برای نمایش وجود ندارد</value>
+    </data>
+    <data name="user" xml:space="preserve">
+        <value>کاربر</value>
+    </data>
+    <data name="users-settings" xml:space="preserve">
+        <value>تنظیمات کاربران</value>
+    </data>
+    <data name="version" xml:space="preserve">
+        <value>نسخه</value>
+    </data>
+    <data name="website-URL" xml:space="preserve">
+        <value>آدرس سایت</value>
+    </data>
+    <data name="widgets" xml:space="preserve">
+        <value>ابزارک‌ها</value>
+    </data>
+    <data name="analytics" xml:space="preserve">
+        <value>آمار</value>
+    </data>
+    <data name="chart" xml:space="preserve">
+        <value>چارت</value>
+    </data>
+    <data name="list" xml:space="preserve">
+        <value>لیست</value>
+    </data>
+    <data name="visits" xml:space="preserve">
+        <value>بازدیدها</value>
+    </data>
+    <data name="date" xml:space="preserve">
+        <value>تاریخ</value>
+    </data>
+    <data name="days" xml:space="preserve">
+        <value>روزها</value>
+    </data>
+    <data name="7-days" xml:space="preserve">
+        <value>7 روز</value>
+    </data>
+    <data name="30-days" xml:space="preserve">
+        <value>30 روز</value>
+    </data>
+    <data name="90-days" xml:space="preserve">
+        <value>90 روز</value>
+    </data>
+    <data name="today" xml:space="preserve">
+        <value>امروز</value>
+    </data>
+    <data name="yesterday" xml:space="preserve">
+        <value>دیروز</value>
+    </data>
+    <data name="drive" xml:space="preserve">
+        <value>درایو</value>
+    </data>
+    <data name="select-all" xml:space="preserve">
+        <value>انتخاب همه</value>
+    </data>
+    <data name="not-featured" xml:space="preserve">
+        <value>ویژه نیست</value>
+    </data>
+    <data name="change" xml:space="preserve">
+        <value>تغییر</value>
+    </data>
+    <data name="reset" xml:space="preserve">
+        <value>تنظیم مجدد</value>
+    </data>
+    <data name="add-category" xml:space="preserve">
+        <value>افزودن طبقه‌بندی</value>
+    </data>
+    <data name="new-category" xml:space="preserve">
+        <value>طبقه‌بندی جدید</value>
+    </data>
+    <data name="edit-category" xml:space="preserve">
+        <value>ویرایش طبقه‌بندی</value>
+    </data>
+    <data name="newsletters" xml:space="preserve">
+        <value>خبرنامه‌ها</value>
+    </data>
+    <data name="resend" xml:space="preserve">
+        <value>ارسال مجدد</value>
+    </data>
+    <data name="newsletter-settings" xml:space="preserve">
+        <value>تنظیمات خبرنامه</value>
+    </data>
+    <data name="host" xml:space="preserve">
+        <value>میزبان</value>
+    </data>
+    <data name="to-name" xml:space="preserve">
+        <value>to-name</value>
+    </data>
+    <data name="from-name" xml:space="preserve">
+        <value>from-name</value>
+    </data>
+    <data name="from-email" xml:space="preserve">
+        <value>from-email</value>
+    </data>
+    <data name="enabled" xml:space="preserve">
+        <value>فعال شده</value>
+    </data>
+    <data name="disabled" xml:space="preserve">
+        <value>غیرفعال شده</value>
+    </data>
+    <data name="default-cover" xml:space="preserve">
+        <value>کاور پیش‌فرض</value>
+    </data>
+    <data name="under-development" xml:space="preserve">
+        <value>درحال توسعه</value>
+    </data>
+    <data name="learn-more" xml:space="preserve">
+        <value>بیشتر بدانید</value>
+    </data>
+    <data name="add-user" xml:space="preserve">
+        <value>افزودن کاربر</value>
+    </data>
+    <data name="current" xml:space="preserve">
+        <value>انتخاب شده</value>
+    </data>
+    <data name="developer" xml:space="preserve">
+        <value>توسعه دهنده</value>
+    </data>
+    <data name="by" xml:space="preserve">
+        <value>توسط</value>
+    </data>
+    <data name="import-message-found" xml:space="preserve">
+        <value>پست‌ پیدا شد و آماده برای افزودن</value>
+    </data>
+    <data name="import-all" xml:space="preserve">
+        <value>افزودن همه</value>
+    </data>
+    <data name="error-page" xml:space="preserve">
+        <value>صفحه خطا</value>
+    </data>
+    <data name="website" xml:space="preserve">
+        <value>سایت</value>
+    </data>
+    <data name="database-provider" xml:space="preserve">
+        <value>پایگاه داده‌ها</value>
+    </data>
+    <data name="back-to-website" xml:space="preserve">
+        <value>برگشت به سایت</value>
+    </data>
+    <data name="microsoft" xml:space="preserve">
+        <value>مایکروسافت</value>
+    </data>
+    <data name="twitter" xml:space="preserve">
+        <value>توییتر</value>
+    </data>
+    <data name="github" xml:space="preserve">
+        <value>گیت‌هاب</value>
+    </data>
+    <data name="facebook" xml:space="preserve">
+        <value>فیسبوک</value>
+    </data>
+    <data name="instagram" xml:space="preserve">
+        <value>اینستاگرام</value>
+    </data>
+    <data name="linkedin" xml:space="preserve">
+        <value>لینکدین</value>
+    </data>
+    <data name="google" xml:space="preserve">
+        <value>گوگل</value>
+    </data>
+    <data name="youtube" xml:space="preserve">
+        <value>یوتوب</value>
+    </data>
+    <data name="pinterest" xml:space="preserve">
+        <value>پینترست</value>
+    </data>
+    <data name="whatsapp" xml:space="preserve">
+        <value>واتساپ</value>
+    </data>
+    <data name="telegram" xml:space="preserve">
+        <value>تلگرام</value>
+    </data>
 </root>

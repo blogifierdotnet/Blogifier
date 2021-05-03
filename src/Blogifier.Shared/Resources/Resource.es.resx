@@ -118,37 +118,37 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="general" xml:space="preserve">
-        <value>Geral</value>
+        <value>General</value>
     </data>
     <data name="profile" xml:space="preserve">
         <value>Perfil</value>
     </data>
     <data name="password" xml:space="preserve">
-        <value>Senha</value>
+        <value>Contraseña</value>
     </data>
     <data name="themes" xml:space="preserve">
         <value>Temas</value>
     </data>
     <data name="users" xml:space="preserve">
-        <value>Usuários</value>
+        <value>Usuarios</value>
     </data>
     <data name="new-user" xml:space="preserve">
-        <value>Novo usuário</value>
+        <value>Nuevo usuario</value>
     </data>
     <data name="import" xml:space="preserve">
         <value>Importar</value>
     </data>
     <data name="new-post" xml:space="preserve">
-        <value>Nova Postagem</value>
+        <value>Nueva Entrada</value>
     </data>
     <data name="posts" xml:space="preserve">
-        <value>Postagens</value>
+        <value>Entradas</value>
     </data>
     <data name="settings" xml:space="preserve">
-        <value>Configurações</value>
+        <value>Ajustes</value>
     </data>
     <data name="notifications" xml:space="preserve">
-        <value>Notificações</value>
+        <value>Notificationes</value>
     </data>
     <data name="visit-blog" xml:space="preserve">
         <value>Visitar Blog</value>
@@ -157,264 +157,150 @@
         <value>Título</value>
     </data>
     <data name="description" xml:space="preserve">
-        <value>Descrição</value>
+        <value>Descripción</value>
     </data>
     <data name="items-per-page" xml:space="preserve">
-        <value>Itens por página</value>
+        <value>Elementos por página</value>
     </data>
     <data name="logo" xml:space="preserve">
         <value>Logotipo</value>
     </data>
     <data name="cover" xml:space="preserve">
-        <value>Imagem de Capa</value>
+        <value>Imagen de cabecera</value>
     </data>
     <data name="language" xml:space="preserve">
         <value>Idioma</value>
     </data>
     <data name="save" xml:space="preserve">
-        <value>Salvar</value>
+        <value>Guardar</value>
     </data>
     <data name="select" xml:space="preserve">
-        <value>Selecionar</value>
+        <value>Seleccionar</value>
     </data>
     <data name="selected" xml:space="preserve">
-        <value>Selecionado</value>
+        <value>Seleccionado</value>
     </data>
     <data name="search" xml:space="preserve">
         <value>Buscar</value>
     </data>
     <data name="all" xml:space="preserve">
-        <value>Tudo</value>
+        <value>Todo</value>
     </data>
     <data name="published" xml:space="preserve">
-        <value>Publicado</value>
+        <value>Publicada</value>
     </data>
     <data name="draft" xml:space="preserve">
-        <value>Rascunho</value>
+        <value>Borrador</value>
     </data>
     <data name="status" xml:space="preserve">
-        <value>Status</value>
+        <value>Estado</value>
     </data>
     <data name="not-found" xml:space="preserve">
-        <value>Não encontrado</value>
+        <value>No encontrado</value>
     </data>
     <data name="publish" xml:space="preserve">
         <value>Publicar</value>
     </data>
     <data name="unpublish" xml:space="preserve">
-        <value>Cancelar publicação</value>
+        <value>Desactivar</value>
     </data>
     <data name="featured" xml:space="preserve">
         <value>Destacada</value>
     </data>
     <data name="add-to-featured" xml:space="preserve">
-        <value>Destacar</value>
+        <value>Añadir a destacado</value>
     </data>
     <data name="cancel" xml:space="preserve">
         <value>Cancelar</value>
     </data>
     <data name="delete" xml:space="preserve">
-        <value>Apagar</value>
+        <value>Eliminar</value>
     </data>
     <data name="categories" xml:space="preserve">
-        <value>Categorias</value>
+        <value>Categorías</value>
     </data>
     <data name="view" xml:space="preserve">
-        <value>Visualizar</value>
+        <value>Ver</value>
     </data>
     <data name="user-name" xml:space="preserve">
-        <value>Nome de usuário</value>
+        <value>Nombre de usuario</value>
     </data>
     <data name="email" xml:space="preserve">
-        <value>Email</value>
+        <value>Correo electrónico</value>
     </data>
     <data name="user-bio" xml:space="preserve">
-        <value>Informações do usuário</value>
+        <value>Información biográfica</value>
     </data>
     <data name="avatar" xml:space="preserve">
-        <value>Imagem do perfil</value>
+        <value>Imagen de perfil</value>
     </data>
     <data name="remove" xml:space="preserve">
-        <value>Remover</value>
+        <value>Eliminar</value>
     </data>
     <data name="removed" xml:space="preserve">
-        <value>Removido</value>
+        <value>Eliminado</value>
     </data>
     <data name="new-password" xml:space="preserve">
-        <value>Nova senha</value>
+        <value>Nueva contraseña</value>
     </data>
     <data name="confirm-password" xml:space="preserve">
-        <value>Confirmar senha</value>
+        <value>Confirmar contraseña</value>
     </data>
     <data name="close" xml:space="preserve">
-        <value>Fechar</value>
+        <value>Cerrar</value>
     </data>
     <data name="set-as-admin" xml:space="preserve">
-        <value>Definir como administrador</value>
+        <value>Establecer como administrador</value>
     </data>
     <data name="select-rss-file" xml:space="preserve">
-        <value>Selecionar arquivo RSS (.xml) para importar postagens</value>
+        <value>Seleccionar archivo RSS (.xml) del que importar entradas</value>
     </data>
     <data name="images" xml:space="preserve">
-        <value>Imagens</value>
+        <value>Imágenes</value>
     </data>
     <data name="attachments" xml:space="preserve">
-        <value>Anexos</value>
+        <value>Archivos adjuntos</value>
     </data>
     <data name="upload" xml:space="preserve">
-        <value>Enviar</value>
+        <value>Subir</value>
     </data>
     <data name="filters" xml:space="preserve">
         <value>Filtros</value>
     </data>
     <data name="change-password" xml:space="preserve">
-        <value>Alterar senha</value>
+        <value>Cambiar contraseña</value>
     </data>
     <data name="theme" xml:space="preserve">
         <value>Tema</value>
     </data>
     <data name="read" xml:space="preserve">
-        <value>Ler</value>
+        <value>Leer</value>
     </data>
     <data name="updated" xml:space="preserve">
-        <value>Atualizado</value>
+        <value>Actualizado</value>
     </data>
     <data name="created" xml:space="preserve">
-        <value>Criado</value>
+        <value>Creado</value>
     </data>
     <data name="about" xml:space="preserve">
-        <value>Sobre</value>
+        <value>Acerca de</value>
     </data>
     <data name="newsletter" xml:space="preserve">
-        <value>Boletim de Notícias</value>
-    </data>
-    <data name="newsletter-subscribers" xml:space="preserve">
-        <value>Lista de assinantes de e-mail</value>
-    </data>
-    <data name="contact" xml:space="preserve">
-        <value>Contato</value>
-    </data>
-    <data name="dashboard" xml:space="preserve">
-        <value>Painel de controle</value>
-    </data>
-    <data name="popular" xml:space="preserve">
-        <value>Popular</value>
-    </data>
-    <data name="empty" xml:space="preserve">
-        <value>Vazio</value>
-    </data>
-    <data name="edit" xml:space="preserve">
-        <value>Editar</value>
-    </data>
-    <data name="details" xml:space="preserve">
-        <value>Detalhes</value>
-    </data>
-    <data name="custom-field" xml:space="preserve">
-        <value>Campo customizado</value>
-    </data>
-    <data name="error-msg" xml:space="preserve">
-        <value>Desculpe, algo deu errado ou não existe noda neste endereço</value>
+        <value>Suscribirse</value>
     </data>
     <data name="send" xml:space="preserve">
         <value>Enviar</value>
     </data>
-    <data name="send-to" xml:space="preserve">
-        <value>Enviar para</value>
-    </data>
-    <data name="subject" xml:space="preserve">
-        <value>Assunto</value>
-    </data>
-    <data name="content" xml:space="preserve">
-        <value>Conteúdo</value>
-    </data>
-    <data name="completed" xml:space="preserve">
-        <value>Concluído</value>
-    </data>
-    <data name="email-info" xml:space="preserve">
-        <value>Aqui você poderá verificar as configurações do boletim de notícias enviando um email de teste</value>
-    </data>
-    <data name="disqus-info" xml:space="preserve">
-        <value>Aqui você pode inserir ou atualizar o site e script para adicionar comentários do Disqus</value>
-    </data>
-    <data name="demo-disabled" xml:space="preserve">
-        <value>Desabilitado no modo demo</value>
-    </data>
-    <data name="email-sent-success" xml:space="preserve">
-        <value>Email enviado com sucesso</value>
-    </data>
-    <data name="email-sent-error" xml:space="preserve">
-        <value>Erro ao enviar email, verifique os logs para detalhes</value>
-    </data>
-    <data name="email-sent-count" xml:space="preserve">
-        <value>Enviado {0} boletins de notícias</value>
-    </data>
     <data name="social-accounts" xml:space="preserve">
-        <value>Contas nas mídias sociais</value>
-    </data>
-    <data name="name" xml:space="preserve">
-        <value>Nome</value>
-    </data>
-    <data name="post-title" xml:space="preserve">
-        <value>Título da postagem...</value>
-    </data>
-    <data name="type-here" xml:space="preserve">
-        <value>Escreva aqui...</value>
-    </data>
-    <data name="thank-you" xml:space="preserve">
-        <value>Obrigado!</value>
+        <value>Redes sociales</value>
     </data>
     <data name="enter-email" xml:space="preserve">
-        <value>Informe o email</value>
-    </data>
-    <data name="subscribe" xml:space="preserve">
-        <value>Inscreva-se</value>
+        <value>Ingresar correo</value>
     </data>
     <data name="join-subscribers" xml:space="preserve">
-        <value>Junte-se a nossa lista de inscritos para ter as últimas notícias diretamente na sua caixa de email</value>
-    </data>
-    <data name="login" xml:space="preserve">
-        <value>Entrar</value>
-    </data>
-    <data name="home" xml:space="preserve">
-        <value>Principal</value>
-    </data>
-    <data name="blog" xml:space="preserve">
-        <value>Blog</value>
-    </data>
-    <data name="admin" xml:space="preserve">
-        <value>Admin</value>
-    </data>
-    <data name="tag" xml:space="preserve">
-        <value>Tag</value>
+        <value>Unete a nuestra lista de correo y obtén las ultimas novedades directamente en tu inbox</value>
     </data>
     <data name="quick-links" xml:space="preserve">
-        <value>Links rápidos</value>
-    </data>
-    <data name="navigation" xml:space="preserve">
-        <value>Navegação</value>
-    </data>
-    <data name="previous" xml:space="preserve">
-        <value>Anterior</value>
-    </data>
-    <data name="next" xml:space="preserve">
-        <value>Próximo</value>
-    </data>
-    <data name="confirm-delete" xml:space="preserve">
-        <value>Excluir postagem?</value>
-    </data>
-    <data name="include-featured" xml:space="preserve">
-        <value>Incluir destacado na lista</value>
-    </data>
-    <data name="include-scripts" xml:space="preserve">
-        <value>Scripts para incluir no cabeçalho e no rodapé (Disqus, Analytics etc.)</value>
-    </data>
-    <data name="subscribers" xml:space="preserve">
-        <value>Inscritos</value>
-    </data>
-    <data name="last-week" xml:space="preserve">
-        <value>Última semana</value>
-    </data>
-    <data name="last-month" xml:space="preserve">
-        <value>Último mês</value>
+        <value>Enlaces</value>
     </data>
 </root>

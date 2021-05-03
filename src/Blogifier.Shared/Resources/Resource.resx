@@ -153,9 +153,6 @@
     <data name="visit-blog" xml:space="preserve">
         <value>Visit Blog</value>
     </data>
-    <data name="sign-out" xml:space="preserve">
-        <value>Sign out</value>
-    </data>
     <data name="title" xml:space="preserve">
         <value>Title</value>
     </data>
@@ -261,8 +258,8 @@
     <data name="images" xml:space="preserve">
         <value>Images</value>
     </data>
-    <data name="attachements" xml:space="preserve">
-        <value>Attachements</value>
+    <data name="attachments" xml:space="preserve">
+        <value>attachments</value>
     </data>
     <data name="upload" xml:space="preserve">
         <value>Upload</value>
@@ -678,7 +675,7 @@
     <data name="import-all" xml:space="preserve">
         <value>Import All</value>
     </data>
-   <data name="error-page" xml:space="preserve">
+    <data name="error-page" xml:space="preserve">
         <value>Error Page</value>
     </data>
     <data name="website" xml:space="preserve">
@@ -689,5 +686,38 @@
     </data>
     <data name="back-to-website" xml:space="preserve">
         <value>Back to website</value>
+    </data>
+    <data name="microsoft" xml:space="preserve">
+        <value>Microsoft</value>
+    </data>
+    <data name="twitter" xml:space="preserve">
+        <value>Twitter</value>
+    </data>
+    <data name="github" xml:space="preserve">
+        <value>GitHub</value>
+    </data>
+    <data name="facebook" xml:space="preserve">
+        <value>Facebook</value>
+    </data>
+    <data name="instagram" xml:space="preserve">
+        <value>Instagram</value>
+    </data>
+    <data name="linkedin" xml:space="preserve">
+        <value>LinkedIn</value>
+    </data>
+    <data name="google" xml:space="preserve">
+        <value>Google</value>
+    </data>
+    <data name="youtube" xml:space="preserve">
+        <value>YouTube</value>
+    </data>
+    <data name="pinterest" xml:space="preserve">
+        <value>Pinterest</value>
+    </data>
+    <data name="whatsapp" xml:space="preserve">
+        <value>WhatsApp</value>
+    </data>
+    <data name="telegram" xml:space="preserve">
+        <value>Telegram</value>
     </data>
 </root>
