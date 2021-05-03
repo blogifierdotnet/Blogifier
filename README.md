@@ -7,7 +7,8 @@
 
 <h3 align="center">Blogifier</h3>
 <p align="center">
-    Blogifier is an open-source publishing platform written in .NET 5.0 and Blazor WebAssembly.<br><br>
+    Blogifier is an open-source publishing platform written in .NET 5.0 and Blazor WebAssembly.<br>
+    Right now with Blogifier, you can make a personal blog, and more features are under development.<br><br>
     <a href="https://blogifier.net/"><b>Official Website »</b></a>
     &nbsp;&nbsp;
     <a href="https://demo.blogifier.net/"><b>Live Demo »</b></a>
