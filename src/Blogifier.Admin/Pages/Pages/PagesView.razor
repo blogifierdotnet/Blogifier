@@ -25,28 +25,25 @@
             @if (Posts != null && Posts.Count > 0)
             {
                 <div class="dropdown dropdown-flush">
-                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPagesAction" data-bs-toggle="dropdown" aria-expanded="false">
                         @_localizer["actions"]
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
+                    <div class="dropdown-menu" aria-labelledby="dropdownPagesAction">
                         <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item text-success">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                             </svg>
                             <span>@_localizer["publish"]</span>
                         </button>
-                        <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item text-warning">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item text-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                             </svg>
                             <span>@_localizer["unpublish"]</span>
                         </button>
                         <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                             </svg>
                             <span>@_localizer["delete"]</span>
                         </button>
@@ -66,8 +63,8 @@
             </div>
 
             <button type="button" class="btn btn-link list-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["search"]">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                <svg width="16" height="16" viewBox="0 0 16 16"  fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" title="@_localizer["search"]">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4765 11.8908C9.4957 12.5892 8.29582 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7C13 8.29584 12.5892 9.49573 11.8907 10.4766L15.0549 13.6407C15.4454 14.0312 15.4454 14.6644 15.0549 15.0549C14.6644 15.4455 14.0312 15.4455 13.6407 15.0549L10.4765 11.8908ZM11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z" />
                 </svg>
             </button>
 
@@ -103,23 +100,22 @@
                         <button class="list-btn" @onclick="(async () => await Publish(post))">
                             @if (@pubStatus == "published")
                             {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["published"]">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["published"]">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                 </svg>
                             }
                             else
                             {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle text-warning" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["draft"]">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash text-silver" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["draft"]">
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                 </svg>
                             }
                         </button>
                         <a class="list-btn" href="posts/@post.Slug" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["view"]">
-                                <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
-                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z" />
+                            <svg class="bi" width="15" height="15" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" title="@_localizer["view"]">
+                                <path d="M7.85724 2.17097L6 4L7 5L8.93201 3.24577C9.89935 2.27845 11.4719 2.27845 12.4393 3.24577C13.4066 4.21308 13.4066 5.78571 12.4393 6.75303L10.5141 8.75674L11.5141 9.75674L13.5141 7.82783C15.0754 6.26652 15.0754 3.73225 13.5141 2.17094C11.9528 0.609657 9.41852 0.609688 7.85724 2.17097Z" />
+                                <path d="M3.24575 12.4392C2.2784 11.4719 2.2784 9.89935 3.24575 8.93201L5 7L4 6L2.17098 7.85721C0.609703 9.41849 0.609642 11.9528 2.17098 13.514C3.73226 15.0753 6.26656 15.0753 7.82784 13.514L9.5141 11.7567L8.5141 10.7567L6.75301 12.4392C5.78573 13.4066 4.2131 13.4066 3.24575 12.4392Z" />
+                                <path d="M4.99941 9.55426L9.52486 5.02878L10.6563 6.16016L6.13076 10.6856L4.99941 9.55426Z" />
                             </svg>
                         </a>
                     </li>
