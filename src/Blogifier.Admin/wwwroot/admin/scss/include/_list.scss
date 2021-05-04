@@ -52,7 +52,7 @@
       height: 2.5rem;
       border: 0;
       padding: 0 1rem;
-      background: 0;
+      background: none;
       outline: none !important;
     }
 
@@ -154,7 +154,7 @@
     border: 0;
     text-align: center;
     height: $list-height;
-    color: $gray-600;
+    color: darken($silver, 10%);
 
     .bi {
       height: 100%;
@@ -167,11 +167,11 @@
     border: 0;
     text-align: center;
     height: $list-height;
-    color: $gray-600;
 
     .bi {
       height: 100%;
     }
+
   }
   &-notfound {
     color: $gray-600;
