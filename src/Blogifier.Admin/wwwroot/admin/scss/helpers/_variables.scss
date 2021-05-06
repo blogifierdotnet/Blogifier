@@ -1,6 +1,6 @@
 ﻿// colors
 $blogifier: #7241fd;
-$default: #fff;
+$default: #E7E7E7;
 // $warning: #FFBB54;
 $silver: #aeb8c2;
 // $silver: #E0E0E3;
@@ -22,9 +22,11 @@ $link-hover-color: $silver;
 $bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
 // input
-$input-border-width: 0;
-$input-focus-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15),
-  0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+
+$input-border-color: $default;
+$input-focus-border-color: darken($default, 10%);
+$input-box-shadow: 0;
+$input-focus-box-shadow: 0;
 
 // check
 $form-check-input-width: 1rem;
@@ -35,10 +37,12 @@ $form-check-input-border: 1px solid $silver;
 $form-check-input-checked-color: $black;
 $form-check-input-checked-border-color: $black;
 $form-check-input-checked-bg-color: $body-bg;
-
 $form-check-input-focus-border: $black;
 $form-check-input-focus-box-shadow: 0;
 
+// switch
+$form-check-label-color: $black;
+$form-check-label-cursor: pointer;
 $form-switch-color: $black;
 $form-switch-focus-color: $black;
 
@@ -54,6 +58,7 @@ $input-btn-font-size: 0.875rem;
 $input-btn-padding-y: 0.625rem;
 $input-btn-padding-x: 1rem;
 $input-btn-focus-width: 0;
+$btn-border-radius: .325rem;
 
 // button link
 $btn-link-color: #495057;

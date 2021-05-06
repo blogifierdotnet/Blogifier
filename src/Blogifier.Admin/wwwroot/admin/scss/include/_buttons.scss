@@ -8,18 +8,13 @@
   &-link {
   }
 
-  &-default {
-    &:hover {
-      background-color: $gray-100;
-    }
-  }
-
   &-outline {
     &-default {
-      border-color: $gray-500;
+      border-color: $silver;
       color: $gray-600;
 
       &:hover {
+        color: $gray-800;
         border-color: $gray-500;
       }
     }

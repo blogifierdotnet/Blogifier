@@ -14,7 +14,7 @@
             <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
                 <input type="checkbox" class="list-check-input form-check-input">
             </label>
-            <button class="btn btn-blogifier -add me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>
+            <button class="btn btn-blogifier btn-rounded -add me-3" type="button" @onclick="(()=> LoadForm(string.Empty))" @onclick:preventDefault>
                 @_localizer["new-user"]
             </button>
             <div class="dropdown dropdown-flush">
@@ -108,7 +108,7 @@
             </div>
             <div class="form-item">
                 <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-                <button type="button" @onclick="Cancel" class="btn btn-default px-3">@_localizer["cancel"]</button>
+                <button type="button" @onclick="Cancel" class="btn btn-default px-4">@_localizer["cancel"]</button>
             </div>
         </EditForm>
    </div>

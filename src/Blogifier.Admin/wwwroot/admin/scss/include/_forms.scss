@@ -1,6 +1,5 @@
 .form-control,
 .form-select {
-  box-shadow: $bf-shadow;
 }
 
 .form-switch .form-check-input {
@@ -17,8 +16,8 @@
   .form-label {
     margin-bottom: 0.25rem;
     font-size: 0.875rem;
-    font-weight: 500;
-    color: $gray-700;
+    font-weight: 400;
+    color: $black;
   }
 
   &-desc {

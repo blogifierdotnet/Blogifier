@@ -20,7 +20,7 @@
                 <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
             </label>
 
-            <a class="btn btn-blogifier me-3 -add" href="/admin/pages/editor">@_localizer["new-page"]</a>
+            <a class="btn btn-blogifier btn-rounded me-3 -add" href="/admin/pages/editor">@_localizer["new-page"]</a>
 
             @if (Posts != null && Posts.Count > 0)
             {
