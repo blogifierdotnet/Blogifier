@@ -2,22 +2,20 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  border-top: 1px solid $gray-200;
+  // border-top: 1px solid $gray-200;
+  border-top: 1px solid rgba(0, 0, 0, 0.02);
 
   // toolbar
   &-toolbar {
     display: flex;
     align-items: center;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 
     .btn-blogifier {
-      padding-right: 1rem;
-      padding-left: 1rem;
-      text-transform: capitalize;
     }
 
     .-add {
-      min-width: 7rem;
+      min-width: 8rem;
     }
   }
 
@@ -76,20 +74,41 @@
 
   // items
   &-item {
-    border-bottom: 1px solid $gray-200;
+    // border-bottom: 1px solid $gray-200;
     display: flex;
     align-items: center;
-    &:hover {
+    border-radius: 0.5rem;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+
+    &::after {
+      z-index: -1;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
       background-image: linear-gradient(
         90deg,
         transparent,
-        rgba(#fff, 0.2),
+        rgba(0, 0, 0, 0.01),
         transparent
       );
+      opacity: 0;
+      transition: opacity ease-in 0.2s;
+    }
+
+    &:hover {
+      &::after {
+        opacity: 1;
+      }
     }
     .-link {
+      color: $gray-700;
       &:hover {
-        color: $blogifier;
+        color: #000;
       }
     }
   }
@@ -98,19 +117,21 @@
     padding: 0;
     margin: 0;
     height: $list-height;
-    line-height: $list-height;
-    min-width: 2rem;
-    padding-left: 2rem;
+    width: $list-height + 0.5rem;
+    padding-left: 0;
     position: relative;
     font-weight: 500;
+    // transform: translateX(-1rem);
+    margin-left: -1rem;
 
     .list-check-input {
       vertical-align: top;
-      transform: translateY(-50%);
       position: absolute;
       top: 50%;
-      left: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
       margin: 0;
+      transition: opacity ease-in-out 0.1s;
     }
   }
 
@@ -119,18 +140,17 @@
     flex-grow: 1;
     margin-right: 0.5rem;
     line-height: $list-height;
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: $gray-800;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: $body-color;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     .compact & {
-      line-height:2rem;
-      font-size:.75rem;
+      line-height: 2rem;
+      font-size: 0.75rem;
     }
-
   }
 
   &-text {
@@ -156,6 +176,10 @@
     height: $list-height;
     color: darken($silver, 10%);
 
+    &:hover {
+      color: $silver;
+    }
+
     .bi {
       height: 100%;
     }
@@ -171,7 +195,6 @@
     .bi {
       height: 100%;
     }
-
   }
   &-notfound {
     color: $gray-600;

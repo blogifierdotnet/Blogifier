@@ -1,9 +1,8 @@
 .menu {
-  background-color: #fff;
-  margin-bottom: 2rem;
-  box-shadow: $bf-shadow;
+  margin-bottom: 3rem;
   position: relative;
   z-index: 15;
+  border-bottom: 1px solid rgba(#000, 0.05);
   // one
   &-list {
     @include list-unstyled;
@@ -15,9 +14,9 @@
   }
 
   &-link {
-    line-height: 4rem;
-    height: 4rem;
-    width: 3.25rem;
+    line-height: 4.5rem;
+    height: 4.5rem;
+    width: 3.5rem;
     position: relative;
     color: #7c8792;
     font-weight: 500;
