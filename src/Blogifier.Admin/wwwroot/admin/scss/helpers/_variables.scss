@@ -8,12 +8,15 @@ $success: #47c586;
 $danger: #ff5b65;
 $gold: #ff9765;
 
+$black: #1c1c1c;
+
 // body
 $body-bg: #f8f8f8;
 $font-size-base: 0.875rem;
 $body-color: #1c1c1c;
+
 $link-color: $blogifier;
-$link-hover-color: #444;
+$link-hover-color: $silver;
 
 // shadow
 $bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
@@ -29,19 +32,22 @@ $form-check-input-bg: transparent;
 $form-check-padding-start: 1rem;
 $form-check-input-border-radius: 0.3rem;
 $form-check-input-border: 1px solid $silver;
-$form-check-input-checked-color: $body-color;
-$form-check-input-checked-border-color: $body-color;
+$form-check-input-checked-color: $black;
+$form-check-input-checked-border-color: $black;
 $form-check-input-checked-bg-color: $body-bg;
 
-$form-check-input-focus-border: $body-color;
+$form-check-input-focus-border: $black;
 $form-check-input-focus-box-shadow: 0;
+
+$form-switch-color: $black;
+$form-switch-focus-color: $black;
 
 // active
 $component-active-bg: $blogifier;
 
 // font and text
 $link-decoration: none;
-$btn-font-weight: 500;
+// $btn-font-weight: 500;
 
 // buttons
 $input-btn-font-size: 0.875rem;
@@ -50,8 +56,8 @@ $input-btn-padding-x: 1rem;
 $input-btn-focus-width: 0;
 
 // button link
-$btn-link-color: #666;
-$btn-link-hover-color: $blogifier;
+$btn-link-color: #495057;
+$btn-link-hover-color: $black;
 
 // accordion
 $accordion-border-width: 0;

@@ -1,7 +1,7 @@
 ﻿.sidebar {
   font-size: 1rem;
   hr {
-    background: linear-gradient(90deg, $gray-600, transparent);
+    background: linear-gradient(90deg, $silver, transparent);
     width: 65%;
   }
 
@@ -32,12 +32,12 @@
     display: block;
 
     &:hover {
-      color: $dark;
+      color: $black;
     }
 
     &.active {
-      font-weight: 500;
-      color: $gray-900;
+      color: $black;
+      // font-weight: 500;
     }
   }
 }
