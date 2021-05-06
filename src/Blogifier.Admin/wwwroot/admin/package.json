@@ -7,7 +7,7 @@
     "start": "sass --watch scss:css --style=compressed"
   },
   "devDependencies": {
-    "bootstrap": "^5.0.0-beta3",
-    "sass": "^1.32.8"
+    "bootstrap": "^5.0.0",
+    "sass": "^1.32.12"
   }
 }
