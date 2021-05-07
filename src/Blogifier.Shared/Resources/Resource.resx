@@ -747,4 +747,7 @@
     <data name="author" xml:space="preserve">
         <value>Author</value>
     </data>
+    <data name="customization" xml:space="preserve">
+        <value>Customization</value>
+    </data>
 </root>

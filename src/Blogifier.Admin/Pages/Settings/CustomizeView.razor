@@ -6,99 +6,21 @@
 
 <PageTitle Title="@_localizer["customize"]" />
 
-<h1 class="section-title">@_localizer["customize"]</h1>
+<h1 class="section-title">@_localizer["customization"]</h1>
 <div class="section-content">
-    @if (CurrentTheme != null)
-    {
-        <div class="customize-info d-flex">
-            <div class="customize-info-cover">
-                <img src="@CurrentTheme.Cover" class="customize-info-img" alt="@CurrentTheme.Title">
-            </div>
-            <div class="customize-info-details">
-                <div class="customize-info-title">@CurrentTheme.Title</div>
-                <p class="customize-info-desc">This is a test description, one paragraph long description for you, there should not be a break line in this description.</p>
-                <ul class="customize-info-list">
-                    <li>@_localizer["version"] 2.1</li>
-                    <li>@_localizer["by"] John Doe</li>
-                    <li><a href="#">Website</a></li>
-                    <li><a href="#">GitHub</a></li>
-                    <li><a href="#">Other Link</a></li>
-                </ul>
-            </div>
-        </div>
-    }
+    <SettingsComponent @ref="ChildSettings" />
+    <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
 
-    <div class="customize-tab">
-        <div class="customize-tab-nav nav nav-tabs flex-grow-1 mb-4" id="customize-tab" role="tablist">
-            <button type="button" class="nav-link active" id="customize-settings-tab" data-bs-toggle="tab" data-bs-target="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="true">@_localizer["settings"]</button>
-            <button type="button" class="nav-link" id="customize-widgets-tab" data-bs-toggle="tab" data-bs-target="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="false">@_localizer["widgets"]</button>
-            <button type="button" class="nav-link" id="customize-menu-tab" data-bs-toggle="tab" data-bs-target="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">@_localizer["menus"]</button>
-        </div>
-        <div class="customize-tab-content tab-content" id="customize-tabContent">
-            <div class="tab-pane fade show active" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
-               <SettingsComponent @ref="ChildSettings" />
-               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
-            </div>
-            <div class="tab-pane fade" id="customize-widgets" role="tabpanel" aria-labelledby="customize-widgets-tab">
-               <WidgetsComponent />
-               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
-            </div>
-            <div class="tab-pane fade" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">
-               <MenusComponent />
-               <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <ToasterComponent @ref="Toaster" />
 
 @code {
-   protected Blog Blog { get; set; }
-   protected ThemeItem CurrentTheme { get; set; }
    protected ToasterComponent Toaster;
-
    SettingsComponent ChildSettings;
 
    async Task SaveSettings()
    {
       Toaster.Toast(await ChildSettings.Save());
-   }
-
-   protected override async Task OnInitializedAsync()
-   {
-      await Load();
-   }
-
-   public async Task Load()
-   {
-      Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-      var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
-
-      foreach (var theme in allThemes)
-      {
-         if (theme.ToLower() == Blog.Theme.ToLower())
-         {
-            CurrentTheme = new ThemeItem
-            {
-               Title = theme.Capitalize(),
-               IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
-               Cover = await GetCover(theme)
-            };
-            break;
-         }
-      }
-   }
-
-   private async Task<string> GetCover(string theme)
-   {
-      string slash = System.IO.Path.DirectorySeparatorChar.ToString();
-      string file = $"wwwroot{slash}themes{slash}{theme}{slash}screenshot.png";
-      var result = await _http.PutAsJsonAsync<string>($"api/storage/exists", file);
-
-      if (result.IsSuccessStatusCode)
-         return $"themes/{theme}/screenshot.png";
-      else
-         return "img/img-placeholder.png";
    }
 }
