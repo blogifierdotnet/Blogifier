@@ -174,10 +174,10 @@
     border: 0;
     text-align: center;
     height: $list-height;
-    color: darken($silver, 10%);
+    color: darken($secondary, 10%);
 
     &:hover {
-      color: $silver;
+      color: $secondary;
     }
 
     .bi {

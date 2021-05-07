@@ -1,28 +1,28 @@
 ﻿// colors
 $blogifier: #7241fd;
-$default: #E7E7E7;
-// $warning: #FFBB54;
-$silver: #aeb8c2;
-// $silver: #E0E0E3;
-$success: #47c586;
-$danger: #ff5b65;
-$gold: #ff9765;
+$default: #e1e5e9;
+$secondary: #949ca5;
+$gold: #ffa337;
 
 $black: #1c1c1c;
+$success: #47c586;
+$danger: #ff5b65;
+
+$min-contrast-ratio: 2;
 
 // body
 $body-bg: #f8f8f8;
-$font-size-base: 0.875rem;
 $body-color: #1c1c1c;
+$font-size-base: 0.875rem;
 
+// Link
 $link-color: $blogifier;
-$link-hover-color: $silver;
+$link-hover-color: $secondary;
 
 // shadow
 $bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 
 // input
-
 $input-border-color: $default;
 $input-focus-border-color: darken($default, 10%);
 $input-box-shadow: 0;
@@ -31,9 +31,9 @@ $input-focus-box-shadow: 0;
 // check
 $form-check-input-width: 1rem;
 $form-check-input-bg: transparent;
-$form-check-padding-start: 1rem;
+$form-check-padding-start: 2rem;
 $form-check-input-border-radius: 0.3rem;
-$form-check-input-border: 1px solid $silver;
+$form-check-input-border: 1px solid $secondary;
 $form-check-input-checked-color: $black;
 $form-check-input-checked-border-color: $black;
 $form-check-input-checked-bg-color: $body-bg;
@@ -43,7 +43,7 @@ $form-check-input-focus-box-shadow: 0;
 // switch
 $form-check-label-color: $black;
 $form-check-label-cursor: pointer;
-$form-switch-color: $black;
+$form-switch-color: #6c757d;
 $form-switch-focus-color: $black;
 
 // active
@@ -51,14 +51,13 @@ $component-active-bg: $blogifier;
 
 // font and text
 $link-decoration: none;
-// $btn-font-weight: 500;
 
 // buttons
 $input-btn-font-size: 0.875rem;
 $input-btn-padding-y: 0.625rem;
 $input-btn-padding-x: 1rem;
 $input-btn-focus-width: 0;
-$btn-border-radius: .325rem;
+$btn-border-radius: 0.325rem;
 
 // button link
 $btn-link-color: #495057;
@@ -85,9 +84,6 @@ $h4-font-size: $font-size-base * 1.125;
 $h5-font-size: $font-size-base * 1;
 $h6-font-size: $font-size-base;
 
-// alerts
-// $alert-border-width: 0;
-
 // tooltips
 $tooltip-font-size: 0.625rem;
 $tooltip-bg: #57606b;
@@ -113,8 +109,3 @@ $hljs-sky: #2f6f9f;
 $container-max-widths: (
   xl: 1024px,
 );
-
-:root {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 1.5rem;
-}
