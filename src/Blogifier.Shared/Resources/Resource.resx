@@ -753,4 +753,7 @@
     <data name="theme-customization-desc" xml:space="preserve">
         <value>Every theme has different features. You are customizing your current theme, and these changes only apply to the current theme.</value>
     </data>
+    <data name="blog-settings" xml:space="preserve">
+        <value>Blog settings</value>
+    </data>
 </root>
