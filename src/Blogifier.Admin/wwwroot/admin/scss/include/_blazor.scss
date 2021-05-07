@@ -1,15 +1,3 @@
-strong,
-b {
-  font-weight: 500;
-}
-img {
-  max-width: 100%;
-}
-
-#blazor-error-ui {
-  display: none;
-}
-
 .blogifier-loading {
   position: fixed;
   width: 100%;
@@ -26,6 +14,7 @@ img {
   z-index: 10001;
   background: $danger;
   padding: 1rem;
+  display: none;
 
   &-message {
     margin-bottom: 0;
@@ -54,18 +43,4 @@ img {
       }
     }
   }
-}
-
-.tooltip-inner {
-  margin-top: 0.25rem;
-  box-shadow: 0 0 0 1px rgba(#fff, 0.5);
-  letter-spacing: 0.03125rem;
-}
-
-.bs-tooltip-bottom .tooltip-inner {
-  margin-top: 0.25rem;
-}
-
-.bs-tooltip-top .tooltip-inner {
-  margin-bottom: 0.25rem;
 }
