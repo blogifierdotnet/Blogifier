@@ -5,10 +5,10 @@
   "author": "Farzin",
   "private": true,
   "scripts": {
-    "start": "node-sass --watch scss -o css --source-map true --output-style compressed"
+    "start": "sass --watch scss:css --style=compressed"
   },
   "devDependencies": {
-    "bootstrap": "^5.0.0-beta2",
-    "node-sass": "^5.0.0"
+    "bootstrap": "^5.0.0",
+    "sass": "^1.32.12"
   }
 }
