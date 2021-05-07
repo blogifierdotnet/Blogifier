@@ -33,7 +33,6 @@
             <button type="button" class="nav-link active" id="customize-settings-tab" data-bs-toggle="tab" data-bs-target="#customize-settings" role="tab" aria-controls="customize-settings" aria-selected="true">@_localizer["settings"]</button>
             <button type="button" class="nav-link" id="customize-widgets-tab" data-bs-toggle="tab" data-bs-target="#customize-widgets" role="tab" aria-controls="customize-widgets" aria-selected="false">@_localizer["widgets"]</button>
             <button type="button" class="nav-link" id="customize-menu-tab" data-bs-toggle="tab" data-bs-target="#customize-menu" role="tab" aria-controls="customize-menu" aria-selected="false">@_localizer["menus"]</button>
-            <button type="button" class="nav-link ms-auto" id="customize-about-tab" data-bs-toggle="tab" data-bs-target="#customize-about" role="tab" aria-controls="customize-about" aria-selected="false">@_localizer["about"]</button>
         </div>
         <div class="customize-tab-content tab-content" id="customize-tabContent">
             <div class="tab-pane fade show active" id="customize-settings" role="tabpanel" aria-labelledby="customize-settings-tab">
@@ -47,9 +46,6 @@
             <div class="tab-pane fade" id="customize-menu" role="tabpanel" aria-labelledby="customize-menu-tab">
                <MenusComponent />
                <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
-            </div>
-            <div class="tab-pane fade" id="customize-about" role="tabpanel" aria-labelledby="customize-about-tab">
-                <AboutThemeComponent />
             </div>
         </div>
     </div>
