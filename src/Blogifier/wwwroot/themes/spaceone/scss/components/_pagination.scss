@@ -1,0 +1,39 @@
+.pagination {
+  margin: 4rem auto 4rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+
+  &-item {
+    margin: 0 0.5rem;
+    z-index: 5;
+  }
+  &-link {
+    display: block;
+    color: #888;
+    font-weight: 500;
+    font-size: 0.875rem;
+    height: 3rem;
+    line-height: 3rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity ease 0.2s;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+      color: $color;
+      .bi {
+        width: 1.375rem;
+        height: 1.375rem;
+      }
+    }
+    .bi {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: all ease 0.2s;
+      margin: 0 0.25rem;
+      transform: translateY(-0.0625rem);
+    }
+  }
+}

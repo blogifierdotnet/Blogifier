@@ -1,0 +1,141 @@
+.post-list {
+  align-items: center;
+  height: 100%;
+  padding-left: 20rem;
+  margin-bottom: 2rem;
+  position: relative;
+
+  // cover
+  &-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    display: block;
+    width: 20rem;
+    height: 100%;
+    border-radius: $radius-var;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      box-shadow: inset 0 0 0 1px rgba(#000, 0.1);
+      border-radius: $radius-var;
+    }
+  }
+  &-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  // details
+  &-details {
+    padding: 1.5rem 0 1.5rem 2rem;
+    flex-grow: 1;
+  }
+
+  // meta
+  &-meta {
+    font-size: 0.75rem;
+    color: #555;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    a {
+      color: #555;
+      text-decoration: none;
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-right: 0.875rem;
+    }
+  }
+  &-author {
+    &-img {
+      border-radius: 5rem;
+      margin-right: 0.25rem;
+      filter: grayscale(100%);
+    }
+    &-name {
+      text-transform: capitalize;
+    }
+  }
+  &-date {
+    &-icon {
+      margin-right: 0.375rem;
+    }
+  }
+  &-cat {
+    &-icon {
+      margin-right: 0rem;
+    }
+  }
+
+  // title
+  &-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  &-link {
+    color: #000;
+    transition: color ease-in-out 0.2s;
+    text-decoration: none;
+    &:hover {
+      color: $color;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      width: 20rem;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
+  }
+
+  // desc
+  &-desc {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+    line-height: 1.75;
+    transition: color ease-in-out 0.2s;
+    // keep in two line
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  // more link
+  &-more {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #555;
+    text-decoration: none;
+    &:hover {
+      color: $color;
+    }
+  }
+
+  // hover item
+  &:hover {
+    .post-list-desc {
+      color: #000;
+    }
+  }
+}

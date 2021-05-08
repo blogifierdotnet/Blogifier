@@ -1,0 +1,14 @@
+{
+  "name": "theme",
+  "version": "1.0.0",
+  "description": "only for compiling sass files",
+  "author": "Farzin",
+  "private": true,
+  "scripts": {
+    "start": "sass --watch scss:css --style=compressed"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.0.0",
+    "sass": "^1.32.12"
+  }
+}

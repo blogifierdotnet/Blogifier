@@ -1,0 +1,29 @@
+.post-nav {
+  margin-bottom: 4rem;
+
+  // item
+  &-item {
+    position: relative;
+    color: #000;
+    text-decoration: none;
+    display: block;
+    &:hover {
+      color: $color;
+    }
+  }
+
+  // title
+  &-title {
+    z-index: 2;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  // text
+  &-text {
+    opacity: 0.5;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+}

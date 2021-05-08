@@ -1,0 +1,26 @@
+.related {
+  margin-top: -1px;
+  margin-bottom: 4rem;
+
+  &-header {
+    border-top: 1px solid var(--bs-light);
+    padding-top: 3rem;
+    margin-bottom: 3rem;
+    align-items: center;
+    display: flex;
+    &-title {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+    &-link {
+      margin-bottom: 0;
+      color: rgba(#000, 0.5);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      &:hover {
+        color: $color;
+      }
+    }
+  }
+}

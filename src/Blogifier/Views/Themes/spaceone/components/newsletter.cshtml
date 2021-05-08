@@ -1,0 +1,23 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@{
+    var request = Url.ActionContext.HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var newsletterAction = @absoluteUrl + "/api/newsletter/subscribe";
+}
+
+<div class="newsletter">
+    <div class="newsletter-body row g-0 align-items-center">
+        <div class="newsletter-header mb-5 mb-lg-0 col-lg-7">
+            <h5 class="newsletter-title">Newsletter</h5>
+            <p class="newsletter-desc">We'll email you when new posts published.</p>
+        </div>
+        <form id="newsletter" action="@newsletterAction" class="newsletter-form ms-lg-auto col-lg-5">
+            <div class="d-flex">
+                <input id="newsletter_email" class="newsletter-input" name="email" placeholder="youremail@example.com" type="email" autocomplete="off" required>
+                <button class="newsletter-btn" type="submit">Subscribe</button>
+            </div>
+        </form>
+    </div>
+    <div id="newsletter_status" onclick="resetNewsletter()" role="status" data-success="Thank you, You are subscribed!" data-error="Oops, Something went wrong!"></div>
+</div>

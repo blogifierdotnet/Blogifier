@@ -1,0 +1,10 @@
+.container {
+  width: 61.5rem; // 2rem container gutters
+  max-width: 100%;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --bs-gutter-x: 1.5rem;
+  }
+}

@@ -1,0 +1,36 @@
+/*!
+    Author: https://farzin.dev
+*/
+
+@charset "utf-8";
+
+// helpers
+@import "helpers/variables";
+@import "helpers/mixins";
+@import "helpers/reset";
+@import "helpers/base";
+
+// layouts
+@import "layout/header";
+@import "layout/nav";
+@import "layout/widgets";
+@import "layout/footer";
+
+// components - global
+@import "components/search";
+@import "components/pagination";
+@import "components/newsletter";
+@import "components/dropdowns";
+@import "components/highlight";
+
+// post
+@import "post/featured";
+@import "post/view-grid";
+@import "post/view-list";
+@import "post/post";
+@import "post/nav";
+@import "post/share";
+@import "post/related";
+
+// pages
+@import "page/home";

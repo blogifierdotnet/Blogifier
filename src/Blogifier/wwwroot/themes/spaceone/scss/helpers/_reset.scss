@@ -1,0 +1,58 @@
+img {
+  max-width: 100%;
+}
+
+iframe {
+  width: 100% !important;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+figure,
+p,
+ul,
+ol {
+  margin-bottom: 1.5rem;
+}
+
+table {
+  width: 100%;
+}
+
+blockquote {
+  font-weight: 300;
+  position: relative;
+  padding: 1rem 3rem;
+  margin-bottom: 1.5rem;
+  &::before,
+  &::after {
+    position: absolute;
+
+    content: "";
+    font-size: 5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDM0aDZsNC04di0xMmgtMTJ2MTJoNnptMTYgMGg2bDQtOHYtMTJoLTEydjEyaDZ6Ii8+PHBhdGggZD0iTTAgMGg0OHY0OGgtNDh6IiBmaWxsPSJub25lIi8+PC9zdmc+");
+    display: block;
+    background-size: 2.5rem;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+  }
+
+  &::before {
+    top: 0.75rem;
+    left: 0;
+    transform: rotate(180deg);
+  }
+
+  &::after {
+    bottom: 0.75rem;
+    right: 0;
+  }
+
+  p {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

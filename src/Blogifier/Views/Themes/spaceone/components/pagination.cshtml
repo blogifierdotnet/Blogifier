@@ -1,0 +1,35 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+@{
+   ListModel _model = (ListModel)Model;
+}
+
+@if(_model.Pager.ShowNewer || _model.Pager.ShowOlder)
+{
+<ul class="pagination">
+    @if (_model.Pager.ShowOlder)
+    {
+    <li class="pagination-item">
+        <a class="pagination-link -prev" href="@_model.Pager.LinkToOlder" title="@_localizer["next-page"]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>
+            @_localizer["previous"]
+        </a>
+    </li>
+    }
+    @if (_model.Pager.ShowNewer)
+    {
+    <li class="pagination-item">
+        <a class="pagination-link -next" href="@_model.Pager.LinkToNewer" title="@_localizer["previous-page"]">
+            @_localizer["next"]
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+            </svg>
+        </a>
+    </li>
+    }
+</ul>
+}

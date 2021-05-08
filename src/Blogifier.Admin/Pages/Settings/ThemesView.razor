@@ -10,50 +10,41 @@
 {
     <h1 class="section-title">@_localizer["themes"]</h1>
     <div class="section-content">
-        <div class="row themes">
-            <div class="col-md-6 col-lg-4">
-                <div class="themes-item">
-                    <div class="themes-cover">
-                        <img src="@CurrentTheme.Cover" class="themes-img" alt="@CurrentTheme.Title">
-                    </div>
-                    <div class="themes-details">
-                        <div class="themes-title">@CurrentTheme.Title (@_localizer["current"])</div>
-                        <ul class="themes-info">
-                            <li class="themes-info-item">@_localizer["developer"] <a href="#">John Doe</a></li>
-                            <li class="themes-info-item">@_localizer["version"] 2.1</li>
-                        </ul>
-                        <a href="/admin/settings/customize/" class="btn btn-blogifier btn-block">@_localizer["customize"]</a>
-                    </div>
+        <div class="themes">
+            <div class="themes-item d-flex">
+                <img src="@CurrentTheme.Cover" class="themes-thumbnail" alt="@CurrentTheme.Title">
+                <!-- 4:5 -->
+                <!-- 1024:1280 -->
+                <!-- 1600:2000 -->
+                <div class="themes-info">
+                    <h3 class="themes-title">@CurrentTheme.Title (@_localizer["current"])</h3>
+                    <ul class="themes-meta d-flex">
+                        <li class="themes-meta-item">@_localizer["version"] 2.1</li>
+                        <li class="themes-meta-item">@_localizer["by"] <a href="#">John Doe</a></li>
+                    </ul>
+                    <p class="themes-desc">This is the default theme that comes with the Blogifier 3.0 There are some customization you might enjoy.</p>
+                    <a class="btn btn-blogifier px-4" href="/admin/settings/customize/">@_localizer["customize"]</a>
                 </div>
             </div>
             @foreach (var item in Themes)
             {
-                <div class="col-md-6 col-lg-4">
-                    <div class="themes-item">
-                        <div class="themes-cover">
-                            <img src="@item.Cover" class="themes-img" alt="@item.Title">
-                        </div>
-                        <div class="themes-details">
-                            <div class="themes-title">@item.Title</div>
-                            <ul class="themes-info">
-                                <li class="themes-info-item">@_localizer["developer"] <a href="#">John Doe</a></li>
-                                <li class="themes-info-item">@_localizer["version"] 2.1</li>
-                            </ul>
-                            <div class="d-flex">
-                                <button type="button" class="btn btn-outline-default flex-grow-1 me-2" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@_localizer["select"]</button>
-                                <button type="button" class="btn btn-outline-default me-2" title="@_localizer["delete"]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn btn-outline-default" data-bs-toggle="modal" data-bs-target="#themeInfo" title="@_localizer["info"]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                    </svg>
-                                </button>
-                            </div>
+                <div class="themes-item d-flex">
+                    <img src="@item.Cover" class="themes-thumbnail" alt="@item.Title">
+                    <div class="themes-info">
+                        <div class="themes-title">@item.Title</div>
+                        <ul class="themes-meta d-flex">
+                            <li class="themes-meta-item">@_localizer["version"] 2.1</li>
+                            <li class="themes-meta-item">@_localizer["by"] <a href="#">John Doe</a></li>
+                        </ul>
+                        <p class="themes-desc">This is the default theme that comes with the Blogifier 3.0 There are some customization you might enjoy.</p>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-default me-2" @onclick="()=> SelectTheme(item.Title)" @onclick:preventDefault>@_localizer["set-current-theme"]</button>
+                            <button type="button" class="btn btn-default me-2" title="@_localizer["delete"]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>

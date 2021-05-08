@@ -1,0 +1,74 @@
+.header-nav {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-link,
+  &-button {
+    color: #444;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border: 0;
+    background: none;
+    display: inline-block;
+    border-radius: $radius;
+    transition: all ease-in-out 0.15s;
+    text-align: center;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+
+    &:hover,
+    &:focus {
+      color: #000;
+      background-color: var(--bs-light);
+    }
+    > .bi,
+    > img {
+      transform: translateY(-0.1rem);
+    }
+  }
+
+  &-link {
+    padding: 0 1rem;
+    font-weight: 500;
+    .bi-chevron-down {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+  &-button {
+    padding: 0;
+    width: 2.5rem;
+  }
+
+  .-login {
+    position: relative;
+    &::after {
+      content: "";
+      width: 1px;
+      height: 1rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -0.75rem;
+      background-color: rgba(#000, 0.1);
+      display: block;
+    }
+    .bi-box-arrow-in-right {
+      transform: translateX(-0.125rem);
+    }
+  }
+  @media (max-width: 767px) {
+    border-bottom: 1px solid rgba(#000, 0.03);
+    border-top: 1px solid rgba(#000, 0.03);
+    padding: 0.25rem 0.75rem;
+    margin: 0 -1.5rem 1rem;
+  }
+}
+
+// social links
+@each $name, $item in $brands {
+  @include text-hover(".social-link-#{$name}", null, $item);
+}

@@ -1,0 +1,30 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
+
+@{
+    PostModel _model = (PostModel)Model;
+}
+<nav class="post-nav">
+    <div class="d-none d-md-flex align-items-md-center">
+        @if (Model.Older != null)
+        {
+            <div class="col">
+                <a class="post-nav-item text-start" href="~/posts/@_model.Older.Slug" aria-label="@_localizer["Previous post"]">
+                    <span class="post-nav-text">@_localizer["Previous post"]</span>
+                    <h4 class="post-nav-title">@_model.Older.Title</h4>
+                </a>
+            </div>
+        }
+        @if (Model.Newer != null)
+        {
+            <div class="col">
+                <a class="post-nav-item text-end" href="~/posts/@_model.Newer.Slug" aria-label="@_localizer["Next post"]">
+                    <span class="post-nav-text">@_localizer["Next post"]</span>
+                    <h4 class="post-nav-title">@_model.Newer.Title</h4>
+                </a>
+            </div>
+        }
+    </div>
+</nav>

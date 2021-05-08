@@ -1,0 +1,18 @@
+.bft-widget {
+  &-title {
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #aaa;
+    font-size: 1rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  &-content {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

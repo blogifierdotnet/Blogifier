@@ -1,0 +1,76 @@
+.newsletter {
+  background-color: #000;
+  color: #aaa;
+  border-radius: $radius-var;
+  margin-top: 4rem;
+  position: relative;
+
+  &-body {
+    padding: 3rem;
+
+    @media screen and (min-width: 991px) {
+      padding: 4rem;
+    }
+  }
+
+  &-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  &-desc {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 300;
+  }
+
+  &-form {
+    border: 2px solid #222;
+    border-radius: $radius-var;
+  }
+
+  &-input {
+    background: none;
+    border: 0;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    outline: none !important;
+  }
+  &-btn {
+    background: none;
+    border: 0;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    display: block;
+    border-left: 1px solid #222;
+    &:focus,
+    &:hover {
+      outline: none;
+      background: #222;
+    }
+  }
+
+  &-msg {
+    padding: 2rem;
+    text-align: center;
+    background-color: #000;
+    border-radius: $radius-var;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: #fff;
+    cursor: pointer;
+
+    .spinner-border {
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+.share {
+  &-modal {
+    .modal-dialog {
+      max-width: 25rem;
+    }
+    .modal-title {
+      font-size: 0.875rem;
+    }
+    .btn-close {
+      background-size: 0.75rem;
+    }
+    &-body {
+    }
+
+    &-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+
+    &-link {
+      padding: 1.25rem 0 1.25rem;
+      display: block;
+      text-align: center;
+      color: #666;
+      background-color: rgba(#444, 0.03);
+      border-radius: 0.25rem;
+      transition: all ease-in-out 0.2s;
+      text-decoration: none;
+      &-label {
+        display: block;
+        font-size: 0.75rem;
+      }
+      &-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-bottom: 0.5rem;
+        transition: fill ease 0.1s;
+      }
+
+      &:hover {
+        color: #fff;
+        background-color: #444;
+      }
+
+      @each $name, $item in $brands {
+        @include background-hover(
+          "&.-#{$name}",
+          rgba($item, 0.07),
+          $item,
+          $item,
+          #fff
+        );
+      }
+    }
+
+    &-input {
+      border: 0;
+      background-color: rgba(#444, 0.04);
+      width: 100%;
+      padding: 0.75rem 1rem;
+      outline: none !important;
+      font-size: 0.875rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      color: #666;
+      transition: all ease-in-out 0.3s;
+      &:hover {
+        color: #111;
+        background-color: rgba(#444, 0.07);
+      }
+      &.copied {
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+      }
+    }
+  }
+}

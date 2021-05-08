@@ -1,73 +1,40 @@
 .themes {
-  margin-top: 1.5rem;
-
   &-item {
-    @include bf-shadow();
-    overflow: hidden;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
-
-  &-cover {
-    max-height: 15rem;
-    overflow: hidden;
-    border-bottom: 1px solid $gray-200;
-  }
-
-  &-img {
-    min-width: 100%;
-    max-width: 100%;
-  }
-
-  &-details {
-    padding: 1.5rem;
-  }
-
-  &-title {
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 0.875rem;
+  &-thumbnail {
+    border-radius: 0.325rem;
+    display: block;
+    // 4:5
+    width: 12.5rem;
+    height: 15.625rem;
+    object-fit: cover;
+    object-position: center;
   }
 
   &-info {
-    font-size: 0.75rem;
+    margin-left: 2rem;
+    padding-top: 1rem;
+  }
+
+  &-title {
+    margin-bottom: 1.5rem;
+  }
+
+  &-meta {
     list-style: none;
     padding: 0;
+    margin: 0 0 1.5rem;
     color: $gray-600;
-    margin-bottom: 1rem;
 
-    a {
-      color: $gray-600;
-      &:hover {
-        color: $gray-900;
-      }
+    &-item {
+      margin-right: 1.5rem;
     }
   }
 
-  &-modal {
-    padding: 1rem;
-
-    &-title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-    &-desc {
-      margin-bottom: 1rem;
-    }
-
-    &-info {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 2rem;
-      > li {
-        margin-bottom: .5rem;
-      }
-    }
-
-    &-img {
-      border-radius: 0.25rem;
-      border: 1px solid $gray-200;
-      width: 100%;
-    }
+  &-desc {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 75%;
   }
 }

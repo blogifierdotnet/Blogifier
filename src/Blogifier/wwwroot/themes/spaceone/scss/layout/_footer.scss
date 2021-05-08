@@ -1,0 +1,16 @@
+.footer {
+  border-top: 1px solid rgba(#000, 0.05);
+  margin-top: 4rem;
+  color: #444;
+  font-size: 0.75rem;
+  a {
+    color: #444;
+    text-decoration: none;
+    &:hover {
+      color: $color;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}

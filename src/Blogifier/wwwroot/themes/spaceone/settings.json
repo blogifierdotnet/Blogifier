@@ -1,0 +1,58 @@
+{
+  "Sections": [
+    {
+      "Label": "Social Buttons",
+      "Fields": [
+        {
+          "Id": "enabled",
+          "Label": "Enabled",
+          "Type": "checkbox",
+          "Value": "False",
+          "Options": null
+        },
+        {
+          "Id": "facebook",
+          "Label": "Facebook",
+          "Type": "text",
+          "Value": "blogifierdotnet",
+          "Options": null
+        },
+        {
+          "Id": "twitter",
+          "Label": "Twitter",
+          "Type": "text",
+          "Value": "blogifierdotnet",
+          "Options": null
+        }
+      ]
+    },
+    {
+      "Label": "Select Dropdown Sample",
+      "Fields": [
+        {
+          "Id": "dd-sample",
+          "Label": "Select Sample",
+          "Type": "select",
+          "Value": "two",
+          "Options": [
+            "one",
+            "two",
+            "three"
+          ]
+        }
+      ]
+    },
+    {
+      "Label": "Section Three",
+      "Fields": [
+        {
+          "Id": "txt-area",
+          "Label": "Text Area Sample",
+          "Type": "textarea",
+          "Value": "Some test text here",
+          "Options": null
+        }
+      ]
+    }
+  ]
+}
