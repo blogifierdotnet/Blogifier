@@ -756,4 +756,7 @@
     <data name="blog-settings" xml:space="preserve">
         <value>Blog settings</value>
     </data>
+    <data name="set-current-theme" xml:space="preserve">
+        <value>Set as current theme</value>
+    </data>
 </root>

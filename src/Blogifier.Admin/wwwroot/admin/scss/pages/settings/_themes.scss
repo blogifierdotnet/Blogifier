@@ -3,29 +3,40 @@
     margin-bottom: 3rem;
   }
   &-thumbnail {
-    border-radius: 0.325rem;
+    border-radius: 0.5rem;
     display: block;
     // 4:5
     width: 12.5rem;
     height: 15.625rem;
     object-fit: cover;
     object-position: center;
+    border: 1px solid $gray-200;
   }
 
   &-info {
     margin-left: 2rem;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
   }
 
   &-title {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   &-meta {
     list-style: none;
     padding: 0;
-    margin: 0 0 1.5rem;
+    margin: 0 0 1.25rem;
     color: $gray-600;
+
+    a[href] {
+      color: $gray-600;
+      border-bottom: 1px solid $gray-500;
+
+      &:hover {
+        color: $blogifier;
+        border-color: $blogifier;
+      }
+    }
 
     &-item {
       margin-right: 1.5rem;
