@@ -6,14 +6,17 @@
     border-radius: 0.5rem;
     display: block;
     // 4:5
-    width: 12.5rem;
     height: 15.625rem;
+    width: 12.5rem;
+    max-width: 12.5rem;
+    min-width: 12.5rem;
     object-fit: cover;
     object-position: center;
     border: 1px solid $gray-200;
   }
 
   &-info {
+    flex-grow: 1;
     margin-left: 2rem;
     padding-top: 1.5rem;
   }
