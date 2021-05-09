@@ -97,7 +97,7 @@ $tooltip-opacity: 1;
 // dropdown
 $dropdown-link-hover-bg: #f8f9fa;
 
-//
+// syntax highlighter
 $hljs-foreground: #212529;
 $hljs-background: #f8f9fa;
 $hljs-comments: #90a4ae;
@@ -106,6 +106,15 @@ $hljs-red: #c30;
 $hljs-green: #168174;
 $hljs-sky: #2f6f9f;
 
+
+// container
 $container-max-widths: (
   xl: 1024px,
 );
+
+// floating input
+$form-floating-height:            3.25rem;
+$form-floating-padding-x:         .875rem;
+$form-floating-padding-y:         .875rem;
+$form-floating-label-opacity:     .65;
+$form-floating-label-transform:   scale(.8) translateY(-.325rem) translateX(.15rem);

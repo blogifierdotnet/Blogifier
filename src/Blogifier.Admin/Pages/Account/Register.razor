@@ -15,49 +15,26 @@
 {
     <EditForm Model="@model" OnValidSubmit="RegisterUser">
         <DataAnnotationsValidator />
-        <div class="form-item">
-            <label class="form-label">@_localizer["email"]</label>
-            <input class="form-control" type="email" @bind="model.Email" autofocus>
+        <div class="form-floating form-item">
+            <input @bind="model.Email" id="registerEmail" class="form-control" type="email" placeholder="@_localizer["email"]" autofocus>
+            <label for="registerEmail">@_localizer["email"]</label>
             <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
         </div>
-        <div class="form-item">
-            <label class="form-label">@_localizer["name"]</label>
-            <input class="form-control" type="text" @bind="model.Name">
+        <div class="form-floating form-item">
+            <input @bind="model.Name" id="registerName" class="form-control" type="text" placeholder="@_localizer["name"]">
+            <label for="registerName">@_localizer["name"]</label>
             <ValidationMessage For="@(() => model.Name)"></ValidationMessage>
         </div>
-        <div class="form-item">
-            <label class="form-label">@_localizer["password"]</label>
-            <input class="form-control" type="password" @bind="model.Password">
+        <div class="form-floating form-item">
+            <input @bind="model.Password" id="registerPassword" class="form-control" type="password" placeholder="@_localizer["password"]">
+            <label for="registerPassword">@_localizer["password"]</label>
             <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
         </div>
-        <div class="form-item">
-            <label class="form-label">@_localizer["confirm-password"]</label>
-            <input class="form-control" type="password" @bind="model.PasswordConfirm">
+        <div class="form-floating form-item">
+            <input @bind="model.PasswordConfirm" id="registerConfirmPassword" class="form-control" type="password" placeholder="@_localizer["confirm-password"]">
+            <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
             <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
         </div>
-        <div class="form-item">
-            <button type="submit" class="btn btn-blogifier btn-block">@_localizer["register"]</button>
-        </div>
+        <button type="submit" class="btn btn-blogifier btn-block btn-floating">Create admin account</button>
     </EditForm>
 }
-
-<div class="account-footer">
-    <ul class="account-footer-list">
-        <li class="item">
-            <a class="item-link" href="/admin/login/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                </svg>
-                <span>@_localizer["login"]</span>
-            </a>
-        </li>
-        <li class="item">
-            <a class="item-link" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                </svg>
-                <span>@_localizer["back-to-website"]</span>
-            </a>
-        </li>
-    </ul>
-</div>
