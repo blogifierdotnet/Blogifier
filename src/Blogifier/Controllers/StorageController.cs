@@ -61,7 +61,11 @@ namespace Blogifier.Controllers
 				{
 					case UploadType.Avatar:
 						author.Avatar = fileName;
-						return (await _authorProvider.Update(author)) ? new JsonResult(fileName) : BadRequest();
+
+                        // Here error but when everything follows by my suggestion - should refactor codes and make it clean and readable. 
+                        // After i guess its method will be pure because now looks like a bit chunky
+
+                        return (await _authorProvider.UpdateAsync(author)) ? new JsonResult(fileName) : BadRequest();
 					case UploadType.AppLogo:
 						blog.Logo = fileName;
 						return (await _blogProvider.Update(blog)) ? new JsonResult(fileName) : BadRequest();

@@ -1,4 +1,5 @@
 using Blogifier.Core.Extensions;
+using Blogifier.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,8 @@ namespace Blogifier
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseConfiguredExceptionHandler();
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

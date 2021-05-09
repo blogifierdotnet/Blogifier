@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -45,25 +45,29 @@ namespace Blogifier.Controllers
 
 		[Authorize]
 		[HttpDelete("{id:int}")]
-		public async Task<ActionResult<bool>> RemoveAuthor(int id)
+		public async Task<ActionResult> RemoveAuthor(int id)
 		{
-			return await _authorProvider.Remove(id);
+			await _authorProvider.RemoveAsync(id);
+
+            return Ok();
 		}
 
 		[Authorize]
 		[HttpPost("add")]
-		public async Task<ActionResult<bool>> Add(Author author)
+		public async Task<ActionResult> Add(Author author)
 		{
-			var success = await _authorProvider.Add(author);
-			return success ? Ok() : BadRequest();
+			await _authorProvider.AddAsync(author);
+
+            return Ok();
 		}
 
 		[Authorize]
 		[HttpPut("update")]
-		public async Task<ActionResult<bool>> Update(Author author)
+		public async Task<ActionResult> Update(Author author)
 		{
-			var success = await _authorProvider.Update(author);
-			return success ? Ok() : BadRequest();
+            await _authorProvider.UpdateAsync(author);
+
+            return Ok();
 		}
 
 		[HttpPost("register")]

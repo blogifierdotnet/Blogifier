@@ -1,6 +1,7 @@
 using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
+using Blogifier.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,10 +17,10 @@ namespace Blogifier.Core.Providers
 		Task<Author> FindByEmail(string email);
 		Task<bool> Verify(LoginModel model);
 		Task<bool> Register(RegisterModel model);
-		Task<bool> Add(Author author);
-		Task<bool> Update(Author author);
+		Task AddAsync(Author author);
+		Task UpdateAsync(Author author);
 		Task<bool> ChangePassword(RegisterModel model);
-		Task<bool> Remove(int id);
+		Task RemoveAsync(int id);
 	}
 
 	public class AuthorProvider : IAuthorProvider
@@ -120,15 +121,21 @@ namespace Blogifier.Core.Providers
 			return await _db.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> Add(Author author)
+		public async Task AddAsync(Author author)
 		{
-			var existing = await _db.Authors.Where(a => a.Email == author.Email).OrderBy(a => a.Id).FirstOrDefaultAsync();
-			if (existing != null)
-				return false;
+			var existing = await _db.Authors.Where(a => a.Email == author.Email).SingleOrDefaultAsync();
 
-			var blog = await _db.Blogs.Include(b => b.Authors).OrderBy(b => b.Id).FirstOrDefaultAsync();
+            if (existing != null)
+            {
+                throw new BusinessLogicException("Author with this email already exists");
+            }
+
+			var blog = await _db.Blogs.Include(b => b.Authors).SingleOrDefaultAsync();
+
 			if (blog == null)
-				return false;
+            {
+                throw new NotFoundExсeption();
+            }
 
             author.IsAdmin = false;
             author.Password = author.Password.Hash(_salt);
@@ -137,23 +144,27 @@ namespace Blogifier.Core.Providers
 
 			blog.Authors.Add(author);
 
-			return await _db.SaveChangesAsync() > 0;
+			await _db.SaveChangesAsync();
 		}
 
-		public async Task<bool> Update(Author author)
+		public async Task UpdateAsync(Author author)
 		{
 			var existing = await _db.Authors
 				.Where(a => a.Email == author.Email)
-				.FirstOrDefaultAsync();
+				.SingleOrDefaultAsync();
 
-			if (existing == null)
-				return false;
+            if (existing == null)
+            {
+                throw new NotFoundExсeption();
+            }
 
             if(existing.IsAdmin && !author.IsAdmin)
             {
                 // do not remove last admin account
                 if (_db.Authors.Where(a => a.IsAdmin).Count() == 1)
-                    return false;
+                {
+                    throw new BusinessLogicException("Do not remove last admin account");
+                }
             }
 
 			existing.Email = author.Email;
@@ -162,7 +173,7 @@ namespace Blogifier.Core.Providers
 			existing.Avatar = author.Avatar;
             existing.IsAdmin = author.IsAdmin;
 
-			return await _db.SaveChangesAsync() > 0;
+			await _db.SaveChangesAsync();
 		}
 
 		public async Task<bool> ChangePassword(RegisterModel model)
@@ -179,15 +190,18 @@ namespace Blogifier.Core.Providers
 			return await _db.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> Remove(int id)
+		public async Task RemoveAsync(int id)
 		{
-			var existingAuthor = await _db.Authors.Where(a => a.Id == id).FirstOrDefaultAsync();
-			if (existingAuthor == null)
-				return false;
+			var existingAuthor = await _db.Authors.Where(a => a.Id == id).SingleOrDefaultAsync();
 
-			_db.Authors.Remove(existingAuthor);
+            if (existingAuthor == null)
+            {
+                throw new NotFoundExсeption();
+            }
+
+            _db.Authors.Remove(existingAuthor);
+
 			await _db.SaveChangesAsync();
-			return true;
 		}
 	}
 }
