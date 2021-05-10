@@ -726,8 +726,8 @@
     <data name="telegram" xml:space="preserve">
         <value>Telegram</value>
     </data>
-    <data name="powered-by" xml:space="preserve">
-        <value>Powered by</value>
+    <data name="powered-by-blogifier" xml:space="preserve">
+        <value>Powered by Blogifier</value>
     </data>
     <data name="copyright" xml:space="preserve">
         <value>Copyright</value>
@@ -758,5 +758,11 @@
     </data>
     <data name="set-current-theme" xml:space="preserve">
         <value>Set as current theme</value>
+    </data>
+    <data name="create-admin-account" xml:space="preserve">
+        <value>Create admin account</value>
+    </data>
+    <data name="welcome-blogifier" xml:space="preserve">
+        <value>Welcome to the Blogifier</value>
     </data>
 </root>
