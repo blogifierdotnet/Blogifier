@@ -23,6 +23,48 @@ let fileManager = function (dataService) {
     dataService.upload(url, data, callBack, fail);
   }
 
+  function clipBoardUpload(ClipboardEvent)
+  {
+    let file = getPasteFile(ClipboardEvent);
+
+    if (file === null)
+      return
+
+    uplType = "PostImage";
+    let url = `api/storage/upload/${uplType}`;
+    let data = new FormData();
+    data.append('file', file, `${Date.now()}.png`);
+    dataService.upload(url, data, (arg)=>{insertImgCallback(arg)}, fail);
+  }
+
+  function getPasteFile(ClipboardEvent)
+  {
+    const data = ClipboardEvent.clipboardData;
+    if(data == null)
+    {
+      return null;
+    }
+
+    if(data.items.length === 0)
+    {
+      return null;
+    }
+
+    const item = data.items[0];
+
+    if(item.kind === 'string')
+    {
+      return null;
+    }
+
+    const file = item.getAsFile();
+
+    if (file.type.indexOf("image") === -1)
+      return null
+
+    return file;
+  }
+
   function appCoverCallback(data) {
     let defaultCover = document.getElementById('defaultCover');
     defaultCover.value = data;
@@ -73,6 +115,7 @@ let fileManager = function (dataService) {
 
   return {
     uploadClick: uploadClick,
-    uploadSubmit: uploadSubmit
+    uploadSubmit: uploadSubmit,
+    clipBoardUpload:clipBoardUpload,
   };
 }(DataService);
