@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>Γενικά</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>Προφίλ</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Κωδικός πρόσβασης</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>Θέματα</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Χρήστες</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>Νέος χρήστης</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Εισαγωγή</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>Νέα Ανάρτηση</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>Θύτες</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Ρυθμίσεις</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>Ειδοποιήσεις</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>Επίσκεψη ιστολογίου</value>
+  </data>
+  <data name="sign-out" xml:space="preserve">
+    <value>Αποσύνδεση</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Τίτλος</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Περιγραφή</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>Στοιχεία ανά σελίδα</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>Λογότυπο</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>Εικόνα εξωφύλλου</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Γλώσσα</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Αποθήκευση</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Επιλογή</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>Επιλεγμένα</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Αναζήτηση</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>Όλα</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>Δημοσιευμένο</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Προσχέδιο</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Κατάσταση</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>Δεν βρέθηκε</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>Δημοσίευση</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>Αποδημοσίευση</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>Προτεινόμενο</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>Προσθήκη στα επιλεγμένα</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Ακύρωση</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Διαγραφή</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>Κατηγορίες</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>Προβολή</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>Όνομα χρήστη</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Διεύθυνση ηλεκτρονικού ταχυδρομείου</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>Βιογραφία χρήστη</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>Άβαταρ</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>Αφαίρεση</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>Αφαιρεμένο</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>Νέος κωδικός πρόσβασης</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>Επιβεβαίωση κωδικού</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Κλείσιμο</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>Ορισμός ως διαχειριστή</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>Επιλέξτε αρχείο RSS (.xml) για εισαγωγή άρθρων από αυτό</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>Εικόνες</value>
+  </data>
+  <data name="attachements" xml:space="preserve">
+    <value>Συνημμένα</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>Μεταφόρτωση</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>Φίλτρα</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>Αλλαγή κωδικού</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>Θέμα</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>Ανάγνωση</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>Ενημερωμένο</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Δημιουργήθηκε</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>Σχετικά</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>Ενημερωτικό δελτίο</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>Λίστα συνδρομητών με ηλεκτρονικό ταχυδρομείο</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Επικοινωνία</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>Ταμπλό</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>Δημοφιλή</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>Κενό</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Επεξεργασία</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Λεπτομέρειες</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>Προσαρμοσμένο πεδίο</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>Συγνώμη, κάτι πήγε στραβά ή δεν υπάρχει τίποτα σε αυτή τη διεύθυνση.</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Αποστολή</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>Αποστολή σε</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>Θέμα</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Περιεχόμενο</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>Ολοκληρωμένο</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>Εδώ μπορείτε να επιβεβαιώσετε τις ρυθμίσεις του ενημερωτικού δελτίου με την αποστολή δοκιμαστικού μηνύματος ηλεκτρονικού ταχυδρομείου</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>Εδώ μπορείτε να εισάγετε ή να ανανεώσετε την δέσμη ενεργειών για προσθήκη σχολίων από το Disqus</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>Απενεργοποιημένο σε λειτουργία επίδειξης</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>Το μήνυμα ηλεκτρονικού ταχυδρομείου απεστάλει επιτυχώς</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>Σφάλμα κατά την αποστολή μηνύματος ηλεκτρονικού ταχυδρομείου, ελέγξτε τα αρχεία καταγραφής συμβάντων για πληροφορίες</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>Στάλθηκαν {0} ενημερωτικά δελτία</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>Λογαριασμοί κοινωνικής δικτύωσης</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Όνομα</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>Τίτλος ανάρτησης</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>Πληκτρολογήστε εδώ...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>Σε ευχαριστούμε!</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>Εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>Εγγραφή</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>Μπείτε στην λίστα των συνδρομητών μας για να λαμβάνετε τις τελευταίες ειδήσεις και ενημερώσεις κατευθείαν από τον φάκελο εισερχομένων σας.</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Σύνδεση</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>Αρχική</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>Ιστολόγιο</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Διαχειριστής</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>Ταμπέλα</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>Γρήγοροι σύνδεσμοι</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>Πλοήγηση</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Προηγούμενο</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>Διαγραφή ανάρτησης;</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>Να περιλαμβάνονται τα Επιλεγμένα στην Λίστα</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>Δέσμες ενεργειών που θα προστίθενται στην κεφαλίδα και στο υποσέλιδο (Disqus, Analytics, κτλ.)</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>Συνδρομητές</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>Περασμένη εβδομάδα</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>Περασμένος μήνας</value>
+  </data>
+  <data name="email-provider" xml:space="preserve">
+    <value>Πάροχος ηλεκτρονικού ταχυδρομείου</value>
+  </data>
+  <data name="sendgrid-key" xml:space="preserve">
+    <value>Κλειδί Sendgrid</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>Διακομιστής</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>Θύρα</value>
+  </data>
+  <data name="smtp-email" xml:space="preserve">
+    <value>Ηλεκτρονικό ταχυδρομείο SMTP</value>
+  </data>
+  <data name="send-test-email" xml:space="preserve">
+    <value>Αποστολή δοκιμαστικού μηνύματος</value>
+  </data>
+  <data name="unsubscribe" xml:space="preserve">
+    <value>Κατάργηση συνδρομής</value>
+  </data>
+  <data name="login-failed" xml:space="preserve">
+    <value>Η είσοδος χρήστη απέτυχε, παρακαλούμε δοκιμάστε ξανα</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>Καλώς ήρθατε</value>
+  </data>
+  <data name="you-can-sign-in" xml:space="preserve">
+    <value>Μπορείτε να συνδεθείτε ή να &lt;a href="/"&gt;πάτε πίσω στο ιστολόγιο&lt;/a&gt;</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Εγγραφή</value>
+  </data>
+  <data name="you-can-register" xml:space="preserve">
+    <value>Μπορείτε να εγγραφείτε ή να &lt;a href="/"&gt;πάτε πίσω στο ιστολόγιο&lt;/a&gt;</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>Εγγραφή</value>
+  </data>
+  <data name="generic-error" xml:space="preserve">
+    <value>Κάτι πήγε στραβά, παρακαλούμε δοκιμάστε ξανά.</value>
+  </data>
+  <data name="title-content-required" xml:space="preserve">
+    <value>Ο τίτλος και το περιεχόμενο είναι απαιτούμενα.</value>
+  </data>
+  <data name="views" xml:space="preserve">
+    <value>Προβολές</value>
+  </data>
+  <data name="pages" xml:space="preserve">
+    <value>Σελίδες</value>
+  </data>
+  <data name="advanced" xml:space="preserve">
+    <value>Προχωρημένα</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Σχόλια</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>Προσαρμογή</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Πληροφορίες</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>Δέσμες ενεργειών</value>
+  </data>
+  <data name="page-title" xml:space="preserve">
+    <value>Τίτλος σελίδας</value>
+  </data>
+  <data name="About Blogifier" xml:space="preserve">
+    <value>Σχετικά με το Blogifier</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Ενέργεια</value>
+  </data>
+  <data name="Advanced settings" xml:space="preserve">
+    <value>Προχωρημένες ρυθμίσεις</value>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Βασικά</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>Βασικές Ρυθμίσεις</value>
+  </data>
+  <data name="blogifier-desc" xml:space="preserve">
+    <value>Το Blogifier είναι μια πλατφόρμα δημοσίευσης ανοιχτού λογισμικού κτισμένη με .NET Core 5.0 και τις τελευταίες τεχνολογίες.</value>
+  </data>
+  <data name="Comments settings" xml:space="preserve">
+    <value>Ρυθμίσεις σχολίων</value>
+  </data>
+  <data name="Edit profile" xml:space="preserve">
+    <value>Επεξεργασία προφίλ</value>
+  </data>
+  <data name="Home page" xml:space="preserve">
+    <value>Αρχική σελίδα</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Φόρτωση</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Αποσύνδεση</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>Μενού</value>
+  </data>
+  <data name="New page" xml:space="preserve">
+    <value>Νέα σελίδα</value>
+  </data>
+  <data name="New post" xml:space="preserve">
+    <value>Νέα ανάρτηση</value>
+  </data>
+  <data name="Operating system" xml:space="preserve">
+    <value>Λειτουργικό σύστημα</value>
+  </data>
+  <data name="Profile picture" xml:space="preserve">
+    <value>Εικόνα προφίλ</value>
+  </data>
+  <data name="RSS feed Url" xml:space="preserve">
+    <value>Διεύθυνση τροφοδοσίας RSS</value>
+  </data>
+  <data name="Script footer" xml:space="preserve">
+    <value>Δέσμη ενεργειών υποσέλιδου</value>
+  </data>
+  <data name="Script header" xml:space="preserve">
+    <value>Δέσμη ενεργειών κεφαλίδας</value>
+  </data>
+  <data name="Script settings" xml:space="preserve">
+    <value>Ρυθμίσεις δεσμών ενεργειών</value>
+  </data>
+  <data name="Specification" xml:space="preserve">
+    <value>Προδιαγραφές</value>
+  </data>
+  <data name="This list is empty" xml:space="preserve">
+    <value>Δεν υπάρχει τίποτα για προβολή- η λίστα είναι άδεια</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Χρήστης</value>
+  </data>
+  <data name="User settings" xml:space="preserve">
+    <value>Ρυθμίσεις χρήστη</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Έκδοση</value>
+  </data>
+  <data name="Website Url" xml:space="preserve">
+    <value>Διεύθυνση ιστοσελίδας</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>Γραφικά στοιχεία</value>
+  </data>
+</root>
