@@ -73,6 +73,11 @@ window.commonJsFunctions = {
   loadEditor: function (toolbar) {
     autosize(document.querySelectorAll('.autosize'));
     easymde = getEditor(toolbar);
+    easymde.codemirror.on("paste", function(self,event)
+    {
+      _editor = easymde;
+      fileManager.clipBoardUpload(event)
+    });
     window.onscroll = function () { stickyToolbar(toolbar) };
     editorToolbarTooltip();
   },
