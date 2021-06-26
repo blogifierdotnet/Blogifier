@@ -1,6 +1,8 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-
+<style>
+    .bf-test { color: red !important }
+</style>
 <div class="d-flex">
     @if (PostCategories != null)
     {
@@ -14,7 +16,7 @@
             </div>
         }
     }
-    <input type="text" id="add_category_control" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
+    <input type="text" id="add_category_control" class="bf-test" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
 </div>
 
 @code {

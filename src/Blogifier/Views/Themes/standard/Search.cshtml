@@ -1,5 +1,10 @@
+@using Blogifier.Shared.Resources
+@using Blogifier.Shared
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> _localizer
 @{
-    Layout = "layouts/_main.cshtml";
+   Layout = "layouts/_main.cshtml";
+   ListModel listModel = (ListModel)Model;
 }
 
 <main class="container search">
@@ -9,14 +14,20 @@
     </form>
     <h1 class="search-title">Search Results</h1>
 
-    <div class="row mb-3">
-        <div class="col-4">
-            <img src="IMAGE" alt="TITLE">
-        </div>
-        <div class="col-8">
-            <a href="URL">TITLE</a>
-            <p>DESCRIPTION</p>
-        </div>
-    </div>
+    @if (listModel.Posts.Count() > 0)
+    {
+        @foreach (var post in listModel.Posts)
+        {
+            <div class="row mb-3">
+                <div class="col-4">
+                    <img src="~/@post.Cover" alt="@post.Title">
+                </div>
+                <div class="col-8">
+                    <a href="~/posts/@post.Slug">@post.Title</a>
+                    <p>@post.Description</p>
+                </div>
+            </div>
+        }
+    }
 
 </main>
