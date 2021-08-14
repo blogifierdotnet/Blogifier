@@ -6,6 +6,10 @@
 
 <PageTitle Title="@_localizer["register"]" />
 
+<div class="account-header">
+    <h2 class="account-title text-lg-center">@_localizer["welcome-blogifier"]</h2>
+</div>
+
 @if (showError)
 {
     <div class="account-message -error">@_localizer["register-failed"].</div>
@@ -35,6 +39,6 @@
             <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
             <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
         </div>
-        <button type="submit" class="btn btn-blogifier btn-block btn-floating">Create admin account</button>
+        <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["create-admin-account"]</button>
     </EditForm>
 }

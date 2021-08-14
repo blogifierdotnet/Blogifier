@@ -157,7 +157,7 @@
         <value>توضیحات</value>
     </data>
     <data name="items-per-page" xml:space="preserve">
-        <value>پست در هر صفحه</value>
+        <value>تعداد پست در هر صفحه</value>
     </data>
     <data name="logo" xml:space="preserve">
         <value>لوگو</value>
@@ -726,8 +726,8 @@
     <data name="telegram" xml:space="preserve">
         <value>تلگرام</value>
     </data>
-    <data name="powered-by" xml:space="preserve">
-        <value>قدرت گرفته از</value>
+    <data name="powered-by-blogifier" xml:space="preserve">
+        <value>قدرت گرفته از Blogifier</value>
     </data>
     <data name="copyright" xml:space="preserve">
         <value>حقّ تکثیر</value>
@@ -746,5 +746,23 @@
     </data>
     <data name="author" xml:space="preserve">
         <value>نویسنده</value>
+    </data>
+    <data name="customization" xml:space="preserve">
+        <value>شخصی سازی</value>
+    </data>
+    <data name="theme-customization-desc" xml:space="preserve">
+        <value>هر پوسته دارای قابلیت‌های مختلف است. شما در حال سفارشی کردن پوسته فعال شده هستید و این تغییرات فقط روی آن اعمال می‌شود.</value>
+    </data>
+    <data name="blog-settings" xml:space="preserve">
+        <value>تنظیمات بلاگ</value>
+    </data>
+    <data name="set-current-theme" xml:space="preserve">
+        <value>انتخاب به عناون پوسته فعلی</value>
+    </data>
+    <data name="create-admin-account" xml:space="preserve">
+        <value>ایجاد حساب مدیر</value>
+    </data>
+    <data name="welcome-blogifier" xml:space="preserve">
+        <value>به blogifier خوش آمدید</value>
     </data>
 </root>

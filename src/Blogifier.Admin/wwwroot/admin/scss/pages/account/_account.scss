@@ -10,6 +10,24 @@
     margin: auto;
   }
 
+  // header
+  &-header {
+    margin-bottom: 2rem;
+  }
+
+  &-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+
+  &-desc {
+    font-size: 0.875rem;
+  }
+
   // message
   &-message {
     margin-bottom: 2rem;

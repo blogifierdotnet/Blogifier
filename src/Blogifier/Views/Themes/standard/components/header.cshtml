@@ -1,4 +1,4 @@
-﻿@using Blogifier.Shared
+@using Blogifier.Shared
 @using Blogifier.Shared.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
@@ -11,7 +11,7 @@
 
     @* TODO: Customfield *@
     var siteMark = "titleDesc";
-    var siteLogo = "/themes/standard/img/logo-black.png";
+    var siteLogo = "themes/standard/img/logo-black.png";
 }
 
 <header class="header">
@@ -20,7 +20,7 @@
             @if (siteMark == "logo")
             {
                 <a class="header-logo" href="@absoluteUrl">
-                    <img class="header-logo-img" src="@siteLogo" alt="@siteTitle @_localizer["logo"]">
+                    <img class="header-logo-img" src="~/@siteLogo" alt="@siteTitle @_localizer["logo"]">
                 </a>
             }
             else if (siteMark == "title")
