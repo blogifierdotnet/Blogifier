@@ -3,10 +3,12 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 @inject ICategoryProvider _categoryProvider
+@inject IAuthorProvider _authorProvider
 
 @{
     var categories = await _categoryProvider.Categories();
     var catUrl = Url.Content("~/categories");
+    var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name);
 }
 
 <nav class="header-nav d-flex">
@@ -84,7 +86,7 @@
     {
         <div class="dropdown">
             <button class="header-nav-link -login ms-4" title="@_localizer["login"]" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Admin Menu - John" >
-                <span class="me-1 d-none d-md-inline">John</span>
+                <span class="me-1 d-none d-md-inline">@currentUserAuthor.DisplayName</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                 </svg>
