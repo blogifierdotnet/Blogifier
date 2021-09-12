@@ -39,71 +39,33 @@ namespace Blogifier.Controllers
 
 		public async Task<IActionResult> Index(string term, int page = 1)
 		{
-			var model = new ListModel { PostListType = PostListType.Blog };
-			try
-			{
-				model.Blog = await _blogProvider.GetBlogItem();
-			}
-			catch
-			{
-				return Redirect("~/admin");
-			}
-
-			model.Pager = new Pager(page, model.Blog.ItemsPerPage);
-
-			if (string.IsNullOrEmpty(term))
-			{
-				if (model.Blog.IncludeFeatured)
-					model.Posts = await _postProvider.GetList(model.Pager, 0, "", "FP");
-				else
-					model.Posts = await _postProvider.GetList(model.Pager, 0, "", "P");
-			}
-			else
-			{
-				model.PostListType = PostListType.Search;
-				model.Blog.Title = term;
-				model.Blog.Description = "";
-				model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
-			}	
-
-			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
-			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
-
-            if (!string.IsNullOrEmpty(term))
-            {
-                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
-                if (IsViewExists(viewPath))
-                    return View(viewPath, model);
-            }
+            var model = await getBlogPosts(term, page);
 
 			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
 		[HttpPost]
-		public IActionResult Search(string term)
+		public async Task<IActionResult> Search(string term, int page = 1)
 		{
-			return Redirect($"/home?term={term}");
-		}
+            
+            if (!string.IsNullOrEmpty(term))
+            {
+                var model = await getBlogPosts(term, page);
+                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
+                if (IsViewExists(viewPath))
+                    return View(viewPath, model);
+                else
+                    return Redirect("~/home");
+            }
+            else{
+                return Redirect("~/home");
+            }
+        }
 
-		[HttpGet("categories/{category}")]
+        [HttpGet("categories/{category}")]
 		public async Task<IActionResult> Categories(string category, int page = 1)
 		{
-			var model = new ListModel { PostListType = PostListType.Category };
-			try
-			{
-				model.Blog = await _blogProvider.GetBlogItem();
-			}
-			catch
-			{
-				return Redirect("~/admin");
-			}
-
-			model.Pager = new Pager(page, model.Blog.ItemsPerPage);
-			model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
-
-			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
-			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
-
+            var model = await getBlogPosts("", page, category);
             string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
 
             if (IsViewExists(viewPath))
@@ -225,6 +187,48 @@ namespace Blogifier.Controllers
         {
             var result = _compositeViewEngine.GetView("", viewPath, false);
             return result.Success;
+        }
+
+        public async Task<ListModel> getBlogPosts(string term, int pager = 1, string category = ""){
+
+            var model = new ListModel{};
+
+            try
+            {
+                model.Blog = await _blogProvider.GetBlogItem();
+            }
+            catch
+            {
+                Redirect("~/admin");
+            }
+
+            model.Pager = new Pager(pager, model.Blog.ItemsPerPage);
+            
+            if(!string.IsNullOrEmpty(category))
+            {
+                model.PostListType = PostListType.Category;
+                model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
+            }
+            else if (string.IsNullOrEmpty(term))
+            {
+                model.PostListType = PostListType.Blog;
+                if (model.Blog.IncludeFeatured)
+                    model.Posts = await _postProvider.GetList(model.Pager, 0, "", "FP");
+                else
+                    model.Posts = await _postProvider.GetList(model.Pager, 0, "", "P");
+            }
+            else
+            {
+                model.PostListType = PostListType.Search;
+                model.Blog.Title = term;
+                model.Blog.Description = "";
+                model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
+            }
+
+            if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
+            if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
+
+            return model;
         }
 	}
 }
