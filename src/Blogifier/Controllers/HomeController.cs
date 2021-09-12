@@ -37,14 +37,25 @@ namespace Blogifier.Controllers
             _compositeViewEngine = compositeViewEngine;
 		}
 
-		public async Task<IActionResult> Index(string term, int page = 1)
+		public async Task<IActionResult> Index(int page = 1)
 		{
-            var model = await getBlogPosts(term, page);
+
+            var model = await getBlogPosts(pager: page);
 
 			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
-		[HttpPost]
+        [HttpGet("/{slug}")]
+        public async Task<IActionResult> Index(string slug)
+        {
+            if (!string.IsNullOrEmpty(slug))
+            {
+                return await getSingleBlogPost(slug);
+            }
+            return Redirect("/");
+        }
+
+        [HttpPost]
 		public async Task<IActionResult> Search(string term, int page = 1)
 		{
             
@@ -74,41 +85,11 @@ namespace Blogifier.Controllers
             return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
-		[HttpGet("posts/{slug}")]
-		public async Task<IActionResult> Single(string slug)
-		{
-			try
-			{
-				ViewBag.Slug = slug;
-				PostModel model = await _postProvider.GetPostModel(slug);
-
-				// If unpublished and unauthorised redirect to error / 404.
-				if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
-				{
-					return Redirect("~/error");
-				}
-
-				model.Blog = await _blogProvider.GetBlogItem();
-				model.Post.Description = model.Post.Description.MdToHtml();
-				model.Post.Content = model.Post.Content.MdToHtml();
-
-                if(!model.Post.Author.Avatar.StartsWith("data:"))
-                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
-
-                if(model.Post.PostType == PostType.Page)
-                {
-                    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
-                    if (IsViewExists(viewPath))
-                        return View(viewPath, model);
-                }
-
-                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
-			}
-			catch
-			{
-                return Redirect("~/error");
-            }
-		}
+        [HttpGet("posts/{slug}")]
+        public async Task<IActionResult> Single(string slug)
+        {
+            return await getSingleBlogPost(slug);
+        }
 
         [HttpGet("error")]
         public async Task<IActionResult> Error()
@@ -189,7 +170,41 @@ namespace Blogifier.Controllers
             return result.Success;
         }
 
-        public async Task<ListModel> getBlogPosts(string term, int pager = 1, string category = ""){
+
+        public async Task<IActionResult> getSingleBlogPost(string slug){
+            try
+            {
+                ViewBag.Slug = slug;
+                PostModel model = await _postProvider.GetPostModel(slug);
+
+                // If unpublished and unauthorised redirect to error / 404.
+                if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
+                {
+                    return Redirect("~/error");
+                }
+
+                model.Blog = await _blogProvider.GetBlogItem();
+                model.Post.Description = model.Post.Description.MdToHtml();
+                model.Post.Content = model.Post.Content.MdToHtml();
+
+                if (!model.Post.Author.Avatar.StartsWith("data:"))
+                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+
+                if (model.Post.PostType == PostType.Page)
+                {
+                    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
+                    if (IsViewExists(viewPath))
+                        return View(viewPath, model);
+                }
+
+                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
+            }
+            catch
+            {
+                return Redirect("~/error");
+            }
+        }
+        public async Task<ListModel> getBlogPosts(string term ="", int pager = 1, string category = "", string slug = ""){
 
             var model = new ListModel{};
 
