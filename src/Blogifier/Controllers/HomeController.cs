@@ -42,6 +42,10 @@ namespace Blogifier.Controllers
 
             var model = await getBlogPosts(pager: page);
 
+            if(model == null){
+                return Redirect("~/admin");
+            }
+
 			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
@@ -52,7 +56,7 @@ namespace Blogifier.Controllers
             {
                 return await getSingleBlogPost(slug);
             }
-            return Redirect("/");
+            return Redirect("~/");
         }
 
         [HttpPost]
@@ -214,7 +218,7 @@ namespace Blogifier.Controllers
             }
             catch
             {
-                Redirect("~/admin");
+                return null;
             }
 
             model.Pager = new Pager(pager, model.Blog.ItemsPerPage);

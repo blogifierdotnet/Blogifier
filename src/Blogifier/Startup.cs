@@ -44,8 +44,9 @@ namespace Blogifier
 
             services.AddBlogProviders();
 
-            services.AddRazorPages();
+            
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             Log.Warning("Done configure services");
         }
