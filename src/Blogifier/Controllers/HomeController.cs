@@ -42,8 +42,9 @@ namespace Blogifier.Controllers
 
             var model = await getBlogPosts(pager: page);
 
+            //If no blogs are setup redirect to first time registration
             if(model == null){
-                return Redirect("~/admin");
+                return Redirect("~/admin/register");
             }
 
 			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
