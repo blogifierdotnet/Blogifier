@@ -60,6 +60,12 @@ namespace Blogifier.Controllers
             return Redirect("~/");
         }
 
+        [HttpGet("/admin")]
+        public async Task<IActionResult> Admin(string slug)
+        {
+            return File("~/index.html", "text/html");
+        }
+
         [HttpPost]
 		public async Task<IActionResult> Search(string term, int page = 1)
 		{
