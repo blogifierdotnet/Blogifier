@@ -61,7 +61,7 @@ namespace Blogifier.Controllers
         }
 
         [HttpGet("/admin")]
-        public async Task<IActionResult> Admin(string slug)
+        public async Task<IActionResult> Admin()
         {
             return File("~/index.html", "text/html");
         }
