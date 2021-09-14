@@ -106,6 +106,8 @@ namespace Blogifier.Controllers
 
             string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
 
+            ViewBag.Category = category;
+
             if (IsViewExists(viewPath))
                 return View(viewPath, model);
 
