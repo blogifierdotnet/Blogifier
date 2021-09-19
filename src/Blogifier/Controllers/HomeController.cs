@@ -37,73 +37,57 @@ namespace Blogifier.Controllers
             _compositeViewEngine = compositeViewEngine;
 		}
 
-		public async Task<IActionResult> Index(string term, int page = 1)
+		public async Task<IActionResult> Index(int page = 1)
 		{
-			var model = new ListModel { PostListType = PostListType.Blog };
-			try
-			{
-				model.Blog = await _blogProvider.GetBlogItem();
-			}
-			catch
-			{
-				return Redirect("~/admin");
-			}
 
-			model.Pager = new Pager(page, model.Blog.ItemsPerPage);
+            var model = await getBlogPosts(pager: page);
 
-			if (string.IsNullOrEmpty(term))
-			{
-				if (model.Blog.IncludeFeatured)
-					model.Posts = await _postProvider.GetList(model.Pager, 0, "", "FP");
-				else
-					model.Posts = await _postProvider.GetList(model.Pager, 0, "", "P");
-			}
-			else
-			{
-				model.PostListType = PostListType.Search;
-				model.Blog.Title = term;
-				model.Blog.Description = "";
-				model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
-			}	
-
-			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
-			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
-
-            if (!string.IsNullOrEmpty(term))
-            {
-                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
-                if (IsViewExists(viewPath))
-                    return View(viewPath, model);
+            //If no blogs are setup redirect to first time registration
+            if(model == null){
+                return Redirect("~/admin/register");
             }
 
 			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
-		[HttpPost]
-		public IActionResult Search(string term)
-		{
-			return Redirect($"/home?term={term}");
-		}
+        [HttpGet("/{slug}")]
+        public async Task<IActionResult> Index(string slug)
+        {
+            if (!string.IsNullOrEmpty(slug))
+            {
+                return await getSingleBlogPost(slug);
+            }
+            return Redirect("~/");
+        }
 
-		[HttpGet("categories/{category}")]
+        [HttpGet("/admin")]
+        public async Task<IActionResult> Admin()
+        {
+            return File("~/index.html", "text/html");
+        }
+
+        [HttpPost]
+		public async Task<IActionResult> Search(string term, int page = 1)
+		{
+            
+            if (!string.IsNullOrEmpty(term))
+            {
+                var model = await getBlogPosts(term, page);
+                string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
+                if (IsViewExists(viewPath))
+                    return View(viewPath, model);
+                else
+                    return Redirect("~/home");
+            }
+            else{
+                return Redirect("~/home");
+            }
+        }
+
+        [HttpGet("categories/{category}")]
 		public async Task<IActionResult> Categories(string category, int page = 1)
 		{
-			var model = new ListModel { PostListType = PostListType.Category };
-			try
-			{
-				model.Blog = await _blogProvider.GetBlogItem();
-			}
-			catch
-			{
-				return Redirect("~/admin");
-			}
-
-			model.Pager = new Pager(page, model.Blog.ItemsPerPage);
-			model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
-
-			if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
-			if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
-
+            var model = await getBlogPosts("", page, category);
             string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
 
             if (IsViewExists(viewPath))
@@ -112,41 +96,11 @@ namespace Blogifier.Controllers
             return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
 		}
 
-		[HttpGet("posts/{slug}")]
-		public async Task<IActionResult> Single(string slug)
-		{
-			try
-			{
-				ViewBag.Slug = slug;
-				PostModel model = await _postProvider.GetPostModel(slug);
-
-				// If unpublished and unauthorised redirect to error / 404.
-				if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
-				{
-					return Redirect("~/error");
-				}
-
-				model.Blog = await _blogProvider.GetBlogItem();
-				model.Post.Description = model.Post.Description.MdToHtml();
-				model.Post.Content = model.Post.Content.MdToHtml();
-
-                if(!model.Post.Author.Avatar.StartsWith("data:"))
-                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
-
-                if(model.Post.PostType == PostType.Page)
-                {
-                    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
-                    if (IsViewExists(viewPath))
-                        return View(viewPath, model);
-                }
-
-                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
-			}
-			catch
-			{
-                return Redirect("~/error");
-            }
-		}
+        [HttpGet("posts/{slug}")]
+        public async Task<IActionResult> Single(string slug)
+        {
+            return await getSingleBlogPost(slug);
+        }
 
         [HttpGet("error")]
         public async Task<IActionResult> Error()
@@ -225,6 +179,82 @@ namespace Blogifier.Controllers
         {
             var result = _compositeViewEngine.GetView("", viewPath, false);
             return result.Success;
+        }
+
+
+        public async Task<IActionResult> getSingleBlogPost(string slug){
+            try
+            {
+                ViewBag.Slug = slug;
+                PostModel model = await _postProvider.GetPostModel(slug);
+
+                // If unpublished and unauthorised redirect to error / 404.
+                if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
+                {
+                    return Redirect("~/error");
+                }
+
+                model.Blog = await _blogProvider.GetBlogItem();
+                model.Post.Description = model.Post.Description.MdToHtml();
+                model.Post.Content = model.Post.Content.MdToHtml();
+
+                if (!model.Post.Author.Avatar.StartsWith("data:"))
+                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+
+                if (model.Post.PostType == PostType.Page)
+                {
+                    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
+                    if (IsViewExists(viewPath))
+                        return View(viewPath, model);
+                }
+
+                return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
+            }
+            catch
+            {
+                return Redirect("~/error");
+            }
+        }
+        public async Task<ListModel> getBlogPosts(string term ="", int pager = 1, string category = "", string slug = ""){
+
+            var model = new ListModel{};
+
+            try
+            {
+                model.Blog = await _blogProvider.GetBlogItem();
+            }
+            catch
+            {
+                return null;
+            }
+
+            model.Pager = new Pager(pager, model.Blog.ItemsPerPage);
+            
+            if(!string.IsNullOrEmpty(category))
+            {
+                model.PostListType = PostListType.Category;
+                model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
+            }
+            else if (string.IsNullOrEmpty(term))
+            {
+                model.PostListType = PostListType.Blog;
+                if (model.Blog.IncludeFeatured)
+                    model.Posts = await _postProvider.GetList(model.Pager, 0, "", "FP");
+                else
+                    model.Posts = await _postProvider.GetList(model.Pager, 0, "", "P");
+            }
+            else
+            {
+                model.PostListType = PostListType.Search;
+                model.Blog.Title = term;
+                model.Blog.Description = "";
+                model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");
+            }
+
+            if (model.Pager.ShowOlder) model.Pager.LinkToOlder = $"?page={model.Pager.Older}";
+            if (model.Pager.ShowNewer) model.Pager.LinkToNewer = $"?page={model.Pager.Newer}";
+
+            return model;
         }
 	}
 }

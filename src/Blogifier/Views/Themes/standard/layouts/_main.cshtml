@@ -15,7 +15,7 @@
         PostModel postModel = (PostModel)Model;
         pageTitle = postModel.Post.Title + " | " +  siteTitle;
         pageDesc = postModel.Post.Description.StripHtml();
-        pageCanonical = absoluteUrl + "/posts/" + postModel.Post.Slug;
+        pageCanonical = postModel.Post.PostType == PostType.Post ? absoluteUrl + "/posts/" + postModel.Post.Slug : absoluteUrl + "/" + postModel.Post.Slug;
     }
 }
 
