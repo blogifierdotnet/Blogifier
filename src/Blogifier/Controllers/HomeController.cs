@@ -90,6 +90,8 @@ namespace Blogifier.Controllers
             var model = await getBlogPosts("", page, category);
             string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
 
+            ViewBag.Category = category;
+
             if (IsViewExists(viewPath))
                 return View(viewPath, model);
 
