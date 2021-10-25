@@ -63,7 +63,7 @@ namespace Blogifier.Controllers
         [HttpGet("/admin")]
         public async Task<IActionResult> Admin()
         {
-            return File("~/index.html", "text/html");
+            return await Task.FromResult(File("~/index.html", "text/html"));
         }
 
         [HttpPost]
