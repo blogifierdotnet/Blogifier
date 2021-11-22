@@ -2,9 +2,13 @@ using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using Serilog;
 
 namespace Blogifier
@@ -29,11 +33,34 @@ namespace Blogifier
             Log.Warning("Start configure services");
 
             services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie();
+                options.DefaultScheme = "cookie";
+                options.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("cookie", options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+            })
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.Authority = "https://auth.prime-minister.pub/";
+                options.ClientId = "code_the_auto_blog";
+                options.ClientSecret = "blog_secret";
+
+                options.ResponseType = "code id_token";
+                options.UsePkce = true;
+                //options.ResponseMode = "query";
+
+                options.Scope.Add("profile");
+                options.Scope.Add("avatar");
+                options.Scope.Add("email");
+                options.Scope.Add("comments.read");
+                options.SaveTokens = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.ClaimActions.MapJsonKey("avatar", "picture");
+            });
 
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
             {
@@ -44,7 +71,6 @@ namespace Blogifier
 
             services.AddBlogProviders();
 
-            
             services.AddControllersWithViews();
             services.AddRazorPages();
 

@@ -14,41 +14,42 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace Blogifier.Controllers
 {
-	public class HomeController : Controller
-	{
-		protected readonly IBlogProvider _blogProvider;
-		protected readonly IPostProvider _postProvider;
-		protected readonly IFeedProvider _feedProvider;
-		protected readonly IAuthorProvider _authorProvider;
-		protected readonly IThemeProvider _themeProvider;
-		protected readonly IStorageProvider _storageProvider;
+    public class HomeController : Controller
+    {
+        protected readonly IBlogProvider _blogProvider;
+        protected readonly IPostProvider _postProvider;
+        protected readonly IFeedProvider _feedProvider;
+        protected readonly IAuthorProvider _authorProvider;
+        protected readonly IThemeProvider _themeProvider;
+        protected readonly IStorageProvider _storageProvider;
         protected readonly ICompositeViewEngine _compositeViewEngine;
 
         public HomeController(IBlogProvider blogProvider,
             IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider, IThemeProvider themeProvider,
             IStorageProvider storageProvider, ICompositeViewEngine compositeViewEngine)
-		{
-			_blogProvider = blogProvider;
-			_postProvider = postProvider;
-			_feedProvider = feedProvider;
-			_authorProvider = authorProvider;
-			_themeProvider = themeProvider;
-			_storageProvider = storageProvider;
+        {
+            _blogProvider = blogProvider;
+            _postProvider = postProvider;
+            _feedProvider = feedProvider;
+            _authorProvider = authorProvider;
+            _themeProvider = themeProvider;
+            _storageProvider = storageProvider;
             _compositeViewEngine = compositeViewEngine;
-		}
+        }
 
-		public async Task<IActionResult> Index(int page = 1)
-		{
+        public async Task<IActionResult> Index(int page = 1)
+        {
 
             var model = await getBlogPosts(pager: page);
 
             //If no blogs are setup redirect to first time registration
-            if(model == null){
+            if (model == null)
+            {
                 return Redirect("~/admin/register");
             }
 
-			return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
-		}
+            return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
+        }
 
         [HttpGet("/{slug}")]
         public async Task<IActionResult> Index(string slug)
@@ -61,15 +62,16 @@ namespace Blogifier.Controllers
         }
 
         [HttpGet("/admin")]
-        public async Task<IActionResult> Admin()
+        // public async Task<IActionResult> Admin()
+        public IActionResult Admin()
         {
             return File("~/index.html", "text/html");
         }
 
         [HttpPost]
-		public async Task<IActionResult> Search(string term, int page = 1)
-		{
-            
+        public async Task<IActionResult> Search(string term, int page = 1)
+        {
+
             if (!string.IsNullOrEmpty(term))
             {
                 var model = await getBlogPosts(term, page);
@@ -79,14 +81,15 @@ namespace Blogifier.Controllers
                 else
                     return Redirect("~/home");
             }
-            else{
+            else
+            {
                 return Redirect("~/home");
             }
         }
 
         [HttpGet("categories/{category}")]
-		public async Task<IActionResult> Categories(string category, int page = 1)
-		{
+        public async Task<IActionResult> Categories(string category, int page = 1)
+        {
             var model = await getBlogPosts("", page, category);
             string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
 
@@ -96,7 +99,7 @@ namespace Blogifier.Controllers
                 return View(viewPath, model);
 
             return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
-		}
+        }
 
         [HttpGet("posts/{slug}")]
         public async Task<IActionResult> Single(string slug)
@@ -123,59 +126,59 @@ namespace Blogifier.Controllers
         }
 
         [ResponseCache(Duration = 1200)]
-		[HttpGet("feed/{type}")]
-		public async Task<IActionResult> Rss(string type)
-		{
-			string host = Request.Scheme + "://" + Request.Host;
-			var blog = await _blogProvider.GetBlog();
+        [HttpGet("feed/{type}")]
+        public async Task<IActionResult> Rss(string type)
+        {
+            string host = Request.Scheme + "://" + Request.Host;
+            var blog = await _blogProvider.GetBlog();
 
-			var posts = await _feedProvider.GetEntries(type, host);
-			var items = new List<SyndicationItem>();
+            var posts = await _feedProvider.GetEntries(type, host);
+            var items = new List<SyndicationItem>();
 
-			var feed = new SyndicationFeed(
-				 blog.Title,
-				 blog.Description,
-				 new Uri(host),
-				 host,
-				 posts.FirstOrDefault().Published
-			);
+            var feed = new SyndicationFeed(
+                 blog.Title,
+                 blog.Description,
+                 new Uri(host),
+                 host,
+                 posts.FirstOrDefault().Published
+            );
 
-			if (posts != null && posts.Count() > 0)
-			{
-				foreach (var post in posts)
-				{
-					var item = new SyndicationItem(
-						 post.Title,
-						 post.Description.MdToHtml(),
-						 new Uri(post.Id),
-						 post.Id,
-						 post.Published
-					);
-					item.PublishDate = post.Published;
-					items.Add(item);
-				}
-			}
-			feed.Items = items;
+            if (posts != null && posts.Count() > 0)
+            {
+                foreach (var post in posts)
+                {
+                    var item = new SyndicationItem(
+                         post.Title,
+                         post.Description.MdToHtml(),
+                         new Uri(post.Id),
+                         post.Id,
+                         post.Published
+                    );
+                    item.PublishDate = post.Published;
+                    items.Add(item);
+                }
+            }
+            feed.Items = items;
 
-			var settings = new XmlWriterSettings
-			{
-				Encoding = Encoding.UTF8,
-				NewLineHandling = NewLineHandling.Entitize,
-				NewLineOnAttributes = true,
-				Indent = true
-			};
+            var settings = new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                NewLineHandling = NewLineHandling.Entitize,
+                NewLineOnAttributes = true,
+                Indent = true
+            };
 
-			using (var stream = new MemoryStream())
-			{
-				using (var xmlWriter = XmlWriter.Create(stream, settings))
-				{
-					var rssFormatter = new Rss20FeedFormatter(feed, false);
-					rssFormatter.WriteTo(xmlWriter);
-					xmlWriter.Flush();
-				}
-				return File(stream.ToArray(), "application/xml; charset=utf-8");
-			}
-		}
+            using (var stream = new MemoryStream())
+            {
+                using (var xmlWriter = XmlWriter.Create(stream, settings))
+                {
+                    var rssFormatter = new Rss20FeedFormatter(feed, false);
+                    rssFormatter.WriteTo(xmlWriter);
+                    xmlWriter.Flush();
+                }
+                return File(stream.ToArray(), "application/xml; charset=utf-8");
+            }
+        }
 
         private bool IsViewExists(string viewPath)
         {
@@ -184,7 +187,8 @@ namespace Blogifier.Controllers
         }
 
 
-        public async Task<IActionResult> getSingleBlogPost(string slug){
+        public async Task<IActionResult> getSingleBlogPost(string slug)
+        {
             try
             {
                 ViewBag.Slug = slug;
@@ -217,9 +221,10 @@ namespace Blogifier.Controllers
                 return Redirect("~/error");
             }
         }
-        public async Task<ListModel> getBlogPosts(string term ="", int pager = 1, string category = "", string slug = ""){
+        public async Task<ListModel> getBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
+        {
 
-            var model = new ListModel{};
+            var model = new ListModel { };
 
             try
             {
@@ -231,8 +236,8 @@ namespace Blogifier.Controllers
             }
 
             model.Pager = new Pager(pager, model.Blog.ItemsPerPage);
-            
-            if(!string.IsNullOrEmpty(category))
+
+            if (!string.IsNullOrEmpty(category))
             {
                 model.PostListType = PostListType.Category;
                 model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
@@ -258,5 +263,5 @@ namespace Blogifier.Controllers
 
             return model;
         }
-	}
+    }
 }
