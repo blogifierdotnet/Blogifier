@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
+using System;
 using Serilog;
 
 namespace Blogifier
@@ -59,7 +60,7 @@ namespace Blogifier
                 options.Scope.Add("comments.read");
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
-                options.ClaimActions.MapJsonKey("avatar", "picture");
+                options.ClaimActions.MapJsonKey("picture", "picture");
             });
 
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
@@ -70,7 +71,7 @@ namespace Blogifier
             services.AddBlogDatabase(Configuration);
 
             services.AddBlogProviders();
-
+            services.AddScoped(sp => new HttpClient());
             services.AddControllersWithViews();
             services.AddRazorPages();
 

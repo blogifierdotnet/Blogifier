@@ -204,8 +204,11 @@ namespace Blogifier.Controllers
                 model.Post.Description = model.Post.Description.MdToHtml();
                 model.Post.Content = model.Post.Content.MdToHtml();
 
-                if (!model.Post.Author.Avatar.StartsWith("data:"))
-                    model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+                // Mark to have Avatar from OIDC provider shown
+                // if (!model.Post.Author.Avatar.StartsWith("data:"))
+                // {
+                //     model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+                // }
 
                 if (model.Post.PostType == PostType.Page)
                 {

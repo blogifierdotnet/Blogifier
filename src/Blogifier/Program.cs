@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace Blogifier
 {
@@ -12,7 +14,7 @@ namespace Blogifier
 	{
 		public static void Main(string[] args)
 		{
-			var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
 			using (var scope = host.Services.CreateScope())
 			{
@@ -26,8 +28,7 @@ namespace Blogifier
 				}
 				catch { }
 			}
-
-			host.Run();
+            host.Run();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -14,7 +14,6 @@ namespace Blogifier.Core.Providers
 	{
 		Task<List<Author>> GetAuthors();
 		Task<Author> FindByEmail(string email);
-        
 		Task<bool> Verify(LoginModel model);
 		Task<bool> Register(RegisterModel model);
 		Task<bool> Add(Author author);

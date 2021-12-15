@@ -6,13 +6,14 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject ICategoryProvider _categoryProvider
 @inject IAuthorProvider _authorProvider
+@inject HttpClient _http
 
 @{
     var categories = await _categoryProvider.Categories();
     var catUrl = Url.Content("~/categories");
     @* var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name); *@
-    var httpClient = new HttpClient();
-    Author currentUserAuthor = await httpClient.GetFromJsonAsync<Author>("https://localhost:5002/api/author/getcurrent");
+    @* var httpClient = new HttpClient(); *@
+    Author currentUserAuthor = await _http.GetFromJsonAsync<Author>("https://localhost:5002/api/author/getcurrent");
 }
 
 <nav class="header-nav d-flex">
@@ -153,8 +154,8 @@
     }
     else
     {
-        <a class="header-nav-button -login ms-4" href="https://auth.prime-minister.pub/Account/Login"
-        title="@_localizer["login"]" aria-label="@_localizer["login"]" role="button">
+        <a class="header-nav-button -login ms-4" href="~/admin/authentication/login" title="@_localizer["login"]"
+        aria-label="@_localizer["login"]" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
             class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"

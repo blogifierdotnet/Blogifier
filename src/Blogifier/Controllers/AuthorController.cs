@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityModel;
 using System.Threading.Tasks;
 using System;
 
@@ -46,8 +47,19 @@ namespace Blogifier.Controllers
                 {
                     Console.WriteLine("{0} ===> {1}", claim.Type, claim.Value);
                 }
+                // return await FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
                 // return await FindByEmail(User.FindFirstValue(ClaimTypes.Name));
-                return await new Task<Author>(() => CreateFromOIDC());
+                // return await new Task<Author>(() => CreateFromOIDC());
+                var result = await FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+                if (result.Value is Author)
+                {
+                    var tempAuthor = result.Value;
+                    tempAuthor.DisplayName = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
+                    var avatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
+                    tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + avatar + ".png";
+                    return tempAuthor;
+                }
+                return new Author();
             }
             return new Author();
         }
