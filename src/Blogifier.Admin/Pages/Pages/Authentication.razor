@@ -1,8 +1,12 @@
 @page "/admin/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
-<p> @Action </p>
+@* @using Microsoft.AspNetCore.Authorization
+    @attribute [AllowAnonymous] *@
+
 <RemoteAuthenticatorView Action="@Action" />
+
+@* <p> @Action </p> *@
 
 @code {
     [Parameter]

@@ -50,17 +50,19 @@ namespace Blogifier
                 options.ClientId = "code_the_auto_blog";
                 options.ClientSecret = "blog_secret";
 
-                options.ResponseType = "code id_token";
+                options.ResponseType = "code";
                 options.UsePkce = true;
                 //options.ResponseMode = "query";
 
                 options.Scope.Add("profile");
                 options.Scope.Add("avatar");
                 options.Scope.Add("email");
+                options.Scope.Add("roles");
                 options.Scope.Add("comments.read");
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.ClaimActions.MapJsonKey("picture", "picture");
+                options.ClaimActions.MapJsonKey("role", "role");
             });
 
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>

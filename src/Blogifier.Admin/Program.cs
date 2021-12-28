@@ -35,7 +35,9 @@ namespace Blogifier.Admin
 
             // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(
             //     Path.Combine(builder.HostEnvironment.BaseAddress, "admin")) });
+
             builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthenticationStateProvider>();
+
             builder.Services.AddScoped(sp => new HttpClient
             {
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

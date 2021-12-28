@@ -11,9 +11,13 @@
 @{
     var categories = await _categoryProvider.Categories();
     var catUrl = Url.Content("~/categories");
-    @* var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name); *@
-    @* var httpClient = new HttpClient(); *@
-    Author currentUserAuthor = await _http.GetFromJsonAsync<Author>("https://localhost:5002/api/author/getcurrent");
+    string tempName = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        tempName = User.Claims.Where(c => c.Type == "name").FirstOrDefault().Value;
+    }
+    var currentUserAuthor = await _authorProvider.FindByName(tempName);
+    @* Author currentUserAuthor = await _http.GetFromJsonAsync<Author>("https://localhost:5002/api/author/getcurrent"); *@
 }
 
 <nav class="header-nav d-flex">
@@ -133,6 +137,7 @@
             <button class="header-nav-link -login ms-4" title="@_localizer["login"]" id="dropdownMenuButton"
             data-bs-toggle="dropdown" aria-expanded="false" aria-label="Admin Menu - John">
                 <span class="me-1 d-none d-md-inline">@currentUserAuthor.DisplayName</span>
+                @* <span class="me-1 d-none d-md-inline">@User.Identity.Name</span> *@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-chevron-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -154,7 +159,7 @@
     }
     else
     {
-        <a class="header-nav-button -login ms-4" href="~/admin/authentication/login" title="@_localizer["login"]"
+        <a class="header-nav-button -login ms-4" href="~/home/externalsignin" title="@_localizer["login"]"
         aria-label="@_localizer["login"]" role="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
             class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">

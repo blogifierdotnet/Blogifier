@@ -51,17 +51,13 @@ namespace Blogifier.Controllers
                 // return await FindByEmail(User.FindFirstValue(ClaimTypes.Name));
                 // return await new Task<Author>(() => CreateFromOIDC());
                 var result = await FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
-                if (result.Value is Author)
-                {
-                    var tempAuthor = result.Value;
-                    tempAuthor.DisplayName = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
-                    var avatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
-                    tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + avatar + ".png";
-                    return tempAuthor;
-                }
-                return new Author();
+                var tempAuthor = result.Value;
+                tempAuthor.DisplayName = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
+                var avatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
+                tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + avatar + ".png";
+                return tempAuthor;
             }
-            return new Author();
+            return new Author() { DisplayName = "Visitor" };
         }
 
         [Authorize]
@@ -111,7 +107,9 @@ namespace Blogifier.Controllers
         [HttpGet("logout")]
         public async Task<ActionResult<bool>> LogOutUser()
         {
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync("cookie");
+            // return await Task.FromResult(true);
+            // await Task.FromResult(SignOut("cookie", "oidc"));
             return await Task.FromResult(true);
         }
 

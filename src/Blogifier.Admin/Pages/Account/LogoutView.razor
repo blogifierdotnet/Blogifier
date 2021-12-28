@@ -5,7 +5,7 @@
 
 <PageTitle Title="@_localizer["logout"]" />
 
-@code{
+@code {
     protected override async Task OnInitializedAsync()
     {
         await _http.GetFromJsonAsync<bool>("api/author/logout");

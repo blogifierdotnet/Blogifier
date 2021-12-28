@@ -11,6 +11,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blogifier.Controllers
 {
@@ -59,6 +60,17 @@ namespace Blogifier.Controllers
                 return await getSingleBlogPost(slug);
             }
             return Redirect("~/");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ExternalSignIn()
+        {
+            // if (!string.IsNullOrEmpty(slug))
+            // {
+            //     return await getSingleBlogPost(slug);
+            // }
+            return await Task.FromResult(Redirect("~/"));
         }
 
         [HttpGet("/admin")]
