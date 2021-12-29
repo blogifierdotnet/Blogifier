@@ -11,13 +11,14 @@
 @{
     var categories = await _categoryProvider.Categories();
     var catUrl = Url.Content("~/categories");
-    string tempName = null;
-    if (User.Identity.IsAuthenticated)
+    var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name);
+    if (User.Identity.IsAuthenticated && currentUserAuthor is null)
     {
-        tempName = User.Claims.Where(c => c.Type == "name").FirstOrDefault().Value;
+        string tempName = User.Claims.Where(c => c.Type == "name").FirstOrDefault().Value;
+        currentUserAuthor = await _authorProvider.FindByName(tempName);
+        if (currentUserAuthor is null)
+        { currentUserAuthor = new Author() {DisplayName = tempName}; }
     }
-    var currentUserAuthor = await _authorProvider.FindByName(tempName);
-    @* Author currentUserAuthor = await _http.GetFromJsonAsync<Author>("https://localhost:5002/api/author/getcurrent"); *@
 }
 
 <nav class="header-nav d-flex">
@@ -145,6 +146,8 @@
                 </svg>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            @if (User.HasClaim("role", "AutoBloger"))
+            {
                 <li><a class="dropdown-item" href="~/admin/">@_localizer["dashboard"]</a></li>
                 <li><a class="dropdown-item" href="~/admin/newsletter/">@_localizer["newsletter"]</a></li>
                 <li><a class="dropdown-item" href="~/admin/settings/">@_localizer["settings"]</a></li>
@@ -153,6 +156,7 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
+            }
                 <li><a class="dropdown-item" href="~/admin/logout/">@_localizer["logout"]</a></li>
             </ul>
         </div>

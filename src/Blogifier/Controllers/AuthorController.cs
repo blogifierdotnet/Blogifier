@@ -47,15 +47,28 @@ namespace Blogifier.Controllers
                 {
                     Console.WriteLine("{0} ===> {1}", claim.Type, claim.Value);
                 }
-                // return await FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
-                // return await FindByEmail(User.FindFirstValue(ClaimTypes.Name));
-                // return await new Task<Author>(() => CreateFromOIDC());
-                var result = await FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+                // var tempAvatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
+                var tempEmail = User.FindFirstValue(JwtClaimTypes.Email);
+                var tempName = User.FindFirstValue(JwtClaimTypes.Name);
+                var tempAvatar = User.FindFirstValue(JwtClaimTypes.Picture);
+                var result = await FindByEmail(tempEmail);
                 var tempAuthor = result.Value;
-                tempAuthor.DisplayName = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
-                var avatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
-                tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + avatar + ".png";
-                return tempAuthor;
+                // Sync Author to local DB if Admin role status not match local DB
+                if (User.HasClaim("role", "AutoBloger"))
+                {
+                    Console.WriteLine("Yes, A Bolger Here");
+                    if (tempAuthor is null)
+                    { await _authorProvider.CreateFromOIDC(User); }
+                    tempAuthor.DisplayName = tempName;
+                    tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + tempAvatar + ".png";
+                    return tempAuthor;
+                }
+                else
+                {
+                    if (await _authorProvider.ExistByOIDC(tempEmail))
+                    { await _authorProvider.RemoveByOIDC(tempEmail); }
+                    return new Author() { DisplayName = tempName };
+                }
             }
             return new Author() { DisplayName = "Visitor" };
         }
@@ -121,7 +134,8 @@ namespace Blogifier.Controllers
             return success ? Ok() : BadRequest();
         }
 
-        [HttpGet("getcurrent")]
+        [Authorize]
+        [HttpGet]
         protected Author CreateFromOIDC()
         {
             var tempAuthor = new Author();
