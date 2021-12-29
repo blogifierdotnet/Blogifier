@@ -18,8 +18,10 @@
             if (blog == null)
                 _navigationManager.NavigateTo("admin/register/");
             else
-                // _navigationManager.NavigateTo($"admin/login/?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
-                _navigationManager.NavigateTo($"admin/authentication/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+                // _navigationManager.NavigateTo($"~/home/externalsignin/?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+                _navigationManager.NavigateTo($"admin/login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+            // _navigationManager.NavigateTo($"home/index/", true);
+            // _navigationManager.NavigateTo($"/", true);
         }
         catch (Exception ex)
         {

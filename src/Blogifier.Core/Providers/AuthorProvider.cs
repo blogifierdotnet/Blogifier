@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel;
 
 namespace Blogifier.Core.Providers
 {
@@ -16,11 +18,14 @@ namespace Blogifier.Core.Providers
         Task<Author> FindByEmail(string email);
         Task<Author> FindByName(string name);
         Task<bool> Verify(LoginModel model);
+        Task<bool> CreateFromOIDC(ClaimsPrincipal user);
         Task<bool> Register(RegisterModel model);
         Task<bool> Add(Author author);
         Task<bool> Update(Author author);
         Task<bool> ChangePassword(RegisterModel model);
         Task<bool> Remove(int id);
+        Task<bool> ExistByOIDC(string email);
+        Task<bool> RemoveByOIDC(string email);
     }
 
     public class AuthorProvider : IAuthorProvider
@@ -46,6 +51,34 @@ namespace Blogifier.Core.Providers
         public async Task<Author> FindByName(string name)
         {
             return await Task.FromResult(_db.Authors.Where(a => a.DisplayName == name).FirstOrDefault());
+        }
+        public async Task<bool> CreateFromOIDC(ClaimsPrincipal user)
+        {
+            var tempEmail = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Email).Value;
+            var tempAvatar = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
+            var tempName = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
+            Author authorToAdd = new Author()
+            {
+                DisplayName = tempName,
+                Email = tempEmail,
+                Password = "111",
+                Bio = "Update Bio Here/更新简介",
+                Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + tempAvatar + ".png",
+                IsAdmin = true,
+                DateCreated = DateTime.UtcNow
+            };
+
+            _db.Authors.Add(authorToAdd);
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Warning($"Error registering new blog: {ex.Message}");
+                return false;
+            }
+            return await _db.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> Verify(LoginModel model)
@@ -189,6 +222,23 @@ namespace Blogifier.Core.Providers
             var existingAuthor = await _db.Authors.Where(a => a.Id == id).FirstOrDefaultAsync();
             if (existingAuthor == null)
                 return false;
+
+            _db.Authors.Remove(existingAuthor);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> ExistByOIDC(string email)
+        {
+            var existingAuthor = await _db.Authors.AsNoTracking().Where(a => a.Email == email).FirstOrDefaultAsync();
+            if (existingAuthor == null)
+                return false;
+            return true;
+        }
+        public async Task<bool> RemoveByOIDC(string email)
+        {
+            var existingAuthor = await _db.Authors.Where(a => a.Email == email).FirstOrDefaultAsync();
+            if (existingAuthor == null)
+                return true;
 
             _db.Authors.Remove(existingAuthor);
             await _db.SaveChangesAsync();

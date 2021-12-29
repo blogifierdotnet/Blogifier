@@ -117,13 +117,20 @@ namespace Blogifier.Controllers
             return Ok();
         }
 
+        // [HttpGet("logout")]
+        // public async Task<ActionResult<bool>> LogOutUser()
+        // {
+        //     await HttpContext.SignOutAsync("oidc");
+        //     // await HttpContext.SignOutAsync("oidc");
+        //     // return await Task.FromResult(true);
+        //     // await Task.FromResult(SignOut("cookie", "oidc"));
+        //     return await Task.FromResult(true);
+        // }
         [HttpGet("logout")]
-        public async Task<ActionResult<bool>> LogOutUser()
+        public async Task<IActionResult> LogOutUser()
         {
             await HttpContext.SignOutAsync("cookie");
-            // return await Task.FromResult(true);
-            // await Task.FromResult(SignOut("cookie", "oidc"));
-            return await Task.FromResult(true);
+            return Redirect("~/");
         }
 
         [Authorize]

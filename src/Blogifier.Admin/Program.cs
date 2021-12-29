@@ -21,16 +21,16 @@ namespace Blogifier.Admin
             builder.Services.AddLocalization();
 
             builder.Services.AddOptions();
-            builder.Services.AddOidcAuthentication(
-                options =>
-                {
-                    builder.Configuration.Bind("OpenIDOption", options.ProviderOptions);
-                    options.ProviderOptions.DefaultScopes.Add("profile");
-                    options.ProviderOptions.DefaultScopes.Add("avatar");
-                    options.ProviderOptions.DefaultScopes.Add("email");
-                    options.ProviderOptions.DefaultScopes.Add("comments.read");
-                }
-            );
+            // builder.Services.AddOidcAuthentication(
+            //     options =>
+            //     {
+            //         builder.Configuration.Bind("OpenIDOption", options.ProviderOptions);
+            //         options.ProviderOptions.DefaultScopes.Add("profile");
+            //         options.ProviderOptions.DefaultScopes.Add("avatar");
+            //         options.ProviderOptions.DefaultScopes.Add("email");
+            //         options.ProviderOptions.DefaultScopes.Add("comments.read");
+            //     }
+            // );
             builder.Services.AddAuthorizationCore();
 
             // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(

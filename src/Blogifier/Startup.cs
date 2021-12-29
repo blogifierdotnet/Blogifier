@@ -63,6 +63,7 @@ namespace Blogifier
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.ClaimActions.MapJsonKey("picture", "picture");
                 options.ClaimActions.MapJsonKey("role", "role");
+                //options.Events.OnSignedOutCallbackRedirect();
             });
 
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>

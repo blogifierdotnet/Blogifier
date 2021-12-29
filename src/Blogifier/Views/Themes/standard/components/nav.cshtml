@@ -17,7 +17,7 @@
         string tempName = User.Claims.Where(c => c.Type == "name").FirstOrDefault().Value;
         currentUserAuthor = await _authorProvider.FindByName(tempName);
         if (currentUserAuthor is null)
-        { currentUserAuthor = new Author() {DisplayName = tempName}; }
+        { currentUserAuthor = new Author() { DisplayName = tempName }; }
     }
 }
 
@@ -146,18 +146,18 @@
                 </svg>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-            @if (User.HasClaim("role", "AutoBloger"))
-            {
-                <li><a class="dropdown-item" href="~/admin/">@_localizer["dashboard"]</a></li>
-                <li><a class="dropdown-item" href="~/admin/newsletter/">@_localizer["newsletter"]</a></li>
-                <li><a class="dropdown-item" href="~/admin/settings/">@_localizer["settings"]</a></li>
-                <li><a class="dropdown-item" href="~/admin/settings/customize/">@_localizer["customize"]</a></li>
-                <li><a class="dropdown-item" href="~/admin/profile/">@_localizer["edit-profile"]</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-            }
-                <li><a class="dropdown-item" href="~/admin/logout/">@_localizer["logout"]</a></li>
+                @if (User.HasClaim("role", "AutoBloger"))
+                {
+                    <li><a class="dropdown-item" href="~/admin/">@_localizer["dashboard"]</a></li>
+                    <li><a class="dropdown-item" href="~/admin/newsletter/">@_localizer["newsletter"]</a></li>
+                    <li><a class="dropdown-item" href="~/admin/settings/">@_localizer["settings"]</a></li>
+                    <li><a class="dropdown-item" href="~/admin/settings/customize/">@_localizer["customize"]</a></li>
+                    <li><a class="dropdown-item" href="~/admin/profile/">@_localizer["edit-profile"]</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                }
+                <li><a class="dropdown-item" href="~/api/author/logout/">@_localizer["logout"]</a></li>
             </ul>
         </div>
     }
