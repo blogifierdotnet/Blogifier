@@ -43,35 +43,31 @@ namespace Blogifier.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                foreach (var claim in User.Claims)
-                {
-                    Console.WriteLine("{0} ===> {1}", claim.Type, claim.Value);
-                }
-                // var tempAvatar = User.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
-                var tempEmail = User.FindFirstValue(JwtClaimTypes.Email);
-                var tempName = User.FindFirstValue(JwtClaimTypes.Name);
-                var tempAvatar = User.FindFirstValue(JwtClaimTypes.Picture);
-                var result = await FindByEmail(tempEmail);
-                var tempAuthor = result.Value;
-                // Sync Author to local DB if Admin role status not match local DB
+                // foreach (var claim in User.Claims)
+                // {
+                //     Console.WriteLine("{0} ===> {1}", claim.Type, claim.Value);
+                // }
+
+                var tempAuthor = CreateFromOIDC();
                 if (User.HasClaim("role", "AutoBloger"))
                 {
-                    Console.WriteLine("Yes, A Bolger Here");
-                    if (tempAuthor is null)
-                    { await _authorProvider.CreateFromOIDC(User); }
-                    tempAuthor.DisplayName = tempName;
-                    tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + tempAvatar + ".png";
+                    // Sync with local DB on Bio firstly
+                    var tempBio = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+                    if (tempBio is null)
+                    {
+                        await SyncWithDB(tempAuthor);
+                    }
+                    tempAuthor.IsAdmin = true;
+                    var reBio = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+                    tempAuthor.Id = (tempBio is null) ? 1 : reBio.Id;
+                    tempAuthor.Bio = (tempBio is null) ? "Update Bio/更新简介" : reBio.Bio;
+                    Console.WriteLine("Bloger ID is " + tempAuthor.Id);
                     return tempAuthor;
                 }
-                else
-                {
-                    if (await _authorProvider.ExistByOIDC(tempEmail))
-                    { await _authorProvider.RemoveByOIDC(tempEmail); }
-                    return new Author() { DisplayName = tempName };
-                }
             }
-            return new Author() { DisplayName = "Visitor" };
+            return new Author() { DisplayName = "Visitor", IsAdmin = false };
         }
+
 
         [Authorize]
         [HttpDelete("{id:int}")]
@@ -92,7 +88,13 @@ namespace Blogifier.Controllers
         [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Author author)
         {
+            var tempAutor = await _authorProvider.FindByEmail(author.Email);
+            if (tempAutor is null)
+            {
+                return await _authorProvider.CreateFromAuthor(author) ? Ok() : BadRequest();
+            }
             var success = await _authorProvider.Update(author);
+            Console.WriteLine("Update Results: " + success);
             return success ? Ok() : BadRequest();
         }
 
@@ -130,6 +132,7 @@ namespace Blogifier.Controllers
         public async Task<IActionResult> LogOutUser()
         {
             await HttpContext.SignOutAsync("cookie");
+            await HttpContext.SignOutAsync("oidc");
             return Redirect("~/");
         }
 
@@ -142,20 +145,29 @@ namespace Blogifier.Controllers
         }
 
         [Authorize]
-        [HttpGet]
         protected Author CreateFromOIDC()
         {
             var tempAuthor = new Author();
-            tempAuthor.Avatar =
-                "https://auth.prime-minister.pub/images/user_avatars/" +
-                User.Claims.FirstOrDefault(claim => claim.Type == "avatar").Value + ".png";
+            var tempEmail = User.FindFirstValue(JwtClaimTypes.Email);
+            var tempName = User.FindFirstValue(JwtClaimTypes.Name);
+            var tempAvatar = User.FindFirstValue(JwtClaimTypes.Picture);
 
-            tempAuthor.DisplayName = User.Claims.FirstOrDefault(claim => claim.Type == "name").Value;
-            tempAuthor.Email = User.Claims.FirstOrDefault(claim => claim.Type == "email").Value;
-            Console.WriteLine(tempAuthor.Avatar);
-            Console.WriteLine(tempAuthor.DisplayName);
-            Console.WriteLine(tempAuthor.Email);
+            tempAuthor.Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + tempAvatar + ".png";
+            tempAuthor.DisplayName = tempName;
+            tempAuthor.Email = tempEmail;
+            tempAuthor.IsAdmin = false;
+
             return tempAuthor;
+        }
+
+        [Authorize]
+        protected async Task<bool> SyncWithDB(Author author)
+        {
+            Author authorToSync = author;
+            authorToSync.IsAdmin = true;
+            authorToSync.Bio = "Update Bio/更新简介";
+            authorToSync.DateCreated = DateTime.UtcNow;
+            return await _authorProvider.CreateFromAuthor(authorToSync);
         }
     }
 }

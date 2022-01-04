@@ -146,7 +146,8 @@
     {
         var state = await _stateProvider.GetAuthenticationStateAsync();
         var identity = state.User.Identity;
-        author = await _http.GetFromJsonAsync<Author>($"api/author/email/{identity.Name}");
+        // author = await _http.GetFromJsonAsync<Author>($"api/author/email/{identity.Name}");
+        author = await _http.GetFromJsonAsync<Author>($"api/author/getcurrent");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

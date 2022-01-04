@@ -20,7 +20,7 @@ namespace Blogifier.Admin
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             Author author = await _httpClient.GetFromJsonAsync<Author>("api/author/getcurrent");
-            if (author != null && author.Email != null)
+            if (author != null && author.Email != null && author.IsAdmin)
             {
                 var claim = new Claim(ClaimTypes.Name, author.Email);
                 var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");

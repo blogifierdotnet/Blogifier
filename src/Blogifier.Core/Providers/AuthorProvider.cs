@@ -18,13 +18,13 @@ namespace Blogifier.Core.Providers
         Task<Author> FindByEmail(string email);
         Task<Author> FindByName(string name);
         Task<bool> Verify(LoginModel model);
-        Task<bool> CreateFromOIDC(ClaimsPrincipal user);
+        Task<bool> CreateFromAuthor(Author author);
         Task<bool> Register(RegisterModel model);
         Task<bool> Add(Author author);
         Task<bool> Update(Author author);
         Task<bool> ChangePassword(RegisterModel model);
         Task<bool> Remove(int id);
-        Task<bool> ExistByOIDC(string email);
+        // Task<bool> ExistByOIDC(string email);
         Task<bool> RemoveByOIDC(string email);
     }
 
@@ -52,23 +52,12 @@ namespace Blogifier.Core.Providers
         {
             return await Task.FromResult(_db.Authors.Where(a => a.DisplayName == name).FirstOrDefault());
         }
-        public async Task<bool> CreateFromOIDC(ClaimsPrincipal user)
+        public async Task<bool> CreateFromAuthor(Author author)
         {
-            var tempEmail = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Email).Value;
-            var tempAvatar = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Picture).Value;
-            var tempName = user.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Name).Value;
-            Author authorToAdd = new Author()
-            {
-                DisplayName = tempName,
-                Email = tempEmail,
-                Password = "111",
-                Bio = "Update Bio Here/更新简介",
-                Avatar = "https://auth.prime-minister.pub/images/user_avatars/" + tempAvatar + ".png",
-                IsAdmin = true,
-                DateCreated = DateTime.UtcNow
-            };
+            author.Password = "111";
+            author.DateCreated = DateTime.UtcNow;
 
-            _db.Authors.Add(authorToAdd);
+            _db.Authors.Add(author);
             try
             {
                 await _db.SaveChangesAsync();
@@ -227,13 +216,13 @@ namespace Blogifier.Core.Providers
             await _db.SaveChangesAsync();
             return true;
         }
-        public async Task<bool> ExistByOIDC(string email)
-        {
-            var existingAuthor = await _db.Authors.AsNoTracking().Where(a => a.Email == email).FirstOrDefaultAsync();
-            if (existingAuthor == null)
-                return false;
-            return true;
-        }
+        // public async Task<bool> ExistByOIDC(string email)
+        // {
+        //     var existingAuthor = await _db.Authors.AsNoTracking().Where(a => a.Email == email).FirstOrDefaultAsync();
+        //     if (existingAuthor == null)
+        //         return false;
+        //     return true;
+        // }
         public async Task<bool> RemoveByOIDC(string email)
         {
             var existingAuthor = await _db.Authors.Where(a => a.Email == email).FirstOrDefaultAsync();
