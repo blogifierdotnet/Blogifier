@@ -19,6 +19,9 @@ namespace Blogifier.Admin.Pages.Account
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var param))
                 returnUrl = param.First();
 
+			if(returnUrl.StartsWith("http"))
+				returnUrl = "admin/";
+
             var result = await Http.PostAsJsonAsync<LoginModel>("api/author/login", model);
 
 			if (result.IsSuccessStatusCode)
