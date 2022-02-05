@@ -124,9 +124,11 @@ namespace Blogifier.Core.Providers
 				 Path.Combine(_storageRoot, fileName) :
 				 Path.Combine(_storageRoot, path + _slash + fileName);
 
-			using (WebClient client = new WebClient())
+			HttpClient client = new HttpClient();
+			var response = await client.GetAsync(requestUri);
+			using (var fs = new FileStream(filePath, FileMode.CreateNew))
 			{
-				client.DownloadFile(requestUri, filePath);
+				await response.Content.CopyToAsync(fs);
 				return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
 			}
 		}
