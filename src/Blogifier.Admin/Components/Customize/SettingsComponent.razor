@@ -5,33 +5,35 @@
 @if (Settings != null)
 {
    <div class="accordion accordion-flush" id="accordionFlushExample">
-      @foreach (var section in Settings.Sections)
+      @foreach (var item in Settings.Sections)
       {
+        var sec = item.Label.GetHashCode();
+
          <div class="accordion-item">
-            <h2 class="accordion-header" id="head-@section.Label.GetHashCode()">
-               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@section.Label.GetHashCode()" aria-expanded="false" aria-controls="id-@section.Label.GetHashCode()">
-                  @section.Label
+            <h2 class="accordion-header" id="head-@sec">
+               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@sec" aria-expanded="false" aria-controls="id-@sec">
+                  @item.Label
                </button>
             </h2>
-            <div id="id-@section.Label.GetHashCode()" class="accordion-collapse collapse" aria-labelledby="head-@section.Label.GetHashCode()" data-bs-parent="#accordionFlushExample">
+            <div id="id-@sec" class="accordion-collapse collapse" aria-labelledby="head-@sec" data-bs-parent="#accordionFlushExample">
                 <!-- Test if this -half is good for this section, theme developers may need full width -->
                 <div class="accordion-body section-content -half">
-                    @foreach (var field in section.Fields)
+                    @foreach (var field in item.Fields)
                     {
                         <div class="form-item">
                             @if (field.Type == "select")
                             {
                                 <label class="form-label">@field.Label</label>
                                 <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
-                                    @foreach (var item in field.Options)
+                                    @foreach (var opt in field.Options)
                                     {
-                                        if (field.Value == item)
+                                        if (field.Value == opt)
                                         {
-                                            <option value="@item" selected>@item</option>
+                                            <option value="@opt" selected>@opt</option>
                                         }
                                         else
                                         {
-                                            <option value="@item">@item</option>
+                                            <option value="@opt">@opt</option>
                                         }
                                     }
                                 </select>

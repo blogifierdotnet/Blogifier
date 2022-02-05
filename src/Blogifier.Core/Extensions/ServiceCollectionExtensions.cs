@@ -27,13 +27,13 @@ namespace Blogifier.Core.Extensions
 			//TODO: this is not tested
 			if (section.GetValue<string>("DbProvider") == "MySql")
 			{
-				services.AddDbContextPool<AppDbContext>(
-					dbContextOptions => dbContextOptions.UseMySql(
-						section.GetValue<string>("ConnString"),
-						new MySqlServerVersion(new Version(8, 0, 21)),
-						mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend)
-					)
-				);
+				//services.AddDbContextPool<AppDbContext>(
+				//	dbContextOptions => dbContextOptions.UseMySql(
+				//		section.GetValue<string>("ConnString"),
+				//		new MySqlServerVersion(new Version(8, 0, 21)),
+				//		mySqlOptions => mySqlOptions.HasCharSet("utf8mb4", DelegationModes.ApplyToAll) //CharSetBehavior(CharSetBehavior.NeverAppend)
+				//	)
+				//);
 			}
 			services.AddDatabaseDeveloperPageExceptionFilter();
 			return services;
