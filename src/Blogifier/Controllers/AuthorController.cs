@@ -55,6 +55,7 @@ namespace Blogifier.Controllers
                     var tempBio = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
                     if (tempBio is null)
                     {
+                        Console.WriteLine("Has no local data, need to Sync!");
                         await SyncWithDB(tempAuthor);
                     }
                     tempAuthor.IsAdmin = true;
@@ -62,6 +63,16 @@ namespace Blogifier.Controllers
                     tempAuthor.Id = (tempBio is null) ? 1 : reBio.Id;
                     tempAuthor.Bio = (tempBio is null) ? "Update Bio/更新简介" : reBio.Bio;
                     Console.WriteLine("Bloger ID is " + tempAuthor.Id);
+                    return tempAuthor;
+                }
+                else
+                {
+                    var tempAuthorToRemove = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+                    if (tempAuthorToRemove is not null)
+                    {
+                        Console.WriteLine("Has no Author Cliam, need to Delete!");
+                        await _authorProvider.Remove(tempAuthorToRemove.Id);
+                    }
                     return tempAuthor;
                 }
             }
@@ -88,6 +99,7 @@ namespace Blogifier.Controllers
         [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Author author)
         {
+            Console.WriteLine("Update API Called!!!");
             var tempAutor = await _authorProvider.FindByEmail(author.Email);
             if (tempAutor is null)
             {
@@ -128,12 +140,20 @@ namespace Blogifier.Controllers
         //     // await Task.FromResult(SignOut("cookie", "oidc"));
         //     return await Task.FromResult(true);
         // }
+
+        // [HttpGet("logout")]
+        // public async Task<IActionResult> LogOutUser()
+        // {
+        //     await HttpContext.SignOutAsync("cookie");
+        //     await HttpContext.SignOutAsync("oidc");
+        //     return Redirect("~/");
+        // }
+
         [HttpGet("logout")]
-        public async Task<IActionResult> LogOutUser()
+        public async Task LogOutUser()
         {
             await HttpContext.SignOutAsync("cookie");
             await HttpContext.SignOutAsync("oidc");
-            return Redirect("~/");
         }
 
         [Authorize]

@@ -186,7 +186,7 @@ namespace Blogifier.Core.Providers
             existing.Email = author.Email;
             existing.DisplayName = author.DisplayName;
             existing.Bio = author.Bio;
-            existing.Avatar = author.Avatar;
+            //existing.Avatar = author.Avatar;
             existing.IsAdmin = author.IsAdmin;
 
             return await _db.SaveChangesAsync() > 0;

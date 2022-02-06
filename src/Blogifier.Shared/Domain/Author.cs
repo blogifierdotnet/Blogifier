@@ -14,7 +14,7 @@ namespace Blogifier.Shared
         [EmailAddress]
         [StringLength(160)]
         public string Email { get; set; }
-        [Required]
+        // [Required]
         [StringLength(160)]
         public string Password { get; set; }
         [Required]

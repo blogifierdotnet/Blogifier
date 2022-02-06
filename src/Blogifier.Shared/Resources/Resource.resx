@@ -365,6 +365,10 @@
         <value>Edit profile</value>
         <comment/>
     </data>
+    <data name="edit-remoteprofile" xml:space="preserve">
+        <value>ID profile</value>
+        <comment/>
+    </data>
     <data name="email" xml:space="preserve">
         <value>Email</value>
         <comment/>

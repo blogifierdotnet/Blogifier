@@ -217,7 +217,7 @@ namespace Blogifier.Controllers
                 model.Post.Content = model.Post.Content.MdToHtml();
 
                 // Mark to have Avatar from OIDC provider shown
-                // if (!model.Post.Author.Avatar.StartsWith("data:"))
+                // if (User.Identity.IsAuthenticated)
                 // {
                 //     model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
                 // }
