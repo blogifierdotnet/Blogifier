@@ -107,10 +107,21 @@ namespace Blogifier.Core.Providers
 				 Path.Combine(_storageRoot, fileName) :
 				 Path.Combine(_storageRoot, path + _slash + fileName);
 
-			using (var fileStream = new FileStream(filePath, FileMode.Create))
+			Serilog.Log.Information($"Storage root: {_storageRoot}");
+			Serilog.Log.Information($"Uploading file: {filePath}");
+			try
 			{
-				await file.CopyToAsync(fileStream);
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await file.CopyToAsync(fileStream);
+					Serilog.Log.Information($"Uploaded file: {filePath}");
+				}
 			}
+			catch (Exception ex)
+			{
+				Serilog.Log.Error($"Error uploading file: {ex.Message}");
+			}
+
 			return true;
 		}
 
@@ -178,19 +189,28 @@ namespace Blogifier.Core.Providers
 				string testsDirectory = $"tests{_slash}Blogifier.Tests";
 				string appDirectory = $"src{_slash}Blogifier";
 
+				Serilog.Log.Information($"Current directory path: {path}");
+
 				// development unit test run
 				if (path.LastIndexOf(testsDirectory) > 0)
 				{
 					path = path.Substring(0, path.LastIndexOf(testsDirectory));
+					Serilog.Log.Information($"Unit test path: {path}src{_slash}Blogifier");
 					return $"{path}src{_slash}Blogifier";
 				}
 
-				// development debug run
+				// this needed to make sure we have correct data directory
+				// when running in debug mode in Visual Studio
+				// so instead of debug (src/Blogifier/bin/Debug..)
+				// will be used src/Blogifier/wwwroot/data
+				// !! this can mess up installs that have "src/Blogifier" in the path !!
 				if (path.LastIndexOf(appDirectory) > 0)
 				{
 					path = path.Substring(0, path.LastIndexOf(appDirectory));
+					Serilog.Log.Information($"Development debug path: {path}src{_slash}Blogifier");
 					return $"{path}src{_slash}Blogifier";
 				}
+				Serilog.Log.Information($"Final path: {path}");
 				return path;
 			}
 		}
