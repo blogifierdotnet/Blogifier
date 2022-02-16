@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Blogifier.Controllers
 {
@@ -62,15 +64,24 @@ namespace Blogifier.Controllers
             return Redirect("~/");
         }
 
-        [Authorize]
-        [HttpGet]
+        //[Authorize]
+        [HttpPost]
         public async Task<IActionResult> ExternalSignIn()
         {
             // if (!string.IsNullOrEmpty(slug))
             // {
             //     return await getSingleBlogPost(slug);
             // }
-            return await Task.FromResult(Redirect("~/"));
+            var currentPath = Request.Form["currentpath"].ToString();
+            var domain = $"{Request.Scheme}://{Request.Host}";
+            var absolutePath = string.Equals(currentPath, "/") ? domain : domain + currentPath;
+            var returnUri = new Uri(absolutePath);
+            return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
+            // if (currentpath is null)
+            // {
+            //     return await Task.FromResult(Redirect("~/"));
+            // }
+            // return await Task.FromResult(Redirect(currentpath));
         }
 
         [HttpGet("/admin")]
@@ -278,5 +289,18 @@ namespace Blogifier.Controllers
 
             return model;
         }
+        private AuthenticationProperties BuildAuthenticationProperties(Uri returnUri)
+        {
+            var authenticationProperties = new AuthenticationProperties();
+            if (returnUri != null)
+            {
+                if (string.Equals(base.Request.Host.Host, returnUri.Host, StringComparison.OrdinalIgnoreCase))
+                {
+                    authenticationProperties.RedirectUri = returnUri.ToString();
+                }
+            }
+            return authenticationProperties;
+        }
+
     }
 }
