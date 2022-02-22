@@ -1,0 +1,27 @@
+@using Microsoft.AspNetCore.Components
+@using Blogifier.Shared
+@inject HttpClient _http
+
+<p>Text from Blazor Component</p>
+<p>@PostSlug</p>
+
+@code {
+    [Parameter] public string PostSlug { get; set; }
+    public List<CommentDTO> CommentDTOs { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    protected async Task Load()
+    {
+        CommentsDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+    }
+
+    protected async Task UpdateComment(Comment comment)
+    {
+        Toaster.Toast(await _http.PutAsJsonAsync<RegisterModel>("api/author/changepassword", Model));
+        await Load();
+    }
+
+}

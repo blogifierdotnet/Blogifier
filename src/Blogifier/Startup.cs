@@ -77,7 +77,7 @@ namespace Blogifier
             services.AddScoped(sp => new HttpClient());
             services.AddControllersWithViews();
             services.AddRazorPages();
-
+            services.AddServerSideBlazor();
             Log.Warning("Done configure services");
         }
 
@@ -112,6 +112,7 @@ namespace Blogifier
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
                 endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
+                endpoints.MapBlazorHub();
             });
         }
     }

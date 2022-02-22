@@ -1,6 +1,8 @@
 @using Blogifier.Shared.Resources
 @using Blogifier.Shared
+@using Blogifier.Views.Shared
 @using Microsoft.Extensions.Localization
+@using System.Collections.Generic
 @inject IStringLocalizer<Resource> _localizer
 @{
     Layout = "layouts/_main.cshtml";
@@ -8,6 +10,8 @@
     var post = postModel.Post;
     string cover = postModel.Post.Cover;
     var catUrl = Url.Content("~/categories");
+    var currentPath = this.Context.Request.Path.ToString().Split("/");
+    var currentSlug = currentPath[currentPath.Count() - 1];
 }
 
 <main class="post-detail">
@@ -82,7 +86,9 @@
                 - post comments on or off (default)
             -->
             <partial name="post/author.cshtml" />
-            <partial name="post/comments.cshtml" />
+
+            <component type="typeof(Comments)" render-mode="ServerPrerendered" param-PostSlug="@currentSlug" />
+            </cust>
         </footer>
 
     </article>

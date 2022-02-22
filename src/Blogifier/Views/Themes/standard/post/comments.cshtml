@@ -1,2 +1,7 @@
 <!-- DISQUS -->
-<div id="disqus_thread" class="post-comments"></div>
+@* <div id="disqus_thread" class="post-comments"></div> *@
+@{
+    var currentPath = this.Context.Request.Path;
+}
+<p>some comments here</p>
+<p>@currentPath</p>

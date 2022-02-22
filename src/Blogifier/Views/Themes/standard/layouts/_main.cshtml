@@ -26,7 +26,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>@pageTitle</title>
     <meta name="description" content="@pageDesc">
     <link rel="alternate" type="application/rss+xml" title="@siteTitle" href="@siteFeed" />
@@ -71,7 +70,7 @@
     <script src="~/themes/standard/js/highlight.js" asp-append-version="true"></script>
     <script src="~/themes/standard/js/scripts.js" asp-append-version="true"></script>
     <script src="~/themes/standard/js/newsletter.js" asp-append-version="true"></script>
-
+    <script src="_framework/blazor.server.js"></script>
     @Html.Raw(Model.Blog.FooterScript)
     <partial name="../components/metadata.cshtml" />
 </body>
