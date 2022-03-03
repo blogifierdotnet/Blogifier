@@ -4,6 +4,13 @@
 
 <p>Text from Blazor Component</p>
 <p>@PostSlug</p>
+@if (CommentDTOs.Count > 0)
+{
+    foreach (var comment in CommentDTOs)
+    {
+        <p>@comment.MainComment.CommentContent</p>
+    }
+}
 
 @code {
     [Parameter] public string PostSlug { get; set; }
@@ -15,12 +22,12 @@
 
     protected async Task Load()
     {
-        CommentsDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
     }
 
     protected async Task UpdateComment(Comment comment)
     {
-        Toaster.Toast(await _http.PutAsJsonAsync<RegisterModel>("api/author/changepassword", Model));
+        await _http.PutAsJsonAsync<Comment>("api/comment/update", comment);
         await Load();
     }
 
