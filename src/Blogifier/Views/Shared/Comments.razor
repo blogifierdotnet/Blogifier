@@ -1,20 +1,32 @@
 @using Microsoft.AspNetCore.Components
 @using Blogifier.Shared
-@inject HttpClient _http
+@inject IHttpClientFactory ClientFactory
 
 <p>Text from Blazor Component</p>
-<p>@PostSlug</p>
-@if (CommentDTOs.Count > 0)
+<p>Slug=> @PostSlug</p>
+<p>Base=> @HttpBase</p>
+@if (CommentDTOs is not null)
 {
-    foreach (var comment in CommentDTOs)
+    if (CommentDTOs.Count > 0)
     {
-        <p>@comment.MainComment.CommentContent</p>
+        foreach (var comment in CommentDTOs)
+        {
+            <p>@comment.MainComment.CommentContent</p>
+        }
     }
+    else
+    {
+        <p> No comments yet</p>
+    }
+
 }
+
 
 @code {
     [Parameter] public string PostSlug { get; set; }
     public List<CommentDTO> CommentDTOs { get; set; }
+    public string HttpBase { get; set; }
+    private HttpClient _http { get; set; }
     protected override async Task OnInitializedAsync()
     {
         await Load();
@@ -22,6 +34,8 @@
 
     protected async Task Load()
     {
+        var _http = ClientFactory.CreateClient("Local");
+        HttpBase = _http.BaseAddress.ToString();
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
     }
 

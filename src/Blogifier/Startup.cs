@@ -1,3 +1,4 @@
+using System.Reflection;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -70,6 +71,11 @@ namespace Blogifier
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
+
+            services.AddHttpClient("Local", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]);
+            });
 
             services.AddBlogDatabase(Configuration);
 

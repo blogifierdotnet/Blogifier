@@ -40,9 +40,9 @@ namespace Blogifier.Core.Providers
         }
         public async Task<IEnumerable<CommentDTO>> GetCommentsBySlug(string slug)
         {
+            int tempId;
             var commentDTOs = new List<CommentDTO>();
             var tempPost = await _db.Posts.AsNoTracking().Where(p => p.Slug == slug).FirstOrDefaultAsync();
-            int tempId;
             try { tempId = tempPost.Id; }
             finally
             {
@@ -50,7 +50,7 @@ namespace Blogifier.Core.Providers
                     ((IDisposable)tempPost).Dispose();
             }
 
-            System.Console.WriteLine(tempId);
+            System.Console.WriteLine("Post ID =>" + tempId);
             return await GetCommentsById(tempId);
         }
 
