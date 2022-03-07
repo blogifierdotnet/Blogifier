@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Blogifier.Shared
 {
-    public class Post : IDisposable
+    public class Post
     {
         public Post() { }
 
@@ -40,30 +40,6 @@ namespace Blogifier.Shared
         public Blog Blog { get; set; }
         public List<PostCategory> PostCategories { get; set; }
         public List<Comment> Comments { get; set; }
-        // Flag: Has Dispose already been called?
-        bool disposed = false;
-        // Instantiate a SafeHandle instance.
-        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
 
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
-            {
-                handle.Dispose();
-                // Free any other managed objects here.
-                //
-            }
-
-            disposed = true;
-        }
     }
 }

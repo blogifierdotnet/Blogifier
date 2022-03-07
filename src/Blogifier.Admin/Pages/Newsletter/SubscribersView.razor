@@ -3,7 +3,7 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<PageTitle Title="@_localizer["subscribers"]" />
+<CustomPageTitle Title="@_localizer["subscribers"]" />
 
 <h1 class="section-title">@_localizer["subscribers"]</h1>
 <div class="section-content">
@@ -24,9 +24,12 @@
                     }
                     <span class="list-title">@title</span>
                     <span class="list-text">@pubDate</span>
-                    <button class="list-btn" @onclick="(async () => await RemoveSubscription(subscriber.Id))" data-bs-toggle="tooltip" title="@_localizer["remove"]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x text-danger" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    <button class="list-btn" @onclick="(async () => await RemoveSubscription(subscriber.Id))"
+                data-bs-toggle="tooltip" title="@_localizer["remove"]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-x text-danger" viewBox="0 0 16 16">
+                            <path
+                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                         </svg>
                     </button>
                 </li>

@@ -4,7 +4,7 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<Resource> _localizer
 
-<PageTitle Title="@_localizer["login"]" />
+<CustomPageTitle Title="@_localizer["login"]" />
 
 @if (showError)
 {
@@ -16,12 +16,14 @@
     <EditForm Model="@model" OnValidSubmit="LoginUser">
         <DataAnnotationsValidator />
         <div class="form-floating form-item">
-            <input @bind="model.Email" type="email" class="form-control" id="loginEmail" placeholder="@_localizer["email"]" autofocus>
+            <input @bind="model.Email" type="email" class="form-control" id="loginEmail" placeholder="@_localizer["email"]"
+            autofocus>
             <label for="loginEmail">@_localizer["email"]</label>
             <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
         </div>
         <div class="form-floating form-item">
-            <input @bind="model.Password" type="password" class="form-control" id="loginPassword" placeholder="@_localizer["password"]">
+            <input @bind="model.Password" type="password" class="form-control" id="loginPassword"
+            placeholder="@_localizer["password"]">
             <label for="loginPassword">@_localizer["password"]</label>
             <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
         </div>

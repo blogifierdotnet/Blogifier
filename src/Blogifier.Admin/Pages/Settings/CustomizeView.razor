@@ -4,13 +4,13 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
-<PageTitle Title="@_localizer["customize"]" />
+<CustomPageTitle Title="@_localizer["customize"]" />
 
 <h1 class="section-title">@_localizer["customization"]</h1>
 <p class="section-desc w-75">@_localizer["theme-customization-desc"]</p>
 <div class="section-content">
-    <SettingsComponent @ref="ChildSettings" />
-    <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
+   <SettingsComponent @ref="ChildSettings" />
+   <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
 
 </div>
 

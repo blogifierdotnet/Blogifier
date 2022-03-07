@@ -42,14 +42,13 @@ namespace Blogifier.Core.Providers
         {
             int tempId;
             var commentDTOs = new List<CommentDTO>();
-            var tempPost = await _db.Posts.AsNoTracking().Where(p => p.Slug == slug).FirstOrDefaultAsync();
-            try { tempId = tempPost.Id; }
-            finally
-            {
-                if (tempPost is not null)
-                    ((IDisposable)tempPost).Dispose();
-            }
-
+            var tempPost = await _db.Posts.AsNoTracking()
+                                .Select(p => new { Id = p.Id, Slug = p.Slug })
+                                .Where(item => item.Slug == slug).FirstOrDefaultAsync();
+            if (tempPost is not null)
+            { tempId = tempPost.Id; }
+            else
+            { return null; }
             System.Console.WriteLine("Post ID =>" + tempId);
             return await GetCommentsById(tempId);
         }

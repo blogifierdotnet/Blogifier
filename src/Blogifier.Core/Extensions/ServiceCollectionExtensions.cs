@@ -30,8 +30,8 @@ namespace Blogifier.Core.Extensions
                 services.AddDbContextPool<AppDbContext>(
                     dbContextOptions => dbContextOptions.UseMySql(
                         section.GetValue<string>("ConnString"),
-                        new MySqlServerVersion(new Version(8, 0, 21)),
-                        mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend)
+                        new MySqlServerVersion(new Version(8, 0, 21))
+                    //mySqlOptions => mySqlOptions.HasCharSet((string)null, DelegationModes.ApplyToAll)
                     )
                 );
             }

@@ -1,6 +1,7 @@
 using System.Security.AccessControl;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sotsera.Blazor.Toaster.Core.Models;
@@ -17,20 +18,12 @@ namespace Blogifier.Admin
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
+            //builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddLocalization();
 
             builder.Services.AddOptions();
-            // builder.Services.AddOidcAuthentication(
-            //     options =>
-            //     {
-            //         builder.Configuration.Bind("OpenIDOption", options.ProviderOptions);
-            //         options.ProviderOptions.DefaultScopes.Add("profile");
-            //         options.ProviderOptions.DefaultScopes.Add("avatar");
-            //         options.ProviderOptions.DefaultScopes.Add("email");
-            //         options.ProviderOptions.DefaultScopes.Add("comments.read");
-            //     }
-            // );
+
             builder.Services.AddAuthorizationCore();
 
             builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthenticationStateProvider>();

@@ -4,7 +4,7 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<Resource> _localizer
 
-<PageTitle Title="@_localizer["register"]" />
+<CustomPageTitle Title="@_localizer["register"]" />
 
 <div class="account-header">
     <h2 class="account-title text-lg-center">@_localizer["welcome-blogifier"]</h2>
@@ -20,7 +20,8 @@
     <EditForm Model="@model" OnValidSubmit="RegisterUser">
         <DataAnnotationsValidator />
         <div class="form-floating form-item">
-            <input @bind="model.Email" id="registerEmail" class="form-control" type="email" placeholder="@_localizer["email"]" autofocus>
+            <input @bind="model.Email" id="registerEmail" class="form-control" type="email"
+            placeholder="@_localizer["email"]" autofocus>
             <label for="registerEmail">@_localizer["email"]</label>
             <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
         </div>
@@ -30,12 +31,14 @@
             <ValidationMessage For="@(() => model.Name)"></ValidationMessage>
         </div>
         <div class="form-floating form-item">
-            <input @bind="model.Password" id="registerPassword" class="form-control" type="password" placeholder="@_localizer["password"]">
+            <input @bind="model.Password" id="registerPassword" class="form-control" type="password"
+            placeholder="@_localizer["password"]">
             <label for="registerPassword">@_localizer["password"]</label>
             <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
         </div>
         <div class="form-floating form-item">
-            <input @bind="model.PasswordConfirm" id="registerConfirmPassword" class="form-control" type="password" placeholder="@_localizer["confirm-password"]">
+            <input @bind="model.PasswordConfirm" id="registerConfirmPassword" class="form-control" type="password"
+            placeholder="@_localizer["confirm-password"]">
             <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
             <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
         </div>

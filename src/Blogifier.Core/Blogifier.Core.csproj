@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Version>2.9.1.4</Version>
 		<Authors>blogifierdotnet</Authors>
 		<Description>Blogifier is an open-source publishing platform Written in .NET 5.0 and Blazor WebAssembly.</Description>
@@ -12,20 +12,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="IdentityModel" Version="5.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+		<PackageReference Include="IdentityModel" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.2" />
 		<PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
 		<PackageReference Include="NETCore.MailKit" Version="2.0.3" />
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00905" />
-		<PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.2-mauipre.1.22102.15" />
 		<PackageReference Include="ReverseMarkdown" Version="3.14.0" />
 		<PackageReference Include="Markdig" Version="0.22.1" />
 	</ItemGroup>

@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="IdentityModel" Version="5.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.11" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.1" />
+		<PackageReference Include="IdentityModel" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00905" />
-		<PackageReference Include="System.ServiceModel.Syndication" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="System.ServiceModel.Syndication" Version="6.0.2-mauipre.1.22102.15" />
 	</ItemGroup>
 
 	<ItemGroup>

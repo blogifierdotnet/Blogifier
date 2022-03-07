@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Blogifier.Core.Data.Migrations
 {
-    public partial class CommentAdded : Migration
+    public partial class CommentRelated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,8 +34,7 @@ namespace Blogifier.Core.Data.Migrations
                     Hidden = table.Column<bool>(type: "INTEGER", nullable: false),
                     CommentLiked = table.Column<int>(type: "INTEGER", nullable: false),
                     CommentDisliked = table.Column<int>(type: "INTEGER", nullable: false),
-                    ParentId = table.Column<long>(type: "INTEGER", nullable: true),
-                    PostId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                    ParentId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,23 +45,12 @@ namespace Blogifier.Core.Data.Migrations
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comments_Posts_PostId1",
-                        column: x => x.PostId1,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostId1",
-                table: "Comments",
-                column: "PostId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

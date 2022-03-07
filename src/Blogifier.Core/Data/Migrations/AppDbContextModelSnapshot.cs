@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
@@ -13,8 +15,7 @@ namespace Blogifier.Core.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
 
             modelBuilder.Entity("Blogifier.Shared.Author", b =>
                 {
@@ -185,17 +186,12 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PostId1")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("PostId1");
 
                     b.ToTable("Comments");
                 });
@@ -422,15 +418,13 @@ namespace Blogifier.Core.Data.Migrations
 
             modelBuilder.Entity("Blogifier.Shared.Comment", b =>
                 {
-                    b.HasOne("Blogifier.Shared.Post", null)
-                        .WithMany()
+                    b.HasOne("Blogifier.Shared.Post", "Post")
+                        .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Blogifier.Shared.Post", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId1");
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Blogifier.Shared.MailSetting", b =>

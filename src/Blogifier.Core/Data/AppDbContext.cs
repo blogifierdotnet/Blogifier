@@ -39,8 +39,8 @@ namespace Blogifier.Core.Data
                 .HasForeignKey(pt => pt.CategoryId);
 
             modelBuilder.Entity<Comment>()
-                .HasOne<Post>()
-                .WithMany()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PostId);
 
             string sql = "getdate()";
