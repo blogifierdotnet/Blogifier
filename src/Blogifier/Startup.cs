@@ -80,10 +80,11 @@ namespace Blogifier
             services.AddBlogDatabase(Configuration);
 
             services.AddBlogProviders();
-            services.AddScoped(sp => new HttpClient());
-            services.AddControllersWithViews();
+            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]) });
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddControllersWithViews();
+
             Log.Warning("Done configure services");
         }
 
@@ -98,7 +99,7 @@ namespace Blogifier
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            // app.UsePathBase("/themes/standard");
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -116,9 +117,9 @@ namespace Blogifier
                       pattern: "{controller=Home}/{action=Index}/{id?}"
                  );
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
                 endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
                 endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
-                endpoints.MapBlazorHub();
             });
         }
     }

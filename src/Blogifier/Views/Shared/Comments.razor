@@ -44,5 +44,36 @@
         await _http.PutAsJsonAsync<Comment>("api/comment/update", comment);
         await Load();
     }
-
 }
+
+@* <div class="col-md-12">
+    <MarkdownEditor Value="@markdownValue" ValueChanged="@OnMarkdownValueChanged"
+    ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
+
+    <hr />
+
+    <h3>Result</h3>
+    @((MarkupString)markdownHtml)
+    </div>
+
+    @code {
+    string markdownValue = "#Markdown Editor\nThis is a test";
+    string markdownHtml;
+
+    protected override void OnInitialized()
+    {
+    markdownHtml = Markdig.Markdown.ToHtml(markdownValue ?? string.Empty);
+    base.OnInitialized();
+    }
+
+    Task OnMarkdownValueChanged(string value)
+    {
+    return Task.CompletedTask;
+    }
+
+    Task OnMarkdownValueHTMLChanged(string value)
+    {
+    markdownHtml = value;
+    return Task.CompletedTask;
+    }
+    } *@
