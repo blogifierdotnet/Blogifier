@@ -229,7 +229,7 @@
         <value>Correo electrónico</value>
     </data>
     <data name="user-bio" xml:space="preserve">
-        <value>Información biográfica</value>
+        <value>Biografía del usuario</value>
     </data>
     <data name="avatar" xml:space="preserve">
         <value>Imagen de perfil</value>
@@ -302,5 +302,374 @@
     </data>
     <data name="quick-links" xml:space="preserve">
         <value>Enlaces</value>
+    </data>
+    <data name="30-days" xml:space="preserve">
+        <value>30 días</value>
+    </data>
+    <data name="7-days" xml:space="preserve">
+        <value>7 días</value>
+    </data>
+    <data name="90-days" xml:space="preserve">
+        <value>90 días</value>
+    </data>
+    <data name="About Blogifier" xml:space="preserve">
+        <value>Sobre Blogfier</value>
+    </data>
+    <data name="about-blogifier" xml:space="preserve">
+        <value>Sobre Blogfier</value>
+    </data>
+    <data name="Action" xml:space="preserve">
+        <value>Acción</value>
+    </data>
+    <data name="actions" xml:space="preserve">
+        <value>Acciones</value>
+    </data>
+    <data name="add-category" xml:space="preserve">
+        <value>Añadir categoría</value>
+    </data>
+    <data name="add-user" xml:space="preserve">
+        <value>Añadir usuario</value>
+    </data>
+    <data name="admin" xml:space="preserve">
+        <value>Admin</value>
+    </data>
+    <data name="advanced" xml:space="preserve">
+        <value>Avanzado</value>
+    </data>
+    <data name="Advanced settings" xml:space="preserve">
+        <value>Ajustes avanzados</value>
+    </data>
+    <data name="advanced-settings" xml:space="preserve">
+        <value>Ajustes Avanzados</value>
+    </data>
+    <data name="author" xml:space="preserve">
+        <value>Autor</value>
+    </data>
+    <data name="back-to-website" xml:space="preserve">
+        <value>Volver al sitio web</value>
+    </data>
+    <data name="basic" xml:space="preserve">
+        <value>Básico</value>
+    </data>
+    <data name="basic-settings" xml:space="preserve">
+        <value>Ajustes básicos</value>
+    </data>
+    <data name="blog" xml:space="preserve">
+        <value>Blog</value>
+    </data>
+    <data name="blog-settings" xml:space="preserve">
+        <value>Ajustes del blog</value>
+    </data>
+    <data name="blogifier-desc" xml:space="preserve">
+        <value>Blogifier es una plataforma de publicación de código abierto construida usando las últimas tecnologías de .NET Core 5.</value>
+    </data>
+    <data name="change" xml:space="preserve">
+        <value>Cambiar</value>
+    </data>
+    <data name="chart" xml:space="preserve">
+        <value>Gráfico</value>
+    </data>
+    <data name="comments" xml:space="preserve">
+        <value>Comentarios</value>
+    </data>
+    <data name="comments-settings" xml:space="preserve">
+        <value>Configuraciones de comentarios</value>
+    </data>
+    <data name="completed" xml:space="preserve">
+        <value>Completado</value>
+    </data>
+    <data name="confirm-delete" xml:space="preserve">
+        <value>Borrar post?</value>
+    </data>
+    <data name="contact" xml:space="preserve">
+        <value>Contacto</value>
+    </data>
+    <data name="content" xml:space="preserve">
+        <value>Contenido</value>
+    </data>
+    <data name="copyright" xml:space="preserve">
+        <value>Derechos de autor</value>
+    </data>
+    <data name="create-admin-account" xml:space="preserve">
+        <value>Crear cuenta de administrador</value>
+    </data>
+    <data name="current" xml:space="preserve">
+        <value>Actual</value>
+    </data>
+    <data name="custom-field" xml:space="preserve">
+        <value>Campo personalizado</value>
+    </data>
+    <data name="customization" xml:space="preserve">
+        <value>Personalización</value>
+    </data>
+    <data name="customize" xml:space="preserve">
+        <value>Personalizar</value>
+    </data>
+    <data name="database-provider" xml:space="preserve">
+        <value>Proveedor  de base de datos</value>
+    </data>
+    <data name="date" xml:space="preserve">
+        <value>Fecha</value>
+    </data>
+    <data name="days" xml:space="preserve">
+        <value>Días</value>
+    </data>
+    <data name="default-cover" xml:space="preserve">
+        <value>Portada por defecto</value>
+    </data>
+    <data name="demo-disabled" xml:space="preserve">
+        <value>Deshabilitado en modo demo</value>
+    </data>
+    <data name="developer" xml:space="preserve">
+        <value>Desarrollador</value>
+    </data>
+    <data name="details" xml:space="preserve">
+        <value>Detalles</value>
+    </data>
+    <data name="disabled" xml:space="preserve">
+        <value>Deshabilitado</value>
+    </data>
+    <data name="disqus-info" xml:space="preserve">
+        <value>Aquí puedes insertar o actualizar el sitio, así como el script, para añadir comentarios de Disqus.</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>Editar</value>
+    </data>
+    <data name="drive" xml:space="preserve">
+        <value>Archivo</value>
+    </data>
+    <data name="Edit profile" xml:space="preserve">
+        <value>Editar perfil</value>
+    </data>
+    <data name="edit-category" xml:space="preserve">
+        <value>Editar categoría</value>
+    </data>
+    <data name="edit-profile" xml:space="preserve">
+        <value>Editar perfil</value>
+    </data>
+    <data name="email-info" xml:space="preserve">
+        <value>Aquí puedes chequear las configuraciones del newsletter enviando un email.</value>
+    </data>
+    <data name="email-provider" xml:space="preserve">
+        <value>Proveedor de email.</value>
+    </data>
+    <data name="email-sent-count" xml:space="preserve">
+        <value>{0} newslettters enviados.</value>
+    </data>
+    <data name="email-sent-error" xml:space="preserve">
+        <value>Ocurrió un error al enviar el email, revisa los logs para ver los detalles.</value>
+    </data>
+    <data name="email-sent-success" xml:space="preserve">
+        <value>Email enviado correctamente</value>
+    </data>
+    <data name="empty" xml:space="preserve">
+        <value>Vacío</value>
+    </data>
+    <data name="enabled" xml:space="preserve">
+        <value>Habilitado</value>
+    </data>
+    <data name="error-msg" xml:space="preserve">
+        <value>Lo siento, algo salió mal o la dirección está vacía.</value>
+    </data>
+    <data name="error-page" xml:space="preserve">
+        <value>Página de error</value>
+    </data>
+    <data name="from-email" xml:space="preserve">
+        <value>desde-email</value>
+    </data>
+    <data name="from-name" xml:space="preserve">
+        <value>desde-nombre</value>
+    </data>
+    <data name="generic-error" xml:space="preserve">
+        <value>Algo salió mal, intenta otra vez.</value>
+    </data>
+    <data name="home" xml:space="preserve">
+        <value>Inicio</value>
+    </data>
+    <data name="home-page" xml:space="preserve">
+        <value>Página de inicio</value>
+    </data>
+    <data name="import-all" xml:space="preserve">
+        <value>Importar todo</value>
+    </data>
+    <data name="import-message-found" xml:space="preserve">
+        <value>Se encontraron publicaciones y están listas para importarse.</value>
+    </data>
+    <data name="include-featured" xml:space="preserve">
+        <value>Incluir destacado en la lista.</value>
+    </data>
+    <data name="include-scripts" xml:space="preserve">
+        <value>Scripts para incluir en el header y footer del sitio (Disqus, Analytics etc.)</value>
+    </data>
+    <data name="last-month" xml:space="preserve">
+        <value>Último més</value>
+    </data>
+    <data name="last-week" xml:space="preserve">
+        <value>Última semana</value>
+    </data>
+    <data name="learn-more" xml:space="preserve">
+        <value>Más información</value>
+    </data>
+    <data name="list" xml:space="preserve">
+        <value>Lista</value>
+    </data>
+    <data name="list-is-empty" xml:space="preserve">
+        <value>Nada por aquí - esta lista está vacía.</value>
+    </data>
+    <data name="load" xml:space="preserve">
+        <value>Cargar</value>
+    </data>
+    <data name="login" xml:space="preserve">
+        <value>Iniciar sesión</value>
+    </data>
+    <data name="login-failed" xml:space="preserve">
+        <value>Inicio de sesión fallido, intenta otra vez.</value>
+    </data>
+    <data name="logout" xml:space="preserve">
+        <value>Cerrar sesión</value>
+    </data>
+    <data name="new-category" xml:space="preserve">
+        <value>Nueva categoría</value>
+    </data>
+    <data name="new-page" xml:space="preserve">
+        <value>Nueva página</value>
+    </data>
+    <data name="newsletter-settings" xml:space="preserve">
+        <value>Configuraciones del Newsletter.</value>
+    </data>
+    <data name="newsletter-subscribers" xml:space="preserve">
+        <value>Lista de suscriptores de email.</value>
+    </data>
+    <data name="next" xml:space="preserve">
+        <value>Siguiente</value>
+    </data>
+    <data name="next-page" xml:space="preserve">
+        <value>Siguiente página</value>
+    </data>
+    <data name="not-featured" xml:space="preserve">
+        <value>No implementado</value>
+    </data>
+    <data name="operating-system" xml:space="preserve">
+        <value>Sistema Operativo</value>
+    </data>
+    <data name="page-not-found" xml:space="preserve">
+        <value>Página no encontrada</value>
+    </data>
+    <data name="page-title" xml:space="preserve">
+        <value>Título de la página</value>
+    </data>
+    <data name="pages" xml:space="preserve">
+        <value>Páginas</value>
+    </data>
+    <data name="port" xml:space="preserve">
+        <value>Puerto</value>
+    </data>
+    <data name="post-title" xml:space="preserve">
+        <value>Título de la entrada</value>
+    </data>
+    <data name="previous" xml:space="preserve">
+        <value>Anterior</value>
+    </data>
+    <data name="previous-page" xml:space="preserve">
+        <value>Página anterior</value>
+    </data>
+    <data name="profile-picture" xml:space="preserve">
+        <value>Imágen de perfil</value>
+    </data>
+    <data name="read-more" xml:space="preserve">
+        <value>Más información</value>
+    </data>
+    <data name="register" xml:space="preserve">
+        <value>Registrarse</value>
+    </data>
+    <data name="registration" xml:space="preserve">
+        <value>Registro</value>
+    </data>
+    <data name="resend" xml:space="preserve">
+        <value>Reenviar</value>
+    </data>
+    <data name="reset" xml:space="preserve">
+        <value>Restablecer</value>
+    </data>
+    <data name="send-test-email" xml:space="preserve">
+        <value>Enviar al email de tests</value>
+    </data>
+    <data name="send-to" xml:space="preserve">
+        <value>Enviar a</value>
+    </data>
+    <data name="set-current-theme" xml:space="preserve">
+        <value>Establecer como tema actual</value>
+    </data>
+    <data name="share" xml:space="preserve">
+        <value>Compartir</value>
+    </data>
+    <data name="specification" xml:space="preserve">
+        <value>Especificación</value>
+    </data>
+    <data name="subject" xml:space="preserve">
+        <value>Asunto</value>
+    </data>
+    <data name="subscribe" xml:space="preserve">
+        <value>Suscribirse</value>
+    </data>
+    <data name="subscribers" xml:space="preserve">
+        <value>Suscriptores</value>
+    </data>
+    <data name="thank-you" xml:space="preserve">
+        <value>¡Gracias!</value>
+    </data>
+    <data name="theme-customization-desc" xml:space="preserve">
+        <value>Cada tema tiene diferentes características. Estás configurando tu tema actual y los cambios actuales solo aplicarán al mismo.</value>
+    </data>
+    <data name="title-content-required" xml:space="preserve">
+        <value>Título y contenido son requeridos.</value>
+    </data>
+    <data name="today" xml:space="preserve">
+        <value>Hoy</value>
+    </data>
+    <data name="type-here" xml:space="preserve">
+        <value>Escribe aquí...</value>
+    </data>
+    <data name="under-development" xml:space="preserve">
+        <value>Actualmente en desarrollo</value>
+    </data>
+    <data name="unsubscribe" xml:space="preserve">
+        <value>Desuscribirse</value>
+    </data>
+    <data name="user" xml:space="preserve">
+        <value>Usuario</value>
+    </data>
+    <data name="users-settings" xml:space="preserve">
+        <value>Configuraciones del usuario</value>
+    </data>
+    <data name="version" xml:space="preserve">
+        <value>Versión</value>
+    </data>
+    <data name="views" xml:space="preserve">
+        <value>Vistas</value>
+    </data>
+    <data name="visits" xml:space="preserve">
+        <value>Visitas</value>
+    </data>
+    <data name="website" xml:space="preserve">
+        <value>Sitio web</value>
+    </data>
+    <data name="website-URL" xml:space="preserve">
+        <value>Url del sitio web</value>
+    </data>
+    <data name="welcome" xml:space="preserve">
+        <value>Bienvenida</value>
+    </data>
+    <data name="welcome-blogifier" xml:space="preserve">
+        <value>Bienvenido a blogifier</value>
+    </data>
+    <data name="yesterday" xml:space="preserve">
+        <value>Ayer</value>
+    </data>
+    <data name="you-can-register" xml:space="preserve">
+        <value>Puedes registrarte o &lt;a href="/"&gt;volver al blog&lt;/a&gt;</value>
+    </data>
+    <data name="you-can-sign-in" xml:space="preserve">
+        <value>También puedes iniciar sesión o&lt;a href="/"&gt;volver al blog&lt;/a&gt;</value>
     </data>
 </root>
