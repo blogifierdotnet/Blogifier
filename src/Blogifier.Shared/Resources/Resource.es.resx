@@ -139,10 +139,10 @@
         <value>Importar</value>
     </data>
     <data name="new-post" xml:space="preserve">
-        <value>Nueva Entrada</value>
+        <value>Nuevo post</value>
     </data>
     <data name="posts" xml:space="preserve">
-        <value>Entradas</value>
+        <value>Posts</value>
     </data>
     <data name="settings" xml:space="preserve">
         <value>Ajustes</value>
@@ -311,9 +311,6 @@
     </data>
     <data name="90-days" xml:space="preserve">
         <value>90 días</value>
-    </data>
-    <data name="About Blogifier" xml:space="preserve">
-        <value>Sobre Blogfier</value>
     </data>
     <data name="about-blogifier" xml:space="preserve">
         <value>Sobre Blogfier</value>
@@ -565,7 +562,7 @@
         <value>Puerto</value>
     </data>
     <data name="post-title" xml:space="preserve">
-        <value>Título de la entrada</value>
+        <value>Título del post</value>
     </data>
     <data name="previous" xml:space="preserve">
         <value>Anterior</value>
