@@ -22,6 +22,9 @@
 }
 
 
+@* <textarea rows="10" cols="100" id="comment-area" onchange="logit()"> </textarea> *@
+<textarea rows="10" cols="100" title="comment"> </textarea>
+
 @code {
     [Parameter] public string PostSlug { get; set; }
     public List<CommentDTO> CommentDTOs { get; set; }
