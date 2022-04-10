@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Components
 @using Blogifier.Shared
+@inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 
 <p>Text from Blazor Component</p>
@@ -22,11 +23,13 @@
 }
 
 
-@* <textarea rows="10" cols="100" id="comment-area" onchange="logit()"> </textarea> *@
-<textarea rows="10" cols="100" title="comment"> </textarea>
+<textarea rows="10" cols="100" id="comment-area" onchange="logit()"> </textarea>
+@* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
 
 @code {
     [Parameter] public string PostSlug { get; set; }
+    [Parameter] public string Content { get; set; }
+    [Parameter] public string Toolbar { get; set; }
     public List<CommentDTO> CommentDTOs { get; set; }
     public string HttpBase { get; set; }
     private HttpClient _http { get; set; }
@@ -46,6 +49,15 @@
     {
         await _http.PutAsJsonAsync<Comment>("api/comment/update", comment);
         await Load();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+        }
+
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
     }
 }
 

@@ -12,6 +12,8 @@
     var catUrl = Url.Content("~/categories");
     var currentPath = this.Context.Request.Path.ToString().Split("/");
     var currentSlug = currentPath[currentPath.Count() - 1];
+    string Toolbar = "miniToolbar";
+    string Temp = "Temparory Content";
 }
 
 <main class="post-detail">
@@ -87,7 +89,9 @@
             -->
             <partial name="post/author.cshtml" />
 
-            <component type="typeof(Comments)" render-mode="ServerPrerendered" param-PostSlug="@currentSlug" />
+            <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
+                param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp" />
+            @* <component type="typeof(Comments)" render-mode="ServerPrerendered" /> *@
             </cust>
         </footer>
 
