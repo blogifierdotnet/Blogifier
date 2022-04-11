@@ -19,11 +19,16 @@ namespace Blogifier.Shared
     {
         Save, Publish, Unpublish
     }
+    public enum CommentAction
+    {
+        Upload, Eidt
+    }
 
     public enum PostType
     {
         Post = 1, Page = 2
     }
+
 
     public enum SaveStatus
     {

@@ -1,0 +1,81 @@
+@using Microsoft.AspNetCore.Components
+@using Microsoft.Extensions.Localization
+@using System.Security.Claims
+@using Blogifier.Shared
+@using Blogifier.Shared.Resources
+
+@inject IJSRuntime JSRuntime
+@inject IHttpClientFactory ClientFactory
+@inject IStringLocalizer<Resource> _localizer
+
+<textarea rows="10" cols="100" id="comment-area"> </textarea>
+@* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
+
+<button type=" button" class="btn btn-blogifier me-3 px-4"
+    @onclick="() => UploadComment()">@_localizer["comment"]</button>
+<button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
+    @onclick:preventDefault>@_localizer["cancel"]</button>
+
+@code {
+    [Parameter] public string PostSlug { get; set; }
+    [Parameter] public string Content { get; set; }
+    [Parameter] public string Toolbar { get; set; }
+    [Parameter] public int PostId { get; set; }
+    protected Comment Comment { get; set; }
+    public string HttpBase { get; set; }
+    private HttpClient _http { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    protected async Task Load()
+    {
+        var _http = ClientFactory.CreateClient("Local");
+        HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
+        // var state = await BlogifierServerAuthStateProvider.GetAuthenticationStateAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+        }
+
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+    }
+    protected async Task SaveComment(CommentAction commentAction)
+    {
+        Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
+        Comment.PostId = PostId;
+        Comment.PostDate = DateTime.UtcNow;
+        if (commentAction == CommentAction.Eidt)
+        {
+            Comment.UpdatedDate = DateTime.UtcNow;
+            HttpResponseMessage updateResult = await _http.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
+            if (updateResult.IsSuccessStatusCode)
+            {
+                await Load();
+            }
+        }
+        HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
+        if (uploadResult.IsSuccessStatusCode)
+        {
+            await Load();
+        }
+    }
+    protected async Task UploadComment()
+    {
+        await SaveComment(CommentAction.Upload);
+    }
+    protected async Task EditComment()
+    {
+        await SaveComment(CommentAction.Eidt);
+    }
+    protected async Task CancelUpload()
+    {
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.clearEditorValue", "");
+    }
+}

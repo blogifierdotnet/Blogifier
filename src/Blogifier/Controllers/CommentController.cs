@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IdentityModel;
 
 namespace Blogifier.Controllers
 {
@@ -26,21 +27,27 @@ namespace Blogifier.Controllers
 
         [Authorize]
         [HttpPost("add")]
-        public async Task<ActionResult<bool>> AddComment(Comment comment)
+        public async Task<ActionResult<bool>> Add(Comment comment)
         {
+            System.Console.WriteLine("Front End pass !!!!!");
+            comment.CommentedUserId = User.FindFirst(c => c.Type == JwtClaimTypes.Subject).Value;
+            comment.CommentedUserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name).Value;
+            System.Console.WriteLine(comment.CommentedUserId);
+            System.Console.WriteLine(comment.CommentedUserName);
+            comment.Hidden = false;
             return await _commentProvider.Add(comment);
         }
 
         [Authorize]
         [HttpPut("update")]
-        public async Task<ActionResult<bool>> UpdateComment(Comment comment)
+        public async Task<ActionResult<bool>> Update(Comment comment)
         {
             return await _commentProvider.Update(comment);
         }
 
         [Authorize]
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<bool>> RemoveComment(int id)
+        public async Task<ActionResult<bool>> Remove(int id)
         {
             return await _commentProvider.Remove(id);
         }

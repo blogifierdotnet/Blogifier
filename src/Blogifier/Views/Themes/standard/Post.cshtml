@@ -12,8 +12,9 @@
     var catUrl = Url.Content("~/categories");
     var currentPath = this.Context.Request.Path.ToString().Split("/");
     var currentSlug = currentPath[currentPath.Count() - 1];
+    var currentPostId = post.Id;
     string Toolbar = "miniToolbar";
-    string Temp = "Temparory Content";
+    string Temp = "";
 }
 
 <main class="post-detail">
@@ -88,9 +89,19 @@
                 - post comments on or off (default)
             -->
             <partial name="post/author.cshtml" />
-
+            @if (User.Identity.IsAuthenticated)
+            {
+                <component type="typeof(CommentEditor)" render-mode="ServerPrerendered" class="visually-hidden"
+                param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
+                param-PostId="@currentPostId" />
+            }
+            else
+            {
+                <p>CLICK TO LOGIN</p>
+            }
             <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
-                param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp" />
+                param-PostSlug="@currentSlug" />
+
             @* <component type="typeof(Comments)" render-mode="ServerPrerendered" /> *@
             </cust>
         </footer>

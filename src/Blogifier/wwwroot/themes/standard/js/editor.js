@@ -149,6 +149,22 @@ const fullToolbar = [
   editorToolbar_fullscreen
 ];
 
+// const miniToolbar = [
+//   editorToolbar_heading,
+//   editorToolbar_bold,
+//   editorToolbar_strike,
+//   editorToolbar_italic,
+//   "|",
+//   editorToolbar_ol,
+//   editorToolbar_ul,
+//   "|",
+//   editorToolbar_hr,
+//   editorToolbar_link,
+//   editorToolbar_image,
+//   editorToolbar_video,
+//   "|",
+//   editorToolbar_preview,
+// ];
 const miniToolbar = [
   editorToolbar_heading,
   editorToolbar_bold,
@@ -161,7 +177,9 @@ const miniToolbar = [
   editorToolbar_hr,
   editorToolbar_link,
   editorToolbar_image,
-  editorToolbar_video,
+  editorToolbar_quote,
+  editorToolbar_code,
+  editorToolbar_table,
   "|",
   editorToolbar_preview,
 ];
@@ -332,6 +350,10 @@ window.commonJsFunctions = {
   },
   getEditorValue: function () {
     return easymde.value();
+  },
+  // Add Clear Value Function
+  clearEditorValue: function () {
+    easymde.value('');
   },
   showModal: function (id) {
     document.getElementById(id).showModal();

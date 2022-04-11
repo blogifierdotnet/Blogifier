@@ -29,8 +29,8 @@ namespace Blogifier
             else
             {
                 var identity = new ClaimsIdentity(new[]{
-                                    new Claim(ClaimTypes.Name, "Fake Status"),
-                                    }, "Fake authentication type");
+                                    new Claim(ClaimTypes.Name, "AnonymousVisitor"),
+                                    }, "AnonymousAuth");
 
                 var fakeUser = new ClaimsPrincipal(identity);
                 return new AuthenticationState(fakeUser);

@@ -49,6 +49,7 @@ namespace Blogifier.Controllers
             var author = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
             var post = postId == 0 ? new Post() : await _postProvider.GetPostById(postId);
 
+            // If image uploaded by visitor, change author.Id to Visitor Id
             var path = $"{author.Id}/{DateTime.Now.Year}/{DateTime.Now.Month}";
             var fileName = $"data/{path}/{file.FileName}";
 
