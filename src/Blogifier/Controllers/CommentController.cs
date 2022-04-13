@@ -22,6 +22,7 @@ namespace Blogifier.Controllers
         [HttpGet("{slug}")]
         public async Task<ActionResult<IEnumerable<CommentDTO>>> GetComments(string slug)
         {
+            // System.Console.WriteLine("Get OK");
             return new ActionResult<IEnumerable<CommentDTO>>(await _commentProvider.GetCommentsBySlug(slug));
         }
 

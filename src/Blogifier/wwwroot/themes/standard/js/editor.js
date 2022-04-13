@@ -380,6 +380,9 @@ window.commonJsFunctions = {
     }
     time();
     setInterval(time, 60 * 1000);
+  },
+  tempAlert: function (message) {
+    alert(message);
   }
 };
 

@@ -1,6 +1,7 @@
 @using Blogifier.Shared.Resources
 @using Blogifier.Shared
-@using Blogifier.Views.Shared
+@* @using Blogifier.Views.Shared *@
+@using Blogifier.Pages
 @using Microsoft.Extensions.Localization
 @using System.Collections.Generic
 @inject IStringLocalizer<Resource> _localizer
@@ -79,6 +80,7 @@
 
         <section class="post-content post-container">
             @Html.Raw(post.Content)
+            <p></p>
         </section>
 
         <footer class="post-footer post-container">

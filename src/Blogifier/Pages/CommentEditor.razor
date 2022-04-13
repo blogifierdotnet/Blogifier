@@ -2,16 +2,18 @@
 @using Microsoft.Extensions.Localization
 @using System.Security.Claims
 @using Blogifier.Shared
+@using Blogifier.Services
 @using Blogifier.Shared.Resources
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject IStringLocalizer<Resource> _localizer
+@inject IMessageService _commentsRenderTrigger
 
 <textarea rows="10" cols="100" id="comment-area"> </textarea>
 @* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
 
-<button type=" button" class="btn btn-blogifier me-3 px-4"
+<button type="button" class="btn btn-blogifier me-3 px-4"
     @onclick="() => UploadComment()">@_localizer["comment"]</button>
 <button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
     @onclick:preventDefault>@_localizer["cancel"]</button>
@@ -32,7 +34,8 @@
 
     protected async Task Load()
     {
-        var _http = ClientFactory.CreateClient("Local");
+        _http = ClientFactory.CreateClient("Local");
+        Comment = new Comment();
         HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
         // var state = await BlogifierServerAuthStateProvider.GetAuthenticationStateAsync();
     }
@@ -51,20 +54,30 @@
         Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
         Comment.PostId = PostId;
         Comment.PostDate = DateTime.UtcNow;
+        await AlertDeBug(Comment.CommentContent);
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
             HttpResponseMessage updateResult = await _http.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
             if (updateResult.IsSuccessStatusCode)
             {
+                _commentsRenderTrigger.SendMessage("refresh");
                 await Load();
             }
         }
-        HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
-        if (uploadResult.IsSuccessStatusCode)
+        else
         {
-            await Load();
+            HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
+            if (uploadResult.IsSuccessStatusCode)
+            {
+                await AlertDeBug(uploadResult.StatusCode.ToString());
+                //string temp = uploadResult.Content.ReadAsStringAsync();
+                _commentsRenderTrigger.SendMessage("refresh");
+                await Load();
+            }
+            else { await AlertDeBug("fail"); }
         }
+
     }
     protected async Task UploadComment()
     {
@@ -77,5 +90,9 @@
     protected async Task CancelUpload()
     {
         await JSRuntime.InvokeAsync<string>("commonJsFunctions.clearEditorValue", "");
+    }
+    protected async Task AlertDeBug(string info)
+    {
+        await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", info);
     }
 }

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Blogifier.Core.Extensions;
+using Blogifier.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,14 +77,16 @@ namespace Blogifier
             {
                 httpClient.BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]);
             });
+            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]) });
 
             services.AddBlogDatabase(Configuration);
-
             services.AddBlogProviders();
-            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]) });
+            services.AddSingleton<IMessageService, MessageService>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllersWithViews();
+            //Add Detailed Error information to client
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
             Log.Warning("Done configure services");
         }

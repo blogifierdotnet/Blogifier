@@ -2,9 +2,14 @@
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims
 @using Blogifier.Shared
+@using Blogifier.Services
+
+@implements IDisposable
+
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject AuthenticationStateProvider BlogifierServerAuthStateProvider
+@inject IMessageService _commentsRenderTrigger
 
 <p>Text from Blazor Component</p>
 <p>Slug=> @PostSlug</p>
@@ -35,7 +40,17 @@
     private HttpClient _http { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        _commentsRenderTrigger.OnMessage += MessageHandler;
         await Load();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "First Rendered");
+        }
+
+        await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "Not First Rendered");
     }
 
     protected async Task Load()
@@ -43,6 +58,16 @@
         var _http = ClientFactory.CreateClient("Local");
         HttpBase = _http.BaseAddress.ToString();
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+    }
+
+    public void Dispose()
+    {
+        // unsubscribe from OnMessage event
+        _commentsRenderTrigger.OnMessage -= MessageHandler;
+    }
+    private void MessageHandler(string message)
+    {
+        StateHasChanged();
     }
 
 }
