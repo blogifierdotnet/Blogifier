@@ -5,6 +5,7 @@
 @using Microsoft.Extensions.Localization
 @using System.Collections.Generic
 @inject IStringLocalizer<Resource> _localizer
+
 @{
     Layout = "layouts/_main.cshtml";
     PostModel postModel = (PostModel)Model;
@@ -90,18 +91,29 @@
                 - post author on or off (default)
                 - post comments on or off (default)
             -->
+
             <partial name="post/author.cshtml" />
+
             @if (User.Identity.IsAuthenticated)
             {
-                <component type="typeof(CommentEditor)" render-mode="ServerPrerendered" class="visually-hidden"
+                <component type="typeof(CommentEditor)" render-mode="Server" class="visually-hidden"
                 param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
                 param-PostId="@currentPostId" />
             }
+
             else
             {
                 <p>CLICK TO LOGIN</p>
             }
-            <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
+            <form method="post" asp-controller="Comment" asp-action="Add">
+                <div class="form-group">
+                    <input class="form-control" id="hidden-text" name="tempComment" value="" />
+                    @* <input class="form-control" id="hidden-text" hidden="true" name="currentpath" /> *@
+                </div>
+                <button type="button" class="btn" type="submit" role="button">@_localizer["comment"]</button>
+            </form>
+
+            <component type="typeof(Comments)" render-mode="Server" class="visually-hidden"
                 param-PostSlug="@currentSlug" />
 
             @* <component type="typeof(Comments)" render-mode="ServerPrerendered" /> *@

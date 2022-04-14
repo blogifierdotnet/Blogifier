@@ -48,6 +48,7 @@
         }
 
         await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.getTextToHiddenField", "");
     }
     protected async Task SaveComment(CommentAction commentAction)
     {

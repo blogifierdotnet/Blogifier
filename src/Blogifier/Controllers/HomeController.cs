@@ -68,20 +68,11 @@ namespace Blogifier.Controllers
         [HttpPost]
         public async Task<IActionResult> ExternalSignIn()
         {
-            // if (!string.IsNullOrEmpty(slug))
-            // {
-            //     return await getSingleBlogPost(slug);
-            // }
             var currentPath = Request.Form["currentpath"].ToString();
             var domain = $"{Request.Scheme}://{Request.Host}";
             var absolutePath = string.Equals(currentPath, "/") ? domain : domain + currentPath;
             var returnUri = new Uri(absolutePath);
             return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
-            // if (currentpath is null)
-            // {
-            //     return await Task.FromResult(Redirect("~/"));
-            // }
-            // return await Task.FromResult(Redirect(currentpath));
         }
 
         [HttpGet("/admin")]

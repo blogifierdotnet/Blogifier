@@ -11,7 +11,7 @@
 @inject AuthenticationStateProvider BlogifierServerAuthStateProvider
 @inject IMessageService _commentsRenderTrigger
 
-<p>Text from Blazor Component</p>
+<p>Text from Blazor Comment Component</p>
 <p>Slug=> @PostSlug</p>
 <p>Base=> @HttpBase</p>
 @if (CommentDTOs is not null)
@@ -43,6 +43,11 @@
         _commentsRenderTrigger.OnMessage += MessageHandler;
         await Load();
     }
+    public void Dispose()
+    {
+        // unsubscribe from OnMessage event
+        _commentsRenderTrigger.OnMessage -= MessageHandler;
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -60,11 +65,7 @@
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
     }
 
-    public void Dispose()
-    {
-        // unsubscribe from OnMessage event
-        _commentsRenderTrigger.OnMessage -= MessageHandler;
-    }
+
     private void MessageHandler(string message)
     {
         StateHasChanged();

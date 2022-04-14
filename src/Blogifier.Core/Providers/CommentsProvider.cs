@@ -49,7 +49,7 @@ namespace Blogifier.Core.Providers
             { tempId = tempPost.Id; }
             else
             { return null; }
-            System.Console.WriteLine("Post ID =>" + tempId);
+            // System.Console.WriteLine("Post ID => " + tempId);
             return await GetCommentsById(tempId);
         }
 

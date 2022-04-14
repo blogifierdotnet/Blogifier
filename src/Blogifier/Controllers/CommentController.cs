@@ -31,6 +31,8 @@ namespace Blogifier.Controllers
         public async Task<ActionResult<bool>> Add(Comment comment)
         {
             System.Console.WriteLine("Front End pass !!!!!");
+            var tempComment = Request.Form["tempComment"].ToString();
+            System.Console.WriteLine(tempComment);
             comment.CommentedUserId = User.FindFirst(c => c.Type == JwtClaimTypes.Subject).Value;
             comment.CommentedUserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name).Value;
             System.Console.WriteLine(comment.CommentedUserId);
