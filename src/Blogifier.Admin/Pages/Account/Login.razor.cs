@@ -1,39 +1,73 @@
-using Blogifier.Shared;
-using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Blogifier.Shared;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.JSInterop;
 
-namespace Blogifier.Admin.Pages.Account
+namespace Blogifier.Admin.Pages.Account;
+
+public partial class Login
 {
-	public partial class Login
-	{
-		public bool showError = false;
-		public LoginModel model = new LoginModel { Email = "", Password = "" };
+    private readonly LoginModel _model = new()
+    {
+        Email = "",
+        Password = "",
+        CaptchaResponse = ""
+    };
 
-        public async Task LoginUser()
-		{
-            var returnUrl = "admin/";
-            var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
 
-            if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var param))
-                returnUrl = param.First();
+    private bool _showError;
 
-			if(returnUrl.StartsWith("http"))
-				returnUrl = "admin/";
+    private async Task LoginUser()
+    {
+        var returnUrl = "admin/";
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
 
-            var result = await Http.PostAsJsonAsync<LoginModel>("api/author/login", model);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var param))
+            returnUrl = param.First();
 
-			if (result.IsSuccessStatusCode)
-			{
-				showError = false;
-				_navigationManager.NavigateTo(returnUrl, true);
-			}
-			else
-			{
-				showError = true;
-				StateHasChanged();
-			}
-		}
-	}
+        if (returnUrl.StartsWith("http"))
+            returnUrl = "admin/";
+
+        var result = await _http.PostAsJsonAsync("api/author/login", _model);
+
+        if (result.IsSuccessStatusCode)
+        {
+            _showError = false;
+            _navigationManager.NavigateTo(returnUrl, true);
+        }
+        else
+        {
+            _showError = true;
+            StateHasChanged();
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+            await _jsRuntime.InvokeAsync<int>("googleReCaptcha",
+                DotNetObjectReference.Create(this),
+                "recaptcha",
+                "api/captchakey?valueonly=true");
+    }
+
+    [JSInvokable]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnSuccess(string response)
+    {
+        _model.CaptchaResponse = response;
+    }
+
+
+    [JSInvokable]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnExpired(string response)
+    {
+        _model.CaptchaResponse = response;
+    }
 }
