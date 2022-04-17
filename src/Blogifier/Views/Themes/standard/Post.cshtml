@@ -4,6 +4,8 @@
 @using Blogifier.Pages
 @using Microsoft.Extensions.Localization
 @using System.Collections.Generic
+@using Microsoft.AspNetCore.Authentication
+
 @inject IStringLocalizer<Resource> _localizer
 
 @{
@@ -17,6 +19,7 @@
     var currentPostId = post.Id;
     string Toolbar = "miniToolbar";
     string Temp = "";
+    var token = await Url.ActionContext.HttpContext.GetTokenAsync("access_token");
 }
 
 <main class="post-detail">
@@ -94,11 +97,17 @@
 
             <partial name="post/author.cshtml" />
 
+            @foreach (var item in User.Claims)
+            {
+                <p>@item.Type -> @item.Value</p>
+            }
+            <p>@token</p>
+
             @if (User.Identity.IsAuthenticated)
             {
                 <component type="typeof(CommentEditor)" render-mode="Server" class="visually-hidden"
                 param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
-                param-PostId="@currentPostId" />
+                param-PostId="@currentPostId" param-Token="@token" />
             }
 
             else
@@ -115,8 +124,6 @@
 
             <component type="typeof(Comments)" render-mode="Server" class="visually-hidden"
                 param-PostSlug="@currentSlug" />
-
-            @* <component type="typeof(Comments)" render-mode="ServerPrerendered" /> *@
             </cust>
         </footer>
 

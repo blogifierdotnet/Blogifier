@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System;
@@ -67,6 +68,13 @@ namespace Blogifier
                 options.ClaimActions.MapJsonKey("role", "role");
                 //options.Events.OnSignedOutCallbackRedirect();
             });
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+            // services.AddAuthorization();
 
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
             {
@@ -83,7 +91,7 @@ namespace Blogifier
             services.AddBlogProviders();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            // services.AddServerSideBlazor();
             services.AddControllersWithViews();
             //Add Detailed Error information to client
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });

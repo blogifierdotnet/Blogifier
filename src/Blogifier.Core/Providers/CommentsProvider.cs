@@ -16,18 +16,18 @@ namespace Blogifier.Core.Providers
     {
         // Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType);
         // Task<List<Post>> SearchPosts(string term);
-        Task<IEnumerable<CommentDTO>> GetCommentsById(int id);
-        Task<IEnumerable<CommentDTO>> GetCommentsBySlug(string slug);
+        Task<List<CommentDTO>> GetCommentsById(int id);
+        Task<List<CommentDTO>> GetCommentsBySlug(string slug);
         // Task<string> GetSlugFromTitle(string title);
         Task<bool> Add(Comment comment);
         Task<bool> Update(Comment comment);
         // Task<bool> Publish(int id, bool publish);
         // Task<bool> Featured(int id, bool featured);
-        // Task<IEnumerable<PostItem>> GetPostItems();
+        // Task<List<PostItem>> GetPostItems();
         // Task<PostModel> GetPostModel(string slug);
-        // Task<IEnumerable<PostItem>> GetPopular(Pager pager, int author = 0);
-        // Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
-        // Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true);
+        // Task<List<PostItem>> GetPopular(Pager pager, int author = 0);
+        // Task<List<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
+        // Task<List<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true);
         Task<bool> Remove(int id);
     }
     public class CommentsProvider : ICommentsProvider
@@ -38,7 +38,7 @@ namespace Blogifier.Core.Providers
         {
             _db = db;
         }
-        public async Task<IEnumerable<CommentDTO>> GetCommentsBySlug(string slug)
+        public async Task<List<CommentDTO>> GetCommentsBySlug(string slug)
         {
             int tempId;
             var commentDTOs = new List<CommentDTO>();
@@ -53,7 +53,7 @@ namespace Blogifier.Core.Providers
             return await GetCommentsById(tempId);
         }
 
-        public async Task<IEnumerable<CommentDTO>> GetCommentsById(int id)
+        public async Task<List<CommentDTO>> GetCommentsById(int id)
         {
             var commentDTOs = new List<CommentDTO>();
             var mainComments = await _db.Comments.AsNoTracking()

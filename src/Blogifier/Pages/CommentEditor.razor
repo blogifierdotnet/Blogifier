@@ -4,11 +4,13 @@
 @using Blogifier.Shared
 @using Blogifier.Services
 @using Blogifier.Shared.Resources
+@using System.Net.Http.Headers
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IMessageService _commentsRenderTrigger
+@* @inject TokenProvider Service *@
 
 <textarea rows="10" cols="100" id="comment-area"> </textarea>
 @* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
@@ -18,15 +20,18 @@
 <button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
     @onclick:preventDefault>@_localizer["cancel"]</button>
 
+<p>---------------Token again----------------</p>
+<p>@Token</p>
+
 @code {
     [Parameter] public string PostSlug { get; set; }
     [Parameter] public string Content { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
+    [Parameter] public string Token { get; set; }
     protected Comment Comment { get; set; }
     public string HttpBase { get; set; }
     private HttpClient _http { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         await Load();
@@ -35,8 +40,10 @@
     protected async Task Load()
     {
         _http = ClientFactory.CreateClient("Local");
+        _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
         Comment = new Comment();
         HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
+
         // var state = await BlogifierServerAuthStateProvider.GetAuthenticationStateAsync();
     }
 
@@ -62,7 +69,7 @@
             HttpResponseMessage updateResult = await _http.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
             if (updateResult.IsSuccessStatusCode)
             {
-                _commentsRenderTrigger.SendMessage("refresh");
+                await _commentsRenderTrigger.SendMessage("refresh");
                 await Load();
             }
         }
@@ -73,10 +80,10 @@
             {
                 await AlertDeBug(uploadResult.StatusCode.ToString());
                 //string temp = uploadResult.Content.ReadAsStringAsync();
-                _commentsRenderTrigger.SendMessage("refresh");
+                await _commentsRenderTrigger.SendMessage("refresh");
                 await Load();
             }
-            else { await AlertDeBug("fail"); }
+            else { await AlertDeBug("Fail to Upload!!!"); }
         }
 
     }

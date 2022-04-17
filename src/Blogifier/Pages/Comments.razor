@@ -3,6 +3,7 @@
 @using System.Security.Claims
 @using Blogifier.Shared
 @using Blogifier.Services
+@using System.Collections.Generic
 
 @implements IDisposable
 
@@ -11,9 +12,9 @@
 @inject AuthenticationStateProvider BlogifierServerAuthStateProvider
 @inject IMessageService _commentsRenderTrigger
 
-<p>Text from Blazor Comment Component</p>
+<p>Text from Blazor Comments Show Component</p>
 <p>Slug=> @PostSlug</p>
-<p>Base=> @HttpBase</p>
+
 @if (CommentDTOs is not null)
 {
     if (CommentDTOs.Count > 0)
@@ -29,6 +30,7 @@
     }
 
 }
+
 
 
 
@@ -54,53 +56,20 @@
         {
             await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "First Rendered");
         }
-
         await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "Not First Rendered");
     }
 
     protected async Task Load()
     {
-        var _http = ClientFactory.CreateClient("Local");
-        HttpBase = _http.BaseAddress.ToString();
+        _http = ClientFactory.CreateClient("Local");
+        // HttpBase = _http.BaseAddress.ToString();
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
     }
 
-
-    private void MessageHandler(string message)
+    private async Task MessageHandler(string message)
     {
+        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+        // await InvokeAsync(() => { StateHasChanged(); });
         StateHasChanged();
     }
-
 }
-
-@* <div class="col-md-12">
-    <MarkdownEditor Value="@markdownValue" ValueChanged="@OnMarkdownValueChanged"
-    ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
-
-    <hr />
-
-    <h3>Result</h3>
-    @((MarkupString)markdownHtml)
-    </div>
-
-    @code {
-    string markdownValue = "#Markdown Editor\nThis is a test";
-    string markdownHtml;
-
-    protected override void OnInitialized()
-    {
-    markdownHtml = Markdig.Markdown.ToHtml(markdownValue ?? string.Empty);
-    base.OnInitialized();
-    }
-
-    Task OnMarkdownValueChanged(string value)
-    {
-    return Task.CompletedTask;
-    }
-
-    Task OnMarkdownValueHTMLChanged(string value)
-    {
-    markdownHtml = value;
-    return Task.CompletedTask;
-    }
-    } *@

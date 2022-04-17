@@ -1,26 +1,27 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Blogifier.Services
 {
     public interface IMessageService
     {
-        event Action<string> OnMessage;
-        void SendMessage(string message);
-        void ClearMessages();
+        event Func<string, Task> OnMessage;
+        Task SendMessage(string message);
+        Task ClearMessages();
     }
 
     public class MessageService : IMessageService
     {
-        public event Action<string> OnMessage;
+        public event Func<string, Task> OnMessage;
 
-        public void SendMessage(string message)
+        public async Task SendMessage(string message)
         {
-            OnMessage?.Invoke(message);
+            await OnMessage?.Invoke(message);
         }
 
-        public void ClearMessages()
+        public async Task ClearMessages()
         {
-            OnMessage?.Invoke(null);
+            await OnMessage?.Invoke(null);
         }
     }
 }
