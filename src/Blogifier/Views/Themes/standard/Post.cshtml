@@ -96,16 +96,13 @@
             -->
 
             <partial name="post/author.cshtml" />
+            @* <component type="typeof(App)" render-mode="ServerPrerendered" /> *@
 
-            @foreach (var item in User.Claims)
-            {
-                <p>@item.Type -> @item.Value</p>
-            }
-            <p>@token</p>
+
 
             @if (User.Identity.IsAuthenticated)
             {
-                <component type="typeof(CommentEditor)" render-mode="Server" class="visually-hidden"
+                <component type="typeof(CommentEditor)" render-mode="ServerPrerendered" class="visually-hidden"
                 param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
                 param-PostId="@currentPostId" param-Token="@token" />
             }
@@ -114,15 +111,25 @@
             {
                 <p>CLICK TO LOGIN</p>
             }
-            <form method="post" asp-controller="Comment" asp-action="Add">
+            @* <form method="post" asp-controller="Comment" asp-action="Add"
+                enctype="application/x-www-form-urlencoded"> *@
+            <form method="post" action="api/comment/add" enctype="multipart/form-data">
+
                 <div class="form-group">
-                    <input class="form-control" id="hidden-text" name="tempComment" value="" />
+                    <div>
+                        <label for="commentContent">CommentContent</label>
+                    </div>
+                    <div>
+                        <input class="form-control" id="hidden-text" name="commentContent" />
+                    </div>
                     @* <input class="form-control" id="hidden-text" hidden="true" name="currentpath" /> *@
                 </div>
-                <button type="button" class="btn" type="submit" role="button">@_localizer["comment"]</button>
+                @* <button type="button" class="btn" value="Submit" type="submit"
+                    role="button">@_localizer["comment"]</button> *@
+                <input type="submit" value="Submit" />
             </form>
 
-            <component type="typeof(Comments)" render-mode="Server" class="visually-hidden"
+            <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
                 param-PostSlug="@currentSlug" />
             </cust>
         </footer>

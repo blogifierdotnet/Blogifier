@@ -43,10 +43,6 @@ namespace Blogifier.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                foreach (var claim in User.Claims)
-                {
-                    Console.WriteLine("{0} ===> {1}", claim.Type, claim.Value);
-                }
 
                 var tempAuthor = CreateFromOIDC();
                 if (User.HasClaim("role", "AutoBloger"))

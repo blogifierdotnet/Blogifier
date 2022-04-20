@@ -10,18 +10,34 @@
 @inject IHttpClientFactory ClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IMessageService _commentsRenderTrigger
+@* @inject AuthenticationStateProvider AuthenticationStateProvider *@
+@* @inject AuthenticationStateProvider BlogifierServerAuthStateProvider *@
 @* @inject TokenProvider Service *@
+<CascadingAuthenticationState>
 
-<textarea rows="10" cols="100" id="comment-area"> </textarea>
-@* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
+    <AuthorizeView>
+        <Authorized>
 
-<button type="button" class="btn btn-blogifier me-3 px-4"
-    @onclick="() => UploadComment()">@_localizer["comment"]</button>
-<button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
-    @onclick:preventDefault>@_localizer["cancel"]</button>
 
-<p>---------------Token again----------------</p>
-<p>@Token</p>
+            <textarea rows="10" cols="100" id="comment-area"> </textarea>
+            @* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
+
+            <button type="button" class="btn btn-blogifier me-3 px-4"
+                @onclick="() => UploadComment()">@_localizer["comment"]</button>
+            <button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
+                @onclick:preventDefault>@_localizer["cancel"]</button>
+            <p>@Token</p>
+        </Authorized>
+        <NotAuthorized>
+            <p>---------------Non-Authorized in Editor----------------</p>
+        </NotAuthorized>
+
+        @* @foreach (var item in CurrentUser.Claims)
+            {
+            <p>@item.Type -> @item.Value</p>
+            } *@
+    </AuthorizeView>
+</CascadingAuthenticationState>
 
 @code {
     [Parameter] public string PostSlug { get; set; }
@@ -31,16 +47,19 @@
     [Parameter] public string Token { get; set; }
     protected Comment Comment { get; set; }
     public string HttpBase { get; set; }
+    public ClaimsPrincipal CurrentUser { get; set; }
     private HttpClient _http { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        //CurrentUser = authState.User;
         await Load();
     }
 
     protected async Task Load()
     {
         _http = ClientFactory.CreateClient("Local");
-        _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+        // _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
         Comment = new Comment();
         HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
 
@@ -103,4 +122,5 @@
     {
         await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", info);
     }
+
 }

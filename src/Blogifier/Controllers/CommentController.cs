@@ -24,11 +24,12 @@ namespace Blogifier.Controllers
             _commentProvider = commentProvider;
         }
 
+        // [Authorize]
         [HttpGet("{slug}")]
         public async Task<ActionResult<List<CommentDTO>>> GetComments(string slug)
         {
             // System.Console.WriteLine("Get OK");
-            System.Console.WriteLine("Get Method Here===========");
+            System.Console.WriteLine("==============Get Method Here===========");
             System.Console.WriteLine(User.Claims.Count());
             foreach (var item in User.Claims)
             {
@@ -37,9 +38,9 @@ namespace Blogifier.Controllers
             return new ActionResult<List<CommentDTO>>(await _commentProvider.GetCommentsBySlug(slug));
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPost("add")]
-        public async Task<ActionResult<bool>> Add(Comment comment)
+        public async Task<ActionResult<bool>> Add([FromForm] Comment comment)
         {
             System.Console.WriteLine("Front End pass !!!!!");
             // var tempComment = Request.Form["tempComment"].ToString();

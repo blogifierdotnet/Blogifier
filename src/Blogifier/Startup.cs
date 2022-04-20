@@ -2,6 +2,7 @@ using System.Reflection;
 using Blogifier.Core.Extensions;
 using Blogifier.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +39,7 @@ namespace Blogifier
 
             services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddHttpContextAccessor();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "cookie";
@@ -68,14 +70,15 @@ namespace Blogifier
                 options.ClaimActions.MapJsonKey("role", "role");
                 //options.Events.OnSignedOutCallbackRedirect();
             });
-            services.AddAuthorization(options =>
-            {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-            });
-            // services.AddAuthorization();
-
+            // services.AddAuthorization(options =>
+            // {
+            //     options.DefaultPolicy = new AuthorizationPolicyBuilder()
+            //         .RequireAuthenticatedUser()
+            //         .Build();
+            // });
+            services.AddAuthorizationCore();
+            services.AddScoped<AuthenticationStateProvider, BlogifierServerAuthStateProvider>();
+            // services.AddScoped<AuthenticationStateProvider>();
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
@@ -85,16 +88,18 @@ namespace Blogifier
             {
                 httpClient.BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]);
             });
-            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]) });
+            // services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Configuration["ASPNETCORE_URLS"]) });
 
             services.AddBlogDatabase(Configuration);
             services.AddBlogProviders();
             services.AddSingleton<IMessageService, MessageService>();
             services.AddRazorPages();
+            services.AddServerSideBlazor()
+                .AddCircuitOptions(options => { options.DetailedErrors = true; });
             // services.AddServerSideBlazor();
             services.AddControllersWithViews();
             //Add Detailed Error information to client
-            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+            // services.AddScoped<AuthenticationStateProvider, BlogifierServerAuthStateProvider>();
 
             Log.Warning("Done configure services");
         }
