@@ -25,7 +25,7 @@ namespace Blogifier.Controllers
         }
 
         // [Authorize]
-        [HttpGet("{slug}")]
+        [HttpGet("get/{slug}")]
         public async Task<ActionResult<List<CommentDTO>>> GetComments(string slug)
         {
             // System.Console.WriteLine("Get OK");
@@ -35,21 +35,27 @@ namespace Blogifier.Controllers
             {
                 System.Console.WriteLine("{0}=>{1}", item.Type, item.Value);
             }
+            foreach (var cookie in HttpContext.Request.Cookies)
+            {
+                System.Console.WriteLine("{0}__{1}", cookie.Key, cookie.Value);
+            }
             return new ActionResult<List<CommentDTO>>(await _commentProvider.GetCommentsBySlug(slug));
         }
 
         [Authorize]
         [HttpPost("add")]
-        public async Task<ActionResult<bool>> Add([FromForm] Comment comment)
+        // public async Task<ActionResult<bool>> Add([FromForm] Comment comment)
+        public async Task<ActionResult<bool>> Add(Comment comment)
         {
-            System.Console.WriteLine("Front End pass !!!!!");
-            // var tempComment = Request.Form["tempComment"].ToString();
-            // System.Console.WriteLine(tempComment);
-            System.Console.WriteLine("Add Method Here===========");
+            // var currentForValidate = await 
+            System.Console.WriteLine(comment.CommentedUserId);
+            System.Console.WriteLine("Front End pass to Add Method!!!!!");
+            System.Console.WriteLine(comment.CommentContent);
+            System.Console.WriteLine(comment.PostId);
             System.Console.WriteLine(User.Claims.Count());
             foreach (var item in User.Claims)
             {
-                System.Console.WriteLine("{0}=>{1}", item.Type, item.Value);
+                System.Console.WriteLine("{0}===>{1}", item.Type, item.Value);
             }
             // comment.CommentedUserId = User.FindFirst(c => c.Type == JwtClaimTypes.Subject).Value;
             // comment.CommentedUserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name).Value;

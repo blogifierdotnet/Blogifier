@@ -93,6 +93,7 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+
 # Chutzpah Test files
 _Chutzpah*
 
@@ -255,6 +256,9 @@ ServiceFabricBackup/
 *.mdf
 *.ldf
 *.ndf
+
+# SQLite SQL files
+*.sql
 
 # Business Intelligence projects
 *.rdl.data

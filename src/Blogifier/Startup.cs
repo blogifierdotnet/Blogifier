@@ -1,3 +1,4 @@
+using System.Security.AccessControl;
 using System.Reflection;
 using Blogifier.Core.Extensions;
 using Blogifier.Services;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.HttpLogging;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System;
@@ -40,6 +42,11 @@ namespace Blogifier
             services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddHttpContextAccessor();
+            services.AddHttpLogging(httpLogging =>
+            {
+                httpLogging.LoggingFields = HttpLoggingFields.All;
+                // httpLogging.RequestHeaders.Add("Cookie");
+            });
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "cookie";
@@ -70,12 +77,13 @@ namespace Blogifier
                 options.ClaimActions.MapJsonKey("role", "role");
                 //options.Events.OnSignedOutCallbackRedirect();
             });
-            // services.AddAuthorization(options =>
+            // services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
             // {
-            //     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-            //         .RequireAuthenticatedUser()
-            //         .Build();
+            //     options.Authority = "https://auth.prime-minister.pub/";
+            //     options.RequireHttpsMetadata = false;
+            //     options.Audience = "CommentsApi";
             // });
+
             services.AddAuthorizationCore();
             services.AddScoped<AuthenticationStateProvider, BlogifierServerAuthStateProvider>();
             // services.AddScoped<AuthenticationStateProvider>();
@@ -117,15 +125,26 @@ namespace Blogifier
             }
             // app.UsePathBase("/themes/standard");
             app.UseBlazorFrameworkFiles();
+            app.UseHttpLogging();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseRouting();
             app.UseCors("BlogifierPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/admin"), app =>
+            // {
+            //     app.UseBlazorFrameworkFiles();
+            //     app.UseRouting();
+            //     app.UseAuthorization();
+            //     app.UseEndpoints(endpoints =>
+            //     {
+            //         endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
+            //         endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
+            //     });
+            // });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

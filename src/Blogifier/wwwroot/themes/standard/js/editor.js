@@ -383,15 +383,15 @@ window.commonJsFunctions = {
   },
 
   //Take the text to hidden area to be uploaded
-  getTextToHiddenField: function () {
-    console.log("loaded from editor");
-    easymde.codemirror.on("change", () =>
-    {
-      console.log(easymde.value());
-      let hiddenText = document.getElementById('hidden-text');
-      hiddenText.value = easymde.value();
-    });
-  },
+  // getTextToHiddenField: function () {
+  //   console.log("loaded from editor");
+  //   easymde.codemirror.on("change", () =>
+  //   {
+  //     console.log(easymde.value());
+  //     let hiddenText = document.getElementById('hidden-text');
+  //     hiddenText.value = easymde.value();
+  //   });
+  // },
 
   //Alert to debug
   tempAlert: function (message) {

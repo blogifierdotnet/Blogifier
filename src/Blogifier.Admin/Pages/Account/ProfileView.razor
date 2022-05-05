@@ -1,8 +1,11 @@
+@using System.Security.Claims
+
 @layout ProfileLayout
 @page "/admin/profile/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
+@inject AuthenticationStateProvider _stateProvider
 
 
 <CustomPageTitle Title="@_localizer["edit-profile"]" />
@@ -57,8 +60,13 @@
             </div>
         </EditForm>
     }
-    
+
 </div>
+<p>---------------Claims Start here--------------------------------</p>
+    @foreach (var item in CurrentUser.Claims)
+    {
+        <p>@item.Type -> @item.Value</p>
+    }
 
 <ToasterComponent @ref="Toaster" />
 
@@ -66,6 +74,8 @@
     protected Author Author { get; set; }
     protected RegisterModel Model { get; set; }
     protected ToasterComponent Toaster;
+    public ClaimsPrincipal CurrentUser { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -84,6 +94,8 @@
             Name = Author.DisplayName,
             Email = Author.Email
         };
+        var authState = await _stateProvider.GetAuthenticationStateAsync();
+        CurrentUser = authState.User;
     }
 
     protected async Task SaveProfile()

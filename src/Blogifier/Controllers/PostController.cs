@@ -33,6 +33,10 @@ namespace Blogifier.Controllers
         [HttpGet("byslug/{slug}")]
         public async Task<ActionResult<Post>> GetPostBySlug(string slug)
         {
+            foreach (var cookie in HttpContext.Request.Cookies)
+            {
+                System.Console.WriteLine("{0}__{1}", cookie.Key, cookie.Value);
+            }
             return await _postProvider.GetPostBySlug(slug);
         }
 

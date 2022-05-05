@@ -41,9 +41,10 @@ namespace Blogifier.Controllers
         [HttpGet("getcurrent")]
         public async Task<ActionResult<Author>> GetCurrentAuthor()
         {
+            Console.WriteLine("--------Non-Auth Method in AuthorController-----------");
+            Console.WriteLine(User.Claims.Count());
             if (User.Identity.IsAuthenticated)
             {
-
                 var tempAuthor = CreateFromOIDC();
                 if (User.HasClaim("role", "AutoBloger"))
                 {
@@ -95,6 +96,8 @@ namespace Blogifier.Controllers
         [HttpPut("update")]
         public async Task<ActionResult<bool>> Update(Author author)
         {
+            Console.WriteLine("=======Auth Method in AuthorController========");
+            Console.WriteLine(User.Claims.Count());
             Console.WriteLine("Update API Called!!!");
             var tempAutor = await _authorProvider.FindByEmail(author.Email);
             if (tempAutor is null)

@@ -96,9 +96,6 @@
             -->
 
             <partial name="post/author.cshtml" />
-            @* <component type="typeof(App)" render-mode="ServerPrerendered" /> *@
-
-
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -106,28 +103,6 @@
                 param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
                 param-PostId="@currentPostId" param-Token="@token" />
             }
-
-            else
-            {
-                <p>CLICK TO LOGIN</p>
-            }
-            @* <form method="post" asp-controller="Comment" asp-action="Add"
-                enctype="application/x-www-form-urlencoded"> *@
-            <form method="post" action="api/comment/add" enctype="multipart/form-data">
-
-                <div class="form-group">
-                    <div>
-                        <label for="commentContent">CommentContent</label>
-                    </div>
-                    <div>
-                        <input class="form-control" id="hidden-text" name="commentContent" />
-                    </div>
-                    @* <input class="form-control" id="hidden-text" hidden="true" name="currentpath" /> *@
-                </div>
-                @* <button type="button" class="btn" value="Submit" type="submit"
-                    role="button">@_localizer["comment"]</button> *@
-                <input type="submit" value="Submit" />
-            </form>
 
             <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
                 param-PostSlug="@currentSlug" />

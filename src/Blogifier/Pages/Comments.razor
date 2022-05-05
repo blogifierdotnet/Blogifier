@@ -66,12 +66,12 @@
         // HttpBase = _http.BaseAddress.ToString();
         //responseMessage = await _http.GetAsync("api/comment/" + PostSlug);
 
-        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
     }
 
     private async Task MessageHandler(string message)
     {
-        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/" + PostSlug);
+        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
         // await InvokeAsync(() => { StateHasChanged(); });
         StateHasChanged();
     }

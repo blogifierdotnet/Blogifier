@@ -1,41 +1,37 @@
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Http
 @using Microsoft.Extensions.Localization
 @using System.Security.Claims
 @using Blogifier.Shared
 @using Blogifier.Services
 @using Blogifier.Shared.Resources
 @using System.Net.Http.Headers
+@using System.Net.Http
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IMessageService _commentsRenderTrigger
-@* @inject AuthenticationStateProvider AuthenticationStateProvider *@
-@* @inject AuthenticationStateProvider BlogifierServerAuthStateProvider *@
-@* @inject TokenProvider Service *@
+@inject AuthenticationStateProvider StateProvider
+@inject IHttpContextAccessor _contextAccessor
+
 <CascadingAuthenticationState>
 
     <AuthorizeView>
         <Authorized>
-
-
             <textarea rows="10" cols="100" id="comment-area"> </textarea>
-            @* <textarea rows="10" cols="100" id="comment-area" title="comment"> </textarea> *@
 
-            <button type="button" class="btn btn-blogifier me-3 px-4"
+            <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
                 @onclick="() => UploadComment()">@_localizer["comment"]</button>
-            <button type="button" class="btn btn-default me-auto" @onclick="() => CancelUpload()"
+            <button type="button" class="btn btn-outline-dark" @onclick="() => CancelUpload()"
                 @onclick:preventDefault>@_localizer["cancel"]</button>
-            <p>@Token</p>
+
+            <p>----------------------------Razor Editor End here--------------------------------</p>
         </Authorized>
         <NotAuthorized>
-            <p>---------------Non-Authorized in Editor----------------</p>
+            <p>---------------Non-Authorized in Editor-------------------</p>
         </NotAuthorized>
 
-        @* @foreach (var item in CurrentUser.Claims)
-            {
-            <p>@item.Type -> @item.Value</p>
-            } *@
     </AuthorizeView>
 </CascadingAuthenticationState>
 
@@ -51,15 +47,32 @@
     private HttpClient _http { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        //CurrentUser = authState.User;
+        var authState = await StateProvider.GetAuthenticationStateAsync();
+        CurrentUser = authState.User;
         await Load();
     }
 
     protected async Task Load()
     {
         _http = ClientFactory.CreateClient("Local");
+        if (CurrentUser.Identity.IsAuthenticated)
+        {
+            List<string> cookieCollection = new List<string>();
+            foreach (var cookie in _contextAccessor.HttpContext.Request.Cookies)
+            {
+                cookieCollection.Add(cookie.Key + "=" + cookie.Value);
+            }
+            _http.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
+        }
         // _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+        // var defaultRequestHeaders = _http.DefaultRequestHeaders;
+        // if (defaultRequestHeaders.Accept == null || !defaultRequestHeaders.Accept.Any(m => m.MediaType ==
+        // "application/json"))
+        /* {
+        _http.DefaultRequestHeaders.Accept.Add(new
+        MediaTypeWithQualityHeaderValue("application/json"));
+        }
+        defaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Token);*/
         Comment = new Comment();
         HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
 
@@ -72,16 +85,17 @@
         {
             await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
         }
-
         await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.getTextToHiddenField", "");
     }
     protected async Task SaveComment(CommentAction commentAction)
     {
         Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
         Comment.PostId = PostId;
         Comment.PostDate = DateTime.UtcNow;
-        await AlertDeBug(Comment.CommentContent);
+        Comment.CommentedUserId = CurrentUser.FindFirst(c => c.Type == "sub").Value;
+        // await AlertDeBug(Comment.CommentContent);
+        // var mes = CurrentUser.Claims.Count().ToString() + " Claims";
+        // await AlertDeBug(mes);
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
@@ -97,7 +111,7 @@
             HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
             if (uploadResult.IsSuccessStatusCode)
             {
-                await AlertDeBug(uploadResult.StatusCode.ToString());
+                // await AlertDeBug(uploadResult.StatusCode.ToString());
                 //string temp = uploadResult.Content.ReadAsStringAsync();
                 await _commentsRenderTrigger.SendMessage("refresh");
                 await Load();
