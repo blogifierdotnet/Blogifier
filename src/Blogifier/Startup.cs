@@ -1,6 +1,7 @@
 using System.Security.AccessControl;
 using System.Reflection;
 using Blogifier.Core.Extensions;
+using Blogifier.Core.Providers;
 using Blogifier.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -77,16 +78,9 @@ namespace Blogifier
                 options.ClaimActions.MapJsonKey("role", "role");
                 //options.Events.OnSignedOutCallbackRedirect();
             });
-            // services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
-            // {
-            //     options.Authority = "https://auth.prime-minister.pub/";
-            //     options.RequireHttpsMetadata = false;
-            //     options.Audience = "CommentsApi";
-            // });
 
             services.AddAuthorizationCore();
             services.AddScoped<AuthenticationStateProvider, BlogifierServerAuthStateProvider>();
-            // services.AddScoped<AuthenticationStateProvider>();
             services.AddCors(o => o.AddPolicy("BlogifierPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
@@ -101,14 +95,13 @@ namespace Blogifier
             services.AddBlogDatabase(Configuration);
             services.AddBlogProviders();
             services.AddSingleton<IMessageService, MessageService>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddCircuitOptions(options => { options.DetailedErrors = true; });
             // services.AddServerSideBlazor();
             services.AddControllersWithViews();
             //Add Detailed Error information to client
-            // services.AddScoped<AuthenticationStateProvider, BlogifierServerAuthStateProvider>();
-
             Log.Warning("Done configure services");
         }
 
@@ -134,17 +127,7 @@ namespace Blogifier
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/admin"), app =>
-            // {
-            //     app.UseBlazorFrameworkFiles();
-            //     app.UseRouting();
-            //     app.UseAuthorization();
-            //     app.UseEndpoints(endpoints =>
-            //     {
-            //         endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
-            //         endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
-            //     });
-            // });
+            // app.UserSyncforOIDC();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

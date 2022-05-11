@@ -43,6 +43,11 @@ namespace Blogifier.Core.Data
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PostId);
 
+            modelBuilder.Entity<CommentsLike>()
+                .HasOne(cl => cl.Comment)
+                .WithMany(c => c.CommentsLiked)
+                .HasForeignKey(cl => cl.CommentId);
+
             string sql = "getdate()";
 
             if (_options.Extensions != null)

@@ -57,17 +57,17 @@ namespace Blogifier.Core.Providers
         {
             var commentDTOs = new List<CommentDTO>();
             var mainComments = await _db.Comments.AsNoTracking()
-                .Where(c => c.PostId == id)
-                .Where(c => c.ParentId == null)
+                .Where(c => c.PostId == id && c.ParentId == null)
                 .OrderBy(c => c.PostDate)
+                .Select(c => CommentToHtml(c))
                 .ToListAsync();
 
             foreach (var comment in mainComments)
             {
                 var subComments = await _db.Comments.AsNoTracking()
-                    .Where(c => c.PostId == id)
-                    .Where(c => c.ParentId == comment.Id)
+                    .Where(c => c.PostId == id && c.ParentId == comment.Id)
                     .OrderBy(c => c.PostDate)
+                    .Select(c => CommentToHtml(c))
                     .ToListAsync();
 
                 commentDTOs.Add(new CommentDTO() { MainComment = comment, SubComments = subComments });
@@ -103,6 +103,13 @@ namespace Blogifier.Core.Providers
             existing.Hidden = true;
             await _db.SaveChangesAsync();
             return true;
+        }
+
+        private static Comment CommentToHtml(Comment comment)
+        {
+            string temp = comment.CommentContent.MdToHtml();
+            comment.CommentContent = temp;
+            return comment;
         }
     }
 }

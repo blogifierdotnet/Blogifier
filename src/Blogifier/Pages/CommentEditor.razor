@@ -7,6 +7,7 @@
 @using Blogifier.Shared.Resources
 @using System.Net.Http.Headers
 @using System.Net.Http
+@using IdentityModel
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
@@ -20,7 +21,7 @@
     <AuthorizeView>
         <Authorized>
             <textarea rows="10" cols="100" id="comment-area"> </textarea>
-
+            <p></p>
             <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
                 @onclick="() => UploadComment()">@_localizer["comment"]</button>
             <button type="button" class="btn btn-outline-dark" @onclick="() => CancelUpload()"
@@ -40,7 +41,6 @@
     [Parameter] public string Content { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
-    [Parameter] public string Token { get; set; }
     protected Comment Comment { get; set; }
     public string HttpBase { get; set; }
     public ClaimsPrincipal CurrentUser { get; set; }
@@ -64,19 +64,8 @@
             }
             _http.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
         }
-        // _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
-        // var defaultRequestHeaders = _http.DefaultRequestHeaders;
-        // if (defaultRequestHeaders.Accept == null || !defaultRequestHeaders.Accept.Any(m => m.MediaType ==
-        // "application/json"))
-        /* {
-        _http.DefaultRequestHeaders.Accept.Add(new
-        MediaTypeWithQualityHeaderValue("application/json"));
-        }
-        defaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", Token);*/
         Comment = new Comment();
         HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
-
-        // var state = await BlogifierServerAuthStateProvider.GetAuthenticationStateAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -84,6 +73,7 @@
         if (firstRender)
         {
             await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+            await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
         }
         await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
     }
@@ -92,10 +82,7 @@
         Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
         Comment.PostId = PostId;
         Comment.PostDate = DateTime.UtcNow;
-        Comment.CommentedUserId = CurrentUser.FindFirst(c => c.Type == "sub").Value;
-        // await AlertDeBug(Comment.CommentContent);
-        // var mes = CurrentUser.Claims.Count().ToString() + " Claims";
-        // await AlertDeBug(mes);
+        Comment.CommentedUserId = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
@@ -111,8 +98,6 @@
             HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
             if (uploadResult.IsSuccessStatusCode)
             {
-                // await AlertDeBug(uploadResult.StatusCode.ToString());
-                //string temp = uploadResult.Content.ReadAsStringAsync();
                 await _commentsRenderTrigger.SendMessage("refresh");
                 await Load();
             }

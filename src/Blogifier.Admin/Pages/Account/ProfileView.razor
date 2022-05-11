@@ -5,7 +5,7 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
-@inject AuthenticationStateProvider _stateProvider
+@* @inject AuthenticationStateProvider _stateProvider *@
 
 
 <CustomPageTitle Title="@_localizer["edit-profile"]" />
@@ -62,11 +62,6 @@
     }
 
 </div>
-<p>---------------Claims Start here--------------------------------</p>
-    @foreach (var item in CurrentUser.Claims)
-    {
-        <p>@item.Type -> @item.Value</p>
-    }
 
 <ToasterComponent @ref="Toaster" />
 
@@ -94,8 +89,6 @@
             Name = Author.DisplayName,
             Email = Author.Email
         };
-        var authState = await _stateProvider.GetAuthenticationStateAsync();
-        CurrentUser = authState.User;
     }
 
     protected async Task SaveProfile()

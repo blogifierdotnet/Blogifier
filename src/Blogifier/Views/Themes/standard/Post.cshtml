@@ -19,7 +19,6 @@
     var currentPostId = post.Id;
     string Toolbar = "miniToolbar";
     string Temp = "";
-    var token = await Url.ActionContext.HttpContext.GetTokenAsync("access_token");
 }
 
 <main class="post-detail">
@@ -92,7 +91,6 @@
                 TODO:
                 Custom fields:
                 - post author on or off (default)
-                - post comments on or off (default)
             -->
 
             <partial name="post/author.cshtml" />
@@ -101,7 +99,7 @@
             {
                 <component type="typeof(CommentEditor)" render-mode="ServerPrerendered" class="visually-hidden"
                 param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
-                param-PostId="@currentPostId" param-Token="@token" />
+                param-PostId="@currentPostId" />
             }
 
             <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"

@@ -1,4 +1,5 @@
-﻿using Blogifier.Core.Extensions;
+﻿using System.Linq;
+using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -17,6 +18,8 @@ namespace Blogifier.Core.Providers
         bool FileExists(string path);
         Task<bool> UploadFormFile(IFormFile file, string path = "");
         Task<string> UploadFromWeb(Uri requestUri, string root, string path = "");
+        Task<string> SyncAvatarFromWeb(Uri requestUri, string root, string path = "Avatar");
+        Task<bool> DeleteOldAvatar(string oldAvatar);
         Task<string> UploadBase64Image(string baseImg, string root, string path = "");
         Task<ThemeSettings> GetThemeSettings(string theme);
         Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
@@ -137,6 +140,45 @@ namespace Blogifier.Core.Providers
                     await response.Content.CopyToAsync(fs);
                     return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
                 }
+            }
+        }
+
+        public async Task<string> SyncAvatarFromWeb(Uri requestUri, string root, string path = "Avatar")
+        {
+            path = path.Replace("/", _slash);
+            VerifyPath(path);
+
+            var fileName = requestUri.ToString().Split("/").Last();
+            var filePath = string.IsNullOrEmpty(path) ?
+                 Path.Combine(_storageRoot, fileName) :
+                 Path.Combine(_storageRoot, path + _slash + fileName);
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(requestUri);
+                using (var fs = new FileStream(filePath, FileMode.Create))
+                {
+                    await response.Content.CopyToAsync(fs);
+                    return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
+                }
+            }
+        }
+
+        public async Task<bool> DeleteOldAvatar(string oldAvatar)
+        {
+            var oldFile = Path.Combine(ContentRoot, $"wwwroot{_slash}data{_slash}Avatar{_slash}{oldAvatar}.png");
+            try
+            {
+                if (File.Exists(oldFile))
+                {
+                    await Task.Run(() => File.Delete(oldFile));
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error($"Error writing deleting old avatar: {ex.Message}");
+                return false;
             }
         }
 

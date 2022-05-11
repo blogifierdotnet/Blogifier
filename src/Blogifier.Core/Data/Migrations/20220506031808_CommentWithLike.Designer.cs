@@ -3,6 +3,7 @@ using System;
 using Blogifier.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Core.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220506031808_CommentWithLike")]
+    partial class CommentWithLike
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
@@ -54,9 +56,6 @@ namespace Blogifier.Core.Data.Migrations
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("OpenGuid")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .HasMaxLength(160)
@@ -208,7 +207,7 @@ namespace Blogifier.Core.Data.Migrations
                     b.Property<DateTime>("ExpressDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LikedByGuid")
+                    b.Property<string>("LikedUserEmail")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

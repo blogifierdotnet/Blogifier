@@ -25,10 +25,9 @@ namespace Blogifier.Shared
         [StringLength(400)]
         public string Avatar { get; set; }
         public bool IsAdmin { get; set; }
-
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
+        public string OpenGuid { get; set; }
         public List<Post> Posts { get; set; }
     }
 }

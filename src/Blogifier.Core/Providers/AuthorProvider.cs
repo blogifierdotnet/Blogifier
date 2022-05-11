@@ -17,11 +17,13 @@ namespace Blogifier.Core.Providers
         Task<List<Author>> GetAuthors();
         Task<Author> FindByEmail(string email);
         Task<Author> FindByName(string name);
+        Task<Author> FindByOpenId(string openGuid);
         Task<bool> Verify(LoginModel model);
         Task<bool> CreateFromAuthor(Author author);
         Task<bool> Register(RegisterModel model);
         Task<bool> Add(Author author);
         Task<bool> Update(Author author);
+        Task<bool> UpdatePartial(Author author);
         Task<bool> ChangePassword(RegisterModel model);
         Task<bool> Remove(int id);
         // Task<bool> ExistByOIDC(string email);
@@ -51,6 +53,10 @@ namespace Blogifier.Core.Providers
         public async Task<Author> FindByName(string name)
         {
             return await Task.FromResult(_db.Authors.Where(a => a.DisplayName == name).FirstOrDefault());
+        }
+        public async Task<Author> FindByOpenId(string openGuid)
+        {
+            return await Task.FromResult(_db.Authors.Where(a => a.OpenGuid == openGuid).FirstOrDefault());
         }
         public async Task<bool> CreateFromAuthor(Author author)
         {
@@ -159,7 +165,8 @@ namespace Blogifier.Core.Providers
 
             author.IsAdmin = false;
             author.Password = author.Password.Hash(_salt);
-            author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
+            if (author.Avatar == null)
+                author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
             author.DateCreated = DateTime.UtcNow;
 
             blog.Authors.Add(author);
@@ -170,7 +177,7 @@ namespace Blogifier.Core.Providers
         public async Task<bool> Update(Author author)
         {
             var existing = await _db.Authors
-                .Where(a => a.Email == author.Email)
+                .Where(a => a.OpenGuid == author.OpenGuid)
                 .FirstOrDefaultAsync();
 
             if (existing == null)
@@ -186,8 +193,23 @@ namespace Blogifier.Core.Providers
             existing.Email = author.Email;
             existing.DisplayName = author.DisplayName;
             existing.Bio = author.Bio;
-            //existing.Avatar = author.Avatar;
+            existing.Avatar = author.Avatar;
             existing.IsAdmin = author.IsAdmin;
+
+            return await _db.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdatePartial(Author author)
+        {
+            var existing = await _db.Authors
+                .Where(a => a.Email == author.Email)
+                .FirstOrDefaultAsync();
+
+            if (existing == null)
+                return false;
+
+            existing.DisplayName = author.DisplayName;
+            existing.Avatar = author.Avatar;
 
             return await _db.SaveChangesAsync() > 0;
         }

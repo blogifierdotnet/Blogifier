@@ -46,7 +46,8 @@ namespace Blogifier.Controllers
         [HttpPost("upload/{uploadType}")]
         public async Task<ActionResult> Upload(IFormFile file, UploadType uploadType, int postId = 0)
         {
-            var author = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+            // var author = await _authorProvider.FindByEmail(User.FindFirstValue(JwtClaimTypes.Email));
+            var author = await _authorProvider.FindByOpenId(User.FindFirstValue(JwtClaimTypes.Subject));
             var post = postId == 0 ? new Post() : await _postProvider.GetPostById(postId);
 
             // If image uploaded by visitor, change author.Id to Visitor Id

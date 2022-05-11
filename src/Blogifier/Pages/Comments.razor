@@ -3,18 +3,15 @@
 @using System.Security.Claims
 @using Blogifier.Shared
 @using Blogifier.Services
+@using Blogifier.Core
 @using System.Collections.Generic
 
 @implements IDisposable
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
-@* @inject AuthenticationStateProvider AuthenticationStateProvider *@
-@* @inject AuthenticationStateProvider BlogifierServerAuthStateProvider *@
 @inject IMessageService _commentsRenderTrigger
 
-<p>Text from Blazor Comments Show Component</p>
-<p>Slug=> @PostSlug</p>
 
 @if (CommentDTOs is not null)
 {
@@ -22,7 +19,8 @@
     {
         foreach (var comment in CommentDTOs)
         {
-            <p>@comment.MainComment.CommentContent</p>
+            @((MarkupString)comment.MainComment.CommentContent)
+            <br>
         }
     }
     else
@@ -50,14 +48,6 @@
     {
         // unsubscribe from OnMessage event
         _commentsRenderTrigger.OnMessage -= MessageHandler;
-    }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "First Rendered");
-        }
-        await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", "Not First Rendered");
     }
 
     protected async Task Load()

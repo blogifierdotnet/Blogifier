@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace Blogifier.Shared
 {
@@ -15,7 +16,7 @@ namespace Blogifier.Shared
         public string CommentedUserName { get; set; }
         public string CommentedUserId { get; set; }
         public bool Hidden { get; set; }
-        public int CommentLiked { get; set; }
+        public List<CommentsLike> CommentsLiked { get; set; }
         public int CommentDisliked { get; set; }
         public long? ParentId { get; set; }
 

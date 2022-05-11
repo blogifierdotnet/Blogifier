@@ -37,5 +37,17 @@ namespace Blogifier.Shared.Extensions
             Regex scriptRegex = new Regex(@"<script[^>]*>[\s\S]*?</script>");
             return scriptRegex.Replace(str, "");
         }
+
+        public static string VerifyAvatar(this string authorAvatar)
+        {
+            if (authorAvatar.StartsWith("/data"))
+            {
+                return authorAvatar;
+            }
+            else
+            {
+                return "/data/Avatar/" + authorAvatar + ".png";
+            }
+        }
     }
 }
