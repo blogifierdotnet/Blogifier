@@ -15,11 +15,7 @@
     var catUrl = Url.Content("~/categories");
     var currentUserAuthor = await _authorProvider.FindByOpenId(User.FindFirstValue(JwtClaimTypes.Subject));
 
-    @* var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name); *@
-    @* var currentPath = Url.Content("~/home/externalsignin") +
-        ViewContext.HttpContext.Request.Path.ToString(); *@
     var currentPath = this.Context.Request.Path;
-    @* var currentPath = "home/externalsignin"; *@
     if (User.Identity.IsAuthenticated && currentUserAuthor is null)
     {
         string tempName = User.FindFirstValue(JwtClaimTypes.Name);

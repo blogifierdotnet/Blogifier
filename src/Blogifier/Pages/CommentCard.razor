@@ -1,0 +1,68 @@
+@using Microsoft.AspNetCore.Components
+@using Blogifier.Shared
+@using Blogifier.Services
+
+@inject IJSRuntime JSRuntime
+@inject IHttpClientFactory ClientFactory
+@inject IMessageService _commentsRenderTrigger
+
+
+@* <div class="container border-0 p-0">
+    <div class="row">
+    <div class="col-md-1 col-sm-1 mt-2">
+    <img src="@Avatar" class="rounded mx-auto d-block float-start" alt="@Name">
+    </div>
+    <div class="col">
+    <div class="card border-0 shadow-sm">
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item border-0">
+    <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString()
+    </p>
+    </li>
+    <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div> *@
+<div class="col-md-1 col-sm-1 mt-2">
+    <img src="@Avatar" class="rounded mx-auto d-block float-start" alt="@Name">
+</div>
+<div class="col">
+    <div class="card border-0 shadow-sm">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0">
+                <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString()
+                </p>
+            </li>
+            <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
+        </ul>
+    </div>
+</div>
+<br>
+
+@code {
+    [Parameter]
+    public Comment Comment { get; set; }
+    private HttpClient _httpClient { get; set; }
+    private CommentUserModel authorModel { get; set; }
+    public string Avatar { get; set; }
+    public string Email { get; set; }
+    public string Name { get; set; }
+    public bool IsAdmin { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+    public async Task Load()
+    {
+        _httpClient = ClientFactory.CreateClient("Local");
+        // authorAvatar = await _httpClient.GetStringAsync("api/author/avatarbyguid/" + Comment.CommentedUserId);
+        authorModel = await
+        _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{Comment.CommentedUserId}");
+        Avatar = authorModel.Avatar;
+        Name = authorModel.Name;
+        Email = authorModel.Email;
+        IsAdmin = authorModel.IsAdmin;
+    }
+}

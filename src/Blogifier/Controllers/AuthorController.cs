@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Net.Http;
+using System.Linq;
 using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Blogifier.Shared.Extensions;
@@ -11,6 +12,7 @@ using System.Security.Claims;
 using IdentityModel;
 using System.Threading.Tasks;
 using System;
+using System.Net.Http.Json;
 
 namespace Blogifier.Controllers
 {
@@ -41,10 +43,25 @@ namespace Blogifier.Controllers
             return await _authorProvider.FindByEmail(email);
         }
 
+        [HttpGet("partialinfobyguid/{guid}")]
+        public async Task<ActionResult<CommentUserModel>> FindByGuid(string guid)
+        {
+            var author = await _authorProvider.FindByOpenId(guid);
+
+            return new CommentUserModel()
+            {
+                Avatar = author.Avatar,
+                Name = author.DisplayName,
+                Email = author.Email,
+                IsAdmin = author.IsAdmin
+            };
+        }
+
         [HttpGet("getcurrent")]
         public async Task<ActionResult<Author>> GetCurrentAuthor()
         {
             Console.WriteLine("--------Current Author was Called!-----------");
+
 
             if (User.Identity.IsAuthenticated)
             {

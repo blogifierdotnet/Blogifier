@@ -20,14 +20,18 @@
 
     <AuthorizeView>
         <Authorized>
-            <textarea rows="10" cols="100" id="comment-area"> </textarea>
-            <p></p>
-            <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
-                @onclick="() => UploadComment()">@_localizer["comment"]</button>
-            <button type="button" class="btn btn-outline-dark" @onclick="() => CancelUpload()"
-                @onclick:preventDefault>@_localizer["cancel"]</button>
+            <div class="container mb-3">
+                <div class="row mb-2">
+                    <textarea rows="10" cols="100" id="comment-area"> </textarea>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
+                        @onclick="() => UploadComment()">@_localizer["comment"]</button>
+                    <button type="button" class="btn btn-outline-dark" @onclick="() => CancelUpload()"
+                        @onclick:preventDefault>@_localizer["cancel"]</button>
+                </div>
+            </div>
 
-            <p>----------------------------Razor Editor End here--------------------------------</p>
         </Authorized>
         <NotAuthorized>
             <p>---------------Non-Authorized in Editor-------------------</p>

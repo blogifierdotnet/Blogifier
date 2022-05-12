@@ -107,7 +107,8 @@ namespace Blogifier.Core.Providers
 
         private static Comment CommentToHtml(Comment comment)
         {
-            string temp = comment.CommentContent.MdToHtml();
+            string temp = comment.CommentContent.MdToHtml().Replace("<p>", string.Empty).Replace("</p>", string.Empty);
+            // string temp = comment.CommentContent.MdToHtml();
             comment.CommentContent = temp;
             return comment;
         }

@@ -6,6 +6,6 @@ namespace Blogifier.Shared
     public class CommentDTO
     {
         public Comment MainComment { get; set; }
-        public IEnumerable<Comment> SubComments { get; set; }
+        public List<Comment> SubComments { get; set; }
     }
 }
