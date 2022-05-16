@@ -196,8 +196,8 @@ function getEditor(_toolbar) {
     autoDownloadFontAwesome: false,
     indentWithTabs: false,
     status: false,
-    height: "200px",
-    minHeight: "200px",
+    height: "100px",
+    minHeight: "100px",
     parsingConfig: {
       allowAtxHeaderWithoutSpace: true,
       underscoresBreakWords: true

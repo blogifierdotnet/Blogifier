@@ -1,9 +1,7 @@
 @using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Identity
 @using System.Security.Claims
 @using Blogifier.Shared
 @using Blogifier.Services
-@using Blogifier.Core
 @using System.Collections.Generic
 
 @implements IDisposable
@@ -30,15 +28,12 @@
                         <p></p>
                         <div class="row">
                             @* <div class="col-md-1 col-sm-1 mt-2"></div> *@
-                            <div class="col offset-md-1 offset-sm-1 offset-lg-1">
-                                <div class="row">
-                                    <CommentCard Comment="@subComment" />
-                                </div>
-                            </div>
+                            <div class="col-md-1 col-sm-1 col-lg-1"></div>
+                            <CommentCard Comment="@subComment" />
                         </div>
                     }
                 }
-
+@* 本页放活动的Editor，点击主回复或者相应的附带回复，Editor出现在每个主回复下方 *@
             </div>
             <p></p>
         }

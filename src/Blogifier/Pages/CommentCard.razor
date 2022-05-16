@@ -6,27 +6,8 @@
 @inject IHttpClientFactory ClientFactory
 @inject IMessageService _commentsRenderTrigger
 
-
-@* <div class="container border-0 p-0">
-    <div class="row">
-    <div class="col-md-1 col-sm-1 mt-2">
-    <img src="@Avatar" class="rounded mx-auto d-block float-start" alt="@Name">
-    </div>
-    <div class="col">
-    <div class="card border-0 shadow-sm">
-    <ul class="list-group list-group-flush">
-    <li class="list-group-item border-0">
-    <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString()
-    </p>
-    </li>
-    <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
-    </ul>
-    </div>
-    </div>
-    </div>
-    </div> *@
-<div class="col-md-1 col-sm-1 mt-2">
-    <img src="@Avatar" class="rounded mx-auto d-block float-start" alt="@Name">
+<div class="col-1 mt-2">
+    <img src="@Avatar" class="rounded-circle mx-auto d-block float-start" alt="@Name">
 </div>
 <div class="col">
     <div class="card border-0 shadow-sm">
@@ -36,10 +17,15 @@
                 </p>
             </li>
             <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
+            <li class=" list-group-item border-0 mb-0">
+                <button type="button" class="btn btn-light btn-sm" @onclick="ShouldRenderEditor">Reply</button>
+            </li>
         </ul>
     </div>
 </div>
 <br>
+
+@* 本页放置回复按钮，点击回复，传递参数到上一层，触发Comments页面动态渲染组件 *@
 
 @code {
     [Parameter]
@@ -65,4 +51,5 @@
         Email = authorModel.Email;
         IsAdmin = authorModel.IsAdmin;
     }
+    public void ShouldRenderEditor() { }
 }

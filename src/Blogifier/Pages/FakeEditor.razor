@@ -1,0 +1,63 @@
+@using Microsoft.AspNetCore.Components
+@using Microsoft.Extensions.Localization
+@using Blogifier.Shared.Resources
+@using System.Net.Http
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpClientFactory ClientFactory
+@inject IStringLocalizer<Resource> _localizer
+
+
+<div class="container border-0 px-0">
+    <div class="row px-0">
+        <div class="col-1 my-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-person-circle rounded-circle mx-auto d-block float-start" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+        </div>
+        <div class="col my-auto my-0 py-0" style="height: 100px;">
+            <form method="post" action="/Home/ExternalSignIn" class="d-grid mx-auto my-0 h-100">
+                <div class="form-group">
+                    <input class="form-control" name="path" hidden="true" aria-label="currentpath"
+                        value="@CurrentPath" />
+                </div>
+                <button class="btn btn-light h-100" type="submit" aria-label="@_localizer["login"]">
+                    Register or Login to Comment!
+                </button>
+                <div class="form-group">
+                </div>
+            </form>
+        </div>
+    </div>
+    @* <div class="row">
+        <EditForm Model="@submitModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText id="name" @bind-Value="submitModel.ReturnPath" />
+
+        <button type="submit">Submit</button>
+        </EditForm>
+        </div> *@
+</div>
+
+@code {
+    [Parameter] public string CurrentPath { get; set; }
+    /*private HttpClient _httpClient { get; set; }
+    private SubmitModel submitModel { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+    await Load();
+    }
+    public async Task Load()
+    {
+    // _httpClient = ClientFactory.CreateClient("Local");
+    // await Task.Run(() => submitModel = new SubmitModel() { ReturnPath = CurrentPath });
+    }
+    private void HandleValidSubmit()
+    {
+    }*/
+}

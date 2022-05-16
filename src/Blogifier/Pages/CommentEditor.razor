@@ -20,14 +20,20 @@
 
     <AuthorizeView>
         <Authorized>
-            <div class="container mb-3">
+            <div class="container border-0 p-0">
                 <div class="row mb-2">
-                    <textarea rows="10" cols="100" id="comment-area"> </textarea>
+                    <div class="col-1 my-auto">
+                        <img src="@Avatar" class="rounded-circle mx-auto d-block float-start">
+                    </div>
+                    <div class="col">
+                        @* <textarea rows="10" cols="100" id="comment-area"> </textarea> *@
+                        <textarea id="comment-area"> </textarea>
+                    </div>
                 </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
                     <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
                         @onclick="() => UploadComment()">@_localizer["comment"]</button>
-                    <button type="button" class="btn btn-outline-dark" @onclick="() => CancelUpload()"
+                    <button type="button" class="btn btn-light" @onclick="() => CancelUpload()"
                         @onclick:preventDefault>@_localizer["cancel"]</button>
                 </div>
             </div>
@@ -46,9 +52,9 @@
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
     protected Comment Comment { get; set; }
-    public string HttpBase { get; set; }
+    public string Avatar { get; set; }
     public ClaimsPrincipal CurrentUser { get; set; }
-    private HttpClient _http { get; set; }
+    private HttpClient _httpClient { get; set; }
     protected override async Task OnInitializedAsync()
     {
         var authState = await StateProvider.GetAuthenticationStateAsync();
@@ -58,7 +64,7 @@
 
     protected async Task Load()
     {
-        _http = ClientFactory.CreateClient("Local");
+        _httpClient = ClientFactory.CreateClient("Local");
         if (CurrentUser.Identity.IsAuthenticated)
         {
             List<string> cookieCollection = new List<string>();
@@ -66,10 +72,14 @@
             {
                 cookieCollection.Add(cookie.Key + "=" + cookie.Value);
             }
-            _http.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
+            _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
         }
         Comment = new Comment();
-        HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
+        var tempGuid = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
+        // HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
+        var authorModel = await
+        _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{tempGuid}");
+        Avatar = authorModel.Avatar;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -90,7 +100,7 @@
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
-            HttpResponseMessage updateResult = await _http.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
+            HttpResponseMessage updateResult = await _httpClient.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
             if (updateResult.IsSuccessStatusCode)
             {
                 await _commentsRenderTrigger.SendMessage("refresh");
@@ -99,7 +109,7 @@
         }
         else
         {
-            HttpResponseMessage uploadResult = await _http.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
+            HttpResponseMessage uploadResult = await _httpClient.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
             if (uploadResult.IsSuccessStatusCode)
             {
                 await _commentsRenderTrigger.SendMessage("refresh");
