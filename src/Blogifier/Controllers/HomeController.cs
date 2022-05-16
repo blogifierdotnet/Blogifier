@@ -63,16 +63,16 @@ namespace Blogifier.Controllers
             return Redirect("~/");
         }
 
-        //[Authorize]
-        [HttpPost]
-        public async Task<IActionResult> ExternalSignIn()
-        {
-            var currentPath = Request.Form["currentpath"].ToString();
-            var domain = $"{Request.Scheme}://{Request.Host}";
-            var absolutePath = string.Equals(currentPath, "/") ? domain : domain + currentPath;
-            var returnUri = new Uri(absolutePath);
-            return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
-        }
+        // //[Authorize]
+        // [HttpPost]
+        // public async Task<IActionResult> ExternalSignIn()
+        // {
+        //     var currentPath = Request.Form["currentpath"].ToString();
+        //     var domain = $"{Request.Scheme}://{Request.Host}";
+        //     var absolutePath = string.Equals(currentPath, "/") ? domain : domain + currentPath;
+        //     var returnUri = new Uri(absolutePath);
+        //     return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
+        // }
 
         [HttpGet("/admin")]
         // public async Task<IActionResult> Admin()
@@ -279,18 +279,18 @@ namespace Blogifier.Controllers
 
             return model;
         }
-        private AuthenticationProperties BuildAuthenticationProperties(Uri returnUri)
-        {
-            var authenticationProperties = new AuthenticationProperties();
-            if (returnUri != null)
-            {
-                if (string.Equals(base.Request.Host.Host, returnUri.Host, StringComparison.OrdinalIgnoreCase))
-                {
-                    authenticationProperties.RedirectUri = returnUri.ToString();
-                }
-            }
-            return authenticationProperties;
-        }
+        // private AuthenticationProperties BuildAuthenticationProperties(Uri returnUri)
+        // {
+        //     var authenticationProperties = new AuthenticationProperties();
+        //     if (returnUri != null)
+        //     {
+        //         if (string.Equals(base.Request.Host.Host, returnUri.Host, StringComparison.OrdinalIgnoreCase))
+        //         {
+        //             authenticationProperties.RedirectUri = returnUri.ToString();
+        //         }
+        //     }
+        //     return authenticationProperties;
+        // }
 
     }
 }
