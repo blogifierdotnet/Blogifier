@@ -51,5 +51,7 @@ namespace Blogifier.Shared
         public static string PostPublished = "P";
 
         public static string IdentityCookieName = ".AspNetCore.Identity.Application";
+        public static string ComponentUpdate = "refresh";
+        public static string ComponentShowEditor = "show-editor";
     }
 }

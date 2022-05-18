@@ -13,7 +13,7 @@
 @inject IHttpClientFactory ClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IMessageService _commentsRenderTrigger
-@inject AuthenticationStateProvider StateProvider
+@inject AuthenticationStateProvider _stateProvider
 @inject IHttpContextAccessor _contextAccessor
 
 <CascadingAuthenticationState>
@@ -26,8 +26,14 @@
                         <img src="@Avatar" class="rounded-circle mx-auto d-block float-start">
                     </div>
                     <div class="col">
-                        @* <textarea rows="10" cols="100" id="comment-area"> </textarea> *@
-                        <textarea id="comment-area"> </textarea>
+                        @if (!CommentId.HasValue)
+                        {
+                            <textarea rows="5" cols="100" id="comment-area"> </textarea>
+                        }
+                        else
+                        {
+                            <textarea rows="5" cols="100" id="@textAreaId"> </textarea>
+                        }
                     </div>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
@@ -37,6 +43,7 @@
                         @onclick:preventDefault>@_localizer["cancel"]</button>
                 </div>
             </div>
+            <p>@textAreaId</p>
 
         </Authorized>
         <NotAuthorized>
@@ -51,13 +58,15 @@
     [Parameter] public string Content { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
+    [Parameter] public long? CommentId { get; set; }
     protected Comment Comment { get; set; }
     public string Avatar { get; set; }
     public ClaimsPrincipal CurrentUser { get; set; }
     private HttpClient _httpClient { get; set; }
+    private string textAreaId { get; set; } = "comment-area";
     protected override async Task OnInitializedAsync()
     {
-        var authState = await StateProvider.GetAuthenticationStateAsync();
+        var authState = await _stateProvider.GetAuthenticationStateAsync();
         CurrentUser = authState.User;
         await Load();
     }
@@ -76,35 +85,64 @@
         }
         Comment = new Comment();
         var tempGuid = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
-        // HttpBase = await Task.Run(() => _http.BaseAddress.ToString());
         var authorModel = await
         _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{tempGuid}");
         Avatar = authorModel.Avatar;
+        if (CommentId.HasValue)
+        {
+            textAreaId = $"comment-{CommentId}";
+        }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    /*protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-            await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-        }
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+    if (firstRender)
+    {
+    if (!_commentsRenderTrigger.MainEditorRendered)
+    {
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+    _commentsRenderTrigger.MainEditorRendered = true;
     }
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+    await AlertDeBug("first Render");
+    }
+    else
+    {
+    if (CommentId.HasValue)
+    {
+    await AlertDeBug("Render Sub Editor");
+    textAreaId = $"comment-{CommentId}";
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+    }
+    }
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+    }*/
     protected async Task SaveComment(CommentAction commentAction)
     {
-        Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
+        if (CommentId.HasValue)
+        {
+            Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", textAreaId);
+        }
+        else
+        {
+            Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "main");
+        }
         Comment.PostId = PostId;
         Comment.PostDate = DateTime.UtcNow;
         Comment.CommentedUserId = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
+        if (CommentId.HasValue)
+        {
+            Comment.ParentId = CommentId;
+        }
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
             HttpResponseMessage updateResult = await _httpClient.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
             if (updateResult.IsSuccessStatusCode)
             {
-                await _commentsRenderTrigger.SendMessage("refresh");
-                await Load();
+                await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
+                //await Load();
             }
         }
         else
@@ -112,8 +150,8 @@
             HttpResponseMessage uploadResult = await _httpClient.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
             if (uploadResult.IsSuccessStatusCode)
             {
-                await _commentsRenderTrigger.SendMessage("refresh");
-                await Load();
+                await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
+                //await Load();
             }
             else { await AlertDeBug("Fail to Upload!!!"); }
         }

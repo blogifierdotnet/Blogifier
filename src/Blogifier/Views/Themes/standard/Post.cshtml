@@ -18,7 +18,7 @@
     var currentSlug = currentPath.ToString().Split("/").AsQueryable().Last();
     var currentPostId = post.Id;
     string Toolbar = "miniToolbar";
-    string Temp = "";
+    // string Temp = "";
 }
 
 <main class="post-detail">
@@ -110,29 +110,30 @@
         -->
         <partial name="post/nav.cshtml" />
 
-        @if (User.Identity.IsAuthenticated)
-        {
+        @* @if (User.Identity.IsAuthenticated)
+            {
             <component type="typeof(CommentEditor)" render-mode="ServerPrerendered" class="visually-hidden"
             param-PostSlug="@currentSlug" param-Toolbar="@Toolbar" param-Content="@Temp"
             param-PostId="@currentPostId" />
-        }
-        else
-        {
-            @* <form method="post" asp-controller="Home" asp-action="ExternalSignIn" class="d-grid gap-2 col-6 mx-auto"
-                style="height: 100px">
-                <div class="form-group">
-                <input class="form-control" name="currentpath" hidden="true" value="@currentPath" />
-                </div>
-                <button class="btn btn-light h-100" type="submit" aria-label="@_localizer["login"]">
-                Click to Login & Give Comments!
-                </button>
-                </form>
-                <p></p> *@
+            } *@
+        @* else
+            {
+            <form method="post" asp-controller="Home" asp-action="ExternalSignIn" class="d-grid gap-2 col-6 mx-auto"
+            style="height: 100px">
+            <div class="form-group">
+            <input class="form-control" name="currentpath" hidden="true" value="@currentPath" />
+            </div>
+            <button class="btn btn-light h-100" type="submit" aria-label="@_localizer["login"]">
+            Click to Login & Give Comments!
+            </button>
+            </form>
+            <p></p>
             <component type="typeof(FakeEditor)" render-mode="ServerPrerendered" class="visually-hidden"
             param-CurrentPath="@currentPath.ToString()" />
-        }
+            } *@
         <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
-            param-PostSlug="@currentSlug" />
+            param-PostSlug="@currentSlug" param-PostId="@currentPostId" param-CurrentPath="@currentPath.ToString()"
+            param-Toolbar="@Toolbar" />
 
         <partial name="post/related.cshtml" />
         <partial name="post/share.cshtml" />

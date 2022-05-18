@@ -9,33 +9,59 @@
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject IMessageService _commentsRenderTrigger
+@inject AuthenticationStateProvider _stateProvider
 
+@if (CurrentUser.Identity.IsAuthenticated)
+{
+    if (!ShowMainEditorDone)
+    {
+        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" Content="">
+        </CommentEditor>
+    }
+}
+else
+{
+    <FakeEditor CurrentPath="@CurrentPath"></FakeEditor>
+}
 
 @if (CommentDTOs is not null)
 {
     if (CommentDTOs.Count > 0)
     {
-        foreach (var comment in CommentDTOs)
+        foreach (var commentTree in CommentDTOs)
         {
             <div class="container border-0 p-0">
                 <div class="row">
-                    <CommentCard Comment="@comment.MainComment" />
+                    <CommentCard Comment="@commentTree.MainComment" />
                 </div>
-                @if (comment.SubComments.Count > 0)
+                @if (commentTree.SubComments.Count > 0)
                 {
-                    foreach (var subComment in comment.SubComments)
+                    foreach (var subComment in commentTree.SubComments)
                     {
                         <p></p>
                         <div class="row">
-                            @* <div class="col-md-1 col-sm-1 mt-2"></div> *@
                             <div class="col-md-1 col-sm-1 col-lg-1"></div>
                             <CommentCard Comment="@subComment" />
                         </div>
                     }
                 }
-@* 本页放活动的Editor，点击主回复或者相应的附带回复，Editor出现在每个主回复下方 *@
             </div>
             <p></p>
+            @if (ShowSubEditor && (commentTree.MainComment.Id == EditorForId))
+            {
+                if (CurrentUser.Identity.IsAuthenticated)
+                {
+                    <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" Content="" CommentId="@EditorForId.Value">
+                    </CommentEditor>
+                }
+                else
+                {
+                    <FakeEditor CurrentPath="@CurrentPath"></FakeEditor>
+                }
+            }
+            @* 本页放活动的Editor，点击主回复或者相应的附带回复，Editor出现在每个主回复下方 *@
+            <p>ShowSubEditor: @ShowSubEditor</p>
+            <p>ShowMainEditorDone: @ShowMainEditorDone</p>
         }
     }
     else
@@ -47,35 +73,84 @@
 
 @code {
     [Parameter] public string PostSlug { get; set; }
+    [Parameter] public string CurrentPath { get; set; }
+    [Parameter] public string Toolbar { get; set; }
+    [Parameter] public int PostId { get; set; }
     private ClaimsPrincipal CurrentUser { get; set; }
     public List<CommentDTO> CommentDTOs { get; set; }
-    public string HttpBase { get; set; }
+    public string Content { get; set; } = string.Empty;
     public HttpResponseMessage responseMessage { get; set; }
     private HttpClient _http { get; set; }
+    private bool ShowSubEditor { get; set; } = false;
+    //private bool ShowFakeEditor { get; set; } = false;
+    private long? EditorForId { get; set; } = null;
+    private bool ShowMainEditorDone { get; set; } = false;
+    private string textAreaId { get; set; }
     protected override async Task OnInitializedAsync()
     {
         _commentsRenderTrigger.OnMessage += MessageHandler;
+        var authState = await _stateProvider.GetAuthenticationStateAsync();
+        CurrentUser = authState.User;
         await Load();
     }
     public void Dispose()
     {
-        // unsubscribe from OnMessage event
         _commentsRenderTrigger.OnMessage -= MessageHandler;
     }
 
     protected async Task Load()
     {
+        //ShowMainEditor = true;
         _http = ClientFactory.CreateClient("Local");
-        // HttpBase = _http.BaseAddress.ToString();
-        //responseMessage = await _http.GetAsync("api/comment/" + PostSlug);
-
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
     }
 
-    private async Task MessageHandler(string message)
+    private async Task MessageHandler(string message, long commentId)
     {
-        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
-        // await InvokeAsync(() => { StateHasChanged(); });
+        if (String.Equals(message, Constants.ComponentUpdate))
+        {
+            CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
+            ShowSubEditor = false;
+        }
+        if (String.Equals(message, Constants.ComponentShowEditor))
+        {
+            ShowSubEditor = true;
+            EditorForId = commentId;
+            textAreaId = $"comment-{EditorForId}";
+        }
         StateHasChanged();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (CurrentUser.Identity.IsAuthenticated)
+        {
+            if (firstRender)
+            {
+                /*if (!_commentsRenderTrigger.MainEditorRendered)
+                {
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+                _commentsRenderTrigger.MainEditorRendered = true;
+                }*/
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+                ShowMainEditorDone = true;
+                //await AlertDeBug("first Render");
+            }
+            else
+            {
+                if (EditorForId.HasValue && ShowSubEditor)
+                {
+                    //await AlertDeBug("Render Sub Editor");
+                    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+                    ShowSubEditor = false;
+                }
+                //ShowMainEditor = true;
+            }
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+        }
+    }
+    protected async Task AlertDeBug(string info)
+    {
+        await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", info);
     }
 }

@@ -18,7 +18,7 @@
             </li>
             <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
             <li class=" list-group-item border-0 mb-0">
-                <button type="button" class="btn btn-light btn-sm" @onclick="ShouldRenderEditor">Reply</button>
+                <button type="button" class="btn btn-light btn-sm" @onclick="() => ShouldRenderEditor()">Reply</button>
             </li>
         </ul>
     </div>
@@ -36,6 +36,7 @@
     public string Email { get; set; }
     public string Name { get; set; }
     public bool IsAdmin { get; set; }
+    private long CommentId { get; set; }
     protected override async Task OnInitializedAsync()
     {
         await Load();
@@ -51,5 +52,16 @@
         Email = authorModel.Email;
         IsAdmin = authorModel.IsAdmin;
     }
-    public void ShouldRenderEditor() { }
+    public async Task ShouldRenderEditor()
+    {
+        if (!Comment.ParentId.HasValue)
+        {
+            CommentId = Comment.Id;
+        }
+        else
+        {
+            CommentId = Comment.ParentId.Value;
+        }
+        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditor, CommentId);
+    }
 }

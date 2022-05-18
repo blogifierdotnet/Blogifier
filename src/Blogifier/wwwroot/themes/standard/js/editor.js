@@ -184,13 +184,13 @@ const miniToolbar = [
   editorToolbar_preview,
 ];
 
-function getEditor(_toolbar) {
+function getEditor(_toolbar, _textid) {
   let selectedToolbar = fullToolbar;
   if (_toolbar == "miniToolbar") {
     selectedToolbar = miniToolbar;
   }
 
-  let bf_editor = document.getElementById('comment-area');
+  let bf_editor = document.getElementById(_textid);
   let easyMDE = new EasyMDE({
     element: bf_editor,
     autoDownloadFontAwesome: false,
@@ -209,7 +209,8 @@ function getEditor(_toolbar) {
     toolbar: selectedToolbar,
     insertTexts: {
       horizontalRule: ["", "\n---\n"]
-    }
+    },
+    //placeholder:bf_editor.id
   });
   return easyMDE;
 }
@@ -329,27 +330,61 @@ window.commonJsFunctions = {
       return new bootstrap.Tooltip(tooltipTriggerEl, options)
     });
   },
-  loadEditor: function (toolbar) {
+  loadEditor: function (toolbar, textid) {
     autosize(document.querySelectorAll('.autosize'));
-    easymde = getEditor(toolbar);
-    easymde.codemirror.on("paste", function(self,event)
+    if (textid) {
+      console.log('load Editor for sub');
+      console.log(textid);
+      easymde_sub = getEditor(toolbar, textid);
+      easymde_sub.codemirror.on("paste", function(self,event)
     {
-      _editor = easymde;
+      _editor = easymde_sub;
+      fileManager.clipBoardUpload(event)
+    });
+    }
+    console.log('load Editor for main');
+    easymde_main = getEditor(toolbar, 'comment-area');
+    easymde_main.codemirror.on("paste", function(self,event)
+    {
+      _editor = easymde_main;
       fileManager.clipBoardUpload(event)
     });
     window.onscroll = function () { stickyToolbar(toolbar) };
     editorToolbarTooltip();
   },
   setEditorValue: function (txt) {
-    easymde.value(txt
+    easymde_main.value(txt
       .replace(/&#xA;/g, '\r\n')
       .replace(/&#xD;/g, '')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"'));
+    // if (!Object.entries(easymde_sub).length === 0)
+    // {
+    //   easymde_sub.value(txt
+    //   .replace(/&#xA;/g, '\r\n')
+    //   .replace(/&#xD;/g, '')
+    //   .replace(/&lt;/g, '<')
+    //   .replace(/&gt;/g, '>')
+    //     .replace(/&quot;/g, '"'));
+      
+    //   }
   },
-  getEditorValue: function () {
-    return easymde.value();
+  getEditorValue: function (textid) {
+    // easymde = getEditor(toolbar, textid)
+    console.log(textid);
+    if (textid === 'main')
+    {
+      console.log(easymde_main.value());
+      return easymde_main.value();
+    }
+    else
+    {
+      console.log(easymde_sub.value());
+      return easymde_sub.value();
+    }
+    // console.log(easymde.value());
+    
   },
   // setOidcForm: function (path) {
   //   var inputField = document.getElementById('hidden_returnpath');
@@ -357,8 +392,15 @@ window.commonJsFunctions = {
   //   console.log('JS get Form here');
   // },
   // Add Clear Value Function
-  clearEditorValue: function () {
-    easymde.value('');
+  clearEditorValue: function (editorid) {
+    if (editorid === 'comment-area')
+    {
+      easymde_main.value('');
+    }
+    else {
+      easymde_sub.value('');
+    }
+    
   },
   showModal: function (id) {
     document.getElementById(id).showModal();

@@ -76,4 +76,5 @@ namespace Blogifier.Shared
         Days30 = 4,
         Days90 = 5
     }
+
 }
