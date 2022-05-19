@@ -13,7 +13,8 @@
     <div class="row px-0">
         <div class="col-1 my-auto">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                class="bi bi-person-circle rounded-circle mx-auto d-block float-start" viewBox="0 0 16 16">
+                class="bi bi-person-circle rounded-circle mx-auto d-block float-start text-secondary"
+                viewBox="0 0 16 16">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                 <path fill-rule="evenodd"
                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
@@ -22,15 +23,16 @@
         <div class="col my-auto py-auto d-grid" style="height: 150px;">
             @* <form method="post" action="/Home/ExternalSignIn" class="d-grid mx-auto my-0 h-100">
                 <div class="form-group">
-                    <input class="form-control" name="path" hidden="true" aria-label="currentpath" id="hidden_returnpath" />
+                <input class="form-control" name="path" hidden="true" aria-label="currentpath" id="hidden_returnpath" />
                 </div>
                 <button class="btn btn-light h-100" type="submit" aria-label="@_localizer["login"]">
-                    Register or Login to Comment!
+                Register or Login to Comment!
                 </button>
                 <div class="form-group">
-                </div> 
-            </form> *@
-            <a class="d-grid btn btn-light h-50 my-auto py-auto align-items-center" href="@ReturnPath" role="button">Register or Login to Comment!</a>
+                </div>
+                </form> *@
+            <a class="d-grid btn btn-light h-50 my-auto py-auto align-items-center" href="@ReturnPath"
+                role="button">Register or Login to Post Comment!</a>
         </div>
     </div>
     @* <div class="row">
@@ -47,19 +49,19 @@
 
 @code {
     [Parameter] public string CurrentPath { get; set; }
-    private string ReturnPath {get; set;}
+    private string ReturnPath { get; set; }
     protected override async Task OnInitializedAsync()
     {
-    await Load();
+        await Load();
     }
     public async Task Load()
     {
-        await Task.Run(() =>ReturnPath = "Oidc/ExternalSignIn/?path=" + CurrentPath);
+        await Task.Run(() => ReturnPath = "Oidc/ExternalSignIn/?path=" + CurrentPath);
     }
-    
+
     /*protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender){}
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setOidcForm", CurrentPath);
+    if (firstRender){}
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setOidcForm", CurrentPath);
     }*/
 }

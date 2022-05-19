@@ -54,6 +54,7 @@ namespace Blogifier.Core.Extensions
             services.AddScoped<ISyndicationProvider, SyndicationProvider>();
             services.AddScoped<IAboutProvider, AboutProvider>();
             services.AddScoped<ICommentsProvider, CommentsProvider>();
+            services.AddScoped<ICommentsLikeProvider, CommentsLikeProvider>();
 
             return services;
         }

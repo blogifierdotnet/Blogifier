@@ -18,10 +18,12 @@ namespace Blogifier.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentsProvider _commentProvider;
+        private readonly ICommentsLikeProvider _commentsLikeProvider;
 
-        public CommentController(ICommentsProvider commentProvider)
+        public CommentController(ICommentsProvider commentProvider, ICommentsLikeProvider commentsLikeProvider)
         {
             _commentProvider = commentProvider;
+            _commentsLikeProvider = commentsLikeProvider;
         }
 
         [HttpGet("get/{slug}")]
@@ -56,6 +58,35 @@ namespace Blogifier.Controllers
         public async Task<ActionResult<bool>> Remove(int id)
         {
             return await _commentProvider.Remove(id);
+        }
+
+        [HttpGet("getlikes/{id}")]
+        public async Task<ActionResult<int>> GetLikes(long id)
+        {
+            return new ActionResult<int>(await _commentsLikeProvider.GetCommentsLikeById(id));
+        }
+
+        [Authorize]
+        [HttpGet("checklikes/{id}")]
+        public async Task<ActionResult<bool>> Check(long id)
+        {
+            var guid = User.FindFirstValue(JwtClaimTypes.Subject);
+            return new ActionResult<bool>(await _commentsLikeProvider.Check(id, guid));
+        }
+
+        [Authorize]
+        [HttpPost("addlikes/{id}")]
+        public async Task<ActionResult<bool>> Add(long id)
+        {
+            var guid = User.FindFirstValue(JwtClaimTypes.Subject);
+            return await _commentsLikeProvider.Add(id, guid);
+        }
+        [Authorize]
+        [HttpPost("revokelikes/{id}")]
+        public async Task<ActionResult<bool>> Revoke(long id)
+        {
+            var guid = User.FindFirstValue(JwtClaimTypes.Subject);
+            return await _commentsLikeProvider.Revoke(id, guid);
         }
     }
 }
