@@ -354,15 +354,18 @@ window.commonJsFunctions = {
     window.onscroll = function () { stickyToolbar(toolbar) };
     editorToolbarTooltip();
   },
-  setEditorValue: function (txt) {
+  setEditorValue: function (txt, textid) {
     //easymde_main = getEditor(toolbar, 'comment-area');
-    easymde_main.value(txt
+    if (textid === 'main')
+    {
+      easymde_main.value(txt
       .replace(/&#xA;/g, '\r\n')
       .replace(/&#xD;/g, '')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"'));
-    if (!Object.entries(easymde_sub).length === 0)
+      }
+    if (textid === 'sub')
     {
       easymde_sub.value(txt
       .replace(/&#xA;/g, '\r\n')

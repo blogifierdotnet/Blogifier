@@ -108,6 +108,7 @@
                 //await AlertDeBug("Render Sub Editor");
                 textAreaId = $"comment-{CommentId}";
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "sub");
             }
             else
             {
@@ -116,6 +117,7 @@
                 //await AlertDeBug(info);
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
                 await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "mian");
             }
         }
         else
