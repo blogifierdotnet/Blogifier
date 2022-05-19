@@ -342,33 +342,35 @@ window.commonJsFunctions = {
       fileManager.clipBoardUpload(event)
     });
     }
-    console.log('load Editor for main');
-    easymde_main = getEditor(toolbar, 'comment-area');
-    easymde_main.codemirror.on("paste", function(self,event)
-    {
-      _editor = easymde_main;
-      fileManager.clipBoardUpload(event)
-    });
+    else {
+      console.log('load Editor for main');
+      easymde_main = getEditor(toolbar, 'comment-area');
+      easymde_main.codemirror.on("paste", function(self,event)
+      {
+        _editor = easymde_main;
+        fileManager.clipBoardUpload(event)
+      });
+    }
     window.onscroll = function () { stickyToolbar(toolbar) };
     editorToolbarTooltip();
   },
   setEditorValue: function (txt) {
+    //easymde_main = getEditor(toolbar, 'comment-area');
     easymde_main.value(txt
       .replace(/&#xA;/g, '\r\n')
       .replace(/&#xD;/g, '')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"'));
-    // if (!Object.entries(easymde_sub).length === 0)
-    // {
-    //   easymde_sub.value(txt
-    //   .replace(/&#xA;/g, '\r\n')
-    //   .replace(/&#xD;/g, '')
-    //   .replace(/&lt;/g, '<')
-    //   .replace(/&gt;/g, '>')
-    //     .replace(/&quot;/g, '"'));
-      
-    //   }
+    if (!Object.entries(easymde_sub).length === 0)
+    {
+      easymde_sub.value(txt
+      .replace(/&#xA;/g, '\r\n')
+      .replace(/&#xD;/g, '')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"'));
+      }
   },
   getEditorValue: function (textid) {
     // easymde = getEditor(toolbar, textid)
@@ -393,7 +395,7 @@ window.commonJsFunctions = {
   // },
   // Add Clear Value Function
   clearEditorValue: function (editorid) {
-    if (editorid === 'comment-area')
+    if (editorid === 'main')
     {
       easymde_main.value('');
     }

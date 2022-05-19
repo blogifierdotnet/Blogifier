@@ -60,8 +60,8 @@ else
                 }
             }
             @* 本页放活动的Editor，点击主回复或者相应的附带回复，Editor出现在每个主回复下方 *@
-            <p>ShowSubEditor: @ShowSubEditor</p>
-            <p>ShowMainEditorDone: @ShowMainEditorDone</p>
+            @* <p>ShowSubEditor: @ShowSubEditor</p>
+                <p>ShowMainEditorDone: @ShowMainEditorDone</p> *@
         }
     }
     else
@@ -115,40 +115,44 @@ else
         if (String.Equals(message, Constants.ComponentShowEditor))
         {
             ShowSubEditor = true;
+            ShowMainEditorDone = false;
             EditorForId = commentId;
             textAreaId = $"comment-{EditorForId}";
         }
         StateHasChanged();
     }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    /*protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (CurrentUser.Identity.IsAuthenticated)
-        {
-            if (firstRender)
-            {
-                /*if (!_commentsRenderTrigger.MainEditorRendered)
-                {
-                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-                _commentsRenderTrigger.MainEditorRendered = true;
-                }*/
-                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
-                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-                ShowMainEditorDone = true;
-                //await AlertDeBug("first Render");
-            }
-            else
-            {
-                if (EditorForId.HasValue && ShowSubEditor)
-                {
-                    //await AlertDeBug("Render Sub Editor");
-                    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
-                    ShowSubEditor = false;
-                }
-                //ShowMainEditor = true;
-            }
-            await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
-        }
+    if (CurrentUser.Identity.IsAuthenticated)
+    {
+    //await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
+    //await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+    //ShowMainEditorDone = true;
+    if (firstRender)
+    {
+    if (!_commentsRenderTrigger.MainEditorRendered)
+    {
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+    _commentsRenderTrigger.MainEditorRendered = true;
     }
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
+    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+    ShowMainEditorDone = true;
+    //await AlertDeBug("first Render");
+    }
+    else
+    {
+    if (EditorForId.HasValue && ShowSubEditor)
+    {
+    //await AlertDeBug("Render Sub Editor");
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+    ShowSubEditor = false;
+    }
+    //ShowMainEditor = true;
+    }
+    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+    }
+    }*/
     protected async Task AlertDeBug(string info)
     {
         await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", info);

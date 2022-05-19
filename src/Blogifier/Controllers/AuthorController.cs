@@ -61,27 +61,32 @@ namespace Blogifier.Controllers
         public async Task<ActionResult<Author>> GetCurrentAuthor()
         {
             Console.WriteLine("--------Current Author was Called!-----------");
-
-
             if (User.Identity.IsAuthenticated)
             {
                 var tempAuthor = CreateFromOIDC();
+                var tempSub = User.FindFirstValue(JwtClaimTypes.Subject);
                 tempAuthor.Avatar = tempAuthor.Avatar.VerifyAvatar();
-
                 if (User.HasClaim("role", "AutoBloger"))
                 {
                     tempAuthor.IsAdmin = true;
                 }
 
                 // Sync with local DB on Bio firstly
-                var existingUser = await _authorProvider.FindByOpenId(User.FindFirstValue(JwtClaimTypes.Subject));
+                var existingUser = await _authorProvider.FindByOpenId(tempSub);
                 existingUser.Avatar = existingUser.Avatar.VerifyAvatar();
 
                 if (existingUser is null)
                 {
                     Console.WriteLine("Has no local data, need to Sync!");
-                    await SyncAuthorWithDB(tempAuthor);
-                    var avatarResult = await _storageProvider.SyncAvatarFromWeb(new Uri("https://auth.prime-minister.pub/images/user_avatars/" + tempAuthor.Avatar + ".png"), "/");
+                    var syncResult = await SyncAuthorWithDB(tempAuthor);
+                    if (syncResult)
+                    {
+                        var avatarResult = await _storageProvider.SyncAvatarFromWeb(new Uri("https://auth.prime-minister.pub/images/user_avatars/" + tempAuthor.Avatar + ".png"), "/");
+                        var recapture = await _authorProvider.FindByOpenId(tempSub);
+                        tempAuthor.Id = recapture.Id;
+                        return tempAuthor;
+                    }
+                    System.Console.WriteLine("Authenticated User returned without Id");
                     return tempAuthor;
                 }
 
@@ -104,10 +109,7 @@ namespace Blogifier.Controllers
                     }
                 }
                 tempAuthor.Bio = existingUser.Bio;
-                System.Console.WriteLine("Bio here----");
-                System.Console.WriteLine(existingUser.Bio);
-                // var addressedAvatar = "/data/Avatar/" + tempAuthor.Avatar + ".png";
-                // tempAuthor.Avatar = addressedAvatar;
+                tempAuthor.Id = existingUser.Id;
                 return tempAuthor;
             }
             return new Author() { DisplayName = "Visitor", IsAdmin = false };

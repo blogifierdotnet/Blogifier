@@ -43,7 +43,7 @@
                         @onclick:preventDefault>@_localizer["cancel"]</button>
                 </div>
             </div>
-            <p>@textAreaId</p>
+            <p></p>
 
         </Authorized>
         <NotAuthorized>
@@ -94,30 +94,35 @@
         }
     }
 
-    /*protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-    if (firstRender)
-    {
-    if (!_commentsRenderTrigger.MainEditorRendered)
-    {
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-    _commentsRenderTrigger.MainEditorRendered = true;
+        if (firstRender)
+        {
+            /*if (!_commentsRenderTrigger.MainEditorRendered)
+            {
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+            _commentsRenderTrigger.MainEditorRendered = true;
+            }*/
+            if (CommentId.HasValue)
+            {
+                //await AlertDeBug("Render Sub Editor");
+                textAreaId = $"comment-{CommentId}";
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+            }
+            else
+            {
+                var which = CommentId.HasValue ? "Sub" : "Main";
+                var info = $"First Render from {which}";
+                //await AlertDeBug(info);
+                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+            }
+        }
+        else
+        {
+        }
+        //await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
     }
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-    await AlertDeBug("first Render");
-    }
-    else
-    {
-    if (CommentId.HasValue)
-    {
-    await AlertDeBug("Render Sub Editor");
-    textAreaId = $"comment-{CommentId}";
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
-    }
-    }
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
-    }*/
     protected async Task SaveComment(CommentAction commentAction)
     {
         if (CommentId.HasValue)
@@ -127,6 +132,7 @@
         else
         {
             Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "main");
+            await JSRuntime.InvokeAsync<string>("commonJsFunctions.clearEditorValue", "main");
         }
         Comment.PostId = PostId;
         Comment.PostDate = DateTime.UtcNow;
