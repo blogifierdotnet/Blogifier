@@ -19,14 +19,13 @@
     <div class="card border-0 shadow-sm">
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0">
-                <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString()
+                <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString() as @Comment.Id
                 </p>
             </li>
             <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
             <li class=" list-group-item border-0 mb-0">
                 <div class="d-flex flex-row lign-items-center">
-                    <button type="button" class="btn btn-sm text-secondary"
-                        @onclick="() => ShouldRenderEditor()">Reply</button>
+                    @* <button type="button" class="btn btn-sm"> *@
                     <button type="button" class="btn btn-sm" @onclick="() => HandleThumbup()">
                         @if (CurrentUser.Identity.IsAuthenticated && ThumbupAlready)
                         {
@@ -51,6 +50,16 @@
                             @CommentsLikedCount
                         </div>
                     }
+                    <button type="button" class="btn btn-sm text-secondary"
+                        @onclick="() => ShouldRenderEditor()">Reply</button>
+                    @if (CurrentUser.Identity.IsAuthenticated)
+                    {
+                        if (Comment.CommentedUserId == CurrentUser.FindFirstValue(JwtClaimTypes.Subject))
+                        {
+                            <button type="button" class="btn btn-sm text-secondary"
+                        @onclick="() => RenderEditorbyContent()">Edit</button>
+                        }
+                    }
                 </div>
             </li>
         </ul>
@@ -58,7 +67,6 @@
 </div>
 <br>
 
-@* 本页放置回复按钮，点击回复，传递参数到上一层，触发Comments页面动态渲染组件 *@
 
 @code {
     [Parameter]
@@ -70,7 +78,7 @@
     public string Email { get; set; }
     public string Name { get; set; }
     public bool IsAdmin { get; set; }
-    private long CommentId { get; set; }
+    private long ParentCommentId { get; set; }
     private int CommentsLikedCount { get; set; }
     private bool ThumbupAlready { get; set; } = false;
     protected override async Task OnInitializedAsync()
@@ -105,13 +113,25 @@
     {
         if (!Comment.ParentId.HasValue)
         {
-            CommentId = Comment.Id;
+            ParentCommentId = Comment.Id;
         }
         else
         {
-            CommentId = Comment.ParentId.Value;
+            ParentCommentId = Comment.ParentId.Value;
         }
-        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditor, CommentId);
+        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditor, ParentCommentId);
+    }
+    public async Task RenderEditorbyContent()
+    {
+        if (!Comment.ParentId.HasValue)
+        {
+            ParentCommentId = Comment.Id;
+        }
+        else
+        {
+            ParentCommentId = Comment.ParentId.Value;
+        }
+        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditorbyContent, ParentCommentId, Comment.Id);
     }
     public async Task HandleThumbup()
     {

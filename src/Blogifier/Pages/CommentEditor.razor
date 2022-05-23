@@ -26,7 +26,7 @@
                         <img src="@Avatar" class="rounded-circle mx-auto d-block float-start">
                     </div>
                     <div class="col">
-                        @if (!CommentId.HasValue)
+                        @if (!ParentCommentId.HasValue)
                         {
                             <textarea rows="5" cols="100" id="comment-area"> </textarea>
                         }
@@ -37,13 +37,24 @@
                     </div>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                    <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
-                        @onclick="() => UploadComment()">@_localizer["comment"]</button>
-                    <button type="button" class="btn btn-light" @onclick="() => CancelUpload()"
+                    @if (Content.Length > 0)
+                    {
+                        <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
+                        @onclick="() => EditComment()">@_localizer["edit"]</button>
+                        <button type="button" class="btn btn-light" @onclick="() => CancelEdit()"
                         @onclick:preventDefault>@_localizer["cancel"]</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
+                        @onclick="() => UploadComment()">@_localizer["comment"]</button>
+                        <button type="button" class="btn btn-light" @onclick="() => CancelUpload()"
+                        @onclick:preventDefault>@_localizer["cancel"]</button>
+                    }
                 </div>
             </div>
-            <p></p>
+            <p>Content: @Content</p>
+            <p>Text: @textAreaId</p>
 
         </Authorized>
     </AuthorizeView>
@@ -51,15 +62,16 @@
 
 @code {
     [Parameter] public string PostSlug { get; set; }
-    [Parameter] public string Content { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
-    [Parameter] public long? CommentId { get; set; }
+    [Parameter] public long? ParentCommentId { get; set; }
+    [Parameter] public long? CurrentCommentId { get; set; }
     protected Comment Comment { get; set; }
     public string Avatar { get; set; }
     public ClaimsPrincipal CurrentUser { get; set; }
     private HttpClient _httpClient { get; set; }
-    private string textAreaId { get; set; } = "comment-area";
+    private string textAreaId { get; set; }
+    private string Content { get; set; }
     protected override async Task OnInitializedAsync()
     {
         var authState = await _stateProvider.GetAuthenticationStateAsync();
@@ -79,14 +91,20 @@
             }
             _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
         }
+        Content = "";
         Comment = new Comment();
         var tempGuid = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
         var authorModel = await
         _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{tempGuid}");
         Avatar = authorModel.Avatar;
-        if (CommentId.HasValue)
+        if (ParentCommentId.HasValue)
         {
-            textAreaId = $"comment-{CommentId}";
+            textAreaId = $"comment-{ParentCommentId}";
+        }
+        if (CurrentCommentId.HasValue)
+        {
+            var tempComment = await _httpClient.GetFromJsonAsync<Comment>($"api/comment/getsingle/{CurrentCommentId}");
+            Content = tempComment.CommentContent;
         }
     }
 
@@ -94,36 +112,42 @@
     {
         if (firstRender)
         {
-            /*if (!_commentsRenderTrigger.MainEditorRendered)
+            if (ParentCommentId.HasValue)
             {
-            await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-            _commentsRenderTrigger.MainEditorRendered = true;
-            }*/
-            if (CommentId.HasValue)
-            {
-                //await AlertDeBug("Render Sub Editor");
-                textAreaId = $"comment-{CommentId}";
+                //textAreaId = $"comment-{ParentCommentId}";
+                await AlertDeBug(textAreaId);
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "sub");
             }
             else
             {
-                var which = CommentId.HasValue ? "Sub" : "Main";
-                var info = $"First Render from {which}";
-                //await AlertDeBug(info);
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
                 await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "mian");
             }
         }
+        /*
+        if (ParentCommentId.HasValue)
+        {
+        textAreaId = $"comment-{ParentCommentId}";
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "sub");
+        }
         else
         {
+        if (firstRender)
+        {
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
+        await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "mian");
         }
-        //await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+        }*/
     }
     protected async Task SaveComment(CommentAction commentAction)
     {
-        if (CommentId.HasValue)
+        HttpResponseMessage result;
+        if (ParentCommentId.HasValue)
         {
             Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", textAreaId);
         }
@@ -133,33 +157,29 @@
             await JSRuntime.InvokeAsync<string>("commonJsFunctions.clearEditorValue", "main");
         }
         Comment.PostId = PostId;
-        Comment.PostDate = DateTime.UtcNow;
         Comment.CommentedUserId = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
-        if (CommentId.HasValue)
+        if (ParentCommentId.HasValue)
         {
-            Comment.ParentId = CommentId;
+            Comment.ParentId = ParentCommentId;
         }
         if (commentAction == CommentAction.Eidt)
         {
             Comment.UpdatedDate = DateTime.UtcNow;
-            HttpResponseMessage updateResult = await _httpClient.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
-            if (updateResult.IsSuccessStatusCode)
-            {
-                await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
-                //await Load();
-            }
+            result = await _httpClient.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
         }
         else
         {
-            HttpResponseMessage uploadResult = await _httpClient.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
-            if (uploadResult.IsSuccessStatusCode)
-            {
-                await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
-                //await Load();
-            }
-            else { await AlertDeBug("Fail to Upload!!!"); }
+            Comment.PostDate = DateTime.UtcNow;
+            result = await _httpClient.PostAsJsonAsync<Comment>($"api/comment/add", Comment);
         }
-
+        if (result.IsSuccessStatusCode)
+        {
+            await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
+        }
+        else
+        {
+            await AlertDeBug("API Communication Fail");
+        }
     }
     protected async Task UploadComment()
     {
@@ -172,6 +192,10 @@
     protected async Task CancelUpload()
     {
         await JSRuntime.InvokeAsync<string>("commonJsFunctions.clearEditorValue", "");
+    }
+    protected async Task CancelEdit()
+    {
+        await _commentsRenderTrigger.SendMessage(Constants.HeaderScript);
     }
     protected async Task AlertDeBug(string info)
     {

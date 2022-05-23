@@ -33,6 +33,13 @@ namespace Blogifier.Controllers
         }
 
         [Authorize]
+        [HttpGet("getsingle/{commentid}")]
+        public async Task<ActionResult<Comment>> GetOneComment(long commentid)
+        {
+            return new ActionResult<Comment>(await _commentProvider.GetSingleCommentById(commentid));
+        }
+
+        [Authorize]
         [HttpPost("add")]
         public async Task<ActionResult<bool>> Add(Comment comment)
         {

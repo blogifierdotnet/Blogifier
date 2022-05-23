@@ -176,7 +176,7 @@ const miniToolbar = [
   "|",
   editorToolbar_hr,
   editorToolbar_link,
-  editorToolbar_image,
+  //editorToolbar_image,
   editorToolbar_quote,
   editorToolbar_code,
   editorToolbar_table,

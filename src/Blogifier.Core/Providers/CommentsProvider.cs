@@ -21,6 +21,7 @@ namespace Blogifier.Core.Providers
         // Task<string> GetSlugFromTitle(string title);
         Task<bool> Add(Comment comment);
         Task<bool> Update(Comment comment);
+        Task<Comment> GetSingleCommentById(long commentId);
         // Task<bool> Publish(int id, bool publish);
         // Task<bool> Featured(int id, bool featured);
         // Task<List<PostItem>> GetPostItems();
@@ -51,6 +52,16 @@ namespace Blogifier.Core.Providers
             { return null; }
             // System.Console.WriteLine("Post ID => " + tempId);
             return await GetCommentsById(tempId);
+        }
+
+        public async Task<Comment> GetSingleCommentById(long commentId)
+        {
+            var comment = await _db.Comments.AsNoTracking()
+                                .Where(c => c.Id == commentId).FirstOrDefaultAsync();
+            if (comment is not null)
+            { return comment; }
+            else
+            { return null; }
         }
 
         public async Task<List<CommentDTO>> GetCommentsById(int id)
@@ -108,7 +119,6 @@ namespace Blogifier.Core.Providers
         private static Comment CommentToHtml(Comment comment)
         {
             string temp = comment.CommentContent.MdToHtml().Replace("<p>", string.Empty).Replace("</p>", string.Empty);
-            // string temp = comment.CommentContent.MdToHtml();
             comment.CommentContent = temp;
             return comment;
         }

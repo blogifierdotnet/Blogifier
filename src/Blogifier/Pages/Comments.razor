@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Http
 @using System.Security.Claims
 @using Blogifier.Shared
 @using Blogifier.Services
@@ -10,12 +11,13 @@
 @inject IHttpClientFactory ClientFactory
 @inject IMessageService _commentsRenderTrigger
 @inject AuthenticationStateProvider _stateProvider
+@inject IHttpContextAccessor _contextAccessor
 
 @if (CurrentUser.Identity.IsAuthenticated)
 {
     if (!ShowMainEditorDone)
     {
-        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" Content="">
+        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar">
         </CommentEditor>
     }
 }
@@ -51,17 +53,25 @@ else
             {
                 if (CurrentUser.Identity.IsAuthenticated)
                 {
-                    <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" Content="" CommentId="@EditorForId.Value">
-                    </CommentEditor>
+                    if (ShowSubEditorbyContent)
+                    {
+                        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value"
+    CurrentCommentId="@CurrentCommentId.Value">
+                        </CommentEditor>
+                        @* <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value">
+                            </CommentEditor> *@
+                    }
+                    else
+                    {
+                        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value">
+                        </CommentEditor>
+                    }
                 }
                 else
                 {
                     <FakeEditor CurrentPath="@CurrentPath"></FakeEditor>
                 }
             }
-            @* 本页放活动的Editor，点击主回复或者相应的附带回复，Editor出现在每个主回复下方 *@
-            @* <p>ShowSubEditor: @ShowSubEditor</p>
-                <p>ShowMainEditorDone: @ShowMainEditorDone</p> *@
         }
     }
     else
@@ -82,10 +92,13 @@ else
     public HttpResponseMessage responseMessage { get; set; }
     private HttpClient _http { get; set; }
     private bool ShowSubEditor { get; set; } = false;
+    private bool ShowSubEditorbyContent { get; set; } = false;
     //private bool ShowFakeEditor { get; set; } = false;
     private long? EditorForId { get; set; } = null;
+    private long? CurrentCommentId { get; set; } = null;
     private bool ShowMainEditorDone { get; set; } = false;
     private string textAreaId { get; set; }
+    //private string contentNeedChange { get; set; } = null;
     protected override async Task OnInitializedAsync()
     {
         _commentsRenderTrigger.OnMessage += MessageHandler;
@@ -102,57 +115,49 @@ else
     {
         //ShowMainEditor = true;
         _http = ClientFactory.CreateClient("Local");
-        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
+        CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>($"api/comment/get/{PostSlug}");
+        if (CurrentUser.Identity.IsAuthenticated)
+        {
+            List<string> cookieCollection = new List<string>();
+            foreach (var cookie in _contextAccessor.HttpContext.Request.Cookies)
+            {
+                cookieCollection.Add(cookie.Key + "=" + cookie.Value);
+            }
+            _http.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
+        }
     }
 
-    private async Task MessageHandler(string message, long commentId)
+    private async Task MessageHandler(string message, long commentIdforPosition, long commentId)
     {
         if (String.Equals(message, Constants.ComponentUpdate))
         {
-            CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>("api/comment/get/" + PostSlug);
+            CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>($"api/comment/get/{PostSlug}");
             ShowSubEditor = false;
         }
         if (String.Equals(message, Constants.ComponentShowEditor))
         {
             ShowSubEditor = true;
             ShowMainEditorDone = false;
-            EditorForId = commentId;
+            EditorForId = commentIdforPosition;
             textAreaId = $"comment-{EditorForId}";
+        }
+        if (String.Equals(message, Constants.ComponentShowEditorbyContent))
+        {
+            ShowSubEditor = true;
+            ShowMainEditorDone = false;
+            EditorForId = commentIdforPosition;
+            textAreaId = $"comment-{EditorForId}";
+            ShowSubEditorbyContent = true;
+            CurrentCommentId = commentId;
+
+        }
+        if (String.Equals(message, Constants.HideSubEditor))
+        {
+            ShowSubEditor = false;
         }
         StateHasChanged();
     }
-    /*protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-    if (CurrentUser.Identity.IsAuthenticated)
-    {
-    //await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
-    //await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-    //ShowMainEditorDone = true;
-    if (firstRender)
-    {
-    if (!_commentsRenderTrigger.MainEditorRendered)
-    {
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
-    _commentsRenderTrigger.MainEditorRendered = true;
-    }
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
-    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-    ShowMainEditorDone = true;
-    //await AlertDeBug("first Render");
-    }
-    else
-    {
-    if (EditorForId.HasValue && ShowSubEditor)
-    {
-    //await AlertDeBug("Render Sub Editor");
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
-    ShowSubEditor = false;
-    }
-    //ShowMainEditor = true;
-    }
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
-    }
-    }*/
+
     protected async Task AlertDeBug(string info)
     {
         await JSRuntime.InvokeVoidAsync("commonJsFunctions.tempAlert", info);
