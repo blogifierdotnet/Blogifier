@@ -64,15 +64,7 @@ namespace Blogifier.Core.Providers
             author.DateCreated = DateTime.UtcNow;
 
             _db.Authors.Add(author);
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Serilog.Log.Warning($"Error registering new blog: {ex.Message}");
-                return false;
-            }
+
             return await _db.SaveChangesAsync() > 0;
         }
 

@@ -5,7 +5,7 @@ namespace Blogifier.Services
 {
     public interface IMessageService
     {
-        event Func<string, long, long, Task> OnMessage;
+        event Func<string, long, long, Task> OnMessageAsync;
         Task SendMessage(string message, long commentIdforPosition = 0, long commentId = 0);
         Task ClearMessages();
         //bool MainEditorRendered { get; set; }
@@ -13,18 +13,18 @@ namespace Blogifier.Services
 
     public class MessageService : IMessageService
     {
-        public event Func<string, long, long, Task> OnMessage;
+        public event Func<string, long, long, Task> OnMessageAsync;
 
         public async Task SendMessage(string message, long commentIdforPosition = 0, long commentId = 0)
         {
             // System.Console.WriteLine(message);
             // System.Console.WriteLine(commentId);
-            await OnMessage?.Invoke(message, commentIdforPosition, commentId);
+            await OnMessageAsync?.Invoke(message, commentIdforPosition, commentId);
         }
 
         public async Task ClearMessages()
         {
-            await OnMessage?.Invoke(null, 0, 0);
+            await OnMessageAsync?.Invoke(null, 0, 0);
         }
         //public bool MainEditorRendered { get; set; } = false;
     }

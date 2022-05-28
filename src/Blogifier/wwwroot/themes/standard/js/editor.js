@@ -336,15 +336,15 @@ window.commonJsFunctions = {
       console.log('load Editor for sub');
       console.log(textid);
       easymde_sub = getEditor(toolbar, textid);
-      easymde_sub.codemirror.on("paste", function(self,event)
-    {
-      _editor = easymde_sub;
-      fileManager.clipBoardUpload(event)
-    });
+    //   easymde_sub.codemirror.on("paste", function(self,event)
+    // {
+    //   _editor = easymde_sub;
+    //   fileManager.clipBoardUpload(event)
+    // });
     }
     else {
       console.log('load Editor for main');
-      easymde_main = getEditor(toolbar, 'comment-area');
+      easymde_main = getEditor(toolbar, 'comment-main');
       easymde_main.codemirror.on("paste", function(self,event)
       {
         _editor = easymde_main;
@@ -356,24 +356,27 @@ window.commonJsFunctions = {
   },
   setEditorValue: function (txt, textid) {
     //easymde_main = getEditor(toolbar, 'comment-area');
-    if (textid === 'main')
+    if (txt)
     {
-      easymde_main.value(txt
-      .replace(/&#xA;/g, '\r\n')
-      .replace(/&#xD;/g, '')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"'));
-      }
-    if (textid === 'sub')
-    {
-      easymde_sub.value(txt
-      .replace(/&#xA;/g, '\r\n')
-      .replace(/&#xD;/g, '')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
+      if (textid === 'main')
+      {
+        easymde_main.value(txt
+        .replace(/&#xA;/g, '\r\n')
+        .replace(/&#xD;/g, '')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
         .replace(/&quot;/g, '"'));
       }
+      if (textid === 'sub')
+      {
+        easymde_sub.value(txt
+        .replace(/&#xA;/g, '\r\n')
+        .replace(/&#xD;/g, '')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"'));
+      }
+    }
   },
   getEditorValue: function (textid) {
     // easymde = getEditor(toolbar, textid)
@@ -436,6 +439,9 @@ window.commonJsFunctions = {
   //Alert to debug
   tempAlert: function (message) {
     alert(message);
+  },
+  simpleLog: function (text) {
+    console.log(text);
   }
 };
 

@@ -70,7 +70,7 @@ namespace Blogifier.Core.Providers
             var mainComments = await _db.Comments.AsNoTracking()
                 .Where(c => c.PostId == id && c.ParentId == null)
                 .OrderBy(c => c.PostDate)
-                .Select(c => CommentToHtml(c))
+                //.Select(c => CommentToHtml(c))
                 .ToListAsync();
 
             foreach (var comment in mainComments)
@@ -78,7 +78,7 @@ namespace Blogifier.Core.Providers
                 var subComments = await _db.Comments.AsNoTracking()
                     .Where(c => c.PostId == id && c.ParentId == comment.Id)
                     .OrderBy(c => c.PostDate)
-                    .Select(c => CommentToHtml(c))
+                    //.Select(c => CommentToHtml(c))
                     .ToListAsync();
 
                 commentDTOs.Add(new CommentDTO() { MainComment = comment, SubComments = subComments });

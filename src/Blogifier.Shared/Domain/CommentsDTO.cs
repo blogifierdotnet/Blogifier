@@ -7,5 +7,11 @@ namespace Blogifier.Shared
     {
         public Comment MainComment { get; set; }
         public List<Comment> SubComments { get; set; }
+        // public List<Comment> All()
+        // {
+        //     List<Comment> all = SubComments;
+        //     all.Add(MainComment);
+        //     return all;
+        // }
     }
 }

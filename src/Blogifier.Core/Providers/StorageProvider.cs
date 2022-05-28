@@ -18,7 +18,7 @@ namespace Blogifier.Core.Providers
         bool FileExists(string path);
         Task<bool> UploadFormFile(IFormFile file, string path = "");
         Task<string> UploadFromWeb(Uri requestUri, string root, string path = "");
-        Task<string> SyncAvatarFromWeb(Uri requestUri, string root, string path = "Avatar");
+        Task SyncAvatarFromWeb(Uri requestUri);
         Task<bool> DeleteOldAvatar(string oldAvatar);
         Task<string> UploadBase64Image(string baseImg, string root, string path = "");
         Task<ThemeSettings> GetThemeSettings(string theme);
@@ -127,11 +127,6 @@ namespace Blogifier.Core.Providers
                  Path.Combine(_storageRoot, fileName) :
                  Path.Combine(_storageRoot, path + _slash + fileName);
 
-            // using (WebClient client = new WebClient())
-            // {
-            //     client.DownloadFile(requestUri, filePath);
-            //     return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
-            // }
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.GetAsync(requestUri);
@@ -143,15 +138,24 @@ namespace Blogifier.Core.Providers
             }
         }
 
-        public async Task<string> SyncAvatarFromWeb(Uri requestUri, string root, string path = "Avatar")
+        public async Task SyncAvatarFromWeb(Uri requestUri)
         {
-            path = path.Replace("/", _slash);
-            VerifyPath(path);
+            string _fileName = requestUri.ToString().Split("/").Last();
+            string fileName = _fileName;
+            // var fileName = fileNameToSave;
+            if (!_fileName.EndsWith(".png"))
+            {
+                fileName = _fileName + ".png";
+            }
+            System.Console.WriteLine(fileName);
+            // System.Console.WriteLine(path);
+            // System.Console.WriteLine(_storageRoot);
 
-            var fileName = requestUri.ToString().Split("/").Last();
-            var filePath = string.IsNullOrEmpty(path) ?
-                 Path.Combine(_storageRoot, fileName) :
-                 Path.Combine(_storageRoot, path + _slash + fileName);
+            // var filePath = string.IsNullOrEmpty(path) ?
+            //      Path.Combine(_storageRoot, fileName) :
+            //      Path.Combine(_storageRoot, path + _slash + fileName);
+            var filePath = Path.Combine(_storageRoot, "Avatar" + _slash + fileName);
+            System.Console.WriteLine(filePath);
 
             using (HttpClient client = new HttpClient())
             {
@@ -159,9 +163,10 @@ namespace Blogifier.Core.Providers
                 using (var fs = new FileStream(filePath, FileMode.Create))
                 {
                     await response.Content.CopyToAsync(fs);
-                    return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
+                    // return;
                 }
             }
+            return;
         }
 
         public async Task<bool> DeleteOldAvatar(string oldAvatar)

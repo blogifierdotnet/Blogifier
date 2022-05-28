@@ -48,6 +48,11 @@ namespace Blogifier.Shared.Extensions
             {
                 return "/data/Avatar/" + authorAvatar + ".png";
             }
+            // if (authorAvatar.EndsWith(".png"))
+            // {
+            //     return authorAvatar;
+            // }
+            // return authorAvatar + ".png";
         }
     }
 }

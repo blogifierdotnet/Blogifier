@@ -63,54 +63,19 @@ namespace Blogifier.Controllers
             Console.WriteLine("--------Current Author was Called!-----------");
             if (User.Identity.IsAuthenticated)
             {
-                var tempAuthor = CreateFromOIDC();
                 var tempSub = User.FindFirstValue(JwtClaimTypes.Subject);
-                tempAuthor.Avatar = tempAuthor.Avatar.VerifyAvatar();
-                if (User.HasClaim("role", "AutoBloger"))
-                {
-                    tempAuthor.IsAdmin = true;
-                }
-
-                // Sync with local DB on Bio firstly
                 var existingUser = await _authorProvider.FindByOpenId(tempSub);
-                existingUser.Avatar = existingUser.Avatar.VerifyAvatar();
 
                 if (existingUser is null)
                 {
-                    Console.WriteLine("Has no local data, need to Sync!");
-                    var syncResult = await SyncAuthorWithDB(tempAuthor);
-                    if (syncResult)
-                    {
-                        var avatarResult = await _storageProvider.SyncAvatarFromWeb(new Uri("https://auth.prime-minister.pub/images/user_avatars/" + tempAuthor.Avatar + ".png"), "/");
-                        var recapture = await _authorProvider.FindByOpenId(tempSub);
-                        tempAuthor.Id = recapture.Id;
-                        return tempAuthor;
-                    }
-                    System.Console.WriteLine("Authenticated User returned without Id");
-                    return tempAuthor;
+                    return new Author() { DisplayName = "Visitor-FailtoSync", IsAdmin = false };
                 }
 
                 else
                 {
                     // Sync with Avatar/Name/Email
-                    var oldAvatarName = existingUser.Avatar;
-                    if (existingUser.DisplayName != tempAuthor.DisplayName || existingUser.Email != tempAuthor.Email || existingUser.Avatar != tempAuthor.Avatar)
-                    {
-                        System.Console.WriteLine("----Update Profile----");
-                        tempAuthor.Bio = existingUser.Bio;
-                        await _authorProvider.Update(tempAuthor);
-                    }
-
-                    if (oldAvatarName != tempAuthor.Avatar)
-                    {
-                        System.Console.WriteLine("----Update Avatar----");
-                        var avatarResult = await _storageProvider.SyncAvatarFromWeb(new Uri("https://auth.prime-minister.pub/images/user_avatars/" + tempAuthor.Avatar + ".png"), "/");
-                        await _storageProvider.DeleteOldAvatar(oldAvatarName);
-                    }
+                    return existingUser;
                 }
-                tempAuthor.Bio = existingUser.Bio;
-                tempAuthor.Id = existingUser.Id;
-                return tempAuthor;
             }
             return new Author() { DisplayName = "Visitor", IsAdmin = false };
         }
@@ -226,7 +191,5 @@ namespace Blogifier.Controllers
             authorToSync.DateCreated = DateTime.UtcNow;
             return await _authorProvider.CreateFromAuthor(authorToSync);
         }
-
-
     }
 }

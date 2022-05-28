@@ -34,7 +34,7 @@ else
         {
             <div class="container border-0 p-0">
                 <div class="row">
-                    <CommentCard Comment="@commentTree.MainComment" />
+                    <CommentCard Comment="@commentTree.MainComment" @key="@commentTree.MainComment.CommentContent" />
                 </div>
                 @if (commentTree.SubComments.Count > 0)
                 {
@@ -43,7 +43,7 @@ else
                         <p></p>
                         <div class="row">
                             <div class="col-md-1 col-sm-1 col-lg-1"></div>
-                            <CommentCard Comment="@subComment" />
+                            <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
                         </div>
                     }
                 }
@@ -53,19 +53,20 @@ else
             {
                 if (CurrentUser.Identity.IsAuthenticated)
                 {
-                    if (ShowSubEditorbyContent)
-                    {
+                    @* if (ShowSubEditorbyContent)
+                        {
                         <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value"
-    CurrentCommentId="@CurrentCommentId.Value">
+                        EditedCommentId="@EditCommentId" LoadContent="@ContentToLoad">
                         </CommentEditor>
-                        @* <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value">
-                            </CommentEditor> *@
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
                         <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value">
                         </CommentEditor>
-                    }
+                        } *@
+                    <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId"
+    EditedCommentId="@EditCommentId" LoadContent="@ContentToLoad" @key="ContentToLoad">
+                    </CommentEditor>
                 }
                 else
                 {
@@ -78,7 +79,6 @@ else
     {
         <p></p>
     }
-
 }
 
 @code {
@@ -86,29 +86,29 @@ else
     [Parameter] public string CurrentPath { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
-    private ClaimsPrincipal CurrentUser { get; set; }
-    public List<CommentDTO> CommentDTOs { get; set; }
-    public string Content { get; set; } = string.Empty;
-    public HttpResponseMessage responseMessage { get; set; }
-    private HttpClient _http { get; set; }
-    private bool ShowSubEditor { get; set; } = false;
-    private bool ShowSubEditorbyContent { get; set; } = false;
+    private ClaimsPrincipal CurrentUser;
+    public List<CommentDTO> CommentDTOs;
+    //public string Content = string.Empty;
+    public HttpResponseMessage responseMessage;
+    private HttpClient _http;
+    private bool ShowSubEditor = false;
+    //private bool ShowSubEditorbyContent = false;
     //private bool ShowFakeEditor { get; set; } = false;
-    private long? EditorForId { get; set; } = null;
-    private long? CurrentCommentId { get; set; } = null;
-    private bool ShowMainEditorDone { get; set; } = false;
-    private string textAreaId { get; set; }
-    //private string contentNeedChange { get; set; } = null;
+    private long? EditorForId = null;
+    private long? EditCommentId = null;
+    private bool ShowMainEditorDone = false;
+    //private string textAreaId;
+    private string ContentToLoad = null;
     protected override async Task OnInitializedAsync()
     {
-        _commentsRenderTrigger.OnMessage += MessageHandler;
+        _commentsRenderTrigger.OnMessageAsync += MessageHandler;
         var authState = await _stateProvider.GetAuthenticationStateAsync();
         CurrentUser = authState.User;
         await Load();
     }
     public void Dispose()
     {
-        _commentsRenderTrigger.OnMessage -= MessageHandler;
+        _commentsRenderTrigger.OnMessageAsync -= MessageHandler;
     }
 
     protected async Task Load()
@@ -116,15 +116,6 @@ else
         //ShowMainEditor = true;
         _http = ClientFactory.CreateClient("Local");
         CommentDTOs = await _http.GetFromJsonAsync<List<CommentDTO>>($"api/comment/get/{PostSlug}");
-        if (CurrentUser.Identity.IsAuthenticated)
-        {
-            List<string> cookieCollection = new List<string>();
-            foreach (var cookie in _contextAccessor.HttpContext.Request.Cookies)
-            {
-                cookieCollection.Add(cookie.Key + "=" + cookie.Value);
-            }
-            _http.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
-        }
     }
 
     private async Task MessageHandler(string message, long commentIdforPosition, long commentId)
@@ -139,17 +130,27 @@ else
             ShowSubEditor = true;
             ShowMainEditorDone = false;
             EditorForId = commentIdforPosition;
-            textAreaId = $"comment-{EditorForId}";
+            EditCommentId = null;
+            ContentToLoad = string.Empty;
         }
         if (String.Equals(message, Constants.ComponentShowEditorbyContent))
         {
             ShowSubEditor = true;
             ShowMainEditorDone = false;
+            //ShowSubEditorbyContent = true;
             EditorForId = commentIdforPosition;
-            textAreaId = $"comment-{EditorForId}";
-            ShowSubEditorbyContent = true;
-            CurrentCommentId = commentId;
-
+            EditCommentId = commentId;
+            if (commentIdforPosition == commentId)
+            {
+                ContentToLoad = CommentDTOs
+                .Where(cd => cd.MainComment.Id == commentIdforPosition).First().MainComment.CommentContent;
+            }
+            else
+            {
+                ContentToLoad = CommentDTOs
+                .Where(cd => cd.MainComment.Id == commentIdforPosition).First()
+                .SubComments.Where(c => c.Id == commentId).First().CommentContent;
+            }
         }
         if (String.Equals(message, Constants.HideSubEditor))
         {
@@ -157,6 +158,17 @@ else
         }
         StateHasChanged();
     }
+    /*
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+    if (!firstRender && ShowSubEditor && ShowSubEditorbyContent)
+    {
+    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setEditorValue", ContentToLoad, "sub");
+    }
+    else
+    {
+    }
+    }*/
 
     protected async Task AlertDeBug(string info)
     {

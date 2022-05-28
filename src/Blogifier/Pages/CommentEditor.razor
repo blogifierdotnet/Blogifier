@@ -8,6 +8,7 @@
 @using System.Net.Http.Headers
 @using System.Net.Http
 @using IdentityModel
+@using Microsoft.Extensions.Logging
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
@@ -15,65 +16,65 @@
 @inject IMessageService _commentsRenderTrigger
 @inject AuthenticationStateProvider _stateProvider
 @inject IHttpContextAccessor _contextAccessor
+@inject ILogger<CommentCard> _logger
 
-<CascadingAuthenticationState>
 
-    <AuthorizeView>
-        <Authorized>
-            <div class="container border-0 p-0">
-                <div class="row mb-2">
-                    <div class="col-1 my-auto">
-                        <img src="@Avatar" class="rounded-circle mx-auto d-block float-start">
-                    </div>
-                    <div class="col">
-                        @if (!ParentCommentId.HasValue)
-                        {
-                            <textarea rows="5" cols="100" id="comment-area"> </textarea>
-                        }
-                        else
-                        {
-                            <textarea rows="5" cols="100" id="@textAreaId"> </textarea>
-                        }
-                    </div>
-                </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                    @if (Content.Length > 0)
-                    {
-                        <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
-                        @onclick="() => EditComment()">@_localizer["edit"]</button>
-                        <button type="button" class="btn btn-light" @onclick="() => CancelEdit()"
-                        @onclick:preventDefault>@_localizer["cancel"]</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
-                        @onclick="() => UploadComment()">@_localizer["comment"]</button>
-                        <button type="button" class="btn btn-light" @onclick="() => CancelUpload()"
-                        @onclick:preventDefault>@_localizer["cancel"]</button>
-                    }
-                </div>
-            </div>
-            <p>Content: @Content</p>
-            <p>Text: @textAreaId</p>
+<div class="container border-0 p-0">
+    <div class="row mb-2">
+        <div class="col-1 my-auto">
+            <img src="@Avatar" class="rounded-circle mx-auto d-block float-start">
+        </div>
+        <div class="col">
+            @if (!ParentCommentId.HasValue)
+            {
+                <textarea rows="5" cols="100" id="comment-main"> </textarea>
+            }
+            else
+            {
+                <textarea rows="5" cols="100" id="comment-sub"> </textarea>
+            }
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+        @if (EditedCommentId.HasValue && LoadContent is not null)
+        {
+            <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
+            @onclick="() => EditComment()">@_localizer["edit"]</button>
+            <button type="button" class="btn btn-light" @onclick="() => CancelEdit()"
+            @onclick:preventDefault>@_localizer["cancel"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn" style="background-color: #622aff; color: #ffffff"
+            @onclick="() => UploadComment()">@_localizer["comment"]</button>
+            <button type="button" class="btn btn-light" @onclick="() => CancelUpload()"
+            @onclick:preventDefault>@_localizer["cancel"]</button>
+        }
+    </div>
+</div>
+<p></p>
 
-        </Authorized>
-    </AuthorizeView>
-</CascadingAuthenticationState>
+
 
 @code {
     [Parameter] public string PostSlug { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
     [Parameter] public long? ParentCommentId { get; set; }
-    [Parameter] public long? CurrentCommentId { get; set; }
-    protected Comment Comment { get; set; }
-    public string Avatar { get; set; }
-    public ClaimsPrincipal CurrentUser { get; set; }
-    private HttpClient _httpClient { get; set; }
-    private string textAreaId { get; set; }
-    private string Content { get; set; }
+    [Parameter] public long? EditedCommentId { get; set; }
+    [Parameter] public string LoadContent { get; set; }
+    private Comment Comment;
+    public string Avatar;
+    public ClaimsPrincipal CurrentUser;
+    private HttpClient _httpClient;
+    private string textAreaId;
     protected override async Task OnInitializedAsync()
     {
+        if (ParentCommentId.HasValue)
+        {
+            //textAreaId = $"comment-{ParentCommentId}";
+            textAreaId = $"comment-sub";
+        }
         var authState = await _stateProvider.GetAuthenticationStateAsync();
         CurrentUser = authState.User;
         await Load();
@@ -91,20 +92,16 @@
             }
             _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
         }
-        Content = "";
+
         Comment = new Comment();
         var tempGuid = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
         var authorModel = await
         _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{tempGuid}");
         Avatar = authorModel.Avatar;
-        if (ParentCommentId.HasValue)
+        if (!String.IsNullOrEmpty(LoadContent))
         {
-            textAreaId = $"comment-{ParentCommentId}";
-        }
-        if (CurrentCommentId.HasValue)
-        {
-            var tempComment = await _httpClient.GetFromJsonAsync<Comment>($"api/comment/getsingle/{CurrentCommentId}");
-            Content = tempComment.CommentContent;
+            _logger.LogWarning(666, $"Content:{LoadContent}");
+            _logger.LogWarning(777, $"Length:{LoadContent.Length}");
         }
     }
 
@@ -114,42 +111,41 @@
         {
             if (ParentCommentId.HasValue)
             {
-                //textAreaId = $"comment-{ParentCommentId}";
-                await AlertDeBug(textAreaId);
-                await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.loadEditor", Toolbar, textAreaId);
                 await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-                await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "sub");
+                if (LoadContent is not null)
+                {
+                    await JSRuntime.InvokeVoidAsync("commonJsFunctions.setEditorValue", LoadContent, "sub");
+                }
             }
             else
             {
                 await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
                 await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-                await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "mian");
+                //await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", "", "main");
             }
-        }
-        /*
-        if (ParentCommentId.HasValue)
-        {
-        textAreaId = $"comment-{ParentCommentId}";
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, textAreaId);
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "sub");
         }
         else
         {
-        if (firstRender)
-        {
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar, "");
-        await JSRuntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content, "mian");
+            if (!String.IsNullOrEmpty(LoadContent))
+            {
+                _logger.LogWarning(888, "LoadContent is not null!");
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setEditorValue", LoadContent, "sub");
+            }
+            else
+            {
+                _logger.LogWarning(999, "LoadContent is null!");
+                await JSRuntime.InvokeVoidAsync("commonJsFunctions.setEditorValue", "", "sub");
+            }
         }
-        }*/
     }
     protected async Task SaveComment(CommentAction commentAction)
     {
         HttpResponseMessage result;
         if (ParentCommentId.HasValue)
         {
-            Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", textAreaId);
+            Comment.ParentId = ParentCommentId;
+            Comment.CommentContent = await JSRuntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "sub");
         }
         else
         {
@@ -158,14 +154,12 @@
         }
         Comment.PostId = PostId;
         Comment.CommentedUserId = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
-        if (ParentCommentId.HasValue)
-        {
-            Comment.ParentId = ParentCommentId;
-        }
         if (commentAction == CommentAction.Eidt)
         {
+            Comment.Id = EditedCommentId.Value;
             Comment.UpdatedDate = DateTime.UtcNow;
             result = await _httpClient.PutAsJsonAsync<Comment>($"api/comment/update", Comment);
+            //await Task.Delay(100);
         }
         else
         {
@@ -174,11 +168,12 @@
         }
         if (result.IsSuccessStatusCode)
         {
+            //await AlertDeBug("API Communication Success");
             await _commentsRenderTrigger.SendMessage(Constants.ComponentUpdate);
         }
         else
         {
-            await AlertDeBug("API Communication Fail");
+            //await AlertDeBug("API Communication Fail");
         }
     }
     protected async Task UploadComment()

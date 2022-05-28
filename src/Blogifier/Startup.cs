@@ -94,7 +94,7 @@ namespace Blogifier
 
             services.AddBlogDatabase(Configuration);
             services.AddBlogProviders();
-            services.AddSingleton<IMessageService, MessageService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor()
@@ -127,7 +127,7 @@ namespace Blogifier
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // app.UserSyncforOIDC();
+            app.UseCustomSyncMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -139,6 +139,13 @@ namespace Blogifier
                 endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
                 endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");
             });
+        }
+    }
+    public static class CustomSyncMiddleware
+    {
+        public static void UseCustomSyncMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<SyncMiddleware>();
         }
     }
 }

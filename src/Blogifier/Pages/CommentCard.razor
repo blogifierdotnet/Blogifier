@@ -5,12 +5,17 @@
 @using System.Security.Claims
 @using System.Net.Http
 @using IdentityModel
+@using Blogifier.Core.Extensions
+@* @using Microsoft.Extensions.Logging *@
+
+@implements IDisposable
 
 @inject IJSRuntime JSRuntime
 @inject IHttpClientFactory ClientFactory
 @inject IMessageService _commentsRenderTrigger
 @inject AuthenticationStateProvider _stateProvider
 @inject IHttpContextAccessor _contextAccessor
+@* @inject ILogger<CommentCard> _logger *@
 
 <div class="col-1 mt-2">
     <img src="@Avatar" class="rounded-circle mx-auto d-block float-start" alt="@Name">
@@ -22,7 +27,7 @@
                 <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString() as @Comment.Id
                 </p>
             </li>
-            <li class=" list-group-item border-0 mb-0">@((MarkupString)Comment.CommentContent)</li>
+            <li class=" list-group-item border-0 mb-0">@((MarkupString)ContentToShow)</li>
             <li class=" list-group-item border-0 mb-0">
                 <div class="d-flex flex-row lign-items-center">
                     @* <button type="button" class="btn btn-sm"> *@
@@ -71,23 +76,30 @@
 @code {
     [Parameter]
     public Comment Comment { get; set; }
-    private HttpClient _httpClient { get; set; }
-    private CommentUserModel authorModel { get; set; }
-    public ClaimsPrincipal CurrentUser { get; set; }
-    public string Avatar { get; set; }
-    public string Email { get; set; }
-    public string Name { get; set; }
-    public bool IsAdmin { get; set; }
-    private long ParentCommentId { get; set; }
-    private int CommentsLikedCount { get; set; }
-    private bool ThumbupAlready { get; set; } = false;
+    private HttpClient _httpClient;
+    private CommentUserModel authorModel;
+    private ClaimsPrincipal CurrentUser;
+    private string ContentToShow;
+    public string Avatar;
+    public string Email;
+    public string Name;
+    public bool IsAdmin;
+    private long PositionCommentId;
+    private int CommentsLikedCount;
+    private bool ThumbupAlready = false;
     protected override async Task OnInitializedAsync()
     {
+        _commentsRenderTrigger.OnMessageAsync += LocalRefresh;
         var authState = await _stateProvider.GetAuthenticationStateAsync();
         CurrentUser = authState.User;
+        ContentToShow = Comment.CommentContent.MdToHtml().Replace("<p>", string.Empty).Replace("</p>", string.Empty);
         await Load();
     }
-    public async Task Load()
+    public void Dispose()
+    {
+        _commentsRenderTrigger.OnMessageAsync -= LocalRefresh;
+    }
+    private async Task Load()
     {
         _httpClient = ClientFactory.CreateClient("Local");
         if (CurrentUser.Identity.IsAuthenticated)
@@ -100,7 +112,6 @@
             _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", string.Join(";", cookieCollection)));
             ThumbupAlready = await _httpClient.GetFromJsonAsync<bool>($"api/comment/checklikes/{Comment.Id}");
         }
-        // authorAvatar = await _httpClient.GetStringAsync("api/author/avatarbyguid/" + Comment.CommentedUserId);
         CommentsLikedCount = await _httpClient.GetFromJsonAsync<int>($"api/comment/getlikes/{Comment.Id}");
         authorModel = await
         _httpClient.GetFromJsonAsync<CommentUserModel>($"api/author/partialinfobyguid/{Comment.CommentedUserId}");
@@ -108,32 +119,38 @@
         Name = authorModel.Name;
         Email = authorModel.Email;
         IsAdmin = authorModel.IsAdmin;
+        //_logger.LogInformation(10, $"Id:{Comment.Id}, Content:{Comment.CommentContent}");
     }
-    public async Task ShouldRenderEditor()
+    private async Task LocalRefresh(string message, long commentIdforPosition, long commentId)
+    {
+        if (String.Equals(message, Constants.ComponentUpdate))
+        {
+            await Task.Delay(1);
+            StateHasChanged();
+        }
+    }
+    private async Task ShouldRenderEditor()
+    {
+        ConfirmId();
+        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditor, PositionCommentId);
+    }
+    private async Task RenderEditorbyContent()
+    {
+        ConfirmId();
+        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditorbyContent, PositionCommentId, Comment.Id);
+    }
+    private void ConfirmId()
     {
         if (!Comment.ParentId.HasValue)
         {
-            ParentCommentId = Comment.Id;
+            PositionCommentId = Comment.Id;
         }
         else
         {
-            ParentCommentId = Comment.ParentId.Value;
+            PositionCommentId = Comment.ParentId.Value;
         }
-        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditor, ParentCommentId);
     }
-    public async Task RenderEditorbyContent()
-    {
-        if (!Comment.ParentId.HasValue)
-        {
-            ParentCommentId = Comment.Id;
-        }
-        else
-        {
-            ParentCommentId = Comment.ParentId.Value;
-        }
-        await _commentsRenderTrigger.SendMessage(Constants.ComponentShowEditorbyContent, ParentCommentId, Comment.Id);
-    }
-    public async Task HandleThumbup()
+    private async Task HandleThumbup()
     {
         if (!CurrentUser.Identity.IsAuthenticated)
         {
@@ -141,7 +158,7 @@
         }
         else
         {
-            //进行点赞操作
+            //进�?�点赞操�?
             if (!ThumbupAlready)
             {
                 var result = await _httpClient.PostAsync($"api/comment/addlikes/{Comment.Id}", new StringContent(string.Empty));
@@ -162,8 +179,8 @@
                 }
             }
             //var tempGuid = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
-            //进行取消点赞
-            //else (点赞过)
+            //进�?�取消点�?
+            //else (点赞�?)
         }
     }
 }

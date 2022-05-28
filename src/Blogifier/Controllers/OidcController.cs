@@ -8,7 +8,6 @@ namespace Blogifier.Controllers
 {
     public class OidcController : ControllerBase
     {
-        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> ExternalSignIn(string path = "")
         {
