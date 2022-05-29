@@ -36,17 +36,18 @@ else
                 <div class="row">
                     <CommentCard Comment="@commentTree.MainComment" @key="@commentTree.MainComment.CommentContent" />
                 </div>
+                <p></p>
                 @if (commentTree.SubComments.Count > 0)
                 {
                     foreach (var subComment in commentTree.SubComments)
                     {
-                        <p></p>
                         @if (commentTree.SubComments.FindIndex(subc => subc.Id == subComment.Id) > 1)
                         {
-                            <div class="row" id="collapse_@commentTree.SubComments.FindIndex(subc => subc.Id == subComment.Id)">
+                            <div class="row collapse multi-collapse_@commentTree.MainComment.Id">
                                 <div class="col-md-1 col-sm-1 col-lg-1"></div>
                                 <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
                             </div>
+                            <p></p>
                         }
                         else
                         {
@@ -54,27 +55,26 @@ else
                                 <div class="col-md-1 col-sm-1 col-lg-1"></div>
                                 <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
                             </div>
+                            <p></p>
                         }
-
+                    }
+                    @if (commentTree.SubComments.Count > 2)
+                    {
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-lg-2"></div>
+                            <div class="col">
+                                <p class="text-secondary" type="button" data-bs-toggle="collapse"
+                data-bs-target=".multi-collapse_@commentTree.MainComment.Id" aria-expanded="false">Collapse or Expand
+                                    More Comments</p>
+                            </div>
+                        </div>
                     }
                 }
             </div>
-            <p></p>
             @if (ShowSubEditor && (commentTree.MainComment.Id == EditorForId))
             {
                 if (CurrentUser.Identity.IsAuthenticated)
                 {
-                    @* if (ShowSubEditorbyContent)
-                        {
-                        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value"
-                        EditedCommentId="@EditCommentId" LoadContent="@ContentToLoad">
-                        </CommentEditor>
-                        }
-                        else
-                        {
-                        <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId.Value">
-                        </CommentEditor>
-                        } *@
                     <CommentEditor PostSlug="@PostSlug" PostId="@PostId" Toolbar="@Toolbar" ParentCommentId="@EditorForId"
     EditedCommentId="@EditCommentId" LoadContent="@ContentToLoad" @key="ContentToLoad">
                     </CommentEditor>
@@ -91,6 +91,8 @@ else
         <p></p>
     }
 }
+
+
 
 @code {
     [Parameter] public string PostSlug { get; set; }

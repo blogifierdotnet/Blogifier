@@ -15,12 +15,11 @@ namespace Blogifier.Controllers
             System.Console.WriteLine("New Controller here!");
             var domain = $"{Request.Scheme}://{Request.Host}";
             var absolutePath = String.IsNullOrEmpty(path) ? domain : domain + path;
-            System.Console.WriteLine(path);
-            System.Console.WriteLine(absolutePath);
+            // System.Console.WriteLine(path);
+            // System.Console.WriteLine(absolutePath);
             // var returnUri = new Uri(WebUtility.UrlEncode(absolutePath), UriKind.Absolute);
             // var returnUri = new Uri(WebUtility.UrlEncode(absolutePath), UriKind.Absolute);
             var returnUri = new Uri(new Uri(domain), new Uri(path, UriKind.Relative));
-            System.Console.WriteLine(returnUri.AbsoluteUri);
             return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
         }
         private AuthenticationProperties BuildAuthenticationProperties(Uri returnUri)

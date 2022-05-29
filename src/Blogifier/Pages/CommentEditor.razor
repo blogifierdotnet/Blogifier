@@ -18,6 +18,10 @@
 @inject IHttpContextAccessor _contextAccessor
 @inject ILogger<CommentCard> _logger
 
+@if (ShowWarningModal)
+{
+    <WarningModal Callback="()=> {ShowWarningModal = false;StateHasChanged();}"></WarningModal>
+}
 
 <div class="container border-0 p-0">
     <div class="row mb-2">
@@ -68,6 +72,8 @@
     public ClaimsPrincipal CurrentUser;
     private HttpClient _httpClient;
     private string textAreaId;
+    private bool ShowWarningModal = false;
+
     protected override async Task OnInitializedAsync()
     {
         if (ParentCommentId.HasValue)
@@ -154,6 +160,11 @@
         }
         Comment.PostId = PostId;
         Comment.CommentedUserId = CurrentUser.FindFirstValue(JwtClaimTypes.Subject);
+        if (String.IsNullOrEmpty(Comment.CommentContent.Trim()))
+        {
+            ShowWarningModal = true;
+            return;
+        }
         if (commentAction == CommentAction.Eidt)
         {
             Comment.Id = EditedCommentId.Value;
