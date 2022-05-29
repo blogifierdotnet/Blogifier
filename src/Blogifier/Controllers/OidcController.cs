@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
@@ -12,10 +13,14 @@ namespace Blogifier.Controllers
         public async Task<IActionResult> ExternalSignIn(string path = "")
         {
             System.Console.WriteLine("New Controller here!");
-
             var domain = $"{Request.Scheme}://{Request.Host}";
-            var absolutePath = string.Equals(path, "") ? domain : domain + path;
-            var returnUri = new Uri(absolutePath);
+            var absolutePath = String.IsNullOrEmpty(path) ? domain : domain + path;
+            System.Console.WriteLine(path);
+            System.Console.WriteLine(absolutePath);
+            // var returnUri = new Uri(WebUtility.UrlEncode(absolutePath), UriKind.Absolute);
+            // var returnUri = new Uri(WebUtility.UrlEncode(absolutePath), UriKind.Absolute);
+            var returnUri = new Uri(new Uri(domain), new Uri(path, UriKind.Relative));
+            System.Console.WriteLine(returnUri.AbsoluteUri);
             return await Task.FromResult(Challenge(BuildAuthenticationProperties(returnUri), "oidc"));
         }
         private AuthenticationProperties BuildAuthenticationProperties(Uri returnUri)
@@ -25,7 +30,7 @@ namespace Blogifier.Controllers
             {
                 if (string.Equals(base.Request.Host.Host, returnUri.Host, StringComparison.OrdinalIgnoreCase))
                 {
-                    authenticationProperties.RedirectUri = returnUri.ToString();
+                    authenticationProperties.RedirectUri = returnUri.AbsolutePath;
                 }
             }
             return authenticationProperties;

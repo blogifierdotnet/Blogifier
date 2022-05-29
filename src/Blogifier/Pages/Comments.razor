@@ -41,10 +41,21 @@ else
                     foreach (var subComment in commentTree.SubComments)
                     {
                         <p></p>
-                        <div class="row">
-                            <div class="col-md-1 col-sm-1 col-lg-1"></div>
-                            <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
-                        </div>
+                        @if (commentTree.SubComments.FindIndex(subc => subc.Id == subComment.Id) > 1)
+                        {
+                            <div class="row" id="collapse_@commentTree.SubComments.FindIndex(subc => subc.Id == subComment.Id)">
+                                <div class="col-md-1 col-sm-1 col-lg-1"></div>
+                                <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-1 col-sm-1 col-lg-1"></div>
+                                <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
+                            </div>
+                        }
+
                     }
                 }
             </div>

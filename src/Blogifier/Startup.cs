@@ -127,7 +127,7 @@ namespace Blogifier
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCustomSyncMiddleware();
+            // app.UseCustomSyncMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
