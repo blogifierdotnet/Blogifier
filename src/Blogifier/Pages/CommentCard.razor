@@ -24,8 +24,15 @@
     <div class="card border-0 shadow-sm">
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0">
-                <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString() as @Comment.Id
+            @if(Comment.CommentedUserId == AuthorGuid)
+            {
+                    <p class="text-muted mb-0"><span class="badge rounded-pill" style="background-color: #622aff; color: #ffffff">Author</span> @Name posted in @Comment.UpdatedDate.ToString()
                 </p>
+            }
+            else{
+                <p class="text-muted mb-0">@Name posted in @Comment.UpdatedDate.ToString()
+                </p>
+            }              
             </li>
             <li class=" list-group-item border-0 mb-0">@((MarkupString)ContentToShow)</li>
             <li class=" list-group-item border-0 mb-0">
@@ -76,6 +83,8 @@
 @code {
     [Parameter]
     public Comment Comment { get; set; }
+    [Parameter]
+    public string AuthorGuid { get; set; }
     private HttpClient _httpClient;
     private CommentUserModel authorModel;
     private ClaimsPrincipal CurrentUser;

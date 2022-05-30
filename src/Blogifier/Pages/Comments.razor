@@ -34,7 +34,8 @@ else
         {
             <div class="container border-0 p-0">
                 <div class="row">
-                    <CommentCard Comment="@commentTree.MainComment" @key="@commentTree.MainComment.CommentContent" />
+                    <CommentCard Comment="@commentTree.MainComment" AuthorGuid="@AuthorGuid"
+            @key="@commentTree.MainComment.CommentContent" />
                 </div>
                 <p></p>
                 @if (commentTree.SubComments.Count > 0)
@@ -45,7 +46,7 @@ else
                         {
                             <div class="row collapse multi-collapse_@commentTree.MainComment.Id">
                                 <div class="col-md-1 col-sm-1 col-lg-1"></div>
-                                <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
+                                <CommentCard Comment="@subComment" AuthorGuid="@AuthorGuid" @key="subComment.CommentContent" />
                             </div>
                             <p></p>
                         }
@@ -53,7 +54,7 @@ else
                         {
                             <div class="row">
                                 <div class="col-md-1 col-sm-1 col-lg-1"></div>
-                                <CommentCard Comment="@subComment" @key="subComment.CommentContent" />
+                                <CommentCard Comment="@subComment" AuthorGuid="@AuthorGuid" @key="subComment.CommentContent" />
                             </div>
                             <p></p>
                         }
@@ -99,6 +100,7 @@ else
     [Parameter] public string CurrentPath { get; set; }
     [Parameter] public string Toolbar { get; set; }
     [Parameter] public int PostId { get; set; }
+    [Parameter] public string AuthorGuid { get; set; }
     private ClaimsPrincipal CurrentUser;
     public List<CommentDTO> CommentDTOs;
     //public string Content = string.Empty;

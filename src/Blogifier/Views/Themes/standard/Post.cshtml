@@ -18,6 +18,7 @@
     var currentSlug = currentPath.ToString().Split("/").AsQueryable().Last();
     var currentPostId = post.Id;
     string Toolbar = "miniToolbar";
+    string AuthorGuid = post.Author.OpenGuid;
     // string Temp = "";
 }
 
@@ -112,7 +113,7 @@
 
         <component type="typeof(Comments)" render-mode="ServerPrerendered" class="visually-hidden"
             param-PostSlug="@currentSlug" param-PostId="@currentPostId" param-CurrentPath="@currentPath.ToString()"
-            param-Toolbar="@Toolbar" />
+            param-Toolbar="@Toolbar" param-AuthorGuid="@AuthorGuid" />
         @* <component type="typeof(Comments)" render-mode="Server" class="visually-hidden" param-PostSlug="@currentSlug"
             param-PostId="@currentPostId" param-CurrentPath="@currentPath.ToString()" param-Toolbar="@Toolbar" /> *@
 
