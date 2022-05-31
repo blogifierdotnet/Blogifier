@@ -39,7 +39,7 @@ namespace Blogifier
         public void ConfigureServices(IServiceCollection services)
         {
             Log.Warning("Start configure services");
-
+            System.Console.WriteLine(Configuration.GetSection("Oidc").GetValue<string>("ClientId"));
             services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddHttpContextAccessor();
@@ -59,14 +59,7 @@ namespace Blogifier
             })
             .AddOpenIdConnect("oidc", options =>
             {
-                options.Authority = "https://auth.prime-minister.pub/";
-                options.ClientId = "code_the_auto_blog";
-                options.ClientSecret = "blog_secret";
-
-                options.ResponseType = "code";
-                options.UsePkce = true;
-                //options.ResponseMode = "query";
-
+                Configuration.Bind("Oidc", options);
                 options.Scope.Add("profile");
                 options.Scope.Add("avatar");
                 options.Scope.Add("email");

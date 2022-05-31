@@ -354,3 +354,6 @@ MigrationBackup/
 .ionide/
 
 .DS_Store
+
+# Development json file shall ignore
+src/Blogifier/appsettings.Development.json
