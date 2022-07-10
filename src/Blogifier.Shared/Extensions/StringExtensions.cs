@@ -37,5 +37,11 @@ namespace Blogifier.Shared.Extensions
             Regex scriptRegex = new Regex(@"<script[^>]*>[\s\S]*?</script>");
             return scriptRegex.Replace(str, "");
         }
+
+        public static string RemoveImgTags(this string str)
+        {
+            Regex scriptRegex = new Regex(@"<img[^>]*>[\s\S]*?>");
+            return scriptRegex.Replace(str, "");
+        }
     }
 }

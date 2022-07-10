@@ -236,8 +236,8 @@ namespace Blogifier.Core.Providers
 			post.DateCreated = DateTime.UtcNow;
 
             // sanitize HTML fields
-            post.Content = post.Content.RemoveScriptTags();
-            post.Description = post.Description.RemoveScriptTags();
+            post.Content = post.Content.RemoveScriptTags().RemoveImgTags();
+            post.Description = post.Description.RemoveScriptTags().RemoveImgTags();
 
 			await _db.Posts.AddAsync(post);
 			return await _db.SaveChangesAsync() > 0;
@@ -251,8 +251,8 @@ namespace Blogifier.Core.Providers
 
 			existing.Slug = post.Slug;
 			existing.Title = post.Title;
-			existing.Description = post.Description.RemoveScriptTags();
-			existing.Content = post.Content.RemoveScriptTags();
+			existing.Description = post.Description.RemoveScriptTags().RemoveImgTags();
+			existing.Content = post.Content.RemoveScriptTags().RemoveImgTags();
 			existing.Cover = post.Cover;
 			existing.PostType = post.PostType;
 			existing.Published = post.Published;

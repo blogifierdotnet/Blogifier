@@ -1,4 +1,6 @@
 ﻿using Blogifier.Core.Providers;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,7 +33,15 @@ namespace Blogifier.Tests
 
       IStorageProvider GetSut()
       {
-         return new StorageProvider();
+         var inMemorySettings = new Dictionary<string, string> {
+            {"Blgofier:FileExtensions", "png,gif,jpeg,jpg,zip"}
+         };
+
+         IConfiguration configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+         return new StorageProvider(configuration);
       }
    }
 }

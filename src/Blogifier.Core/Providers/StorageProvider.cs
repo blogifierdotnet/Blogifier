@@ -1,6 +1,7 @@
 ﻿using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,10 +27,12 @@ namespace Blogifier.Core.Providers
 	{
 		private string _storageRoot;
 		private readonly string _slash = Path.DirectorySeparatorChar.ToString();
+		private readonly IConfiguration _configuration;
 		
-		public StorageProvider()
+		public StorageProvider(IConfiguration configuration)
 		{
 			_storageRoot = $"{ContentRoot}{_slash}wwwroot{_slash}data{_slash}";
+			_configuration = configuration;
 		}
 
 		public bool FileExists(string path)
@@ -103,6 +106,13 @@ namespace Blogifier.Core.Providers
 			VerifyPath(path);
 
 			var fileName = GetFileName(file.FileName);
+
+			if(InvalidFileName(fileName))
+			{
+				Serilog.Log.Error($"Invalid file name: {fileName}");
+				return false;
+			}
+
 			var filePath = string.IsNullOrEmpty(path) ?
 				 Path.Combine(_storageRoot, fileName) :
 				 Path.Combine(_storageRoot, path + _slash + fileName);
@@ -306,6 +316,27 @@ namespace Blogifier.Core.Providers
 
 			return imgTag.Substring(srcStart, srcEnd - srcStart);
 		}
+
+		bool InvalidFileName(string fileName)
+      {
+			List<string> fileExtensions = new List<string>() { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
+         string configFileExtensions = _configuration.GetSection("Blogifier").GetValue<string>("FileExtensions");
+			
+			if(!string.IsNullOrEmpty(configFileExtensions))
+			{
+				fileExtensions = new List<string>(configFileExtensions.Split(','));
+			}
+
+			foreach(string ext in fileExtensions)
+			{
+				if(fileName.EndsWith(ext))
+				{
+					return false;
+				}
+			}
+
+			return true;
+      }
 
 		#endregion
 	}
