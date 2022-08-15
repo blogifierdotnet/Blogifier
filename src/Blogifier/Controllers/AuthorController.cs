@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -66,12 +66,12 @@ namespace Blogifier.Controllers
 			return success ? Ok() : BadRequest();
 		}
 
-		[HttpPost("register")]
-		public async Task<ActionResult<bool>> Register(RegisterModel model)
-		{
-			var success = await _authorProvider.Register(model);
-			return success ? Ok() : BadRequest();
-		}
+		//[HttpPost("register")]
+		//public async Task<ActionResult<bool>> Register(RegisterModel model)
+		//{
+		//	var success = await _authorProvider.Register(model);
+		//	return success ? Ok() : BadRequest();
+		//}
 
 		[HttpPost("login")]
 		public async Task<ActionResult> Login(LoginModel model)
