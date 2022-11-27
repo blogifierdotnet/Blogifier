@@ -36,16 +36,19 @@ username: admin@example.com
 password: admin
 ```
 
-<br><br>
-## Contributing
-Please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md). We have a list of things there that you can help us with.
+
 
 <br><br>
-## Team
-[![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
-[![@rxtur](https://avatars.githubusercontent.com/u/1932785?s=60&v=4)](https://github.com/rxtur)
+## Debugging in kubernetes
+```
+kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
+```
 
 <br><br>
-## Copyright and License
-Code released under the MIT License. Docs released under Creative Commons.<br>
-Copyright 2017–2022 Blogifier
+## Deploy to kubernetes
+```
+docker-compose build
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.0.4
+helm upgrade blogifier ./chart --namespace leenet
+
+```

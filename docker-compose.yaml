@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+
+  blogifier:
+      image: neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.0.4
+      build:
+          context: ./
+          dockerfile: ./Dockerfile
+      restart: unless-stopped
+      ports:
+          - "5001:443"

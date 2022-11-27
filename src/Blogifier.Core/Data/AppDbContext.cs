@@ -47,6 +47,10 @@ namespace Blogifier.Core.Data
                     {
                         sql = "DATE('now')";
                         break;
+                    } else if(ext.GetType().ToString().StartsWith("Npgsql.EntityFrameworkCore.PostgreSQL"))
+                    {
+                        sql = "CURRENT_TIMESTAMP";
+                        break;
                     }
                 }
             }

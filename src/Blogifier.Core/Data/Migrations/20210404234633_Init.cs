@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
 
 namespace Blogifier.Core.Data.Migrations
 {
@@ -11,21 +14,21 @@ namespace Blogifier.Core.Data.Migrations
                 name: "Blogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 450, nullable: true),
-                    Theme = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
-                    IncludeFeatured = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ItemsPerPage = table.Column<int>(type: "INTEGER", nullable: false),
-                    Cover = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
-                    Logo = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
-                    HeaderScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    FooterScript = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    AnalyticsListType = table.Column<int>(type: "INTEGER", nullable: false),
-                    AnalyticsPeriod = table.Column<int>(type: "INTEGER", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    Description = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: true),
+                    Theme = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    IncludeFeatured = table.Column<int>(type: "int", nullable: false),
+                    ItemsPerPage = table.Column<int>(type: "integer", nullable: false),
+                    Cover = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    Logo = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    HeaderScript = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    FooterScript = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    AnalyticsListType = table.Column<int>(type: "integer", nullable: false),
+                    AnalyticsPeriod = table.Column<int>(type: "integer", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -36,12 +39,12 @@ namespace Blogifier.Core.Data.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Content = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Content = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -52,17 +55,17 @@ namespace Blogifier.Core.Data.Migrations
                 name: "Authors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Password = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    DisplayName = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Bio = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    Avatar = table.Column<string>(type: "TEXT", maxLength: 400, nullable: true),
-                    IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
-                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Email = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Password = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    DisplayName = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Bio = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
+                    Avatar = table.Column<string>(type: "character varying(400)", maxLength: 400, nullable: true),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    BlogId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,27 +74,26 @@ namespace Blogifier.Core.Data.Migrations
                         name: "FK_Authors_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "MailSettings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Host = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Port = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserEmail = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    UserPassword = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    FromName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    FromEmail = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    ToName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    Enabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
-                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Host = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Port = table.Column<int>(type: "integer", nullable: false),
+                    UserEmail = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    UserPassword = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    FromName = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    FromEmail = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    ToName = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Enabled = table.Column<bool>(type: "boolean", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    BlogId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,23 +102,22 @@ namespace Blogifier.Core.Data.Migrations
                         name: "FK_MailSettings_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Subscribers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Ip = table.Column<string>(type: "TEXT", maxLength: 80, nullable: true),
-                    Country = table.Column<string>(type: "TEXT", maxLength: 120, nullable: true),
-                    Region = table.Column<string>(type: "TEXT", maxLength: 120, nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
-                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Email = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Ip = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
+                    Country = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    Region = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    BlogId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,31 +126,30 @@ namespace Blogifier.Core.Data.Migrations
                         name: "FK_Subscribers_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PostType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Slug = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 450, nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    Cover = table.Column<string>(type: "TEXT", maxLength: 160, nullable: true),
-                    PostViews = table.Column<int>(type: "INTEGER", nullable: false),
-                    Rating = table.Column<double>(type: "REAL", nullable: false),
-                    IsFeatured = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Selected = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Published = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')"),
-                    BlogId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AuthorId = table.Column<int>(type: "integer", nullable: false),
+                    PostType = table.Column<int>(type: "integer", nullable: false),
+                    Title = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Slug = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Description = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    Cover = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    PostViews = table.Column<int>(type: "integer", nullable: false),
+                    Rating = table.Column<double>(type: "double precision", nullable: false),
+                    IsFeatured = table.Column<bool>(type: "boolean", nullable: false),
+                    Selected = table.Column<bool>(type: "boolean", nullable: false),
+                    Published = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    BlogId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -164,20 +164,19 @@ namespace Blogifier.Core.Data.Migrations
                         name: "FK_Posts_Blogs_BlogId",
                         column: x => x.BlogId,
                         principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Newsletters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Success = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "DATE('now')")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PostId = table.Column<int>(type: "integer", nullable: false),
+                    Success = table.Column<bool>(type: "boolean", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -194,8 +193,8 @@ namespace Blogifier.Core.Data.Migrations
                 name: "PostCategories",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PostId = table.Column<int>(type: "integer", nullable: false),
+                    CategoryId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
