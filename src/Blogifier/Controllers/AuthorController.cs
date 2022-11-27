@@ -62,6 +62,11 @@ namespace Blogifier.Controllers
 		[HttpPut("update")]
 		public async Task<ActionResult<bool>> Update(Author author)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				author.IsAdmin = false;
+			}
 			var success = await _authorProvider.Update(author);
 			return success ? Ok() : BadRequest();
 		}

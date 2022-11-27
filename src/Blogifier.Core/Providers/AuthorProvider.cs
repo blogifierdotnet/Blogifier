@@ -160,7 +160,7 @@ namespace Blogifier.Core.Providers
 			existing.DisplayName = author.DisplayName;
 			existing.Bio = author.Bio;
 			existing.Avatar = author.Avatar;
-            existing.IsAdmin = existing.IsAdmin ? author.IsAdmin : false;
+            existing.IsAdmin = author.IsAdmin;
 
 			return await _db.SaveChangesAsync() > 0;
 		}
