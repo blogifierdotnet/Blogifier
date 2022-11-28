@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Blogifier.Controllers
 {
@@ -25,13 +26,24 @@ namespace Blogifier.Controllers
 		[HttpGet("all")]
 		public async Task<List<Author>> All()
 		{
-			return await _authorProvider.GetAuthors();
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			var authors = await _authorProvider.GetAuthors();
+			if(!currentUser.IsAdmin)
+			{
+				authors = authors.Where(x => x.Email == currentUser.Email).ToList();
+			}
+			return authors;
 		}
 
 		[Authorize]
 		[HttpGet("email/{email}")]
 		public async Task<ActionResult<Author>> FindByEmail(string email)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return currentUser;
+			}
 			return await _authorProvider.FindByEmail(email);
 		}
 
@@ -39,7 +51,10 @@ namespace Blogifier.Controllers
 		public async Task<ActionResult<Author>> GetCurrentAuthor()
 		{
 			if (User.Identity.IsAuthenticated)
-				return await FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			{
+				var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+				return currentUser;
+			}
 			return new Author();
 		}
 
@@ -47,6 +62,11 @@ namespace Blogifier.Controllers
 		[HttpDelete("{id:int}")]
 		public async Task<ActionResult<bool>> RemoveAuthor(int id)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return false;
+			}
 			return await _authorProvider.Remove(id);
 		}
 
@@ -54,6 +74,11 @@ namespace Blogifier.Controllers
 		[HttpPost("add")]
 		public async Task<ActionResult<bool>> Add(Author author)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return false;
+			}
 			var success = await _authorProvider.Add(author);
 			return success ? Ok() : BadRequest();
 		}
@@ -65,7 +90,7 @@ namespace Blogifier.Controllers
 			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
 			if(!currentUser.IsAdmin)
 			{
-				author.IsAdmin = false;
+				return false;
 			}
 			var success = await _authorProvider.Update(author);
 			return success ? Ok() : BadRequest();

@@ -182,8 +182,10 @@
            Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
 
            await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
-
-           await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+           if (postAction == PostAction.Publish)
+           {
+                await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+           }
            await Load();
        }
    }

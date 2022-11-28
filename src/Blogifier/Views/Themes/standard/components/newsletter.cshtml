@@ -2,7 +2,7 @@
 @using Blogifier.Shared
 @{
     var request = Url.ActionContext.HttpContext.Request;
-    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var absoluteUrl = $"//{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
     var newsletterAction = @absoluteUrl + "/api/newsletter/subscribe";
 }
 

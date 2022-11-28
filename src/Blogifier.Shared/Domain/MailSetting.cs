@@ -12,7 +12,6 @@ namespace Blogifier.Shared
 		public string Host { get; set; }
 		public int Port { get; set; }
 		[Required]
-		[EmailAddress]
 		[StringLength(120)]
 		public string UserEmail { get; set; }
 		[Required]

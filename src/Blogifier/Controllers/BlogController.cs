@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Blogifier.Controllers
 {
@@ -12,9 +13,12 @@ namespace Blogifier.Controllers
 	public class BlogController : ControllerBase
 	{
 		private readonly IBlogProvider _blogProvider;
-
-		public BlogController(IBlogProvider blogProvider)
+		private readonly IAuthorProvider _authorProvider;
+		public BlogController(
+			IAuthorProvider authorProvider,
+			IBlogProvider blogProvider)
 		{
+			_authorProvider = authorProvider;
 			_blogProvider = blogProvider;
 		}
 
@@ -34,6 +38,11 @@ namespace Blogifier.Controllers
 		[HttpPut]
 		public async Task<ActionResult<bool>> ChangeTheme([FromBody] Blog blog)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return false;
+			}
 			return await _blogProvider.Update(blog);
 		}
 	}

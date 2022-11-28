@@ -50,7 +50,7 @@ kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
 ## Deploy to kubernetes
 ```
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.15
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.26
 helm upgrade blogifier ./chart --namespace leenet
 
 ```

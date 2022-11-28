@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Blogifier.Controllers
 {
@@ -12,9 +13,13 @@ namespace Blogifier.Controllers
 	public class NewsletterController : ControllerBase
 	{
 		protected readonly INewsletterProvider _newsletterProvider;
-
-		public NewsletterController(INewsletterProvider newsletterProvider)
+		private readonly IAuthorProvider _authorProvider;
+		public NewsletterController(
+			IAuthorProvider authorProvider,
+			INewsletterProvider newsletterProvider
+			)
 		{
+			_authorProvider = authorProvider;
 			_newsletterProvider = newsletterProvider;
 		}
 
@@ -62,6 +67,11 @@ namespace Blogifier.Controllers
 		[HttpGet("mailsettings")]
 		public async Task<MailSetting> GetMailSettings()
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return new MailSetting();
+			}
 			return await _newsletterProvider.GetMailSettings();
 		}
 
@@ -69,6 +79,11 @@ namespace Blogifier.Controllers
 		[HttpPut("mailsettings")]
 		public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
 		{
+			var currentUser = await _authorProvider.FindByEmail(User.FindFirstValue(ClaimTypes.Name));
+			if(!currentUser.IsAdmin)
+			{
+				return false;
+			}
 			return await _newsletterProvider.SaveMailSettings(mailSettings);
 		}
 	}
