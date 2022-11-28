@@ -44,6 +44,7 @@ password: admin
 pkill -9 Blogifier
 
 kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
+#to backup restore db use pg-admin4. To restore make sure to select the role name
 ```
 
 <br><br>

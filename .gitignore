@@ -351,3 +351,5 @@ MigrationBackup/
 
 .DS_Store
 src/Blogifier/appsettings.json
+
+backups/*
