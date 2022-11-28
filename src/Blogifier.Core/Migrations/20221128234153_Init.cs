@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Blogifier.Core.Data.Migrations
+namespace Blogifier.Core.Migrations
 {
+    /// <inheritdoc />
     public partial class Init : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -63,6 +65,8 @@ namespace Blogifier.Core.Data.Migrations
                     Bio = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     Avatar = table.Column<string>(type: "character varying(400)", maxLength: 400, nullable: true),
                     IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
+                    VerificationToken = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Verified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     BlogId = table.Column<int>(type: "integer", nullable: true)
@@ -249,6 +253,7 @@ namespace Blogifier.Core.Data.Migrations
                 column: "BlogId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

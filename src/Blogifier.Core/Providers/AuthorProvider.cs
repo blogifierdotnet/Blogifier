@@ -3,9 +3,14 @@ using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
@@ -20,6 +25,9 @@ namespace Blogifier.Core.Providers
 		Task<bool> Update(Author author);
 		Task<bool> ChangePassword(RegisterModel model);
 		Task<bool> Remove(int id);
+		Task<string> ValidateCurrentToken(string token);
+		Task<bool> IsEmailEnabled();
+		
 	}
 
 	public class AuthorProvider : IAuthorProvider
@@ -36,6 +44,11 @@ namespace Blogifier.Core.Providers
 		public async Task<List<Author>> GetAuthors()
 		{
 			return await _db.Authors.ToListAsync();
+		}
+		public async Task<bool> IsEmailEnabled()
+		{
+			var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+			return settings != null && settings.Enabled;
 		}
 
 		public async Task<Author> FindByEmail(string email)
@@ -58,6 +71,19 @@ namespace Blogifier.Core.Providers
 
 			if(existing.Password == model.Password.Hash(_salt))
 			{
+				var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+				if(settings != null && settings.Enabled)
+				{
+					if(existing.Verified != null)
+					{
+						Serilog.Log.Warning($"Successful login and is verified for {model.Email}");
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
 				Serilog.Log.Warning($"Successful login for {model.Email}");
 				return true;
 			}
@@ -109,6 +135,7 @@ namespace Blogifier.Core.Providers
 				DisplayName = model.Name,
 				Email = model.Email,
 				Password = model.Password.Hash(_salt),
+				VerificationToken = GenerateToken(model.Email),
 				IsAdmin = isAdmin,
 				Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
 				Bio = "The short author bio.",
@@ -189,5 +216,65 @@ namespace Blogifier.Core.Providers
 			await _db.SaveChangesAsync();
 			return true;
 		}
+
+		public string GenerateToken(string PreferredUsername)
+        {
+            var mySecret = _salt;
+            var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
+
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, PreferredUsername),
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                //Issuer = myIssuer, //set if multi-tenant
+                //Audience = myAudience, //set if multi-tenant
+                SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var result = tokenHandler.WriteToken(token);
+            return result;
+        }
+        public async Task<string> ValidateCurrentToken(string token)
+        {
+            var mySecret = _salt;
+            var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
+
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false, //set to true if multi-tenant
+                    ValidateAudience = false, //set to true if multi-tenant
+                    //ValidIssuer = myIssuer, //set if multi-tenant
+                    //ValidAudience = myAudience, //set if multi-tenant
+                    IssuerSigningKey = mySecurityKey
+                }, out SecurityToken validatedToken);
+				// if we got this far then the token must be valid
+                return await Task.FromResult(GetUserIdFromClaim(token));
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+            
+        }
+        public string GetUserIdFromClaim(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+            var stringClaimValue = securityToken.Claims.First(claim => claim.Type == "nameid").Value;
+            return stringClaimValue;
+        }
 	}
 }

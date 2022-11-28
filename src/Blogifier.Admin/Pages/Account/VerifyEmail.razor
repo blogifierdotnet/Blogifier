@@ -1,0 +1,51 @@
+@layout AccountLayout
+@page "/admin/verify-email/"
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Net.Http;
+@using System.Threading.Tasks;
+@using Blogifier.Shared;
+@using Microsoft.AspNetCore.Components;
+@using System.Net.Http.Json;
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+@inject HttpClient _http
+@inject NavigationManager _navigationManager
+
+
+<BlogPageTitle Title="Verify Email" />
+
+<h1 class="section-title">Verify Email</h1>
+<div class="section-content -half">
+   @Status
+</div>
+
+<ToasterComponent @ref="Toaster" />
+
+@code {
+   protected string Status { get; set; }
+   protected ToasterComponent Toaster;
+
+   protected override async Task OnInitializedAsync()
+   {
+       await Load();
+   }
+
+   protected async Task Load()
+   {
+        Status = "Verifying...";
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("token", out var token);
+        VerifyEmailRequest request = new VerifyEmailRequest(){
+            Token = token
+        };
+        HttpResponseMessage response = await _http.PostAsJsonAsync<VerifyEmailRequest>("api/author/verify-email", request);
+        Toaster.Toast(response);
+        if(response.IsSuccessStatusCode){
+            Status = "Success";
+        }
+        else
+        {
+            Status = "There was a problem verifying your verification code. Your token may have expired.";
+        }
+   }
+}

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Blogifier.Admin.Pages.Profile
+namespace Blogifier.Admin.Pages.Account
 {
-	public partial class Profile
+	public partial class ProfileView
 	{
 
 	}

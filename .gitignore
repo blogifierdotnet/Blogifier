@@ -353,3 +353,4 @@ MigrationBackup/
 src/Blogifier/appsettings.json
 
 backups/*
+src/Blogifier/appsettings.test.json

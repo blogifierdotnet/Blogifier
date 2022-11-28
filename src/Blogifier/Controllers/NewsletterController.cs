@@ -14,11 +14,14 @@ namespace Blogifier.Controllers
 	{
 		protected readonly INewsletterProvider _newsletterProvider;
 		private readonly IAuthorProvider _authorProvider;
+		protected readonly IEmailProvider _emailProvider;
 		public NewsletterController(
+			IEmailProvider emailProvider,
 			IAuthorProvider authorProvider,
 			INewsletterProvider newsletterProvider
 			)
 		{
+			_emailProvider = emailProvider;
 			_authorProvider = authorProvider;
 			_newsletterProvider = newsletterProvider;
 		}
@@ -84,7 +87,19 @@ namespace Blogifier.Controllers
 			{
 				return false;
 			}
-			return await _newsletterProvider.SaveMailSettings(mailSettings);
+			
+			var success = await _newsletterProvider.SaveMailSettings(mailSettings);
+			if(success && mailSettings.Enabled)
+			{
+				string webRoot = Url.Content("~/");
+            	var origin = $"{Request.Scheme}s://{Request.Host}{webRoot}";
+				//do not turn this on if it doesn't work
+				if(!await _emailProvider.SendVerificationEmail(currentUser,origin)){
+					mailSettings.Enabled = false;
+					success = await _newsletterProvider.SaveMailSettings(mailSettings);
+				}
+			}
+			return success;
 		}
 	}
 }

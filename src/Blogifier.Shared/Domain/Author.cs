@@ -25,7 +25,9 @@ namespace Blogifier.Shared
       [StringLength(400)]
       public string Avatar { get; set; }
       public bool IsAdmin { get; set; }
-
+      [StringLength(512)]
+      public string VerificationToken { get; set; }
+      public DateTime? Verified { get; set; }
       public DateTime DateCreated { get; set; }
       public DateTime DateUpdated { get; set; }
 

@@ -2,6 +2,7 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -23,8 +24,8 @@ namespace Blogifier.Admin.Pages.Account
 			if(!IsLocalUrl(returnUrl))
 				returnUrl = "admin/";
 
-         var result = await Http.PostAsJsonAsync<LoginModel>("api/author/login", model);
-
+         	HttpResponseMessage result = await Http.PostAsJsonAsync<LoginModel>("api/author/login", model);
+			
 			if (result.IsSuccessStatusCode)
 			{
 				showError = false;

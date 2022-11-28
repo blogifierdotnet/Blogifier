@@ -106,14 +106,10 @@ namespace Blogifier.Core.Providers
 			if (subscribers == null || subscribers.Count == 0)
 				return false;
 
-			var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
-			if (settings == null || settings.Enabled == false)
-				return false;
-
 			string subject = post.Title;
 			string content = post.Content.MdToHtml();
 
-			bool sent = await _emailProvider.SendEmail(settings, subscribers, subject, content);
+			bool sent = await _emailProvider.SendEmail(subscribers, subject, content);
 			bool saved = await SaveNewsletter(postId, sent);
 
 			return sent && saved;

@@ -35,8 +35,14 @@ Then you can open `localhost:5000` with your browser, Also login to the admin pa
 username: admin@example.com
 password: admin
 ```
+<br><br>
+## Db Migrations
+```
+cd src
+dotnet-ef migrations add Init --verbose --project Blogifier.Core --startup-project Blogifier
 
-
+To undo this action, use 'ef migrations remove --verbose --project Blogifier.Core --startup-project Blogifier'
+```
 
 <br><br>
 ## Debugging Notes
@@ -51,7 +57,7 @@ kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
 ## Deploy to kubernetes
 ```
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.26
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.30
 helm upgrade blogifier ./chart --namespace leenet
 
 ```
