@@ -96,7 +96,10 @@ To unsubscribe from these messages click <a href={origin}admin/unsubscribe?token
       public async Task<bool> SendVerificationEmail(Author account, string origin)
       {
          string token = account.VerificationToken;
-         var verifyUrl = $"{origin}admin/verify-email?token={account.VerificationToken}";
+         if(string.IsNullOrEmpty(token)){
+            token = TokenHandling.GenerateToken(_salt, account.Email);
+         }
+         var verifyUrl = $"{origin}admin/verify-email?token={token}";
          string body = 
 $@"
 <p>
@@ -104,8 +107,9 @@ Dear {origin} user,
 </p>
 <br/>
 <p>
-We have received a request to authorize this email address for use with {origin}. If you requested this verification, please go to the following URL to confirm that you are authorized to use this email address:
-{verifyUrl}
+We have received a request to authorize this email address for use with {origin}. If you requested this verification, please click the following link to confirm that you are authorized to use this email address:
+<br/>
+<a href={verifyUrl}>Verify</a>
 </p>
 <p>
 Your request to register your email address on this site will not be processed unless you confirm the address using this URL. This link expires 7 days after your original request.
