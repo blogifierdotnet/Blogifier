@@ -5,9 +5,7 @@
 		<Version>3.0.0.0</Version>
 		<Authors>blogifierdotnet</Authors>
 		<Description>Blogifier is an open-source publishing platform Written in ASP.NET and Blazor WebAssembly.</Description>
-		<Copyright>Blogifier.Net</Copyright>
-		<PackageProjectUrl>https://blogifier.net</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/blogifierdotnet/Blogifier</RepositoryUrl>
+		<RepositoryUrl>https://github.com/maddadder/Blogifier</RepositoryUrl>
 		<PackageTags>blog,blogifier,asp.net,.net core,blogifier.net,asp.net core</PackageTags>
 	</PropertyGroup>
 
