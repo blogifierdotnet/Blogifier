@@ -10,7 +10,7 @@
 Steps to install compiled application on the server for a self-hosting:
 
 1. .NET Core Runtime (currently 6.0) must be installed on your host server.
-2. [Download](https://github.com/blogifierdotnet/Blogifier/releases) the latest release.
+2. [Download](https://github.com/maddadder/Blogifier/releases) the latest release.
 3. Unzip and copy to your host server.<br>
 4. Restart your website.
 5. Open your website and only the first time you'll be redirected to the register page.<br> `example.com/admin/register/`
@@ -57,7 +57,7 @@ kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
 ## Deploy to kubernetes
 ```
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.38
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.41
 helm upgrade blogifier ./chart --namespace leenet
 
 ```

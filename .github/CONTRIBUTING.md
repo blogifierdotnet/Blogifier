@@ -1,5 +1,5 @@
 # Contributing to Blogifier
-Thanks for contributing to the Blogifier. If you haven't already, please setup your environment and [run the Blogifier locally](https://github.com/blogifierdotnet/Blogifier/blob/main/README.md#development).
+Thanks for contributing to the Blogifier. If you haven't already, please setup your environment and [run the Blogifier locally](https://github.com/maddadder/Blogifier/blob/main/README.md#development).
 
 Here is the list of things that you can contribute:
 
@@ -8,7 +8,7 @@ Here is the list of things that you can contribute:
 
 # Translation
 
-In the "[/src/Blogifier.Shared/Resouces/](https://github.com/blogifierdotnet/Blogifier/tree/main/src/Blogifier.Shared/Resources)" folder we keep all the resources files.
+In the "[/src/Blogifier.Shared/Resouces/](https://github.com/maddadder/Blogifier/tree/main/src/Blogifier.Shared/Resources)" folder we keep all the resources files.
 
 The `Resource.resx` is the main English language that you can copy and create another Resource file for any other languages.<br> For example, `Resouce.es.resx` is created for Spanish with `es` language code. So if your language is not in the Resources folder, copy the `Resource.resx` and rename it and add your language code at the end.
 

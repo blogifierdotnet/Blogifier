@@ -14,14 +14,14 @@
           "Id": "facebook",
           "Label": "Facebook",
           "Type": "text",
-          "Value": "blogifierdotnet",
+          "Value": "maddadder",
           "Options": null
         },
         {
           "Id": "twitter",
           "Label": "Twitter",
           "Type": "text",
-          "Value": "blogifierdotnet",
+          "Value": "maddadder",
           "Options": null
         }
       ]
