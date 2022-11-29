@@ -14,9 +14,10 @@ namespace Blogifier.Core.Providers
 		Task<List<Subscriber>> GetSubscribers();
 		Task<bool> AddSubscriber(Subscriber subscriber);
 		Task<bool> RemoveSubscriber(int id);
+		Task<bool> RemoveSubscriber(string email);
 		
 		Task<List<Newsletter>> GetNewsletters();
-		Task<bool> SendNewsletter(int postId);
+		Task<bool> SendNewsletter(int postId, string origin);
 		Task<bool> RemoveNewsletter(int id);
 
 		Task<MailSetting> GetMailSettings();
@@ -62,6 +63,16 @@ namespace Blogifier.Core.Providers
 			}
 			return false;
 		}
+		public async Task<bool> RemoveSubscriber(string email)
+		{
+			var existing = _db.Subscribers.Where(s => s.Email == email).FirstOrDefault();
+			if(existing != null)
+			{
+				_db.Subscribers.Remove(existing);
+				return await _db.SaveChangesAsync() > 0;
+			}
+			return false;
+		}
 
 
 		public async Task<List<Newsletter>> GetNewsletters()
@@ -96,7 +107,7 @@ namespace Blogifier.Core.Providers
 			return await _db.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> SendNewsletter(int postId)
+		public async Task<bool> SendNewsletter(int postId, string origin)
 		{
 			var post = await _db.Posts.AsNoTracking().Where(p => p.Id == postId).FirstOrDefaultAsync();
 			if (post == null)
@@ -109,7 +120,7 @@ namespace Blogifier.Core.Providers
 			string subject = post.Title;
 			string content = post.Content.MdToHtml();
 
-			bool sent = await _emailProvider.SendEmail(subscribers, subject, content);
+			bool sent = await _emailProvider.SendEmail(subscribers, subject, content, origin);
 			bool saved = await SaveNewsletter(postId, sent);
 
 			return sent && saved;

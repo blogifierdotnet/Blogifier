@@ -1,0 +1,51 @@
+@layout AccountLayout
+@page "/admin/unsubscribe/"
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Net.Http;
+@using System.Threading.Tasks;
+@using Blogifier.Shared;
+@using Microsoft.AspNetCore.Components;
+@using System.Net.Http.Json;
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+@inject HttpClient _http
+@inject NavigationManager _navigationManager
+
+
+<BlogPageTitle Title="Unsubscribe" />
+
+<h1 class="section-title">Unsubscribe</h1>
+<div class="section-content -half">
+   @Status
+</div>
+
+<ToasterComponent @ref="Toaster" />
+
+@code {
+   protected string Status { get; set; }
+   protected ToasterComponent Toaster;
+
+   protected override async Task OnInitializedAsync()
+   {
+       await Load();
+   }
+
+   protected async Task Load()
+   {
+        Status = "Unsubscribing...";
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("token", out var token);
+        UnsubscribeRequest request = new UnsubscribeRequest(){
+            Token = token
+        };
+        HttpResponseMessage response = await _http.PostAsJsonAsync<UnsubscribeRequest>("api/newsletter/unsubscribe", request);
+        Toaster.Toast(response);
+        if(response.IsSuccessStatusCode){
+            Status = "Success";
+        }
+        else
+        {
+            Status = "There was a problem verifying your verification code. Your token may have expired.";
+        }
+   }
+}

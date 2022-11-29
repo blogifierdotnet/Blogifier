@@ -39,12 +39,28 @@ namespace Blogifier.Controllers
 			return await _newsletterProvider.GetSubscribers();
 		}
 
+		[Authorize]
 		[HttpDelete("unsubscribe/{id:int}")]
 		public async Task<ActionResult<bool>> RemoveSubscriber(int id)
 		{
 			return await _newsletterProvider.RemoveSubscriber(id);
 		}
 
+		[AllowAnonymous]
+		[HttpPost("unsubscribe")]
+		public async Task<ActionResult<bool>> RemoveSubscriber(UnsubscribeRequest model)
+		{
+			var userEmail = await _authorProvider.ValidateCurrentToken(model.Token);
+			if(userEmail != null)
+			{
+				return await _newsletterProvider.RemoveSubscriber(userEmail);
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+		
 		[Authorize]
 		[HttpGet("newsletters")]
 		public async Task<List<Newsletter>> GetNewsletters()
@@ -56,7 +72,9 @@ namespace Blogifier.Controllers
 		[HttpGet("send/{postId:int}")]
 		public async Task<bool> SendNewsletter(int postId)
 		{
-			return await _newsletterProvider.SendNewsletter(postId);
+			string webRoot = Url.Content("~/");
+            var origin = $"{Request.Scheme}s://{Request.Host}{webRoot}";
+			return await _newsletterProvider.SendNewsletter(postId, origin);
 		}
 
 		[Authorize]

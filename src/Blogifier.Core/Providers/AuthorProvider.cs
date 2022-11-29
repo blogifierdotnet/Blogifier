@@ -1,16 +1,13 @@
 using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
+using Blogifier.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
+
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
@@ -135,7 +132,7 @@ namespace Blogifier.Core.Providers
 				DisplayName = model.Name,
 				Email = model.Email,
 				Password = model.Password.Hash(_salt),
-				VerificationToken = GenerateToken(model.Email),
+				VerificationToken = TokenHandling.GenerateToken(_salt, model.Email),
 				IsAdmin = isAdmin,
 				Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
 				Bio = "The short author bio.",
@@ -217,64 +214,9 @@ namespace Blogifier.Core.Providers
 			return true;
 		}
 
-		public string GenerateToken(string PreferredUsername)
+        public Task<string> ValidateCurrentToken(string token)
         {
-            var mySecret = _salt;
-            var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
-
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, PreferredUsername),
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                //Issuer = myIssuer, //set if multi-tenant
-                //Audience = myAudience, //set if multi-tenant
-                SigningCredentials = new SigningCredentials(mySecurityKey, SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var result = tokenHandler.WriteToken(token);
-            return result;
+            return TokenHandling.ValidateCurrentToken(_salt, token);
         }
-        public async Task<string> ValidateCurrentToken(string token)
-        {
-            var mySecret = _salt;
-            var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
-
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false, //set to true if multi-tenant
-                    ValidateAudience = false, //set to true if multi-tenant
-                    //ValidIssuer = myIssuer, //set if multi-tenant
-                    //ValidAudience = myAudience, //set if multi-tenant
-                    IssuerSigningKey = mySecurityKey
-                }, out SecurityToken validatedToken);
-				// if we got this far then the token must be valid
-                return await Task.FromResult(GetUserIdFromClaim(token));
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-            
-        }
-        public string GetUserIdFromClaim(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-
-            var stringClaimValue = securityToken.Claims.First(claim => claim.Type == "nameid").Value;
-            return stringClaimValue;
-        }
-	}
+    }
 }
