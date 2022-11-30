@@ -24,7 +24,8 @@ If you want to customize the Blogifier, or contribute:
 1. [Download](https://dotnet.microsoft.com/download/dotnet) and Install .NET SDK.
 2. Download, fork, or clone the repository.
 3. Open the project with your favorite IDE (VS Code, Visual Studio, Atom, etc).
-4. Run the app with your IDE or these commands:
+4. Rename appsettings.sqlite.json to appsettings.Development.json
+5. Run the app with your IDE or these commands:
 
 ```
 $ cd /your-local-path/Blogifier/src/Blogifier/
