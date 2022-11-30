@@ -77,6 +77,9 @@
                             <li>
                                 <button class="dropdown-item" type="button" @onclick="() => ResetCover()">@_localizer["reset"]</button>
                             </li>
+                            <li>
+                                <button class="dropdown-item" type="button" @onclick="() => CopyLinkFromImgur()">Copy From Imgur</button>
+                            </li>
                         </ul>
                     </div>
                     <CategoriesComponent Post="Post" @ref="Categories" />
@@ -104,7 +107,7 @@
            return _stateprovider.PostType == PostType.Post ? _localizer["post-title"] : _localizer["page-title"];
        }
    }
-
+   protected string LinkFromImgur {get;set;}
    [Parameter]
 #nullable enable
    public string? Slug { get; set; }
@@ -136,8 +139,12 @@
        Post.PostType = _stateprovider.PostType;
 
        Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
-       Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
+       Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "/");
 
+       if(!string.IsNullOrEmpty(LinkFromImgur)){
+           Post.Cover = LinkFromImgur;
+       }
+       
        if(string.IsNullOrEmpty(Post.Cover))
            Post.Cover = Constants.DefaultCover;
 
@@ -219,7 +226,15 @@
        Post.Cover = Constants.DefaultCover;
        await Save();
    }
-
+   protected async Task CopyLinkFromImgur()
+   {
+       string content = await _jsruntime.InvokeAsync<string>("navigator.clipboard.readText");
+       string imgurLinkWithoutPrefix = content.Replace("https://i.imgur.com/","");
+       string beginningOfLink = imgurLinkWithoutPrefix.Substring(0,Math.Min(imgurLinkWithoutPrefix.Length, 16));
+       LinkFromImgur = $"https://i.imgur.com/{beginningOfLink}";
+       await Save();
+       LinkFromImgur = null;
+   }
    protected async Task RemoveCover()
    {
        Post.Cover = null;
