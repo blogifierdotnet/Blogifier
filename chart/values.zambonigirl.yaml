@@ -1,0 +1,6 @@
+environment: zambonigirl
+
+nameOverride: "blogifier-zambonigirl"
+fullnameOverride: "blogifier-zambonigirl"
+
+dnsName: zambonigirl.com

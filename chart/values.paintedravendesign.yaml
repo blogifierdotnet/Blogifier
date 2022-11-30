@@ -1,0 +1,6 @@
+environment: paintedravendesign
+
+nameOverride: "blogifier-paintedravendesign"
+fullnameOverride: "blogifier-paintedravendesign"
+
+dnsName: paintedravendesign.com

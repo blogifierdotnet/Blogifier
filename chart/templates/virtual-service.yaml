@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: leenet-gateway-{{ .Values.dnsName }}
+  namespace: neon-ingress
+spec:
+  gateways:
+    - neon-ingress/leenet-gateway
+  hosts:
+    - {{ .Values.dnsName }}
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: {{ .Values.nameOverride }}.leenet.svc.cluster.local
+            port:
+              number: 80

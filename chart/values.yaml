@@ -65,3 +65,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+environment: "Development"
+dnsName: example.com

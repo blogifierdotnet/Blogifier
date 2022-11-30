@@ -1,0 +1,6 @@
+environment: plhhoa
+
+nameOverride: "blogifier-plhhoa"
+fullnameOverride: "blogifier-plhhoa"
+
+dnsName: plhhoa.link

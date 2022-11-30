@@ -354,3 +354,7 @@ src/Blogifier/appsettings.json
 
 backups/*
 src/Blogifier/appsettings.test.json
+src/Blogifier/appsettings.plhhoa.json
+src/Blogifier/appsettings.Development.json
+src/Blogifier/appsettings.zambonigirl.json
+src/Blogifier/appsettings.paintedravendesign.json

@@ -57,8 +57,21 @@ kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
 <br><br>
 ## Deploy to kubernetes
 ```
+#plhhoa
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.41
-helm upgrade blogifier ./chart --namespace leenet
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.45
+helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa.yaml ./chart --namespace leenet
+
+
+#zambonigirl
+docker-compose build
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.45
+helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl.yaml ./chart --namespace leenet
+
+#paintedravendesign
+docker-compose build
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.45
+helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign.yaml ./chart --namespace leenet
+
 
 ```
