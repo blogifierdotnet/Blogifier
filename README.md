@@ -51,6 +51,7 @@ To undo this action, use 'ef migrations remove --verbose --project Blogifier.Cor
 pkill -9 Blogifier
 
 kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
+kubectl port-forward pod/acid-minimal-cluster-0 5432 --namespace default
 #to backup restore db use pg-admin4. To restore make sure to select the role name
 ```
 
@@ -59,19 +60,36 @@ kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
 ```
 #plhhoa
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.46
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.49
 helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa.yaml ./chart --namespace leenet
 
 
 #zambonigirl
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.46
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.49
 helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl.yaml ./chart --namespace leenet
 
 #paintedravendesign
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.46
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.49
 helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign.yaml ./chart --namespace leenet
 
+
+#plhhoa-t30
+docker-compose build
+docker push 192.168.1.151:32000/blogifier:1.11.49
+helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa-t30.yaml ./chart --namespace default
+
+
+#zambonigirl-t30
+docker-compose build
+docker push 192.168.1.151:32000/blogifier:1.11.49
+helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl-t30.yaml ./chart --namespace default
+
+
+#paintedravendesign-t30
+docker-compose build
+docker push 192.168.1.151:32000/blogifier:1.11.49
+helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign-t30.yaml ./chart --namespace default
 
 ```

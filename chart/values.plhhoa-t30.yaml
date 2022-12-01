@@ -1,0 +1,13 @@
+environment: plhhoa-t30
+
+nameOverride: "blogifier-plhhoa"
+fullnameOverride: "blogifier-plhhoa"
+
+dnsName: plhhoa.link
+
+image:
+  repository: 192.168.1.151:32000/blogifier
+
+gatewayNamespace: default
+gateway: default/leenet-gateway
+appNamespace: default

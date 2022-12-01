@@ -3,7 +3,7 @@ version: '2'
 services:
 
   blogifier:
-      image: neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.46
+      image: 192.168.1.151:32000/blogifier:1.11.49
       build:
           context: ./
           dockerfile: ./Dockerfile

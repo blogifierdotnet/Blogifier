@@ -1,0 +1,13 @@
+environment: paintedravendesign-t30
+
+nameOverride: "blogifier-paintedravendesign"
+fullnameOverride: "blogifier-paintedravendesign"
+
+dnsName: paintedravendesign.com
+
+image:
+  repository: 192.168.1.151:32000/blogifier
+
+gatewayNamespace: default
+gateway: default/leenet-gateway
+appNamespace: default

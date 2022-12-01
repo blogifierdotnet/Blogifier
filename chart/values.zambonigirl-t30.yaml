@@ -1,0 +1,13 @@
+environment: zambonigirl-t30
+
+nameOverride: "blogifier-zambonigirl"
+fullnameOverride: "blogifier-zambonigirl"
+
+dnsName: zambonigirl.com
+
+image:
+  repository: 192.168.1.151:32000/blogifier
+
+gatewayNamespace: default
+gateway: default/leenet-gateway
+appNamespace: default
