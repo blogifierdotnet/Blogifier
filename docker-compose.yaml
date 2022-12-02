@@ -3,7 +3,7 @@ version: '2'
 services:
 
   blogifier:
-      image: 192.168.1.151:32000/blogifier:1.11.49
+      image: 192.168.1.151:32000/blogifier:1.11.50
       build:
           context: ./
           dockerfile: ./Dockerfile
