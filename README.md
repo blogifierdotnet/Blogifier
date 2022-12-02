@@ -57,54 +57,7 @@ while true; do kubectl port-forward --namespace default pod/acid-minimal-cluster
 <br><br>
 ## Deploy to kubernetes
 ```
-#plhhoa
-docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.52
-helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa.yaml ./chart --namespace leenet
-
-
-#zambonigirl
-docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.52
-helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl.yaml ./chart --namespace leenet
-
-#paintedravendesign
-docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.52
-helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign.yaml ./chart --namespace leenet
-
-#pawsnclaws
-docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.52
-helm upgrade blogifier-pawsnclaws -f ./chart/values.yaml -f ./chart/values.pawsnclaws.yaml ./chart --namespace leenet
-
-#plhhoa-t30
-docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.52
-helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa-t30.yaml ./chart --namespace default
-
-
-#zambonigirl-t30
-docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.52
-helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl-t30.yaml ./chart --namespace default
-
-
-#paintedravendesign-t30
-docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.52
-helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign-t30.yaml ./chart --namespace default
-
-
-#pawsnclaws-t30
-docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.52
-helm upgrade blogifier-pawsnclaws -f ./chart/values.yaml -f ./chart/values.pawsnclaws-t30.yaml ./chart --namespace default
-
-
-#ollie-t30
-docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.52
-helm upgrade blogifier-ollie -f ./chart/values.yaml -f ./chart/values.ollie-t30.yaml ./chart --namespace default
-
+./deploy-t30.sh
+OR
+./deploy.sh
 ```

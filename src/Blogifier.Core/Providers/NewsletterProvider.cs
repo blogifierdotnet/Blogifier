@@ -118,9 +118,11 @@ namespace Blogifier.Core.Providers
 				return false;
 
 			string subject = post.Title;
-			string content = post.Content.MdToHtml();
-
-			bool sent = await _emailProvider.SendEmail(subscribers, subject, content, origin);
+			string postContent = post.Content.MdToHtml();
+			System.Text.StringBuilder content = new System.Text.StringBuilder();
+			content.Append($@"<p style='text-align:center'><a href='{origin}posts/{post.Slug}'>View this email in your browser</a></p><p>&nbsp;</p>");
+			content.Append(postContent);
+			bool sent = await _emailProvider.SendEmail(subscribers, subject, content.ToString(), origin);
 			bool saved = await SaveNewsletter(postId, sent);
 
 			return sent && saved;
