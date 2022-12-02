@@ -49,9 +49,8 @@ To undo this action, use 'ef migrations remove --verbose --project Blogifier.Cor
 ## Debugging Notes
 ```
 pkill -9 Blogifier
-
-kubectl port-forward pod/neon-system-db-0 5432 --namespace neon-system
-kubectl port-forward pod/acid-minimal-cluster-0 5432 --namespace default
+while true; do kubectl port-forward --namespace default pod/neon-system-db-0 5432:5432; done
+while true; do kubectl port-forward --namespace default pod/acid-minimal-cluster-0 5432:5432; done
 #to backup restore db use pg-admin4. To restore make sure to select the role name
 ```
 
@@ -60,46 +59,46 @@ kubectl port-forward pod/acid-minimal-cluster-0 5432 --namespace default
 ```
 #plhhoa
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.50
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.51
 helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa.yaml ./chart --namespace leenet
 
 
 #zambonigirl
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.50
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.51
 helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl.yaml ./chart --namespace leenet
 
 #paintedravendesign
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.50
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.51
 helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign.yaml ./chart --namespace leenet
 
 #pawsnclaws
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.50
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier:1.11.51
 helm upgrade blogifier-pawsnclaws -f ./chart/values.yaml -f ./chart/values.pawsnclaws.yaml ./chart --namespace leenet
 
 #plhhoa-t30
 docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.50
+docker push 192.168.1.151:32000/blogifier:1.11.51
 helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa-t30.yaml ./chart --namespace default
 
 
 #zambonigirl-t30
 docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.50
+docker push 192.168.1.151:32000/blogifier:1.11.51
 helm upgrade blogifier-zambonigirl -f ./chart/values.yaml -f ./chart/values.zambonigirl-t30.yaml ./chart --namespace default
 
 
 #paintedravendesign-t30
 docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.50
+docker push 192.168.1.151:32000/blogifier:1.11.51
 helm upgrade blogifier-paintedravendesign -f ./chart/values.yaml -f ./chart/values.paintedravendesign-t30.yaml ./chart --namespace default
 
 
 #pawsnclaws-t30
 docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.50
+docker push 192.168.1.151:32000/blogifier:1.11.51
 helm upgrade blogifier-pawsnclaws -f ./chart/values.yaml -f ./chart/values.pawsnclaws-t30.yaml ./chart --namespace default
 
 ```
