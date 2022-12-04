@@ -1,0 +1,6 @@
+environment: pawsnclaws
+
+nameOverride: "blogifier-pawsnclaws"
+fullnameOverride: "blogifier-pawsnclaws"
+
+dnsName: pawsnclaws.leenet.link

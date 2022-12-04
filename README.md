@@ -49,7 +49,7 @@ To undo this action, use 'ef migrations remove --verbose --project Blogifier.Cor
 ## Debugging Notes
 ```
 pkill -9 Blogifier
-while true; do kubectl port-forward --namespace default pod/neon-system-db-0 5432:5432; done
+while true; do kubectl port-forward --namespace neon-system pod/neon-system-db-0 5432:5432; done
 while true; do kubectl port-forward --namespace default pod/acid-minimal-cluster-0 5432:5432; done
 #to backup restore db use pg-admin4. To restore make sure to select the role name
 ```

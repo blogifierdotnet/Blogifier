@@ -1,0 +1,6 @@
+environment: ollie
+
+nameOverride: "blogifier-ollie"
+fullnameOverride: "blogifier-ollie"
+
+dnsName: ollie.leenet.link

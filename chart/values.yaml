@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/blogifier
+  repository: neon-registry.d95f-98d9-33df-f8a6.neoncluster.io/leenet/blogifier
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
