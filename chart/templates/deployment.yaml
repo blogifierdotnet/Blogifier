@@ -20,6 +20,10 @@ spec:
       labels:
         {{- include "blogifier.selectorLabels" . | nindent 8 }}
     spec:
+      volumes:
+        - name: {{ .Values.nameOverride }}-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.nameOverride }}-volume-claim
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -52,6 +56,9 @@ spec:
           env:
             - name: "ASPNETCORE_ENVIRONMENT"
               value: "{{ .Values.environment }}"
+          volumeMounts:
+            - name: {{ .Values.nameOverride }}-volume
+              mountPath: /opt/blogifier/outputs/wwwroot/data
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

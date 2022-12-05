@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.nameOverride }}-volume-claim
+  namespace: {{ .Values.appNamespace }}
+  labels:
+    app: {{ .Values.nameOverride }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: default
+  volumeMode: Filesystem
