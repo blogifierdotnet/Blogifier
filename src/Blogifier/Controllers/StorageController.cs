@@ -49,9 +49,11 @@ namespace Blogifier.Controllers
 
             var path = $"{author.Id}/{DateTime.Now.Year}/{DateTime.Now.Month}";
 			var fileName = $"data/{path}/{file.FileName}";
+			string webRoot = Url.Content("~/");
+            var origin = $"{Request.Scheme}s://{Request.Host}{webRoot}";
 
             if (uploadType == UploadType.PostImage)
-                fileName = Url.Content("~/") + fileName;
+                fileName = origin + fileName;
 
 			if (await _storageProvider.UploadFormFile(file, path))
 			{

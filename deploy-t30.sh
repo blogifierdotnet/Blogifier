@@ -1,5 +1,5 @@
 docker-compose build
-docker push 192.168.1.151:32000/blogifier:1.11.53
+docker push 192.168.1.151:32000/blogifier:1.11.54
 
 #plhhoa-t30
 helm upgrade blogifier-plhhoa -f ./chart/values.yaml -f ./chart/values.plhhoa-t30.yaml ./chart --namespace default
