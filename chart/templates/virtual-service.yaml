@@ -14,6 +14,6 @@ spec:
             prefix: /
       route:
         - destination:
-            host: {{ .Values.nameOverride }}.{{ .Values.appNamespace }}.svc.cluster.local
+            host: {{ include "blogifier.fullname" . }}.{{ .Values.appNamespace }}.svc.cluster.local
             port:
               number: 80

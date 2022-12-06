@@ -1,16 +1,26 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "blogifier.fullname" . }}
   labels:
     {{- include "blogifier.labels" . | nindent 4 }}
 spec:
+  volumeClaimTemplates:
+    - metadata:
+        name: wwwroot-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: default
+        resources:
+          requests:
+            storage: 2Gi
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
       {{- include "blogifier.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "blogifier.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,10 +30,6 @@ spec:
       labels:
         {{- include "blogifier.selectorLabels" . | nindent 8 }}
     spec:
-      volumes:
-        - name: {{ .Values.nameOverride }}-volume
-          persistentVolumeClaim:
-            claimName: {{ .Values.nameOverride }}-volume-claim
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -57,7 +63,7 @@ spec:
             - name: "ASPNETCORE_ENVIRONMENT"
               value: "{{ .Values.environment }}"
           volumeMounts:
-            - name: {{ .Values.nameOverride }}-volume
+            - name: wwwroot-data
               mountPath: /opt/blogifier/outputs/wwwroot/data
       {{- with .Values.nodeSelector }}
       nodeSelector:
