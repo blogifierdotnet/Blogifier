@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Blogifier' " />
   <ItemGroup>
     <PackageReference Include="Blazored.Typeahead" Version="4.6.0" />
     <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
