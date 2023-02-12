@@ -502,7 +502,7 @@
         <value>Basic settings</value>
     </data>
     <data name="blogifier-desc" xml:space="preserve">
-        <value>Blogifier is an open-source publishing platform built with .NET Core 5.0 and the latest technologies.</value>
+        <value>Blogifier is an open-source publishing platform built with .NET Core 6.0 and the latest technologies.</value>
     </data>
     <data name="comments-settings" xml:space="preserve">
         <value>Comments settings</value>
