@@ -1,10 +1,11 @@
-using Blogifier.Core.Extensions;
+﻿using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,13 +25,15 @@ namespace Blogifier.Core.Providers
 
     public class StorageProvider : IStorageProvider
     {
-        private string _storageRoot;
+        private readonly string _storageRoot;
+        private readonly string _publicStorageRoot;
         private readonly string _slash = Path.DirectorySeparatorChar.ToString();
         private readonly IConfiguration _configuration;
 
         public StorageProvider(IConfiguration configuration)
         {
             _storageRoot = $"{ContentRoot}{_slash}wwwroot{_slash}data{_slash}";
+            _publicStorageRoot = Path.Combine(ContentRoot, "Data", "public");
             _configuration = configuration;
         }
 
@@ -102,7 +105,7 @@ namespace Blogifier.Core.Providers
         public async Task<bool> UploadFormFile(IFormFile file, string path = "")
         {
             path = path.Replace("/", _slash);
-            VerifyPath(path);
+            VerifyPath(_publicStorageRoot, path);
 
             var fileName = GetFileName(file.FileName);
 
@@ -136,8 +139,9 @@ namespace Blogifier.Core.Providers
 
         public async Task<string> UploadFromWeb(Uri requestUri, string root, string path = "")
         {
+
             path = path.Replace("/", _slash);
-            VerifyPath(path);
+            VerifyPath(_publicStorageRoot, path);
 
             var fileName = TitleFromUri(requestUri);
             var filePath = string.IsNullOrEmpty(path) ?
@@ -158,7 +162,7 @@ namespace Blogifier.Core.Providers
             path = path.Replace("/", _slash);
             var fileName = "";
 
-            VerifyPath(path);
+            VerifyPath(_publicStorageRoot, path);
             string imgSrc = GetImgSrcValue(baseImg);
 
             Random rnd = new Random();
@@ -226,7 +230,7 @@ namespace Blogifier.Core.Providers
 
         string GetFileName(string fileName)
         {
-            // some browsers pass uploaded file name as short file name 
+            // some browsers pass uploaded file name as short file name
             // and others include the path; remove path part if needed
             if (fileName.Contains(_slash))
             {
@@ -241,6 +245,21 @@ namespace Blogifier.Core.Providers
                 fileName = fileName.Replace("mceclip0", rnd.Next(100000, 999999).ToString());
             }
             return fileName.SanitizePath();
+        }
+
+        void VerifyPath(string basePath, string path)
+        {
+            path = path.SanitizePath();
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                var dir = Path.Combine(basePath, path);
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+            }
         }
 
         void VerifyPath(string path)
