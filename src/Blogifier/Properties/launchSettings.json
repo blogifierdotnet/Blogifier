@@ -10,7 +10,7 @@
     "profiles": {
       "IIS Express": {
         "commandName": "IISExpress",
-        "launchBrowser": true,
+        "launchBrowser": false,
         "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
@@ -19,7 +19,7 @@
       "Blogifier": {
         "commandName": "Project",
         "dotnetRunMessages": "true",
-        "launchBrowser": true,
+        "launchBrowser": false,
         "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
         "applicationUrl": "http://localhost:5000",
         "environmentVariables": {
