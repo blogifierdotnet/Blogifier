@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared
 {
@@ -7,10 +8,10 @@ namespace Blogifier.Shared
 		public int Id { get; set; }
 		public int PostId { get; set; }
 		public bool Success { get; set; }
-
-		public DateTime DateCreated { get; set; }
-		public DateTime DateUpdated { get; set; }
-
-		public Post Post { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime DateCreated { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateUpdated { get; set; }
+        public Post Post { get; set; }
 	}
 }

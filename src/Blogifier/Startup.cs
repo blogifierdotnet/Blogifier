@@ -44,7 +44,7 @@ namespace Blogifier
 
             services.AddBlogProviders();
 
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -75,10 +75,7 @@ namespace Blogifier
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                      name: "default",
-                      pattern: "{controller=Home}/{action=Index}/{id?}"
-                 );
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
                 endpoints.MapFallbackToFile("account/{*path:nonfile}", "index.html");

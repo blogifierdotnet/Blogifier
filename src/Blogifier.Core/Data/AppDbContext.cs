@@ -36,28 +36,6 @@ namespace Blogifier.Core.Data
                 .HasOne(pt => pt.Category)
                 .WithMany(t => t.PostCategories)
                 .HasForeignKey(pt => pt.CategoryId);
-
-            string sql = "getdate()";
-
-            if (_options.Extensions != null)
-            {
-                foreach (var ext in _options.Extensions)
-                {
-                    if (ext.GetType().ToString().StartsWith("Microsoft.EntityFrameworkCore.Sqlite"))
-                    {
-                        sql = "DATE('now')";
-                        break;
-                    }
-                }
-            }
-
-            modelBuilder.Entity<Blog>().Property(b => b.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<Post>().Property(p => p.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<Author>().Property(a => a.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<Category>().Property(c => c.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<Subscriber>().Property(s => s.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<Newsletter>().Property(n => n.DateUpdated).HasDefaultValueSql(sql);
-            modelBuilder.Entity<MailSetting>().Property(n => n.DateUpdated).HasDefaultValueSql(sql);
         }
     }
 }

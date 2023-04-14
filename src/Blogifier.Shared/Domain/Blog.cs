@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared
 {
-	public class Blog
+    public class Blog
 	{
 		public int Id { get; set; }
 		[StringLength(160)]
@@ -23,13 +24,12 @@ namespace Blogifier.Shared
 		public string HeaderScript { get; set; }
 		[StringLength(2000)]
 		public string FooterScript { get; set; }
-
         public int AnalyticsListType { get; set; }
         public int AnalyticsPeriod { get; set; }
-
-		public DateTime DateCreated { get; set; }
-		public DateTime DateUpdated { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime DateCreated { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateUpdated { get; set; }
 		public List<Post> Posts { get; set; }
 		public List<Author> Authors { get; set; }
 	}

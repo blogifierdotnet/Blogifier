@@ -33,8 +33,4 @@
 		<ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Data\Migrations\" />
-	</ItemGroup>
-
 </Project>

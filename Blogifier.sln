@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{84FCDE15-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA-AC43-4A35-88D9-8D63D26884B8}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject

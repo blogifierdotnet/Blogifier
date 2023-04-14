@@ -85,7 +85,6 @@ namespace Blogifier.Core.Providers
 					Description = "Short Blog Description",
 					Theme = "Standard",
 					ItemsPerPage = 10,
-					DateCreated = DateTime.UtcNow
 				};
 
 				_db.Blogs.Add(blog);

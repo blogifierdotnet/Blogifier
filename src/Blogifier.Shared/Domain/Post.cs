@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared
 {
-	public class Post
+    public class Post
 	{
 		public Post() { }
 
@@ -30,12 +31,12 @@ namespace Blogifier.Shared
 		public double Rating { get; set; }
 		public bool IsFeatured { get; set; }
 		public bool Selected { get; set; }
-
 		public DateTime Published { get; set; }
-		public DateTime DateCreated { get; set; }
-		public DateTime DateUpdated { get; set; }
-
-		public Blog Blog { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime DateCreated { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateUpdated { get; set; }
+        public Blog Blog { get; set; }
         public List<PostCategory> PostCategories { get; set; }
     }
 }
