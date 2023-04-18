@@ -20,9 +20,9 @@ builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthenticationStateP
 
 builder.Services.AddToaster(config =>
 {
-    config.PositionClass = Defaults.Classes.Position.BottomRight;
-    config.PreventDuplicates = true;
-    config.NewestOnTop = false;
+  config.PositionClass = Defaults.Classes.Position.BottomRight;
+  config.PreventDuplicates = true;
+  config.NewestOnTop = false;
 });
 
 builder.Services.AddSingleton<BlogStateProvider>();
