@@ -26,7 +26,7 @@ namespace Blogifier.Core.Providers
     public async Task<AnalyticsModel> GetAnalytics()
     {
       var blog = await _db.Blogs.FirstOrDefaultAsync();
-      var model = new AnalyticsModel()
+      var model = new AnalyticsModel
       {
         TotalPosts = _db.Posts.Where(p => p.PostType == PostType.Post).Count(),
         TotalPages = _db.Posts.Where(p => p.PostType == PostType.Page).Count(),
@@ -36,7 +36,6 @@ namespace Blogifier.Core.Providers
         DisplayType = blog.AnalyticsListType > 0 ? (AnalyticsListType)blog.AnalyticsListType : AnalyticsListType.Graph,
         DisplayPeriod = blog.AnalyticsPeriod > 0 ? (AnalyticsPeriod)blog.AnalyticsPeriod : AnalyticsPeriod.Days7
       };
-
       return await Task.FromResult(model);
     }
 
@@ -72,23 +71,17 @@ namespace Blogifier.Core.Providers
       };
     }
 
-    private int GetDays(int id)
+    private static int GetDays(int id)
     {
-      switch ((AnalyticsPeriod)id)
+      return (AnalyticsPeriod)id switch
       {
-        case AnalyticsPeriod.Today:
-          return 1;
-        case AnalyticsPeriod.Yesterday:
-          return 2;
-        case AnalyticsPeriod.Days7:
-          return 7;
-        case AnalyticsPeriod.Days30:
-          return 30;
-        case AnalyticsPeriod.Days90:
-          return 90;
-        default:
-          throw new ApplicationException("Unknown analytics period");
-      }
+        AnalyticsPeriod.Today => 1,
+        AnalyticsPeriod.Yesterday => 2,
+        AnalyticsPeriod.Days7 => 7,
+        AnalyticsPeriod.Days30 => 30,
+        AnalyticsPeriod.Days90 => 90,
+        _ => throw new ApplicationException("Unknown analytics period"),
+      };
     }
   }
 }

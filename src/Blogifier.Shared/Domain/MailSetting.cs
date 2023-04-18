@@ -6,6 +6,7 @@ namespace Blogifier.Shared
 {
   public class MailSetting
   {
+    [Key]
     public int Id { get; set; }
     [Required]
     [StringLength(160)]

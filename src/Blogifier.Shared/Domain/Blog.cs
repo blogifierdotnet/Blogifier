@@ -7,6 +7,7 @@ namespace Blogifier.Shared
 {
   public class Blog
   {
+    [Key]
     public int Id { get; set; }
     [StringLength(160)]
     public string Title { get; set; }

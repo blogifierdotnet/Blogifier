@@ -8,6 +8,7 @@ namespace Blogifier.Shared
   public class Category
   {
     public Category() { }
+    [Key]
     public int Id { get; set; }
     [Required]
     [StringLength(120)]

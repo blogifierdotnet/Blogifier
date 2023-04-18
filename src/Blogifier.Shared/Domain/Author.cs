@@ -8,7 +8,7 @@ namespace Blogifier.Shared
   public class Author
   {
     public Author() { }
-
+    [Key]
     public int Id { get; set; }
 
     [Required]

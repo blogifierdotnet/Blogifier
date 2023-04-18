@@ -140,8 +140,7 @@ namespace Blogifier.Core.Providers
       if (post == null)
         return false;
 
-      if (post.PostCategories == null)
-        post.PostCategories = new List<PostCategory>();
+      post.PostCategories ??= new List<PostCategory>();
 
       PostCategory postCategory = await _db.PostCategories
           .AsNoTracking()

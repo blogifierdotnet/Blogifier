@@ -147,11 +147,9 @@ namespace Blogifier.Core.Providers
 
       HttpClient client = new HttpClient();
       var response = await client.GetAsync(requestUri);
-      using (var fs = new FileStream(filePath, FileMode.CreateNew))
-      {
-        await response.Content.CopyToAsync(fs);
-        return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
-      }
+      using var fs = new FileStream(filePath, FileMode.CreateNew);
+      await response.Content.CopyToAsync(fs);
+      return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
     }
 
     public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")

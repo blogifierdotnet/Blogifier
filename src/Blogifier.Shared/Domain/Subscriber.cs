@@ -7,6 +7,7 @@ namespace Blogifier.Shared
   public class Subscriber
   {
     public Subscriber() { }
+    [Key]
     public int Id { get; set; }
     [Required]
     [EmailAddress]

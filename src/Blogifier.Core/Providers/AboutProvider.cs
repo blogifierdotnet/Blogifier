@@ -20,18 +20,16 @@ namespace Blogifier.Core.Providers
     }
     public async Task<AboutModel> GetAboutModel()
     {
-      var model = new AboutModel();
-
-      model.Version = typeof(AboutProvider)
+      var model = new AboutModel
+      {
+        Version = typeof(AboutProvider)
              .GetTypeInfo()
              .Assembly
              .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-             .InformationalVersion;
-
-      model.DatabaseProvider = _db.Database.ProviderName;
-
-      model.OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
-
+             .InformationalVersion,
+        DatabaseProvider = _db.Database.ProviderName,
+        OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription
+      };
       return await Task.FromResult(model);
     }
   }
