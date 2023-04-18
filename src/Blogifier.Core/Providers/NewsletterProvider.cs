@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Data;
+using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;

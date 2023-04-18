@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;

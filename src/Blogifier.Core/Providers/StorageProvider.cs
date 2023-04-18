@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Extensions;
+using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;

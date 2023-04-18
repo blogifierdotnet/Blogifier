@@ -1,4 +1,4 @@
-﻿using Blogifier.Shared;
+using Blogifier.Shared;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;
 using System;

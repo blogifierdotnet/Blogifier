@@ -1,4 +1,4 @@
-﻿namespace Blogifier.Shared
+namespace Blogifier.Shared
 {
   public class ThemeItem
   {

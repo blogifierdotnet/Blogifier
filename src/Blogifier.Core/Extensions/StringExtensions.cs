@@ -1,4 +1,4 @@
-﻿using Markdig;
+using Markdig;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Globalization;

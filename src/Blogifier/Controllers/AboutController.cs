@@ -1,4 +1,4 @@
-﻿using Blogifier.Core.Providers;
+using Blogifier.Core.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

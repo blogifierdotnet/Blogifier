@@ -1,4 +1,4 @@
-﻿using Blogifier.Shared;
+using Blogifier.Shared;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;

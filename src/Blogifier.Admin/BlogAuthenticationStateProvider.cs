@@ -1,4 +1,4 @@
-﻿using Blogifier.Shared;
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http;
 using System.Net.Http.Json;

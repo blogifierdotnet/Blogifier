@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -12,7 +12,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
 		<PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
 	</ItemGroup>
 
@@ -20,11 +20,6 @@
 		<ProjectReference Include="..\Blogifier.Admin\Blogifier.Admin.csproj" />
 		<ProjectReference Include="..\Blogifier.Core\Blogifier.Core.csproj" />
 		<ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Logs\" />
-	  <Folder Include="wwwroot\data\" />
 	</ItemGroup>
 
 </Project>
