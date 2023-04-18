@@ -24,15 +24,13 @@ namespace Blogifier.Core.Providers
 
     public class StorageProvider : IStorageProvider
     {
-        private readonly string _storageRoot;
         private readonly string _publicStorageRoot;
         private readonly string _slash = Path.DirectorySeparatorChar.ToString();
         private readonly IConfiguration _configuration;
 
         public StorageProvider(IConfiguration configuration)
         {
-            _storageRoot = $"{ContentRoot}{_slash}wwwroot{_slash}data{_slash}";
-            _publicStorageRoot = Path.Combine(ContentRoot, "Data", "public");
+            _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
             _configuration = configuration;
         }
 
@@ -115,10 +113,10 @@ namespace Blogifier.Core.Providers
             }
 
             var filePath = string.IsNullOrEmpty(path) ?
-                 Path.Combine(_storageRoot, fileName) :
-                 Path.Combine(_storageRoot, path + _slash + fileName);
+                 Path.Combine(_publicStorageRoot, fileName) :
+                 Path.Combine(_publicStorageRoot, path + _slash + fileName);
 
-            Serilog.Log.Information($"Storage root: {_storageRoot}");
+            Serilog.Log.Information($"Storage root: {_publicStorageRoot}");
             Serilog.Log.Information($"Uploading file: {filePath}");
             try
             {
@@ -144,8 +142,8 @@ namespace Blogifier.Core.Providers
 
             var fileName = TitleFromUri(requestUri);
             var filePath = string.IsNullOrEmpty(path) ?
-                 Path.Combine(_storageRoot, fileName) :
-                 Path.Combine(_storageRoot, path + _slash + fileName);
+                 Path.Combine(_publicStorageRoot, fileName) :
+                 Path.Combine(_publicStorageRoot, path + _slash + fileName);
 
             HttpClient client = new HttpClient();
             var response = await client.GetAsync(requestUri);
@@ -183,8 +181,8 @@ namespace Blogifier.Core.Providers
             }
 
             var filePath = string.IsNullOrEmpty(path) ?
-                 Path.Combine(_storageRoot, fileName) :
-                 Path.Combine(_storageRoot, path + _slash + fileName);
+                 Path.Combine(_publicStorageRoot, fileName) :
+                 Path.Combine(_publicStorageRoot, path + _slash + fileName);
 
             await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
 
@@ -267,7 +265,7 @@ namespace Blogifier.Core.Providers
 
             if (!string.IsNullOrEmpty(path))
             {
-                var dir = Path.Combine(_storageRoot, path);
+                var dir = Path.Combine(_publicStorageRoot, path);
 
                 if (!Directory.Exists(dir))
                 {
@@ -311,7 +309,7 @@ namespace Blogifier.Core.Providers
 
         string PathToUrl(string path)
         {
-            string url = path.ReplaceIgnoreCase(_storageRoot, "").Replace(_slash, "/");
+            string url = path.ReplaceIgnoreCase(_publicStorageRoot, "").Replace(_slash, "/");
             return $"data/{url}";
         }
 

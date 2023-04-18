@@ -4,8 +4,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
+using System.IO;
+using System.Linq;
 
 var corsString = "BlogifierPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +37,16 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
-await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.MigrateAsync();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+try
+{
+    if (dbContext.Database.GetPendingMigrations().Any())
+        await dbContext.Database.MigrateAsync();
+}
+catch (Exception ex)
+{
+
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -52,6 +65,11 @@ app.UseRouting();
 app.UseCors(corsString);
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "App_Data/public")),
+    RequestPath = "/data"
+});
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
