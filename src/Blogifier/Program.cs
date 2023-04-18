@@ -37,12 +37,12 @@ await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.MigrateA
 
 if (app.Environment.IsDevelopment())
 {
-  app.UseDeveloperExceptionPage();
-  app.UseWebAssemblyDebugging();
+    app.UseDeveloperExceptionPage();
+    app.UseWebAssemblyDebugging();
 }
 else
 {
-  app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error");
 }
 
 app.UseBlazorFrameworkFiles();

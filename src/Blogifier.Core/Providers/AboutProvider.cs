@@ -5,34 +5,34 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
 {
-  public interface IAboutProvider
-  {
-    Task<AboutModel> GetAboutModel();
-  }
-
-  public class AboutProvider : IAboutProvider
-  {
-    private readonly AppDbContext _db;
-
-    public AboutProvider(AppDbContext db)
+    public interface IAboutProvider
     {
-      _db = db;
+        Task<AboutModel> GetAboutModel();
     }
-    public async Task<AboutModel> GetAboutModel()
+
+    public class AboutProvider : IAboutProvider
     {
-      var model = new AboutModel();
+        private readonly AppDbContext _db;
 
-      model.Version = typeof(AboutProvider)
-             .GetTypeInfo()
-             .Assembly
-             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-             .InformationalVersion;
+        public AboutProvider(AppDbContext db)
+        {
+            _db = db;
+        }
+        public async Task<AboutModel> GetAboutModel()
+        {
+            var model = new AboutModel();
 
-      model.DatabaseProvider = _db.Database.ProviderName;
+            model.Version = typeof(AboutProvider)
+                   .GetTypeInfo()
+                   .Assembly
+                   .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                   .InformationalVersion;
 
-      model.OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+            model.DatabaseProvider = _db.Database.ProviderName;
 
-      return await Task.FromResult(model);
+            model.OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+
+            return await Task.FromResult(model);
+        }
     }
-  }
 }

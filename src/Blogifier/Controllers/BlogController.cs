@@ -7,34 +7,34 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class BlogController : ControllerBase
-  {
-    private readonly IBlogProvider _blogProvider;
-
-    public BlogController(IBlogProvider blogProvider)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BlogController : ControllerBase
     {
-      _blogProvider = blogProvider;
-    }
+        private readonly IBlogProvider _blogProvider;
 
-    [HttpGet]
-    public async Task<Blog> GetBlog()
-    {
-      return await _blogProvider.GetBlog();
-    }
+        public BlogController(IBlogProvider blogProvider)
+        {
+            _blogProvider = blogProvider;
+        }
 
-    [HttpGet("categories")]
-    public async Task<ICollection<Category>> GetBlogCategories()
-    {
-      return await _blogProvider.GetBlogCategories();
-    }
+        [HttpGet]
+        public async Task<Blog> GetBlog()
+        {
+            return await _blogProvider.GetBlog();
+        }
 
-    [Authorize]
-    [HttpPut]
-    public async Task<ActionResult<bool>> ChangeTheme([FromBody] Blog blog)
-    {
-      return await _blogProvider.Update(blog);
+        [HttpGet("categories")]
+        public async Task<ICollection<Category>> GetBlogCategories()
+        {
+            return await _blogProvider.GetBlogCategories();
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<bool>> ChangeTheme([FromBody] Blog blog)
+        {
+            return await _blogProvider.Update(blog);
+        }
     }
-  }
 }
