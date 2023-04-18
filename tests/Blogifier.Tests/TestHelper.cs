@@ -18,8 +18,7 @@ namespace Blogifier.Tests
 
     public AppDbContext GetDbContext()
     {
-      return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
-           .UseSqlite(GetDataSource()).Options);
+      return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlite(GetDataSource()).Options);
     }
 
     private string GetDataSource()

@@ -15,9 +15,7 @@ namespace Blogifier.Tests
     public async Task CanUploadImageOrFileFromUrl()
     {
       var sut = GetSut();
-
       var result = await sut.UploadFromWeb(new System.Uri(_imgUrl), "/", "1/2020/12");
-
       Assert.True(result.Length > 0);
     }
 
@@ -31,16 +29,12 @@ namespace Blogifier.Tests
       Assert.True(result.Length > 0);
     }
 
-    IStorageProvider GetSut()
+    static IStorageProvider GetSut()
     {
-      var inMemorySettings = new Dictionary<string, string> {
-            {"Blgofier:FileExtensions", "png,gif,jpeg,jpg,zip"}
-         };
-
-      IConfiguration configuration = new ConfigurationBuilder()
+      var inMemorySettings = new Dictionary<string, string> { { "Blgofier:FileExtensions", "png,gif,jpeg,jpg,zip" } };
+      var configuration = new ConfigurationBuilder()
          .AddInMemoryCollection(inMemorySettings)
          .Build();
-
       return new StorageProvider(configuration);
     }
   }

@@ -222,7 +222,6 @@ namespace Blogifier.Core.Providers
         return path;
       }
     }
-
     string GetFileName(string fileName)
     {
       // some browsers pass uploaded file name as short file name
@@ -241,8 +240,7 @@ namespace Blogifier.Core.Providers
       }
       return fileName.SanitizePath();
     }
-
-    void VerifyPath(string basePath, string path)
+    static void VerifyPath(string basePath, string path)
     {
       path = path.SanitizePath();
 
@@ -256,23 +254,7 @@ namespace Blogifier.Core.Providers
         }
       }
     }
-
-    void VerifyPath(string path)
-    {
-      path = path.SanitizePath();
-
-      if (!string.IsNullOrEmpty(path))
-      {
-        var dir = Path.Combine(_publicStorageRoot, path);
-
-        if (!Directory.Exists(dir))
-        {
-          Directory.CreateDirectory(dir);
-        }
-      }
-    }
-
-    string TitleFromUri(Uri uri)
+    static string TitleFromUri(Uri uri)
     {
       var title = uri.ToString().ToLower();
       title = title.Replace("%2f", "/");
@@ -304,14 +286,12 @@ namespace Blogifier.Core.Providers
 
       return title.Replace("/", "").SanitizeFileName();
     }
-
     string PathToUrl(string path)
     {
       string url = path.ReplaceIgnoreCase(_publicStorageRoot, "").Replace(_slash, "/");
       return $"data/{url}";
     }
-
-    string GetImgSrcValue(string imgTag)
+    static string GetImgSrcValue(string imgTag)
     {
       if (!(imgTag.Contains("data:image") && imgTag.Contains("src=")))
         return imgTag;
@@ -329,7 +309,6 @@ namespace Blogifier.Core.Providers
 
       return imgTag.Substring(srcStart, srcEnd - srcStart);
     }
-
     bool InvalidFileName(string fileName)
     {
       List<string> fileExtensions = new List<string>() { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
