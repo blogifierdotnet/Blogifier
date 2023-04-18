@@ -25,11 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DDBCDEC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Tests", "tests\Blogifier.Tests\Blogifier.Tests.csproj", "{27EB38D0-E275-4033-93B6-3ED6E6B7B442}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{84FCDE15-5F12-484E-A8C2-DA9A1D3122BB}"
-	ProjectSection(SolutionItems) = preProject
-		tests\data\test3.xml = tests\data\test3.xml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA-AC43-4A35-88D9-8D63D26884B8}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -112,7 +107,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442} = {8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}
-		{84FCDE15-5F12-484E-A8C2-DA9A1D3122BB} = {8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AA706E7-D820-4892-9F60-FCEEDC51FF5E}
