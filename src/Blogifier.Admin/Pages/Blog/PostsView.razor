@@ -295,14 +295,6 @@ else
        await Load();
    }
 
-   protected override async Task OnAfterRenderAsync(bool firstRender)
-   {
-       if (firstRender)
-       {
-           //await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-       }
-   }
-
    protected void Toast(HttpResponseMessage msg)
    {
        if (msg.IsSuccessStatusCode)

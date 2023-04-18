@@ -9,38 +9,38 @@ using System.Linq;
 
 namespace Blogifier
 {
-    public class Program
+  public class Program
+  {
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+      var host = CreateHostBuilder(args).Build();
+
+      using (var scope = host.Services.CreateScope())
+      {
+        var services = scope.ServiceProvider;
+        var dbContext = services.GetRequiredService<AppDbContext>();
+
+        try
         {
-            var host = CreateHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var dbContext = services.GetRequiredService<AppDbContext>();
-
-                try
-                {
-                    if (dbContext.Database.GetPendingMigrations().Any())
-                        dbContext.Database.Migrate();
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-
-            host.Run();
+          if (dbContext.Database.GetPendingMigrations().Any())
+            dbContext.Database.Migrate();
         }
+        catch (Exception ex)
+        {
+        }
+      }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-             Host.CreateDefaultBuilder(args)
-                  .ConfigureWebHostDefaults(webBuilder =>
-                  {
-                      webBuilder
-                      .UseContentRoot(Directory.GetCurrentDirectory())
-                      .UseIISIntegration()
-                      .UseStartup<Startup>();
-                  });
+      host.Run();
     }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+         Host.CreateDefaultBuilder(args)
+              .ConfigureWebHostDefaults(webBuilder =>
+              {
+                webBuilder
+                    .UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseIISIntegration()
+                    .UseStartup<Startup>();
+              });
+  }
 }
