@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.IO;
+using System.Linq;
 
 var corsString = "BlogifierPolicy";
 var builder = WebApplication.CreateBuilder(args);
@@ -33,16 +36,18 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
-await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.MigrateAsync();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+if (dbContext.Database.GetPendingMigrations().Any())
+  await dbContext.Database.MigrateAsync();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-    app.UseWebAssemblyDebugging();
+  app.UseDeveloperExceptionPage();
+  app.UseWebAssemblyDebugging();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+  app.UseExceptionHandler("/Error");
 }
 
 app.UseBlazorFrameworkFiles();
@@ -52,6 +57,13 @@ app.UseRouting();
 app.UseCors(corsString);
 app.UseAuthentication();
 app.UseAuthorization();
+var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
+if (!Directory.Exists(fileProviderRoot)) Directory.CreateDirectory(fileProviderRoot);
+app.UseStaticFiles(new StaticFileOptions
+{
+  FileProvider = new PhysicalFileProvider(fileProviderRoot),
+  RequestPath = "/data"
+});
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapFallbackToFile("admin/{*path:nonfile}", "index.html");

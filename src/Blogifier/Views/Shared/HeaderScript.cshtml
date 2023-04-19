@@ -6,21 +6,23 @@
     if (Model.ToString().EndsWith("PostModel"))
     {
         PostModel postModel = (PostModel)Model;
-    <title>@postModel.Post.Title &amp; @postModel.Blog.Title</title>
-    <meta name="author" content="@postModel.Post.Author.DisplayName">
-    <meta name="description" content="@postModel.Post.Description.StripHtml()">
-        if(postModel.Post.PostType == PostType.Page){
+        <title>@postModel.Post.Title &amp; @postModel.Blog.Title</title>
+        <meta name="author" content="@postModel.Post.Author.DisplayName">
+        <meta name="description" content="@postModel.Post.Description.StripHtml()">
+        if (postModel.Post.PostType == PostType.Page)
+        {
             <link rel="canonical" href="@absoluteUrl/@postModel.Post.Slug" />
         }
-        else{
+        else
+        {
             <link rel="canonical" href="@absoluteUrl/posts/@postModel.Post.Slug" />
         }
     }
     else
     {
         ListModel listModel = (ListModel)Model;
-    <title>@listModel.Blog.Title</title>
-    <meta name="description" content="@listModel.Blog.Description">
+        <title>@listModel.Blog.Title</title>
+        <meta name="description" content="@listModel.Blog.Description">
     }
     <link rel="alternate" type="application/rss+xml" title="@Model.Blog.Title" href="@absoluteUrl/feed/rss" />
 }
