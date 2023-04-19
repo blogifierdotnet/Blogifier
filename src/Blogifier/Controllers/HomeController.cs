@@ -21,19 +21,16 @@ namespace Blogifier.Controllers
     protected readonly IFeedProvider _feedProvider;
     protected readonly IAuthorProvider _authorProvider;
     protected readonly IThemeProvider _themeProvider;
-    protected readonly IStorageProvider _storageProvider;
     protected readonly ICompositeViewEngine _compositeViewEngine;
 
-    public HomeController(IBlogProvider blogProvider,
-        IPostProvider postProvider, IFeedProvider feedProvider, IAuthorProvider authorProvider, IThemeProvider themeProvider,
-        IStorageProvider storageProvider, ICompositeViewEngine compositeViewEngine)
+    public HomeController(IBlogProvider blogProvider, IPostProvider postProvider, IFeedProvider feedProvider,
+      IAuthorProvider authorProvider, IThemeProvider themeProvider, ICompositeViewEngine compositeViewEngine)
     {
       _blogProvider = blogProvider;
       _postProvider = postProvider;
       _feedProvider = feedProvider;
       _authorProvider = authorProvider;
       _themeProvider = themeProvider;
-      _storageProvider = storageProvider;
       _compositeViewEngine = compositeViewEngine;
     }
 

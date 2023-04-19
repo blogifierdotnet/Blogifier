@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
-        <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.5" />
-        <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
-        <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
+    <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.5" />
+    <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
+    <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+  </ItemGroup>
 </Project>
