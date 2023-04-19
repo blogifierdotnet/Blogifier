@@ -1,4 +1,4 @@
-﻿@inject IJSRuntime JSRuntime
+@inject IJSRuntime JSRuntime
 @inject IStringLocalizer<Resource> _localizer
 <div class="easymde-wrapper">
     <textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
@@ -15,6 +15,6 @@
             await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
         }
 
-        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content );
+        await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
     }
 }

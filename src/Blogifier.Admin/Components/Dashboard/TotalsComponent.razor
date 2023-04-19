@@ -3,7 +3,7 @@
 
 @if (_model != null)
 {
-     <div class="row">
+    <div class="row">
         <div class="col-4">
             <a class="dash-widget dash-link dash-stats" href="/admin/blog/">
                 <span class="dash-stats-value">@_model.TotalPosts</span>
@@ -26,10 +26,10 @@
 }
 
 @code {
-	protected AnalyticsModel _model;
+    protected AnalyticsModel _model;
 
-	protected override async Task OnInitializedAsync()
-	{
-		_model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        _model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
+    }
 }

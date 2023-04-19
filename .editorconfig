@@ -9,6 +9,9 @@ indent_size = 2
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+[*.{razor}]
+indent_size = 2
+
 [*.{css,scss,js,json,yml}]
 indent_size = 2
 
