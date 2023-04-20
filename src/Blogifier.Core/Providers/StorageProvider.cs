@@ -2,17 +2,20 @@ using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Minio.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Blogifier.Core.Providers
 {
   public interface IStorageProvider
   {
+    Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> cb);
     Task<IList<string>> GetThemes();
     bool FileExists(string path);
     Task<bool> UploadFormFile(IFormFile file, string path = "");
@@ -30,8 +33,14 @@ namespace Blogifier.Core.Providers
 
     public StorageProvider(IConfiguration configuration)
     {
-      _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
       _configuration = configuration;
+      _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
+    }
+
+
+    public async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> cb)
+    {
+      throw new NotImplementedException();
     }
 
     public bool FileExists(string path)

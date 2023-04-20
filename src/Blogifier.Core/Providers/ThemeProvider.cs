@@ -12,9 +12,11 @@ namespace Blogifier.Core.Providers
   {
     public async Task<Dictionary<string, string>> GetSettings(string theme)
     {
-      var settings = new Dictionary<string, string>();
-      settings.Add("one", "<div>the one</div>");
-      settings.Add("two", "<div>the two</div>");
+      var settings = new Dictionary<string, string>
+      {
+        { "one", "<div>the one</div>" },
+        { "two", "<div>the two</div>" }
+      };
       return await Task.FromResult(settings);
     }
   }
