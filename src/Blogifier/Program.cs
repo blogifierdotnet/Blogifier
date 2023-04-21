@@ -16,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
 
 builder.Services.AddAuthentication(options =>

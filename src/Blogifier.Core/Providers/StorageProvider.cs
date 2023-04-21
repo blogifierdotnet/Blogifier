@@ -2,6 +2,8 @@ using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Minio;
 using Minio.DataModel;
 using System;
 using System.Collections.Generic;
@@ -25,22 +27,34 @@ namespace Blogifier.Core.Providers
     Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
   }
 
-  public class StorageProvider : IStorageProvider
+  public class StorageProvider : IStorageProvider, IDisposable
   {
+    private readonly ILogger _logger;
     private readonly string _publicStorageRoot;
     private readonly string _slash = Path.DirectorySeparatorChar.ToString();
     private readonly IConfiguration _configuration;
+    private readonly string _bucketName;
+    private readonly MinioClient _minioClient;
 
-    public StorageProvider(IConfiguration configuration)
+    public StorageProvider(ILogger<StorageProvider> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
+      _logger = logger;
       _configuration = configuration;
       _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
+      var section = _configuration.GetSection("Minio");
+      _bucketName = section.GetValue<string>("BucketName")!;
+      _minioClient = new MinioClient()
+       .WithEndpoint(section.GetValue<string>("Endpoint")!, section.GetValue<int>("Port"))
+       .WithRegion(section.GetValue<string>("Region")!)
+       .WithCredentials(section.GetValue<string>("AccessKey")!, section.GetValue<string>("SecretKey")!)
+       .WithHttpClient(httpClientFactory.CreateClient())
+       .Build();
     }
-
 
     public async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> callback)
     {
-      throw new NotImplementedException();
+      var args = new GetObjectArgs().WithBucket(_bucketName).WithObject(objectName).WithCallbackStream(callback);
+      return await _minioClient.GetObjectAsync(args).ConfigureAwait(false);
     }
 
     public bool FileExists(string path)
@@ -339,6 +353,33 @@ namespace Blogifier.Core.Providers
       return true;
     }
 
+
+
     #endregion
+
+
+    private bool _disposedValue;
+
+    ~StorageProvider() => Dispose(false);
+
+    // Public implementation of Dispose pattern callable by consumers.
+    public void Dispose()
+    {
+      Dispose(true);
+      GC.SuppressFinalize(this);
+    }
+
+    // Protected implementation of Dispose pattern.
+    protected virtual void Dispose(bool disposing)
+    {
+      if (!_disposedValue)
+      {
+        if (disposing)
+        {
+          _minioClient.Dispose();
+        }
+        _disposedValue = true;
+      }
+    }
   }
 }
