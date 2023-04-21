@@ -14,10 +14,10 @@ public class Storage
   public bool IsDeleted { get; set; }
   public DateTime? DeletedAt { get; set; }
   [StringLength(256)]
-  public string Name { get; set; }
+  public string Name { get; set; } = default!;
   [StringLength(2048)]
-  public string Url { get; set; }
+  public string Url { get; set; } = default!;
   [StringLength(128)]
-  public string ContentType { get; set; }
+  public string ContentType { get; set; } = default!;
   public int StorageType { get; set; }
 }

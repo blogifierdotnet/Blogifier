@@ -38,7 +38,7 @@ namespace Blogifier.Core.Providers
     }
 
 
-    public async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> cb)
+    public async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> callback)
     {
       throw new NotImplementedException();
     }

@@ -12,18 +12,19 @@ namespace Blogifier.Controllers;
 public class ApiFileController : ControllerBase
 {
   private readonly IStorageProvider _storageProvider;
-  public ApiFileController(IStorageProvider  storageProvider)
+  public ApiFileController(IStorageProvider storageProvider)
   {
     _storageProvider = storageProvider;
   }
 
-  [HttpGet($"{BlogifierConstant.FileObjectPath}/{{**objectName}}")]
+  [HttpGet($"object/{{**objectName}}")]
   [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
   [OutputCache(PolicyName = BlogifierConstant.OutputCacheExpire1)]
-  public async Task<FileStreamResult> GetAsync([FromRoute] string objectName)
+  public async Task<FileStreamResult> ObjectAsync([FromRoute] string objectName)
   {
     var memoryStream = new MemoryStream();
-    var stat = await _storageProvider.GetObjectAsync(objectName, async (s, cancellationToken) => await s.CopyToAsync(memoryStream, cancellationToken));
+    var stat = await _storageProvider.GetObjectAsync(objectName,
+      (stream, cancellationToken) => stream.CopyToAsync(memoryStream, cancellationToken));
     memoryStream.Position = 0;
     return File(memoryStream, stat.ContentType);
   }
