@@ -8,11 +8,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AnalyticsController : ControllerBase
+public class ApiAnalyticsController : ControllerBase
 {
   private readonly IAnalyticsProvider _analyticsProvider;
 
-  public AnalyticsController(IAnalyticsProvider analyticsProvider)
+  public ApiAnalyticsController(IAnalyticsProvider analyticsProvider)
   {
     _analyticsProvider = analyticsProvider;
   }

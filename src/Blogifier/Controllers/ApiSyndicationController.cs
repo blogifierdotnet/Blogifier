@@ -12,12 +12,12 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SyndicationController : ControllerBase
+public class ApiSyndicationController : ControllerBase
 {
   private readonly AppDbContext _dbContext;
   private readonly ISyndicationProvider _syndicationProvider;
 
-  public SyndicationController(AppDbContext dbContext, ISyndicationProvider syndicationProvider)
+  public ApiSyndicationController(AppDbContext dbContext, ISyndicationProvider syndicationProvider)
   {
     _dbContext = dbContext;
     _syndicationProvider = syndicationProvider;

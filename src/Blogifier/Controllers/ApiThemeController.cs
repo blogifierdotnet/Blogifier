@@ -8,11 +8,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ThemeController : ControllerBase
+public class ApiThemeController : ControllerBase
 {
   private readonly IStorageProvider _storageProvider;
 
-  public ThemeController(IStorageProvider storageProvider)
+  public ApiThemeController(IStorageProvider storageProvider)
   {
     _storageProvider = storageProvider;
   }

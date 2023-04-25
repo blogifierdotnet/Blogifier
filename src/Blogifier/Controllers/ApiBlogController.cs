@@ -9,11 +9,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BlogController : ControllerBase
+public class ApiBlogController : ControllerBase
 {
   private readonly IBlogProvider _blogProvider;
 
-  public BlogController(IBlogProvider blogProvider)
+  public ApiBlogController(IBlogProvider blogProvider)
   {
     _blogProvider = blogProvider;
   }

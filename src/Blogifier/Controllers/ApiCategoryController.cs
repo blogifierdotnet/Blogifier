@@ -9,11 +9,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryController : ControllerBase
+public class ApiCategoryController : ControllerBase
 {
   private readonly ICategoryProvider _categoryProvider;
 
-  public CategoryController(ICategoryProvider categoryProvider)
+  public ApiCategoryController(ICategoryProvider categoryProvider)
   {
     _categoryProvider = categoryProvider;
   }

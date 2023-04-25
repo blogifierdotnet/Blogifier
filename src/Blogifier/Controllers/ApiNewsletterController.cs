@@ -9,11 +9,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class NewsletterController : ControllerBase
+public class ApiNewsletterController : ControllerBase
 {
   protected readonly INewsletterProvider _newsletterProvider;
 
-  public NewsletterController(INewsletterProvider newsletterProvider)
+  public ApiNewsletterController(INewsletterProvider newsletterProvider)
   {
     _newsletterProvider = newsletterProvider;
   }

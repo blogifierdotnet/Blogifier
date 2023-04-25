@@ -7,11 +7,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AboutController : ControllerBase
+public class ApiAboutController : ControllerBase
 {
   private readonly IAboutProvider _aboutProvider;
 
-  public AboutController(IAboutProvider aboutProvider)
+  public ApiAboutController(IAboutProvider aboutProvider)
   {
     _aboutProvider = aboutProvider;
   }

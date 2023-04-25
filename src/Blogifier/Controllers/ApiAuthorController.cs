@@ -12,11 +12,11 @@ namespace Blogifier.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthorController : ControllerBase
+public class ApiAuthorController : ControllerBase
 {
   private readonly IAuthorProvider _authorProvider;
 
-  public AuthorController(IAuthorProvider authorProvider)
+  public ApiAuthorController(IAuthorProvider authorProvider)
   {
     _authorProvider = authorProvider;
   }
