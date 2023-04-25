@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "dotnet",
       "args": [
-        "run"
+        "watch"
       ],
       "cwd": "${workspaceFolder}/src/Blogifier",
       "env": {
