@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogifier.Interface", "src\Blogifier.Interface\Blogifier.Interface.csproj", "{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,18 @@ Global
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x64.Build.0 = Release|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x86.ActiveCfg = Release|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x86.Build.0 = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|x64.Build.0 = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Debug|x86.Build.0 = Debug|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|x64.ActiveCfg = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|x64.Build.0 = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|x86.ActiveCfg = Release|Any CPU
+		{BDE24077-9E82-4BF1-A23F-36F1A5E7BFCB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
