@@ -106,8 +106,8 @@ namespace Blogifier.Core.Providers
         Content = syndicationItem.Summary.Text,
         Cover = Constants.DefaultCover,
         Published = syndicationItem.PublishDate.DateTime,
-        DateCreated = syndicationItem.PublishDate.DateTime,
-        DateUpdated = syndicationItem.LastUpdatedTime.DateTime
+        CreatedAt = syndicationItem.PublishDate.DateTime,
+        UpdatedAt = syndicationItem.LastUpdatedTime.DateTime
       };
 
       if (syndicationItem.ElementExtensions != null)
@@ -134,8 +134,6 @@ namespace Blogifier.Core.Providers
             Category = new Category
             {
               Content = category.Name,
-              DateCreated = DateTime.UtcNow,
-              DateUpdated = DateTime.UtcNow
             }
           });
         }

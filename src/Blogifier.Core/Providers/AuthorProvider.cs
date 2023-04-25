@@ -111,7 +111,6 @@ namespace Blogifier.Core.Providers
         IsAdmin = isAdmin,
         Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
         Bio = "The short author bio.",
-        DateCreated = DateTime.UtcNow
       };
 
       blog.Authors.Add(author);
@@ -132,7 +131,6 @@ namespace Blogifier.Core.Providers
       author.IsAdmin = false;
       author.Password = author.Password.Hash(_salt);
       author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
-      author.DateCreated = DateTime.UtcNow;
 
       blog.Authors.Add(author);
 

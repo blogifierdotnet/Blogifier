@@ -233,7 +233,7 @@ namespace Blogifier.Core.Providers
         return false;
 
       post.Blog = _db.Blogs.First();
-      post.DateCreated = DateTime.UtcNow;
+      post.CreatedAt = DateTime.UtcNow;
 
       // sanitize HTML fields
       post.Content = post.Content.RemoveScriptTags().RemoveImgTags();

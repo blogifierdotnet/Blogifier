@@ -1,15 +1,15 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 <style>
-  .editor-add-category {
-    color: #FFF;
-    overflow: hidden;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-weight: 600;
-    font-size: 0.95em;
-  }
+    .editor-add-category {
+        color: #FFF;
+        overflow: hidden;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-weight: 600;
+        font-size: 0.95em;
+    }
 </style>
 <div class="d-flex">
     @if (PostCategories != null)
@@ -28,34 +28,34 @@
 </div>
 
 @code {
-   [Parameter] public Post Post { get; set; }
+    [Parameter] public Post Post { get; set; }
 
-   protected string Tag { get; set; }
-   public List<Category> PostCategories { get; set; }
+    protected string Tag { get; set; }
+    public List<Category> PostCategories { get; set; }
 
-   protected override async Task OnInitializedAsync()
-   {
-       await Load();
-   }
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
 
-   protected async Task Load()
-   {
-       Tag = "";
-       PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
-   }
+    protected async Task Load()
+    {
+        Tag = "";
+        PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
+    }
 
-   protected async Task KeyPressed(KeyboardEventArgs eventArgs)
-   {
-       if (eventArgs.Code == "Enter")
-       {
-           PostCategories.Add(new Category { Content = Tag, DateUpdated = DateTime.UtcNow });
-           Tag = await Task.FromResult("");
-       }
-   }
+    protected async Task KeyPressed(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Code == "Enter")
+        {
+            PostCategories.Add(new Category { Content = Tag });
+            Tag = await Task.FromResult("");
+        }
+    }
 
-   protected async Task Remove(string tag)
-   {
-       var tagToRemove = await Task.FromResult(PostCategories.Where(c => c.Content == tag).FirstOrDefault());
-       PostCategories.Remove(tagToRemove);
-   }
+    protected async Task Remove(string tag)
+    {
+        var tagToRemove = await Task.FromResult(PostCategories.Where(c => c.Content == tag).FirstOrDefault());
+        PostCategories.Remove(tagToRemove);
+    }
 }

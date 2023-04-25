@@ -50,7 +50,7 @@ namespace Blogifier.Core.Providers
               Id = pc.CategoryId,
               Category = pc.Category.Content.ToLower(),
               PostCount = 1,
-              DateCreated = pc.Category.DateCreated
+              DateCreated = pc.Category.CreatedAt
             });
           }
           else
@@ -103,8 +103,6 @@ namespace Blogifier.Core.Providers
 
       dbCategory.Content = category.Content;
       dbCategory.Description = category.Description;
-      dbCategory.DateUpdated = DateTime.UtcNow;
-
       return await _db.SaveChangesAsync() > 0;
     }
 
@@ -121,7 +119,7 @@ namespace Blogifier.Core.Providers
       category = new Category()
       {
         Content = tag,
-        DateCreated = DateTime.UtcNow
+        CreatedAt = DateTime.UtcNow
       };
       _db.Categories.Add(category);
       await _db.SaveChangesAsync();

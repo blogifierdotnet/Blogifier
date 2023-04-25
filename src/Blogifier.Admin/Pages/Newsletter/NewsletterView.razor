@@ -20,7 +20,7 @@
                 <li class="list-item">
                     @{
                         string title = $"{newsletter.Post.Title}";
-                        string pubDate = newsletter.DateCreated.ToLocalTime().ToFriendlyDateTimeString();
+                        string pubDate = newsletter.CreatedAt.ToLocalTime().ToFriendlyDateTimeString();
                         string pubStatus = newsletter.Success ? "published" : "";
                     }
                     <span class="list-title">@title</span>

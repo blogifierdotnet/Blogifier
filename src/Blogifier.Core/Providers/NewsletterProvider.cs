@@ -45,7 +45,7 @@ namespace Blogifier.Core.Providers
       var existing = await _db.Subscribers.AsNoTracking().Where(s => s.Email == subscriber.Email).FirstOrDefaultAsync();
       if (existing == null)
       {
-        subscriber.DateCreated = DateTime.UtcNow;
+        subscriber.CreatedAt = DateTime.UtcNow;
         _db.Subscribers.Add(subscriber);
         return await _db.SaveChangesAsync() > 0;
       }
@@ -78,7 +78,6 @@ namespace Blogifier.Core.Providers
 
       if (existing != null)
       {
-        existing.DateUpdated = DateTime.UtcNow;
         existing.Success = success;
       }
       else
@@ -86,7 +85,6 @@ namespace Blogifier.Core.Providers
         var newsletter = new Newsletter()
         {
           PostId = postId,
-          DateCreated = DateTime.UtcNow,
           Success = success,
           Post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault()
         };
@@ -152,7 +150,6 @@ namespace Blogifier.Core.Providers
           FromName = mail.FromName,
           ToName = mail.ToName,
           Enabled = mail.Enabled,
-          DateCreated = DateTime.UtcNow,
           Blog = _db.Blogs.FirstOrDefault()
         };
         _db.MailSettings.Add(newMail);
