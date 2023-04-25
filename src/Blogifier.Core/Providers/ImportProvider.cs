@@ -2,6 +2,7 @@ using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Blogifier.Core.Providers;
 
 public interface IImportProvider
 {
-  List<Post> Rss(string feedUrl);
+  ImportDto Rss(string feedUrl);
   Task<bool> ImportPost(Post post);
 }
 
@@ -32,64 +33,63 @@ public class ImportProvider : IImportProvider
     _storageProvider = storageProvider;
   }
 
-  public List<Post> Rss(string feedUrl)
+  public ImportDto Rss(string feedUrl)
   {
-    var posts = new List<Post>();
-    try
+    var xml = XmlReader.Create(feedUrl);
+    var feed = SyndicationFeed.Load(xml);
+
+    var result = new ImportDto
     {
-      var xml = XmlReader.Create(feedUrl);
-      var feed = SyndicationFeed.Load(xml);
-      foreach (var syndicationItem in feed.Items)
+      BaseUrl = feed.Id,
+      Posts = new List<ImportPostDto>(),
+    };
+
+    foreach (var syndicationItem in feed.Items)
+    {
+      var content = ((TextSyndicationContent)syndicationItem.Content).Text;
+      var post = new ImportPostDto
       {
-        var post = new Post
-        {
-          CreatedAt = syndicationItem.PublishDate.DateTime,
-          UpdatedAt = syndicationItem.LastUpdatedTime.DateTime,
-          PostType = PostType.Post,
-          Title = syndicationItem.Title.Text,
-          Description = GetDescription(syndicationItem.Summary.Text),
-          Content = syndicationItem.Content.ToString()!,
-          Cover = Constants.DefaultCover,
-          Published = syndicationItem.PublishDate.DateTime,
-        };
+        UpdatedAt = syndicationItem.LastUpdatedTime.DateTime,
+        Title = syndicationItem.Title.Text,
+        Description = GetDescription(syndicationItem.Summary.Text),
+        Content = content,
+        Cover = Constants.DefaultCover,
+        Published = syndicationItem.PublishDate.DateTime,
+      };
 
-        if (syndicationItem.ElementExtensions != null)
+      if (syndicationItem.ElementExtensions != null)
+      {
+        foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
         {
-          foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
-          {
-            if (ext.GetObject<XElement>().Name.LocalName == "summary")
-              post.Description = GetDescription(ext.GetObject<XElement>().Value);
+          if (ext.GetObject<XElement>().Name.LocalName == "summary")
+            post.Description = GetDescription(ext.GetObject<XElement>().Value);
 
-            if (ext.GetObject<XElement>().Name.LocalName == "cover")
-              post.Cover = ext.GetObject<XElement>().Value;
-          }
+          if (ext.GetObject<XElement>().Name.LocalName == "cover")
+            post.Cover = ext.GetObject<XElement>().Value;
         }
-
-        if (syndicationItem.Categories != null)
-        {
-          if (post.PostCategories == null)
-          {
-            post.PostCategories = new List<PostCategory>();
-          }
-          foreach (var category in syndicationItem.Categories)
-          {
-            post.PostCategories.Add(new PostCategory()
-            {
-              Category = new Category
-              {
-                Content = category.Name,
-              }
-            });
-          }
-        };
-        posts.Add(post);
       }
+
+      if (syndicationItem.Categories != null)
+      {
+        if (post.PostCategories == null)
+        {
+          post.PostCategories = new List<ImportPostCategory>();
+        }
+        foreach (var category in syndicationItem.Categories)
+        {
+          post.PostCategories.Add(new ImportPostCategory()
+          {
+            Category = new ImportCategory
+            {
+              Content = category.Name,
+            }
+          });
+        }
+      };
+      result.Posts.Add(post);
     }
-    catch (Exception ex)
-    {
-      _logger.LogError("Error parsing feed Message: {Message}", ex.Message);
-    }
-    return posts;
+
+    return result;
   }
 
   public async Task<bool> ImportPost(Post post)

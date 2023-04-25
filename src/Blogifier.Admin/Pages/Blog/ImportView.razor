@@ -7,11 +7,11 @@
 
 <BlogPageTitle Title="@_localizer["import"]" />
 
-@if (Posts == null)
+@if (Import == null)
 {
   <h1 class="section-title">@_localizer["import"]</h1>
   <div class="section-content -half">
-    <EditForm Model="@Model" OnValidSubmit="Analysis">
+    <EditForm Model="@Model" OnValidSubmit="OnAnalysis">
       <DataAnnotationsValidator />
       <div class="form-item">
         <label class="form-label">@_localizer["feed-URL"]</label>
@@ -27,7 +27,7 @@
 else
 {
   <div class="section-content">
-    <div class="section-title">@Posts.Count @_localizer["import-message-found"].</div>
+    <div class="section-title">@Import.Posts.Count @_localizer["import-message-found"].</div>
     <div class="list-toolbar">
       <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
         <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
@@ -35,7 +35,7 @@ else
       </label>
     </div>
     <ul id="import-list" class="list mb-4">
-      @foreach (var post in Posts)
+      @foreach (var post in Import.Posts)
       {
         <li class="list-item">
           <label class="list-check form-check" id="@post.Slug" data-bs-toggle="tooltip" title="@_localizer["select"]">
@@ -58,46 +58,46 @@ else
     </ul>
     <div class="alert @StatusMsgCss mb-4">@StatusMsg</div>
     <div class="form-item">
-      <button class="btn btn-blogifier px-5 me-3" type="button" @onclick="Import">@_localizer["import"]</button>
-      <button class="btn btn-default" type="button" @onclick="Load">@_localizer["cancel"]</button>
+      <button class="btn btn-blogifier px-5 me-3" type="button" @onclick="OnImport">@_localizer["import"]</button>
+      <button class="btn btn-default" type="button" @onclick="OnLoad">@_localizer["cancel"]</button>
     </div>
   </div>
 }
 
 @code {
   protected ImportRssRequest Model { get; set; } = default!;
-  protected List<Post>? Posts { get; set; }
+  protected ImportDto? Import { get; set; }
   protected string StatusMsg { get; set; } = default!;
   protected string StatusMsgCss { get; set; } = default!;
 
   protected override void OnInitialized()
   {
-    Load();
+    OnLoad();
   }
 
-  protected void Load()
+  protected void OnLoad()
   {
     Model = new ImportRssRequest { FeedUrl = "" };
-    Posts = null;
+    Import = null;
     StatusMsg = "";
   }
 
-  protected async Task Analysis()
+  protected async Task OnAnalysis()
   {
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/syndication/getitems?feedUrl={Model.FeedUrl}");
+    Import = await _http.GetFromJsonAsync<ImportDto>($"api/import/rss?feedUrl={Model.FeedUrl}");
   }
 
-  protected async Task Import()
+  protected async Task OnImport()
   {
     int successCnt = 0;
     int failedCnt = 0;
 
-    foreach (var post in Posts!)
+    foreach (var post in Import!.Posts!)
     {
       if (!post.Selected)
         continue;
 
-      var result = await _http.PostAsJsonAsync<Post>("api/syndication/import", post);
+      var result = await _http.PostAsJsonAsync<ImportPostDto>("api/import/write", post);
       if (result.IsSuccessStatusCode)
       {
         await _jsRuntime.InvokeAsync<string>("commonJsFunctions.replaceElement", post.Slug, true);
@@ -125,7 +125,7 @@ else
   public void CheckAll(object? checkValue)
   {
     bool isChecked = checkValue != null ? (bool)checkValue : false;
-    Posts!.ForEach(p => p.Selected = isChecked);
+    Import!.Posts.ForEach(p => p.Selected = isChecked);
     StateHasChanged();
   }
 }

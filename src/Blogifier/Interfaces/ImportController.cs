@@ -4,7 +4,6 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,14 +24,14 @@ public class ImportController : ControllerBase
 
   [Authorize]
   [HttpGet("rss")]
-  public List<Post> Rss([FromQuery] ImportRssRequest request)
+  public ImportDto Rss([FromQuery] ImportRssRequest request)
   {
     return _importProvider.Rss(request.FeedUrl);
   }
 
   [Authorize]
-  [HttpPost("import")]
-  public async Task<ActionResult<bool>> Import(Post post)
+  [HttpPost("write")]
+  public async Task<ActionResult<bool>> Write(Post post)
   {
     var author = await _dbContext.Authors.Where(a => a.Email == User.Identity!.Name).FirstAsync();
     var webRoot = Url.Content("~/");
