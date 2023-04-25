@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/author")]
 [ApiController]
 public class ApiAuthorController : ControllerBase
 {

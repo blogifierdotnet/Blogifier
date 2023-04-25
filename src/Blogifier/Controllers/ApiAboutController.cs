@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/about")]
 [ApiController]
 public class ApiAboutController : ControllerBase
 {

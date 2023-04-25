@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/post")]
 [ApiController]
 public class ApiPostController : ControllerBase
 {
