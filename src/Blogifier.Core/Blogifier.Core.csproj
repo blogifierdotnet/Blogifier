@@ -31,8 +31,8 @@
     <PackageReference Include="Markdig" Version="0.31.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+    </ItemGroup>
 
 </Project>
