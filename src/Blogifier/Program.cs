@@ -1,12 +1,15 @@
+using Blogifier.Core;
 using Blogifier.Core.Data;
 using Blogifier.Core.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -17,21 +20,29 @@ builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
-builder.Services.AddAuthentication(options =>
-  options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
-  .AddCookie();
+builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddCors(o => o.AddPolicy(corsString,
   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 builder.Services.AddBlogDatabase(builder.Configuration);
 builder.Services.AddBlogProviders();
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+  options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+  options.KnownNetworks.Clear();
+  options.KnownProxies.Clear();
+});
+builder.Services.AddResponseCaching();
+builder.Services.AddOutputCache(options =>
+{
+  options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-if (dbContext.Database.GetPendingMigrations().Any())
-  await dbContext.Database.MigrateAsync();
+if (dbContext.Database.GetPendingMigrations().Any()) await dbContext.Database.MigrateAsync();
 
 if (app.Environment.IsDevelopment())
 {
@@ -42,12 +53,15 @@ else
 {
   app.UseExceptionHandler("/Error");
 }
-
+app.UseSerilogRequestLogging();
+app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseCookiePolicy();
-app.UseRouting();
 app.UseCors(corsString);
+app.UseRouting();
+app.UseResponseCaching();
+app.UseOutputCache();
 app.UseAuthentication();
 app.UseAuthorization();
 var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
