@@ -8,15 +8,15 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/author")]
 [ApiController]
-public class ApiAuthorController : ControllerBase
+public class AuthorController : ControllerBase
 {
   private readonly IAuthorProvider _authorProvider;
 
-  public ApiAuthorController(IAuthorProvider authorProvider)
+  public AuthorController(IAuthorProvider authorProvider)
   {
     _authorProvider = authorProvider;
   }

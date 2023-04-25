@@ -8,16 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/import")]
 [ApiController]
-public class ApiImportController : ControllerBase
+public class ImportController : ControllerBase
 {
   private readonly AppDbContext _dbContext;
   private readonly IImportProvider _importProvider;
 
-  public ApiImportController(AppDbContext dbContext, IImportProvider importProvider)
+  public ImportController(AppDbContext dbContext, IImportProvider importProvider)
   {
     _dbContext = dbContext;
     _importProvider = importProvider;
@@ -25,7 +25,7 @@ public class ApiImportController : ControllerBase
 
   [Authorize]
   [HttpGet("rss")]
-  public List<Post> Rss([FromQuery] ImportRssModel request)
+  public List<Post> Rss([FromQuery] ImportRssRequest request)
   {
     return _importProvider.Rss(request.FeedUrl);
   }

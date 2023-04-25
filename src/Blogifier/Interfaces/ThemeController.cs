@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/theme")]
 [ApiController]
-public class ApiThemeController : ControllerBase
+public class ThemeController : ControllerBase
 {
   private readonly IStorageProvider _storageProvider;
 
-  public ApiThemeController(IStorageProvider storageProvider)
+  public ThemeController(IStorageProvider storageProvider)
   {
     _storageProvider = storageProvider;
   }

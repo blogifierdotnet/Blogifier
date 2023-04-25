@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/analytics")]
 [ApiController]
-public class ApiAnalyticsController : ControllerBase
+public class AnalyticsController : ControllerBase
 {
   private readonly IAnalyticsProvider _analyticsProvider;
 
-  public ApiAnalyticsController(IAnalyticsProvider analyticsProvider)
+  public AnalyticsController(IAnalyticsProvider analyticsProvider)
   {
     _analyticsProvider = analyticsProvider;
   }

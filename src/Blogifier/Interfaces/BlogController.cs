@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/blog")]
 [ApiController]
-public class ApiBlogController : ControllerBase
+public class BlogController : ControllerBase
 {
   private readonly IBlogProvider _blogProvider;
 
-  public ApiBlogController(IBlogProvider blogProvider)
+  public BlogController(IBlogProvider blogProvider)
   {
     _blogProvider = blogProvider;
   }

@@ -7,18 +7,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/storage")]
 [ApiController]
-public class ApiStorageController : ControllerBase
+public class StorageController : ControllerBase
 {
   private readonly IStorageProvider _storageProvider;
   private readonly IAuthorProvider _authorProvider;
   private readonly IBlogProvider _blogProvider;
   private readonly IPostProvider _postProvider;
 
-  public ApiStorageController(
+  public StorageController(
     IStorageProvider storageProvider,
     IAuthorProvider authorProvider,
     IBlogProvider blogProvider,

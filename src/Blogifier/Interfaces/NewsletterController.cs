@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/newsletter")]
 [ApiController]
-public class ApiNewsletterController : ControllerBase
+public class NewsletterController : ControllerBase
 {
   protected readonly INewsletterProvider _newsletterProvider;
 
-  public ApiNewsletterController(INewsletterProvider newsletterProvider)
+  public NewsletterController(INewsletterProvider newsletterProvider)
   {
     _newsletterProvider = newsletterProvider;
   }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared;
 
-public class ImportRssModel
+public class ImportRssRequest
 {
   [Required]
   [Url]

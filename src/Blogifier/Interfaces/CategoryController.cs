@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers;
+namespace Blogifier.Interfaces;
 
 [Route("api/category")]
 [ApiController]
-public class ApiCategoryController : ControllerBase
+public class CategoryController : ControllerBase
 {
   private readonly ICategoryProvider _categoryProvider;
 
-  public ApiCategoryController(ICategoryProvider categoryProvider)
+  public CategoryController(ICategoryProvider categoryProvider)
   {
     _categoryProvider = categoryProvider;
   }

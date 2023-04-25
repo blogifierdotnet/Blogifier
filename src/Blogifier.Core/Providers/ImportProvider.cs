@@ -142,9 +142,9 @@ public class ImportProvider : IImportProvider
     {
       var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-      var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
-      if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
-        post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
+      //var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
+      //if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
+      //  post.Cover = mdTag.Substring(mdTag.IndexOf("(") + 2).Replace(")", "");
     }
 
     var matches = Regex.Matches(post.Content, rgx, RegexOptions.IgnoreCase | RegexOptions.Singleline);
@@ -163,22 +163,22 @@ public class ImportProvider : IImportProvider
         uri = ValidateUrl(uri);
         var mdTag = "";
 
-        if (uri.Contains("data:image"))
-          mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
-        else
-        {
-          try
-          {
-            mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
-          }
-          catch
-          {
-            if (uri.StartsWith("https:"))
-            {
-              mdTag = await _storageProvider.UploadFromWeb(new Uri(uri.Replace("https:", "http:")), _webRoot, path);
-            }
-          }
-        }
+        //if (uri.Contains("data:image"))
+        //  mdTag = await _storageProvider.UploadBase64Image(uri, _webRoot, path);
+        //else
+        //{
+        //  try
+        //  {
+        //    mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+        //  }
+        //  catch
+        //  {
+        //    if (uri.StartsWith("https:"))
+        //    {
+        //      mdTag = await _storageProvider.UploadFromWeb(new Uri(uri.Replace("https:", "http:")), _webRoot, path);
+        //    }
+        //  }
+        //}
         post.Content = post.Content.ReplaceIgnoreCase(tag, mdTag);
       }
       catch (Exception ex)
@@ -212,7 +212,7 @@ public class ImportProvider : IImportProvider
               var uri = ValidateUrl(src);
               var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
 
-              mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
+              //mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 
               if (mdTag.StartsWith("!"))
                 mdTag = mdTag.Substring(1);
@@ -252,18 +252,18 @@ public class ImportProvider : IImportProvider
   {
     var url = link;
 
-    var baseUrl = _baseUrl.ToString();
-    if (baseUrl.EndsWith("/"))
-      baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+    //var baseUrl = _baseUrl.ToString();
+    //if (baseUrl.EndsWith("/"))
+    //  baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
 
-    if (url.StartsWith("~"))
-      url = url.Replace("~", baseUrl);
+    //if (url.StartsWith("~"))
+    //  url = url.Replace("~", baseUrl);
 
-    if (url.StartsWith("/"))
-      url = $"{baseUrl}{url}";
+    //if (url.StartsWith("/"))
+    //  url = $"{baseUrl}{url}";
 
-    if (!(url.StartsWith("http:") || url.StartsWith("https:")))
-      url = $"{baseUrl}/{url}";
+    //if (!(url.StartsWith("http:") || url.StartsWith("https:")))
+    //  url = $"{baseUrl}/{url}";
 
     return url;
   }
