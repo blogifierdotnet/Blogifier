@@ -27,6 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Tests", "tests\Bl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA-AC43-4A35-88D9-8D63D26884B8}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 	EndProjectSection
