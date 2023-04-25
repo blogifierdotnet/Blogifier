@@ -5,53 +5,52 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Providers
+namespace Blogifier.Core.Providers;
+
+public interface IFeedProvider
 {
-  public interface IFeedProvider
+  Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
+}
+
+public class FeedProvider : IFeedProvider
+{
+  protected readonly IPostProvider _postProvider;
+
+  public FeedProvider(IPostProvider postProvider)
   {
-    Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
+    _postProvider = postProvider;
   }
 
-  public class FeedProvider : IFeedProvider
+  public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
   {
-    protected readonly IPostProvider _postProvider;
+    var items = new List<AtomEntry>();
+    var posts = await _postProvider.GetList(new Pager(1), 0, "", "P");
 
-    public FeedProvider(IPostProvider postProvider)
+    foreach (var post in posts)
     {
-      _postProvider = postProvider;
-    }
-
-    public async Task<IEnumerable<AtomEntry>> GetEntries(string type, string host)
-    {
-      var items = new List<AtomEntry>();
-      var posts = await _postProvider.GetList(new Pager(1), 0, "", "P");
-
-      foreach (var post in posts)
+      var item = new AtomEntry
       {
-        var item = new AtomEntry
-        {
-          Title = post.Title,
-          Description = post.Content,
-          Id = $"{host}/posts/{post.Slug}",
-          Published = post.Published,
-          LastUpdated = post.Published,
-          ContentType = "html",
-        };
+        Title = post.Title,
+        Description = post.Content,
+        Id = $"{host}/posts/{post.Slug}",
+        Published = post.Published,
+        LastUpdated = post.Published,
+        ContentType = "html",
+      };
 
-        if (post.Categories != null && post.Categories.Count > 0)
+      if (post.Categories != null && post.Categories.Count > 0)
+      {
+        foreach (Category category in post.Categories)
         {
-          foreach (Category category in post.Categories)
-          {
-            item.AddCategory(new SyndicationCategory(category.Content));
-          }
+          item.AddCategory(new SyndicationCategory(category.Content));
         }
-
-        item.AddContributor(new SyndicationPerson(post.Author.Email, post.Author.DisplayName));
-        item.AddLink(new SyndicationLink(new Uri(item.Id)));
-        items.Add(item);
       }
 
-      return await Task.FromResult(items);
+      item.AddContributor(new SyndicationPerson(post.Author.Email, post.Author.DisplayName));
+      item.AddLink(new SyndicationLink(new Uri(item.Id)));
+      items.Add(item);
     }
+
+    return await Task.FromResult(items);
   }
 }

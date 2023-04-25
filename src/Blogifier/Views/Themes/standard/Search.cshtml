@@ -8,12 +8,10 @@
 }
 
 <main class="container search">
-
   <form action="" method="GET">
     <input type="text" placeholder="Search...">
   </form>
   <h1 class="search-title">Search Results</h1>
-
   @if (listModel.Posts.Count() > 0)
   {
     @foreach (var post in listModel.Posts)
@@ -29,5 +27,4 @@
       </div>
     }
   }
-
 </main>

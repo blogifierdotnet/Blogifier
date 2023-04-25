@@ -22,9 +22,7 @@ public class SitemapController : ControllerBase
   public async Task<IActionResult> Sitemap()
   {
     var sitemapNamespace = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9");
-
     var posts = await _postProvider.GetPosts(PublishedStatus.Published, PostType.Post);
-
     var doc = new XDocument(
         new XDeclaration("1.0", "utf-8", null),
         new XElement(sitemapNamespace + "urlset",
@@ -36,7 +34,6 @@ public class SitemapController : ControllerBase
             )
         )
     );
-
     return Content(doc.Declaration + Environment.NewLine + doc, "text/xml");
   }
 
