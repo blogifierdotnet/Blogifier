@@ -15,28 +15,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-
 builder.Services.AddHttpClient();
-
 builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
-
 builder.Services.AddAuthentication(options =>
   options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie();
-
 builder.Services.AddCors(o => o.AddPolicy(corsString,
   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-
 builder.Services.AddBlogDatabase(builder.Configuration);
-
 builder.Services.AddBlogProviders();
-
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 if (dbContext.Database.GetPendingMigrations().Any())

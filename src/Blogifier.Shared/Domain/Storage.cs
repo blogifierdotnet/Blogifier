@@ -16,7 +16,8 @@ public class Storage
   [StringLength(256)]
   public string Name { get; set; } = default!;
   [StringLength(2048)]
-  public string Url { get; set; } = default!;
+  public string Path { get; set; } = default!;
+  public long Length { get; set; }
   [StringLength(128)]
   public string ContentType { get; set; } = default!;
   public int StorageType { get; set; }
