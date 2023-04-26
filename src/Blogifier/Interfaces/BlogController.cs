@@ -11,9 +11,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class BlogController : ControllerBase
 {
-  private readonly IBlogProvider _blogProvider;
+  private readonly BlogProvider _blogProvider;
 
-  public BlogController(IBlogProvider blogProvider)
+  public BlogController(BlogProvider blogProvider)
   {
     _blogProvider = blogProvider;
   }

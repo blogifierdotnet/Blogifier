@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
   public static IServiceCollection AddBlogProviders(this IServiceCollection services)
   {
     services.AddScoped<IAuthorProvider, AuthorProvider>();
-    services.AddScoped<IBlogProvider, BlogProvider>();
+    services.AddScoped<BlogProvider>();
     services.AddScoped<IPostProvider, PostProvider>();
     services.AddScoped<IStorageProvider, StorageProvider>();
     services.AddScoped<IFeedProvider, FeedProvider>();

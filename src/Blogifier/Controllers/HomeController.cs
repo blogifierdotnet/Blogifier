@@ -16,7 +16,7 @@ namespace Blogifier.Controllers;
 
 public class HomeController : Controller
 {
-  protected readonly IBlogProvider _blogProvider;
+  protected readonly BlogProvider _blogProvider;
   protected readonly IPostProvider _postProvider;
   protected readonly IFeedProvider _feedProvider;
   protected readonly IAuthorProvider _authorProvider;
@@ -24,7 +24,7 @@ public class HomeController : Controller
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
   public HomeController(
-    IBlogProvider blogProvider,
+    BlogProvider blogProvider,
     IPostProvider postProvider,
     IFeedProvider feedProvider,
     IAuthorProvider authorProvider,

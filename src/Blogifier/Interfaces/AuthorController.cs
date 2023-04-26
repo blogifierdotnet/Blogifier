@@ -79,9 +79,7 @@ public class AuthorController : ControllerBase
     if (await _authorProvider.Verify(model) == false)
       return BadRequest();
 
-    var claimsIdentity = new ClaimsIdentity(new[] {
-      new Claim(ClaimTypes.Name, model.Email),
-    }, "serverAuth");
+    var claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, model.Email) }, "serverAuth");
     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
     await HttpContext.SignInAsync(claimsPrincipal);
