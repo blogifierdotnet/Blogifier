@@ -1,9 +1,11 @@
 using Blogifier;
 using Blogifier.Data;
 using Blogifier.Extensions;
+using Blogifier.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -20,22 +22,45 @@ builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
-builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddScoped<UserClaimsPrincipalFactory>();
+builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
+{
+  options.Password.RequireUppercase = false;
+  options.Password.RequireNonAlphanumeric = false;
+  options.ClaimsIdentity.UserIdClaimType = UserInfo.ClaimTypes.UserId;
+  options.ClaimsIdentity.UserNameClaimType = UserInfo.ClaimTypes.UserName;
+  options.ClaimsIdentity.SecurityStampClaimType = UserInfo.ClaimTypes.SecurityStamp;
+}).AddUserManager<UserManager>()
+  .AddRoleManager<RoleManager>()
+  .AddEntityFrameworkStores<AppDbContext>()
+  .AddDefaultTokenProviders()
+  .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
+
+builder.Services
+  .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+  .AddCookie();
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddCors(o => o.AddPolicy(corsString,
   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 builder.Services.AddBlogDatabase(builder.Configuration);
 builder.Services.AddBlogProviders();
+
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
   options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
   options.KnownNetworks.Clear();
   options.KnownProxies.Clear();
 });
+
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache(options =>
 {
   options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
 });
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

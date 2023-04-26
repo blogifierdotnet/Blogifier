@@ -1,9 +1,12 @@
+using Blogifier.Identity;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
 {
   protected readonly DbContextOptions<AppDbContext> _options;
 
@@ -24,6 +27,51 @@ public class AppDbContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder.Entity<UserInfo>(e =>
+    {
+      e.ToTable("User");
+      e.Property(p => p.CreatedAt).HasColumnOrder(0);
+      e.Property(p => p.PasswordHash).HasMaxLength(256);
+      e.Property(p => p.SecurityStamp).HasMaxLength(32);
+      e.Property(p => p.ConcurrencyStamp).HasMaxLength(64);
+      e.Property(p => p.PhoneNumber).HasMaxLength(32);
+    });
+
+    modelBuilder.Entity<IdentityUserClaim<int>>(e =>
+    {
+      e.ToTable("UserClaim");
+      e.Property(p => p.ClaimType).HasMaxLength(16);
+      e.Property(p => p.ClaimValue).HasMaxLength(256);
+    });
+    modelBuilder.Entity<IdentityUserLogin<int>>(e =>
+    {
+      e.ToTable("UserLogin");
+      e.Property(p => p.ProviderDisplayName).HasMaxLength(128);
+    });
+    modelBuilder.Entity<IdentityUserToken<int>>(e =>
+    {
+      e.ToTable("UserToken");
+      e.Property(p => p.Value).HasMaxLength(1024);
+    });
+
+    modelBuilder.Entity<RoleInfo>(e =>
+    {
+      e.ToTable("Role");
+      e.Property(p => p.ConcurrencyStamp).HasMaxLength(64);
+    });
+    modelBuilder.Entity<IdentityUserRole<int>>(e =>
+    {
+      e.ToTable("UserRole");
+    });
+    modelBuilder.Entity<IdentityRoleClaim<int>>(e =>
+    {
+      e.ToTable("RoleClaim");
+      e.Property(p => p.ClaimType).HasMaxLength(16);
+      e.Property(p => p.ClaimValue).HasMaxLength(256);
+    });
+
     modelBuilder.Entity<PostCategory>()
         .HasKey(t => new { t.PostId, t.CategoryId });
 
