@@ -4,9 +4,9 @@
 @inject IStringLocalizer<Resource> _localizer
 @{
   Layout = "layouts/_main.cshtml";
-  PostModel postModel = (PostModel)Model;
+  var postModel = (PostModel)Model;
   var post = postModel.Post;
-  string cover = postModel.Post.Cover;
+  var cover = postModel.Post.Cover;
   var catUrl = Url.Content("~/categories");
 }
 

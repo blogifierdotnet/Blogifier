@@ -1,6 +1,6 @@
 @using Blogifier.Shared
 @{
-  PostModel postModel = (PostModel)Model;
+  var postModel = (PostModel)Model;
   var author = postModel.Post.Author;
 }
 <section class="post-author d-md-flex align-items-md-center text-center text-md-start">
