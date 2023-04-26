@@ -79,8 +79,9 @@ public class AuthorController : ControllerBase
     if (await _authorProvider.Verify(model) == false)
       return BadRequest();
 
-    var claim = new Claim(ClaimTypes.Name, model.Email);
-    var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
+    var claimsIdentity = new ClaimsIdentity(new[] {
+      new Claim(ClaimTypes.Name, model.Email),
+    }, "serverAuth");
     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
     await HttpContext.SignInAsync(claimsPrincipal);
@@ -91,7 +92,7 @@ public class AuthorController : ControllerBase
   public async Task<ActionResult<bool>> LogOutUser()
   {
     await HttpContext.SignOutAsync();
-    return await Task.FromResult(true);
+    return true;
   }
 
   [Authorize]
