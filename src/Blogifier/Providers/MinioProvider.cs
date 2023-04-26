@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Providers;
+namespace Blogifier.Providers;
 
 public interface IMinioProvider
 {

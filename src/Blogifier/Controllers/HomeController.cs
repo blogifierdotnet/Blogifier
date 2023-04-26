@@ -1,5 +1,5 @@
-using Blogifier.Core.Extensions;
-using Blogifier.Core.Providers;
+using Blogifier.Extensions;
+using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;

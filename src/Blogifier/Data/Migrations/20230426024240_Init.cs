@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Blogifier.Core.Data.Migrations
+namespace Blogifier.Data.Migrations
 {
   /// <inheritdoc />
   public partial class Init : Migration

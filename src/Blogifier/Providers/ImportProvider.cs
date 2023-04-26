@@ -1,8 +1,7 @@
-using Blogifier.Core.Data;
-using Blogifier.Core.Extensions;
+using Blogifier.Data;
+using Blogifier.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Blogifier.Core.Providers;
+namespace Blogifier.Providers;
 
 public interface IImportProvider
 {

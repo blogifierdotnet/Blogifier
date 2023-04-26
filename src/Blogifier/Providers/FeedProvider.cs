@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Providers;
+namespace Blogifier.Providers;
 
 public interface IFeedProvider
 {

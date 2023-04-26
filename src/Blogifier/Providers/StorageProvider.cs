@@ -1,5 +1,5 @@
-using Blogifier.Core.Data;
-using Blogifier.Core.Extensions;
+using Blogifier.Data;
+using Blogifier.Extensions;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Providers;
+namespace Blogifier.Providers;
 
 public interface IStorageProvider
 {

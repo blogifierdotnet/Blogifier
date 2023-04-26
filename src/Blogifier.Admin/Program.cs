@@ -16,7 +16,7 @@ builder.Services.AddAuthorizationCore();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();
 
 builder.Services.AddToaster(config =>
 {

@@ -1,4 +1,4 @@
-namespace Blogifier.Core;
+namespace Blogifier;
 
 public class BlogifierConstant
 {

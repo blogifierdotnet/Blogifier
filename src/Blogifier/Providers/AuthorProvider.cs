@@ -1,14 +1,15 @@
-using Blogifier.Core.Data;
-using Blogifier.Core.Extensions;
+using Blogifier.Data;
+using Blogifier.Extensions;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blogifier.Core.Providers;
+namespace Blogifier.Providers;
 
 public interface IAuthorProvider
 {
@@ -24,13 +25,15 @@ public interface IAuthorProvider
 
 public class AuthorProvider : IAuthorProvider
 {
+  private readonly ILogger _logger;
   private readonly AppDbContext _db;
-  private static string _salt;
+  private readonly string _salt;
 
-  public AuthorProvider(AppDbContext db, IConfiguration configuration)
+  public AuthorProvider(ILogger<AuthorProvider> logger, AppDbContext db, IConfiguration configuration)
   {
+    _logger = logger;
     _db = db;
-    _salt = configuration.GetSection("Blogifier").GetValue<string>("Salt");
+    _salt = configuration.GetSection("Blogifier").GetValue<string>("Salt")!;
   }
 
   public async Task<List<Author>> GetAuthors()
@@ -40,29 +43,29 @@ public class AuthorProvider : IAuthorProvider
 
   public async Task<Author> FindByEmail(string email)
   {
-    return await Task.FromResult(_db.Authors.Where(a => a.Email == email).FirstOrDefault());
+    return await _db.Authors.Where(a => a.Email == email).FirstAsync();
   }
 
   public async Task<bool> Verify(LoginModel model)
   {
-    Serilog.Log.Warning($"Verifying password for {model.Email}");
+    _logger.LogWarning("Verifying password for {model.Email}", model.Email);
 
-    Author existing = await Task.FromResult(_db.Authors.Where(a => a.Email == model.Email).FirstOrDefault());
+    var existing = await _db.Authors.Where(a => a.Email == model.Email).FirstOrDefaultAsync();
 
     if (existing == null)
     {
-      Serilog.Log.Warning($"User with email {model.Email} not found");
+      _logger.LogWarning("User with email {model.Email} not found", model.Email);
       return false;
     }
 
     if (existing.Password == model.Password.Hash(_salt))
     {
-      Serilog.Log.Warning($"Successful login for {model.Email}");
+      _logger.LogWarning("Successful login for {model.Email}", model.Email);
       return true;
     }
     else
     {
-      Serilog.Log.Warning($"Password does not match");
+      _logger.LogWarning($"Password does not match");
       return false;
     }
   }
@@ -99,8 +102,7 @@ public class AuthorProvider : IAuthorProvider
     }
 
     blog = await _db.Blogs.Include(b => b.Authors).FirstOrDefaultAsync();
-    if (blog == null)
-      return false;
+    if (blog == null) return false;
 
     author = new Author
     {
@@ -111,9 +113,7 @@ public class AuthorProvider : IAuthorProvider
       Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
       Bio = "The short author bio.",
     };
-
-    blog.Authors.Add(author);
-
+    blog.Authors!.Add(author);
     return await _db.SaveChangesAsync() > 0;
   }
 
@@ -131,8 +131,7 @@ public class AuthorProvider : IAuthorProvider
     author.Password = author.Password.Hash(_salt);
     author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
 
-    blog.Authors.Add(author);
-
+    blog.Authors!.Add(author);
     return await _db.SaveChangesAsync() > 0;
   }
 

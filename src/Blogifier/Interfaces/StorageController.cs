@@ -1,11 +1,11 @@
-using Blogifier.Core.Providers;
+using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 namespace Blogifier.Interfaces;
 
