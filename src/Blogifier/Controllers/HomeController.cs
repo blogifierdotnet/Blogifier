@@ -1,5 +1,5 @@
-using Blogifier.Core.Extensions;
-using Blogifier.Core.Providers;
+using Blogifier.Extensions;
+using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -23,8 +23,13 @@ public class HomeController : Controller
   protected readonly IThemeProvider _themeProvider;
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
-  public HomeController(IBlogProvider blogProvider, IPostProvider postProvider, IFeedProvider feedProvider,
-    IAuthorProvider authorProvider, IThemeProvider themeProvider, ICompositeViewEngine compositeViewEngine)
+  public HomeController(
+    IBlogProvider blogProvider,
+    IPostProvider postProvider,
+    IFeedProvider feedProvider,
+    IAuthorProvider authorProvider,
+    IThemeProvider themeProvider,
+    ICompositeViewEngine compositeViewEngine)
   {
     _blogProvider = blogProvider;
     _postProvider = postProvider;
@@ -36,42 +41,26 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-
     var model = await getBlogPosts(pager: page);
-
     //If no blogs are setup redirect to first time registration
-    if (model == null)
-    {
-      return Redirect("~/admin/register");
-    }
-
-    return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
+    if (model == null) return Redirect("~/admin/register");
+    return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
   }
 
   [HttpGet("/{slug}")]
   public async Task<IActionResult> Index(string slug)
   {
-    if (!string.IsNullOrEmpty(slug))
-    {
-      return await getSingleBlogPost(slug);
-    }
+    if (!string.IsNullOrEmpty(slug)) return await getSingleBlogPost(slug);
     return Redirect("~/");
-  }
-
-  [HttpGet("/admin")]
-  public async Task<IActionResult> Admin()
-  {
-    return await Task.FromResult(File("~/index.html", "text/html"));
   }
 
   [HttpPost]
   public async Task<IActionResult> Search(string term, int page = 1)
   {
-
     if (!string.IsNullOrEmpty(term))
     {
       var model = await getBlogPosts(term, page);
-      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Search.cshtml";
+      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/search.cshtml";
       if (IsViewExists(viewPath))
         return View(viewPath, model);
       else
@@ -87,14 +76,14 @@ public class HomeController : Controller
   public async Task<IActionResult> Categories(string category, int page = 1)
   {
     var model = await getBlogPosts("", page, category);
-    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Category.cshtml";
+    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/category.cshtml";
 
     ViewBag.Category = category;
 
     if (IsViewExists(viewPath))
       return View(viewPath, model);
 
-    return View($"~/Views/Themes/{model.Blog.Theme}/Index.cshtml", model);
+    return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
   }
 
   [HttpGet("posts/{slug}")]
@@ -108,16 +97,15 @@ public class HomeController : Controller
   {
     try
     {
-      PostModel model = new PostModel();
+      var model = new PostModel();
       model.Blog = await _blogProvider.GetBlogItem();
       string viewPath = $"~/Views/Themes/{model.Blog.Theme}/404.cshtml";
-      if (IsViewExists(viewPath))
-        return View(viewPath, model);
-      return View($"~/Views/Error.cshtml");
+      if (IsViewExists(viewPath)) return View(viewPath, model);
+      return View($"~/Views/error.cshtml");
     }
     catch
     {
-      return View($"~/Views/Error.cshtml");
+      return View($"~/Views/error.cshtml");
     }
   }
 
@@ -205,12 +193,12 @@ public class HomeController : Controller
 
       if (model.Post.PostType == PostType.Page)
       {
-        string viewPath = $"~/Views/Themes/{model.Blog.Theme}/Page.cshtml";
+        string viewPath = $"~/Views/Themes/{model.Blog.Theme}/page.cshtml";
         if (IsViewExists(viewPath))
           return View(viewPath, model);
       }
 
-      return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
+      return View($"~/Views/Themes/{model.Blog.Theme}/post.cshtml", model);
     }
     catch
     {

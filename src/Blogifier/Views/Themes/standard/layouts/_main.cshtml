@@ -12,7 +12,7 @@
 
   if (Model.ToString().EndsWith("PostModel"))
   {
-    PostModel postModel = (PostModel)Model;
+    var postModel = (PostModel)Model;
     pageTitle = postModel.Post.Title + " | " + siteTitle;
     pageDesc = postModel.Post.Description.StripHtml();
     pageCanonical = postModel.Post.PostType == PostType.Post ? absoluteUrl + "/posts/" + postModel.Post.Slug : absoluteUrl +

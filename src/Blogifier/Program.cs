@@ -1,6 +1,6 @@
-using Blogifier.Core;
-using Blogifier.Core.Data;
-using Blogifier.Core.Extensions;
+using Blogifier;
+using Blogifier.Data;
+using Blogifier.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;

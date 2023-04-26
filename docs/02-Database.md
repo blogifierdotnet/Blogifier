@@ -11,8 +11,8 @@
 ```
 Valid providers: `SQLite`, `SqlServer`, `Postgres`, `MySql` (you'll need to supply valid connection string)
 
-2. Remove `Blogifier.Core/Data/Migrations` folder with existing migrations
-3. In the Visual Studio, open `Package Manager Console`, set `Blogifier.Core`
+2. Remove `Blogifier/Data/Migrations` folder with existing migrations
+3. In the Visual Studio, open `Package Manager Console`, set `Blogifier`
 as Default project and run these commands:
 
 ```
