@@ -2,6 +2,7 @@ using Blogifier;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Identity;
+using Blogifier.Shared.Resources;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -19,6 +20,9 @@ var corsString = "BlogifierPolicy";
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
+
+builder.Services.Configure<BlogifierOptions>(builder.Configuration.GetSection(BlogifierOptions.OptionsName));
+
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 builder.Services.AddScoped<UserClaimsPrincipalFactory>();
@@ -64,10 +68,11 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache(options =>
 {
-  options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
+  options.AddPolicy(BlogifierOptions.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+  .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Resource)));
 builder.Services.AddRazorPages().AddViewLocalization();
 
 var app = builder.Build();

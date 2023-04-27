@@ -1,9 +1,8 @@
 using Blogifier.Identity;
-using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Data;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -12,13 +11,20 @@ namespace Blogifier.Controllers;
 public class AccountController : Controller
 {
   private readonly ILogger _logger;
+  private readonly BlogifierOptions _options;
+  private readonly UserManager _userManager;
   private readonly SignInManager _signInManager;
-  private readonly BlogProvider _blogProvider;
-  public AccountController(ILogger<AccountController> logger, SignInManager signInManager, BlogProvider blogProvider)
+
+  public AccountController(
+    ILogger<AccountController> logger,
+    IOptions<BlogifierOptions> options,
+    UserManager userManager,
+    SignInManager signInManager)
   {
     _logger = logger;
+    _options = options.Value;
+    _userManager = userManager;
     _signInManager = signInManager;
-    _blogProvider = blogProvider;
   }
 
   [HttpGet]
@@ -26,38 +32,49 @@ public class AccountController : Controller
     => RedirectToAction("login", routeValues: parameter);
 
   [HttpGet("login")]
-  public async Task<IActionResult> Login([FromQuery] AccountModel parameter)
+  public IActionResult Login([FromQuery] AccountModel parameter)
   {
-    var blog = await _blogProvider.FirstOrDefaultAsync();
-    if (blog == null) return RedirectToAction("register", routeValues: parameter);
-    var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri, Theme = blog.Theme };
-    return View($"~/Views/Themes/{blog.Theme}/login.cshtml", model);
+    var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri };
+    return View($"~/Views/Themes/{_options.Theme}/login.cshtml", model);
   }
 
   [HttpPost("login")]
   public async Task<IActionResult> LoginForm([FromForm] AccountLoginModel model)
   {
-    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, lockoutOnFailure: true);
-    if (result.Succeeded)
+    if (ModelState.IsValid)
     {
-      _logger.LogInformation("User logged in.");
-      model.RedirectUri ??= "/";
-      return LocalRedirect(model.RedirectUri);
+      var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, lockoutOnFailure: true);
+      if (result.Succeeded)
+      {
+        _logger.LogInformation("User logged in.");
+        model.RedirectUri ??= "/";
+        return LocalRedirect(model.RedirectUri);
+      }
+      model.ShowError = true;
     }
-    model.ShowError = true;
-    return View($"~/Views/Themes/{model.Theme}/login.cshtml", model);
+    return View($"~/Views/Themes/{_options.Theme}/login.cshtml", model);
   }
 
   [HttpGet("register")]
-  public async Task<IActionResult> Register([FromQuery] AccountModel parameter)
+  public IActionResult Register([FromQuery] AccountModel parameter)
   {
-    var blog = await _blogProvider.FirstOrDefaultAsync();
-    var theme = blog != null ? blog.Theme : "standard";
-    var model = new AccountRegisterModel
+    var model = new AccountRegisterModel { RedirectUri = parameter.RedirectUri, };
+    return View($"~/Views/Themes/{_options.Theme}/register.cshtml", model);
+  }
+
+  [HttpPost("register")]
+  public async Task<IActionResult> RegisterForm([FromForm] AccountRegisterModel model)
+  {
+    if (ModelState.IsValid)
     {
-      RedirectUri = parameter.RedirectUri,
-      Theme = theme,
-    };
-    return View($"~/Views/Themes/{theme}/register.cshtml", model);
+      var user = new UserInfo { UserName = model.UserName, Email = model.Email };
+      var result = await _userManager.CreateAsync(user, model.Password);
+      if (result.Succeeded)
+      {
+        return RedirectToAction("login", routeValues: new AccountModel { RedirectUri = model.RedirectUri });
+      }
+      model.ShowError = true;
+    }
+    return View($"~/Views/Themes/{_options.Theme}/register.cshtml", model);
   }
 }

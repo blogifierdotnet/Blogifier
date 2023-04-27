@@ -16,9 +16,9 @@ public class StorageController : ControllerBase
     _storageProvider = storageProvider;
   }
 
-  [HttpGet($"{BlogifierConstant.StorageObjectUrl}/{{**storageUrl}}")]
+  [HttpGet($"{BlogifierOptions.StorageObjectUrl}/{{**storageUrl}}")]
   [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
-  [OutputCache(PolicyName = BlogifierConstant.OutputCacheExpire1)]
+  [OutputCache(PolicyName = BlogifierOptions.OutputCacheExpire1)]
   public async Task<IActionResult> ObjectAsync([FromRoute] string storageUrl)
   {
     var memoryStream = new MemoryStream();
