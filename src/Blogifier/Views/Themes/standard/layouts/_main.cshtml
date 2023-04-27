@@ -1,5 +1,4 @@
 @{
-
   var request = Url.ActionContext.HttpContext.Request;
   var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
   var siteTitle = Model.Blog.Title;
@@ -9,12 +8,11 @@
   var pageDesc = siteDesc;
   var pageCanonical = absoluteUrl;
 
-  if (Model.ToString().EndsWith("PostModel"))
+  if (Model is PostModel)
   {
-    var postModel = (PostModel)Model;
-    pageTitle = postModel.Post.Title + " | " + siteTitle;
-    pageDesc = postModel.Post.Description.StripHtml();
-    pageCanonical = postModel.Post.PostType == PostType.Post ? absoluteUrl + "/posts/" + postModel.Post.Slug : absoluteUrl + "/" + postModel.Post.Slug;
+    pageTitle = Model.Post.Title + " | " + siteTitle;
+    pageDesc = Model.Post.Description.StripHtml();
+    pageCanonical = Model.Post.PostType == PostType.Post ? absoluteUrl + "/posts/" + Model.Post.Slug : absoluteUrl + "/" + Model.Post.Slug;
   }
 }
 
