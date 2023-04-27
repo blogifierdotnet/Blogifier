@@ -31,13 +31,18 @@ builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
   options.ClaimsIdentity.SecurityStampClaimType = UserInfo.ClaimTypes.SecurityStamp;
 }).AddUserManager<UserManager>()
   .AddRoleManager<RoleManager>()
+  .AddSignInManager<SignInManager>()
   .AddEntityFrameworkStores<AppDbContext>()
   .AddDefaultTokenProviders()
   .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
 
 builder.Services
   .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
-  .AddCookie();
+  .AddCookie(options =>
+  {
+    options.AccessDeniedPath = "/account/denied";
+    options.LoginPath = "/account/login";
+  });
 
 builder.Services.AddAuthorization();
 
@@ -53,6 +58,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
   options.KnownNetworks.Clear();
   options.KnownProxies.Clear();
 });
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache(options =>
