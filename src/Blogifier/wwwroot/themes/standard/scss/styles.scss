@@ -11,9 +11,6 @@
 @import "helpers/reset";
 @import "helpers/base";
 
-@import "include/buttons";
-@import "include/forms";
-
 // layouts
 @import "layout/header";
 @import "layout/nav";
@@ -38,9 +35,3 @@
 
 // pages
 @import "page/home";
-@import "page/account";
-
-
-.post-detail {
-  // background-color: #f1f1f1;
-}
