@@ -1,4 +1,5 @@
 using Blogifier.Data;
+using Blogifier.Options;
 using Blogifier.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +45,7 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IImportProvider, ImportProvider>();
     services.AddScoped<IAboutProvider, AboutProvider>();
     services.AddSingleton<IMinioProvider, MinioProvider>();
-
+    services.AddScoped<OptionManager>();
     return services;
   }
 }

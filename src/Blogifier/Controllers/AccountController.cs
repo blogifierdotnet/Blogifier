@@ -1,4 +1,5 @@
 using Blogifier.Identity;
+using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,20 +12,23 @@ namespace Blogifier.Controllers;
 public class AccountController : Controller
 {
   private readonly ILogger _logger;
-  private readonly BlogifierOptions _options;
+  private readonly BlogifierConstant _options;
   private readonly UserManager _userManager;
   private readonly SignInManager _signInManager;
+  private readonly OptionManager _optionManager;
 
   public AccountController(
     ILogger<AccountController> logger,
-    IOptions<BlogifierOptions> options,
+    IOptions<BlogifierConstant> options,
     UserManager userManager,
-    SignInManager signInManager)
+    SignInManager signInManager,
+    OptionManager optionManager)
   {
     _logger = logger;
     _options = options.Value;
     _userManager = userManager;
     _signInManager = signInManager;
+    _optionManager = optionManager;
   }
 
   [HttpGet]
@@ -32,10 +36,11 @@ public class AccountController : Controller
     => RedirectToAction("login", routeValues: parameter);
 
   [HttpGet("login")]
-  public IActionResult Login([FromQuery] AccountModel parameter)
+  public async Task<IActionResult> Login([FromQuery] AccountModel parameter)
   {
     var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri };
-    return View($"~/Views/Themes/{_options.Theme}/login.cshtml", model);
+    var theme = await _optionManager.GetThemeValueAsync();
+    return View($"~/Views/Themes/{theme}/login.cshtml", model);
   }
 
   [HttpPost("login")]
@@ -52,14 +57,16 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    return View($"~/Views/Themes/{_options.Theme}/login.cshtml", model);
+    var theme = await _optionManager.GetThemeValueAsync();
+    return View($"~/Views/Themes/{theme}/login.cshtml", model);
   }
 
   [HttpGet("register")]
-  public IActionResult Register([FromQuery] AccountModel parameter)
+  public async Task<IActionResult> Register([FromQuery] AccountModel parameter)
   {
-    var model = new AccountRegisterModel { RedirectUri = parameter.RedirectUri, };
-    return View($"~/Views/Themes/{_options.Theme}/register.cshtml", model);
+    var model = new AccountRegisterModel { RedirectUri = parameter.RedirectUri };
+    var theme = await _optionManager.GetThemeValueAsync();
+    return View($"~/Views/Themes/{theme}/register.cshtml", model);
   }
 
   [HttpPost("register")]
@@ -75,6 +82,7 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    return View($"~/Views/Themes/{_options.Theme}/register.cshtml", model);
+    var theme = await _optionManager.GetThemeValueAsync();
+    return View($"~/Views/Themes/{theme}/register.cshtml", model);
   }
 }

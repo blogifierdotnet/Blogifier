@@ -21,7 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 
-builder.Services.Configure<BlogifierOptions>(builder.Configuration.GetSection(BlogifierOptions.OptionsName));
+builder.Services.Configure<BlogifierConstant>(builder.Configuration.GetSection(BlogifierConstant.OptionsName));
+builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
@@ -68,7 +69,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache(options =>
 {
-  options.AddPolicy(BlogifierOptions.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
+  options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
 });
 
 builder.Services.AddControllersWithViews()

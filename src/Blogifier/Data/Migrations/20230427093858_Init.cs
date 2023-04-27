@@ -68,6 +68,27 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
+          name: "Options",
+          columns: table => new
+          {
+            Id = table.Column<int>(type: "int", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
+            Key = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Value = table.Column<string>(type: "longtext", nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4")
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_Options", x => x.Id);
+          })
+          .Annotation("MySql:CharSet", "utf8mb4");
+
+      migrationBuilder.CreateTable(
           name: "Role",
           columns: table => new
           {
@@ -474,6 +495,12 @@ namespace Blogifier.Data.Migrations
           column: "PostId");
 
       migrationBuilder.CreateIndex(
+          name: "IX_Options_Key",
+          table: "Options",
+          column: "Key",
+          unique: true);
+
+      migrationBuilder.CreateIndex(
           name: "IX_PostCategories_CategoryId",
           table: "PostCategories",
           column: "CategoryId");
@@ -537,6 +564,9 @@ namespace Blogifier.Data.Migrations
 
       migrationBuilder.DropTable(
           name: "Newsletters");
+
+      migrationBuilder.DropTable(
+          name: "Options");
 
       migrationBuilder.DropTable(
           name: "PostCategories");

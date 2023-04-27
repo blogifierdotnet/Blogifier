@@ -121,6 +121,37 @@ namespace Blogifier.Data.Migrations
             b.ToTable("User", (string)null);
           });
 
+      modelBuilder.Entity("Blogifier.Options.OptionInfo", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
+
+            b.Property<DateTime>("CreatedAt")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("datetime(6)");
+
+            b.Property<string>("Key")
+                      .IsRequired()
+                      .HasMaxLength(256)
+                      .HasColumnType("varchar(256)");
+
+            b.Property<DateTime>("UpdatedAt")
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
+
+            b.Property<string>("Value")
+                      .IsRequired()
+                      .HasColumnType("longtext");
+
+            b.HasKey("Id");
+
+            b.HasIndex("Key")
+                      .IsUnique();
+
+            b.ToTable("Options", (string)null);
+          });
+
       modelBuilder.Entity("Blogifier.Shared.Author", b =>
           {
             b.Property<int>("Id")

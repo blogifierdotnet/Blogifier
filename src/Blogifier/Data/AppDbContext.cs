@@ -1,4 +1,5 @@
 using Blogifier.Identity;
+using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
     _options = options;
   }
 
+  public DbSet<OptionInfo> Options { get; set; }
   public DbSet<Author> Authors { get; set; }
   public DbSet<Storage> Storages { get; set; }
   public DbSet<Blog> Blogs { get; set; }
@@ -84,5 +86,12 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
         .HasOne(pt => pt.Category)
         .WithMany(t => t.PostCategories)
         .HasForeignKey(pt => pt.CategoryId);
+
+
+    modelBuilder.Entity<OptionInfo>(e =>
+    {
+      e.ToTable("Options");
+      e.HasIndex(b => b.Key).IsUnique();
+    });
   }
 }

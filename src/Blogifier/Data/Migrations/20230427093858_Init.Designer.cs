@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Data.Migrations
 {
   [DbContext(typeof(AppDbContext))]
-  [Migration("20230427071249_Init")]
+  [Migration("20230427093858_Init")]
   partial class Init
   {
     /// <inheritdoc />
@@ -122,6 +122,37 @@ namespace Blogifier.Data.Migrations
                       .HasDatabaseName("UserNameIndex");
 
             b.ToTable("User", (string)null);
+          });
+
+      modelBuilder.Entity("Blogifier.Options.OptionInfo", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
+
+            b.Property<DateTime>("CreatedAt")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("datetime(6)");
+
+            b.Property<string>("Key")
+                      .IsRequired()
+                      .HasMaxLength(256)
+                      .HasColumnType("varchar(256)");
+
+            b.Property<DateTime>("UpdatedAt")
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
+
+            b.Property<string>("Value")
+                      .IsRequired()
+                      .HasColumnType("longtext");
+
+            b.HasKey("Id");
+
+            b.HasIndex("Key")
+                      .IsUnique();
+
+            b.ToTable("Options", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Shared.Author", b =>
