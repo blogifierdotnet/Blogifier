@@ -1,9 +1,9 @@
+@model ListModel
 @{
-  var _model = (ListModel)Model;
-  var _featured = _model.Posts.Where(p => p.Featured).Take(3).ToList();
+  var _featured = Model.Posts.Where(p => p.Featured).Take(3).ToList();
 }
 
-@if (_featured != null)
+@if (_featured != null && _featured.Count > 0)
 {
   <div id="carouselFeatured" class="featured carousel slide carousel-dark" data-bs-ride="carousel" aria-label="Slideshow">
     <div class="carousel-inner">

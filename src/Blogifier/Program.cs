@@ -17,11 +17,10 @@ using System.Linq;
 
 var corsString = "BlogifierPolicy";
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Host.UseSerilog((context, builder) => builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-
+builder.Host.UseSerilog((context, builder) =>
+  builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 builder.Services.AddHttpClient();
-builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+builder.Services.AddLocalization();
 builder.Services.AddScoped<UserClaimsPrincipalFactory>();
 builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
 {
@@ -62,7 +61,7 @@ builder.Services.AddOutputCache(options =>
 });
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddViewLocalization();
 
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
@@ -87,6 +86,7 @@ app.UseCors(corsString);
 app.UseRouting();
 app.UseResponseCaching();
 app.UseOutputCache();
+app.UseRequestLocalization();
 app.UseAuthentication();
 app.UseAuthorization();
 var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
