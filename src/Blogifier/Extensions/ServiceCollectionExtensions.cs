@@ -45,7 +45,7 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IImportProvider, ImportProvider>();
     services.AddScoped<IAboutProvider, AboutProvider>();
     services.AddSingleton<IMinioProvider, MinioProvider>();
-    services.AddScoped<OptionManager>();
+    services.AddScoped<OptionStore>();
     return services;
   }
 }

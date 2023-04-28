@@ -1,3 +1,4 @@
+using Blogifier.Blogs;
 using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Shared;
@@ -17,10 +18,11 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
   }
 
   public DbSet<OptionInfo> Options { get; set; }
+  public DbSet<PostInfo> PostsInfo { get; set; }
   public DbSet<Author> Authors { get; set; }
-  public DbSet<Storage> Storages { get; set; }
   public DbSet<Blog> Blogs { get; set; }
   public DbSet<Post> Posts { get; set; }
+  public DbSet<Storage> Storages { get; set; }
   public DbSet<Category> Categories { get; set; }
   public DbSet<Subscriber> Subscribers { get; set; }
   public DbSet<Newsletter> Newsletters { get; set; }
@@ -30,6 +32,18 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+
+    modelBuilder.Entity<OptionInfo>(e =>
+    {
+      e.ToTable("Options");
+      e.HasIndex(b => b.Key).IsUnique();
+    });
+
+    modelBuilder.Entity<PostInfo>(e =>
+    {
+      e.ToTable("PostInfo");
+      e.HasIndex(b => b.Slug).IsUnique();
+    });
 
     modelBuilder.Entity<UserInfo>(e =>
     {
@@ -86,12 +100,5 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
         .HasOne(pt => pt.Category)
         .WithMany(t => t.PostCategories)
         .HasForeignKey(pt => pt.CategoryId);
-
-
-    modelBuilder.Entity<OptionInfo>(e =>
-    {
-      e.ToTable("Options");
-      e.HasIndex(b => b.Key).IsUnique();
-    });
   }
 }

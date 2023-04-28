@@ -9,14 +9,13 @@ using System;
 
 namespace Blogifier.Options;
 
-public class OptionManager
+public class OptionStore
 {
   private readonly ILogger _logger;
   private readonly IDistributedCache _distributedCache;
   private readonly AppDbContext _dbContext;
-
-  public OptionManager(
-    ILogger<OptionManager> logger,
+  public OptionStore(
+    ILogger<OptionStore> logger,
     IDistributedCache distributedCache,
     AppDbContext dbContext)
   {

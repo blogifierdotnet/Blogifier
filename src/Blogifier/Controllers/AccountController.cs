@@ -3,7 +3,6 @@ using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -12,23 +11,20 @@ namespace Blogifier.Controllers;
 public class AccountController : Controller
 {
   private readonly ILogger _logger;
-  private readonly BlogifierConstant _options;
   private readonly UserManager _userManager;
   private readonly SignInManager _signInManager;
-  private readonly OptionManager _optionManager;
+  private readonly OptionStore _optionStore;
 
   public AccountController(
     ILogger<AccountController> logger,
-    IOptions<BlogifierConstant> options,
     UserManager userManager,
     SignInManager signInManager,
-    OptionManager optionManager)
+    OptionStore optionStore)
   {
     _logger = logger;
-    _options = options.Value;
     _userManager = userManager;
     _signInManager = signInManager;
-    _optionManager = optionManager;
+    _optionStore = optionStore;
   }
 
   [HttpGet]
@@ -39,7 +35,7 @@ public class AccountController : Controller
   public async Task<IActionResult> Login([FromQuery] AccountModel parameter)
   {
     var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri };
-    var theme = await _optionManager.GetThemeValueAsync();
+    var theme = await _optionStore.GetThemeValueAsync();
     return View($"~/Views/Themes/{theme}/login.cshtml", model);
   }
 
@@ -57,7 +53,7 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    var theme = await _optionManager.GetThemeValueAsync();
+    var theme = await _optionStore.GetThemeValueAsync();
     return View($"~/Views/Themes/{theme}/login.cshtml", model);
   }
 
@@ -65,7 +61,7 @@ public class AccountController : Controller
   public async Task<IActionResult> Register([FromQuery] AccountModel parameter)
   {
     var model = new AccountRegisterModel { RedirectUri = parameter.RedirectUri };
-    var theme = await _optionManager.GetThemeValueAsync();
+    var theme = await _optionStore.GetThemeValueAsync();
     return View($"~/Views/Themes/{theme}/register.cshtml", model);
   }
 
@@ -82,7 +78,7 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    var theme = await _optionManager.GetThemeValueAsync();
+    var theme = await _optionStore.GetThemeValueAsync();
     return View($"~/Views/Themes/{theme}/register.cshtml", model);
   }
 }
