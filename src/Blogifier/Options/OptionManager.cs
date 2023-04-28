@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System;
 
 namespace Blogifier.Options;
 
@@ -24,9 +25,9 @@ public class OptionManager
     _dbContext = dbContext;
   }
 
-  public Task<string> GetThemeValueAsync() => GetValue(BlogifierConstant.ThemeKey);
+  public Task<string> GetThemeValueAsync() => GetByCacheValue(BlogifierConstant.ThemeKey);
 
-  public async Task<string> GetValue(string key)
+  public async Task<string> GetByCacheValue(string key, DistributedCacheEntryOptions? options = null)
   {
     _logger.LogDebug("get option {key}", key);
     string? value;
@@ -44,7 +45,8 @@ public class OptionManager
        .FirstOrDefaultAsync();
       value ??= BlogifierConstant.DefaultOption[key];
       var bytes = Encoding.Default.GetBytes(value);
-      await _distributedCache.SetAsync(key, bytes);
+      var cacheOptions = options ?? new() { SlidingExpiration = TimeSpan.FromMinutes(15) };
+      await _distributedCache.SetAsync(key, bytes, cacheOptions);
     }
     _logger.LogDebug("return option {key}:{value}", key, value);
     return value;

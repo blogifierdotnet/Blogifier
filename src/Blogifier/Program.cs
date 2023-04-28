@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +23,10 @@ builder.Host.UseSerilog((context, builder) =>
   builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 
 builder.Services.Configure<BlogifierConstant>(builder.Configuration.GetSection(BlogifierConstant.OptionsName));
-builder.Services.AddDistributedMemoryCache();
+
+var redis = builder.Configuration.GetSection("Blogifier:Redis").Value;
+if (redis == null) builder.Services.AddDistributedMemoryCache();
+else builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redis; options.InstanceName = "blogifier:"; });
 
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
