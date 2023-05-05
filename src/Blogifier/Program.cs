@@ -1,7 +1,8 @@
 using Blogifier;
 using Blogifier.Data;
-using Blogifier.Extensions;
 using Blogifier.Identity;
+using Blogifier.Options;
+using Blogifier.Providers;
 using Blogifier.Shared.Resources;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -17,13 +18,9 @@ using System;
 using System.IO;
 using System.Linq;
 
-var corsString = "BlogifierPolicy";
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog((context, builder) =>
-  builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-
+builder.Host.UseSerilog((context, builder) => builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 builder.Services.Configure<BlogifierConstant>(builder.Configuration.GetSection(BlogifierConstant.OptionsName));
-
 var redis = builder.Configuration.GetSection("Blogifier:Redis").Value;
 if (redis == null) builder.Services.AddDistributedMemoryCache();
 else builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redis; options.InstanceName = "blogifier:"; });
@@ -45,8 +42,7 @@ builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
   .AddDefaultTokenProviders()
   .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
 
-builder.Services
-  .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie(options =>
   {
     options.AccessDeniedPath = "/account/denied";
@@ -54,12 +50,37 @@ builder.Services
   });
 
 builder.Services.AddAuthorization();
-
-builder.Services.AddCors(o => o.AddPolicy(corsString,
+builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-builder.Services.AddBlogDatabase(builder.Configuration);
-builder.Services.AddBlogProviders();
+var section = builder.Configuration.GetSection("Blogifier");
+var conn = section.GetValue<string>("ConnString");
+if (section.GetValue<string>("DbProvider") == "SQLite")
+  builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(conn));
+else if (section.GetValue<string>("DbProvider") == "SqlServer")
+  builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(conn));
+else if (section.GetValue<string>("DbProvider") == "Postgres")
+  builder.Services.AddDbContext<AppDbContext>(o => o.UseNpgsql(conn));
+else if (section.GetValue<string>("DbProvider") == "MySql")
+  builder.Services.AddDbContext<AppDbContext>(o => o.UseMySql(conn, ServerVersion.AutoDetect(conn)));
+
+if (builder.Environment.IsDevelopment())
+  builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddSingleton<IMinioProvider, MinioProvider>();
+builder.Services.AddScoped<IAuthorProvider, AuthorProvider>();
+builder.Services.AddScoped<BlogProvider>();
+builder.Services.AddScoped<IPostProvider, PostProvider>();
+builder.Services.AddScoped<IStorageProvider, StorageProvider>();
+builder.Services.AddScoped<IFeedProvider, FeedProvider>();
+builder.Services.AddScoped<ICategoryProvider, CategoryProvider>();
+builder.Services.AddScoped<IAnalyticsProvider, AnalyticsProvider>();
+builder.Services.AddScoped<INewsletterProvider, NewsletterProvider>();
+builder.Services.AddScoped<IEmailProvider, MailKitProvider>();
+builder.Services.AddScoped<IThemeProvider, ThemeProvider>();
+builder.Services.AddScoped<IImportProvider, ImportProvider>();
+builder.Services.AddScoped<IAboutProvider, AboutProvider>();
+builder.Services.AddScoped<OptionStore>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -99,7 +120,7 @@ app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseCookiePolicy();
-app.UseCors(corsString);
+app.UseCors(BlogifierConstant.PolicyCorsName);
 app.UseRouting();
 app.UseResponseCaching();
 app.UseOutputCache();
