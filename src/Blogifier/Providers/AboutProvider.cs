@@ -5,12 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IAboutProvider
-{
-  Task<AboutModel> GetAboutModel();
-}
-
-public class AboutProvider : IAboutProvider
+public class AboutProvider
 {
   private readonly AppDbContext _db;
 

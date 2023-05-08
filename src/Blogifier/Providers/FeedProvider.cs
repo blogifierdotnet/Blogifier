@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IFeedProvider
+public class FeedProvider 
 {
-  Task<IEnumerable<AtomEntry>> GetEntries(string type, string host);
-}
+  protected readonly PostProvider _postProvider;
 
-public class FeedProvider : IFeedProvider
-{
-  protected readonly IPostProvider _postProvider;
-
-  public FeedProvider(IPostProvider postProvider)
+  public FeedProvider(PostProvider postProvider)
   {
     _postProvider = postProvider;
   }

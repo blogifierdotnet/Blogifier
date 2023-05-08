@@ -14,9 +14,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class AuthorController : ControllerBase
 {
-  private readonly IAuthorProvider _authorProvider;
+  private readonly AuthorProvider _authorProvider;
 
-  public AuthorController(IAuthorProvider authorProvider)
+  public AuthorController(AuthorProvider authorProvider)
   {
     _authorProvider = authorProvider;
   }

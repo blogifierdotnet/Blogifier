@@ -7,14 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IAnalyticsProvider
-{
-  Task<AnalyticsModel> GetAnalytics();
-  Task<bool> SaveDisplayType(int type);
-  Task<bool> SaveDisplayPeriod(int period);
-}
-
-public class AnalyticsProvider : IAnalyticsProvider
+public class AnalyticsProvider
 {
   private readonly AppDbContext _db;
 

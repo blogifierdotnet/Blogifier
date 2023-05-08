@@ -67,19 +67,19 @@ else if (section.GetValue<string>("DbProvider") == "MySql")
 if (builder.Environment.IsDevelopment())
   builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddSingleton<IMinioProvider, MinioProvider>();
-builder.Services.AddScoped<IAuthorProvider, AuthorProvider>();
+builder.Services.AddSingleton<MinioProvider>();
+builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
-builder.Services.AddScoped<IPostProvider, PostProvider>();
-builder.Services.AddScoped<IStorageProvider, StorageProvider>();
-builder.Services.AddScoped<IFeedProvider, FeedProvider>();
-builder.Services.AddScoped<ICategoryProvider, CategoryProvider>();
-builder.Services.AddScoped<IAnalyticsProvider, AnalyticsProvider>();
-builder.Services.AddScoped<INewsletterProvider, NewsletterProvider>();
-builder.Services.AddScoped<IEmailProvider, MailKitProvider>();
-builder.Services.AddScoped<IThemeProvider, ThemeProvider>();
-builder.Services.AddScoped<IImportProvider, ImportProvider>();
-builder.Services.AddScoped<IAboutProvider, AboutProvider>();
+builder.Services.AddScoped<PostProvider>();
+builder.Services.AddScoped<StorageProvider>();
+builder.Services.AddScoped<FeedProvider>();
+builder.Services.AddScoped<CategoryProvider>();
+builder.Services.AddScoped<AnalyticsProvider>();
+builder.Services.AddScoped<NewsletterProvider>();
+builder.Services.AddScoped<EmailProvider>();
+builder.Services.AddScoped<ThemeProvider>();
+builder.Services.AddScoped<ImportProvider>();
+builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>

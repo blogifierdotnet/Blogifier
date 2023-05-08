@@ -10,9 +10,9 @@ namespace Blogifier.Providers;
 public class BlogProvider
 {
   private readonly AppDbContext _dbContext;
-  private readonly IStorageProvider _storageProvider;
+  private readonly StorageProvider _storageProvider;
 
-  public BlogProvider(AppDbContext dbContext, IStorageProvider storageProvider)
+  public BlogProvider(AppDbContext dbContext, StorageProvider storageProvider)
   {
     _dbContext = dbContext;
     _storageProvider = storageProvider;

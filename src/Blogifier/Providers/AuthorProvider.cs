@@ -11,19 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IAuthorProvider
-{
-  Task<List<Author>> GetAuthors();
-  Task<Author> FindByEmail(string email);
-  Task<bool> Verify(LoginModel model);
-  Task<bool> Register(RegisterModel model);
-  Task<bool> Add(Author author);
-  Task<bool> Update(Author author);
-  Task<bool> ChangePassword(RegisterModel model);
-  Task<bool> Remove(int id);
-}
-
-public class AuthorProvider : IAuthorProvider
+public class AuthorProvider
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _db;

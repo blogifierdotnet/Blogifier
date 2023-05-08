@@ -9,26 +9,12 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface INewsletterProvider
-{
-  Task<List<Subscriber>> GetSubscribers();
-  Task<bool> AddSubscriber(Subscriber subscriber);
-  Task<bool> RemoveSubscriber(int id);
-
-  Task<List<Newsletter>> GetNewsletters();
-  Task<bool> SendNewsletter(int postId);
-  Task<bool> RemoveNewsletter(int id);
-
-  Task<MailSetting> GetMailSettings();
-  Task<bool> SaveMailSettings(MailSetting mail);
-}
-
-public class NewsletterProvider : INewsletterProvider
+public class NewsletterProvider
 {
   private readonly AppDbContext _db;
-  private readonly IEmailProvider _emailProvider;
+  private readonly EmailProvider _emailProvider;
 
-  public NewsletterProvider(AppDbContext db, IEmailProvider emailProvider)
+  public NewsletterProvider(AppDbContext db, EmailProvider emailProvider)
   {
     _db = db;
     _emailProvider = emailProvider;

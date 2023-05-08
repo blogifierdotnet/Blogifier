@@ -11,9 +11,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class CategoryController : ControllerBase
 {
-  private readonly ICategoryProvider _categoryProvider;
+  private readonly CategoryProvider _categoryProvider;
 
-  public CategoryController(ICategoryProvider categoryProvider)
+  public CategoryController(CategoryProvider categoryProvider)
   {
     _categoryProvider = categoryProvider;
   }

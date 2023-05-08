@@ -9,9 +9,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class AboutController : ControllerBase
 {
-  private readonly IAboutProvider _aboutProvider;
+  private readonly AboutProvider _aboutProvider;
 
-  public AboutController(IAboutProvider aboutProvider)
+  public AboutController(AboutProvider aboutProvider)
   {
     _aboutProvider = aboutProvider;
   }
