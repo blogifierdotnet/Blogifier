@@ -68,10 +68,10 @@ if (builder.Environment.IsDevelopment())
   builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton<MinioProvider>();
+builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
 builder.Services.AddScoped<PostProvider>();
-builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<FeedProvider>();
 builder.Services.AddScoped<CategoryProvider>();
 builder.Services.AddScoped<AnalyticsProvider>();

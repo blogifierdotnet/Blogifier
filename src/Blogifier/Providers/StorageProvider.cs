@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public class StorageProvider 
+public class StorageProvider
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _appDbContext;
@@ -48,28 +48,25 @@ public class StorageProvider
     return storage;
   }
 
-  public bool FileExists(string path)
+  public bool FileExistsAsync(string path)
   {
-    Serilog.Log.Information($"File exists: {Path.Combine(ContentRoot, path)}");
-    return File.Exists(Path.Combine(ContentRoot, path));
+    var absolutePath = Path.Combine(ContentRoot, path);
+    _logger.LogInformation("File exists: {absolutePath}", absolutePath);
+    return File.Exists(absolutePath);
   }
 
-  public async Task<IList<string>> GetThemes()
+  public async Task<IList<string>> GetThemesAsync()
   {
     var themes = new List<string>();
     var themesDirectory = Path.Combine(ContentRoot, $"Views{_slash}Themes");
-    try
+    foreach (string dir in Directory.GetDirectories(themesDirectory))
     {
-      foreach (string dir in Directory.GetDirectories(themesDirectory))
-      {
-        themes.Add(Path.GetFileName(dir));
-      }
+      themes.Add(Path.GetFileName(dir));
     }
-    catch { }
     return await Task.FromResult(themes);
   }
 
-  public async Task<ThemeSettings> GetThemeSettings(string theme)
+  public async Task<ThemeSettings?> GetThemeSettingsAsync(string theme)
   {
     var settings = new ThemeSettings();
     var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
@@ -82,7 +79,7 @@ public class StorageProvider
       }
       catch (Exception ex)
       {
-        Serilog.Log.Error($"Error reading theme settings: {ex.Message}");
+        _logger.LogError("Error reading theme settings: {Message}", ex.Message);
         return null;
       }
     }
@@ -90,7 +87,7 @@ public class StorageProvider
     return await Task.FromResult(settings);
   }
 
-  public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
+  public async Task<bool> SaveThemeSettingsAsync(string theme, ThemeSettings settings)
   {
     var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
     try
@@ -107,13 +104,13 @@ public class StorageProvider
     }
     catch (Exception ex)
     {
-      Serilog.Log.Error($"Error writing theme settings: {ex.Message}");
+      _logger.LogError("Error writing theme settings: {Message}", ex.Message);
       return false;
     }
     return true;
   }
 
-  public async Task<bool> UploadFormFile(IFormFile file, string path = "")
+  public async Task<bool> UploadFormFileAsync(IFormFile file, string path = "")
   {
     path = path.Replace("/", _slash);
     VerifyPath(_publicStorageRoot, path);
@@ -122,7 +119,7 @@ public class StorageProvider
 
     if (InvalidFileName(fileName))
     {
-      Serilog.Log.Error($"Invalid file name: {fileName}");
+      _logger.LogError("Invalid file name: {fileName}", fileName);
       return false;
     }
 
@@ -130,19 +127,17 @@ public class StorageProvider
          Path.Combine(_publicStorageRoot, fileName) :
          Path.Combine(_publicStorageRoot, path + _slash + fileName);
 
-    Serilog.Log.Information($"Storage root: {_publicStorageRoot}");
-    Serilog.Log.Information($"Uploading file: {filePath}");
+    _logger.LogInformation("Storage root: {_publicStorageRoot}", _publicStorageRoot);
+    _logger.LogInformation("Uploading file: {filePath}", filePath);
     try
     {
-      using (var fileStream = new FileStream(filePath, FileMode.Create))
-      {
-        await file.CopyToAsync(fileStream);
-        Serilog.Log.Information($"Uploaded file: {filePath}");
-      }
+      using var fileStream = new FileStream(filePath, FileMode.Create);
+      await file.CopyToAsync(fileStream);
+      _logger.LogInformation("Uploaded file: {filePath}", filePath);
     }
     catch (Exception ex)
     {
-      Serilog.Log.Error($"Error uploading file: {ex.Message}");
+      _logger.LogInformation("Error uploading file: {Message}", ex.Message);
     }
 
     return true;
@@ -150,7 +145,6 @@ public class StorageProvider
 
   public async Task<string> UploadFromWeb(Uri requestUri, string root, string path = "")
   {
-
     path = path.Replace("/", _slash);
     VerifyPath(_publicStorageRoot, path);
 
@@ -159,11 +153,11 @@ public class StorageProvider
          Path.Combine(_publicStorageRoot, fileName) :
          Path.Combine(_publicStorageRoot, path + _slash + fileName);
 
-    HttpClient client = new HttpClient();
+    var client = new HttpClient();
     var response = await client.GetAsync(requestUri);
     using var fs = new FileStream(filePath, FileMode.CreateNew);
     await response.Content.CopyToAsync(fs);
-    return await Task.FromResult($"![{fileName}]({root}{PathToUrl(filePath)})");
+    return $"![{fileName}]({root}{PathToUrl(filePath)})";
   }
 
   public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")
@@ -174,8 +168,7 @@ public class StorageProvider
     VerifyPath(_publicStorageRoot, path);
     string imgSrc = GetImgSrcValue(baseImg);
 
-    Random rnd = new Random();
-
+    var rnd = new Random();
     if (imgSrc.StartsWith("data:image/png;base64,"))
     {
       fileName = string.Format("{0}.png", rnd.Next(1000, 9999));
@@ -211,14 +204,15 @@ public class StorageProvider
       string testsDirectory = $"tests{_slash}Blogifier.Tests";
       string appDirectory = $"src{_slash}Blogifier";
 
-      Serilog.Log.Information($"Current directory path: {path}");
+      _logger.LogInformation("Current directory path: {path}", path);
 
       // development unit test run
       if (path.LastIndexOf(testsDirectory) > 0)
       {
-        path = path.Substring(0, path.LastIndexOf(testsDirectory));
-        Serilog.Log.Information($"Unit test path: {path}src{_slash}Blogifier");
-        return $"{path}src{_slash}Blogifier";
+        path = path[..path.LastIndexOf(testsDirectory)];
+        var rootPath = $"{path}src{_slash}Blogifier";
+        _logger.LogInformation("Unit test path: {rootPath}", rootPath);
+        return rootPath;
       }
 
       // this needed to make sure we have correct data directory
@@ -228,11 +222,12 @@ public class StorageProvider
       // !! this can mess up installs that have "src/Blogifier" in the path !!
       if (path.LastIndexOf(appDirectory) > 0)
       {
-        path = path.Substring(0, path.LastIndexOf(appDirectory));
-        Serilog.Log.Information($"Development debug path: {path}src{_slash}Blogifier");
-        return $"{path}src{_slash}Blogifier";
+        path = path[..path.LastIndexOf(appDirectory)];
+        var rootPath = $"{path}src{_slash}Blogifier";
+        _logger.LogInformation("Development debug path: {rootPath}", rootPath);
+        return rootPath;
       }
-      Serilog.Log.Information($"Final path: {path}");
+      _logger.LogInformation($"Final path: {path}");
       return path;
     }
   }
@@ -249,7 +244,7 @@ public class StorageProvider
     // it uses "mceclip0" as file name; randomize it for multiple uploads
     if (fileName.StartsWith("mceclip0"))
     {
-      Random rnd = new Random();
+      var rnd = new Random();
       fileName = fileName.Replace("mceclip0", rnd.Next(100000, 999999).ToString());
     }
     return fileName.SanitizePath();
@@ -279,21 +274,21 @@ public class StorageProvider
     }
     if (title.Contains("image.axd?picture="))
     {
-      title = title.Substring(title.IndexOf("image.axd?picture=") + 18);
+      title = title[(title.IndexOf("image.axd?picture=") + 18)..];
     }
     if (title.Contains("file.axd?file="))
     {
-      title = title.Substring(title.IndexOf("file.axd?file=") + 14);
+      title = title[(title.IndexOf("file.axd?file=") + 14)..];
     }
     if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
     {
-      Random rnd = new Random();
+      var rnd = new Random();
       title = string.Format("{0}.png", rnd.Next(1000, 9999));
     }
 
     if (title.Contains("/"))
     {
-      title = title.Substring(title.LastIndexOf("/"));
+      title = title[title.LastIndexOf("/")..];
     }
 
     title = title.Replace(" ", "-");
@@ -326,7 +321,7 @@ public class StorageProvider
   bool InvalidFileName(string fileName)
   {
     List<string> fileExtensions = new List<string>() { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
-    string configFileExtensions = _configuration.GetSection("Blogifier").GetValue<string>("FileExtensions");
+    var configFileExtensions = _configuration.GetSection("Blogifier").GetValue<string>("FileExtensions");
 
     if (!string.IsNullOrEmpty(configFileExtensions))
     {

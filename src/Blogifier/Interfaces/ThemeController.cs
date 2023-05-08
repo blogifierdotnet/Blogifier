@@ -21,13 +21,13 @@ public class ThemeController : ControllerBase
   [HttpGet("{theme}")]
   public async Task<ThemeSettings> GetThemeSettings(string theme)
   {
-    return await _storageProvider.GetThemeSettings(theme);
+    return await _storageProvider.GetThemeSettingsAsync(theme);
   }
 
   [Authorize]
   [HttpPost("{theme}")]
   public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
   {
-    return await _storageProvider.SaveThemeSettings(theme, settings);
+    return await _storageProvider.SaveThemeSettingsAsync(theme, settings);
   }
 }

@@ -34,14 +34,14 @@ public class StorageController : ControllerBase
   [HttpGet("themes")]
   public async Task<IList<string>> GetThemes()
   {
-    return await _storageProvider.GetThemes();
+    return await _storageProvider.GetThemesAsync();
   }
 
   [Authorize]
   [HttpPut("exists")]
   public async Task<IActionResult> FileExists([FromBody] string path)
   {
-    return (await Task.FromResult(_storageProvider.FileExists(path))) ? Ok() : BadRequest();
+    return (await Task.FromResult(_storageProvider.FileExistsAsync(path))) ? Ok() : BadRequest();
   }
 
   [Authorize]
@@ -57,7 +57,7 @@ public class StorageController : ControllerBase
     if (uploadType == UploadType.PostImage)
       fileName = Url.Content("~/") + fileName;
 
-    if (await _storageProvider.UploadFormFile(file, path))
+    if (await _storageProvider.UploadFormFileAsync(file, path))
     {
       var blog = await _blogProvider.GetBlog();
 

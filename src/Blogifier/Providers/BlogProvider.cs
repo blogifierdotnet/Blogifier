@@ -74,7 +74,7 @@ public class BlogProvider
 
   private async Task<dynamic> GetValues(string theme)
   {
-    var settings = await _storageProvider.GetThemeSettings(theme);
+    var settings = await _storageProvider.GetThemeSettingsAsync(theme);
     var values = new Dictionary<string, string>();
 
     if (settings != null && settings.Sections != null)

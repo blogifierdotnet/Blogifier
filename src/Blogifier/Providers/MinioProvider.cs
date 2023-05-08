@@ -12,13 +12,19 @@ namespace Blogifier.Providers;
 public class MinioProvider : IDisposable
 {
   private readonly ILogger _logger;
-  private readonly string _bucketName;
-  private readonly MinioClient _minioClient;
+  private readonly string _bucketName = default!;
+  private readonly MinioClient _minioClient = default!;
 
   public MinioProvider(ILogger<MinioProvider> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
   {
     _logger = logger;
     var section = configuration.GetSection("Blogifier:Minio");
+
+    if (section == null)
+    {
+      _logger.LogWarning("Minio 配置信息不存在未初始化 MinioProvider.");
+      return;
+    }
     _bucketName = section.GetValue<string>("BucketName")!;
     _minioClient = new MinioClient()
      .WithEndpoint(section.GetValue<string>("Endpoint")!, section.GetValue<int>("Port"))
