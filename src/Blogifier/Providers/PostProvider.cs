@@ -403,10 +403,5 @@ public class PostProvider
     return items;
   }
 
-  bool IsDemo()
-  {
-    return _configuration.GetSection("Blogifier").GetValue<bool>("DemoMode");
-  }
-
   #endregion
 }

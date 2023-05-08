@@ -1,3 +1,4 @@
+using Blogifier.Blogs;
 using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Shared;
@@ -10,21 +11,21 @@ namespace Blogifier.Controllers;
 [Route("account")]
 public class AccountController : Controller
 {
-  private readonly ILogger _logger;
-  private readonly UserManager _userManager;
-  private readonly SignInManager _signInManager;
-  private readonly OptionStore _optionStore;
+  protected readonly ILogger _logger;
+  protected readonly UserManager _userManager;
+  protected readonly SignInManager _signInManager;
+  protected readonly BlogManager _blogManager;
 
   public AccountController(
     ILogger<AccountController> logger,
     UserManager userManager,
     SignInManager signInManager,
-    OptionStore optionStore)
+    BlogManager  blogManager)
   {
     _logger = logger;
     _userManager = userManager;
     _signInManager = signInManager;
-    _optionStore = optionStore;
+    _blogManager = blogManager;
   }
 
   [HttpGet]
@@ -34,9 +35,9 @@ public class AccountController : Controller
   [HttpGet("login")]
   public async Task<IActionResult> Login([FromQuery] AccountModel parameter)
   {
+    var data = await _blogManager.GetBlogDataAsync();
     var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri };
-    var theme = await _optionStore.GetThemeValueAsync();
-    return View($"~/Views/Themes/{theme}/login.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
   }
 
   [HttpPost("login")]
@@ -53,16 +54,16 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    var theme = await _optionStore.GetThemeValueAsync();
-    return View($"~/Views/Themes/{theme}/login.cshtml", model);
+    var data = await _blogManager.GetBlogDataAsync();
+    return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
   }
 
   [HttpGet("register")]
   public async Task<IActionResult> Register([FromQuery] AccountModel parameter)
   {
     var model = new AccountRegisterModel { RedirectUri = parameter.RedirectUri };
-    var theme = await _optionStore.GetThemeValueAsync();
-    return View($"~/Views/Themes/{theme}/register.cshtml", model);
+    var data = await _blogManager.GetBlogDataAsync();
+    return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
   }
 
   [HttpPost("register")]
@@ -78,7 +79,7 @@ public class AccountController : Controller
       }
       model.ShowError = true;
     }
-    var theme = await _optionStore.GetThemeValueAsync();
-    return View($"~/Views/Themes/{theme}/register.cshtml", model);
+    var data = await _blogManager.GetBlogDataAsync();
+    return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
   }
 }

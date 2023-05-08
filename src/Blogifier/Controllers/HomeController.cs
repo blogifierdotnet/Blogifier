@@ -1,4 +1,6 @@
+using Blogifier.Blogs;
 using Blogifier.Extensions;
+using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,7 @@ namespace Blogifier.Controllers;
 
 public class HomeController : Controller
 {
+  protected readonly BlogManager _blogManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
   protected readonly FeedProvider _feedProvider;
@@ -24,6 +27,7 @@ public class HomeController : Controller
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
   public HomeController(
+    BlogManager blogManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
     FeedProvider feedProvider,
@@ -31,6 +35,7 @@ public class HomeController : Controller
     ThemeProvider themeProvider,
     ICompositeViewEngine compositeViewEngine)
   {
+    _blogManager = blogManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
     _feedProvider = feedProvider;
@@ -41,16 +46,17 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    var model = await GetBlogPosts(pager: page);
-    //If no blogs are setup redirect to first time registration
-    if (model == null) return Redirect("~/admin/register");
-    return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
+    var blogData = await _blogManager.GetBlogDataAsync();
+    var request = HttpContext.Request;
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var model = new IndexModel(absoluteUrl, blogData, page);
+    return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
   [HttpGet("/{slug}")]
   public async Task<IActionResult> Index(string slug)
   {
-    if (!string.IsNullOrEmpty(slug)) return await getSingleBlogPost(slug);
+    if (!string.IsNullOrEmpty(slug)) return await GetSingleBlogPost(slug);
     return Redirect("~/");
   }
 
@@ -89,7 +95,7 @@ public class HomeController : Controller
   [HttpGet("posts/{slug}")]
   public async Task<IActionResult> Single(string slug)
   {
-    return await getSingleBlogPost(slug);
+    return await GetSingleBlogPost(slug);
   }
 
   [HttpGet("error")]
@@ -171,7 +177,7 @@ public class HomeController : Controller
   }
 
 
-  public async Task<IActionResult> getSingleBlogPost(string slug)
+  public async Task<IActionResult> GetSingleBlogPost(string slug)
   {
     try
     {

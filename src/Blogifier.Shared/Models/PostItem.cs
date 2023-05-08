@@ -21,7 +21,6 @@ namespace Blogifier.Shared
     public DateTime Published { get; set; }
     public bool IsPublished { get { return Published > DateTime.MinValue; } }
     public bool Featured { get; set; }
-
     public Author Author { get; set; }
     public SaveStatus Status { get; set; }
     public List<SocialField> SocialFields { get; set; }
