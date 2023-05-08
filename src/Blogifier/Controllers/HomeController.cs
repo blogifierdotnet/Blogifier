@@ -16,19 +16,19 @@ namespace Blogifier.Controllers;
 
 public class HomeController : Controller
 {
-  protected readonly IBlogProvider _blogProvider;
-  protected readonly IPostProvider _postProvider;
-  protected readonly IFeedProvider _feedProvider;
-  protected readonly IAuthorProvider _authorProvider;
-  protected readonly IThemeProvider _themeProvider;
+  protected readonly BlogProvider _blogProvider;
+  protected readonly PostProvider _postProvider;
+  protected readonly FeedProvider _feedProvider;
+  protected readonly AuthorProvider _authorProvider;
+  protected readonly ThemeProvider _themeProvider;
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
   public HomeController(
-    IBlogProvider blogProvider,
-    IPostProvider postProvider,
-    IFeedProvider feedProvider,
-    IAuthorProvider authorProvider,
-    IThemeProvider themeProvider,
+    BlogProvider blogProvider,
+    PostProvider postProvider,
+    FeedProvider feedProvider,
+    AuthorProvider authorProvider,
+    ThemeProvider themeProvider,
     ICompositeViewEngine compositeViewEngine)
   {
     _blogProvider = blogProvider;
@@ -41,7 +41,7 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    var model = await getBlogPosts(pager: page);
+    var model = await GetBlogPosts(pager: page);
     //If no blogs are setup redirect to first time registration
     if (model == null) return Redirect("~/admin/register");
     return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
@@ -59,7 +59,7 @@ public class HomeController : Controller
   {
     if (!string.IsNullOrEmpty(term))
     {
-      var model = await getBlogPosts(term, page);
+      var model = await GetBlogPosts(term, page);
       string viewPath = $"~/Views/Themes/{model.Blog.Theme}/search.cshtml";
       if (IsViewExists(viewPath))
         return View(viewPath, model);
@@ -75,7 +75,7 @@ public class HomeController : Controller
   [HttpGet("categories/{category}")]
   public async Task<IActionResult> Categories(string category, int page = 1)
   {
-    var model = await getBlogPosts("", page, category);
+    var model = await GetBlogPosts("", page, category);
     string viewPath = $"~/Views/Themes/{model.Blog.Theme}/category.cshtml";
 
     ViewBag.Category = category;
@@ -205,11 +205,9 @@ public class HomeController : Controller
       return Redirect("~/error");
     }
   }
-  public async Task<ListModel> getBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
+  private async Task<ListModel> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
   {
-
     var model = new ListModel { };
-
     try
     {
       model.Blog = await _blogProvider.GetBlogItem();

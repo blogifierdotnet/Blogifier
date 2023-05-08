@@ -10,9 +10,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
-  private readonly IAnalyticsProvider _analyticsProvider;
+  private readonly AnalyticsProvider _analyticsProvider;
 
-  public AnalyticsController(IAnalyticsProvider analyticsProvider)
+  public AnalyticsController(AnalyticsProvider analyticsProvider)
   {
     _analyticsProvider = analyticsProvider;
   }

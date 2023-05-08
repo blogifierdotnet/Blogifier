@@ -1,4 +1,13 @@
 // colors
+$blogifier: #7241fd;
+$default: #e1e5e9;
+$secondary: #8b949e;
+$gold: #ff9f2e;
+$black: #1c1c1c;
+$success: #00b45a;
+$danger: #ff4d58;
+
+// colors
 $color: var(--bf-color);
 $color-hover: #888;
 
@@ -27,7 +36,7 @@ $brands: (
   "whatsapp": $color-whatsapp,
 );
 
-// highlighter
+// syntax highlighter
 $hljs-foreground: #212529;
 $hljs-background: #f8f9fa;
 $hljs-comments: #90a4ae;

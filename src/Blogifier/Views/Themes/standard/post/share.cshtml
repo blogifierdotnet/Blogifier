@@ -2,13 +2,10 @@
 @{
   var request = Url.ActionContext.HttpContext.Request;
   var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-
-  PostModel postModel = (PostModel)Model;
+  var postModel = (PostModel)Model;
   var post = postModel.Post;
-
   var postTitle = post.Title;
   var postSlug = absoluteUrl + "/posts/" + post.Slug;
-
   var share_facebook = "https://www.facebook.com/sharer/sharer.php?u=" + postSlug;
   var share_twitter = "https://twitter.com/intent/tweet?text=" + postTitle + "&url=" + postSlug;
   var share_email = "mailto:?&subject=" + postTitle + "&cc=&bcc=&body=" + postTitle + "%0" + postSlug;

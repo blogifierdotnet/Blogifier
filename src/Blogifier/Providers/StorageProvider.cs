@@ -15,28 +15,16 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IStorageProvider
-{
-  Task<IList<string>> GetThemes();
-  bool FileExists(string path);
-  Task<bool> UploadFormFile(IFormFile file, string path = "");
-  Task<string> UploadFromWeb(Uri requestUri, string root, string path = "");
-  Task<string> UploadBase64Image(string baseImg, string root, string path = "");
-  Task<ThemeSettings> GetThemeSettings(string theme);
-  Task<bool> SaveThemeSettings(string theme, ThemeSettings settings);
-  Task<Storage?> GetAsync(string storageUrl, Func<Stream, CancellationToken, Task> callback);
-}
-
-public class StorageProvider : IStorageProvider
+public class StorageProvider 
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _appDbContext;
-  private readonly IMinioProvider _minioProvider;
+  private readonly MinioProvider _minioProvider;
   private readonly string _publicStorageRoot;
   private readonly string _slash = Path.DirectorySeparatorChar.ToString();
   private readonly IConfiguration _configuration;
 
-  public StorageProvider(ILogger<StorageProvider> logger, AppDbContext appDbContext, IMinioProvider minioProvider, IConfiguration configuration)
+  public StorageProvider(ILogger<StorageProvider> logger, AppDbContext appDbContext, MinioProvider minioProvider, IConfiguration configuration)
   {
     _logger = logger;
     _appDbContext = appDbContext;

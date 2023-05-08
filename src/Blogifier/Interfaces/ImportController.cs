@@ -14,9 +14,9 @@ namespace Blogifier.Interfaces;
 public class ImportController : ControllerBase
 {
   private readonly AppDbContext _dbContext;
-  private readonly IImportProvider _importProvider;
+  private readonly ImportProvider _importProvider;
 
-  public ImportController(AppDbContext dbContext, IImportProvider importProvider)
+  public ImportController(AppDbContext dbContext, ImportProvider importProvider)
   {
     _dbContext = dbContext;
     _importProvider = importProvider;

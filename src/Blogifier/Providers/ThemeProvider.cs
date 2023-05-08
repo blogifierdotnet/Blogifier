@@ -3,12 +3,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IThemeProvider
-{
-  Task<Dictionary<string, string>> GetSettings(string theme);
-}
-
-public class ThemeProvider : IThemeProvider
+public class ThemeProvider
 {
   public async Task<Dictionary<string, string>> GetSettings(string theme)
   {

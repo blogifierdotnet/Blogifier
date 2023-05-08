@@ -3,8 +3,8 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
 @{
-  PostModel _model = (PostModel)Model;
-  List<PostItem> _related = _model.Related.Take(3).ToList();
+  var _model = (PostModel)Model;
+  var _related = _model.Related.Take(3).ToList();
 }
 <!--
     TODO:

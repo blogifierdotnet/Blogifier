@@ -1,7 +1,7 @@
 @using Blogifier.Providers;
 @inject IStringLocalizer<Resource> _localizer
-@inject ICategoryProvider _categoryProvider
-@inject IAuthorProvider _authorProvider
+@inject CategoryProvider _categoryProvider
+@inject AuthorProvider _authorProvider
 
 @{
   var categories = await _categoryProvider.Categories();

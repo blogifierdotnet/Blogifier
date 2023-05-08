@@ -9,13 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
-
-public interface IMinioProvider
-{
-  Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> callback);
-}
-
-public class MinioProvider : IMinioProvider, IDisposable
+public class MinioProvider : IDisposable
 {
   private readonly ILogger _logger;
   private readonly string _bucketName;

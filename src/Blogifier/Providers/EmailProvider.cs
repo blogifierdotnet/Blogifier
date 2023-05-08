@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IEmailProvider
+public class EmailProvider
 {
-  Task<bool> SendEmail(MailSetting settings, List<Subscriber> subscribers, string subject, string content);
-}
-
-public class MailKitProvider : IEmailProvider
-{
-  public MailKitProvider() { }
+  public EmailProvider() { }
 
   public async Task<bool> SendEmail(MailSetting settings, List<Subscriber> subscribers, string subject, string content)
   {

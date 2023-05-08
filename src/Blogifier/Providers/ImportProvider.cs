@@ -13,23 +13,15 @@ using System.Xml.Linq;
 
 namespace Blogifier.Providers;
 
-public interface IImportProvider
-{
-  ImportDto Rss(string feedUrl);
-  Task<bool> ImportPost(Post post);
-}
-
-public class ImportProvider : IImportProvider
+public class ImportProvider 
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _dbContext;
-  private readonly IStorageProvider _storageProvider;
 
-  public ImportProvider(ILogger<ImportProvider> logger, AppDbContext dbContext, IStorageProvider storageProvider)
+  public ImportProvider(ILogger<ImportProvider> logger, AppDbContext dbContext)
   {
     _logger = logger;
     _dbContext = dbContext;
-    _storageProvider = storageProvider;
   }
 
   public ImportDto Rss(string feedUrl)

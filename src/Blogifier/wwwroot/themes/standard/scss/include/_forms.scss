@@ -1,0 +1,103 @@
+.form-control,
+.form-select {
+}
+
+.form-switch .form-check-input {
+  border-color: $gray-600;
+  &:checked {
+    border-color: $success;
+    background-color: $success;
+  }
+}
+
+.form-item {
+  margin-bottom: 1.375rem;
+
+  .form-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: $black;
+  }
+
+  &-desc {
+    padding-left: 0.1rem;
+    font-size: 0.875rem;
+    color: $gray-600;
+  }
+
+  &-error,
+  .validation-message {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $danger;
+    margin-top: 0.125rem;
+  }
+}
+
+.modal {
+  .form-select,
+  .form-control {
+    box-shadow: none;
+    border: 1px solid $gray-400;
+  }
+}
+
+// dropdown
+.dropdown-full {
+  .dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    display: flex;
+
+    &::after {
+      margin-left: auto;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    width: 100%;
+  }
+
+  .dropdown-item {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+}
+
+.dropdown-flush {
+  .dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    margin-top: 0.5rem !important;
+    box-shadow: -1rem 1rem 5rem rgba(#000, 0.25);
+  }
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-bottom: 1px solid $gray-100;
+
+    &:active {
+      color: #fff !important;
+      .bi {
+        fill: #fff !important;
+      }
+    }
+
+    .bi {
+      margin-right: 0.5rem;
+      margin-left: -0.25rem;
+      transform: translateY(-1px);
+    }
+  }
+}

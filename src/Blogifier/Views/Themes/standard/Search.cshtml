@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @{
   Layout = "layouts/_main.cshtml";
-  ListModel listModel = (ListModel)Model;
+  var listModel = (ListModel)Model;
 }
 
 <main class="container search">

@@ -12,32 +12,13 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IPostProvider
-{
-  Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType);
-  Task<List<Post>> SearchPosts(string term);
-  Task<Post> GetPostById(int id);
-  Task<Post> GetPostBySlug(string slug);
-  Task<string> GetSlugFromTitle(string title);
-  Task<bool> Add(Post post);
-  Task<bool> Update(Post post);
-  Task<bool> Publish(int id, bool publish);
-  Task<bool> Featured(int id, bool featured);
-  Task<IEnumerable<PostItem>> GetPostItems();
-  Task<PostModel> GetPostModel(string slug);
-  Task<IEnumerable<PostItem>> GetPopular(Pager pager, int author = 0);
-  Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
-  Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true);
-  Task<bool> Remove(int id);
-}
-
-public class PostProvider : IPostProvider
+public class PostProvider
 {
   private readonly AppDbContext _db;
-  private readonly ICategoryProvider _categoryProvider;
+  private readonly CategoryProvider _categoryProvider;
   private readonly IConfiguration _configuration;
 
-  public PostProvider(AppDbContext db, ICategoryProvider categoryProvider, IConfiguration configuration)
+  public PostProvider(AppDbContext db, CategoryProvider categoryProvider, IConfiguration configuration)
   {
     _db = db;
     _categoryProvider = categoryProvider;
@@ -202,7 +183,7 @@ public class PostProvider : IPostProvider
     }
   }
 
-  public async Task<Post> GetPostBySlug(string slug)
+  public async Task<Post?> GetPostBySlug(string slug)
   {
     return await _db.Posts.Where(p => p.Slug == slug).FirstOrDefaultAsync();
   }

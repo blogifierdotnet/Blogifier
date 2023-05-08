@@ -13,16 +13,16 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class StorageController : ControllerBase
 {
-  private readonly IStorageProvider _storageProvider;
-  private readonly IAuthorProvider _authorProvider;
-  private readonly IBlogProvider _blogProvider;
-  private readonly IPostProvider _postProvider;
+  private readonly StorageProvider _storageProvider;
+  private readonly AuthorProvider _authorProvider;
+  private readonly BlogProvider _blogProvider;
+  private readonly PostProvider _postProvider;
 
   public StorageController(
-    IStorageProvider storageProvider,
-    IAuthorProvider authorProvider,
-    IBlogProvider blogProvider,
-    IPostProvider postProvider)
+    StorageProvider storageProvider,
+    AuthorProvider authorProvider,
+    BlogProvider blogProvider,
+    PostProvider postProvider)
   {
     _storageProvider = storageProvider;
     _authorProvider = authorProvider;

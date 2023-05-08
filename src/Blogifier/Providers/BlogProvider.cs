@@ -7,28 +7,25 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
 
-public interface IBlogProvider
+public class BlogProvider
 {
-  Task<Blog> GetBlog();
-  Task<ICollection<Category>> GetBlogCategories();
-  Task<BlogItem> GetBlogItem();
-  Task<bool> Update(Blog blog);
-}
+  private readonly AppDbContext _dbContext;
+  private readonly StorageProvider _storageProvider;
 
-public class BlogProvider : IBlogProvider
-{
-  private readonly AppDbContext _db;
-  private readonly IStorageProvider _storageProvider;
-
-  public BlogProvider(AppDbContext db, IStorageProvider storageProvider)
+  public BlogProvider(AppDbContext dbContext, StorageProvider storageProvider)
   {
-    _db = db;
+    _dbContext = dbContext;
     _storageProvider = storageProvider;
+  }
+
+  public async Task<Blog?> FirstOrDefaultAsync()
+  {
+    return await _dbContext.Blogs.AsNoTracking().FirstOrDefaultAsync();
   }
 
   public async Task<BlogItem> GetBlogItem()
   {
-    var blog = await _db.Blogs.AsNoTracking().OrderBy(b => b.Id).FirstAsync();
+    var blog = await _dbContext.Blogs.AsNoTracking().OrderBy(b => b.Id).FirstAsync();
     blog.Theme = blog.Theme.ToLower();
     return new BlogItem
     {
@@ -48,17 +45,17 @@ public class BlogProvider : IBlogProvider
 
   public async Task<Blog> GetBlog()
   {
-    return await _db.Blogs.OrderBy(b => b.Id).AsNoTracking().FirstAsync();
+    return await _dbContext.Blogs.OrderBy(b => b.Id).AsNoTracking().FirstAsync();
   }
 
   public async Task<ICollection<Category>> GetBlogCategories()
   {
-    return await _db.Categories.AsNoTracking().ToListAsync();
+    return await _dbContext.Categories.AsNoTracking().ToListAsync();
   }
 
   public async Task<bool> Update(Blog blog)
   {
-    var existing = await _db.Blogs.OrderBy(b => b.Id).FirstAsync();
+    var existing = await _dbContext.Blogs.OrderBy(b => b.Id).FirstAsync();
 
     existing.Title = blog.Title;
     existing.Description = blog.Description;
@@ -72,7 +69,7 @@ public class BlogProvider : IBlogProvider
     existing.AnalyticsListType = blog.AnalyticsListType;
     existing.AnalyticsPeriod = blog.AnalyticsPeriod;
 
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 
   private async Task<dynamic> GetValues(string theme)

@@ -1,0 +1,36 @@
+.btn-rounded {
+  border-radius: 6rem;
+}
+
+.btn {
+  text-transform: capitalize;
+
+  &-link {
+  }
+
+  &-outline {
+    &-default {
+      border-color: $secondary;
+      color: $gray-600;
+
+      &:hover {
+        color: $gray-800;
+        border-color: $gray-500;
+      }
+    }
+  }
+
+  &-xs {
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.2rem;
+  }
+  &-block {
+    width: 100%;
+  }
+
+  &-floating {
+    height: 3.125rem;
+    font-size: 0.9375rem;
+  }
+}

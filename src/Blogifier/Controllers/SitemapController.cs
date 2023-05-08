@@ -10,9 +10,9 @@ namespace Blogifier.Controllers;
 
 public class SitemapController : ControllerBase
 {
-  private readonly IPostProvider _postProvider;
+  private readonly PostProvider _postProvider;
 
-  public SitemapController(IPostProvider postProvider)
+  public SitemapController(PostProvider postProvider)
   {
     _postProvider = postProvider;
   }

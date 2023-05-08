@@ -10,9 +10,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class ThemeController : ControllerBase
 {
-  private readonly IStorageProvider _storageProvider;
+  private readonly StorageProvider _storageProvider;
 
-  public ThemeController(IStorageProvider storageProvider)
+  public ThemeController(StorageProvider storageProvider)
   {
     _storageProvider = storageProvider;
   }
