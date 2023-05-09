@@ -1,29 +1,43 @@
+using Blogifier.Blogs;
 using Blogifier.Shared;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Models;
 
 public class PostInfoModel
 {
+  public PostInfoModel(PostInfo post)
+  {
+
+  }
+
+  [Key]
   public int Id { get; set; }
-  public PostType PostType { get; set; }
+  public int UserId { get; set; }
+  public AuthorModel User { get; set; } = default!;
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+  public DateTime CreatedAt { get; set; }
+  [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+  public DateTime UpdatedAt { get; set; }
   [Required]
-  public string Title { get; set; }
-  public string Slug { get; set; }
-  public string Description { get; set; }
+  [StringLength(160)]
+  public string Title { get; set; } = default!;
   [Required]
-  public string Content { get; set; }
-  public ICollection<Category> Categories { get; set; }
-  public string Cover { get; set; }
-  public int PostViews { get; set; }
+  [StringLength(160)]
+  public string Slug { get; set; } = default!;
+  [Required]
+  [StringLength(450)]
+  public string Description { get; set; } = default!;
+  [Required]
+  public string Content { get; set; } = default!;
+  [StringLength(160)]
+  public string? Cover { get; set; }
+  public int Views { get; set; }
   public double Rating { get; set; }
-  public DateTime Published { get; set; }
-  public bool IsPublished { get { return Published > DateTime.MinValue; } }
-  public bool Featured { get; set; }
-  public Author Author { get; set; }
-  public SaveStatus Status { get; set; }
-  public List<SocialField> SocialFields { get; set; }
-  public bool Selected { get; set; }
+  public PostType Type { get; set; }
+  public PostState State { get; set; }
+  public DateTime PublishedAt { get; set; }
+  public bool IsFeatured { get; set; }
 }

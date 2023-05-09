@@ -47,9 +47,10 @@ public class HomeController : Controller
   public async Task<IActionResult> Index(int page = 1)
   {
     var blogData = await _blogManager.GetBlogDataAsync();
+    var posts = await _blogManager.GetPostsAsync(page, blogData.ItemsPerPage);
     var request = HttpContext.Request;
-    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(absoluteUrl, blogData, page);
+    var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var model = new IndexModel(url, blogData, page, posts);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
