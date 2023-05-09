@@ -1,5 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Options;
+using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -49,9 +50,9 @@ public class BlogManager
     return _blogData;
   }
 
-  public async Task<IEnumerable<PostInfo>> GetPostsAsync(int page, int items)
+  public async Task<IEnumerable<Post>> GetPostsAsync(int page, int items)
   {
     var skip = (page - 1) * items;
-    return await _dbContext.PostsInfo.Skip(skip).Take(items).ToListAsync();
+    return await _dbContext.Posts.Skip(skip).Take(items).ToListAsync();
   }
 }
