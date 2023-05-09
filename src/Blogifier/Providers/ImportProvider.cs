@@ -109,8 +109,6 @@ public class ImportProvider
         _logger.LogError("Error finding saved post - {Title}", post.Title);
         return false;
       }
-
-      savedPost.Blog = await _dbContext.Blogs.FirstOrDefaultAsync();
       return await _dbContext.SaveChangesAsync() > 0;
     }
     catch (Exception ex)
@@ -131,7 +129,7 @@ public class ImportProvider
 
     if (post.Cover != Constants.DefaultCover)
     {
-      var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+      var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
       //var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
       //if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
@@ -148,7 +146,7 @@ public class ImportProvider
       try
       {
         var tag = m.Groups[0].Value;
-        var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+        var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
         var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
         uri = ValidateUrl(uri);
@@ -201,7 +199,7 @@ public class ImportProvider
             if (src.ToLower().EndsWith($".{ext}"))
             {
               var uri = ValidateUrl(src);
-              var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.Published.Year, post.Published.Month);
+              var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
               //mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 

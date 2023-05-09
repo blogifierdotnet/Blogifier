@@ -1,4 +1,20 @@
-@model MainModel
+@{
+  var request = Url.ActionContext.HttpContext.Request;
+  var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+  var siteTitle = Model.Blog.Title;
+  var siteDesc = Model.Blog.Description;
+  var siteFeed = absoluteUrl + "/feed/rss";
+  var pageTitle = siteTitle + " | " + siteDesc;
+  var pageDesc = siteDesc;
+  var pageCanonical = absoluteUrl;
+
+  if (Model is PostModel)
+  {
+    pageTitle = Model.Post.Title + " | " + siteTitle;
+    pageDesc = Model.Post.Description.StripHtml();
+    pageCanonical = Model.Post.PostType == PostType.Post ? absoluteUrl + "/posts/" + Model.Post.Slug : absoluteUrl + "/" + Model.Post.Slug;
+  }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,10 +22,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@Model.Title</title>
-  <meta name="description" content="@Model.Description">
-  <link rel="alternate" type="application/rss+xml" title="@Model.Title" href="@Model.SiteFeed" />
-  <link rel="canonical" href="@Model.AbsoluteUrl" />
+  <title>@pageTitle</title>
+  <meta name="description" content="@pageDesc">
+  <link rel="alternate" type="application/rss+xml" title="@siteTitle" href="@siteFeed" />
+  <link rel="canonical" href="@pageCanonical" />
   <!-- TODO: These variables comes from customfiedls -->
   <style>
     :root {
@@ -30,7 +46,7 @@
     }
   </style>
   <link rel="stylesheet" href="~/themes/standard/css/styles.css" asp-append-version="true">
-  @Html.Raw(Model.HeaderScript)
+  @Html.Raw(Model.Blog.HeaderScript)
 </head>
 <body>
   <partial name="../components/header.cshtml" />
@@ -40,7 +56,7 @@
   <script src="~/themes/standard/js/highlight.js" asp-append-version="true"></script>
   <script src="~/themes/standard/js/scripts.js" asp-append-version="true"></script>
   <script src="~/themes/standard/js/newsletter.js" asp-append-version="true"></script>
-  @Html.Raw(Model.FooterScript)
+  @Html.Raw(Model.Blog.FooterScript)
 </body>
 
 </html>

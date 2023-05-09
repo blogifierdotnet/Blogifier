@@ -1,4 +1,5 @@
 using Blogifier;
+using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Identity;
 using Blogifier.Options;
@@ -81,6 +82,7 @@ builder.Services.AddScoped<ThemeProvider>();
 builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
+builder.Services.AddScoped<BlogManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

@@ -1,6 +1,5 @@
 using Blogifier.Blogs;
 using Blogifier.Extensions;
-using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -46,12 +45,17 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    var blogData = await _blogManager.GetBlogDataAsync();
-    var posts = await _blogManager.GetPostsAsync(page, blogData.ItemsPerPage);
-    var request = HttpContext.Request;
-    var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(url, blogData, page, posts);
-    return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
+    //var blogData = await _blogManager.GetBlogDataAsync();
+    //var posts = await _blogManager.GetPostsAsync(page, blogData.ItemsPerPage);
+    //var request = HttpContext.Request;
+    //var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    //var model = new IndexModel(url, blogData, page, posts);
+    //return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
+
+    var model = await GetBlogPosts(pager: page);
+    //If no blogs are setup redirect to first time registration
+    if (model == null) return Redirect("~/admin/register");
+    return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
   }
 
   [HttpGet("/{slug}")]
@@ -177,7 +181,6 @@ public class HomeController : Controller
     return result.Success;
   }
 
-
   public async Task<IActionResult> GetSingleBlogPost(string slug)
   {
     try
@@ -212,6 +215,7 @@ public class HomeController : Controller
       return Redirect("~/error");
     }
   }
+
   private async Task<ListModel> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
   {
     var model = new ListModel { };

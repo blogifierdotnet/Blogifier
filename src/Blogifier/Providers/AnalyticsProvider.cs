@@ -23,7 +23,7 @@ public class AnalyticsProvider
     {
       TotalPosts = _db.Posts.Where(p => p.PostType == PostType.Post).Count(),
       TotalPages = _db.Posts.Where(p => p.PostType == PostType.Page).Count(),
-      TotalViews = _db.Posts.Select(v => v.PostViews).Sum(),
+      TotalViews = _db.Posts.Select(v => v.Views).Sum(),
       TotalSubscribers = _db.Subscribers.Count(),
       LatestPostViews = GetLatestPostViews(),
       DisplayType = blog.AnalyticsListType > 0 ? (AnalyticsListType)blog.AnalyticsListType : AnalyticsListType.Graph,
@@ -51,16 +51,16 @@ public class AnalyticsProvider
     var blog = _db.Blogs.OrderBy(b => b.Id).First();
     var period = blog.AnalyticsPeriod == 0 ? 3 : blog.AnalyticsPeriod;
 
-    var posts = _db.Posts.AsNoTracking().Where(p => p.Published > DateTime.MinValue).OrderByDescending(p => p.Published).Take(GetDays(period));
+    var posts = _db.Posts.AsNoTracking().Where(p => p.PublishedAt > DateTime.MinValue).OrderByDescending(p => p.PublishedAt).Take(GetDays(period));
     if (posts == null || posts.Count() < 3)
       return null;
 
-    posts = posts.OrderBy(p => p.Published);
+    posts = posts.OrderBy(p => p.PublishedAt);
 
     return new BarChartModel()
     {
       Labels = posts.Select(p => p.Title).ToList(),
-      Data = posts.Select(p => p.PostViews).ToList()
+      Data = posts.Select(p => p.Views).ToList()
     };
   }
 

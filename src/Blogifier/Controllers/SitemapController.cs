@@ -48,6 +48,6 @@ public class SitemapController : ControllerBase
 
   public string GetPostDate(Post post)
   {
-    return post.Published.ToString("yyyy-MM-ddTHH:mm:sszzz");
+    return post.PublishedAt.ToString("yyyy-MM-ddTHH:mm:sszzz");
   }
 }
