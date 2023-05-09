@@ -38,10 +38,10 @@ public class BlogManager
     }
     _blogData = new BlogData
     {
-      Title = "Blog Title",
-      Description = "Short Blog Description",
-      Theme = "standard",
-      ItemsPerPage = 10,
+      Title = BlogifierConstant.DefaultTitle,
+      Description = BlogifierConstant.DefaultDescription,
+      Theme = BlogifierConstant.DefaultTheme,
+      ItemsPerPage = BlogifierConstant.DefaultItemsPerPage,
     };
     value = JsonSerializer.Serialize(_blogData);
     _logger.LogCritical("blog initialize {value}", value);
