@@ -19,74 +19,6 @@ namespace Blogifier.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Blogifier.Blogs.PostInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Cover")
-                        .HasMaxLength(160)
-                        .HasColumnType("varchar(160)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("varchar(450)");
-
-                    b.Property<bool>("IsFeatured")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("PublishedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("double");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(160)
-                        .HasColumnType("varchar(160)");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(160)
-                        .HasColumnType("varchar(160)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Views")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Slug")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PostInfo", (string)null);
-                });
-
             modelBuilder.Entity("Blogifier.Identity.RoleInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -483,10 +415,7 @@ namespace Blogifier.Data.Migrations
                     b.Property<int>("PostType")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostViews")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Published")
+                    b.Property<DateTime>("PublishedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("Rating")
@@ -500,6 +429,9 @@ namespace Blogifier.Data.Migrations
                         .HasMaxLength(160)
                         .HasColumnType("varchar(160)");
 
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(160)
@@ -509,9 +441,17 @@ namespace Blogifier.Data.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BlogId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -722,17 +662,6 @@ namespace Blogifier.Data.Migrations
                     b.ToTable("UserToken", (string)null);
                 });
 
-            modelBuilder.Entity("Blogifier.Blogs.PostInfo", b =>
-                {
-                    b.HasOne("Blogifier.Identity.UserInfo", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Blogifier.Shared.Author", b =>
                 {
                     b.HasOne("Blogifier.Shared.Blog", null)
@@ -762,11 +691,17 @@ namespace Blogifier.Data.Migrations
 
             modelBuilder.Entity("Blogifier.Shared.Post", b =>
                 {
-                    b.HasOne("Blogifier.Shared.Blog", "Blog")
+                    b.HasOne("Blogifier.Shared.Blog", null)
                         .WithMany("Posts")
                         .HasForeignKey("BlogId");
 
-                    b.Navigation("Blog");
+                    b.HasOne("Blogifier.Identity.UserInfo", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>

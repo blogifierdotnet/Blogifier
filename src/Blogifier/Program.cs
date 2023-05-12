@@ -103,6 +103,8 @@ builder.Services.AddControllersWithViews()
   .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Resource)));
 builder.Services.AddRazorPages().AddViewLocalization();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
