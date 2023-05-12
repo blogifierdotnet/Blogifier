@@ -1,4 +1,4 @@
-@model ListModel
+@model PostsModel
 @{
   var _featured = Model.Posts.Where(p => p.Featured).Take(3).ToList();
 }

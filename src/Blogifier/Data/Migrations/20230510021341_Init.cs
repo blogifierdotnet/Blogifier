@@ -246,46 +246,6 @@ namespace Blogifier.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Posts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    PostType = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Slug = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Content = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Cover = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PostViews = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<double>(type: "double", nullable: false),
-                    IsFeatured = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Selected = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Published = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    BlogId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Posts_Blogs_BlogId",
-                        column: x => x.BlogId,
-                        principalTable: "Blogs",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Subscribers",
                 columns: table => new
                 {
@@ -341,16 +301,17 @@ namespace Blogifier.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PostInfo",
+                name: "Posts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Slug = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
@@ -363,16 +324,23 @@ namespace Blogifier.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Views = table.Column<int>(type: "int", nullable: false),
                     Rating = table.Column<double>(type: "double", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    State = table.Column<int>(type: "int", nullable: false),
+                    IsFeatured = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PublishedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsFeatured = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    PostType = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false),
+                    Selected = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    BlogId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostInfo", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PostInfo_User_UserId",
+                        name: "FK_Posts_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Posts_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -554,20 +522,14 @@ namespace Blogifier.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostInfo_Slug",
-                table: "PostInfo",
-                column: "Slug",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostInfo_UserId",
-                table: "PostInfo",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Posts_BlogId",
                 table: "Posts",
                 column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -631,9 +593,6 @@ namespace Blogifier.Data.Migrations
                 name: "PostCategories");
 
             migrationBuilder.DropTable(
-                name: "PostInfo");
-
-            migrationBuilder.DropTable(
                 name: "RoleClaim");
 
             migrationBuilder.DropTable(
@@ -664,10 +623,10 @@ namespace Blogifier.Data.Migrations
                 name: "Role");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Blogs");
 
             migrationBuilder.DropTable(
-                name: "Blogs");
+                name: "User");
         }
     }
 }

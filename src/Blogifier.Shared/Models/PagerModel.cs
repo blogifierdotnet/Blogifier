@@ -1,18 +1,7 @@
-using Blogifier.Blogs;
-
 namespace Blogifier.Models;
 
 public class PagerModel : MainModel
 {
-  public PagerModel(string absoluteUrl, BlogData blogData, int currentPage) : base(absoluteUrl, blogData)
-  {
-    CurrentPage = currentPage;
-    ItemsPerPage = blogData.ItemsPerPage;
-    Newer = CurrentPage - 1;
-    ShowNewer = CurrentPage > 1 ? true : false;
-    Older = currentPage + 1;
-  }
-
   public int CurrentPage { get; set; } = 1;
   public int ItemsPerPage { get; set; }
   public int Total { get; set; }
@@ -21,9 +10,9 @@ public class PagerModel : MainModel
   public bool ShowNewer { get; set; }
   public int Older { get; set; }
   public bool ShowOlder { get; set; }
-  public string LinkToNewer { get; set; }
-  public string LinkToOlder { get; set; }
-  public string RouteValue { get; set; }
+  public string LinkToNewer { get; set; } = default!;
+  public string LinkToOlder { get; set; } = default!;
+  public string RouteValue { get; set; } = default!;
   public int LastPage { get; set; } = 1;
 
   public void Configure(int total)

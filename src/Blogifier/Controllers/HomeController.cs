@@ -46,10 +46,11 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    var blogData = await _blogManager.GetBlogDataAsync();
+    var data = await _blogManager.GetBlogDataAsync();
+    var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
     var request = HttpContext.Request;
-    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(absoluteUrl, blogData, page);
+    var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var model = new IndexModel();
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
@@ -176,7 +177,6 @@ public class HomeController : Controller
     return result.Success;
   }
 
-
   public async Task<IActionResult> GetSingleBlogPost(string slug)
   {
     try
@@ -211,6 +211,7 @@ public class HomeController : Controller
       return Redirect("~/error");
     }
   }
+
   private async Task<ListModel> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
   {
     var model = new ListModel { };

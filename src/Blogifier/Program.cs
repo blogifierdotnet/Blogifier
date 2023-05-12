@@ -1,4 +1,5 @@
 using Blogifier;
+using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Identity;
 using Blogifier.Options;
@@ -81,6 +82,7 @@ builder.Services.AddScoped<ThemeProvider>();
 builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
+builder.Services.AddScoped<BlogManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -100,6 +102,8 @@ builder.Services.AddOutputCache(options =>
 builder.Services.AddControllersWithViews()
   .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Resource)));
 builder.Services.AddRazorPages().AddViewLocalization();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 using var scope = app.Services.CreateScope();
