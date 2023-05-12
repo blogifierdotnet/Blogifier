@@ -56,6 +56,7 @@ public class HomeController : Controller
     var request = HttpContext.Request;
     var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
     var model = new IndexModel(url, postsDto, page, data.ItemsPerPage);
+    _mapper.Map<BlogData, IndexModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
