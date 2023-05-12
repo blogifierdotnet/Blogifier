@@ -52,11 +52,11 @@ public class HomeController : Controller
   {
     var data = await _blogManager.GetBlogDataAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
-    var postsDto = _mapper.Map<IEnumerable<PostItemModel>>(posts);
+    var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
     var request = HttpContext.Request;
-    var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(url, postsDto, page, data.ItemsPerPage);
-    _mapper.Map<BlogData, IndexModel>(data, model);
+    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl);
+    _mapper.Map<BlogData, MainModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 

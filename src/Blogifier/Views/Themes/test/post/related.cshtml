@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @{
    PostModel _model = (PostModel)Model;
-   List<PostItemModel> _related = _model.Related.Take(3).ToList();
+   List<PostItemDto> _related = _model.Related.Take(3).ToList();
 }
 <!--
     TODO:

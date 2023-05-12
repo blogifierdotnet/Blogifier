@@ -7,6 +7,6 @@ public class PostItemProfile : Profile
 {
   public PostItemProfile()
   {
-    CreateMap<Post, PostItemModel>();
+    CreateMap<Post, PostItemDto>();
   }
 }

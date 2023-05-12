@@ -51,7 +51,7 @@ public class PostProvider
         .ToListAsync();
   }
 
-  public async Task<IEnumerable<PostItemModel>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
+  public async Task<IEnumerable<PostItemDto>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false)
   {
     term = term.ToLower();
     var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
@@ -100,7 +100,7 @@ public class PostProvider
 
     results = results.OrderByDescending(r => r.Rank).ToList();
 
-    var posts = new List<PostItemModel>();
+    var posts = new List<PostItemDto>();
     for (int i = 0; i < results.Count; i++)
     {
       posts.Add(results[i].Item);
@@ -114,14 +114,14 @@ public class PostProvider
     return await _db.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
   }
 
-  public async Task<IEnumerable<PostItemModel>> GetPostItems()
+  public async Task<IEnumerable<PostItemDto>> GetPostItems()
   {
     var posts = await _db.Posts.ToListAsync();
-    var postItems = new List<PostItemModel>();
+    var postItems = new List<PostItemDto>();
 
     foreach (var post in posts)
     {
-      postItems.Add(new PostItemModel
+      postItems.Add(new PostItemDto
       {
         Id = post.Id,
         Title = post.Title,
@@ -262,7 +262,7 @@ public class PostProvider
     return await _db.SaveChangesAsync() > 0;
   }
 
-  public async Task<IEnumerable<PostItemModel>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true)
+  public async Task<IEnumerable<PostItemDto>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true)
   {
     var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
@@ -293,7 +293,7 @@ public class PostProvider
     }
     pager.Configure(posts.Count);
 
-    var items = new List<PostItemModel>();
+    var items = new List<PostItemDto>();
     foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
     {
       items.Add(await PostToItem(p, sanitize));
@@ -301,7 +301,7 @@ public class PostProvider
     return await Task.FromResult(items);
   }
 
-  public async Task<IEnumerable<PostItemModel>> GetPopular(Pager pager, int author = 0)
+  public async Task<IEnumerable<PostItemDto>> GetPopular(Pager pager, int author = 0)
   {
     var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
 
@@ -316,7 +316,7 @@ public class PostProvider
 
     pager.Configure(posts.Count);
 
-    var items = new List<PostItemModel>();
+    var items = new List<PostItemDto>();
     foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
     {
       items.Add(await PostToItem(p, true));
@@ -337,9 +337,9 @@ public class PostProvider
 
   #region Private methods
 
-  async Task<PostItemModel> PostToItem(Post p, bool sanitize = false)
+  async Task<PostItemDto> PostToItem(Post p, bool sanitize = false)
   {
-    var post = new PostItemModel
+    var post = new PostItemDto
     {
       Id = p.Id,
       PostType = p.PostType,

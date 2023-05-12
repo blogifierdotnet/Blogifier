@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Blogifier.Models;
 
-public class IndexModel : PagerModel<PostItemModel>
+public class IndexModel : PostsModel
 {
-  public IndexModel(string absoluteUrl, IEnumerable<PostItemModel> itmes, int currentPage, int itemsPerPage = 10)
-    : base(absoluteUrl, itmes, currentPage, itemsPerPage)
+  public IndexModel(IEnumerable<PostItemDto> items,  int currentPage, int itemsPerPage, string absoluteUrl)
+    : base(items,  currentPage, itemsPerPage, absoluteUrl)
   {
   }
 }

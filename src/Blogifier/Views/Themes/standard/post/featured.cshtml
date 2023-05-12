@@ -1,4 +1,4 @@
-@model PagerModel<PostItemModel>
+@model PostsModel
 @{
   var _featured = Model.Items.Where(p => p.Featured).Take(3).ToList();
 }
