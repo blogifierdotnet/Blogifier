@@ -1,6 +1,6 @@
 @{
    ListModel _model = (ListModel)Model;
-   List<PostItem> _featured = _model.Posts.Where(p => p.Featured).Take(3).ToList();
+   List<PostItemModel> _featured = _model.Posts.Where(p => p.Featured).Take(3).ToList();
 }
 
 @if(_featured != null)
@@ -10,7 +10,7 @@
         @for (int i = 0; i < _featured.Count; i++)
         {
             string active = i == 0 ? "active" : "";
-            PostItem item = _featured[i];
+            PostItemModel item = _featured[i];
 
             <div class="carousel-item @active">
                 <article class="featured-item row">

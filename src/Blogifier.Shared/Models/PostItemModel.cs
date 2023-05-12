@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared;
 
-public class PostItem
+public class PostItemModel
 {
   public int Id { get; set; }
   public PostType PostType { get; set; }
@@ -29,7 +29,7 @@ public class PostItem
   #region IEquatable
   // to be able compare two posts
   // if(post1 == post2) { ... }
-  public bool Equals(PostItem other)
+  public bool Equals(PostItemModel other)
   {
     if (Id == other.Id)
       return true;

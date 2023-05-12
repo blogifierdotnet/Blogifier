@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 
-namespace Blogifier.Shared
+namespace Blogifier.Shared;
+
+public class BarChartModel
 {
-  public class BarChartModel
-  {
-    public ICollection<string> Labels { get; set; }
-    public ICollection<int> Data { get; set; }
-  }
+  public ICollection<string> Labels { get; set; } = default!;
+  public ICollection<int> Data { get; set; } = default!;
 }

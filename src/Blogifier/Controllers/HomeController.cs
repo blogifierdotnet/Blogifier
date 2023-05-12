@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Extensions;
 using Blogifier.Models;
@@ -18,6 +19,7 @@ namespace Blogifier.Controllers;
 
 public class HomeController : Controller
 {
+  protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
@@ -27,6 +29,7 @@ public class HomeController : Controller
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
   public HomeController(
+    IMapper mapper,
     BlogManager blogManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
@@ -35,6 +38,7 @@ public class HomeController : Controller
     ThemeProvider themeProvider,
     ICompositeViewEngine compositeViewEngine)
   {
+    _mapper = mapper;
     _blogManager = blogManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
@@ -48,9 +52,10 @@ public class HomeController : Controller
   {
     var data = await _blogManager.GetBlogDataAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
+    var postsDto = _mapper.Map<IEnumerable<PostItemModel>>(posts);
     var request = HttpContext.Request;
     var url = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel();
+    var model = new IndexModel(url, postsDto, page, data.ItemsPerPage);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 

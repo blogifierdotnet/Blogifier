@@ -1,6 +1,6 @@
-@model PostsModel
+@model PagerModel<PostItemModel>
 @{
-  var _featured = Model.Posts.Where(p => p.Featured).Take(3).ToList();
+  var _featured = Model.Items.Where(p => p.Featured).Take(3).ToList();
 }
 
 @if (_featured != null && _featured.Count > 0)
