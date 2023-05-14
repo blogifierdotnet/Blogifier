@@ -1,18 +1,12 @@
 @using Microsoft.Extensions.Localization
 @using Blogifier.Shared.Resources
 @using Blogifier.Shared
-
-@model ListModel
-
+@model PostsModel
 @inject IStringLocalizer<Resource> _localizer
 
-@{
-  var root = Url.Content("~/");
-}
-
-@if (Model.Posts.Count() > 0)
+@if (Model.Items.Count() > 0)
 {
-  @foreach (var post in Model.Posts)
+  @foreach (var post in Model.Items)
   {
     <article class="post-list d-flex">
       <figure class="post-list-cover">

@@ -3,6 +3,7 @@ using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -43,6 +44,8 @@ public class BlogManager
       Description = BlogifierConstant.DefaultDescription,
       Theme = BlogifierConstant.DefaultTheme,
       ItemsPerPage = BlogifierConstant.DefaultItemsPerPage,
+      Version = BlogifierConstant.DefaultVersion,
+      Logo = BlogifierConstant.DefaultLogo
     };
     value = JsonSerializer.Serialize(_blogData);
     _logger.LogCritical("blog initialize {value}", value);
@@ -53,6 +56,24 @@ public class BlogManager
   public async Task<IEnumerable<Post>> GetPostsAsync(int page, int items)
   {
     var skip = (page - 1) * items;
-    return await _dbContext.Posts.Skip(skip).Take(items).ToListAsync();
+    return await _dbContext.Posts
+      .OrderByDescending(m => m.CreatedAt)
+      .Skip(skip)
+      .Take(items)
+      .ToListAsync();
+  }
+
+  public async Task<IEnumerable<CategoryItem>> GetCategoryItemesAsync()
+  {
+    return await _dbContext.PostCategories.Include(pc => pc.Category)
+          .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
+          .Select(m => new CategoryItem
+          {
+            Id = m.Key.Id,
+            Category = m.Key.Content,
+            Description = m.Key.Description,
+            PostCount = m.Count()
+          })
+          .ToListAsync();
   }
 }

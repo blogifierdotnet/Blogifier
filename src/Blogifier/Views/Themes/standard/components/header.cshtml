@@ -2,16 +2,10 @@
 @using Blogifier.Shared.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> _localizer
+@model MainModel
 @{
-  var request = Url.ActionContext.HttpContext.Request;
-  var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-
-  var siteTitle = Model.Blog.Title;
-  var siteDesc = Model.Blog.Description;
-
   @* TODO: Customfield *@
   var siteMark = "titleDesc";
-  var siteLogo = "themes/standard/img/logo-black.png";
 }
 
 <header class="header">
@@ -19,18 +13,18 @@
     <section class="header-sign py-4 py-md-0 text-center text-md-start me-md-auto">
       @if (siteMark == "logo")
       {
-        <a class="header-logo" href="@absoluteUrl">
-          <img class="header-logo-img" src="~/@siteLogo" alt="@siteTitle @_localizer["logo"]">
+        <a class="header-logo" href="@Model.AbsoluteUrl">
+          <img class="header-logo-img" src="~/@Model.Logo" alt="@Model.Title @_localizer["logo"]">
         </a>
       }
       else if (siteMark == "title")
       {
-        <a class="header-title" href="@absoluteUrl">@siteTitle</a>
+        <a class="header-title" href="@Model.AbsoluteUrl">@Model.Title</a>
       }
       else if (siteMark == "titleDesc")
       {
-        <a class="header-title" href="@absoluteUrl">@siteTitle</a>
-        <p class="header-desc">@siteDesc</p>
+        <a class="header-title" href="@Model.AbsoluteUrl">@Model.Title</a>
+        <p class="header-desc">@Model.Description</p>
       }
     </section>
 

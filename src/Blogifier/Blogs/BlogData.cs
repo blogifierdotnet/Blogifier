@@ -10,4 +10,5 @@ public class BlogData
   public int ItemsPerPage { get; set; }
   public string? HeaderScript { get; set; }
   public string? FooterScript { get; set; }
+  public string Version { get; set; } = default!;
 }

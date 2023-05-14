@@ -10,5 +10,7 @@ public class BlogifierConstant
   public const string DefaultTitle = "Blog Title";
   public const string DefaultDescription = "Short Blog Description";
   public const string DefaultTheme = "standard";
+  public const string DefaultVersion = "3.0";
+  public const string DefaultLogo = "themes/standard/img/logo-black.png";
   public const int DefaultItemsPerPage = 10;
 }

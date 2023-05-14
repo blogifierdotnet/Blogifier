@@ -2,14 +2,12 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject CategoryProvider _categoryProvider
 @inject AuthorProvider _authorProvider
-
+@model MainModel
 @{
-  var categories = await _categoryProvider.Categories();
-  var catUrl = Url.Content("~/categories");
+  var categoryUrl = Url.Content("~/categories");
 }
 
 <nav class="header-nav d-flex">
-
   <!-- Topics -->
   <div class="dropdown me-auto me-md-0">
     <button class="header-nav-link" type="button" id="mainNav" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,10 +19,10 @@
       </svg>
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mainNav">
-      @foreach (var item in categories)
+      @foreach (var item in Model.Categories)
       {
         <li>
-          <a class="dropdown-item" href="@catUrl/@item.Category">@item.Category</a>
+          <a class="dropdown-item" href="@categoryUrl/@item.Category">@item.Category</a>
         </li>
       }
     </ul>
@@ -114,7 +112,6 @@
   @if (User.Identity != null && User.Identity.IsAuthenticated)
   {
     var currentUserAuthor = await _authorProvider.FindByEmail(User.Identity.Name);
-
     <div class="dropdown">
       <button class="header-nav-link -login ms-4" title="@_localizer["login"]" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Admin Menu - John">

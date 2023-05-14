@@ -51,11 +51,13 @@ public class HomeController : Controller
   public async Task<IActionResult> Index(int page = 1)
   {
     var data = await _blogManager.GetBlogDataAsync();
+    var categoryItemes = await _blogManager.GetCategoryItemesAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
+    var categoryItemesDto = _mapper.Map<IEnumerable<CategoryItemDto>>(categoryItemes);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
     var request = HttpContext.Request;
     var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl);
+    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, categoryItemesDto);
     _mapper.Map<BlogData, MainModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
