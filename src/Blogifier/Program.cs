@@ -33,9 +33,9 @@ builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
 {
   options.Password.RequireUppercase = false;
   options.Password.RequireNonAlphanumeric = false;
-  options.ClaimsIdentity.UserIdClaimType = UserInfo.ClaimTypes.UserId;
-  options.ClaimsIdentity.UserNameClaimType = UserInfo.ClaimTypes.UserName;
-  options.ClaimsIdentity.SecurityStampClaimType = UserInfo.ClaimTypes.SecurityStamp;
+  options.ClaimsIdentity.UserIdClaimType = IIdentityUser.ClaimTypes.UserId;
+  options.ClaimsIdentity.UserNameClaimType = IIdentityUser.ClaimTypes.UserName;
+  options.ClaimsIdentity.SecurityStampClaimType = IIdentityUser.ClaimTypes.SecurityStamp;
 }).AddUserManager<UserManager>()
   .AddRoleManager<RoleManager>()
   .AddSignInManager<SignInManager>()
@@ -83,6 +83,7 @@ builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
 builder.Services.AddScoped<BlogManager>();
+builder.Services.AddScoped<IdentityManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

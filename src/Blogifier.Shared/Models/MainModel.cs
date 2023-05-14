@@ -4,9 +4,10 @@ namespace Blogifier.Models;
 
 public class MainModel
 {
-  public MainModel(string absoluteUrl, IEnumerable<CategoryItemDto> categories)
+  public MainModel(string absoluteUrl, IdentityUserDto? identity, IEnumerable<CategoryItemDto> categories)
   {
     AbsoluteUrl = absoluteUrl;
+    Identity = identity;
     Categories = categories;
   }
   public string AbsoluteUrl { get; set; }
@@ -18,5 +19,6 @@ public class MainModel
   public string? HeaderScript { get; set; }
   public string? FooterScript { get; set; }
   public string Version { get; set; } = default!;
+  public IdentityUserDto? Identity { get; set; }
   public IEnumerable<CategoryItemDto> Categories { get; set; }
 }

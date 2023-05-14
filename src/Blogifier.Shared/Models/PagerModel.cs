@@ -1,11 +1,17 @@
 using Blogifier.Models;
+using System.Collections.Generic;
 
 namespace Blogifier.Shared;
 
 public class PagerModel : MainModel
 {
-  public PagerModel(int currentPage, int itemsPerPage, string absoluteUrl, System.Collections.Generic.IEnumerable<CategoryItemDto> categories)
-    : base(absoluteUrl, categories)
+  public PagerModel(
+    int currentPage,
+    int itemsPerPage,
+    string absoluteUrl,
+    IdentityUserDto? identity,
+    IEnumerable<CategoryItemDto> categories)
+    : base(absoluteUrl, identity, categories)
   {
     CurrentPage = currentPage;
     ItemsPerPage = itemsPerPage;

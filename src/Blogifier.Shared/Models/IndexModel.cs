@@ -5,8 +5,14 @@ namespace Blogifier.Models;
 
 public class IndexModel : PostsModel
 {
-  public IndexModel(IEnumerable<PostItemDto> items,  int currentPage, int itemsPerPage, string absoluteUrl, IEnumerable<CategoryItemDto> categories)
-    : base(items,  currentPage, itemsPerPage, absoluteUrl, categories)
+  public IndexModel(
+    IEnumerable<PostItemDto> items,
+    int currentPage,
+    int itemsPerPage,
+    string absoluteUrl,
+    IdentityUserDto? identity,
+    IEnumerable<CategoryItemDto> categories)
+    : base(items, currentPage, itemsPerPage, absoluteUrl, identity, categories)
   {
   }
 }

@@ -5,8 +5,14 @@ namespace Blogifier.Models;
 
 public class PostsModel : PagerModel
 {
-  public PostsModel(IEnumerable<PostItemDto> items, int currentPage, int itemsPerPage , string absoluteUrl, IEnumerable<CategoryItemDto> categories)
-    : base( currentPage, itemsPerPage, absoluteUrl, categories)
+  public PostsModel(
+    IEnumerable<PostItemDto> items,
+    int currentPage,
+    int itemsPerPage ,
+    string absoluteUrl,
+    IdentityUserDto? identity,
+    IEnumerable<CategoryItemDto> categories)
+    : base( currentPage, itemsPerPage, absoluteUrl, identity, categories)
   {
     Items = items;
   }

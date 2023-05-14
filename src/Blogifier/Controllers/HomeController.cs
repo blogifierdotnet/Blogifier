@@ -1,6 +1,7 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Extensions;
+using Blogifier.Identity;
 using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
@@ -21,6 +22,7 @@ public class HomeController : Controller
 {
   protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
+  protected readonly IdentityManager _identityManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
   protected readonly FeedProvider _feedProvider;
@@ -31,6 +33,7 @@ public class HomeController : Controller
   public HomeController(
     IMapper mapper,
     BlogManager blogManager,
+    IdentityManager identityManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
     FeedProvider feedProvider,
@@ -40,6 +43,7 @@ public class HomeController : Controller
   {
     _mapper = mapper;
     _blogManager = blogManager;
+    _identityManager = identityManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
     _feedProvider = feedProvider;
@@ -53,11 +57,13 @@ public class HomeController : Controller
     var data = await _blogManager.GetBlogDataAsync();
     var categoryItemes = await _blogManager.GetCategoryItemesAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
+    var identity = _identityManager.GetIdentityUser(User);
+    var identityDto = _mapper.Map<IdentityUserDto>(identity);
     var categoryItemesDto = _mapper.Map<IEnumerable<CategoryItemDto>>(categoryItemes);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
     var request = HttpContext.Request;
     var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, categoryItemesDto);
+    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, identityDto, categoryItemesDto);
     _mapper.Map<BlogData, MainModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
