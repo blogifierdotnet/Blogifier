@@ -19,6 +19,8 @@ public class IdentityManager
           userInfo.SecurityStamp = claim.Value; break;
         case IIdentityUser.ClaimTypes.UserName:
           userInfo.UserName = claim.Value; break;
+        case IIdentityUser.ClaimTypes.NickName:
+          userInfo.NickName = claim.Value; break;
         case IIdentityUser.ClaimTypes.Avatar:
           userInfo.Avatar = claim.Value; break;
         case IIdentityUser.ClaimTypes.Gender:

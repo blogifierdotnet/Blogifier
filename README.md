@@ -1,7 +1,8 @@
 <br>
 <h3 align="center">Blogifier</h3>
 <p align="center">
-    Blogifier is a self-hosted open source publishing platform written in ASP.NET and Blazor WebAssembly. It can be used to quickly and easily set up a lightweight, but fully functional personal or group blog.
+    Blogifier is a self-hosted open source publishing platform written in ASP.NET and Blazor WebAssembly. 
+    It can be used to quickly and easily set up a lightweight, but fully functional personal or group blog.
 </p>
 
 <br><br>
@@ -9,7 +10,7 @@
 
 Steps to install compiled application on the server for a self-hosting:
 
-1. .NET Core Runtime (currently 6.0) must be installed on your host server.
+1. .NET Core Runtime (currently 7.0) must be installed on your host server.
 2. [Download](https://github.com/blogifierdotnet/Blogifier/releases) the latest release.
 3. Unzip and copy to your host server.<br>
 4. Restart your website.

@@ -44,12 +44,16 @@ public class AccountController : Controller
   {
     if (ModelState.IsValid)
     {
-      var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, lockoutOnFailure: true);
-      if (result.Succeeded)
+      var user = await _userManager.FindByEmailAsync(model.Email);
+      if (user != null)
       {
-        _logger.LogInformation("User logged in.");
-        model.RedirectUri ??= "/";
-        return LocalRedirect(model.RedirectUri);
+        var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, lockoutOnFailure: true);
+        if (result.Succeeded)
+        {
+          _logger.LogInformation("User logged in.");
+          model.RedirectUri ??= "/";
+          return LocalRedirect(model.RedirectUri);
+        }
       }
       model.ShowError = true;
     }
@@ -70,7 +74,12 @@ public class AccountController : Controller
   {
     if (ModelState.IsValid)
     {
-      var user = new UserInfo { UserName = model.UserName, Email = model.Email };
+      var user = new UserInfo
+      {
+        UserName = model.UserName,
+        NickName = model.NickName,
+        Email = model.Email
+      };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
@@ -80,5 +89,12 @@ public class AccountController : Controller
     }
     var data = await _blogManager.GetBlogDataAsync();
     return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
+  }
+
+  [HttpGet("logout")]
+  public async Task<IActionResult> Logout()
+  {
+    await _signInManager.SignOutAsync();
+    return Redirect("~/");
   }
 }

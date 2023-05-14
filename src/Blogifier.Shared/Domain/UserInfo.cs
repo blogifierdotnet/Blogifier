@@ -10,7 +10,7 @@ public class UserInfo : IdentityUser<int>, IIdentityUser
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   [StringLength(256)]
-  public string Nickname { get; set; } = default!;
+  public string NickName { get; set; } = default!;
   [StringLength(1024)]
   public string? Avatar { get; set; }
   [StringLength(2048)]

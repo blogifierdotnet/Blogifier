@@ -447,4 +447,7 @@
   <data name="drive-describe" xml:space="preserve">
     <value>Drive 是一种文件存储，您可以上传和管理您的文件并在整个网站上使用。</value>
   </data>
+  <data name="nick-name" xml:space="preserve">
+    <value>昵称</value>
+  </data>
 </root>

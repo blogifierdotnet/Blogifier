@@ -19,8 +19,13 @@
 <form method="post" asp-controller="account" asp-action="register">
   <input type="hidden" asp-for="RedirectUri" />
   <div class="form-floating form-item">
-    <input id="registerName" asp-for="UserName" class="form-control" type="text" placeholder="@_localizer["user-name"]">
-    <label for="registerName">@_localizer["user-name"]</label>
+    <input id="userName" asp-for="UserName" class="form-control" type="text" placeholder="@_localizer["user-name"]">
+    <label for="userName">@_localizer["user-name"]</label>
+    <span class="validation-message" asp-validation-for="UserName"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="nickname" asp-for="NickName" class="form-control" type="text" placeholder="@_localizer["nick-name"]">
+    <label for="nickname">@_localizer["nick-name"]</label>
     <span class="validation-message" asp-validation-for="UserName"></span>
   </div>
   <div class="form-floating form-item">
