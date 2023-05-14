@@ -1,4 +1,4 @@
-﻿@layout AccountLayout
+@layout AccountLayout
 @page "/admin/register/"
 @inject HttpClient Http
 @inject NavigationManager _navigationManager
@@ -26,8 +26,8 @@
       <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
     </div>
     <div class="form-floating form-item">
-      <input @bind="model.Name" id="registerName" class="form-control" type="text" placeholder="@_localizer["name"]">
-      <label for="registerName">@_localizer["name"]</label>
+      <input @bind="model.Name" id="registerName" class="form-control" type="text" placeholder="@_localizer["user-name"]">
+      <label for="registerName">@_localizer["user-name"]</label>
       <ValidationMessage For="@(() => model.Name)"></ValidationMessage>
     </div>
     <div class="form-floating form-item">

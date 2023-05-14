@@ -1,6 +1,5 @@
 using Blogifier.Blogs;
 using Blogifier.Identity;
-using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +19,7 @@ public class AccountController : Controller
     ILogger<AccountController> logger,
     UserManager userManager,
     SignInManager signInManager,
-    BlogManager  blogManager)
+    BlogManager blogManager)
   {
     _logger = logger;
     _userManager = userManager;
