@@ -226,7 +226,7 @@ public class HomeController : Controller
     }
   }
 
-  private async Task<ListModel> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
+  private async Task<ListModel?> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
   {
     var model = new ListModel { };
     try
