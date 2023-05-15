@@ -8,6 +8,6 @@ public class IdentityUserProfile : Profile
 {
   public IdentityUserProfile()
   {
-    CreateMap<UserInfo, IdentityUserDto>();
+    CreateMap<IdentityUser, IdentityUserDto>();
   }
 }

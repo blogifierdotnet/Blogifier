@@ -30,8 +30,8 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
       {
         var claims = new List<Claim>
         {
-          new Claim(AppClaimTypes.UserId, identity.Id.ToString()),
-          new Claim(AppClaimTypes.SecurityStamp, identity.SecurityStamp),
+          new Claim(ClaimTypes.Name, identity.UserName),
+          new Claim(AppClaimTypes.UserId, identity.UserId),
           new Claim(AppClaimTypes.UserName, identity.UserName),
           new Claim(AppClaimTypes.NickName, identity.NickName)
         };

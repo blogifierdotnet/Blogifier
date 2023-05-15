@@ -24,7 +24,6 @@ public class HomeController : Controller
   protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
-  protected readonly IdentityManager _identityManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
   protected readonly FeedProvider _feedProvider;
@@ -36,7 +35,6 @@ public class HomeController : Controller
     ILogger<HomeController> logger,
     IMapper mapper,
     BlogManager blogManager,
-    IdentityManager identityManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
     FeedProvider feedProvider,
@@ -47,7 +45,6 @@ public class HomeController : Controller
     _logger = logger;
     _mapper = mapper;
     _blogManager = blogManager;
-    _identityManager = identityManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
     _feedProvider = feedProvider;
@@ -70,7 +67,7 @@ public class HomeController : Controller
     }
     var categoryItemes = await _blogManager.GetCategoryItemesAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
-    var identity = _identityManager.GetIdentityUser(User);
+    var identity = IdentityUser.Analysis(User);
     var identityDto = _mapper.Map<IdentityUserDto>(identity);
     var categoryItemesDto = _mapper.Map<IEnumerable<CategoryItemDto>>(categoryItemes);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
@@ -186,16 +183,14 @@ public class HomeController : Controller
       Indent = true
     };
 
-    using (var stream = new MemoryStream())
+    using var stream = new MemoryStream();
+    using (var xmlWriter = XmlWriter.Create(stream, settings))
     {
-      using (var xmlWriter = XmlWriter.Create(stream, settings))
-      {
-        var rssFormatter = new Rss20FeedFormatter(feed, false);
-        rssFormatter.WriteTo(xmlWriter);
-        xmlWriter.Flush();
-      }
-      return File(stream.ToArray(), "application/xml; charset=utf-8");
+      var rssFormatter = new Rss20FeedFormatter(feed, false);
+      rssFormatter.WriteTo(xmlWriter);
+      xmlWriter.Flush();
     }
+    return File(stream.ToArray(), "application/xml; charset=utf-8");
   }
 
   private bool IsViewExists(string viewPath)

@@ -1,8 +1,10 @@
 using Blogifier.Blogs;
 using Blogifier.Identity;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
@@ -124,6 +126,7 @@ public class AccountController : Controller
       var result = await _userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
+        await _userManager.AddClaimAsync(user, new Claim(AppClaimTypes.AuthorityAdmin, "y"));
         var blogData = new BlogData
         {
           Title = model.Title,

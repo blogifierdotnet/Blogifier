@@ -43,12 +43,7 @@ builder.Services.AddIdentityCore<UserInfo>(options =>
   .AddDefaultTokenProviders()
   .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
 
-builder.Services.AddAuthentication(options => options.DefaultScheme = BlogifierConstant.DefaultScheme)
-  .AddCookie(BlogifierConstant.DefaultScheme, options =>
-  {
-    options.AccessDeniedPath = "/account/denied";
-    options.LoginPath = "/account/login";
-  });
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
 
 builder.Services.AddAuthorization();
 builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
@@ -83,7 +78,6 @@ builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
 builder.Services.AddScoped<BlogManager>();
-builder.Services.AddScoped<IdentityManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

@@ -11,19 +11,17 @@ namespace Blogifier.Interfaces;
 public class UserController : ControllerBase
 {
   protected readonly IMapper _mapper;
-  protected readonly IdentityManager _identityManager;
 
-  public UserController(IMapper mapper, IdentityManager identityManager)
+  public UserController(IMapper mapper)
   {
     _mapper = mapper;
-    _identityManager = identityManager;
   }
 
   [HttpGet("identity")]
   [Authorize]
   public IdentityUserDto GetInfo()
   {
-    var identity = _identityManager.GetIdentityUser(User);
+    var identity = IdentityUser.Analysis(User);
     var identityDto = _mapper.Map<IdentityUserDto>(identity);
     return identityDto;
   }
