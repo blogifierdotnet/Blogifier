@@ -11,25 +11,38 @@ namespace Blogifier.Admin;
 
 public class BlogAuthStateProvider : AuthenticationStateProvider
 {
-  private readonly HttpClient _httpClient;
+  private readonly IHttpClientFactory _httpClientFactory;
 
-  public BlogAuthStateProvider(HttpClient httpClient)
+  private AuthenticationState? _state;
+
+  public BlogAuthStateProvider(IHttpClientFactory httpClientFactory)
   {
-    _httpClient = httpClient;
+    _httpClientFactory = httpClientFactory;
   }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync()
   {
-    var identity = await _httpClient.GetFromJsonAsync<IdentityUserDto>("api/user/identity");
-    var claims = new List<Claim>();
-    if (identity != null)
+    if (_state == null)
     {
-      claims.Add(new Claim(AppClaimTypes.UserId, identity.Id.ToString()));
-      claims.Add(new Claim(AppClaimTypes.SecurityStamp, identity.SecurityStamp));
-      claims.Add(new Claim(AppClaimTypes.UserName, identity.UserName));
-      if (!string.IsNullOrEmpty(identity.Email)) claims.Add(new Claim(AppClaimTypes.Email, identity.Email));
-      claims.Add(new Claim(AppClaimTypes.NickName, identity.NickName));
+      var client = _httpClientFactory.CreateClient();
+      var identity = await client.GetFromJsonAsync<IdentityUserDto>("/api/user/identity");
+      if (identity != null)
+      {
+        var claims = new List<Claim>
+        {
+          new Claim(AppClaimTypes.UserId, identity.Id.ToString()),
+          new Claim(AppClaimTypes.SecurityStamp, identity.SecurityStamp),
+          new Claim(AppClaimTypes.UserName, identity.UserName),
+          new Claim(AppClaimTypes.NickName, identity.NickName)
+        };
+        if (!string.IsNullOrEmpty(identity.Email)) claims.Add(new Claim(AppClaimTypes.Email, identity.Email));
+        _state = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims, "identity")));
+      }
+      else
+      {
+        _state = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+      }
     }
-    return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims, "serverAuth")));
+    return _state;
   }
 }
