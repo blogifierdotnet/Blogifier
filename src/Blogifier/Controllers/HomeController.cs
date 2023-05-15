@@ -7,6 +7,7 @@ using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ namespace Blogifier.Controllers;
 
 public class HomeController : Controller
 {
+  protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
   protected readonly IdentityManager _identityManager;
@@ -31,6 +33,7 @@ public class HomeController : Controller
   protected readonly ICompositeViewEngine _compositeViewEngine;
 
   public HomeController(
+    ILogger<HomeController> logger,
     IMapper mapper,
     BlogManager blogManager,
     IdentityManager identityManager,
@@ -41,6 +44,7 @@ public class HomeController : Controller
     ThemeProvider themeProvider,
     ICompositeViewEngine compositeViewEngine)
   {
+    _logger = logger;
     _mapper = mapper;
     _blogManager = blogManager;
     _identityManager = identityManager;
@@ -54,7 +58,16 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    var data = await _blogManager.GetBlogDataAsync();
+    BlogData data;
+    try
+    {
+      data = await _blogManager.GetBlogDataAsync();
+    }
+    catch (BlogNotIitializeException ex)
+    {
+      _logger.LogError(ex, "blgo not iitialize redirect");
+      return Redirect("~/account/initialize");
+    }
     var categoryItemes = await _blogManager.GetCategoryItemesAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
     var identity = _identityManager.GetIdentityUser(User);

@@ -7,12 +7,12 @@
 .account {
   width: 22rem;
   max-width: 100%;
-  padding: 4rem 1.5rem;
+  padding: 1rem 1.5rem;
   margin-right: auto;
   margin-left: auto;
 
   @media screen and (min-width: 992px) {
-    transform: translateY(-8rem);
+    transform: translateY(-3rem);
     margin: auto;
   }
 

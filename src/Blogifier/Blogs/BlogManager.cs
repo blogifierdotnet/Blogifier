@@ -3,7 +3,6 @@ using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -16,13 +15,9 @@ public class BlogManager
   private readonly ILogger _logger;
   private readonly AppDbContext _dbContext;
   private readonly OptionStore _optionStore;
-
   private BlogData? _blogData;
 
-  public BlogManager(
-    ILogger<BlogManager> logger,
-    AppDbContext dbContext,
-    OptionStore optionStore)
+  public BlogManager(ILogger<BlogManager> logger, AppDbContext dbContext, OptionStore optionStore)
   {
     _logger = logger;
     _dbContext = dbContext;
@@ -36,21 +31,9 @@ public class BlogManager
     if (value != null)
     {
       _blogData = JsonSerializer.Deserialize<BlogData>(value);
-      if (_blogData != null) return _blogData;
+      return _blogData!;
     }
-    _blogData = new BlogData
-    {
-      Title = BlogifierConstant.DefaultTitle,
-      Description = BlogifierConstant.DefaultDescription,
-      Theme = BlogifierConstant.DefaultTheme,
-      ItemsPerPage = BlogifierConstant.DefaultItemsPerPage,
-      Version = BlogifierConstant.DefaultVersion,
-      Logo = BlogifierConstant.DefaultLogo
-    };
-    value = JsonSerializer.Serialize(_blogData);
-    _logger.LogCritical("blog initialize {value}", value);
-    await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
-    return _blogData;
+    throw new BlogNotIitializeException();
   }
 
   public async Task<IEnumerable<Post>> GetPostsAsync(int page, int items)

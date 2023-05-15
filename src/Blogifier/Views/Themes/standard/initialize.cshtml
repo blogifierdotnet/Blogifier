@@ -1,11 +1,11 @@
-@model AccountRegisterModel
+@model AccountInitializeModel
 @inject IStringLocalizer<Resource> _localizer
 @{
   Layout = "layouts/_account.cshtml";
 }
 
 @section HeadMeta{
-  <title>@_localizer["register"]</title>
+  <title>@_localizer["initialize"]</title>
 }
 
 <div class="account-header">
@@ -18,6 +18,17 @@
 }
 <form method="post" asp-controller="account" asp-action="register">
   <input type="hidden" asp-for="RedirectUri" />
+  <div class="form-floating form-item">
+    <input id="title" asp-for="Title" class="form-control" type="text" placeholder="@_localizer["title"]">
+    <label for="title">@_localizer["title"]</label>
+    <span class="validation-message" asp-validation-for="Title"></span>
+  </div>
+  <div class="form-floating form-item">
+    <textarea id="description" asp-for="Description" class="form-control" rows="5" cols="33" placeholder="@_localizer["description"]">
+    </textarea>
+    <label for="description">@_localizer["description"]</label>
+    <span class="validation-message" asp-validation-for="Description"></span>
+  </div>
   <div class="form-floating form-item">
     <input id="userName" asp-for="UserName" class="form-control" type="text" placeholder="@_localizer["user-name"]">
     <label for="userName">@_localizer["user-name"]</label>

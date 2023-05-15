@@ -4,7 +4,6 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-
 namespace Blogifier.Controllers;
 
 [Route("account")]
@@ -96,5 +95,34 @@ public class AccountController : Controller
   {
     await _signInManager.SignOutAsync();
     return Redirect("~/");
+  }
+
+  [HttpGet("initialize")]
+  public IActionResult Initialize([FromQuery] AccountModel parameter)
+  {
+    var model = new AccountInitializeModel { RedirectUri = parameter.RedirectUri };
+    return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
+  }
+
+  [HttpPost("register")]
+  public async Task<IActionResult> InitializeForm([FromForm] AccountInitializeModel model)
+  {
+    if (ModelState.IsValid)
+    {
+      var user = new UserInfo
+      {
+        UserName = model.UserName,
+        NickName = model.NickName,
+        Email = model.Email
+      };
+      var result = await _userManager.CreateAsync(user, model.Password);
+      if (result.Succeeded)
+      {
+        return RedirectToAction("login", routeValues: new AccountModel { RedirectUri = model.RedirectUri });
+      }
+      model.ShowError = true;
+    }
+    var data = await _blogManager.GetBlogDataAsync();
+    return View($"~/Views/Themes/{data.Theme}/initialize.cshtml", model);
   }
 }

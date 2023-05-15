@@ -10,8 +10,7 @@ builder.RootComponents.Add<App>("#app");
 builder.Services.AddLocalization();
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
-builder.Services.AddHttpClient(string.Empty, client =>
-  client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+builder.Services.AddHttpClient(string.Empty, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();
 builder.Services.AddSingleton<BlogStateProvider>();
 builder.Services.AddToaster(config =>
