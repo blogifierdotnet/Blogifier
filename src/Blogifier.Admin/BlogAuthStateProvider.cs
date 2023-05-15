@@ -1,5 +1,7 @@
-using Blogifier.Shared;
+using Blogifier.Identity;
+using Blogifier.Models;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
@@ -18,17 +20,16 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync()
   {
-    var author = await _httpClient.GetFromJsonAsync<Author>("api/author/getcurrent");
-    if (author != null && author.Email != null)
+    var identity = await _httpClient.GetFromJsonAsync<IdentityUserDto>("api/user/identity");
+    var claims = new List<Claim>();
+    if (identity != null)
     {
-      var claim = new Claim(ClaimTypes.Name, author.Email);
-      var claimsIdentity = new ClaimsIdentity(new[] { claim }, "serverAuth");
-      var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-      return new AuthenticationState(claimsPrincipal);
+      claims.Add(new Claim(AppClaimTypes.UserId, identity.Id.ToString()));
+      claims.Add(new Claim(AppClaimTypes.SecurityStamp, identity.SecurityStamp));
+      claims.Add(new Claim(AppClaimTypes.UserName, identity.UserName));
+      if (!string.IsNullOrEmpty(identity.Email)) claims.Add(new Claim(AppClaimTypes.Email, identity.Email));
+      claims.Add(new Claim(AppClaimTypes.NickName, identity.NickName));
     }
-    else
-    {
-      return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-    }
+    return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims, "serverAuth")));
   }
 }

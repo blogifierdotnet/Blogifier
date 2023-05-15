@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Identity;
 
-public class UserInfo : IdentityUser<int>, IIdentityUser
+public class UserInfo : IdentityUser<int>
 {
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }

@@ -33,9 +33,10 @@ builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
 {
   options.Password.RequireUppercase = false;
   options.Password.RequireNonAlphanumeric = false;
-  options.ClaimsIdentity.UserIdClaimType = IIdentityUser.ClaimTypes.UserId;
-  options.ClaimsIdentity.UserNameClaimType = IIdentityUser.ClaimTypes.UserName;
-  options.ClaimsIdentity.SecurityStampClaimType = IIdentityUser.ClaimTypes.SecurityStamp;
+  options.ClaimsIdentity.UserIdClaimType = AppClaimTypes.UserId;
+  options.ClaimsIdentity.UserNameClaimType = AppClaimTypes.UserName;
+  options.ClaimsIdentity.EmailClaimType = AppClaimTypes.Email;
+  options.ClaimsIdentity.SecurityStampClaimType = AppClaimTypes.SecurityStamp;
 }).AddUserManager<UserManager>()
   .AddRoleManager<RoleManager>()
   .AddSignInManager<SignInManager>()
@@ -111,6 +112,8 @@ using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 if (dbContext.Database.GetPendingMigrations().Any()) await dbContext.Database.MigrateAsync();
 
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
   app.UseDeveloperExceptionPage();
@@ -120,7 +123,6 @@ else
 {
   app.UseExceptionHandler("/Error");
 }
-app.UseSerilogRequestLogging();
 app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();

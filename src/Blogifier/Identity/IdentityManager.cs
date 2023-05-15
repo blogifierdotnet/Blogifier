@@ -4,7 +4,7 @@ namespace Blogifier.Identity;
 
 public class IdentityManager
 {
-  public IIdentityUser? GetIdentityUser(ClaimsPrincipal user)
+  public UserInfo? GetIdentityUser(ClaimsPrincipal user)
   {
     if (user.Identity == null || !user.Identity.IsAuthenticated)
       return null;
@@ -13,17 +13,19 @@ public class IdentityManager
     {
       switch (claim.Type)
       {
-        case IIdentityUser.ClaimTypes.UserId:
+        case AppClaimTypes.UserId:
           userInfo.Id = int.Parse(claim.Value); break;
-        case IIdentityUser.ClaimTypes.SecurityStamp:
+        case AppClaimTypes.SecurityStamp:
           userInfo.SecurityStamp = claim.Value; break;
-        case IIdentityUser.ClaimTypes.UserName:
+        case AppClaimTypes.UserName:
           userInfo.UserName = claim.Value; break;
-        case IIdentityUser.ClaimTypes.NickName:
+        case AppClaimTypes.Email:
+          userInfo.Email = claim.Value; break;
+        case AppClaimTypes.NickName:
           userInfo.NickName = claim.Value; break;
-        case IIdentityUser.ClaimTypes.Avatar:
+        case AppClaimTypes.Avatar:
           userInfo.Avatar = claim.Value; break;
-        case IIdentityUser.ClaimTypes.Gender:
+        case AppClaimTypes.Gender:
           userInfo.Gender = claim.Value; break;
       }
     }
