@@ -1,4 +1,4 @@
-﻿@layout AccountLayout
+@layout AccountLayout
 @page "/admin/login/"
 @inject HttpClient Http
 @inject NavigationManager _navigationManager
@@ -17,13 +17,13 @@
     <DataAnnotationsValidator />
     <div class="form-floating form-item">
       <input @bind="model.Email" type="email" class="form-control" id="loginEmail" placeholder="@_localizer["email"]"
-        autofocus>
+             autofocus>
       <label for="loginEmail">@_localizer["email"]</label>
       <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
     </div>
     <div class="form-floating form-item">
       <input @bind="model.Password" type="password" class="form-control" id="loginPassword"
-        placeholder="@_localizer["password"]">
+             placeholder="@_localizer["password"]">
       <label for="loginPassword">@_localizer["password"]</label>
       <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
     </div>

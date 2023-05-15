@@ -13,12 +13,12 @@
     <div class="dash-pan-title me-auto">@_localizer["analytics"]</div>
     <div class="dropdown dropdown-flush">
       <a class="text-muted" type="button" id="dropdownAnalytics" data-bs-toggle="dropdown" aria-expanded="false"
-        href="#">
+         href="#">
         <span>@(_hideList ? _localizer["chart"] : _localizer["list"])</span> - <span>@PeriodLabel()</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down"
-          viewBox="0 0 16 16">
+             viewBox="0 0 16 16">
           <path fill-rule="evenodd"
-            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
         </svg>
       </a>
 
@@ -31,7 +31,8 @@
             {
               var cls = _model.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
               "py-1 px-2 rounded dropdown-item";
-              <li><button type="button" class="@cls" @onclick="() => DateOptionSelect(option.Id)">@option.Title</button>
+              <li>
+                <button type="button" class="@cls" @onclick="() => DateOptionSelect(option.Id)">@option.Title</button>
               </li>
             }
           }
@@ -41,23 +42,23 @@
           @if (_hideList)
           {
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
-              @onchange="() => ToggleAnalyticsView(true)">
+                 @onchange="() => ToggleAnalyticsView(true)">
           }
           else
           {
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
-              @onchange="() => ToggleAnalyticsView(true)">
+                 @onchange="() => ToggleAnalyticsView(true)">
           }
           <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio1">@_localizer["chart"]</label>
           @if (_hideGraph)
           {
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked
-              @onchange="() => ToggleAnalyticsView(false)">
+                 @onchange="() => ToggleAnalyticsView(false)">
           }
           else
           {
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
-              @onchange="() => ToggleAnalyticsView(false)">
+                 @onchange="() => ToggleAnalyticsView(false)">
           }
           <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio2">@_localizer["list"]</label>
         </div>

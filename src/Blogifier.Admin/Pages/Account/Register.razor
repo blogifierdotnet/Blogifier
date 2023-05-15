@@ -21,7 +21,7 @@
     <DataAnnotationsValidator />
     <div class="form-floating form-item">
       <input @bind="model.Email" id="registerEmail" class="form-control" type="email" placeholder="@_localizer["email"]"
-        autofocus>
+             autofocus>
       <label for="registerEmail">@_localizer["email"]</label>
       <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
     </div>
@@ -32,13 +32,13 @@
     </div>
     <div class="form-floating form-item">
       <input @bind="model.Password" id="registerPassword" class="form-control" type="password"
-        placeholder="@_localizer["password"]">
+             placeholder="@_localizer["password"]">
       <label for="registerPassword">@_localizer["password"]</label>
       <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
     </div>
     <div class="form-floating form-item">
       <input @bind="model.PasswordConfirm" id="registerConfirmPassword" class="form-control" type="password"
-        placeholder="@_localizer["confirm-password"]">
+             placeholder="@_localizer["confirm-password"]">
       <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
       <ValidationMessage For="@(() => model.PasswordConfirm)"></ValidationMessage>
     </div>

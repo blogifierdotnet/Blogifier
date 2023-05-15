@@ -1,4 +1,4 @@
-﻿@layout SettingsLayout
+@layout SettingsLayout
 @page "/admin/settings/customize/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
@@ -9,19 +9,19 @@
 <h1 class="section-title">@_localizer["customization"]</h1>
 <p class="section-desc w-75">@_localizer["theme-customization-desc"]</p>
 <div class="section-content">
-    <SettingsComponent @ref="ChildSettings" />
-    <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
+  <SettingsComponent @ref="ChildSettings" />
+  <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
 
 </div>
 
 <ToasterComponent @ref="Toaster" />
 
 @code {
-   protected ToasterComponent Toaster;
-   SettingsComponent ChildSettings;
+  protected ToasterComponent Toaster;
+  SettingsComponent ChildSettings;
 
-   async Task SaveSettings()
-   {
-      Toaster.Toast(await ChildSettings.Save());
-   }
+  async Task SaveSettings()
+  {
+    Toaster.Toast(await ChildSettings.Save());
+  }
 }
