@@ -134,11 +134,10 @@ public class AccountController : Controller
           Logo = BlogifierConstant.DefaultLogo
         };
         await _blogManager.SetBlogDataAsync(blogData);
-        return RedirectToAction("login", routeValues: new AccountModel { RedirectUri = model.RedirectUri });
+        return Redirect("~/");
       }
       model.ShowError = true;
     }
-    var data = await _blogManager.GetBlogDataAsync();
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
   }
 }

@@ -2,6 +2,7 @@ namespace Blogifier;
 
 public class BlogifierConstant
 {
+  public const string DefaultScheme = "Identity.Application";
   public const string PolicyCorsName = "BlogifierPolicy";
   public const string OptionsName = "Blogifier";
   public const string StorageObjectUrl = "/storage/object";

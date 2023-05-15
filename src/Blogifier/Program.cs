@@ -5,7 +5,6 @@ using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Providers;
 using Blogifier.Shared.Resources;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +30,7 @@ builder.Services.AddLocalization();
 builder.Services.AddScoped<UserClaimsPrincipalFactory>();
 builder.Services.AddIdentityCore<UserInfo>(options =>
 {
+  options.User.RequireUniqueEmail = true;
   options.Password.RequireUppercase = false;
   options.Password.RequireNonAlphanumeric = false;
   options.ClaimsIdentity.UserIdClaimType = AppClaimTypes.UserId;
@@ -43,8 +43,8 @@ builder.Services.AddIdentityCore<UserInfo>(options =>
   .AddDefaultTokenProviders()
   .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
 
-builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
-  .AddCookie(options =>
+builder.Services.AddAuthentication(options => options.DefaultScheme = BlogifierConstant.DefaultScheme)
+  .AddCookie(BlogifierConstant.DefaultScheme, options =>
   {
     options.AccessDeniedPath = "/account/denied";
     options.LoginPath = "/account/login";
