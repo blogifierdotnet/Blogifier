@@ -3,7 +3,7 @@
 @inject NavigationManager _navigationManager
 @inject IStringLocalizer<Resource> _localizer
 
-<BlogPageTitle Title="@_localizer["logout"]" />
+<PageTitleComponent Title="@_localizer["logout"]" />
 
 @code {
   protected override async Task OnInitializedAsync()

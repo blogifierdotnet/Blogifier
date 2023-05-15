@@ -1,16 +1,14 @@
+
 @inject IJSRuntime _jsRuntime;
 
 @code {
+
   [Parameter]
   public string Title { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
-    await setTitle();
+    await SetTitleAsync();
   }
-
-  private async Task setTitle()
-  {
-    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title);
-  }
+  private async Task SetTitleAsync() => await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title);
 }

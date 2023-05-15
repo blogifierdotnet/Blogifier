@@ -9,17 +9,13 @@
 @inject BlogStateProvider _stateprovider
 @implements IDisposable
 
-<BlogPageTitle Title="@_localizer["blog"]" />
-
+<PageTitleComponent Title="@_localizer["blog"]" />
 
 <div class="list-toolbar">
-
   <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
     <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
   </label>
-
   <a class="btn btn-blogifier btn-rounded me-3 -add" href="/admin/editor">@_localizer["new-post"]</a>
-
   <div class="dropdown dropdown-flush">
     <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
       @_localizer["actions"]
@@ -63,13 +59,11 @@
       <button @onclick="(async ()=> await Filter(PublishedStatus.Featured))" class="dropdown-item">@_localizer["featured"]</button>
     </div>
   </div>
-
   <button type="button" class="btn btn-link list-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" title="@_localizer["search"]">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4765 11.8908C9.4957 12.5892 8.29582 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7C13 8.29584 12.5892 9.49573 11.8907 10.4766L15.0549 13.6407C15.4454 14.0312 15.4454 14.6644 15.0549 15.0549C14.6644 15.4455 14.0312 15.4455 13.6407 15.0549L10.4765 11.8908ZM11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z" />
     </svg>
   </button>
-
 </div>
 
 <div class="list-search collapse" id="collapseSearch">

@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime JSRuntime
 
-<BlogPageTitle Title="@_localizer["themes"]" />
+<PageTitleComponent Title="@_localizer["themes"]" />
 
 @if (CurrentTheme != null)
 {
