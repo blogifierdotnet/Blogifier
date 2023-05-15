@@ -1,7 +1,10 @@
 using Blogifier.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
+using Org.BouncyCastle.Utilities;
 using System;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,11 @@ public class OptionStore
     _logger = logger;
     _distributedCache = distributedCache;
     _dbContext = dbContext;
+  }
+
+  public async Task<bool> AnyKey(string key)
+  {
+    return await _dbContext.Options.AnyAsync(m => m.Key == key);
   }
 
   public async Task<string?> GetByCacheValue(string key, DistributedCacheEntryOptions? options = null)
@@ -57,5 +65,10 @@ public class OptionStore
     var bytes = Encoding.UTF8.GetBytes(value);
     var cacheOptions = options ?? new() { SlidingExpiration = TimeSpan.FromMinutes(15) };
     await _distributedCache.SetAsync(key, bytes, cacheOptions);
+  }
+
+  public async Task RemoveCacheValue(string key)
+  {
+    await _distributedCache.RemoveAsync(key);
   }
 }

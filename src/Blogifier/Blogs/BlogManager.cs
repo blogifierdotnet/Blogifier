@@ -3,6 +3,7 @@ using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -22,6 +23,22 @@ public class BlogManager
     _logger = logger;
     _dbContext = dbContext;
     _optionStore = optionStore;
+  }
+
+  public async Task<bool> AnyBlogDataAsync()
+  {
+    if(await _optionStore.AnyKey(BlogData.CacheKey))
+      return true;
+
+    await _optionStore.RemoveCacheValue(BlogData.CacheKey);
+    return false;
+  }
+
+  public async Task SetBlogDataAsync(BlogData blogData)
+  {
+    var value = JsonSerializer.Serialize(blogData);
+    _logger.LogCritical("blog initialize {value}", value);
+    await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
   }
 
   public async Task<BlogData> GetBlogDataAsync()
