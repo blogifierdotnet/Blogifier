@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
+public class AppDbContext : IdentityUserContext<UserInfo, int>
 {
   protected readonly DbContextOptions<AppDbContext> _options;
 
@@ -30,12 +30,6 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
-
-    modelBuilder.Entity<OptionInfo>(e =>
-    {
-      e.ToTable("Options");
-      e.HasIndex(b => b.Key).IsUnique();
-    });
 
     modelBuilder.Entity<UserInfo>(e =>
     {
@@ -64,20 +58,10 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
       e.Property(p => p.Value).HasMaxLength(1024);
     });
 
-    modelBuilder.Entity<RoleInfo>(e =>
+    modelBuilder.Entity<OptionInfo>(e =>
     {
-      e.ToTable("Role");
-      e.Property(p => p.ConcurrencyStamp).HasMaxLength(64);
-    });
-    modelBuilder.Entity<IdentityUserRole<int>>(e =>
-    {
-      e.ToTable("UserRole");
-    });
-    modelBuilder.Entity<IdentityRoleClaim<int>>(e =>
-    {
-      e.ToTable("RoleClaim");
-      e.Property(p => p.ClaimType).HasMaxLength(16);
-      e.Property(p => p.ClaimValue).HasMaxLength(256);
+      e.ToTable("Options");
+      e.HasIndex(b => b.Key).IsUnique();
     });
 
     modelBuilder.Entity<PostCategory>()

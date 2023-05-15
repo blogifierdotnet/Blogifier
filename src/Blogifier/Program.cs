@@ -29,7 +29,7 @@ else builder.Services.AddStackExchangeRedisCache(options => { options.Configurat
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 builder.Services.AddScoped<UserClaimsPrincipalFactory>();
-builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
+builder.Services.AddIdentityCore<UserInfo>(options =>
 {
   options.Password.RequireUppercase = false;
   options.Password.RequireNonAlphanumeric = false;
@@ -38,7 +38,6 @@ builder.Services.AddIdentity<UserInfo, RoleInfo>(options =>
   options.ClaimsIdentity.EmailClaimType = AppClaimTypes.Email;
   options.ClaimsIdentity.SecurityStampClaimType = AppClaimTypes.SecurityStamp;
 }).AddUserManager<UserManager>()
-  .AddRoleManager<RoleManager>()
   .AddSignInManager<SignInManager>()
   .AddEntityFrameworkStores<AppDbContext>()
   .AddDefaultTokenProviders()
