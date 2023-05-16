@@ -10,15 +10,13 @@
 
 
 @code {
-  protected List<Post> Posts { get; set; }
 
-  protected string SearchTerm { get; set; }
-
-  protected string FilterLabel { get; set; }
+  protected List<Post>? Posts { get; set; }
+  protected string? SearchTerm { get; set; }
+  protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; }
-
-  protected string PostTypeLabel { get; set; }
-  protected string PostTypeButton { get; set; }
+  protected string PostTypeLabel { get; set; } = default!;
+  protected string PostTypeButton { get; set; } = default!;
   protected PostType PostTypeValue { get; set; }
 
   protected override async Task OnInitializedAsync()
@@ -26,15 +24,13 @@
     FilterLabel = _localizer["all"];
     PostTypeLabel = _localizer["posts"];
     PostTypeButton = _localizer["post"];
-
     _stateprovider.OnChange += StateHasChanged;
     _stateprovider.PostType = PostType.Post;
     PostTypeValue = PostType.Post;
-
-    await Load();
+    await LoadAsync();
   }
 
-  protected async Task Load()
+  protected async Task LoadAsync()
   {
     Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostTypeValue}");
   }
@@ -46,7 +42,7 @@
     StateHasChanged();
   }
 
-  public async Task RunAction(GroupAction action)
+  private async Task RunAction(GroupAction action)
   {
     string confirm = _localizer["confirm-delete"];
     bool confirmed = false;
@@ -79,7 +75,7 @@
         }
       }
     }
-    await Load();
+    await LoadAsync();
   }
 
   protected async Task SearchKeyPress(KeyboardEventArgs e)
@@ -103,7 +99,7 @@
     PostTypeButton = _localizer["post"];
     PostTypeValue = PostType.Post;
     _stateprovider.SetPostType(PostType.Post);
-    await Load();
+    await LoadAsync();
   }
 
   protected async Task GetPages()
@@ -112,7 +108,7 @@
     PostTypeButton = _localizer["page"];
     PostTypeValue = PostType.Page;
     _stateprovider.SetPostType(PostType.Page);
-    await Load();
+    await LoadAsync();
   }
 
   public async Task Filter(PublishedStatus filter)
@@ -133,19 +129,19 @@
         FilterLabel = _localizer["all"];
         break;
     }
-    await Load();
+    await LoadAsync();
   }
 
   public async Task Publish(Post post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
-    await Load();
+    await LoadAsync();
   }
 
   public async Task Featured(Post post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
-    await Load();
+    await LoadAsync();
   }
 
   protected void Toast(HttpResponseMessage msg)
@@ -154,10 +150,6 @@
       _toaster.Success(_localizer["completed"]);
     else
       _toaster.Error(_localizer["generic-error"]);
-  }
-
-  protected void Open()
-  {
   }
 
   public void Dispose()

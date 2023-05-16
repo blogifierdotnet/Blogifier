@@ -16,13 +16,11 @@ public class PostProvider
 {
   private readonly AppDbContext _db;
   private readonly CategoryProvider _categoryProvider;
-  private readonly IConfiguration _configuration;
 
-  public PostProvider(AppDbContext db, CategoryProvider categoryProvider, IConfiguration configuration)
+  public PostProvider(AppDbContext db, CategoryProvider categoryProvider)
   {
     _db = db;
     _categoryProvider = categoryProvider;
-    _configuration = configuration;
   }
 
   public async Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType)
