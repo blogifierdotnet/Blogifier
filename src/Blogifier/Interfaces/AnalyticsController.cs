@@ -1,7 +1,11 @@
+using AutoMapper;
+using Blogifier.Blogs;
+using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
@@ -10,18 +14,24 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class AnalyticsController : ControllerBase
 {
-  private readonly AnalyticsProvider _analyticsProvider;
+  protected readonly AnalyticsProvider _analyticsProvider;
+  protected readonly BlogManager _blogManager;
+  protected readonly IMapper _mapper;
 
-  public AnalyticsController(AnalyticsProvider analyticsProvider)
+  public AnalyticsController(AnalyticsProvider analyticsProvider, BlogManager blogManager, IMapper mapper)
   {
     _analyticsProvider = analyticsProvider;
+    _blogManager = blogManager;
+    _mapper = mapper;
   }
 
   [Authorize]
   [HttpGet]
-  public async Task<AnalyticsModel> GetAnalytics()
+  public async Task<AnalyticsDto> GetAnalytics()
   {
-    return await _analyticsProvider.GetAnalytics();
+    var blogs = await _blogManager.GetBlogSumInfoAsync();
+    var blogsDto = _mapper.Map<IEnumerable<BlogSumDto>>(blogs);
+    return new AnalyticsDto { Blogs = blogsDto };
   }
 
   [Authorize]

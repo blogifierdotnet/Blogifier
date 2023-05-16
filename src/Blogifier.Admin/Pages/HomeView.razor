@@ -2,6 +2,15 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
+
+@code {
+  private AnalyticsDto? _analytics;
+  protected override async Task OnInitializedAsync()
+  {
+    _analytics = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
+  }
+}
+
 <PageTitleComponent Title="@_localizer["dashboard"]" />
 
 <div class="container">
@@ -26,10 +35,17 @@
           </a>
         </div>
       </div>
-      <TotalsComponent />
+      @if (_analytics != null)
+      {
+        <TotalsComponent Analytics=@_analytics />
+      }
+
     </div>
     <div class="col-md-6">
-      <AnalyticsComponent />
+      @if (_analytics != null)
+      {
+        <AnalyticsComponent Analytics=@_analytics />
+      }
     </div>
   </div>
 </div>

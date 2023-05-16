@@ -16,10 +16,10 @@ public class AnalyticsProvider
     _db = db;
   }
 
-  public async Task<AnalyticsModel> GetAnalytics()
+  public async Task<AnalyticsDto> GetAnalytics()
   {
     var blog = await _db.Blogs.FirstOrDefaultAsync();
-    var model = new AnalyticsModel
+    var model = new AnalyticsDto
     {
       TotalPosts = _db.Posts.Where(p => p.PostType == PostType.Post).Count(),
       TotalPages = _db.Posts.Where(p => p.PostType == PostType.Page).Count(),

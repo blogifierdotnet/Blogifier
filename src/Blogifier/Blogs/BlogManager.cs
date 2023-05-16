@@ -2,7 +2,9 @@ using Blogifier.Data;
 using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -73,5 +75,21 @@ public class BlogManager
             PostCount = m.Count()
           })
           .ToListAsync();
+  }
+
+  public async Task<IEnumerable<BlogSumInfo>> GetBlogSumInfoAsync()
+  {
+    var currTime = DateTime.UtcNow;
+    var query = from post in _dbContext.Posts
+                where post.State >= PostState.Release && post.PublishedAt >= currTime.AddDays(-7)
+                group post by new { Time = new { post.PublishedAt.Year, post.PublishedAt.Month, post.PublishedAt.Day } } into g
+                select new BlogSumInfo
+                {
+                  Time = g.Key.Time.Year + "-" + g.Key.Time.Month + "-" + g.Key.Time.Day,
+                  Posts = g.Count(m => m.PostType == PostType.Post),
+                  Pages = g.Count(m => m.PostType == PostType.Page),
+                  Views = g.Sum(m=>m.Views),
+                };
+    return await query.ToListAsync();
   }
 }

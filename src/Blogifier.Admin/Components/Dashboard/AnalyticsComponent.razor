@@ -8,6 +8,11 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
+
+@code {
+  [Parameter] public AnalyticsDto Analytics { get; set; } = default!;
+}
+
 <div class="dash-widget dash-pan">
   <div class="dash-pan-header">
     <div class="dash-pan-title me-auto">@_localizer["analytics"]</div>
@@ -110,7 +115,7 @@
   protected bool _hideList = true;
 
   protected List<OptionItem> _dateOptions;
-  protected AnalyticsModel _model;
+  protected AnalyticsDto _model;
 
   protected override async Task OnInitializedAsync()
   {
@@ -128,33 +133,33 @@
 
   protected async Task Load()
   {
-    IDataset<int> dataset = new BarDataset<int>()
-      {
-        Label = "Latest Post Views",
-        BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
-        BorderWidth = 0
-      };
-
-    _model = await _http.GetFromJsonAsync<AnalyticsModel>("api/analytics");
-
-    if (_model == null || _model.LatestPostViews == null)
+    var dataset = new BarDataset<int>()
     {
-      LoadData(dataset, TestData());
-    }
-    else
-    {
-      _hideList = _model.DisplayType == AnalyticsListType.Graph;
-      _hideGraph = _model.DisplayType == AnalyticsListType.List;
+      Label = "Latest Post Views",
+      BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
+      BorderWidth = 0
+    };
 
-      LoadData(dataset, _model.LatestPostViews);
-    }
+    //_model = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
 
-    if (_config.Data.Datasets.Count > 0)
-    {
-      _config.Data.Datasets.Clear();
-    }
+    //if (_model == null || _model.LatestPostViews == null)
+    //{
+    //  LoadData(dataset, TestData());
+    //}
+    //else
+    //{
+    //  _hideList = _model.DisplayType == AnalyticsListType.Graph;
+    //  _hideGraph = _model.DisplayType == AnalyticsListType.List;
 
-    _config.Data.Datasets.Add(dataset);
+    //  LoadData(dataset, _model.LatestPostViews);
+    //}
+
+    //if (_config.Data.Datasets.Count > 0)
+    //{
+    //  _config.Data.Datasets.Clear();
+    //}
+
+    //_config.Data.Datasets.Add(dataset);
   }
 
   protected BarConfig GetConfig()
