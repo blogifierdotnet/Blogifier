@@ -10,7 +10,124 @@
 
 
 @code {
-  [Parameter] public AnalyticsDto Analytics { get; set; } = default!;
+  [Parameter] public AnalyticsDto? Analytics { get; set; }
+
+  protected ToasterComponent? Toaster;
+  protected BarConfig _config;
+  protected List<PostVisit> _visits;
+  protected bool _hideGraph = false;
+  protected bool _hideList = true;
+  protected List<OptionItem> _dateOptions;
+
+  protected override void OnInitialized()
+  {
+    _config = GetConfig();
+    _dateOptions = new List<OptionItem>();
+    _dateOptions.Add(new OptionItem { Id = 1, Title = _localizer["today"] });
+    _dateOptions.Add(new OptionItem { Id = 2, Title = _localizer["yesterday"] });
+    _dateOptions.Add(new OptionItem { Id = 3, Title = _localizer["7-days"] });
+    _dateOptions.Add(new OptionItem { Id = 4, Title = _localizer["30-days"] });
+    _dateOptions.Add(new OptionItem { Id = 5, Title = _localizer["90-days"] });
+    Load();
+  }
+
+  protected void Load()
+  {
+    var dataset = new BarDataset<int>()
+      {
+        Label = "Latest Post Views",
+        BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
+        BorderWidth = 0
+      };
+
+    if (Analytics == null || Analytics.LatestPostViews == null)
+    {
+      LoadData(dataset, TestData());
+    }
+    else
+    {
+      _hideList = Analytics.DisplayType == AnalyticsListType.Graph;
+      _hideGraph = Analytics.DisplayType == AnalyticsListType.List;
+
+      LoadData(dataset, Analytics.LatestPostViews);
+    }
+
+    if (_config.Data.Datasets.Count > 0)
+    {
+      _config.Data.Datasets.Clear();
+    }
+
+    _config.Data.Datasets.Add(dataset);
+  }
+
+
+  protected BarConfig GetConfig()
+  {
+    return new BarConfig
+      {
+        Options = new BarOptions
+        {
+          Responsive = true,
+          Legend = new Legend
+          {
+            Position = Position.Top
+          }
+        }
+      };
+  }
+
+  protected void LoadData(IDataset<int> dataset, BarChartModel model)
+  {
+    _visits = new List<PostVisit>();
+    var labels = model.Labels.ToList();
+    var values = model.Data.ToList();
+
+    _config.Data.Labels.Clear();
+
+    for (int i = 0; i < labels.Count; i++)
+    {
+      _config.Data.Labels.Add(labels[i]);
+      dataset.Add(values[i]);
+
+      _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
+    }
+    _visits = _visits.OrderByDescending(v => v.Value).ToList();
+  }
+
+  protected async Task ToggleAnalyticsView(bool isGraph)
+  {
+    _hideGraph = await Task.FromResult(!isGraph);
+    _hideList = isGraph;
+
+    int typeId = isGraph ? 2 : 1;
+
+    Toaster.Toast(await _http.PutAsJsonAsync<int>($"api/analytics/displayType/{typeId}", typeId));
+  }
+
+  protected async Task DateOptionSelect(int id)
+  {
+    Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+    blog.AnalyticsPeriod = id;
+    Analytics.DisplayPeriod = (AnalyticsPeriod)id;
+    Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", blog));
+    Load();
+  }
+
+  protected BarChartModel TestData()
+  {
+    return new BarChartModel()
+      {
+        Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
+        Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
+      };
+  }
+
+  protected string PeriodLabel()
+  {
+    if (Analytics == null)
+      return "";
+    return Analytics.DisplayPeriod.ToString();
+  }
 }
 
 <div class="dash-widget dash-pan">
@@ -30,11 +147,11 @@
       <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="dropdownAnalytics">
         <div class="mb-1 text-muted">@_localizer["date"]:</div>
         <ul class="mb-3 list-unstyled">
-          @if (_dateOptions != null && _model != null)
+          @if (_dateOptions != null && Analytics != null)
           {
             foreach (var option in _dateOptions)
             {
-              var cls = _model.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
+              var cls = Analytics.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
               "py-1 px-2 rounded dropdown-item";
               <li>
                 <button type="button" class="@cls" @onclick="() => DateOptionSelect(option.Id)">@option.Title</button>
@@ -104,129 +221,6 @@
   </div>
 
 </div>
+
 <ToasterComponent @ref="Toaster" />
 
-@code {
-  protected ToasterComponent Toaster;
-  private BarConfig _config;
-  protected List<PostVisit> _visits;
-
-  protected bool _hideGraph = false;
-  protected bool _hideList = true;
-
-  protected List<OptionItem> _dateOptions;
-  protected AnalyticsDto _model;
-
-  protected override async Task OnInitializedAsync()
-  {
-    _config = GetConfig();
-
-    _dateOptions = new List<OptionItem>();
-    _dateOptions.Add(new OptionItem { Id = 1, Title = _localizer["today"] });
-    _dateOptions.Add(new OptionItem { Id = 2, Title = _localizer["yesterday"] });
-    _dateOptions.Add(new OptionItem { Id = 3, Title = _localizer["7-days"] });
-    _dateOptions.Add(new OptionItem { Id = 4, Title = _localizer["30-days"] });
-    _dateOptions.Add(new OptionItem { Id = 5, Title = _localizer["90-days"] });
-
-    await Load();
-  }
-
-  protected async Task Load()
-  {
-    var dataset = new BarDataset<int>()
-    {
-      Label = "Latest Post Views",
-      BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
-      BorderWidth = 0
-    };
-
-    //_model = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
-
-    //if (_model == null || _model.LatestPostViews == null)
-    //{
-    //  LoadData(dataset, TestData());
-    //}
-    //else
-    //{
-    //  _hideList = _model.DisplayType == AnalyticsListType.Graph;
-    //  _hideGraph = _model.DisplayType == AnalyticsListType.List;
-
-    //  LoadData(dataset, _model.LatestPostViews);
-    //}
-
-    //if (_config.Data.Datasets.Count > 0)
-    //{
-    //  _config.Data.Datasets.Clear();
-    //}
-
-    //_config.Data.Datasets.Add(dataset);
-  }
-
-  protected BarConfig GetConfig()
-  {
-    return new BarConfig
-      {
-        Options = new BarOptions
-        {
-          Responsive = true,
-          Legend = new Legend
-          {
-            Position = Position.Top
-          }
-        }
-      };
-  }
-
-  protected void LoadData(IDataset<int> dataset, BarChartModel model)
-  {
-    _visits = new List<PostVisit>();
-    var labels = model.Labels.ToList();
-    var values = model.Data.ToList();
-
-    _config.Data.Labels.Clear();
-
-    for (int i = 0; i < labels.Count; i++)
-    {
-      _config.Data.Labels.Add(labels[i]);
-      dataset.Add(values[i]);
-
-      _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
-    }
-    _visits = _visits.OrderByDescending(v => v.Value).ToList();
-  }
-
-  protected async Task ToggleAnalyticsView(bool isGraph)
-  {
-    _hideGraph = await Task.FromResult(!isGraph);
-    _hideList = isGraph;
-
-    int typeId = isGraph ? 2 : 1;
-
-    Toaster.Toast(await _http.PutAsJsonAsync<int>($"api/analytics/displayType/{typeId}", typeId));
-  }
-
-  protected async Task DateOptionSelect(int id)
-  {
-    Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-    blog.AnalyticsPeriod = id;
-    _model.DisplayPeriod = (AnalyticsPeriod)id;
-    Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", blog));
-    await Load();
-  }
-
-  protected BarChartModel TestData()
-  {
-    return new BarChartModel()
-      {
-        Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
-        Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
-      };
-  }
-
-  protected string PeriodLabel()
-  {
-    if (_model == null)
-      return "";
-    return _model.DisplayPeriod.ToString();
-  }
-}
