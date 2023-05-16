@@ -56,8 +56,8 @@ public class AccountController : Controller
           return LocalRedirect(model.RedirectUri);
         }
       }
-      model.ShowError = true;
     }
+    model.ShowError = true;
     var data = await _blogManager.GetBlogDataAsync();
     return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
   }
@@ -86,8 +86,8 @@ public class AccountController : Controller
       {
         return RedirectToAction("login", routeValues: new AccountModel { RedirectUri = model.RedirectUri });
       }
-      model.ShowError = true;
     }
+    model.ShowError = true;
     var data = await _blogManager.GetBlogDataAsync();
     return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
   }
@@ -126,7 +126,7 @@ public class AccountController : Controller
       var result = await _userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
-        await _userManager.AddClaimAsync(user, new Claim(AppClaimTypes.AuthorityAdmin, "y"));
+         await _userManager.AddClaimAsync(user, new Claim(BlogifierClaimTypes.AuthorityAdmin, "y"));
         var blogData = new BlogData
         {
           Title = model.Title,
@@ -139,8 +139,8 @@ public class AccountController : Controller
         await _blogManager.SetBlogDataAsync(blogData);
         return Redirect("~/");
       }
-      model.ShowError = true;
     }
+    model.ShowError = true;
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
   }
 }

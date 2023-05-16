@@ -1,6 +1,6 @@
+using Blogifier.Identity;
 using Blogifier.Models;
 using System.Collections.Generic;
-
 namespace Blogifier.Shared;
 
 public class PagerModel : MainModel
@@ -9,9 +9,9 @@ public class PagerModel : MainModel
     int currentPage,
     int itemsPerPage,
     string absoluteUrl,
-    IdentityUserDto? identity,
+    BlogifierClaims? claims,
     IEnumerable<CategoryItemDto> categories)
-    : base(absoluteUrl, identity, categories)
+    : base(absoluteUrl, claims, categories)
   {
     CurrentPage = currentPage;
     ItemsPerPage = itemsPerPage;

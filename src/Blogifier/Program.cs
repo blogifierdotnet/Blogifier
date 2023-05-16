@@ -33,10 +33,10 @@ builder.Services.AddIdentityCore<UserInfo>(options =>
   options.User.RequireUniqueEmail = true;
   options.Password.RequireUppercase = false;
   options.Password.RequireNonAlphanumeric = false;
-  options.ClaimsIdentity.UserIdClaimType = AppClaimTypes.UserId;
-  options.ClaimsIdentity.UserNameClaimType = AppClaimTypes.UserName;
-  options.ClaimsIdentity.EmailClaimType = AppClaimTypes.Email;
-  options.ClaimsIdentity.SecurityStampClaimType = AppClaimTypes.SecurityStamp;
+  options.ClaimsIdentity.UserIdClaimType = BlogifierClaimTypes.UserId;
+  options.ClaimsIdentity.UserNameClaimType = BlogifierClaimTypes.UserName;
+  options.ClaimsIdentity.EmailClaimType = BlogifierClaimTypes.Email;
+  options.ClaimsIdentity.SecurityStampClaimType = BlogifierClaimTypes.SecurityStamp;
 }).AddUserManager<UserManager>()
   .AddSignInManager<SignInManager>()
   .AddEntityFrameworkStores<AppDbContext>()

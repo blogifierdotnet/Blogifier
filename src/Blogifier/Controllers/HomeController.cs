@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,13 +68,12 @@ public class HomeController : Controller
     }
     var categoryItemes = await _blogManager.GetCategoryItemesAsync();
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
-    var identity = IdentityUser.Analysis(User);
-    var identityDto = _mapper.Map<IdentityUserDto>(identity);
     var categoryItemesDto = _mapper.Map<IEnumerable<CategoryItemDto>>(categoryItemes);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
+    var claims = BlogifierClaims.Analysis(User);
     var request = HttpContext.Request;
     var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, identityDto, categoryItemesDto);
+    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, claims, categoryItemesDto);
     _mapper.Map<BlogData, MainModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }

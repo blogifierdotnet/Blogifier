@@ -18,7 +18,7 @@ public class UserClaimsPrincipalFactory : UserClaimsPrincipalFactory<UserInfo>
   {
     var claimsPrincipal = await base.CreateAsync(user);
     var id = new ClaimsIdentity("Application");
-    id.AddClaim(new Claim(AppClaimTypes.NickName, user.NickName));
+    id.AddClaim(new Claim(BlogifierClaimTypes.NickName, user.NickName));
     claimsPrincipal.AddIdentity(id);
     return claimsPrincipal;
   }

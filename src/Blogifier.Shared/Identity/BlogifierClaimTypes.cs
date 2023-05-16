@@ -1,6 +1,6 @@
 namespace Blogifier.Identity;
 
-public static class AppClaimTypes
+public static class BlogifierClaimTypes
 {
   public const string UserId = "sub";
   public const string SecurityStamp = "ses";

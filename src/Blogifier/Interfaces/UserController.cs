@@ -1,6 +1,5 @@
 using AutoMapper;
 using Blogifier.Identity;
-using Blogifier.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +18,5 @@ public class UserController : ControllerBase
 
   [HttpGet("identity")]
   [Authorize]
-  public IdentityUserDto GetInfo()
-  {
-    var identity = IdentityUser.Analysis(User);
-    var identityDto = _mapper.Map<IdentityUserDto>(identity);
-    return identityDto;
-  }
+  public BlogifierClaims? GetInfo() => BlogifierClaims.Analysis(User);
 }

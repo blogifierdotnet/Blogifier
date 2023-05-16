@@ -1,6 +1,6 @@
+using Blogifier.Identity;
 using Blogifier.Shared;
 using System.Collections.Generic;
-
 namespace Blogifier.Models;
 
 public class IndexModel : PostsModel
@@ -10,9 +10,9 @@ public class IndexModel : PostsModel
     int currentPage,
     int itemsPerPage,
     string absoluteUrl,
-    IdentityUserDto? identity,
+    BlogifierClaims? claims,
     IEnumerable<CategoryItemDto> categories)
-    : base(items, currentPage, itemsPerPage, absoluteUrl, identity, categories)
+    : base(items, currentPage, itemsPerPage, absoluteUrl, claims, categories)
   {
   }
 }

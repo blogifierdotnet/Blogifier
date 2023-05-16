@@ -1,13 +1,14 @@
+using Blogifier.Identity;
 using System.Collections.Generic;
 
 namespace Blogifier.Models;
 
 public class MainModel
 {
-  public MainModel(string absoluteUrl, IdentityUserDto? identity, IEnumerable<CategoryItemDto> categories)
+  public MainModel(string absoluteUrl, BlogifierClaims? claims, IEnumerable<CategoryItemDto> categories)
   {
     AbsoluteUrl = absoluteUrl;
-    Identity = identity;
+    Claims = claims;
     Categories = categories;
   }
   public string AbsoluteUrl { get; set; }
@@ -19,6 +20,6 @@ public class MainModel
   public string? HeaderScript { get; set; }
   public string? FooterScript { get; set; }
   public string Version { get; set; } = default!;
-  public IdentityUserDto? Identity { get; set; }
+  public BlogifierClaims? Claims { get; set; }
   public IEnumerable<CategoryItemDto> Categories { get; set; }
 }
