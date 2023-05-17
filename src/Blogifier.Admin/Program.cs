@@ -17,7 +17,6 @@ builder.Services.AddAuthorizationCore(options =>
 });
 builder.Services.AddHttpClient(string.Empty, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();
-builder.Services.AddSingleton<BlogStateProvider>();
 builder.Services.AddToaster(config =>
 {
   config.PositionClass = Defaults.Classes.Position.BottomRight;

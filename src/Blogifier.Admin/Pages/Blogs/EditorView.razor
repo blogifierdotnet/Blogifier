@@ -4,8 +4,6 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
-@inject BlogStateProvider _stateprovider
-@implements IDisposable
 
 @code
 {
@@ -16,20 +14,10 @@
   protected ToasterComponent? Toaster;
   protected CategoriesComponent? Categories;
   protected string Confirm { get; set; } = default!;
-  protected string PostTile
-  {
-    get
-    {
-      return _stateprovider.PostType == PostType.Post ? _localizer["post-title"] : _localizer["page-title"];
-    }
-  }
-
-
 
   protected override async Task OnInitializedAsync()
   {
     Confirm = _localizer["confirm-delete"];
-    _stateprovider.OnChange += StateHasChanged;
     await Load();
   }
 
@@ -48,7 +36,7 @@
   protected async Task SavePost(PostAction postAction)
   {
     Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-    Post.PostType = _stateprovider.PostType;
+    Post.PostType = PostType.Post;
 
     Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
@@ -150,11 +138,6 @@
         PostType = PostType.Post,
         Cover = Constants.DefaultCover
       };
-  }
-
-  public void Dispose()
-  {
-    _stateprovider.OnChange -= StateHasChanged;
   }
 }
 
