@@ -5,6 +5,21 @@
 @inject IToaster _toaster
 @inject IJSRuntime JSRuntime
 
+@code {
+  protected Blog? Blog { get; set; }
+  protected ToasterComponent? Toaster;
+
+  protected override async Task OnInitializedAsync()
+  {
+    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+  }
+
+  protected async Task Save()
+  {
+    Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", Blog));
+  }
+}
+
 <PageTitleComponent Title="@_localizer["blog-settings"]" />
 
 @if (Blog != null)
@@ -32,17 +47,4 @@
 }
 <ToasterComponent @ref="Toaster" />
 
-@code {
-  protected Blog Blog { get; set; }
-  protected ToasterComponent Toaster;
 
-  protected override async Task OnInitializedAsync()
-  {
-    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-  }
-
-  protected async Task Save()
-  {
-    Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", Blog));
-  }
-}

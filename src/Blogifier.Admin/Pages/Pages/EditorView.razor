@@ -10,7 +10,6 @@
 <div class="bfeditor">
   @if (Post != null)
   {
-
     <div class="bfeditor-header">
       <img class="bfeditor-cover" src="@Post.Cover" alt="@_localizer["cover"]" id="postCover">
       <div class="bfeditor-actions">
@@ -88,19 +87,14 @@
 <ToasterComponent @ref="Toaster" />
 
 @code {
-  protected Author Author { get; set; }
-  protected Post Post { get; set; }
-  protected ToasterComponent Toaster;
-  protected string Confirm { get; set; }
-
   [Parameter]
-#nullable enable
   public string? Slug { get; set; }
-#nullable disable
+  protected Post? Post { get; set; }
+  protected ToasterComponent? Toaster;
+  protected string Confirm { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
-    Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
     Confirm = _localizer["confirm-delete"];
     await Load();
   }
@@ -202,7 +196,6 @@
         Title = "",
         Description = "",
         Content = "",
-        AuthorId = Author.Id,
         PostType = PostType.Page,
         Cover = Constants.DefaultCover
       };

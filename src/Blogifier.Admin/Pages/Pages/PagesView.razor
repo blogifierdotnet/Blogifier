@@ -4,8 +4,124 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
-@inject BlogStateProvider _stateprovider
-@implements IDisposable
+
+
+@code {
+  protected List<Post>? Posts { get; set; }
+  protected string SearchTerm { get; set; }
+  protected string FilterLabel { get; set; }
+  protected PublishedStatus FilterValue { get; set; }
+  protected string PostTypeLabel { get; set; }
+  protected string PostTypeButton { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    FilterLabel = _localizer["all"];
+    PostTypeLabel = _localizer["posts"];
+    PostTypeButton = _localizer["post"];
+    await Load();
+  }
+
+  protected async Task Load()
+  {
+    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostType.Page}");
+  }
+
+  public void CheckAll(object checkValue)
+  {
+    bool isChecked = (bool)checkValue;
+    Posts.ForEach(p => p.Selected = isChecked);
+    StateHasChanged();
+  }
+
+  public async Task RunAction(GroupAction action)
+  {
+    string confirm = _localizer["confirm-delete"];
+    bool confirmed = false;
+
+    if (action == GroupAction.Delete)
+    {
+      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
+      if (!confirmed)
+        return;
+    }
+
+    foreach (var post in Posts)
+    {
+      if (post.Selected)
+      {
+        switch (action)
+        {
+          case GroupAction.Publish:
+            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
+            break;
+          case GroupAction.Unpublish:
+            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
+            break;
+          case GroupAction.Delete:
+            await _http.DeleteAsync($"api/post/{post.Id}");
+            break;
+        }
+      }
+    }
+    await Load();
+  }
+
+  protected async Task SearchKeyPress(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      await SearchPosts();
+  }
+
+  protected async Task SearchPosts()
+  {
+    if (string.IsNullOrEmpty(SearchTerm))
+      SearchTerm = "*";
+
+    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
+    SearchTerm = "";
+  }
+
+  protected async Task GetPages()
+  {
+    PostTypeLabel = _localizer["pages"];
+    PostTypeButton = _localizer["page"];
+    await Load();
+  }
+
+  public async Task Filter(PublishedStatus filter)
+  {
+    FilterValue = filter;
+    switch (filter)
+    {
+      case PublishedStatus.Published:
+        FilterLabel = _localizer["published"];
+        break;
+      case PublishedStatus.Drafts:
+        FilterLabel = _localizer["draft", true];
+        break;
+      default:
+        FilterLabel = _localizer["all"];
+        break;
+    }
+    await Load();
+  }
+
+  public async Task Publish(Post post)
+  {
+    Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
+    await Load();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}
+
 
 <PageTitleComponent Title="@_localizer["pages"]" />
 
@@ -130,138 +246,3 @@
   }
 </div>
 
-@code {
-  protected List<Post> Posts { get; set; }
-  protected Author Author { get; set; }
-
-  protected string SearchTerm { get; set; }
-
-  protected string FilterLabel { get; set; }
-  protected PublishedStatus FilterValue { get; set; }
-
-  protected string PostTypeLabel { get; set; }
-  protected string PostTypeButton { get; set; }
-
-  protected override async Task OnInitializedAsync()
-  {
-    Author = await _http.GetFromJsonAsync<Author>("api/author/getcurrent");
-
-    FilterLabel = _localizer["all"];
-    PostTypeLabel = _localizer["posts"];
-    PostTypeButton = _localizer["post"];
-
-    _stateprovider.OnChange += StateHasChanged;
-    _stateprovider.PostType = PostType.Post;
-
-    await Load();
-  }
-
-  protected async Task Load()
-  {
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostType.Page}");
-  }
-
-  public void CheckAll(object checkValue)
-  {
-    bool isChecked = (bool)checkValue;
-    Posts.ForEach(p => p.Selected = isChecked);
-    StateHasChanged();
-  }
-
-  public async Task RunAction(GroupAction action)
-  {
-    string confirm = _localizer["confirm-delete"];
-    bool confirmed = false;
-
-    if (action == GroupAction.Delete)
-    {
-      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
-      if (!confirmed)
-        return;
-    }
-
-    foreach (var post in Posts)
-    {
-      if (post.Selected)
-      {
-        switch (action)
-        {
-          case GroupAction.Publish:
-            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
-            break;
-          case GroupAction.Unpublish:
-            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
-            break;
-          case GroupAction.Delete:
-            await _http.DeleteAsync($"api/post/{post.Id}");
-            break;
-        }
-      }
-    }
-    await Load();
-  }
-
-  protected async Task SearchKeyPress(KeyboardEventArgs e)
-  {
-    if (e.Key == "Enter")
-      await SearchPosts();
-  }
-
-  protected async Task SearchPosts()
-  {
-    if (string.IsNullOrEmpty(SearchTerm))
-      SearchTerm = "*";
-
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
-    SearchTerm = "";
-  }
-
-  protected async Task GetPages()
-  {
-    PostTypeLabel = _localizer["pages"];
-    PostTypeButton = _localizer["page"];
-    _stateprovider.SetPostType(PostType.Page);
-    await Load();
-  }
-
-  public async Task Filter(PublishedStatus filter)
-  {
-    FilterValue = filter;
-    switch (filter)
-    {
-      case PublishedStatus.Published:
-        FilterLabel = _localizer["published"];
-        break;
-      case PublishedStatus.Drafts:
-        FilterLabel = _localizer["draft", true];
-        break;
-      default:
-        FilterLabel = _localizer["all"];
-        break;
-    }
-    await Load();
-  }
-
-  public async Task Publish(Post post)
-  {
-    Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
-    await Load();
-  }
-
-  protected void Toast(HttpResponseMessage msg)
-  {
-    if (msg.IsSuccessStatusCode)
-      _toaster.Success(_localizer["completed"]);
-    else
-      _toaster.Error(_localizer["generic-error"]);
-  }
-
-  protected void Open()
-  {
-  }
-
-  public void Dispose()
-  {
-    _stateprovider.OnChange -= StateHasChanged;
-  }
-}

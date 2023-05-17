@@ -5,9 +5,6 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
-@inject BlogStateProvider _stateprovider
-@implements IDisposable
-
 
 @code {
 
@@ -24,8 +21,6 @@
     FilterLabel = _localizer["all"];
     PostTypeLabel = _localizer["posts"];
     PostTypeButton = _localizer["post"];
-    _stateprovider.OnChange += StateHasChanged;
-    _stateprovider.PostType = PostType.Post;
     PostTypeValue = PostType.Post;
     await LoadAsync();
   }
@@ -100,7 +95,6 @@
     PostTypeLabel = _localizer["posts"];
     PostTypeButton = _localizer["post"];
     PostTypeValue = PostType.Post;
-    _stateprovider.SetPostType(PostType.Post);
     await LoadAsync();
   }
 
@@ -109,7 +103,6 @@
     PostTypeLabel = _localizer["pages"];
     PostTypeButton = _localizer["page"];
     PostTypeValue = PostType.Page;
-    _stateprovider.SetPostType(PostType.Page);
     await LoadAsync();
   }
 
@@ -152,11 +145,6 @@
       _toaster.Success(_localizer["completed"]);
     else
       _toaster.Error(_localizer["generic-error"]);
-  }
-
-  public void Dispose()
-  {
-    _stateprovider.OnChange -= StateHasChanged;
   }
 }
 
