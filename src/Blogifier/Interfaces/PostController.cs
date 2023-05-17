@@ -1,3 +1,6 @@
+using AutoMapper;
+using Blogifier.Blogs;
+using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -12,16 +15,22 @@ namespace Blogifier.Interfaces;
 public class PostController : ControllerBase
 {
   private readonly PostProvider _postProvider;
+  protected readonly IMapper _mapper;
+  protected readonly BlogManager _blogManager;
 
-  public PostController(PostProvider postProvider)
+  public PostController(PostProvider postProvider, IMapper mapper, BlogManager blogManager)
   {
     _postProvider = postProvider;
+    _mapper = mapper;
+    _blogManager = blogManager;
   }
 
   [HttpGet("list/{filter}/{postType}")]
-  public async Task<ActionResult<List<Post>>> GetPosts(PublishedStatus filter, PostType postType)
+  public async Task<IEnumerable<PostDto>> GetPosts(PublishedStatus filter, PostType postType)
   {
-    return await _postProvider.GetPosts(filter, postType);
+    var posts = await _blogManager.GetPostsAsync(filter, postType);
+    var postsDto = _mapper.Map<IEnumerable<PostDto>>(posts);
+    return postsDto;
   }
 
   [HttpGet("list/search/{term}")]
@@ -31,7 +40,7 @@ public class PostController : ControllerBase
   }
 
   [HttpGet("byslug/{slug}")]
-  public async Task<ActionResult<Post>> GetPostBySlug(string slug)
+  public async Task<ActionResult<Post?>> GetPostBySlug(string slug)
   {
     return await _postProvider.GetPostBySlug(slug);
   }

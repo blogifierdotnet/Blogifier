@@ -1,5 +1,5 @@
-@layout BlogLayout
 @page "/admin/blog/"
+@layout BlogLayout
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -11,7 +11,7 @@
 
 @code {
 
-  protected List<Post>? Posts { get; set; }
+  protected List<PostDto>? Posts { get; set; }
   protected string? SearchTerm { get; set; }
   protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; }
@@ -32,13 +32,14 @@
 
   protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostTypeValue}");
+    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/{FilterValue}/{PostTypeValue}");
   }
 
   public void CheckAll(object checkValue)
   {
     bool isChecked = (bool)checkValue;
-    Posts.ForEach(p => p.Selected = isChecked);
+    foreach (var item in Posts!)
+      item.Selected = isChecked;
     StateHasChanged();
   }
 
@@ -54,7 +55,7 @@
         return;
     }
 
-    foreach (var post in Posts)
+    foreach (var post in Posts!)
     {
       if (post.Selected)
       {
@@ -75,6 +76,7 @@
         }
       }
     }
+
     await LoadAsync();
   }
 
@@ -89,7 +91,7 @@
     if (string.IsNullOrEmpty(SearchTerm))
       SearchTerm = "*";
 
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
+    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/search/{SearchTerm}");
     SearchTerm = "";
   }
 
@@ -132,13 +134,13 @@
     await LoadAsync();
   }
 
-  public async Task Publish(Post post)
+  public async Task Publish(PostDto post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
     await LoadAsync();
   }
 
-  public async Task Featured(Post post)
+  public async Task Featured(PostDto post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
     await LoadAsync();
@@ -157,7 +159,6 @@
     _stateprovider.OnChange -= StateHasChanged;
   }
 }
-
 
 <PageTitleComponent Title="@_localizer["blog"]" />
 
@@ -228,7 +229,6 @@
   <div style="height:650px;overflow-y:scroll">
     <ul class="list" aria-label="posts">
       <Virtualize Items="Posts" Context="post">
-
         @{
           string pubDate = post.PublishedAt > DateTime.MinValue ? post.PublishedAt.ToFriendlyShortDateString() : @_localizer["draft"];
           string pubStatus = post.PublishedAt > DateTime.MinValue ? "published" : "";

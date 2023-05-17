@@ -2,7 +2,6 @@ using Blogifier.Data;
 using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -88,8 +87,24 @@ public class BlogManager
                   Time = g.Key.Time.Year + "-" + g.Key.Time.Month + "-" + g.Key.Time.Day,
                   Posts = g.Count(m => m.PostType == PostType.Post),
                   Pages = g.Count(m => m.PostType == PostType.Page),
-                  Views = g.Sum(m=>m.Views),
+                  Views = g.Sum(m => m.Views),
                 };
+    return await query.ToListAsync();
+  }
+
+  public async Task<IEnumerable<Post>> GetPostsAsync(PublishedStatus filter, PostType postType)
+  {
+    var query = _dbContext.Posts.AsNoTracking()
+      .Where(p => p.PostType == postType);
+
+    query = filter switch
+    {
+      PublishedStatus.Published => query.Where(p => p.State >= PostState.Release).OrderByDescending(p => p.PublishedAt),
+      PublishedStatus.Drafts => query.Where(p => p.State == PostState.Draft).OrderByDescending(p => p.Id),
+      PublishedStatus.Featured => query.Where(p => p.IsFeatured).OrderByDescending(p => p.Id),
+      _ => query.OrderByDescending(p => p.Id),
+    };
+
     return await query.ToListAsync();
   }
 }

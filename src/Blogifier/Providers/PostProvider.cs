@@ -1,9 +1,9 @@
+using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Shared;
 using Blogifier.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +25,18 @@ public class PostProvider
 
   public async Task<List<Post>> GetPosts(PublishedStatus filter, PostType postType)
   {
-    switch (filter)
+    var query = _db.Posts.AsNoTracking()
+      .Where(p => p.PostType == postType);
+
+    query = filter switch
     {
-      case PublishedStatus.Published:
-        return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.PublishedAt > DateTime.MinValue).OrderByDescending(p => p.PublishedAt).ToListAsync();
-      case PublishedStatus.Drafts:
-        return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.PublishedAt == DateTime.MinValue).OrderByDescending(p => p.Id).ToListAsync();
-      case PublishedStatus.Featured:
-        return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).Where(p => p.IsFeatured).OrderByDescending(p => p.Id).ToListAsync();
-      default:
-        return await _db.Posts.AsNoTracking().Where(p => p.PostType == postType).OrderByDescending(p => p.Id).ToListAsync();
-    }
+      PublishedStatus.Published => query.Where(p => p.State == PostState.Release).OrderByDescending(p => p.PublishedAt),
+      PublishedStatus.Drafts => query.Where(p => p.PublishedAt == DateTime.MinValue).OrderByDescending(p => p.Id),
+      PublishedStatus.Featured => query.Where(p => p.IsFeatured).OrderByDescending(p => p.Id),
+      _ => query.OrderByDescending(p => p.Id),
+    };
+
+    return await query.ToListAsync();
   }
 
   public async Task<List<Post>> SearchPosts(string term)
