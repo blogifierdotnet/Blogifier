@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace Blogifier;
 
 public class BlogifierConstant
@@ -59,6 +61,6 @@ public class BlogifierConstant
   public static string PostDraft = "D";
   public static string PostFeatured = "F";
   public static string PostPublished = "P";
-
   public static string IdentityCookieName = ".AspNetCore.Identity.Application";
+  public static readonly JsonSerializerOptions DefaultJsonSerializerOptionss = new(JsonSerializerDefaults.Web);
 }

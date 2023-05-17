@@ -5,7 +5,9 @@ using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Providers;
 using Blogifier.Shared.Resources;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +44,12 @@ builder.Services.AddIdentityCore<UserInfo>(options =>
   .AddEntityFrameworkStores<AppDbContext>()
   .AddDefaultTokenProviders()
   .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  options.AccessDeniedPath = "/account/accessdenied";
+  options.LoginPath = "/account/login";
+});
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
 
@@ -96,6 +104,7 @@ builder.Services.AddOutputCache(options =>
 
 builder.Services.AddControllersWithViews()
   .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Resource)));
+
 builder.Services.AddRazorPages().AddViewLocalization();
 
 builder.Services.AddAutoMapper(typeof(Program));

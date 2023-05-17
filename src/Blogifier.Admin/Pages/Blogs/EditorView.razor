@@ -74,7 +74,7 @@
           await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
         }
 
-        _navigation.NavigateTo($"/admin/editor/{Post.Slug}");
+        _navigation.NavigateTo($"/admin/blogs/editor/{Post.Slug}");
         await Load();
       }
 

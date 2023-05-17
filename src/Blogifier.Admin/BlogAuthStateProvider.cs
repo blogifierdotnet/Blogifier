@@ -1,19 +1,23 @@
 using Blogifier.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Principal;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blogifier.Admin;
 
 public class BlogAuthStateProvider : AuthenticationStateProvider
 {
-  private readonly IHttpClientFactory _httpClientFactory;
+  protected readonly IHttpClientFactory _httpClientFactory;
+  private readonly ILogger _logger;
+  protected AuthenticationState? _state;
 
-  private AuthenticationState? _state;
-
-  public BlogAuthStateProvider(IHttpClientFactory httpClientFactory)
+  public BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger, IHttpClientFactory httpClientFactory)
   {
+    _logger = logger;
     _httpClientFactory = httpClientFactory;
   }
 
@@ -22,8 +26,20 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
     if (_state == null)
     {
       var client = _httpClientFactory.CreateClient();
-      var identity = await client.GetFromJsonAsync<BlogifierClaims>("/api/user/identity");
-      var principal = BlogifierClaims.Generate(identity);
+      var response = await client.GetAsync("/api/user/identity");
+      BlogifierClaims? claims;
+      if (response.IsSuccessStatusCode)
+      {
+        var stream = await response.Content.ReadAsStreamAsync();
+        claims = JsonSerializer.Deserialize<BlogifierClaims>(stream, BlogifierConstant.DefaultJsonSerializerOptionss)!;
+        _logger.LogInformation("claims success userName:{UserName}", claims.UserName);
+      }
+      else
+      {
+        _logger.LogError("claims http error StatusCode:{StatusCode}", response.StatusCode);
+        claims = null;
+      }
+      var principal = BlogifierClaims.Generate(claims);
       _state = new AuthenticationState(principal);
     }
     return _state;
