@@ -1,5 +1,6 @@
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
+
 <style>
   .editor-add-category {
     color: #FFF;
@@ -30,30 +31,26 @@
 
 @code {
   [Parameter] public PostDto Post { get; set; } = default!;
-
-  public List<Category> PostCategories { get; set; } = default!;
+  [Parameter] public List<Category> PostCategories { get; set; } = default!;
 
   protected string Tag { get; set; } = default!;
 
-  protected override async Task OnInitializedAsync()
+  protected override void OnInitialized()
   {
     Tag = string.Empty;
-    PostCategories = (await _http.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
   }
 
-
-  protected async Task KeyPressed(KeyboardEventArgs eventArgs)
+  protected void KeyPressed(KeyboardEventArgs eventArgs)
   {
     if (eventArgs.Code == "Enter")
     {
       PostCategories.Add(new Category { Content = Tag });
-      Tag = await Task.FromResult("");
+      Tag = string.Empty;
     }
   }
 
   protected void Remove(string tag)
   {
-    var tagToRemove = PostCategories.Where(c => c.Content == tag).First();
-    PostCategories.Remove(tagToRemove);
+    PostCategories.Remove(PostCategories.Where(c => c.Content == tag).First());
   }
 }

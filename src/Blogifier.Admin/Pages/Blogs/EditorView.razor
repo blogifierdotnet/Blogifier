@@ -1,4 +1,5 @@
 @page "/admin/blogs/editor/{Slug?}"
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -7,33 +8,40 @@
 
 @code
 {
-  [Parameter]
-  public string? Slug { get; set; }
+  [Parameter] public string? Slug { get; set; }
 
-  protected PostDto? Post { get; set; }
-  protected ToasterComponent? Toaster;
-  protected CategoriesComponent? Categories;
-  protected string Confirm { get; set; } = default!;
+  protected PostDto Post { get; set; } = default!;
+  protected List<Category> PostCategories { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
-    Confirm = _localizer["confirm-delete"];
-    await Load();
+    await LoadAsync();
   }
 
-  protected async Task Load()
+  protected async Task LoadAsync()
   {
-    Post = NewPost();
-
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}");
+      Post = (await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}"))!;
+      PostCategories = (await _http.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
       var headTitle = _localizer["edit"] + " - " + Post.Title;
       await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
     }
+    else
+    {
+      Post = new PostDto
+        {
+          Title = string.Empty,
+          Description = string.Empty,
+          Content = string.Empty,
+          PostType = PostType.Post,
+          Cover = BlogifierConstant.DefaultCover
+        };
+      PostCategories = new List<Category>();
+    }
   }
 
-  protected async Task SavePost(PostAction postAction)
+  protected async Task SavePostAsync(PostAction postAction)
   {
     Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
     Post.PostType = PostType.Post;
@@ -66,159 +74,158 @@
 
       if (result.IsSuccessStatusCode)
       {
-        Post = await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}");
-        await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
+        Post = (await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}"))!;
+        await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
 
         if (postAction == PostAction.Publish)
         {
           await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
         }
-
         _navigation.NavigateTo($"/admin/blogs/editor/{Post.Slug}");
-        await Load();
+        await LoadAsync();
+        _toaster.Success(_localizer["completed"]);
       }
-
-      Toaster.Toast(result);
+      else
+      {
+        _toaster.Error(_localizer["generic-error"]);
+      }
     }
     else
     {
-      Toaster.Toast(await _http.PutAsJsonAsync<PostDto>($"api/post/update", Post));
-
-      await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
-
+      var result = await _http.PutAsJsonAsync<PostDto>($"api/post/update", Post);
+      if (result.IsSuccessStatusCode)
+      {
+        _toaster.Success(_localizer["completed"]);
+      }
+      else
+      {
+        _toaster.Error(_localizer["generic-error"]);
+      }
+      await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
       await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
-      await Load();
+      await LoadAsync();
     }
   }
 
-  protected async Task Save()
+  protected async Task SaveAsync()
   {
-    await SavePost(PostAction.Save);
+    await SavePostAsync(PostAction.Save);
   }
 
-  protected async Task Publish()
+  protected async Task PublishAsync()
   {
-    await SavePost(PostAction.Publish);
+    await SavePostAsync(PostAction.Publish);
   }
 
-  protected async Task Unpublish()
+  protected async Task UnpublishAsync()
   {
-    await SavePost(PostAction.Unpublish);
+    await SavePostAsync(PostAction.Unpublish);
   }
 
-  protected async Task Remove(int id)
+  protected async Task RemoveAsync(int id)
   {
-    if (await _jsruntime.InvokeAsync<bool>("confirm", Confirm))
+    if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
-      Toaster.Toast(await _http.DeleteAsync($"api/post/{id}"));
+      var result = await _http.DeleteAsync($"api/post/{id}");
+      if (result.IsSuccessStatusCode)
+      {
+        _toaster.Success(_localizer["completed"]);
+      }
+      else
+      {
+        _toaster.Error(_localizer["generic-error"]);
+      }
       _navigation.NavigateTo($"admin");
     }
   }
 
-  protected async Task ResetCover()
+  protected async Task ResetCoverAsync()
   {
     Post.Cover = BlogifierConstant.DefaultCover;
-    await Save();
+    await SaveAsync();
   }
 
-  protected async Task RemoveCover()
+  protected async Task RemoveCoverAsync()
   {
     Post.Cover = null;
-    await Save();
-  }
-
-  protected PostDto NewPost()
-  {
-    return new PostDto
-    {
-      Title = string.Empty,
-      Description = string.Empty,
-      Content = string.Empty,
-      PostType = PostType.Post,
-      Cover = BlogifierConstant.DefaultCover
-    };
+    await SaveAsync();
   }
 }
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
 
-@if (Post != null)
-{
-  <div class="bfeditor">
-    <div class="bfeditor-header">
-      <img class="bfeditor-cover" src="@Post.Cover" alt="@_localizer["cover"]" id="postCover">
-      <div class="bfeditor-actions">
-        <div class="container d-flex">
-          @if (Post.Id == 0)
+<div class="bfeditor">
+  <div class="bfeditor-header">
+    <img class="bfeditor-cover" src="@Post.Cover" alt="@_localizer["cover"]" id="postCover">
+    <div class="bfeditor-actions">
+      <div class="container d-flex">
+        @if (Post.Id == 0)
+        {
+          <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => PublishAsync()">@_localizer["publish"]</button>
+          <button type="button" class="btn btn-default me-auto" @onclick="() => SaveAsync()" @onclick:preventDefault>@_localizer["save"]</button>
+        }
+        else
+        {
+          if (Post.PublishedAt > DateTime.MinValue)
           {
-            <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Publish()">@_localizer["publish"]</button>
-            <button type="button" class="btn btn-default me-auto" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
+            <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => SaveAsync()">@_localizer["save"]</button>
+            <button type="button" class="btn btn-default me-auto" @onclick="() => UnpublishAsync()" @onclick:preventDefault>@_localizer["unpublish"]</button>
+            <button class="btn btn-link text-white me-1" @onclick="(() => RemoveAsync(Post.Id))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+              </svg>
+              <span class="ms-2 d-none d-lg-inline">@_localizer["delete"]</span>
+            </button>
+            <a href="posts/@Post.Slug" class="btn btn-link text-white" target="_blank">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
+              </svg>
+              <span class="ms-2 d-none d-lg-inline">@_localizer["view"]</span>
+            </a>
           }
           else
           {
-            if (Post.PublishedAt > DateTime.MinValue)
-            {
-              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Save()">@_localizer["save"]</button>
-              <button type="button" class="btn btn-default me-auto" @onclick="() => Unpublish()" @onclick:preventDefault>@_localizer["unpublish"]</button>
-              <button class="btn btn-link text-white me-1" @onclick="(() => Remove(Post.Id))">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                </svg>
-                <span class="ms-2 d-none d-lg-inline">@_localizer["delete"]</span>
-              </button>
-              <a href="posts/@Post.Slug" class="btn btn-link text-white" target="_blank">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
-                </svg>
-                <span class="ms-2 d-none d-lg-inline">@_localizer["view"]</span>
-              </a>
-            }
-            else
-            {
-              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Publish()">@_localizer["publish"]</button>
-              <button type="button" class="btn btn-default me-auto" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
-              <button class="btn  text-white btn-link" @onclick="(() => Remove(Post.Id))">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                </svg>
-                <span class="ms-2 d-none d-lg-inline">@_localizer["delete"]</span>
-              </button>
-            }
+            <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => PublishAsync()">@_localizer["publish"]</button>
+            <button type="button" class="btn btn-default me-auto" @onclick="() => SaveAsync()" @onclick:preventDefault>@_localizer["save"]</button>
+            <button class="btn  text-white btn-link" @onclick="(() => RemoveAsync(Post.Id))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+              </svg>
+              <span class="ms-2 d-none d-lg-inline">@_localizer["delete"]</span>
+            </button>
           }
-        </div>
+        }
       </div>
-      <div class="bfeditor-header-inner">
-        <div class="container">
-          <textarea class="bfeditor-header-textarea bfeditor-header-title autosize" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" rows="1" autofocus></textarea>
-          <textarea class="bfeditor-header-textarea bfeditor-header-desc autosize" @bind="Post.Description" name="description" placeholder="@_localizer["description"]..." rows="1"></textarea>
-          <div class="bfeditor-meta d-flex">
-            <div class="dropdown me-3">
-              <a class="bfeditor-meta-link" href="#" id="coverDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image me-1" viewBox="0 0 16 16">
-                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
-                </svg>
-                @_localizer["cover"]
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="coverDropdown">
-                <li>
-                  <button class="dropdown-item" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">@_localizer["change"]</button>
-                  <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
-                </li>
-                <li>
-                  <button class="dropdown-item" type="button" @onclick="() => ResetCover()">@_localizer["reset"]</button>
-                </li>
-              </ul>
-            </div>
-            <CategoriesComponent Post="Post" @ref="Categories" />
+    </div>
+    <div class="bfeditor-header-inner">
+      <div class="container">
+        <textarea class="bfeditor-header-textarea bfeditor-header-title autosize" @bind="Post.Title" name="title" placeholder="@_localizer["post-title"]" rows="1" autofocus></textarea>
+        <textarea class="bfeditor-header-textarea bfeditor-header-desc autosize" @bind="Post.Description" name="description" placeholder="@_localizer["description"]..." rows="1"></textarea>
+        <div class="bfeditor-meta d-flex">
+          <div class="dropdown me-3">
+            <a class="bfeditor-meta-link" href="#" id="coverDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image me-1" viewBox="0 0 16 16">
+                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+              </svg>
+              @_localizer["cover"]
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="coverDropdown">
+              <li>
+                <button class="dropdown-item" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">@_localizer["change"]</button>
+                <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
+              </li>
+              <li>
+                <button class="dropdown-item" type="button" @onclick="() => ResetCoverAsync()">@_localizer["reset"]</button>
+              </li>
+            </ul>
           </div>
+          <CategoriesComponent Post="Post" PostCategories="PostCategories" />
         </div>
       </div>
     </div>
-    <EditorComponent Content="@Post.Content" Toolbar="fullToolbar" />
   </div>
-}
-
-<ToasterComponent @ref="Toaster" />
+  <EditorComponent Content="@Post.Content" Toolbar="fullToolbar" />
+</div>
