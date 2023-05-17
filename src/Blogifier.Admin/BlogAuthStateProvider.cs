@@ -2,8 +2,6 @@ using Blogifier.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Security.Principal;
 using System.Text.Json;
 using System.Threading.Tasks;
 

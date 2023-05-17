@@ -1,5 +1,5 @@
 @page "/admin"
-@inject HttpClient _http
+@inject IHttpClientFactory _httpClientFactory
 @inject IStringLocalizer<Resource> _localizer
 
 
@@ -7,7 +7,8 @@
   private AnalyticsDto? _analytics;
   protected override async Task OnInitializedAsync()
   {
-    _analytics = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
+    var client = _httpClientFactory.CreateClient();
+    _analytics = await client.GetFromJsonAsync<AnalyticsDto>("api/analytics");
   }
 }
 

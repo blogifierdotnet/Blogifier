@@ -1,6 +1,6 @@
 @page "/admin/blogs/editor/{Slug?}"
 
-@inject HttpClient _http
+@inject IHttpClientFactory _httpClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
@@ -22,8 +22,9 @@
   {
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = (await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}"))!;
-      PostCategories = (await _http.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
+      var client = _httpClientFactory.CreateClient();
+      Post = (await client.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}"))!;
+      PostCategories = (await client.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
       var headTitle = _localizer["edit"] + " - " + Post.Title;
       await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
     }
@@ -67,19 +68,20 @@
     if (postAction == PostAction.Unpublish)
       Post.PublishedAt = DateTime.MinValue;
 
+    var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
     {
-      Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
-      var result = await _http.PostAsJsonAsync<PostDto>($"api/post/add", Post);
+      Post.Slug = await client.GetStringAsync($"api/post/getslug/{Post.Title}");
+      var result = await client.PostAsJsonAsync<PostDto>($"api/post/add", Post);
 
       if (result.IsSuccessStatusCode)
       {
-        Post = (await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}"))!;
-        await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
+        Post = (await client.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}"))!;
+        await client.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
 
         if (postAction == PostAction.Publish)
         {
-          await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+          await client.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
         }
         _navigation.NavigateTo($"/admin/blogs/editor/{Post.Slug}");
         await LoadAsync();
@@ -92,7 +94,7 @@
     }
     else
     {
-      var result = await _http.PutAsJsonAsync<PostDto>($"api/post/update", Post);
+      var result = await client.PutAsJsonAsync<PostDto>($"api/post/update", Post);
       if (result.IsSuccessStatusCode)
       {
         _toaster.Success(_localizer["completed"]);
@@ -101,8 +103,8 @@
       {
         _toaster.Error(_localizer["generic-error"]);
       }
-      await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
-      await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
+      await client.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
+      await client.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
       await LoadAsync();
     }
   }
@@ -124,9 +126,10 @@
 
   protected async Task RemoveAsync(int id)
   {
+    var client = _httpClientFactory.CreateClient();
     if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
-      var result = await _http.DeleteAsync($"api/post/{id}");
+      var result = await client.DeleteAsync($"api/post/{id}");
       if (result.IsSuccessStatusCode)
       {
         _toaster.Success(_localizer["completed"]);
