@@ -89,11 +89,11 @@
           <NavLink class="menu-link" href="/admin/profile/" role="button" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
             @if (_claims.Avatar != null)
             {
-              <img class="rounded-circle profilePicture" width="22" height="22" src="@_claims.Avatar" alt="@_claims.NickName">
+              <img class="rounded-circle profilePicture" width="32" height="32" src="@_claims.Avatar" alt="@_claims.NickName">
             }
             else
             {
-              <img class="rounded-circle profilePicture" width="22" height="22" src="/admin/favicons/favicon.ico" alt="@_claims.NickName">
+              <img class="rounded-circle profilePicture" width="32" height="32" src="@BlogifierConstant.DefaultAvatar" alt="@_claims.NickName">
             }
 
           </NavLink>

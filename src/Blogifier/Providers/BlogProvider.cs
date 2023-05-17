@@ -35,8 +35,8 @@ public class BlogProvider
       IncludeFeatured = blog.IncludeFeatured,
       ItemsPerPage = blog.ItemsPerPage,
       SocialFields = new List<SocialField>(),
-      Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : Constants.DefaultCover,
-      Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : Constants.DefaultLogo,
+      Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : BlogifierConstant.DefaultCover,
+      Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : BlogifierConstant.DefaultLogo,
       HeaderScript = blog.HeaderScript,
       FooterScript = blog.FooterScript,
       values = await GetValues(blog.Theme)

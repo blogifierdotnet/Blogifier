@@ -10,7 +10,7 @@
   [Parameter]
   public string? Slug { get; set; }
 
-  protected Post? Post { get; set; }
+  protected PostDto? Post { get; set; }
   protected ToasterComponent? Toaster;
   protected CategoriesComponent? Categories;
   protected string Confirm { get; set; } = default!;
@@ -27,7 +27,7 @@
 
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Slug}");
+      Post = await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}");
       var headTitle = _localizer["edit"] + " - " + Post.Title;
       await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
     }
@@ -42,7 +42,7 @@
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
 
     if (string.IsNullOrEmpty(Post.Cover))
-      Post.Cover = Constants.DefaultCover;
+      Post.Cover = BlogifierConstant.DefaultCover;
 
     if (string.IsNullOrEmpty(Post.Description))
       Post.Description = Post.Title;
@@ -62,11 +62,11 @@
     if (Post.Id == 0)
     {
       Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
-      HttpResponseMessage result = await _http.PostAsJsonAsync<Post>($"api/post/add", Post);
+      var result = await _http.PostAsJsonAsync<PostDto>($"api/post/add", Post);
 
       if (result.IsSuccessStatusCode)
       {
-        Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
+        Post = await _http.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}");
         await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
 
         if (postAction == PostAction.Publish)
@@ -82,7 +82,7 @@
     }
     else
     {
-      Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
+      Toaster.Toast(await _http.PutAsJsonAsync<PostDto>($"api/post/update", Post));
 
       await _http.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", Categories.PostCategories);
 
@@ -117,7 +117,7 @@
 
   protected async Task ResetCover()
   {
-    Post.Cover = Constants.DefaultCover;
+    Post.Cover = BlogifierConstant.DefaultCover;
     await Save();
   }
 
@@ -127,17 +127,16 @@
     await Save();
   }
 
-  protected Post NewPost()
+  protected PostDto NewPost()
   {
-    return new Post
-      {
-        Id = 0,
-        Title = "",
-        Description = "",
-        Content = "",
-        PostType = PostType.Post,
-        Cover = Constants.DefaultCover
-      };
+    return new PostDto
+    {
+      Title = string.Empty,
+      Description = string.Empty,
+      Content = string.Empty,
+      PostType = PostType.Post,
+      Cover = BlogifierConstant.DefaultCover
+    };
   }
 }
 

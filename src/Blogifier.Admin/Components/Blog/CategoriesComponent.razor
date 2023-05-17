@@ -25,26 +25,22 @@
       </div>
     }
   }
-  <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed"
-         name="tagItem" placeholder="@_localizer["add-category"]" />
+  <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
 </div>
 
 @code {
-  [Parameter] public Post Post { get; set; }
+  [Parameter] public PostDto Post { get; set; } = default!;
 
-  protected string Tag { get; set; }
-  public List<Category> PostCategories { get; set; }
+  public List<Category> PostCategories { get; set; } = default!;
+
+  protected string Tag { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
-    await Load();
+    Tag = string.Empty;
+    PostCategories = (await _http.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
   }
 
-  protected async Task Load()
-  {
-    Tag = "";
-    PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
-  }
 
   protected async Task KeyPressed(KeyboardEventArgs eventArgs)
   {
@@ -55,9 +51,9 @@
     }
   }
 
-  protected async Task Remove(string tag)
+  protected void Remove(string tag)
   {
-    var tagToRemove = await Task.FromResult(PostCategories.Where(c => c.Content == tag).FirstOrDefault());
+    var tagToRemove = PostCategories.Where(c => c.Content == tag).First();
     PostCategories.Remove(tagToRemove);
   }
 }

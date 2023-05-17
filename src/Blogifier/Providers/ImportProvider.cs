@@ -44,7 +44,7 @@ public class ImportProvider
         Title = syndicationItem.Title.Text,
         Description = GetDescription(syndicationItem.Summary.Text),
         Content = content,
-        Cover = Constants.DefaultCover,
+        Cover = BlogifierConstant.DefaultCover,
         Published = syndicationItem.PublishDate.DateTime,
       };
 
@@ -127,7 +127,7 @@ public class ImportProvider
     if (string.IsNullOrEmpty(post.Content))
       return;
 
-    if (post.Cover != Constants.DefaultCover)
+    if (post.Cover != BlogifierConstant.DefaultCover)
     {
       var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 

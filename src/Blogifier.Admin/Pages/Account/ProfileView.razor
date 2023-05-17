@@ -87,7 +87,7 @@
 
   protected async Task ResetAvatar()
   {
-    Author.Avatar = string.Format(Constants.AvatarDataImage, Author.DisplayName.Substring(0, 1).ToUpper());
+    Author.Avatar = string.Format(BlogifierConstant.AvatarDataImage, Author.DisplayName.Substring(0, 1).ToUpper());
     await SaveProfile();
   }
 }

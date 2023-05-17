@@ -98,7 +98,7 @@ public class AuthorProvider
       Email = model.Email,
       Password = model.Password.Hash(_salt),
       IsAdmin = isAdmin,
-      Avatar = string.Format(Constants.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
+      Avatar = string.Format(BlogifierConstant.AvatarDataImage, model.Name.Substring(0, 1).ToUpper()),
       Bio = "The short author bio.",
     };
     blog.Authors!.Add(author);
@@ -117,7 +117,7 @@ public class AuthorProvider
 
     author.IsAdmin = false;
     author.Password = author.Password.Hash(_salt);
-    author.Avatar = string.Format(Constants.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
+    author.Avatar = string.Format(BlogifierConstant.AvatarDataImage, author.DisplayName.Substring(0, 1).ToUpper());
 
     blog.Authors!.Add(author);
     return await _db.SaveChangesAsync() > 0;

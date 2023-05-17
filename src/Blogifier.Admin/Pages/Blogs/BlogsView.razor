@@ -12,30 +12,29 @@
   protected string? SearchTerm { get; set; }
   protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; }
-  protected string PostTypeLabel { get; set; } = default!;
-  protected string PostTypeButton { get; set; } = default!;
-  protected PostType PostTypeValue { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
     FilterLabel = _localizer["all"];
-    PostTypeLabel = _localizer["posts"];
-    PostTypeButton = _localizer["post"];
-    PostTypeValue = PostType.Post;
     await LoadAsync();
   }
 
   protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/{FilterValue}/{PostTypeValue}");
+    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/{FilterValue}/{PostType.Post}");
   }
 
-  public void CheckAll(object checkValue)
+  public void CheckAll(object? checkValue)
   {
-    bool isChecked = (bool)checkValue;
-    foreach (var item in Posts!)
-      item.Selected = isChecked;
-    StateHasChanged();
+    if (checkValue != null)
+    {
+      var isChecked = (bool)checkValue;
+      foreach (var item in Posts!)
+      {
+        item.Selected = isChecked;
+      }
+      StateHasChanged();
+    }
   }
 
   private async Task RunAction(GroupAction action)
@@ -88,22 +87,6 @@
 
     Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/search/{SearchTerm}");
     SearchTerm = "";
-  }
-
-  protected async Task GetPosts()
-  {
-    PostTypeLabel = _localizer["posts"];
-    PostTypeButton = _localizer["post"];
-    PostTypeValue = PostType.Post;
-    await LoadAsync();
-  }
-
-  protected async Task GetPages()
-  {
-    PostTypeLabel = _localizer["pages"];
-    PostTypeButton = _localizer["page"];
-    PostTypeValue = PostType.Page;
-    await LoadAsync();
   }
 
   public async Task Filter(PublishedStatus filter)
