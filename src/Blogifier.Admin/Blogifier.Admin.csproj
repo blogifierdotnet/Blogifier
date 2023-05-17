@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\Blog\zj5q23tm.2fb~" />
+    <None Remove="Pages\Blogs\zj5q23tm.2fb~" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />

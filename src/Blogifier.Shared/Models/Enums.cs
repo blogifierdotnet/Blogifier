@@ -22,12 +22,15 @@ public enum PostAction
 
 public enum PostType
 {
-  Post = 1, Page = 2
+  Post = 1,
+  Page = 2,
 }
 
 public enum SaveStatus
 {
-  Saving = 1, Publishing = 2, Unpublishing = 3
+  Saving = 1,
+  Publishing = 2,
+  Unpublishing = 3,
 }
 
 public enum UploadType
