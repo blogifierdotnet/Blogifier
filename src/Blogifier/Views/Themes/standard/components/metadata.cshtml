@@ -12,19 +12,19 @@
   var postAuthor = postModel.Post.Author.DisplayName;
 
   <script type="application/ld+json">
-        {
-        "@@context": "https://schema.org",
-        "@@type": "NewsArticle",
-        "headline": "@postTitle",
-        "url": "@postUrl",
-        "articleBody": "@postDesc",
-        "image": "@postCover",
-        "datePublished": "@postPublished",
-        "dateModified": "@postPublished",
-         "author": {
-          "@@type": "Person",
-          "name": "@postAuthor"
-        }
+    {
+      "@@context": "https://schema.org",
+      "@@type": "NewsArticle",
+      "headline": "@postTitle",
+      "url": "@postUrl",
+      "articleBody": "@postDesc",
+      "image": "@postCover",
+      "datePublished": "@postPublished",
+      "dateModified": "@postPublished",
+       "author": {
+        "@@type": "Person",
+        "name": "@postAuthor"
       }
+    }
   </script>
 }
