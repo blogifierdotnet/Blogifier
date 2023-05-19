@@ -8,7 +8,7 @@
 
 @code {
 
-  protected List<PostDto>? Posts { get; set; }
+  protected List<PostItemDto>? Posts { get; set; }
   protected string? SearchTerm { get; set; }
   protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; }
@@ -21,7 +21,7 @@
 
   protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/{FilterValue}/{PostType.Post}");
+    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{FilterValue}/{PostType.Post}");
   }
 
   public void CheckAll(object? checkValue)
@@ -85,7 +85,7 @@
     if (string.IsNullOrEmpty(SearchTerm))
       SearchTerm = "*";
 
-    Posts = await _http.GetFromJsonAsync<List<PostDto>>($"api/post/list/search/{SearchTerm}");
+    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/search/{SearchTerm}");
     SearchTerm = "";
   }
 
@@ -110,13 +110,13 @@
     await LoadAsync();
   }
 
-  public async Task Publish(PostDto post)
+  public async Task Publish(PostItemDto post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
     await LoadAsync();
   }
 
-  public async Task Featured(PostDto post)
+  public async Task Featured(PostItemDto post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
     await LoadAsync();

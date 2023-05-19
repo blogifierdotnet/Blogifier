@@ -24,6 +24,8 @@ public class PostItemDto
   public Author Author { get; set; }
   public SaveStatus Status { get; set; }
   public List<SocialField> SocialFields { get; set; }
+  public DateTime PublishedAt { get; set; }
+  public bool IsFeatured { get; set; }
   public bool Selected { get; set; }
 
   #region IEquatable

@@ -26,10 +26,10 @@ public class PostController : ControllerBase
   }
 
   [HttpGet("list/{filter}/{postType}")]
-  public async Task<IEnumerable<PostDto>> GetPosts(PublishedStatus filter, PostType postType)
+  public async Task<IEnumerable<PostItemDto>> GetPosts(PublishedStatus filter, PostType postType)
   {
     var posts = await _blogManager.GetPostsAsync(filter, postType);
-    var postsDto = _mapper.Map<IEnumerable<PostDto>>(posts);
+    var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
     return postsDto;
   }
 
@@ -53,9 +53,10 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpPost("add")]
-  public async Task<ActionResult<bool>> AddPost(Post post)
+  public async Task<ActionResult<bool>> AddPost(PostEditorDto post)
   {
-    return await _postProvider.Add(post);
+    throw new BlogNotIitializeException();
+    //return await _postProvider.Add(post);
   }
 
   [Authorize]

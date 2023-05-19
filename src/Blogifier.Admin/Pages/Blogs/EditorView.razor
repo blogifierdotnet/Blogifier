@@ -10,57 +10,47 @@
 {
   [Parameter] public string? Slug { get; set; }
 
-  protected PostDto Post { get; set; } = default!;
-  protected List<Category> PostCategories { get; set; } = default!;
+  protected PostEditorDto Post { get; set; } = default!;
 
-  protected override async Task OnInitializedAsync()
-  {
-    await LoadAsync();
-  }
+  protected override async Task OnInitializedAsync() => await LoadAsync();
 
   protected async Task LoadAsync()
   {
     if (!string.IsNullOrEmpty(Slug))
     {
       var client = _httpClientFactory.CreateClient();
-      Post = (await client.GetFromJsonAsync<PostDto>($"api/post/byslug/{Slug}"))!;
-      PostCategories = (await client.GetFromJsonAsync<List<Category>>($"api/category/{Post.Id}"))!;
+      Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
       var headTitle = _localizer["edit"] + " - " + Post.Title;
       await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
     }
     else
     {
-      Post = new PostDto
+      Post = new PostEditorDto
         {
           Title = string.Empty,
           Description = string.Empty,
           Content = string.Empty,
           PostType = PostType.Post,
-          Cover = BlogifierConstant.DefaultCover
+          Cover = BlogifierConstant.DefaultCover,
+          Categories = new List<Category>(),
         };
-      PostCategories = new List<Category>();
     }
   }
 
   protected async Task SavePostAsync(PostAction postAction)
   {
     Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-    Post.PostType = PostType.Post;
-
-    Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
-    Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
-
-    if (string.IsNullOrEmpty(Post.Cover))
-      Post.Cover = BlogifierConstant.DefaultCover;
-
-    if (string.IsNullOrEmpty(Post.Description))
-      Post.Description = Post.Title;
-
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(Post.Content))
     {
       _toaster.Error(_localizer["title-content-required"]);
       return;
     }
+    Post.PostType = PostType.Post;
+    Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
+    Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
+    if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
+
+    if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
 
     if (postAction == PostAction.Publish)
       Post.PublishedAt = DateTime.UtcNow;
@@ -71,20 +61,10 @@
     var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
     {
-      Post.Slug = await client.GetStringAsync($"api/post/getslug/{Post.Title}");
-      var result = await client.PostAsJsonAsync<PostDto>($"api/post/add", Post);
-
+      var result = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
       if (result.IsSuccessStatusCode)
       {
-        Post = (await client.GetFromJsonAsync<PostDto>($"api/post/byslug/{Post.Slug}"))!;
-        await client.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
-
-        if (postAction == PostAction.Publish)
-        {
-          await client.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
-        }
-        _navigation.NavigateTo($"/admin/blogs/editor/{Post.Slug}");
-        await LoadAsync();
+        Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Post.Slug}"))!;
         _toaster.Success(_localizer["completed"]);
       }
       else
@@ -94,19 +74,11 @@
     }
     else
     {
-      var result = await client.PutAsJsonAsync<PostDto>($"api/post/update", Post);
-      if (result.IsSuccessStatusCode)
-      {
-        _toaster.Success(_localizer["completed"]);
-      }
-      else
-      {
-        _toaster.Error(_localizer["generic-error"]);
-      }
-      await client.PutAsJsonAsync<List<Category>>($"api/category/{Post.Id}", PostCategories);
-      await client.GetFromJsonAsync<bool>($"api/newsletter/send/{Post.Id}");
-      await LoadAsync();
+      var result = await client.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
+      if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
+      else _toaster.Error(_localizer["generic-error"]);
     }
+    await LoadAsync();
   }
 
   protected async Task SaveAsync()
@@ -130,14 +102,8 @@
     if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
       var result = await client.DeleteAsync($"api/post/{id}");
-      if (result.IsSuccessStatusCode)
-      {
-        _toaster.Success(_localizer["completed"]);
-      }
-      else
-      {
-        _toaster.Error(_localizer["generic-error"]);
-      }
+      if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
+      else _toaster.Error(_localizer["generic-error"]);
       _navigation.NavigateTo($"admin");
     }
   }
@@ -225,7 +191,7 @@
               </li>
             </ul>
           </div>
-          <CategoriesComponent Post="Post" PostCategories="PostCategories" />
+          <CategoriesComponent Categories="Post.Categories" />
         </div>
       </div>
     </div>

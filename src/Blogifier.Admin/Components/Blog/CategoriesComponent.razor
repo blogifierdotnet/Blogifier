@@ -1,37 +1,7 @@
-@inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 
-<style>
-  .editor-add-category {
-    color: #FFF;
-    overflow: hidden;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-weight: 600;
-    font-size: 0.95em;
-  }
-</style>
-<div class="d-flex">
-  @if (PostCategories != null)
-  {
-    foreach (var item in PostCategories)
-    {
-      <div>
-        <label>@item.Content</label>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
-             viewBox="0 0 16 16" @onclick="()=> Remove(item.Content)">
-          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-        </svg>
-      </div>
-    }
-  }
-  <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
-</div>
-
 @code {
-  [Parameter] public PostDto Post { get; set; } = default!;
-  [Parameter] public List<Category> PostCategories { get; set; } = default!;
+  [Parameter] public List<Category> Categories { get; set; } = default!;
 
   protected string Tag { get; set; } = default!;
 
@@ -44,13 +14,38 @@
   {
     if (eventArgs.Code == "Enter")
     {
-      PostCategories.Add(new Category { Content = Tag });
+      Categories.Add(new Category { Content = Tag });
       Tag = string.Empty;
     }
   }
 
   protected void Remove(string tag)
   {
-    PostCategories.Remove(PostCategories.Where(c => c.Content == tag).First());
+    Categories.Remove(Categories.Where(c => c.Content == tag).First());
   }
 }
+<style>
+  .editor-add-category {
+    color: #FFF;
+    overflow: hidden;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+</style>
+<div class="d-flex">
+  @foreach (var item in Categories)
+  {
+    <div>
+      <label>@item.Content</label>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+           viewBox="0 0 16 16" @onclick="()=> Remove(item.Content)">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+      </svg>
+    </div>
+  }
+  <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
+</div>
+

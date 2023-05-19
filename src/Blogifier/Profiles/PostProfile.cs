@@ -8,6 +8,6 @@ public class PostProfile : Profile
 {
   public PostProfile()
   {
-    CreateMap<Post, PostDto>();
+    CreateMap<Post, PostEditorDto>();
   }
 }
