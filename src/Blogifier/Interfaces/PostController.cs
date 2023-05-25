@@ -54,7 +54,7 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpPost("add")]
-  public async Task<PostEditorDto> AddPost([FromBody] PostEditorDto postDto)
+  public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto postDto)
   {
     var userId = User.FirstUserId();
     var post = _mapper.Map<Post>(postDto);
@@ -66,9 +66,13 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpPut("update")]
-  public async Task<ActionResult<bool>> UpdatePost(Post post)
+  public async Task<ActionResult<PostEditorDto>> UpdatePostAsync(PostEditorDto postDto)
   {
-    return await _postProvider.Update(post);
+    var userId = User.FirstUserId();
+    var post = _mapper.Map<Post>(postDto);
+    var result = await _blogManager.UpdatePostAsync(post, userId);
+    var resultDto = _mapper.Map<PostEditorDto>(result);
+    return resultDto;
   }
 
   [Authorize]

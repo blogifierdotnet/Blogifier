@@ -115,16 +115,32 @@ public class BlogManager
   {
     post.Slug = await GetSlugFromTitle(post.Title);
 
-    var contentRemoveScriptTags = StringHelper.RemoveScriptTags(post.Content);
-    var contentRemoveImgTags = StringHelper.RemoveImgTags(contentRemoveScriptTags);
-    var descriptionRemoveScriptTags = StringHelper.RemoveScriptTags(post.Description);
-    var descriptionRemoveImgTags = StringHelper.RemoveImgTags(descriptionRemoveScriptTags);
-    post.Description = descriptionRemoveImgTags;
-    post.Content = contentRemoveImgTags;
+    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(post.Content));
+    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(post.Description));
+    post.Description = contentFiltr;
+    post.Content = descriptionFiltr;
 
     if (post.State >= PostState.Release) post.PublishedAt = DateTime.UtcNow;
 
     _dbContext.Posts.Add(post);
+    await _dbContext.SaveChangesAsync();
+    return post;
+  }
+
+  public async Task<Post> UpdatePostAsync(Post postInput, int userId)
+  {
+    var post = await _dbContext.Posts.FirstAsync(m => m.Id == postInput.Id);
+    if (post.UserId != userId) throw new BlogNotIitializeException();
+
+    post.Slug = postInput.Slug;
+    post.Title = postInput.Title;
+    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    post.Description = contentFiltr;
+    post.Content = descriptionFiltr;
+    post.Cover = postInput.Cover;
+
+    _dbContext.Update(post);
     await _dbContext.SaveChangesAsync();
     return post;
   }
