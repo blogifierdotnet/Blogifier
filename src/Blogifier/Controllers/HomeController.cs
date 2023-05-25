@@ -1,7 +1,6 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Extensions;
-using Blogifier.Identity;
 using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
@@ -23,6 +22,7 @@ public class HomeController : Controller
 {
   protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
+  protected readonly MainManager _mainManager;
   protected readonly BlogManager _blogManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
@@ -34,6 +34,7 @@ public class HomeController : Controller
   public HomeController(
     ILogger<HomeController> logger,
     IMapper mapper,
+    MainManager mainManager,
     BlogManager blogManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
@@ -44,6 +45,7 @@ public class HomeController : Controller
   {
     _logger = logger;
     _mapper = mapper;
+    _mainManager = mainManager;
     _blogManager = blogManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
@@ -55,25 +57,21 @@ public class HomeController : Controller
 
   public async Task<IActionResult> Index(int page = 1)
   {
-    BlogData data;
+    MainData data;
     try
     {
-      data = await _blogManager.GetBlogDataAsync();
+      data = await _mainManager.GetMainAsync();
     }
     catch (BlogNotIitializeException ex)
     {
       _logger.LogError(ex, "blgo not iitialize redirect");
       return Redirect("~/account/initialize");
     }
-    var categoryItemes = await _blogManager.GetCategoryItemesAsync();
+
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
-    var categoryItemesDto = _mapper.Map<IEnumerable<CategoryItemDto>>(categoryItemes);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-    var claims = BlogifierClaims.Analysis(User);
-    var request = HttpContext.Request;
-    var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-    var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, claims, categoryItemesDto);
-    _mapper.Map<BlogData, BaseModel>(data, model);
+    var model = new IndexModel(postsDto, page);
+    _mapper.Map<MainData, MainModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
@@ -115,13 +113,6 @@ public class HomeController : Controller
 
     return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
   }
-
-  [HttpGet("posts/{slug}")]
-  public async Task<IActionResult> Single(string slug)
-  {
-    return await GetSingleBlogPost(slug);
-  }
-
 
   [ResponseCache(Duration = 1200)]
   [HttpGet("feed/{type}")]

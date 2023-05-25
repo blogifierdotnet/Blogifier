@@ -84,6 +84,7 @@ builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
 builder.Services.AddScoped<BlogManager>();
+builder.Services.AddScoped<MainManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

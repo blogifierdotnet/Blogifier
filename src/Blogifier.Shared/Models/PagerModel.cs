@@ -1,20 +1,11 @@
-using Blogifier.Identity;
 using Blogifier.Models;
-using System.Collections.Generic;
 namespace Blogifier.Shared;
 
 public class PagerModel : MainModel
 {
-  public PagerModel(
-    int currentPage,
-    int itemsPerPage,
-    string absoluteUrl,
-    BlogifierClaims? claims,
-    IEnumerable<CategoryItemDto> categories)
-    : base(absoluteUrl, claims, categories)
+  public PagerModel(int currentPage)
   {
     CurrentPage = currentPage;
-    ItemsPerPage = itemsPerPage;
     Newer = CurrentPage - 1;
     ShowNewer = CurrentPage > 1;
     Older = currentPage + 1;
