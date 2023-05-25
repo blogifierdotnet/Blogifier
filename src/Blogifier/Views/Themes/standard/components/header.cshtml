@@ -13,18 +13,18 @@
     <section class="header-sign py-4 py-md-0 text-center text-md-start me-md-auto">
       @if (siteMark == "logo")
       {
-        <a class="header-logo" href="@Model.AbsoluteUrl">
-          <img class="header-logo-img" src="~/@Model.Logo" alt="@Model.Title @_localizer["logo"]">
+        <a class="header-logo" href="@Model.Main.AbsoluteUrl">
+          <img class="header-logo-img" src="~/@Model.Main.Logo" alt="@Model.Main.Title @_localizer["logo"]">
         </a>
       }
       else if (siteMark == "title")
       {
-        <a class="header-title" href="@Model.AbsoluteUrl">@Model.Title</a>
+        <a class="header-title" href="@Model.Main.AbsoluteUrl">@Model.Main.Title</a>
       }
       else if (siteMark == "titleDesc")
       {
-        <a class="header-title" href="@Model.AbsoluteUrl">@Model.Title</a>
-        <p class="header-desc">@Model.Description</p>
+        <a class="header-title" href="@Model.Main.AbsoluteUrl">@Model.Main.Title</a>
+        <p class="header-desc">@Model.Main.Description</p>
       }
     </section>
 

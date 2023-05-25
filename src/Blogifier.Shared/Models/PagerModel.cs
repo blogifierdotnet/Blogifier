@@ -2,7 +2,7 @@ namespace Blogifier.Shared;
 
 public class PagerModel : MainModel
 {
-  public PagerModel(int currentPage)
+  public PagerModel(int currentPage, MainDto main) : base(main)
   {
     CurrentPage = currentPage;
     Newer = CurrentPage - 1;
@@ -10,7 +10,6 @@ public class PagerModel : MainModel
     Older = currentPage + 1;
   }
   public int CurrentPage { get; set; } = 1;
-  public new int ItemsPerPage { get; set; }
   public int Total { get; set; }
   public bool NotFound { get; set; }
   public int Newer { get; set; }

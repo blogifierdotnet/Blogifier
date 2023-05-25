@@ -4,7 +4,7 @@ namespace Blogifier.Models;
 
 public class PostsModel : PagerModel
 {
-  public PostsModel(IEnumerable<PostItemDto> items, int currentPage) : base(currentPage)
+  public PostsModel(IEnumerable<PostItemDto> items, int currentPagem, MainDto main) : base(currentPagem, main)
   {
     Items = items;
   }

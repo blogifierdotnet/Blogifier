@@ -6,10 +6,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@Model.Title</title>
-  <meta name="description" content="@Model.Description">
-  <link rel="alternate" type="application/rss+xml" title="@Model.Title" href="@Model.SiteFeed" />
-  <link rel="canonical" href="@Model.AbsoluteUrl" />
+  <title>@Model.Main.Title</title>
+  <meta name="description" content="@Model.Main.Description">
+  <link rel="alternate" type="application/rss+xml" title="@Model.Main.Title" href="@Model.Main.SiteFeed" />
+  <link rel="canonical" href="@Model.Main.AbsoluteUrl" />
   <!-- TODO: These variables comes from customfiedls -->
   <style>
     :root {
@@ -30,7 +30,7 @@
     }
   </style>
   <link rel="stylesheet" href="~/themes/standard/css/styles.css" asp-append-version="true">
-  @Html.Raw(Model.HeaderScript)
+  @Html.Raw(Model.Main.HeaderScript)
 </head>
 <body>
   <partial name="../components/header.cshtml" />
@@ -40,7 +40,7 @@
   <script src="~/themes/standard/js/highlight.js" asp-append-version="true"></script>
   <script src="~/themes/standard/js/scripts.js" asp-append-version="true"></script>
   <script src="~/themes/standard/js/newsletter.js" asp-append-version="true"></script>
-  @Html.Raw(Model.FooterScript)
+  @Html.Raw(Model.Main.FooterScript)
 </body>
 
 </html>

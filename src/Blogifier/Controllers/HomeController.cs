@@ -66,10 +66,10 @@ public class HomeController : Controller
     }
 
     var posts = await _blogManager.GetPostsAsync(page, data.ItemsPerPage);
+    var mainDto = _mapper.Map<MainDto>(data);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-    var model = new IndexModel(postsDto, page);
-    _mapper.Map<MainData, MainModel>(data, model);
-    return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
+    var model = new IndexModel(postsDto, page, mainDto);
+    return View($"~/Views/Themes/{data.Theme}/index.cshtml", model);
   }
 
   [HttpGet("/{slug}")]

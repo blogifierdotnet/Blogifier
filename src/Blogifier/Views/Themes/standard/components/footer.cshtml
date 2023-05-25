@@ -19,10 +19,10 @@
 <footer class="container">
   <partial name="../components/newsletter.cshtml" />
   <section class="footer d-md-flex text-center text-md-start py-4 py-md-5">
-    <p>&copy; @DateTime.Now.Year - @Model.Title</p>
+    <p>&copy; @DateTime.Now.Year - @Model.Main.Title</p>
     <p class="ms-md-auto mt-2 mt-md-0">
       @_localizer["powered-by"]
-      <a href="https://blogifier.net" rel="nofollow" target="_blank" title="@_localizer["blogifier"] - @Model.Version">@_localizer["blogifier"]</a>
+      <a href="https://blogifier.net" rel="nofollow" target="_blank" title="@_localizer["blogifier"] - @Model.Main.Version">@_localizer["blogifier"]</a>
     </p>
   </section>
 </footer>

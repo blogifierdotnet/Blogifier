@@ -27,8 +27,9 @@ public class ErrorController : Controller
     try
     {
       var data = await _blogManager.GetAsync();
-      var model = _mapper.Map<MainModel>(data);
-      return View($"~/Views/Themes/{model.Theme}/404.cshtml", model);
+      var dataDto = _mapper.Map<MainDto>(data);
+      var model = new MainModel(dataDto);
+      return View($"~/Views/Themes/{data.Theme}/404.cshtml", model);
     }
     catch (Exception ex)
     {
