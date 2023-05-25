@@ -1,5 +1,7 @@
 @page "/admin/pages/"
+
 @inject HttpClient _http
+
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
@@ -7,34 +9,37 @@
 
 
 @code {
-  protected List<Post>? Posts { get; set; }
-  protected string SearchTerm { get; set; }
-  protected string FilterLabel { get; set; }
+
+  protected List<PostItemDto>? Posts { get; set; }
+  protected string? SearchTerm { get; set; }
+  protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; }
-  protected string PostTypeLabel { get; set; }
-  protected string PostTypeButton { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
     FilterLabel = _localizer["all"];
-    PostTypeLabel = _localizer["posts"];
-    PostTypeButton = _localizer["post"];
-    await Load();
+    await LoadAsync();
   }
 
-  protected async Task Load()
+  protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/{FilterValue}/{PostType.Page}");
+    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{FilterValue}/{PostType.Page}");
   }
 
-  public void CheckAll(object checkValue)
+  public void CheckAll(object? checkValue)
   {
-    bool isChecked = (bool)checkValue;
-    Posts.ForEach(p => p.Selected = isChecked);
-    StateHasChanged();
+    if (checkValue != null)
+    {
+      var isChecked = (bool)checkValue;
+      foreach (var item in Posts!)
+      {
+        item.Selected = isChecked;
+      }
+      StateHasChanged();
+    }
   }
 
-  public async Task RunAction(GroupAction action)
+  private async Task RunAction(GroupAction action)
   {
     string confirm = _localizer["confirm-delete"];
     bool confirmed = false;
@@ -46,7 +51,7 @@
         return;
     }
 
-    foreach (var post in Posts)
+    foreach (var post in Posts!)
     {
       if (post.Selected)
       {
@@ -58,13 +63,17 @@
           case GroupAction.Unpublish:
             await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
             break;
+          case GroupAction.Feature:
+            await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured);
+            break;
           case GroupAction.Delete:
             await _http.DeleteAsync($"api/post/{post.Id}");
             break;
         }
       }
     }
-    await Load();
+
+    await LoadAsync();
   }
 
   protected async Task SearchKeyPress(KeyboardEventArgs e)
@@ -78,16 +87,11 @@
     if (string.IsNullOrEmpty(SearchTerm))
       SearchTerm = "*";
 
-    Posts = await _http.GetFromJsonAsync<List<Post>>($"api/post/list/search/{SearchTerm}");
+    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/search/{SearchTerm}");
     SearchTerm = "";
   }
 
-  protected async Task GetPages()
-  {
-    PostTypeLabel = _localizer["pages"];
-    PostTypeButton = _localizer["page"];
-    await Load();
-  }
+
 
   public async Task Filter(PublishedStatus filter)
   {
@@ -104,13 +108,13 @@
         FilterLabel = _localizer["all"];
         break;
     }
-    await Load();
+    await LoadAsync();
   }
 
-  public async Task Publish(Post post)
+  public async Task Publish(PostItemDto post)
   {
     Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
-    await Load();
+    await LoadAsync();
   }
 
   protected void Toast(HttpResponseMessage msg)
