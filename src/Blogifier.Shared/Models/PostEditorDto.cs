@@ -8,7 +8,7 @@ public class PostEditorDto
 {
   public int Id { get; set; }
   public string Title { get; set; } = default!;
-  public string? Slug { get; set; } = default!;
+  public string? Slug { get; set; }
   public string Description { get; set; } = default!;
   public string Content { get; set; } = default!;
   public string? Cover { get; set; }

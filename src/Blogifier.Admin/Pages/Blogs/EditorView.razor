@@ -12,16 +12,13 @@
 
   protected PostEditorDto Post { get; set; } = default!;
 
-  protected override async Task OnInitializedAsync() => await LoadAsync();
-
-  protected async Task LoadAsync()
+  protected override async Task OnInitializedAsync()
   {
     if (!string.IsNullOrEmpty(Slug))
     {
       var client = _httpClientFactory.CreateClient();
       Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
-      var headTitle = _localizer["edit"] + " - " + Post.Title;
-      await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+      await SetJsPostAsync(Post);
     }
     else
     {
@@ -32,7 +29,6 @@
           Content = string.Empty,
           PostType = PostType.Post,
           Cover = BlogifierConstant.DefaultCover,
-          Categories = new List<Category>(),
         };
     }
   }
@@ -60,7 +56,9 @@
       var result = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
       if (result.IsSuccessStatusCode)
       {
-        Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Post.Slug}"))!;
+        var stream = await result.Content.ReadAsStreamAsync();
+        Post = (await JsonSerializer.DeserializeAsync<PostEditorDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+        await SetJsPostAsync(Post);
         _toaster.Success(_localizer["completed"]);
       }
       else
@@ -74,7 +72,6 @@
       if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
       else _toaster.Error(_localizer["generic-error"]);
     }
-    await LoadAsync();
   }
 
   protected async Task SaveAsync()
@@ -114,6 +111,12 @@
   {
     Post.Cover = null;
     await SaveAsync();
+  }
+
+  private async Task SetJsPostAsync(PostEditorDto post)
+  {
+    var headTitle = _localizer["edit"] + " - " + Post.Title;
+    await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
   }
 }
 
