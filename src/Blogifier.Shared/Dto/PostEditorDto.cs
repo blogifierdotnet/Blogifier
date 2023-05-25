@@ -2,7 +2,7 @@ using Blogifier.Shared;
 using System;
 using System.Collections.Generic;
 
-namespace Blogifier.Models;
+namespace Blogifier.Shared;
 
 public class PostEditorDto
 {

@@ -180,4 +180,12 @@ public class BlogManager
       slug = $"{slugOriginal}{i}";
     }
   }
+
+  public async Task<Post> GetPostAsync(string slug)
+  {
+    return await _dbContext.Posts
+       .Where(p => p.Slug == slug)
+       .AsNoTracking()
+       .FirstAsync();
+  }
 }

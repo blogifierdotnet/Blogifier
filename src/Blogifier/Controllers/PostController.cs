@@ -1,7 +1,9 @@
 using AutoMapper;
 using Blogifier.Blogs;
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -23,9 +25,16 @@ public class PostController : Controller
   }
 
   [HttpGet("{slug}")]
-  public async Task<IActionResult> Single(string slug)
+  public async Task<IActionResult> GetAsync([FromRoute] string slug)
   {
     var data = await _blogManager.GetAsync();
-    throw new BlogNotIitializeException();
+    var post = await _blogManager.GetPostAsync(slug);
+    if (post.State == PostState.Draft)
+    {
+      if (User.Identity == null || User.FirstUserId() != post.UserId)
+        return Redirect("~/404");
+    }
+    //var model =
+    throw new Exception();
   }
 }
