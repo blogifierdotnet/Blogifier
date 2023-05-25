@@ -63,4 +63,11 @@ public class BlogifierConstant
   public static string PostPublished = "P";
   public static string IdentityCookieName = ".AspNetCore.Identity.Application";
   public static readonly JsonSerializerOptions DefaultJsonSerializerOptionss = new(JsonSerializerDefaults.Web);
+
+
+  public static string CheckGetAvatarUrl(string? avatar)
+  {
+    if (!string.IsNullOrEmpty(avatar)) return avatar;
+    return DefaultAvatar;
+  }
 }

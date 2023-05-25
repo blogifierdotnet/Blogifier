@@ -59,24 +59,28 @@ public class BlogManager
   {
     var skip = (page - 1) * items;
     return await _dbContext.Posts
+      .Include(pc => pc.User)
       .OrderByDescending(m => m.CreatedAt)
       .Skip(skip)
       .Take(items)
+      .AsNoTracking()
       .ToListAsync();
   }
 
   public async Task<IEnumerable<CategoryItem>> GetCategoryItemesAsync()
   {
-    return await _dbContext.PostCategories.Include(pc => pc.Category)
-          .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
-          .Select(m => new CategoryItem
-          {
-            Id = m.Key.Id,
-            Category = m.Key.Content,
-            Description = m.Key.Description,
-            PostCount = m.Count()
-          })
-          .ToListAsync();
+    return await _dbContext.PostCategories
+      .Include(pc => pc.Category)
+      .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
+      .Select(m => new CategoryItem
+      {
+        Id = m.Key.Id,
+        Category = m.Key.Content,
+        Description = m.Key.Description,
+        PostCount = m.Count()
+      })
+      .AsNoTracking()
+      .ToListAsync();
   }
 
   public async Task<IEnumerable<BlogSumInfo>> GetBlogSumInfoAsync()
@@ -92,7 +96,7 @@ public class BlogManager
                   Pages = g.Count(m => m.PostType == PostType.Page),
                   Views = g.Sum(m => m.Views),
                 };
-    return await query.ToListAsync();
+    return await query.AsNoTracking().ToListAsync();
   }
 
   public async Task<IEnumerable<Post>> GetPostsAsync(PublishedStatus filter, PostType postType)
@@ -108,7 +112,7 @@ public class BlogManager
       _ => query.OrderByDescending(p => p.Id),
     };
 
-    return await query.ToListAsync();
+    return await query.AsNoTracking().ToListAsync();
   }
 
   public async Task<Post> AddPostAsync(Post post)
