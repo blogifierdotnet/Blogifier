@@ -1,125 +1,123 @@
 @page "/admin/pages/editor/{Slug?}/"
-@inject HttpClient _http
+
+@inject IHttpClientFactory _httpClientFactory
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject NavigationManager _navigation
 
 @code {
-  [Parameter]
-  public string? Slug { get; set; }
 
-  protected Post? Post { get; set; }
-  protected ToasterComponent? Toaster;
-  protected string Confirm { get; set; } = default!;
+  [Parameter] public string? Slug { get; set; }
+
+  protected PostEditorDto Post { get; set; } = new PostEditorDto
+    {
+      Title = string.Empty,
+      Description = string.Empty,
+      Content = string.Empty,
+      PostType = PostType.Page,
+      Cover = BlogifierConstant.DefaultCover,
+    };
 
   protected override async Task OnInitializedAsync()
   {
-    Confirm = _localizer["confirm-delete"];
-    await Load();
-  }
-
-  protected async Task Load()
-  {
-    Post = NewPost();
-
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Slug}");
-      var headTitle = _localizer["edit"] + " - " + Post.Title;
-      await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+      var client = _httpClientFactory.CreateClient();
+      Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
+      await SetJsPostAsync(Post);
     }
   }
 
-  protected async Task SavePost(PostAction postAction)
+  protected async Task SavePostAsync(PostState postState)
   {
+    Post.State = postState;
     Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-    Post.PostType = PostType.Page;
-
-    Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
-    if (string.IsNullOrEmpty(Post.Cover))
-      Post.Cover = BlogifierConstant.DefaultCover;
-
-    if (string.IsNullOrEmpty(Post.Description))
-      Post.Description = Post.Title;
-
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(Post.Content))
     {
       _toaster.Error(_localizer["title-content-required"]);
       return;
     }
 
-    if (postAction == PostAction.Publish)
-      Post.PublishedAt = DateTime.UtcNow;
+    Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
+    Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
+    if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
 
-    if (postAction == PostAction.Unpublish)
-      Post.PublishedAt = DateTime.MinValue;
+    if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
 
+    var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
     {
-      Post.Slug = await _http.GetStringAsync($"api/post/getslug/{Post.Title}");
-      Toaster.Toast(await _http.PostAsJsonAsync<Post>($"api/post/add", Post));
-
-      Post = await _http.GetFromJsonAsync<Post>($"api/post/byslug/{Post.Slug}");
-
-      _navigation.NavigateTo($"/admin/pages/editor/{Post.Slug}");
-      await Load();
+      var response = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
+      await CheckSetEditorResponseAsync(response);
     }
     else
     {
-      Toaster.Toast(await _http.PutAsJsonAsync<Post>($"api/post/update", Post));
-      await Load();
+      var response = await client.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
+      await CheckSetEditorResponseAsync(response);
     }
   }
 
-  protected async Task Save()
+  protected async Task SaveAsync()
   {
-    await SavePost(PostAction.Save);
+    await SavePostAsync(PostState.Draft);
   }
 
-  protected async Task Publish()
+  protected async Task PublishAsync()
   {
-    await SavePost(PostAction.Publish);
+    await SavePostAsync(PostState.Release);
   }
 
-  protected async Task Unpublish()
+  protected async Task UnpublishAsync()
   {
-    await SavePost(PostAction.Unpublish);
+    await SavePostAsync(PostState.Draft);
   }
 
-  protected async Task Remove(int id)
+  protected async Task RemoveAsync(int id)
   {
-    if (await _jsruntime.InvokeAsync<bool>("confirm", Confirm))
+    var client = _httpClientFactory.CreateClient();
+    if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
-      Toaster.Toast(await _http.DeleteAsync($"api/post/{id}"));
+      var result = await client.DeleteAsync($"api/post/{id}");
+      if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
+      else _toaster.Error(_localizer["generic-error"]);
       _navigation.NavigateTo($"admin");
     }
   }
 
-  protected async Task ResetCover()
+  protected async Task ResetCoverAsync()
   {
     Post.Cover = BlogifierConstant.DefaultCover;
-    await Save();
+    await SaveAsync();
   }
 
-  protected async Task RemoveCover()
+  protected async Task RemoveCoverAsync()
   {
     Post.Cover = null;
-    await Save();
+    await SaveAsync();
   }
 
-  protected Post NewPost()
+  private async Task SetJsPostAsync(PostEditorDto post)
   {
-    return new Post
-      {
-        Id = 0,
-        Title = "",
-        Description = "",
-        Content = "",
-        PostType = PostType.Page,
-        Cover = BlogifierConstant.DefaultCover
-      };
+    var headTitle = _localizer["edit"] + " - " + Post.Title;
+    await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
   }
+
+  private async Task CheckSetEditorResponseAsync(HttpResponseMessage response)
+  {
+    if (response.IsSuccessStatusCode)
+    {
+      var stream = await response.Content.ReadAsStreamAsync();
+      Post = (await JsonSerializer.DeserializeAsync<PostEditorDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      await SetJsPostAsync(Post);
+      _toaster.Success(_localizer["completed"]);
+    }
+    else
+    {
+      _toaster.Error(_localizer["generic-error"]);
+    }
+  }
+
 }
 
 <PageTitleComponent Title="@_localizer["new-page"]" />
@@ -133,16 +131,16 @@
         <div class="container d-flex">
           @if (Post.Id == 0)
           {
-            <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Publish()">@_localizer["publish"]</button>
-            <button type="button" class="btn btn-default me-auto" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
+            <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => PublishAsync()">@_localizer["publish"]</button>
+            <button type="button" class="btn btn-default me-auto" @onclick="() => SaveAsync()" @onclick:preventDefault>@_localizer["save"]</button>
           }
           else
           {
             if (Post.PublishedAt > DateTime.MinValue)
             {
-              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Save()">@_localizer["save"]</button>
-              <button type="button" class="btn btn-default me-auto" @onclick="() => Unpublish()" @onclick:preventDefault>@_localizer["unpublish"]</button>
-              <button class="btn btn-link text-white me-1" @onclick="(() => Remove(Post.Id))">
+              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => SaveAsync()">@_localizer["save"]</button>
+              <button type="button" class="btn btn-default me-auto" @onclick="() => UnpublishAsync()" @onclick:preventDefault>@_localizer["unpublish"]</button>
+              <button class="btn btn-link text-white me-1" @onclick="(() => RemoveAsync(Post.Id))">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -158,9 +156,9 @@
             }
             else
             {
-              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Publish()">@_localizer["publish"]</button>
-              <button type="button" class="btn btn-default me-auto" @onclick="() => Save()" @onclick:preventDefault>@_localizer["save"]</button>
-              <button class="btn btn-link  text-white" @onclick="(() => Remove(Post.Id))">
+              <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => PublishAsync()">@_localizer["publish"]</button>
+              <button type="button" class="btn btn-default me-auto" @onclick="() => SaveAsync()" @onclick:preventDefault>@_localizer["save"]</button>
+              <button class="btn btn-link  text-white" @onclick="(() => RemoveAsync(Post.Id))">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -190,7 +188,7 @@
                   <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
                 </li>
                 <li>
-                  <button class="dropdown-item" type="button" @onclick="() => ResetCover()">@_localizer["reset"]</button>
+                  <button class="dropdown-item" type="button" @onclick="() => ResetCoverAsync()">@_localizer["reset"]</button>
                 </li>
               </ul>
             </div>
@@ -201,5 +199,4 @@
     <EditorComponent Content="@Post.Content" Toolbar="fullToolbar" />
   }
 </div>
-<ToasterComponent @ref="Toaster" />
 
