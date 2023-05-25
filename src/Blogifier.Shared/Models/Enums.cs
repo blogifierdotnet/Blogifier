@@ -17,7 +17,9 @@ public enum PostListType
 
 public enum PostAction
 {
-  Save, Publish, Unpublish
+  Save,
+  Publish,
+  Unpublish
 }
 
 public enum PostType

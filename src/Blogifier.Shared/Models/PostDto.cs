@@ -1,10 +1,9 @@
-using Blogifier.Shared;
-using System;
 using System.Collections.Generic;
+using System;
 
-namespace Blogifier.Models;
+namespace Blogifier.Shared;
 
-public class PostEditorDto
+public class PostDto
 {
   public int Id { get; set; }
   public string Title { get; set; } = default!;

@@ -1,6 +1,9 @@
 using Blogifier.Data;
+using Blogifier.Extensions;
+using Blogifier.Helper;
 using Blogifier.Options;
 using Blogifier.Shared;
+using Blogifier.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -106,5 +109,37 @@ public class BlogManager
     };
 
     return await query.ToListAsync();
+  }
+
+  public async Task<Post> AddPostAsync(Post post)
+  {
+    post.Slug = await GetSlugFromTitle(post.Title);
+
+    var contentRemoveScriptTags = StringHelper.RemoveScriptTags(post.Content);
+    var contentRemoveImgTags = StringHelper.RemoveImgTags(contentRemoveScriptTags);
+    var descriptionRemoveScriptTags = StringHelper.RemoveScriptTags(post.Description);
+    var descriptionRemoveImgTags = StringHelper.RemoveImgTags(descriptionRemoveScriptTags);
+    post.Description = descriptionRemoveImgTags;
+    post.Content = contentRemoveImgTags;
+
+    if (post.State >= PostState.Release) post.PublishedAt = DateTime.UtcNow;
+
+    _dbContext.Posts.Add(post);
+    await _dbContext.SaveChangesAsync();
+    return post;
+  }
+
+  private async Task<string> GetSlugFromTitle(string title)
+  {
+    var slug = title.ToSlug();
+    var i = 1;
+    var slugOriginal = slug;
+    while (true)
+    {
+      if (!await _dbContext.Posts.Where(p => p.Slug == slug).AnyAsync()) return slug;
+      i++;
+      if (i >= 100) throw new BlogNotIitializeException();
+      slug = $"{slugOriginal}{i}";
+    }
   }
 }

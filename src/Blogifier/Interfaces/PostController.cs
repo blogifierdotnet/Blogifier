@@ -5,6 +5,7 @@ using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -53,10 +54,14 @@ public class PostController : ControllerBase
 
   [Authorize]
   [HttpPost("add")]
-  public async Task<ActionResult<bool>> AddPost(PostEditorDto post)
+  public async Task<PostDto> AddPost([FromBody] PostEditorDto postDto)
   {
-    throw new BlogNotIitializeException();
-    //return await _postProvider.Add(post);
+    var userId = User.FirstUserId();
+    var post = _mapper.Map<Post>(postDto);
+    post.UserId = userId;
+    var result = await _blogManager.AddPostAsync(post);
+    var resultDto = _mapper.Map<PostDto>(result);
+    return resultDto;
   }
 
   [Authorize]

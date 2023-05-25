@@ -1,4 +1,4 @@
-namespace Blogifier.Blogs;
+namespace Blogifier.Shared;
 
 public enum PostState
 {

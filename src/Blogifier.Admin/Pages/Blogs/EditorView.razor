@@ -37,26 +37,22 @@
     }
   }
 
-  protected async Task SavePostAsync(PostAction postAction)
+  protected async Task SavePostAsync(PostState postState)
   {
+    Post.State = postState;
     Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(Post.Content))
     {
       _toaster.Error(_localizer["title-content-required"]);
       return;
     }
+
     Post.PostType = PostType.Post;
     Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
 
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
-
-    if (postAction == PostAction.Publish)
-      Post.PublishedAt = DateTime.UtcNow;
-
-    if (postAction == PostAction.Unpublish)
-      Post.PublishedAt = DateTime.MinValue;
 
     var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
@@ -83,17 +79,17 @@
 
   protected async Task SaveAsync()
   {
-    await SavePostAsync(PostAction.Save);
+    await SavePostAsync(PostState.Draft);
   }
 
   protected async Task PublishAsync()
   {
-    await SavePostAsync(PostAction.Publish);
+    await SavePostAsync(PostState.Release);
   }
 
   protected async Task UnpublishAsync()
   {
-    await SavePostAsync(PostAction.Unpublish);
+    await SavePostAsync(PostState.Draft);
   }
 
   protected async Task RemoveAsync(int id)
