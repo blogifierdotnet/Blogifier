@@ -22,7 +22,6 @@ public class HomeController : Controller
 {
   protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
-  protected readonly MainManager _mainManager;
   protected readonly BlogManager _blogManager;
   protected readonly BlogProvider _blogProvider;
   protected readonly PostProvider _postProvider;
@@ -34,7 +33,6 @@ public class HomeController : Controller
   public HomeController(
     ILogger<HomeController> logger,
     IMapper mapper,
-    MainManager mainManager,
     BlogManager blogManager,
     BlogProvider blogProvider,
     PostProvider postProvider,
@@ -45,7 +43,6 @@ public class HomeController : Controller
   {
     _logger = logger;
     _mapper = mapper;
-    _mainManager = mainManager;
     _blogManager = blogManager;
     _blogProvider = blogProvider;
     _postProvider = postProvider;
@@ -60,7 +57,7 @@ public class HomeController : Controller
     MainData data;
     try
     {
-      data = await _mainManager.GetMainAsync();
+      data = await _blogManager.GetAsync();
     }
     catch (BlogNotIitializeException ex)
     {

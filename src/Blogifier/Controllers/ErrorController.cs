@@ -12,13 +12,13 @@ public class ErrorController : Controller
 {
   protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
-  protected readonly MainManager _mainManager;
+  protected readonly BlogManager _blogManager;
 
-  public ErrorController(ILogger<ErrorController> logger, IMapper mapper, MainManager mainManager)
+  public ErrorController(ILogger<ErrorController> logger, IMapper mapper, BlogManager blogManager)
   {
     _logger = logger;
     _mapper = mapper;
-    _mainManager = mainManager;
+    _blogManager = blogManager;
   }
 
   [Route("404")]
@@ -26,7 +26,7 @@ public class ErrorController : Controller
   {
     try
     {
-      var data = await _mainManager.GetMainAsync();
+      var data = await _blogManager.GetAsync();
       var model = _mapper.Map<MainModel>(data);
       return View($"~/Views/Themes/{model.Theme}/404.cshtml", model);
     }

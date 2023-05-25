@@ -25,7 +25,7 @@ public class PostController : Controller
   [HttpGet("{slug}")]
   public async Task<IActionResult> Single(string slug)
   {
-    var data = await _blogManager.GetBlogDataAsync();
+    var data = await _blogManager.GetAsync();
     throw new BlogNotIitializeException();
   }
 }

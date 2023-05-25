@@ -1,9 +1,10 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
+using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Shared;
-using Blogifier.Shared.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,15 +18,32 @@ namespace Blogifier.Blogs;
 public class BlogManager
 {
   private readonly ILogger _logger;
+  private readonly IHttpContextAccessor _httpContextAccessor;
   private readonly AppDbContext _dbContext;
   private readonly OptionStore _optionStore;
   private BlogData? _blogData;
 
-  public BlogManager(ILogger<BlogManager> logger, AppDbContext dbContext, OptionStore optionStore)
+  public BlogManager(ILogger<BlogManager> logger, IHttpContextAccessor httpContextAccessor, AppDbContext dbContext, OptionStore optionStore)
   {
     _logger = logger;
+    _httpContextAccessor = httpContextAccessor;
     _dbContext = dbContext;
     _optionStore = optionStore;
+  }
+
+  public async Task<MainData> GetAsync()
+  {
+    var blogData = await GetBlogDataAsync();
+    var categoryItemes = await GetCategoryItemesAsync();
+    var httpContext = _httpContextAccessor.HttpContext;
+    if (httpContext != null)
+    {
+      var request = httpContext.Request;
+      var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+      var claims = BlogifierClaims.Analysis(httpContext.User);
+      return new MainData(blogData, categoryItemes, absoluteUrl, claims);
+    }
+    return new MainData(blogData, categoryItemes);
   }
 
   public async Task<bool> AnyBlogDataAsync()
