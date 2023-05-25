@@ -450,4 +450,10 @@
   <data name="nick-name" xml:space="preserve">
     <value>昵称</value>
   </data>
+  <data name="page-not-found-message" xml:space="preserve">
+    <value>您正在查找的页面不存在，或者发生了错误.</value>
+  </data>
+  <data name="page-not-found" xml:space="preserve">
+    <value>页面不存在</value>
+  </data>
 </root>

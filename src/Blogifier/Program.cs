@@ -5,9 +5,7 @@ using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Providers;
 using Blogifier.Shared.Resources;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -123,8 +121,9 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-  app.UseExceptionHandler("/Error");
+  app.UseExceptionHandler("/404");
 }
+
 app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();

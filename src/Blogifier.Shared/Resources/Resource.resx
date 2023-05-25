@@ -771,4 +771,7 @@
   <data name="nick-name" xml:space="preserve">
     <value>NickName</value>
   </data>
+  <data name="page-not-found-message" xml:space="preserve">
+    <value>The Page you are looking for doesn't exist, or error occurred.</value>
+  </data>
 </root>

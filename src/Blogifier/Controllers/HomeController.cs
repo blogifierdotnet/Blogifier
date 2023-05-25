@@ -73,7 +73,7 @@ public class HomeController : Controller
     var request = HttpContext.Request;
     var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
     var model = new IndexModel(postsDto, page, data.ItemsPerPage, absoluteUrl, claims, categoryItemesDto);
-    _mapper.Map<BlogData, MainModel>(data, model);
+    _mapper.Map<BlogData, BaseModel>(data, model);
     return View($"~/Views/Themes/{model.Theme}/index.cshtml", model);
   }
 
@@ -122,22 +122,6 @@ public class HomeController : Controller
     return await GetSingleBlogPost(slug);
   }
 
-  [HttpGet("error")]
-  public async Task<IActionResult> Error()
-  {
-    try
-    {
-      var model = new PostModel();
-      model.Blog = await _blogProvider.GetBlogItem();
-      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/404.cshtml";
-      if (IsViewExists(viewPath)) return View(viewPath, model);
-      return View($"~/Views/error.cshtml");
-    }
-    catch
-    {
-      return View($"~/Views/error.cshtml");
-    }
-  }
 
   [ResponseCache(Duration = 1200)]
   [HttpGet("feed/{type}")]
@@ -200,37 +184,28 @@ public class HomeController : Controller
 
   public async Task<IActionResult> GetSingleBlogPost(string slug)
   {
-    try
+    ViewBag.Slug = slug;
+    PostModel model = await _postProvider.GetPostModel(slug);
+
+    // If unpublished and unauthorised redirect to error / 404.
+    if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
+      return Redirect("~/404");
+
+    model.Blog = await _blogProvider.GetBlogItem();
+    model.Post.Description = model.Post.Description.MdToHtml();
+    model.Post.Content = model.Post.Content.MdToHtml();
+
+    if (!model.Post.Author.Avatar.StartsWith("data:"))
+      model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
+
+    if (model.Post.PostType == PostType.Page)
     {
-      ViewBag.Slug = slug;
-      PostModel model = await _postProvider.GetPostModel(slug);
-
-      // If unpublished and unauthorised redirect to error / 404.
-      if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
-      {
-        return Redirect("~/error");
-      }
-
-      model.Blog = await _blogProvider.GetBlogItem();
-      model.Post.Description = model.Post.Description.MdToHtml();
-      model.Post.Content = model.Post.Content.MdToHtml();
-
-      if (!model.Post.Author.Avatar.StartsWith("data:"))
-        model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
-
-      if (model.Post.PostType == PostType.Page)
-      {
-        string viewPath = $"~/Views/Themes/{model.Blog.Theme}/page.cshtml";
-        if (IsViewExists(viewPath))
-          return View(viewPath, model);
-      }
-
-      return View($"~/Views/Themes/{model.Blog.Theme}/post.cshtml", model);
+      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/page.cshtml";
+      if (IsViewExists(viewPath))
+        return View(viewPath, model);
     }
-    catch
-    {
-      return Redirect("~/error");
-    }
+
+    return View($"~/Views/Themes/{model.Blog.Theme}/post.cshtml", model);
   }
 
   private async Task<ListModel?> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")

@@ -1,3 +1,5 @@
+@inject IStringLocalizer<Resource> _localizer
+
 <!doctype html>
 <html lang="en">
 
@@ -91,14 +93,14 @@
       }
     }
   </style>
-  <title>Page Not Found</title>
-  <meta name="description" content="The Page you are looking for doesn't exist, or error occurred.">
+  <title>@_localizer["page-not-found"]</title>
+  <meta name="description" content="@_localizer["page-not-found-message"]">
 </head>
 
 <body>
   <main class="container">
-    <h1 class="title">Not Found!</h1>
-    <p class="message">The Page you are looking for doesn't exist, or error occurred.</p>
+    <h1 class="title">@_localizer["page-not-found"]</h1>
+    <p class="message">@_localizer["page-not-found-message"]</p>
     <p>
       <a class="button" href="~/">
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -106,7 +108,7 @@
           <path fill-rule="evenodd"
             d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
         </svg>
-        Home Page
+        @_localizer["home"]
       </a>
     </p>
   </main>
