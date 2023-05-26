@@ -1,19 +1,20 @@
-using Blogifier.Blogs;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+
 namespace Blogifier.Controllers;
 
 public class SitemapController : ControllerBase
 {
-  protected readonly BlogManager _blogManager;
+  private readonly PostProvider _postProvider;
 
-  public SitemapController(BlogManager blogManager)
+  public SitemapController(PostProvider postProvider)
   {
-    _blogManager = blogManager;
+    _postProvider = postProvider;
   }
 
   [Route("sitemap")]
@@ -21,7 +22,7 @@ public class SitemapController : ControllerBase
   public async Task<IActionResult> Sitemap()
   {
     var sitemapNamespace = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9");
-    var posts = await _blogManager.GetPostsAsync();
+    var posts = await _postProvider.GetAsync();
     var doc = new XDocument(
         new XDeclaration("1.0", "utf-8", null),
         new XElement(sitemapNamespace + "urlset",
@@ -36,15 +37,15 @@ public class SitemapController : ControllerBase
     return Content(doc.Declaration + Environment.NewLine + doc, "text/xml");
   }
 
-  private string GetPostUrl(Post post)
+  private string GetPostUrl(PostDto post)
   {
     string webRoot = Url.Content("~/");
     var sitemapBaseUri = $"{Request.Scheme}://{Request.Host}{webRoot}";
     return $"{sitemapBaseUri}posts/{post.Slug}";
   }
 
-  private string GetPostDate(Post post)
+  private string GetPostDate(PostDto post)
   {
-    return post.PublishedAt.ToString("yyyy-MM-ddTHH:mm:sszzz");
+    return post.PublishedAt!.Value.ToString("yyyy-MM-ddTHH:mm:sszzz");
   }
 }

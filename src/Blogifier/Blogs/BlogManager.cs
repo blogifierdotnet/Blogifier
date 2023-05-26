@@ -1,18 +1,16 @@
+using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
-using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Shared;
 using Blogifier.Shared.Extensions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blogifier.Blogs;
@@ -20,50 +18,24 @@ namespace Blogifier.Blogs;
 public class BlogManager
 {
   private readonly ILogger _logger;
-  private readonly IHttpContextAccessor _httpContextAccessor;
+  private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
   private readonly OptionStore _optionStore;
   private BlogData? _blogData;
 
-  public BlogManager(ILogger<BlogManager> logger, IHttpContextAccessor httpContextAccessor, AppDbContext dbContext, OptionStore optionStore)
+  public BlogManager(
+    ILogger<BlogManager> logger,
+    IMapper mapper,
+    AppDbContext dbContext,
+    OptionStore optionStore)
   {
     _logger = logger;
-    _httpContextAccessor = httpContextAccessor;
+    _mapper = mapper;
     _dbContext = dbContext;
     _optionStore = optionStore;
   }
 
-  public async Task<MainData> GetAsync()
-  {
-    var blogData = await GetBlogDataAsync();
-    var categoryItemes = await GetCategoryItemesAsync();
-    var httpContext = _httpContextAccessor.HttpContext;
-    if (httpContext != null)
-    {
-      var request = httpContext.Request;
-      var absoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
-      var claims = BlogifierClaims.Analysis(httpContext.User);
-      return new MainData(blogData, categoryItemes, absoluteUrl, claims);
-    }
-    return new MainData(blogData, categoryItemes);
-  }
-
-  public async Task<bool> AnyBlogDataAsync()
-  {
-    if (await _optionStore.AnyKey(BlogData.CacheKey))
-      return true;
-    await _optionStore.RemoveCacheValue(BlogData.CacheKey);
-    return false;
-  }
-
-  public async Task SetBlogDataAsync(BlogData blogData)
-  {
-    var value = JsonSerializer.Serialize(blogData);
-    _logger.LogCritical("blog initialize {value}", value);
-    await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
-  }
-
-  public async Task<BlogData> GetBlogDataAsync()
+  public async Task<BlogData> GetAsync()
   {
     if (_blogData != null) return _blogData;
     var value = await _optionStore.GetByCacheValue(BlogData.CacheKey);
@@ -75,89 +47,35 @@ public class BlogManager
     throw new BlogNotIitializeException();
   }
 
-  public async Task<IEnumerable<Post>> GetPostsAsync()
+  public async Task<bool> AnyBlogAsync()
   {
-    return await _dbContext.Posts
-      .AsNoTracking()
-      .Include(pc => pc.User)
-      .OrderByDescending(m => m.CreatedAt)
-      .ToListAsync();
+    if (await _optionStore.AnyKey(BlogData.CacheKey))
+      return true;
+    await _optionStore.RemoveCacheValue(BlogData.CacheKey);
+    return false;
   }
 
-  public async Task<IEnumerable<Post>> GetPostsAsync(int page, int items)
+  public async Task SetBlogAsync(BlogData blogData)
+  {
+    var value = JsonSerializer.Serialize(blogData);
+    _logger.LogCritical("blog initialize {value}", value);
+    await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
+  }
+
+  public async Task<IEnumerable<PostItemDto>> GetPostsAsync(int page, int items)
   {
     var skip = (page - 1) * items;
-    return await _dbContext.Posts
-      .AsNoTracking()
-      .Include(pc => pc.User)
-      .OrderByDescending(m => m.CreatedAt)
-      .Skip(skip)
-      .Take(items)
-      .ToListAsync();
+
+    var query = _dbContext.Posts
+       .AsNoTracking()
+       .Include(pc => pc.User)
+       .OrderByDescending(m => m.CreatedAt)
+       .Skip(skip)
+       .Take(items);
+
+    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
-
-  public async Task<IEnumerable<Post>> SearchPostsAsync(string term, int page, int items)
-  {
-    var posts = await _dbContext.Posts
-     .AsNoTracking()
-     .Include(pc => pc.User)
-     .Include(pc => pc.PostCategories)
-     .Where(m => m.Title.Contains(term) || m.Description.Contains(term) || m.Content.Contains(term))
-     .ToListAsync();
-
-    var postsSearch = new List<PostSearch>();
-    var termList = term.ToLower().Split(' ').ToList();
-
-    foreach (var post in posts)
-    {
-      var rank = 0;
-      var hits = 0;
-
-      foreach (var termItem in termList)
-      {
-        if (termItem.Length < 4 && rank > 0) continue;
-
-        if (post.PostCategories != null)
-        {
-          foreach (var pc in post.PostCategories)
-          {
-            if (pc.Category.Content.ToLower() == termItem) rank += 10;
-          }
-        }
-        if (post.Title.ToLower().Contains(termItem))
-        {
-          hits = Regex.Matches(post.Title.ToLower(), termItem).Count;
-          rank += hits * 10;
-        }
-        if (post.Description.ToLower().Contains(termItem))
-        {
-          hits = Regex.Matches(post.Description.ToLower(), termItem).Count;
-          rank += hits * 3;
-        }
-        if (post.Content.ToLower().Contains(termItem))
-        {
-          rank += Regex.Matches(post.Content.ToLower(), termItem).Count;
-        }
-      }
-
-      if (rank > 0)
-      {
-        postsSearch.Add(new PostSearch(post, rank));
-      }
-    }
-
-    var skip = page * items - items;
-
-    var results = postsSearch
-      .OrderByDescending(r => r.Rank)
-      .Skip(skip)
-      .Take(items)
-      .Select(m => m.Post)
-      .ToList();
-
-    return results;
-  }
 
   public async Task<IEnumerable<Post>> CategoryPostsAsync(string category, int page, int items)
   {
@@ -321,39 +239,6 @@ public class BlogManager
       }
     }
     return original;
-  }
-
-  public async Task<PostSlug> GetPostSlugAsync(string slug)
-  {
-    var post = await _dbContext.Posts
-      .Include(m => m.User)
-      .Where(p => p.Slug == slug)
-      .FirstAsync();
-
-    post.Views++;
-    await _dbContext.SaveChangesAsync();
-
-    var older = await _dbContext.Posts
-      .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
-      .OrderByDescending(p => p.PublishedAt)
-      .FirstOrDefaultAsync();
-
-    var newer = await _dbContext.Posts
-      .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
-      .OrderBy(p => p.PublishedAt)
-      .FirstOrDefaultAsync();
-
-    var relatedQuery = _dbContext.Posts
-       .AsNoTracking()
-       .Include(m => m.User)
-       .Where(m => m.State == PostState.Archive && m.Id != post.Id);
-
-    if (older != null) relatedQuery = relatedQuery.Where(m => m.Id != older.Id);
-    if (newer != null) relatedQuery = relatedQuery.Where(m => m.Id != newer.Id);
-    var related = await relatedQuery.OrderByDescending(p => p.PublishedAt).Take(3).ToListAsync();
-    return new PostSlug { Post = post, Older = older, Newer = newer, Related = related };
   }
 
   public async Task<Post> GetPostAsync(string slug)

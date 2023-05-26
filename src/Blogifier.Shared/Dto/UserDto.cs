@@ -4,6 +4,7 @@ namespace Blogifier.Shared;
 
 public class UserDto
 {
+  public int Id { get; set; }
   public DateTime CreatedAt { get; set; }
   public string NickName { get; set; } = default!;
   public string? Avatar { get; set; }

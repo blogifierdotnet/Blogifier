@@ -8,8 +8,5 @@ public class AdminController : Controller
 {
   [HttpGet("/admin")]
   [Authorize]
-  public async Task<IActionResult> Admin()
-  {
-    return await Task.FromResult(File("~/index.html", "text/html"));
-  }
+  public Task<VirtualFileResult> Admin() => Task.FromResult(File("~/index.html", "text/html"));
 }

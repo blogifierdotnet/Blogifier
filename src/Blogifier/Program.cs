@@ -3,6 +3,7 @@ using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Identity;
 using Blogifier.Options;
+using Blogifier.Posts;
 using Blogifier.Providers;
 using Blogifier.Shared.Resources;
 using Blogifier.Storages;
@@ -73,7 +74,6 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddSingleton<MinioProvider>();
 builder.Services.AddSingleton<MarkdigProvider>();
 
-
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
 builder.Services.AddScoped<PostProvider>();
@@ -87,7 +87,9 @@ builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
 builder.Services.AddScoped<StorageManager>();
+builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();
+builder.Services.AddScoped<MainMamager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {

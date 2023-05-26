@@ -1,9 +1,9 @@
 using AutoMapper;
 using Blogifier.Blogs;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -11,18 +11,15 @@ namespace Blogifier.Controllers;
 [Route("search")]
 public class SearchController : Controller
 {
-  protected readonly ILogger _logger;
-  protected readonly IMapper _mapper;
-  protected readonly BlogManager _blogManager;
+  private readonly MainMamager _mainMamager;
+  private readonly PostProvider _postProvider;
 
   public SearchController(
-    ILogger<SearchController> logger,
-    IMapper mapper,
-    BlogManager blogManager)
+    MainMamager mainMamager,
+    PostProvider postProvider)
   {
-    _logger = logger;
-    _mapper = mapper;
-    _blogManager = blogManager;
+    _mainMamager = mainMamager;
+    _postProvider = postProvider;
   }
 
   [HttpPost]
@@ -30,12 +27,10 @@ public class SearchController : Controller
   {
     if (!string.IsNullOrEmpty(term))
     {
-      var data = await _blogManager.GetAsync();
-      var posts = await _blogManager.SearchPostsAsync(term, page, data.ItemsPerPage);
-      var mainDto = _mapper.Map<MainDto>(data);
-      var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-      var model = new SearchModel(postsDto, page, mainDto);
-      return View($"~/Views/Themes/{data.Theme}/search.cshtml", model);
+      var main = await _mainMamager.GetAsync();
+      var posts = await _postProvider.SearchAsync(term, page, main.ItemsPerPage);
+      var model = new SearchModel(posts, page, main);
+      return View($"~/Views/Themes/{main.Theme}/search.cshtml", model);
     }
     else
     {

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Blogifier.Blogs;
+using Blogifier.Posts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -49,8 +50,10 @@ public class FeedController : Controller
         };
         items.Add(item);
       }
-    var feed = new SyndicationFeed(data.Title, data.Description, new Uri(host), host, publishedAt);
-    feed.Items = items;
+    var feed = new SyndicationFeed(data.Title, data.Description, new Uri(host), host, publishedAt)
+    {
+      Items = items
+    };
     var settings = new XmlWriterSettings
     {
       Encoding = Encoding.UTF8,

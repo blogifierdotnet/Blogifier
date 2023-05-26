@@ -1,3 +1,4 @@
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Atom;

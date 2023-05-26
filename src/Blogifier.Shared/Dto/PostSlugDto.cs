@@ -4,8 +4,8 @@ namespace Blogifier.Shared;
 
 public class PostSlugDto
 {
-  public PostDto Post { get; set; } = default!;
-  public PostDto? Older { get; set; }
-  public PostDto? Newer { get; set; }
-  public IEnumerable<PostDto> Related { get; set; } = default!;
+  public PostToHtmlDto Post { get; set; } = default!;
+  public PostItemDto? Older { get; set; }
+  public PostItemDto? Newer { get; set; }
+  public IEnumerable<PostToHtmlDto> Related { get; set; } = default!;
 }

@@ -27,7 +27,7 @@ public class BlogController : ControllerBase
   [HttpGet("setting")]
   public async Task<BlogSettingDto> GetSetting()
   {
-    var data = await _blogManager.GetBlogDataAsync();
+    var data = await _blogManager.GetAsync();
     var dataDto = _mapper.Map<BlogSettingDto>(data);
     return dataDto;
   }
@@ -36,10 +36,10 @@ public class BlogController : ControllerBase
   [HttpPut("setting")]
   public async Task PutSetting([FromBody] BlogSettingDto blog)
   {
-    var data = await _blogManager.GetBlogDataAsync();
+    var data = await _blogManager.GetAsync();
     data.IncludeFeatured = blog.IncludeFeatured;
     data.ItemsPerPage = blog.ItemsPerPage;
-    await _blogManager.SetBlogDataAsync(data);
+    await _blogManager.SetBlogAsync(data);
   }
 
   [HttpGet("categories")]

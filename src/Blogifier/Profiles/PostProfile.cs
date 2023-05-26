@@ -9,6 +9,7 @@ public class PostProfile : Profile
   {
     CreateMap<Post, PostDto>().ReverseMap();
     CreateMap<Post, PostItemDto>();
+    CreateMap<Post, PostToHtmlDto>();
     CreateMap<Post, PostEditorDto>()
       .ForMember(d => d.Categories, opt => opt.MapFrom(src => src.PostCategories))
       .ReverseMap()

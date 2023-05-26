@@ -1,14 +1,14 @@
 using Blogifier.Shared;
 
-namespace Blogifier.Blogs;
+namespace Blogifier.Posts;
 
 public class PostSearch
 {
-  public PostSearch(Post post, int rank)
+  public PostSearch(PostItemDto post, int rank)
   {
     Post = post;
     Rank = rank;
   }
-  public Post Post { get; set; }
+  public PostItemDto Post { get; set; }
   public int Rank { get; set; }
 }

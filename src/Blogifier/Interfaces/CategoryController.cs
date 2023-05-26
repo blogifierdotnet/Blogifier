@@ -13,6 +13,12 @@ public class CategoryController : ControllerBase
 {
   private readonly CategoryProvider _categoryProvider;
 
+  [HttpGet]
+  public async Task<List<CategoryItem>> GetCategories()
+  {
+    return await _categoryProvider.Categories();
+  }
+
   public CategoryController(CategoryProvider categoryProvider)
   {
     _categoryProvider = categoryProvider;
@@ -30,11 +36,7 @@ public class CategoryController : ControllerBase
     return await _categoryProvider.GetCategory(categoryId);
   }
 
-  [HttpGet]
-  public async Task<List<CategoryItem>> GetCategories()
-  {
-    return await _categoryProvider.Categories();
-  }
+
 
   [HttpGet("{term}")]
   public async Task<List<CategoryItem>> SearchCategories(string term = "*")

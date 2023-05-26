@@ -1,15 +1,12 @@
 using Markdig;
-using Microsoft.Extensions.Logging;
 
-namespace Blogifier.Blogs;
+namespace Blogifier.Posts;
 
 public class MarkdigProvider
 {
-  protected readonly ILogger _logger;
   protected readonly MarkdownPipeline _markdownPipeline;
-  public MarkdigProvider(ILogger<MarkdigProvider> logger)
+  public MarkdigProvider()
   {
-    _logger = logger;
     _markdownPipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
         .UseAdvancedExtensions()

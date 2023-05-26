@@ -1,3 +1,4 @@
+using Blogifier.Posts;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Blogifier.Storages;
