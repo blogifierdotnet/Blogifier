@@ -1,3 +1,5 @@
+using AutoMapper;
+using Blogifier.Blogs;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -12,16 +14,32 @@ namespace Blogifier.Interfaces;
 public class BlogController : ControllerBase
 {
   private readonly BlogProvider _blogProvider;
+  protected readonly IMapper _mapper;
+  protected readonly BlogManager _blogManager;
 
-  public BlogController(BlogProvider blogProvider)
+  public BlogController(BlogProvider blogProvider, IMapper mapper, BlogManager blogManager)
   {
     _blogProvider = blogProvider;
+    _mapper = mapper;
+    _blogManager = blogManager;
   }
 
-  [HttpGet]
-  public async Task<Blog> GetBlog()
+  [HttpGet("setting")]
+  public async Task<BlogSettingDto> GetSetting()
   {
-    return await _blogProvider.GetBlog();
+    var data = await _blogManager.GetBlogDataAsync();
+    var dataDto = _mapper.Map<BlogSettingDto>(data);
+    return dataDto;
+  }
+
+  [Authorize]
+  [HttpPut("setting")]
+  public async Task PutSetting([FromBody] BlogSettingDto blog)
+  {
+    var data = await _blogManager.GetBlogDataAsync();
+    data.IncludeFeatured = blog.IncludeFeatured;
+    data.ItemsPerPage = blog.ItemsPerPage;
+    await _blogManager.SetBlogDataAsync(data);
   }
 
   [HttpGet("categories")]
@@ -30,10 +48,5 @@ public class BlogController : ControllerBase
     return await _blogProvider.GetBlogCategories();
   }
 
-  [Authorize]
-  [HttpPut]
-  public async Task<ActionResult<bool>> ChangeTheme([FromBody] Blog blog)
-  {
-    return await _blogProvider.Update(blog);
-  }
+
 }
