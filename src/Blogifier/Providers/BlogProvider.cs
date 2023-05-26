@@ -1,6 +1,5 @@
 using Blogifier.Data;
 using Blogifier.Shared;
-using Blogifier.Storages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,37 +10,10 @@ namespace Blogifier.Providers;
 public class BlogProvider
 {
   private readonly AppDbContext _dbContext;
-  private readonly StorageManager _storageProvider;
 
-  public BlogProvider(AppDbContext dbContext, StorageManager storageProvider)
+  public BlogProvider(AppDbContext dbContext)
   {
     _dbContext = dbContext;
-    _storageProvider = storageProvider;
-  }
-
-  public async Task<Blog?> FirstOrDefaultAsync()
-  {
-    return await _dbContext.Blogs.AsNoTracking().FirstOrDefaultAsync();
-  }
-
-  public async Task<BlogItem> GetBlogItem()
-  {
-    var blog = await _dbContext.Blogs.AsNoTracking().OrderBy(b => b.Id).FirstAsync();
-    blog.Theme = blog.Theme.ToLower();
-    return new BlogItem
-    {
-      Title = blog.Title,
-      Description = blog.Description,
-      Theme = blog.Theme,
-      IncludeFeatured = blog.IncludeFeatured,
-      ItemsPerPage = blog.ItemsPerPage,
-      SocialFields = new List<SocialField>(),
-      Cover = string.IsNullOrEmpty(blog.Cover) ? blog.Cover : BlogifierConstant.DefaultCover,
-      Logo = string.IsNullOrEmpty(blog.Logo) ? blog.Logo : BlogifierConstant.DefaultLogo,
-      HeaderScript = blog.HeaderScript,
-      FooterScript = blog.FooterScript,
-      values = await GetValues(blog.Theme)
-    };
   }
 
   public async Task<Blog> GetBlog()
@@ -71,26 +43,5 @@ public class BlogProvider
     existing.AnalyticsPeriod = blog.AnalyticsPeriod;
 
     return await _dbContext.SaveChangesAsync() > 0;
-  }
-
-  private async Task<dynamic> GetValues(string theme)
-  {
-    var settings = await _storageProvider.GetThemeSettingsAsync(theme);
-    var values = new Dictionary<string, string>();
-
-    if (settings != null && settings.Sections != null)
-    {
-      foreach (var section in settings.Sections)
-      {
-        if (section.Fields != null)
-        {
-          foreach (var field in section.Fields)
-          {
-            values.Add(field.Id, field.Value);
-          }
-        }
-      }
-    }
-    return values;
   }
 }
