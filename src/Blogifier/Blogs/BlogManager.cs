@@ -157,6 +157,7 @@ public class BlogManager
     var posts = await _dbContext.PostCategories
        .AsNoTracking()
        .Include(pc => pc.Post)
+       .ThenInclude(m=>m.User)
        .Where(m => m.Category.Content.Contains(category))
        .Select(m => m.Post)
        .Skip(skip)

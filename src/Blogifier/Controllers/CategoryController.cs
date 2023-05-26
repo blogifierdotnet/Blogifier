@@ -33,7 +33,7 @@ public class CategoryController : Controller
     var posts = await _blogManager.CategoryPostsAsync(category, page, data.ItemsPerPage);
     var mainDto = _mapper.Map<MainDto>(data);
     var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-    var model = new SearchModel(postsDto, page, mainDto);
+    var model = new CategoryModel(category, postsDto, page, mainDto);
     return View($"~/Views/Themes/{data.Theme}/category.cshtml", model);
   }
 }

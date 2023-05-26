@@ -1,6 +1,4 @@
-@using Blogifier.Shared.Resources
-@using Blogifier.Shared
-@using Microsoft.Extensions.Localization
+@model CategoryModel
 
 @inject IStringLocalizer<Resource> _localizer
 
@@ -9,6 +7,6 @@
 }
 
 <main class="container">
-  <h1 class="h3 mb-5">@_localizer["categories"]: <strong>@ViewBag.Category</strong></h1>
+  <h1 class="h3 mb-5">@_localizer["categories"]: <strong>@Model.Category</strong></h1>
   <partial name="post/view-list.cshtml" />
 </main>
