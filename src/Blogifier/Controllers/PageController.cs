@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-[Route("post")]
+[Route("page")]
 public class PageController : Controller
 {
   protected readonly ILogger _logger;

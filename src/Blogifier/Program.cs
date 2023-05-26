@@ -149,6 +149,5 @@ app.UseStaticFiles(new StaticFileOptions
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
-app.MapFallbackToFile("account/{*path:nonfile}", "index.html");
 
 await app.RunAsync();
