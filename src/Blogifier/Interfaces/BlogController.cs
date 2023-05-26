@@ -39,7 +39,7 @@ public class BlogController : ControllerBase
     var data = await _blogManager.GetAsync();
     data.IncludeFeatured = blog.IncludeFeatured;
     data.ItemsPerPage = blog.ItemsPerPage;
-    await _blogManager.SetBlogAsync(data);
+    await _blogManager.SetAsync(data);
   }
 
   [HttpGet("categories")]

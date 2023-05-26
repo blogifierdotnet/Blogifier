@@ -1,8 +1,8 @@
 using AutoMapper;
 using Blogifier.Identity;
+using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Blogifier.Blogs;
@@ -12,20 +12,23 @@ public class MainMamager
   private readonly IMapper _mapper;
   private readonly IHttpContextAccessor _httpContextAccessor;
   private readonly BlogManager _blogManager;
+  private readonly CategoryProvider _categoryProvider;
   public MainMamager(
     IMapper mapper,
     IHttpContextAccessor httpContextAccessor,
-    BlogManager blogManager)
+    BlogManager blogManager,
+    CategoryProvider categoryProvider)
   {
     _mapper = mapper;
     _httpContextAccessor = httpContextAccessor;
     _blogManager = blogManager;
+    _categoryProvider = categoryProvider;
   }
 
   public async Task<MainDto> GetAsync()
   {
     var blog = await _blogManager.GetAsync();
-    var categoryItemes = await _blogManager.GetCategoryItemesAsync();
+    var categoryItemes = await _categoryProvider.GetAsync();
     var main = _mapper.Map<MainDto>(blog);
     main.Categories = categoryItemes;
     var httpContext = _httpContextAccessor.HttpContext;

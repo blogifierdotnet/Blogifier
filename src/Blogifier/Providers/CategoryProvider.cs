@@ -10,20 +10,36 @@ namespace Blogifier.Providers;
 
 public class CategoryProvider
 {
-  private readonly AppDbContext _db;
+  private readonly AppDbContext _dbContext;
 
-  public CategoryProvider(AppDbContext db)
+  public CategoryProvider(AppDbContext dbContext)
   {
-    _db = db;
+    _dbContext = dbContext;
+  }
+
+  public async Task<IEnumerable<CategoryItem>> GetAsync()
+  {
+    return await _dbContext.PostCategories
+      .Include(pc => pc.Category)
+      .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
+      .Select(m => new CategoryItem
+      {
+        Id = m.Key.Id,
+        Category = m.Key.Content,
+        Description = m.Key.Description,
+        PostCount = m.Count()
+      })
+      .AsNoTracking()
+      .ToListAsync();
   }
 
   public async Task<List<CategoryItem>> Categories()
   {
     var cats = new List<CategoryItem>();
 
-    if (_db.Posts != null && _db.Posts.Count() > 0)
+    if (_dbContext.Posts != null && _dbContext.Posts.Count() > 0)
     {
-      foreach (var pc in _db.PostCategories.Include(pc => pc.Category).AsNoTracking())
+      foreach (var pc in _dbContext.PostCategories.Include(pc => pc.Category).AsNoTracking())
       {
         if (!cats.Exists(c => c.Category.ToLower() == pc.Category.Content.ToLower()))
         {
@@ -59,14 +75,14 @@ public class CategoryProvider
 
   public async Task<Category> GetCategory(int categoryId)
   {
-    return await _db.Categories.AsNoTracking()
+    return await _dbContext.Categories.AsNoTracking()
         .Where(c => c.Id == categoryId)
         .FirstOrDefaultAsync();
   }
 
   public async Task<ICollection<Category>> GetPostCategories(int postId)
   {
-    return await _db.PostCategories.AsNoTracking()
+    return await _dbContext.PostCategories.AsNoTracking()
         .Where(pc => pc.PostId == postId)
         .Select(pc => pc.Category)
         .ToListAsync();
@@ -80,18 +96,18 @@ public class CategoryProvider
     //if (existing != null)
     //    return false; // already exists category with the same title
 
-    Category dbCategory = await _db.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
+    Category dbCategory = await _dbContext.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
     if (dbCategory == null)
       return false;
 
     dbCategory.Content = category.Content;
     dbCategory.Description = category.Description;
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 
   public async Task<Category> SaveCategory(string tag)
   {
-    Category category = await _db.Categories
+    Category category = await _dbContext.Categories
         .AsNoTracking()
         .Where(c => c.Content == tag)
         .FirstOrDefaultAsync();
@@ -104,8 +120,8 @@ public class CategoryProvider
       Content = tag,
       CreatedAt = DateTime.UtcNow
     };
-    _db.Categories.Add(category);
-    await _db.SaveChangesAsync();
+    _dbContext.Categories.Add(category);
+    await _dbContext.SaveChangesAsync();
 
     return category;
   }
@@ -117,13 +133,13 @@ public class CategoryProvider
     if (category == null)
       return false;
 
-    Post post = await _db.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+    Post post = await _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
     if (post == null)
       return false;
 
     post.PostCategories ??= new List<PostCategory>();
 
-    PostCategory postCategory = await _db.PostCategories
+    PostCategory postCategory = await _dbContext.PostCategories
         .AsNoTracking()
         .Where(pc => pc.CategoryId == category.Id)
         .Where(pc => pc.PostId == postId)
@@ -131,12 +147,12 @@ public class CategoryProvider
 
     if (postCategory == null)
     {
-      _db.PostCategories.Add(new PostCategory
+      _dbContext.PostCategories.Add(new PostCategory
       {
         CategoryId = category.Id,
         PostId = postId
       });
-      return await _db.SaveChangesAsync() > 0;
+      return await _dbContext.SaveChangesAsync() > 0;
     }
 
     return false;
@@ -144,34 +160,34 @@ public class CategoryProvider
 
   public async Task<bool> SavePostCategories(int postId, List<Category> categories)
   {
-    List<PostCategory> existingPostCategories = await _db.PostCategories.AsNoTracking()
+    List<PostCategory> existingPostCategories = await _dbContext.PostCategories.AsNoTracking()
         .Where(pc => pc.PostId == postId).ToListAsync();
 
-    _db.PostCategories.RemoveRange(existingPostCategories);
+    _dbContext.PostCategories.RemoveRange(existingPostCategories);
 
-    await _db.SaveChangesAsync();
+    await _dbContext.SaveChangesAsync();
 
     foreach (var cat in categories)
     {
       await AddPostCategory(postId, cat.Content);
     }
 
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 
   public async Task<bool> RemoveCategory(int categoryId)
   {
-    List<PostCategory> postCategories = await _db.PostCategories
+    List<PostCategory> postCategories = await _dbContext.PostCategories
         .AsNoTracking()
         .Where(pc => pc.CategoryId == categoryId)
         .ToListAsync();
-    _db.PostCategories.RemoveRange(postCategories);
+    _dbContext.PostCategories.RemoveRange(postCategories);
 
-    Category category = _db.Categories
+    Category category = _dbContext.Categories
                 .Where(c => c.Id == categoryId)
                 .FirstOrDefault();
-    _db.Categories.Remove(category);
+    _dbContext.Categories.Remove(category);
 
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 }

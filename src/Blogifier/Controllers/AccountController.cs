@@ -101,7 +101,7 @@ public class AccountController : Controller
   [HttpGet("initialize")]
   public async Task<IActionResult> Initialize([FromQuery] AccountModel parameter)
   {
-    if (await _blogManager.AnyBlogAsync())
+    if (await _blogManager.AnyAsync())
       return RedirectToAction("login", routeValues: parameter);
 
     var model = new AccountInitializeModel { RedirectUri = parameter.RedirectUri };
@@ -111,7 +111,7 @@ public class AccountController : Controller
   [HttpPost("initialize")]
   public async Task<IActionResult> InitializeForm([FromForm] AccountInitializeModel model)
   {
-    if (await _blogManager.AnyBlogAsync())
+    if (await _blogManager.AnyAsync())
       return RedirectToAction("login", routeValues: new AccountModel { RedirectUri = model.RedirectUri });
 
     if (ModelState.IsValid)
@@ -135,7 +135,7 @@ public class AccountController : Controller
           Version = BlogifierConstant.DefaultVersion,
           Logo = BlogifierConstant.DefaultLogo
         };
-        await _blogManager.SetBlogAsync(blogData);
+        await _blogManager.SetAsync(blogData);
         return Redirect("~/");
       }
     }

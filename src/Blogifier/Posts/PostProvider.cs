@@ -1,4 +1,5 @@
 using AutoMapper;
+using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Providers;
 using Blogifier.Shared;
@@ -70,6 +71,20 @@ public class PostProvider
     return new PostSlugDto { Post = post, Older = older, Newer = newer, Related = related };
   }
 
+  public async Task<IEnumerable<PostItemDto>> GetAsync(int page, int items)
+  {
+    var skip = (page - 1) * items;
+
+    var query = _dbContext.Posts
+       .AsNoTracking()
+       .Include(pc => pc.User)
+       .OrderByDescending(m => m.CreatedAt)
+       .Skip(skip)
+       .Take(items);
+
+    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+  }
+
   public async Task<IEnumerable<PostItemDto>> SearchAsync(string term, int page, int items)
   {
     var query = _dbContext.Posts
@@ -133,6 +148,23 @@ public class PostProvider
 
     return results;
   }
+
+  public async Task<IEnumerable<PostItemDto>> CategoryAsync(string category, int page, int items)
+  {
+    var skip = (page - 1) * items;
+    var query = _dbContext.PostCategories
+       .AsNoTracking()
+       .Include(pc => pc.Post)
+       .ThenInclude(m => m.User)
+       .Where(m => m.Category.Content.Contains(category))
+       .Select(m => m.Post)
+       .Skip(skip)
+       .Take(items);
+    var posts = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+    return posts;
+  }
+
+
 
   public async Task<List<Post>> SearchPosts(string term)
   {

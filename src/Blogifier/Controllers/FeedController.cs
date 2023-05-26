@@ -1,6 +1,7 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Posts;
+using Markdig.Extensions.MediaLinks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,18 +16,20 @@ namespace Blogifier.Controllers;
 
 public class FeedController : Controller
 {
-  protected readonly ILogger _logger;
-  protected readonly BlogManager _blogManager;
-  protected readonly MarkdigProvider _markdigProvider;
+  private readonly ILogger _logger;
+  private readonly BlogManager _blogManager;
+  private readonly PostProvider _postProvider;
+  private readonly MarkdigProvider _markdigProvider;
 
   public FeedController(
     ILogger<FeedController> logger,
-    IMapper mapper,
     BlogManager blogManager,
+    PostProvider postProvider,
     MarkdigProvider markdigProvider)
   {
     _logger = logger;
     _blogManager = blogManager;
+    _postProvider = postProvider;
     _markdigProvider = markdigProvider;
   }
 
@@ -36,7 +39,7 @@ public class FeedController : Controller
   {
     var host = Request.Scheme + "://" + Request.Host;
     var data = await _blogManager.GetAsync();
-    var posts = await _blogManager.GetPostsAsync(1, data.ItemsPerPage);
+    var posts = await _postProvider.GetAsync(1, data.ItemsPerPage);
     var items = new List<SyndicationItem>();
 
     var publishedAt = DateTime.UtcNow;

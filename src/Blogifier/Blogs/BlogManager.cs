@@ -1,4 +1,3 @@
-using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
@@ -18,19 +17,16 @@ namespace Blogifier.Blogs;
 public class BlogManager
 {
   private readonly ILogger _logger;
-  private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
   private readonly OptionStore _optionStore;
   private BlogData? _blogData;
 
   public BlogManager(
     ILogger<BlogManager> logger,
-    IMapper mapper,
     AppDbContext dbContext,
     OptionStore optionStore)
   {
     _logger = logger;
-    _mapper = mapper;
     _dbContext = dbContext;
     _optionStore = optionStore;
   }
@@ -47,7 +43,7 @@ public class BlogManager
     throw new BlogNotIitializeException();
   }
 
-  public async Task<bool> AnyBlogAsync()
+  public async Task<bool> AnyAsync()
   {
     if (await _optionStore.AnyKey(BlogData.CacheKey))
       return true;
@@ -55,74 +51,13 @@ public class BlogManager
     return false;
   }
 
-  public async Task SetBlogAsync(BlogData blogData)
+  public async Task SetAsync(BlogData blogData)
   {
     var value = JsonSerializer.Serialize(blogData);
     _logger.LogCritical("blog initialize {value}", value);
     await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetPostsAsync(int page, int items)
-  {
-    var skip = (page - 1) * items;
-
-    var query = _dbContext.Posts
-       .AsNoTracking()
-       .Include(pc => pc.User)
-       .OrderByDescending(m => m.CreatedAt)
-       .Skip(skip)
-       .Take(items);
-
-    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
-  }
-
-
-  public async Task<IEnumerable<Post>> CategoryPostsAsync(string category, int page, int items)
-  {
-    var skip = (page - 1) * items;
-    var posts = await _dbContext.PostCategories
-       .AsNoTracking()
-       .Include(pc => pc.Post)
-       .ThenInclude(m => m.User)
-       .Where(m => m.Category.Content.Contains(category))
-       .Select(m => m.Post)
-       .Skip(skip)
-       .Take(items)
-       .ToListAsync();
-    return posts;
-  }
-
-  public async Task<IEnumerable<CategoryItem>> GetCategoryItemesAsync()
-  {
-    return await _dbContext.PostCategories
-      .Include(pc => pc.Category)
-      .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
-      .Select(m => new CategoryItem
-      {
-        Id = m.Key.Id,
-        Category = m.Key.Content,
-        Description = m.Key.Description,
-        PostCount = m.Count()
-      })
-      .AsNoTracking()
-      .ToListAsync();
-  }
-
-  public async Task<IEnumerable<BlogSumInfo>> GetBlogSumInfoAsync()
-  {
-    var currTime = DateTime.UtcNow;
-    var query = from post in _dbContext.Posts
-                where post.State >= PostState.Release && post.PublishedAt >= currTime.AddDays(-7)
-                group post by new { Time = new { post.PublishedAt.Year, post.PublishedAt.Month, post.PublishedAt.Day } } into g
-                select new BlogSumInfo
-                {
-                  Time = g.Key.Time.Year + "-" + g.Key.Time.Month + "-" + g.Key.Time.Day,
-                  Posts = g.Count(m => m.PostType == PostType.Post),
-                  Pages = g.Count(m => m.PostType == PostType.Page),
-                  Views = g.Sum(m => m.Views),
-                };
-    return await query.AsNoTracking().ToListAsync();
-  }
 
   public async Task<IEnumerable<Post>> GetPostsAsync(PublishedStatus filter, PostType postType)
   {

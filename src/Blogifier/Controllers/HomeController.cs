@@ -1,6 +1,7 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Models;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,16 +13,16 @@ public class HomeController : Controller
 {
   private readonly ILogger _logger;
   private readonly MainMamager _mainMamager;
-  private readonly BlogManager _blogManager;
+  private readonly PostProvider _postProvider;
 
   public HomeController(
     ILogger<HomeController> logger,
     MainMamager mainMamager,
-    BlogManager blogManager)
+    PostProvider postProvider)
   {
     _logger = logger;
     _mainMamager = mainMamager;
-    _blogManager = blogManager;
+    _postProvider = postProvider;
   }
 
   [HttpGet]
@@ -37,7 +38,7 @@ public class HomeController : Controller
       _logger.LogError(ex, "blgo not iitialize redirect");
       return Redirect("~/account/initialize");
     }
-    var posts = await _blogManager.GetPostsAsync(page, main.ItemsPerPage);
+    var posts = await _postProvider.GetAsync(page, main.ItemsPerPage);
     var model = new IndexModel(posts, page, main);
     return View($"~/Views/Themes/{main.Theme}/index.cshtml", model);
   }

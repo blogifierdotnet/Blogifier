@@ -29,9 +29,8 @@ public class AnalyticsController : ControllerBase
   [HttpGet]
   public async Task<AnalyticsDto> GetAnalytics()
   {
-    var blogs = await _blogManager.GetBlogSumInfoAsync();
-    var blogsDto = _mapper.Map<IEnumerable<BlogSumDto>>(blogs);
-    return new AnalyticsDto { Blogs = blogsDto };
+    var blogs = await _analyticsProvider.GetPostSummaryAsync();
+    return new AnalyticsDto { Blogs = blogs };
   }
 
   [Authorize]

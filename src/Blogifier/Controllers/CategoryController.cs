@@ -1,5 +1,6 @@
 using AutoMapper;
 using Blogifier.Blogs;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,30 +12,23 @@ namespace Blogifier.Controllers;
 [Route("category")]
 public class CategoryController : Controller
 {
-  private readonly ILogger _logger;
-  private readonly IMapper _mapper;
   private readonly MainMamager _mainMamager;
-  private readonly BlogManager _blogManager;
+  private readonly PostProvider _postProvider;
 
   public CategoryController(
-    ILogger<CategoryController> logger,
-    IMapper mapper,
     MainMamager mainMamager,
-    BlogManager blogManager)
+    PostProvider postProvider )
   {
-    _logger = logger;
-    _mapper = mapper;
     _mainMamager = mainMamager;
-    _blogManager = blogManager;
+    _postProvider = postProvider;
   }
 
   [HttpGet("{category}")]
   public async Task<IActionResult> Category(string category, int page = 1)
   {
     var main = await _mainMamager.GetAsync();
-    var posts = await _blogManager.CategoryPostsAsync(category, page, main.ItemsPerPage);
-    var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-    var model = new CategoryModel(category, postsDto, page, main);
+    var posts = await _postProvider.CategoryAsync(category, page, main.ItemsPerPage);
+    var model = new CategoryModel(category, posts, page, main);
     return View($"~/Views/Themes/{main.Theme}/category.cshtml", model);
   }
 }
