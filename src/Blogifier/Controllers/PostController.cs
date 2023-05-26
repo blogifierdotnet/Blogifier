@@ -51,7 +51,7 @@ public class PostController : Controller
       var relatedDto = postSluDto.Related.First(m => m.Id == related.Id);
       relatedDto.DescriptionHtml = _markdigProvider.ToHtml(related.Description);
     }
-    var categoriesUrl = Url.Content("~/categories");
+    var categoriesUrl = Url.Content("~/category");
     var model = new PostDataModel(postSluDto, categoriesUrl, mainDto);
     return View($"~/Views/Themes/{data.Theme}/post.cshtml", model);
   }

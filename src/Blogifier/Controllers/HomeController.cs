@@ -73,21 +73,6 @@ public class HomeController : Controller
     return View($"~/Views/Themes/{data.Theme}/index.cshtml", model);
   }
 
-
-  [HttpGet("categories/{category}")]
-  public async Task<IActionResult> Categories(string category, int page = 1)
-  {
-    var model = await GetBlogPosts("", page, category);
-    string viewPath = $"~/Views/Themes/{model.Blog.Theme}/category.cshtml";
-
-    ViewBag.Category = category;
-
-    if (IsViewExists(viewPath))
-      return View(viewPath, model);
-
-    return View($"~/Views/Themes/{model.Blog.Theme}/index.cshtml", model);
-  }
-
   [ResponseCache(Duration = 1200)]
   [HttpGet("feed/{type}")]
   public async Task<IActionResult> Rss(string type)

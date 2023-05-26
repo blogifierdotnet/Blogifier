@@ -150,6 +150,20 @@ public class BlogManager
     return results;
   }
 
+  public async Task<IEnumerable<Post>> CategoryPostsAsync(string category, int page, int items)
+  {
+    var skip = (page - 1) * items;
+    var posts = await _dbContext.PostCategories
+       .AsNoTracking()
+       .Include(pc => pc.Post)
+       .Where(m => m.Category.Content.Contains(category))
+       .Select(m => m.Post)
+       .Skip(skip)
+       .Take(items)
+       .ToListAsync();
+    return posts;
+  }
+
   public async Task<IEnumerable<CategoryItem>> GetCategoryItemesAsync()
   {
     return await _dbContext.PostCategories
@@ -278,5 +292,6 @@ public class BlogManager
     var related = await relatedQuery.OrderByDescending(p => p.PublishedAt).Take(3).ToListAsync();
     return new PostSlug { Post = post, Older = older, Newer = newer, Related = related };
   }
+
 
 }
