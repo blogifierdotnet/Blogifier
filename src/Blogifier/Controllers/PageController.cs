@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
 [Route("post")]
-public class PostController : Controller
+public class PageController : Controller
 {
   protected readonly ILogger _logger;
   protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
   protected readonly MarkdigProvider _markdigProvider;
-  public PostController(
-    ILogger<PostController> logger,
+  public PageController(
+    ILogger<PageController> logger,
     IMapper mapper,
     BlogManager blogManager,
     MarkdigProvider markdigProvider)
@@ -53,6 +53,6 @@ public class PostController : Controller
     }
     var categoriesUrl = Url.Content("~/category");
     var model = new PostModel(postSluDto, categoriesUrl, mainDto);
-    return View($"~/Views/Themes/{data.Theme}/page.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/post.cshtml", model);
   }
 }
