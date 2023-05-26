@@ -1,11 +1,7 @@
-@using Blogifier.Shared.Resources
-@using Blogifier.Shared
-@using Microsoft.Extensions.Localization
+@model PostDataModel
+
 @inject IStringLocalizer<Resource> _localizer
-@{
-  var _model = (PostModel)Model;
-  var _related = _model.Related.Take(3).ToList();
-}
+
 <!--
     TODO:
     List of related posts.
@@ -15,8 +11,7 @@
     - Title (Related Posts)
     - How many items
  -->
-
-@if (_related.Any())
+@if (Model.PostSlug.Related.Any())
 {
   <section class="related">
     <header class="related-header">
@@ -32,7 +27,7 @@
     </header>
 
     <div class="row">
-      @foreach (var post in _related)
+      @foreach (var post in Model.PostSlug.Related)
       {
         <div class="col-12 col-md mb-4 mb-md-0">
           <article class="post-grid d-flex flex-column">
@@ -51,12 +46,12 @@
             <h2 class="post-grid-title">
               <a class="post-grid-link" href="~/posts/@post.Slug">@post.Title</a>
             </h2>
-            <p class="post-grid-desc">@Html.Raw(post.Description)</p>
+            <p class="post-grid-desc">@Html.Raw(post.DescriptionHtml)</p>
             <div class="post-grid-meta d-flex">
               <div class="post-grid-author">
-                <img class="post-grid-author-img" src="@post.Author.Avatar" width="16" height="16"
-                  alt="@post.Author.DisplayName" aria-hidden="true">
-                <span class="post-grid-author-name">@post.Author.DisplayName</span>
+                <img class="post-grid-author-img" src="@post.User.Avatar" width="16" height="16"
+                     alt="@post.User.NickName" aria-hidden="true">
+                <span class="post-grid-author-name">@post.User.NickName</span>
               </div>
               <div class="post-grid-date">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
@@ -65,7 +60,7 @@
                   <path
                     d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                 </svg>
-                <time class="post-grid-date-time">@post.Published.ToFriendlyShortDateString()</time>
+                <time class="post-grid-date-time">@DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt)</time>
               </div>
               <a class="post-grid-more ms-auto" href="~/posts/@post.Slug" tabindex="-1">
                 <span>Read</span>

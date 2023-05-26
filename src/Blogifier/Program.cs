@@ -70,6 +70,7 @@ if (builder.Environment.IsDevelopment())
   builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton<MinioProvider>();
+builder.Services.AddSingleton<MarkdigProvider>();
 builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();

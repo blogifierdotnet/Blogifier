@@ -22,7 +22,7 @@
             </div>
           }
           <h2 class="post-grid-title">
-            <a class="post-grid-link" href="~/posts/@post.Slug">@post.Title</a>
+            <a class="post-grid-link" href="~/post/@post.Slug">@post.Title</a>
           </h2>
           <p class="post-grid-desc">@Html.Raw(post.Description)</p>
           <div class="post-grid-meta d-flex">
@@ -38,7 +38,7 @@
               </svg>
               <time class="post-grid-date-time">@post.Published.ToFriendlyShortDateString()</time>
             </div>
-            <a class="post-grid-more ms-auto" href="~/posts/@post.Slug" tabindex="-1">
+            <a class="post-grid-more ms-auto" href="~/post/@post.Slug" tabindex="-1">
               <span>Read</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-arrow-right-short" viewBox="0 0 16 16">

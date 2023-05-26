@@ -181,11 +181,36 @@ public class BlogManager
     }
   }
 
-  public async Task<Post> GetPostAsync(string slug)
+  public async Task<PostSlug> GetPostAsync(string slug)
   {
-    return await _dbContext.Posts
-       .Where(p => p.Slug == slug)
+    var post = await _dbContext.Posts
+      .Include(m => m.User)
+      .Where(p => p.Slug == slug)
+      .FirstAsync();
+
+    post.Views++;
+    await _dbContext.SaveChangesAsync();
+
+    var older = await _dbContext.Posts
+      .AsNoTracking()
+      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
+      .OrderByDescending(p => p.PublishedAt)
+      .FirstOrDefaultAsync();
+
+    var newer = await _dbContext.Posts
+      .AsNoTracking()
+      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
+      .OrderBy(p => p.PublishedAt)
+      .FirstOrDefaultAsync();
+
+    var relatedQuery = _dbContext.Posts
        .AsNoTracking()
-       .FirstAsync();
+       .Include(m => m.User)
+       .Where(m => m.State == PostState.Archive && m.Id != post.Id);
+
+    if (older != null) relatedQuery = relatedQuery.Where(m => m.Id != older.Id);
+    if (newer != null) relatedQuery = relatedQuery.Where(m => m.Id != newer.Id);
+    var related = await relatedQuery.OrderByDescending(p => p.PublishedAt).Take(3).ToListAsync();
+    return new PostSlug { Post = post, Older = older, Newer = newer, Related = related };
   }
 }

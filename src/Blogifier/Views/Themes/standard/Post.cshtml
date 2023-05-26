@@ -1,48 +1,43 @@
-@using Blogifier.Shared.Resources
-@using Blogifier.Shared
-@using Microsoft.Extensions.Localization
+@model PostDataModel
+
 @inject IStringLocalizer<Resource> _localizer
 @{
-  Layout = "layouts/_main.cshtml";
-  var postModel = (PostModel)Model;
-  var post = postModel.Post;
-  var cover = postModel.Post.Cover;
-  var catUrl = Url.Content("~/categories");
+  Layout = "layouts/_main.cshtml"; ;
 }
 
 <main class="post-detail">
   <article class="post">
 
     <figure class="post-cover">
-      <img class="post-cover-img" src="~/@cover" alt="@post.Title" aria-hidden="true">
+      <img class="post-cover-img" src="~/@Model.PostSlug.Post.Cover" alt="@Model.PostSlug.Post.Title" aria-hidden="true">
     </figure>
 
     <header class="post-header post-container">
 
-      <h1 class="post-title">@post.Title</h1>
+      <h1 class="post-title">@Model.PostSlug.Post.Title</h1>
 
       <div class="post-meta d-flex align-items-center">
         <div class="post-meta-item post-meta-author">
-          <img class="post-meta-author-img d-none d-md-block" width="32" height="32" src="@post.Author.Avatar"
-               alt="@post.Author.DisplayName" aria-hidden="true" />
+          <img class="post-meta-author-img d-none d-md-block" width="32" height="32" src="@BlogifierConstant.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)"
+               alt="@Model.PostSlug.Post.User.NickName" aria-hidden="true" />
           <div class="post-meta-author-details">
             <span class="post-meta-label">@_localizer["author"]</span>
-            <a class="post-meta-author-name" href="#">@post.Author.DisplayName</a>
+            <a class="post-meta-author-name" href="#">@Model.PostSlug.Post.User.NickName</a>
           </div>
         </div>
         <div class="post-meta-item post-meta-date">
           <span class="post-meta-label">@_localizer["published"]</span>
-          <time class="post-meta-date-time">@post.Published.ToFriendlyShortDateString()</time>
+          <time class="post-meta-date-time">@DateTimeHelper.ToFriendlyShortDateString(Model.PostSlug.Post.PublishedAt)</time>
         </div>
-        @if (post.Categories != null && post.Categories.Count > 0)
+        @if (Model.PostSlug.Post.Categories != null && Model.PostSlug.Post.Categories.Count > 0)
         {
           <div class="post-meta-item post-meta-cats">
             <span class="post-meta-label">@_localizer["categories"]</span>
             <ul class="post-meta-cats-list d-flex">
-              @foreach (var cat in post.Categories)
+              @foreach (var cat in Model.PostSlug.Post.Categories)
               {
                 <li class="post-meta-cats-item">
-                  <a class="post-meta-cats-link" href="@catUrl/@cat.Content">@cat.Content</a>
+                  <a class="post-meta-cats-link" href="@Model.CategoriesUrl/@cat.Content">@cat.Content</a>
                 </li>
               }
             </ul>
@@ -55,9 +50,9 @@
             <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
           </svg>
         </button>
-        @if (User.Identity.IsAuthenticated)
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
         {
-          <a class="post-meta-btn ms-2" href="~/admin/blogs/editor/@post.Slug" role="button"
+          <a class="post-meta-btn ms-2" href="~/admin/blogs/editor/@Model.PostSlug.Post.Slug" role="button"
              aria-label="@_localizer["edit-post"]">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                  viewBox="0 0 16 16">
@@ -69,7 +64,7 @@
     </header>
 
     <section class="post-content post-container">
-      @Html.Raw(post.Content)
+      @Html.Raw(Model.PostSlug.Post.ContentHtml)
     </section>
 
     <footer class="post-footer post-container">

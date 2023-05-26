@@ -1,14 +1,11 @@
-@using Blogifier.Shared
-@{
-  var postModel = (PostModel)Model;
-  var author = postModel.Post.Author;
-}
+@model PostDataModel
+
 <section class="post-author d-md-flex align-items-md-center text-center text-md-start">
   <figure class="post-author-cover mb-3 mb-md-0">
-    <img class="post-author-img" width="96" height="96" src="@author.Avatar" alt="@author.DisplayName" />
+    <img class="post-author-img" width="96" height="96" src="@Model.PostSlug.Post.User.Avatar" alt="@Model.PostSlug.Post.User.NickName" />
   </figure>
   <div class="post-author-details">
-    <h5 class="post-author-name">@author.DisplayName</h5>
-    <p class="post-author-bio">@author.Bio</p>
+    <h5 class="post-author-name">@Model.PostSlug.Post.User.NickName</h5>
+    <p class="post-author-bio">@Model.PostSlug.Post.User.Bio</p>
   </div>
 </section>

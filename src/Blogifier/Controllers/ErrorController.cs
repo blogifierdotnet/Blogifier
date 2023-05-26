@@ -14,7 +14,10 @@ public class ErrorController : Controller
   protected readonly IMapper _mapper;
   protected readonly BlogManager _blogManager;
 
-  public ErrorController(ILogger<ErrorController> logger, IMapper mapper, BlogManager blogManager)
+  public ErrorController(
+    ILogger<ErrorController> logger,
+    IMapper mapper,
+    BlogManager blogManager)
   {
     _logger = logger;
     _mapper = mapper;
