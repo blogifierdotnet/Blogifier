@@ -5,6 +5,7 @@ using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Providers;
 using Blogifier.Shared.Resources;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -71,7 +72,8 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddSingleton<MinioProvider>();
 builder.Services.AddSingleton<MarkdigProvider>();
-builder.Services.AddScoped<StorageProvider>();
+
+
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
 builder.Services.AddScoped<PostProvider>();
@@ -84,6 +86,7 @@ builder.Services.AddScoped<ThemeProvider>();
 builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<OptionStore>();
+builder.Services.AddScoped<StorageManager>();
 builder.Services.AddScoped<BlogManager>();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>

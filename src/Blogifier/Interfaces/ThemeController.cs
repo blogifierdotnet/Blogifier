@@ -1,5 +1,5 @@
-using Blogifier.Providers;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,9 +10,9 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class ThemeController : ControllerBase
 {
-  private readonly StorageProvider _storageProvider;
+  private readonly StorageManager _storageProvider;
 
-  public ThemeController(StorageProvider storageProvider)
+  public ThemeController(StorageManager storageProvider)
   {
     _storageProvider = storageProvider;
   }

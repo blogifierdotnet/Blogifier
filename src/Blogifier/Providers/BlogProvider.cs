@@ -1,5 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace Blogifier.Providers;
 public class BlogProvider
 {
   private readonly AppDbContext _dbContext;
-  private readonly StorageProvider _storageProvider;
+  private readonly StorageManager _storageProvider;
 
-  public BlogProvider(AppDbContext dbContext, StorageProvider storageProvider)
+  public BlogProvider(AppDbContext dbContext, StorageManager storageProvider)
   {
     _dbContext = dbContext;
     _storageProvider = storageProvider;

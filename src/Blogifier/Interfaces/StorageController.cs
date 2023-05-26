@@ -1,5 +1,6 @@
 using Blogifier.Providers;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,13 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class StorageController : ControllerBase
 {
-  private readonly StorageProvider _storageProvider;
+  private readonly StorageManager _storageProvider;
   private readonly AuthorProvider _authorProvider;
   private readonly BlogProvider _blogProvider;
   private readonly PostProvider _postProvider;
 
   public StorageController(
-    StorageProvider storageProvider,
+    StorageManager storageProvider,
     AuthorProvider authorProvider,
     BlogProvider blogProvider,
     PostProvider postProvider)

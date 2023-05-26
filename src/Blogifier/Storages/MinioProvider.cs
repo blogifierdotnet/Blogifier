@@ -8,7 +8,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blogifier.Providers;
+namespace Blogifier.Storages;
+
 public class MinioProvider : IDisposable
 {
   private readonly ILogger _logger;

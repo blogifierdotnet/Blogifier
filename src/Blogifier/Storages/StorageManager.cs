@@ -13,9 +13,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Blogifier.Providers;
+namespace Blogifier.Storages;
 
-public class StorageProvider
+public class StorageManager
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _appDbContext;
@@ -24,7 +24,7 @@ public class StorageProvider
   private readonly string _slash = Path.DirectorySeparatorChar.ToString();
   private readonly IConfiguration _configuration;
 
-  public StorageProvider(ILogger<StorageProvider> logger, AppDbContext appDbContext, MinioProvider minioProvider, IConfiguration configuration)
+  public StorageManager(ILogger<StorageManager> logger, AppDbContext appDbContext, MinioProvider minioProvider, IConfiguration configuration)
   {
     _logger = logger;
     _appDbContext = appDbContext;
