@@ -1,10 +1,8 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Models;
-using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;

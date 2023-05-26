@@ -76,6 +76,15 @@ public class BlogManager
     throw new BlogNotIitializeException();
   }
 
+  public async Task<IEnumerable<Post>> GetPostsAsync()
+  {
+    return await _dbContext.Posts
+      .AsNoTracking()
+      .Include(pc => pc.User)
+      .OrderByDescending(m => m.CreatedAt)
+      .ToListAsync();
+  }
+
   public async Task<IEnumerable<Post>> GetPostsAsync(int page, int items)
   {
     var skip = (page - 1) * items;
@@ -157,7 +166,7 @@ public class BlogManager
     var posts = await _dbContext.PostCategories
        .AsNoTracking()
        .Include(pc => pc.Post)
-       .ThenInclude(m=>m.User)
+       .ThenInclude(m => m.User)
        .Where(m => m.Category.Content.Contains(category))
        .Select(m => m.Post)
        .Skip(skip)
