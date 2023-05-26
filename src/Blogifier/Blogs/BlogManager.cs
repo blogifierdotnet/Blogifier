@@ -7,10 +7,12 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ReverseMarkdown.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blogifier.Blogs;
@@ -77,12 +79,75 @@ public class BlogManager
   {
     var skip = (page - 1) * items;
     return await _dbContext.Posts
+      .AsNoTracking()
       .Include(pc => pc.User)
       .OrderByDescending(m => m.CreatedAt)
       .Skip(skip)
       .Take(items)
-      .AsNoTracking()
       .ToListAsync();
+  }
+
+
+  public async Task<IEnumerable<Post>> SearchPostsAsync(string term, int page, int items)
+  {
+    var posts = await _dbContext.Posts
+     .AsNoTracking()
+     .Include(pc => pc.User)
+     .Include(pc => pc.PostCategories)
+     .Where(m => m.Title.Contains(term) || m.Description.Contains(term) || m.Content.Contains(term))
+     .ToListAsync();
+
+    var postsSearch = new List<PostSearch>();
+    var termList = term.ToLower().Split(' ').ToList();
+
+    foreach (var post in posts)
+    {
+      var rank = 0;
+      var hits = 0;
+
+      foreach (var termItem in termList)
+      {
+        if (termItem.Length < 4 && rank > 0) continue;
+
+        if (post.PostCategories != null)
+        {
+          foreach (var pc in post.PostCategories)
+          {
+            if (pc.Category.Content.ToLower() == termItem) rank += 10;
+          }
+        }
+        if (post.Title.ToLower().Contains(termItem))
+        {
+          hits = Regex.Matches(post.Title.ToLower(), termItem).Count;
+          rank += hits * 10;
+        }
+        if (post.Description.ToLower().Contains(termItem))
+        {
+          hits = Regex.Matches(post.Description.ToLower(), termItem).Count;
+          rank += hits * 3;
+        }
+        if (post.Content.ToLower().Contains(termItem))
+        {
+          rank += Regex.Matches(post.Content.ToLower(), termItem).Count;
+        }
+      }
+
+      if (rank > 0)
+      {
+        postsSearch.Add(new PostSearch(post, rank));
+      }
+    }
+
+    var skip = page * items - items;
+
+    var results = postsSearch
+      .OrderByDescending(r => r.Rank)
+      .Skip(skip)
+      .Take(items)
+      .Select(m => m.Post)
+      .ToList();
+
+    return results;
   }
 
   public async Task<IEnumerable<CategoryItem>> GetCategoryItemesAsync()
@@ -213,4 +278,5 @@ public class BlogManager
     var related = await relatedQuery.OrderByDescending(p => p.PublishedAt).Take(3).ToListAsync();
     return new PostSlug { Post = post, Older = older, Newer = newer, Related = related };
   }
+
 }

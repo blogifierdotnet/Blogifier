@@ -9,5 +9,4 @@ public class ListModel
   public string Category { get; set; } = default!; // posts by category
   public IEnumerable<PostItemDto> Posts { get; set; } = default!;
   public Pager Pager { get; set; } = default!; 
-  public PostListType PostListType { get; set; } = default!;
 }

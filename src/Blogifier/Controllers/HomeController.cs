@@ -52,6 +52,7 @@ public class HomeController : Controller
     _compositeViewEngine = compositeViewEngine;
   }
 
+  [HttpGet]
   public async Task<IActionResult> Index(int page = 1)
   {
     MainData data;
@@ -72,30 +73,6 @@ public class HomeController : Controller
     return View($"~/Views/Themes/{data.Theme}/index.cshtml", model);
   }
 
-  [HttpGet("/{slug}")]
-  public async Task<IActionResult> Index(string slug)
-  {
-    if (!string.IsNullOrEmpty(slug)) return await GetSingleBlogPost(slug);
-    return Redirect("~/");
-  }
-
-  [HttpPost]
-  public async Task<IActionResult> Search(string term, int page = 1)
-  {
-    if (!string.IsNullOrEmpty(term))
-    {
-      var model = await GetBlogPosts(term, page);
-      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/search.cshtml";
-      if (IsViewExists(viewPath))
-        return View(viewPath, model);
-      else
-        return Redirect("~/home");
-    }
-    else
-    {
-      return Redirect("~/home");
-    }
-  }
 
   [HttpGet("categories/{category}")]
   public async Task<IActionResult> Categories(string category, int page = 1)
@@ -170,32 +147,6 @@ public class HomeController : Controller
     return result.Success;
   }
 
-  public async Task<IActionResult> GetSingleBlogPost(string slug)
-  {
-    ViewBag.Slug = slug;
-    PostModel model = await _postProvider.GetPostModel(slug);
-
-    // If unpublished and unauthorised redirect to error / 404.
-    if (model.Post.Published == DateTime.MinValue && !User.Identity.IsAuthenticated)
-      return Redirect("~/404");
-
-    model.Blog = await _blogProvider.GetBlogItem();
-    model.Post.Description = model.Post.Description.MdToHtml();
-    model.Post.Content = model.Post.Content.MdToHtml();
-
-    if (!model.Post.Author.Avatar.StartsWith("data:"))
-      model.Post.Author.Avatar = Url.Content($"~/{model.Post.Author.Avatar}");
-
-    if (model.Post.PostType == PostType.Page)
-    {
-      string viewPath = $"~/Views/Themes/{model.Blog.Theme}/page.cshtml";
-      if (IsViewExists(viewPath))
-        return View(viewPath, model);
-    }
-
-    return View($"~/Views/Themes/{model.Blog.Theme}/post.cshtml", model);
-  }
-
   private async Task<ListModel?> GetBlogPosts(string term = "", int pager = 1, string category = "", string slug = "")
   {
     var model = new ListModel { };
@@ -212,12 +163,10 @@ public class HomeController : Controller
 
     if (!string.IsNullOrEmpty(category))
     {
-      model.PostListType = PostListType.Category;
       model.Posts = await _postProvider.GetList(model.Pager, 0, category, "PF");
     }
     else if (string.IsNullOrEmpty(term))
     {
-      model.PostListType = PostListType.Blog;
       if (model.Blog.IncludeFeatured)
         model.Posts = await _postProvider.GetList(model.Pager, 0, "", "FP");
       else
@@ -225,7 +174,6 @@ public class HomeController : Controller
     }
     else
     {
-      model.PostListType = PostListType.Search;
       model.Blog.Title = term;
       model.Blog.Description = "";
       model.Posts = await _postProvider.Search(model.Pager, term, 0, "FP");

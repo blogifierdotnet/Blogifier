@@ -4,7 +4,7 @@ namespace Blogifier.Models;
 
 public class IndexModel : PostsModel
 {
-  public IndexModel(IEnumerable<PostItemDto> items, int currentPage, MainDto main) : base(items, currentPage, main)
+  public IndexModel(IEnumerable<PostItemDto> items, int page, MainDto main) : base(items, page, main)
   {
   }
 }

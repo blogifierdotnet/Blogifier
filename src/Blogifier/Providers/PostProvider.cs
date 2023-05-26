@@ -112,74 +112,6 @@ public class PostProvider
     return await _db.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetPostItems()
-  {
-    var posts = await _db.Posts.ToListAsync();
-    var postItems = new List<PostItemDto>();
-
-    foreach (var post in posts)
-    {
-      postItems.Add(new PostItemDto
-      {
-        Id = post.Id,
-        Title = post.Title,
-        Description = post.Description,
-        Content = post.Content,
-        Slug = post.Slug,
-        Author = _db.Authors.Where(a => a.Id == post.AuthorId).First(),
-        Cover = string.IsNullOrEmpty(post.Cover) ? BlogifierConstant.DefaultCover : post.Cover,
-        Published = post.PublishedAt,
-        PostViews = post.Views,
-        Featured = post.IsFeatured
-      });
-    }
-
-    return postItems;
-  }
-
-  public async Task<PostModel> GetPostModel(string slug)
-  {
-    var model = new PostModel();
-
-    var all = _db.Posts
-       .AsNoTracking()
-       .Include(p => p.PostCategories)
-       .OrderByDescending(p => p.IsFeatured)
-       .ThenByDescending(p => p.PublishedAt).ToList();
-
-    await SetOlderNewerPosts(slug, model, all);
-
-    var post = _db.Posts.Single(p => p.Slug == slug);
-    post.Views++;
-    await _db.SaveChangesAsync();
-
-    model.Related = await Search(new Pager(1), model.Post.Title, 0, "PF", true);
-    model.Related = model.Related.Where(r => r.Id != model.Post.Id).ToList();
-
-    return await Task.FromResult(model);
-  }
-
-  private async Task SetOlderNewerPosts(string slug, PostModel model, List<Post> all)
-  {
-    if (all != null && all.Count > 0)
-    {
-      for (int i = 0; i < all.Count; i++)
-      {
-        if (all[i].Slug == slug)
-        {
-          model.Post = await PostToItem(all[i]);
-
-          if (i > 0 && all[i - 1].PublishedAt > DateTime.MinValue)
-            model.Newer = await PostToItem(all[i - 1]);
-
-          if (i + 1 < all.Count && all[i + 1].PublishedAt > DateTime.MinValue)
-            model.Older = await PostToItem(all[i + 1]);
-
-          break;
-        }
-      }
-    }
-  }
 
   public async Task<Post?> GetPostBySlug(string slug)
   {
@@ -205,38 +137,6 @@ public class PostProvider
     return await Task.FromResult(slug);
   }
 
-  public async Task<bool> Add(Post post)
-  {
-    var existing = await _db.Posts.Where(p => p.Slug == post.Slug).FirstOrDefaultAsync();
-    if (existing != null)
-      return false;
-
-    post.CreatedAt = DateTime.UtcNow;
-
-    // sanitize HTML fields
-    post.Content = post.Content.RemoveScriptTags().RemoveImgTags();
-    post.Description = post.Description.RemoveScriptTags().RemoveImgTags();
-
-    await _db.Posts.AddAsync(post);
-    return await _db.SaveChangesAsync() > 0;
-  }
-
-  public async Task<bool> Update(Post post)
-  {
-    var existing = await _db.Posts.Where(p => p.Slug == post.Slug).FirstOrDefaultAsync();
-    if (existing == null)
-      return false;
-
-    existing.Slug = post.Slug;
-    existing.Title = post.Title;
-    existing.Description = post.Description.RemoveScriptTags().RemoveImgTags();
-    existing.Content = post.Content.RemoveScriptTags().RemoveImgTags();
-    existing.Cover = post.Cover;
-    existing.PostType = post.PostType;
-    existing.PublishedAt = post.PublishedAt;
-
-    return await _db.SaveChangesAsync() > 0;
-  }
 
   public async Task<bool> Publish(int id, bool publish)
   {
@@ -295,29 +195,6 @@ public class PostProvider
     foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
     {
       items.Add(await PostToItem(p, sanitize));
-    }
-    return await Task.FromResult(items);
-  }
-
-  public async Task<IEnumerable<PostItemDto>> GetPopular(Pager pager, int author = 0)
-  {
-    var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-
-    var posts = new List<Post>();
-
-    if (author > 0)
-      posts = _db.Posts.AsNoTracking().Where(p => p.PublishedAt > DateTime.MinValue && p.AuthorId == author)
-           .OrderByDescending(p => p.Views).ThenByDescending(p => p.PublishedAt).ToList();
-    else
-      posts = _db.Posts.AsNoTracking().Where(p => p.PublishedAt > DateTime.MinValue)
-           .OrderByDescending(p => p.Views).ThenByDescending(p => p.PublishedAt).ToList();
-
-    pager.Configure(posts.Count);
-
-    var items = new List<PostItemDto>();
-    foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
-    {
-      items.Add(await PostToItem(p, true));
     }
     return await Task.FromResult(items);
   }

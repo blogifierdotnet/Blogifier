@@ -1,5 +1,4 @@
 using AutoMapper;
-using Blogifier.Models;
 using Blogifier.Shared;
 
 namespace Blogifier.Profiles;
@@ -10,5 +9,6 @@ public class PostProfile : Profile
   {
     CreateMap<Post, PostDto>().ReverseMap();
     CreateMap<Post, PostEditorDto>().ReverseMap();
+    CreateMap<Post, PostItemDto>();
   }
 }
