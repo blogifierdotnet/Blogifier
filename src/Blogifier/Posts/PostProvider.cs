@@ -3,7 +3,6 @@ using Blogifier.Blogs;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
-using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,16 +17,13 @@ public class PostProvider
 {
   private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
-  private readonly CategoryProvider _categoryProvider;
 
   public PostProvider(
     IMapper mapper,
-    AppDbContext dbContext,
-    CategoryProvider categoryProvider)
+    AppDbContext dbContext)
   {
     _mapper = mapper;
     _dbContext = dbContext;
-    _categoryProvider = categoryProvider;
   }
 
   public async Task<IEnumerable<PostDto>> GetAsync()
@@ -63,7 +59,7 @@ public class PostProvider
     var relatedQuery = _dbContext.Posts
        .AsNoTracking()
        .Include(m => m.User)
-       .Where(m => m.State == PostState.Archive && m.Id != post.Id);
+       .Where(m => m.State == PostState.Featured && m.Id != post.Id);
 
     if (older != null) relatedQuery = relatedQuery.Where(m => m.Id != older.Id);
     if (newer != null) relatedQuery = relatedQuery.Where(m => m.Id != newer.Id);
@@ -104,9 +100,9 @@ public class PostProvider
 
     query = filter switch
     {
+      PublishedStatus.Featured |
       PublishedStatus.Published => query.Where(p => p.State >= PostState.Release).OrderByDescending(p => p.PublishedAt),
       PublishedStatus.Drafts => query.Where(p => p.State == PostState.Draft).OrderByDescending(p => p.Id),
-      PublishedStatus.Featured => query.Where(p => p.IsFeatured).OrderByDescending(p => p.Id),
       _ => query.OrderByDescending(p => p.Id),
     };
 
@@ -230,45 +226,6 @@ public class PostProvider
     return await _dbContext.SaveChangesAsync() > 0;
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = true)
-  {
-    var skip = pager.CurrentPage * pager.ItemsPerPage - pager.ItemsPerPage;
-
-    var posts = new List<Post>();
-    foreach (var p in GetPosts(include, author))
-    {
-      if (string.IsNullOrEmpty(category))
-      {
-        posts.Add(p);
-      }
-      else
-      {
-        if (p.PostCategories != null && p.PostCategories.Count > 0)
-        {
-          Category cat = _dbContext.Categories.Single(c => c.Content.ToLower() == category.ToLower());
-          if (cat == null)
-            continue;
-
-          foreach (var pc in p.PostCategories)
-          {
-            if (pc.CategoryId == cat.Id)
-            {
-              posts.Add(p);
-            }
-          }
-        }
-      }
-    }
-    pager.Configure(posts.Count);
-
-    var items = new List<PostItemDto>();
-    foreach (var p in posts.Skip(skip).Take(pager.ItemsPerPage).ToList())
-    {
-      items.Add(await PostToItem(p, sanitize));
-    }
-    return await Task.FromResult(items);
-  }
-
   public async Task<bool> Remove(int id)
   {
     var existing = await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -381,72 +338,4 @@ public class PostProvider
     return original;
   }
 
-  #region Private methods
-
-  async Task<PostItemDto> PostToItem(Post p, bool sanitize = false)
-  {
-    var post = new PostItemDto
-    {
-      Id = p.Id,
-      PostType = p.PostType,
-      Slug = p.Slug,
-      Title = p.Title,
-      Description = p.Description,
-      Content = p.Content,
-      Categories = await _categoryProvider.GetPostCategories(p.Id),
-      Cover = p.Cover,
-      PostViews = p.Views,
-      Rating = p.Rating,
-      Published = p.PublishedAt,
-      Featured = p.IsFeatured,
-      Author = _dbContext.Authors.Single(a => a.Id == p.AuthorId),
-      SocialFields = new List<SocialField>()
-    };
-
-    if (post.Author != null)
-    {
-      if (string.IsNullOrEmpty(post.Author.Avatar))
-        string.Format(BlogifierConstant.AvatarDataImage, post.Author.DisplayName.Substring(0, 1).ToUpper());
-
-      post.Author.Email = sanitize ? "donotreply@us.com" : post.Author.Email;
-    }
-    return await Task.FromResult(post);
-  }
-
-  List<Post> GetPosts(string include, int author)
-  {
-    var items = new List<Post>();
-    var pubfeatured = new List<Post>();
-
-    if (include.ToUpper().Contains(BlogifierConstant.PostDraft) || string.IsNullOrEmpty(include))
-    {
-      var drafts = author > 0 ?
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt == DateTime.MinValue && p.AuthorId == author && p.PostType == PostType.Post).ToList() :
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt == DateTime.MinValue && p.PostType == PostType.Post).ToList();
-      items = items.Concat(drafts).ToList();
-    }
-
-    if (include.ToUpper().Contains(BlogifierConstant.PostFeatured) || string.IsNullOrEmpty(include))
-    {
-      var featured = author > 0 ?
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt > DateTime.MinValue && p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.PublishedAt).ToList() :
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt > DateTime.MinValue && p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.PublishedAt).ToList();
-      pubfeatured = pubfeatured.Concat(featured).ToList();
-    }
-
-    if (include.ToUpper().Contains(BlogifierConstant.PostPublished) || string.IsNullOrEmpty(include))
-    {
-      var published = author > 0 ?
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt > DateTime.MinValue && !p.IsFeatured && p.AuthorId == author && p.PostType == PostType.Post).OrderByDescending(p => p.PublishedAt).ToList() :
-           _dbContext.Posts.Include(p => p.PostCategories).Where(p => p.PublishedAt > DateTime.MinValue && !p.IsFeatured && p.PostType == PostType.Post).OrderByDescending(p => p.PublishedAt).ToList();
-      pubfeatured = pubfeatured.Concat(published).ToList();
-    }
-
-    pubfeatured = pubfeatured.OrderByDescending(p => p.PublishedAt).ToList();
-    items = items.Concat(pubfeatured).ToList();
-
-    return items;
-  }
-
-  #endregion
 }

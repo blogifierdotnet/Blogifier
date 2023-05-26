@@ -22,7 +22,7 @@ public class AnalyticsProvider
     var currTime = DateTime.UtcNow;
     var query = from post in _dbContext.Posts.AsNoTracking()
                 where post.State >= PostState.Release && post.PublishedAt >= currTime.AddDays(-7)
-                group post by new { Time = new { post.PublishedAt.Year, post.PublishedAt.Month, post.PublishedAt.Day } } into g
+                group post by new { Time = new { post.PublishedAt!.Value.Year, post.PublishedAt!.Value.Month, post.PublishedAt!.Value.Day } } into g
                 select new BlogSumDto
                 {
                   Time = g.Key.Time.Year + "-" + g.Key.Time.Month + "-" + g.Key.Time.Day,

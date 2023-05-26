@@ -7,22 +7,18 @@ namespace Blogifier.Providers;
 
 public class AboutProvider
 {
-  private readonly AppDbContext _db;
+  private readonly AppDbContext _dbContext;
 
-  public AboutProvider(AppDbContext db)
+  public AboutProvider(AppDbContext dbContext)
   {
-    _db = db;
+    _dbContext = dbContext;
   }
-  public async Task<AboutModel> GetAboutModel()
+  public async Task<AboutDto> GetAsync()
   {
-    var model = new AboutModel
+    var model = new AboutDto
     {
-      Version = typeof(AboutProvider)
-           .GetTypeInfo()
-           .Assembly
-           .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-           .InformationalVersion,
-      DatabaseProvider = _db.Database.ProviderName,
+      Version = typeof(AboutProvider)?.GetTypeInfo()?.Assembly?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion,
+      DatabaseProvider = _dbContext.Database.ProviderName,
       OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription
     };
     return await Task.FromResult(model);

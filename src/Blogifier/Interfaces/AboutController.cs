@@ -17,8 +17,8 @@ public class AboutController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<AboutModel> GetAbout()
+  public async Task<AboutDto> GetAbout()
   {
-    return await _aboutProvider.GetAboutModel();
+    return await _aboutProvider.GetAsync();
   }
 }

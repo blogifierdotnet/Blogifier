@@ -13,7 +13,7 @@
   protected List<PostItemDto>? Posts { get; set; }
   protected string? SearchTerm { get; set; }
   protected string FilterLabel { get; set; } = default!;
-  protected PublishedStatus FilterValue { get; set; }
+  protected PublishedStatus FilterValue { get; set; } = PublishedStatus.All;
 
   protected override async Task OnInitializedAsync()
   {
@@ -23,7 +23,7 @@
 
   protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{FilterValue}/{PostType.Page}");
+    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{(int)FilterValue}/{(int)PostType.Page}");
   }
 
   public void CheckAll(object? checkValue)

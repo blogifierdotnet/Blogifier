@@ -94,7 +94,6 @@ public class ImportProvider
 
       post.Description = GetDescription(converter.Convert(post.Description));
       post.Content = converter.Convert(post.Content);
-      post.Selected = false;
 
       await _dbContext.Posts.AddAsync(post);
       if (await _dbContext.SaveChangesAsync() == 0)
@@ -129,7 +128,7 @@ public class ImportProvider
 
     if (post.Cover != BlogifierConstant.DefaultCover)
     {
-      var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
+      //var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
       //var mdTag = await _storageProvider.UploadFromWeb(new Uri(post.Cover), _webRoot, path);
       //if (mdTag.Length > 0 && mdTag.IndexOf("(") > 2)
@@ -146,7 +145,7 @@ public class ImportProvider
       try
       {
         var tag = m.Groups[0].Value;
-        var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
+        //var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
         var uri = Regex.Match(tag, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
         uri = ValidateUrl(uri);
@@ -199,7 +198,7 @@ public class ImportProvider
             if (src.ToLower().EndsWith($".{ext}"))
             {
               var uri = ValidateUrl(src);
-              var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
+              //var path = string.Format("{0}/{1}/{2}", post.AuthorId, post.PublishedAt.Year, post.PublishedAt.Month);
 
               //mdTag = await _storageProvider.UploadFromWeb(new Uri(uri), _webRoot, path);
 

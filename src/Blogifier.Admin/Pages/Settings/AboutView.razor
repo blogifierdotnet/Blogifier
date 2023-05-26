@@ -1,8 +1,18 @@
-@layout SettingsLayout
 @page "/admin/settings/about/"
+
+@layout SettingsLayout
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-@inject IJSRuntime JSRuntime
+
+@code {
+  protected AboutDto? About { get; set; }
+  protected override async Task OnInitializedAsync()
+  {
+    About = await _http.GetFromJsonAsync<AboutDto>($"api/about");
+  }
+}
+
 
 <PageTitleComponent Title="@_localizer["about"]" />
 
@@ -41,32 +51,24 @@
   </div>
 </div>
 
-@if (AboutModel != null)
+@if (About != null)
 {
   <h1 class="section-title">@_localizer["specification"]</h1>
   <div class="section-content">
     <ul class="about-info">
       <li class="about-info-item">
         <label class="about-info-label">@_localizer["version"]:</label>
-        <div class="about-info-value">@AboutModel.Version</div>
+        <div class="about-info-value">@About.Version</div>
       </li>
       <li class="about-info-item">
         <label class="about-info-label">@_localizer["operating-system"]:</label>
-        <div class="about-info-value">@AboutModel.OperatingSystem</div>
+        <div class="about-info-value">@About.OperatingSystem</div>
       </li>
       <li class="about-info-item">
         <label class="about-info-label">@_localizer["database-provider"]:</label>
-        <div class="about-info-value">@AboutModel.DatabaseProvider</div>
+        <div class="about-info-value">@About.DatabaseProvider</div>
       </li>
     </ul>
   </div>
 }
 
-@code {
-  protected AboutModel AboutModel { get; set; }
-
-  protected override async Task OnInitializedAsync()
-  {
-    AboutModel = await _http.GetFromJsonAsync<AboutModel>($"api/about");
-  }
-}

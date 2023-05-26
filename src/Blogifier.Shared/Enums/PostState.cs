@@ -2,8 +2,8 @@ namespace Blogifier.Shared;
 
 public enum PostState
 {
+  Individual = -1,
   Draft = 1,
   Release = 2,
-  Archive = 3,
-  Individual = 4,
+  Featured = 3,
 }

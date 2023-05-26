@@ -15,14 +15,10 @@ namespace Blogifier.Interfaces;
 public class PostController : ControllerBase
 {
   private readonly PostProvider _postProvider;
-  protected readonly IMapper _mapper;
-  protected readonly BlogManager _blogManager;
 
-  public PostController(PostProvider postProvider, IMapper mapper, BlogManager blogManager)
+  public PostController(PostProvider postProvider)
   {
     _postProvider = postProvider;
-    _mapper = mapper;
-    _blogManager = blogManager;
   }
 
   [HttpGet("list/{filter}/{postType}")]
@@ -51,7 +47,7 @@ public class PostController : ControllerBase
   }
 
   [HttpPut("update")]
-  public async Task<ActionResult<PostEditorDto>> UpdatePostAsync(PostEditorDto post)
+  public async Task<ActionResult<PostEditorDto>> UpdateAsync(PostEditorDto post)
   {
     var userId = User.FirstUserId();
     return await _postProvider.UpdateAsync(post, userId);

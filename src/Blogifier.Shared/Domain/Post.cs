@@ -15,7 +15,6 @@ public class Post
   public DateTime CreatedAt { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
   public DateTime UpdatedAt { get; set; }
-  public int AuthorId { get; set; }
   public int UserId { get; set; }
   public UserInfo User { get; set; } = default!;
   [Required]
@@ -31,11 +30,9 @@ public class Post
   [StringLength(160)]
   public string? Cover { get; set; }
   public int Views { get; set; }
-  public double Rating { get; set; }
   public bool IsFeatured { get; set; }
-  public DateTime PublishedAt { get; set; }
+  public DateTime? PublishedAt { get; set; }
   public PostType PostType { get; set; }
   public PostState State { get; set; }
   public List<PostCategory>? PostCategories { get; set; }
-  public bool Selected { get; set; }
 }
