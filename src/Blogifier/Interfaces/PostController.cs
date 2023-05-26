@@ -1,6 +1,5 @@
 using AutoMapper;
 using Blogifier.Blogs;
-using Blogifier.Models;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
 
-[Route("api/post")]
 [ApiController]
+[Authorize]
+[Route("api/post")]
 public class PostController : ControllerBase
 {
   private readonly PostProvider _postProvider;
@@ -40,18 +40,13 @@ public class PostController : ControllerBase
   }
 
   [HttpGet("byslug/{slug}")]
-  public async Task<ActionResult<Post?>> GetPostBySlug(string slug)
+  public async Task<ActionResult<PostEditorDto?>> GetPostBySlug(string slug)
   {
-    return await _postProvider.GetPostBySlug(slug);
+    var post = await _blogManager.GetPostAsync(slug);
+    var postDto = _mapper.Map<PostEditorDto>(post);
+    return postDto;
   }
 
-  [HttpGet("getslug/{title}")]
-  public async Task<ActionResult<string>> GetSlug(string title)
-  {
-    return await _postProvider.GetSlugFromTitle(title);
-  }
-
-  [Authorize]
   [HttpPost("add")]
   public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto postDto)
   {
@@ -63,7 +58,6 @@ public class PostController : ControllerBase
     return resultDto;
   }
 
-  [Authorize]
   [HttpPut("update")]
   public async Task<ActionResult<PostEditorDto>> UpdatePostAsync(PostEditorDto postDto)
   {
@@ -74,21 +68,18 @@ public class PostController : ControllerBase
     return resultDto;
   }
 
-  [Authorize]
   [HttpPut("publish/{id:int}")]
   public async Task<ActionResult<bool>> PublishPost(int id, [FromBody] bool publish)
   {
     return await _postProvider.Publish(id, publish);
   }
 
-  [Authorize]
   [HttpPut("featured/{id:int}")]
   public async Task<ActionResult<bool>> FeaturedPost(int id, [FromBody] bool featured)
   {
     return await _postProvider.Featured(id, featured);
   }
 
-  [Authorize]
   [HttpDelete("{id:int}")]
   public async Task<ActionResult<bool>> RemovePost(int id)
   {

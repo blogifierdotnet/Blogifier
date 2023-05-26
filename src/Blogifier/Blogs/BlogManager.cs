@@ -4,6 +4,7 @@ using Blogifier.Helper;
 using Blogifier.Identity;
 using Blogifier.Options;
 using Blogifier.Shared;
+using Blogifier.Shared.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -212,17 +213,26 @@ public class BlogManager
     return await query.AsNoTracking().ToListAsync();
   }
 
-  public async Task<Post> AddPostAsync(Post post)
+  public async Task<Post> AddPostAsync(Post postInput)
   {
-    post.Slug = await GetSlugFromTitle(post.Title);
-
-    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(post.Content));
-    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(post.Description));
-    post.Description = contentFiltr;
-    post.Content = descriptionFiltr;
-
-    if (post.State >= PostState.Release) post.PublishedAt = DateTime.UtcNow;
-
+    var slug = await GetSlugFromTitle(postInput.Title);
+    var postCategories = await CheckPostCategories(postInput.PostCategories);
+    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    var publishedAt = postInput.State >= PostState.Release ? DateTime.UtcNow : DateTime.MinValue;
+    var post = new Post
+    {
+      UserId = postInput.UserId,
+      Title = postInput.Title,
+      Slug = slug,
+      Content = contentFiltr,
+      Description = descriptionFiltr,
+      Cover = postInput.Cover,
+      PostType = postInput.PostType,
+      State = postInput.State,
+      PublishedAt = publishedAt,
+      PostCategories = postCategories,
+    };
     _dbContext.Posts.Add(post);
     await _dbContext.SaveChangesAsync();
     return post;
@@ -230,8 +240,13 @@ public class BlogManager
 
   public async Task<Post> UpdatePostAsync(Post postInput, int userId)
   {
-    var post = await _dbContext.Posts.FirstAsync(m => m.Id == postInput.Id);
+    var post = await _dbContext.Posts
+      .Include(m => m.PostCategories)!
+      .ThenInclude(m => m.Category)
+      .FirstAsync(m => m.Id == postInput.Id);
+
     if (post.UserId != userId) throw new BlogNotIitializeException();
+    var postCategories = await CheckPostCategories(postInput.PostCategories, post.PostCategories);
 
     post.Slug = postInput.Slug;
     post.Title = postInput.Title;
@@ -240,6 +255,7 @@ public class BlogManager
     post.Description = contentFiltr;
     post.Content = descriptionFiltr;
     post.Cover = postInput.Cover;
+    post.PostCategories = postCategories;
 
     _dbContext.Update(post);
     await _dbContext.SaveChangesAsync();
@@ -260,7 +276,45 @@ public class BlogManager
     }
   }
 
-  public async Task<PostSlug> GetPostAsync(string slug)
+  private async Task<List<PostCategory>?> CheckPostCategories(List<PostCategory>? input, List<PostCategory>? original = null)
+  {
+    if (input == null || !input.Any()) return null;
+
+    if (original == null)
+    {
+      original = new List<PostCategory>();
+    }
+    else
+    {
+      original = original.Where(p =>
+      {
+        var item = input.FirstOrDefault(m => p.Category.Content.Equals(m.Category.Content, StringComparison.Ordinal));
+        if (item != null)
+        {
+          input.Remove(item);
+          return true;
+        }
+        return false;
+      }).ToList();
+    }
+
+    if (input.Any())
+    {
+      var nameCategories = input.Select(m => m.Category.Content);
+      var categoriesDb = await _dbContext.Categories
+        .Where(m => nameCategories.Contains(m.Content))
+        .ToListAsync();
+
+      foreach (var item in input)
+      {
+        var categoryDb = categoriesDb.FirstOrDefault(m => item.Category.Content.Equals(m.Content, StringComparison.Ordinal));
+        original.Add(new PostCategory { Category = categoryDb != null ? categoryDb : new Category { Content = item.Category.Content } });
+      }
+    }
+    return original;
+  }
+
+  public async Task<PostSlug> GetPostSlugAsync(string slug)
   {
     var post = await _dbContext.Posts
       .Include(m => m.User)
@@ -293,5 +347,13 @@ public class BlogManager
     return new PostSlug { Post = post, Older = older, Newer = newer, Related = related };
   }
 
-
+  public async Task<Post> GetPostAsync(string slug)
+  {
+    var post = await _dbContext.Posts
+        .Include(m => m.PostCategories)!
+        .ThenInclude(m => m.Category)
+        .Where(p => p.Slug == slug)
+        .FirstAsync();
+    return post;
+  }
 }

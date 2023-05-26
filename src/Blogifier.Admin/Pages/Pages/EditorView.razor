@@ -17,6 +17,7 @@
       Content = string.Empty,
       PostType = PostType.Page,
       Cover = BlogifierConstant.DefaultCover,
+      Categories = new List<CategoryDto>(),
     };
 
   protected override async Task OnInitializedAsync()
@@ -25,6 +26,7 @@
     {
       var client = _httpClientFactory.CreateClient();
       Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
+      if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
       await SetJsPostAsync(Post);
     }
   }

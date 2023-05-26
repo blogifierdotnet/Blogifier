@@ -31,7 +31,7 @@ public class PostController : Controller
   public async Task<IActionResult> GetAsync([FromRoute] string slug)
   {
     var data = await _blogManager.GetAsync();
-    var postSlug = await _blogManager.GetPostAsync(slug);
+    var postSlug = await _blogManager.GetPostSlugAsync(slug);
     if (postSlug.Post.State == PostState.Draft)
     {
       if (User.Identity == null || User.FirstUserId() != postSlug.Post.UserId)
