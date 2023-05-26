@@ -21,11 +21,6 @@ public class BlogProvider
     return await _dbContext.Blogs.OrderBy(b => b.Id).AsNoTracking().FirstAsync();
   }
 
-  public async Task<ICollection<Category>> GetBlogCategories()
-  {
-    return await _dbContext.Categories.AsNoTracking().ToListAsync();
-  }
-
   public async Task<bool> Update(Blog blog)
   {
     var existing = await _dbContext.Blogs.OrderBy(b => b.Id).FirstAsync();

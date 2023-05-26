@@ -1,6 +1,7 @@
 @layout SettingsLayout
-@page "/admin/settings/"
+@page "/admin/settings"
 @inject HttpClient _http
+@inject IToaster _toaster
 @inject IStringLocalizer<Resource> _localizer
 
 <PageTitleComponent Title="@_localizer["basic-settings"]" />
@@ -32,19 +33,25 @@
     </EditForm>
   }
 </div>
-<ToasterComponent @ref="Toaster" />
 
 @code {
-  protected Blog Blog { get; set; }
-  protected ToasterComponent Toaster;
+  protected BlogEitorDto? Blog { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
-    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+    Blog = await _http.GetFromJsonAsync<BlogEitorDto>("api/blog");
   }
 
   protected async Task Save()
   {
-    Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", Blog));
+    Toast(await _http.PutAsJsonAsync<BlogEitorDto>("api/blog", Blog!));
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
   }
 }

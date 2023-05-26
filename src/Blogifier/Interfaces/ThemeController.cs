@@ -8,6 +8,7 @@ namespace Blogifier.Interfaces;
 
 [Route("api/theme")]
 [ApiController]
+[Authorize]
 public class ThemeController : ControllerBase
 {
   private readonly StorageManager _storageProvider;
@@ -17,14 +18,13 @@ public class ThemeController : ControllerBase
     _storageProvider = storageProvider;
   }
 
-  [Authorize]
+
   [HttpGet("{theme}")]
-  public async Task<ThemeSettings> GetThemeSettings(string theme)
+  public async Task<ThemeSettings?> GetThemeSettings(string theme)
   {
     return await _storageProvider.GetThemeSettingsAsync(theme);
   }
 
-  [Authorize]
   [HttpPost("{theme}")]
   public async Task<bool> SaveThemeSettings(string theme, ThemeSettings settings)
   {

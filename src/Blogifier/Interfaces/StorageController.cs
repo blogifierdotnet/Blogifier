@@ -1,3 +1,4 @@
+using Blogifier.Blogs;
 using Blogifier.Posts;
 using Blogifier.Providers;
 using Blogifier.Shared;
@@ -17,18 +18,18 @@ public class StorageController : ControllerBase
 {
   private readonly StorageManager _storageProvider;
   private readonly AuthorProvider _authorProvider;
-  private readonly BlogProvider _blogProvider;
+  private readonly BlogManager _blogManager;
   private readonly PostProvider _postProvider;
 
   public StorageController(
     StorageManager storageProvider,
     AuthorProvider authorProvider,
-    BlogProvider blogProvider,
+    BlogManager blogManager,
     PostProvider postProvider)
   {
     _storageProvider = storageProvider;
     _authorProvider = authorProvider;
-    _blogProvider = blogProvider;
+    _blogManager = blogManager;
     _postProvider = postProvider;
   }
 
@@ -61,7 +62,7 @@ public class StorageController : ControllerBase
 
     if (await _storageProvider.UploadFormFileAsync(file, path))
     {
-      var blog = await _blogProvider.GetBlog();
+      var blog = await _blogManager.GetAsync();
 
       switch (uploadType)
       {
@@ -70,10 +71,8 @@ public class StorageController : ControllerBase
           return (await _authorProvider.Update(author)) ? new JsonResult(fileName) : BadRequest();
         case UploadType.AppLogo:
           blog.Logo = fileName;
-          return (await _blogProvider.Update(blog)) ? new JsonResult(fileName) : BadRequest();
-        case UploadType.AppCover:
-          blog.Cover = fileName;
-          return (await _blogProvider.Update(blog)) ? new JsonResult(fileName) : BadRequest();
+          await _blogManager.SetAsync(blog);
+          return new JsonResult(fileName);
         case UploadType.PostCover:
           post.Cover = fileName;
           return new JsonResult(fileName);

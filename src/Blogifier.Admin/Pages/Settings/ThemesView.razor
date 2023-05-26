@@ -1,8 +1,8 @@
 @layout SettingsLayout
 @page "/admin/settings/themes/"
 @inject HttpClient _http
+@inject IToaster _toaster
 @inject IStringLocalizer<Resource> _localizer
-@inject IJSRuntime JSRuntime
 
 <PageTitleComponent Title="@_localizer["themes"]" />
 
@@ -50,13 +50,11 @@
   </div>
 }
 
-<ToasterComponent @ref="Toaster" />
 
 @code {
-  protected Blog Blog { get; set; }
-  protected List<ThemeItem> Themes { get; set; }
+  protected Blog? Blog { get; set; }
+  protected List<ThemeItem> Themes { get; set; } = default!;
   protected ThemeItem CurrentTheme { get; set; }
-  protected ToasterComponent Toaster;
 
   protected override async Task OnInitializedAsync()
   {
@@ -66,7 +64,6 @@
   public async Task Load()
   {
     Themes = new List<ThemeItem>();
-
     Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
     var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
 
@@ -96,7 +93,7 @@
   protected async Task SelectTheme(string theme)
   {
     Blog.Theme = theme;
-    Toaster.Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
+    Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
     await Load();
   }
 
@@ -112,7 +109,12 @@
       return "img/img-placeholder.png";
   }
 
-  //bool showModal = false;
-  //void ModalShow() => showModal = true;
-  //void ModalCancel() => showModal = false;
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+
 }

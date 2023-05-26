@@ -1,5 +1,3 @@
-using AutoMapper;
-using Blogifier.Blogs;
 using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;

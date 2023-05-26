@@ -5,7 +5,6 @@ public enum UploadType
   Avatar,
   Attachement,
   AppLogo,
-  AppCover,
   PostCover,
   PostImage
 }
