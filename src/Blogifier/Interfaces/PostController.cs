@@ -28,9 +28,7 @@ public class PostController : ControllerBase
   [HttpGet("list/{filter}/{postType}")]
   public async Task<IEnumerable<PostItemDto>> GetPosts(PublishedStatus filter, PostType postType)
   {
-    var posts = await _blogManager.GetPostsAsync(filter, postType);
-    var postsDto = _mapper.Map<IEnumerable<PostItemDto>>(posts);
-    return postsDto;
+    return await _postProvider.GetAsync(filter, postType);
   }
 
   [HttpGet("list/search/{term}")]
@@ -40,32 +38,23 @@ public class PostController : ControllerBase
   }
 
   [HttpGet("byslug/{slug}")]
-  public async Task<ActionResult<PostEditorDto?>> GetPostBySlug(string slug)
+  public async Task<PostEditorDto> GetPostBySlug(string slug)
   {
-    var post = await _blogManager.GetPostAsync(slug);
-    var postDto = _mapper.Map<PostEditorDto>(post);
-    return postDto;
+    return await _postProvider.GetEditorAsync(slug);
   }
 
   [HttpPost("add")]
-  public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto postDto)
+  public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto post)
   {
     var userId = User.FirstUserId();
-    var post = _mapper.Map<Post>(postDto);
-    post.UserId = userId;
-    var result = await _blogManager.AddPostAsync(post);
-    var resultDto = _mapper.Map<PostEditorDto>(result);
-    return resultDto;
+    return await _postProvider.AddAsync(post, userId);
   }
 
   [HttpPut("update")]
-  public async Task<ActionResult<PostEditorDto>> UpdatePostAsync(PostEditorDto postDto)
+  public async Task<ActionResult<PostEditorDto>> UpdatePostAsync(PostEditorDto post)
   {
     var userId = User.FirstUserId();
-    var post = _mapper.Map<Post>(postDto);
-    var result = await _blogManager.UpdatePostAsync(post, userId);
-    var resultDto = _mapper.Map<PostEditorDto>(result);
-    return resultDto;
+    return await _postProvider.UpdateAsync(post, userId);
   }
 
   [HttpPut("publish/{id:int}")]

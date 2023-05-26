@@ -1,6 +1,8 @@
 using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Data;
+using Blogifier.Extensions;
+using Blogifier.Helper;
 using Blogifier.Providers;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +32,11 @@ public class PostProvider
 
   public async Task<IEnumerable<PostDto>> GetAsync()
   {
-    var postQuery = _dbContext.Posts
+    var query = _dbContext.Posts
       .AsNoTracking()
       .Include(pc => pc.User)
       .OrderByDescending(m => m.CreatedAt);
-    return await _mapper.ProjectTo<PostDto>(postQuery).ToListAsync();
+    return await _mapper.ProjectTo<PostDto>(query).ToListAsync();
   }
 
   public async Task<PostSlugDto> GetAsync(string slug)
@@ -81,6 +83,32 @@ public class PostProvider
        .OrderByDescending(m => m.CreatedAt)
        .Skip(skip)
        .Take(items);
+
+    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+  }
+
+  public async Task<PostEditorDto> GetEditorAsync(string slug)
+  {
+    var query = _dbContext.Posts
+      .AsNoTracking()
+      .Include(m => m.PostCategories)!
+      .ThenInclude(m => m.Category)
+      .Where(p => p.Slug == slug);
+    return await _mapper.ProjectTo<PostEditorDto>(query).FirstAsync();
+  }
+
+  public async Task<IEnumerable<PostItemDto>> GetAsync(PublishedStatus filter, PostType postType)
+  {
+    var query = _dbContext.Posts.AsNoTracking()
+      .Where(p => p.PostType == postType);
+
+    query = filter switch
+    {
+      PublishedStatus.Published => query.Where(p => p.State >= PostState.Release).OrderByDescending(p => p.PublishedAt),
+      PublishedStatus.Drafts => query.Where(p => p.State == PostState.Draft).OrderByDescending(p => p.Id),
+      PublishedStatus.Featured => query.Where(p => p.IsFeatured).OrderByDescending(p => p.Id),
+      _ => query.OrderByDescending(p => p.Id),
+    };
 
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
@@ -163,8 +191,6 @@ public class PostProvider
     var posts = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
     return posts;
   }
-
-
 
   public async Task<List<Post>> SearchPosts(string term)
   {
@@ -252,6 +278,107 @@ public class PostProvider
     _dbContext.Posts.Remove(existing);
     await _dbContext.SaveChangesAsync();
     return true;
+  }
+
+  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, int userId)
+  {
+    var slug = await GetSlugFromTitle(postInput.Title);
+    var postCategories = await CheckPostCategories(postInput.Categories);
+    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    var publishedAt = postInput.State >= PostState.Release ? DateTime.UtcNow : DateTime.MinValue;
+    var post = new Post
+    {
+      UserId = userId,
+      Title = postInput.Title,
+      Slug = slug,
+      Content = contentFiltr,
+      Description = descriptionFiltr,
+      Cover = postInput.Cover,
+      PostType = postInput.PostType,
+      State = postInput.State,
+      PublishedAt = publishedAt,
+      PostCategories = postCategories,
+    };
+    _dbContext.Posts.Add(post);
+    await _dbContext.SaveChangesAsync();
+    return _mapper.Map<PostEditorDto>(post);
+  }
+
+  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, int userId)
+  {
+    var post = await _dbContext.Posts
+      .Include(m => m.PostCategories)!
+      .ThenInclude(m => m.Category)
+      .FirstAsync(m => m.Id == postInput.Id);
+
+    if (post.UserId != userId) throw new BlogNotIitializeException();
+    var postCategories = await CheckPostCategories(postInput.Categories, post.PostCategories);
+
+    post.Slug = postInput.Slug!;
+    post.Title = postInput.Title;
+    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    post.Description = contentFiltr;
+    post.Content = descriptionFiltr;
+    post.Cover = postInput.Cover;
+    post.PostCategories = postCategories;
+
+    _dbContext.Update(post);
+    await _dbContext.SaveChangesAsync();
+    return _mapper.Map<PostEditorDto>(post);
+  }
+
+  private async Task<string> GetSlugFromTitle(string title)
+  {
+    var slug = title.ToSlug();
+    var i = 1;
+    var slugOriginal = slug;
+    while (true)
+    {
+      if (!await _dbContext.Posts.Where(p => p.Slug == slug).AnyAsync()) return slug;
+      i++;
+      if (i >= 100) throw new BlogNotIitializeException();
+      slug = $"{slugOriginal}{i}";
+    }
+  }
+
+  private async Task<List<PostCategory>?> CheckPostCategories(List<CategoryDto>? input, List<PostCategory>? original = null)
+  {
+    if (input == null || !input.Any()) return null;
+
+    if (original == null)
+    {
+      original = new List<PostCategory>();
+    }
+    else
+    {
+      original = original.Where(p =>
+      {
+        var item = input.FirstOrDefault(m => p.Category.Content.Equals(m.Content, StringComparison.Ordinal));
+        if (item != null)
+        {
+          input.Remove(item);
+          return true;
+        }
+        return false;
+      }).ToList();
+    }
+
+    if (input.Any())
+    {
+      var nameCategories = input.Select(m => m.Content);
+      var categoriesDb = await _dbContext.Categories
+        .Where(m => nameCategories.Contains(m.Content))
+        .ToListAsync();
+
+      foreach (var item in input)
+      {
+        var categoryDb = categoriesDb.FirstOrDefault(m => item.Content.Equals(m.Content, StringComparison.Ordinal));
+        original.Add(new PostCategory { Category = categoryDb != null ? categoryDb : new Category { Content = item.Content } });
+      }
+    }
+    return original;
   }
 
   #region Private methods
