@@ -1,5 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
+using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,14 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Blogifier.Storages;
 
@@ -167,6 +172,49 @@ public class StorageProvider
       await response.Content.CopyToAsync(fileStream);
     }
     return $"![{fileName}]({root}{PathToUrl(filePath)})";
+  }
+
+  public async Task<string> UploadImagesFoHtml(string webRoot, string userid, string baseUrl, DateTime createdAt, string input)
+  {
+    var matches = StringHelper.MatchesImgTags(input);
+    if (matches.Any())
+    {
+      var contentBuilder = new StringBuilder(input);
+      foreach (Match match in matches.Cast<Match>())
+      {
+        var tag = match.Value;
+        var matchUrl = StringHelper.MatchImgSrc(tag);
+        var urlString = matchUrl.Groups[1].Value;
+        var uploadTag = await UploadFromWeb(webRoot, userid, baseUrl, urlString, createdAt);
+        contentBuilder.Replace(tag, uploadTag);
+      }
+      input = contentBuilder.ToString();
+    }
+    return input;
+  }
+
+  private static readonly string[] _arrayfileExts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
+  public async Task<string> UploadFilesFoHtml(string webRoot, string userid, string baseUrl, DateTime createdAt, string input)
+  {
+    var matches = StringHelper.MatchesFile(input);
+    if (matches.Any())
+    {
+      var contentBuilder = new StringBuilder(input);
+      foreach (Match match in matches.Cast<Match>())
+      {
+        var tag = match.Value;
+        var urlString = XElement.Parse(tag).Attribute("href")!.Value;
+        if (_arrayfileExts.Any(m => urlString.ToLower().EndsWith($".{m}")))
+        {
+          var uploadTag = await UploadFromWeb(webRoot, userid, baseUrl, urlString, createdAt);
+          contentBuilder.Replace(tag, uploadTag);
+        }
+
+
+      }
+      input = contentBuilder.ToString();
+    }
+    return input;
   }
 
   public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")

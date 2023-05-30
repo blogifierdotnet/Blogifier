@@ -12,11 +12,11 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class ImportController : ControllerBase
 {
-  private readonly ImportProvider _importProvider;
+  private readonly ImportManager _importManager;
 
-  public ImportController(ImportProvider importProvider)
+  public ImportController(ImportManager importManager)
   {
-    _importProvider = importProvider;
+    _importManager = importManager;
   }
 
   [HttpGet("rss")]
@@ -30,6 +30,6 @@ public class ImportController : ControllerBase
   {
     var userId = User.FirstUserId();
     var webRoot = Url.Content("~/");
-    return await _importProvider.WriteAsync(request, webRoot, userId);
+    return await _importManager.WriteAsync(request, webRoot, userId);
   }
 }

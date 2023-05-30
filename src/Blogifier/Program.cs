@@ -84,10 +84,11 @@ builder.Services.AddScoped<AnalyticsProvider>();
 builder.Services.AddScoped<NewsletterProvider>();
 builder.Services.AddScoped<EmailProvider>();
 builder.Services.AddScoped<ThemeProvider>();
-builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
 builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<OptionProvider>();
+
+builder.Services.AddScoped<ImportManager>();
 builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();
 builder.Services.AddScoped<MainMamager>();
