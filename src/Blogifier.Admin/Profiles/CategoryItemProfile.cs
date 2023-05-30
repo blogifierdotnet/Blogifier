@@ -1,12 +1,12 @@
 using AutoMapper;
 using Blogifier.Shared;
 
-namespace Blogifier.Profiles;
+namespace Blogifier.Admin.Profiles;
 
 public class CategoryItemProfile : Profile
 {
   public CategoryItemProfile()
   {
-    CreateMap<FrontCategoryItemDto, CategoryItemDto>();
+    CreateMap<CategoryItemDto, FrontCategoryItemDto>().ReverseMap();
   }
 }

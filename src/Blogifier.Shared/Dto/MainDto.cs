@@ -13,7 +13,7 @@ public class MainDto
   public string? FooterScript { get; set; }
   public string Version { get; set; } = default!;
   public int ItemsPerPage { get; set; }
-  public IEnumerable<CategoryItem> Categories { get; set; } = default!;
+  public IEnumerable<CategoryItemDto> Categories { get; set; } = default!;
   public string? AbsoluteUrl { get; set; }
   public BlogifierClaims? Claims { get; set; }
 }

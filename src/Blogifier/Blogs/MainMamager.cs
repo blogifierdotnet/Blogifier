@@ -28,7 +28,7 @@ public class MainMamager
   public async Task<MainDto> GetAsync()
   {
     var blog = await _blogManager.GetAsync();
-    var categoryItemes = await _categoryProvider.GetAsync();
+    var categoryItemes = await _categoryProvider.GetItemsAsync();
     var main = _mapper.Map<MainDto>(blog);
     main.Categories = categoryItemes;
     var httpContext = _httpContextAccessor.HttpContext;

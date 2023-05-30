@@ -1,10 +1,7 @@
-using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -17,7 +14,7 @@ public class CategoryController : Controller
 
   public CategoryController(
     MainMamager mainMamager,
-    PostProvider postProvider )
+    PostProvider postProvider)
   {
     _mainMamager = mainMamager;
     _postProvider = postProvider;

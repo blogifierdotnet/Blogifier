@@ -17,12 +17,12 @@ public class CategoryProvider
     _dbContext = dbContext;
   }
 
-  public async Task<IEnumerable<CategoryItem>> GetAsync()
+  public async Task<List<CategoryItemDto>> GetItemsAsync()
   {
     return await _dbContext.PostCategories
       .Include(pc => pc.Category)
       .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
-      .Select(m => new CategoryItem
+      .Select(m => new CategoryItemDto
       {
         Id = m.Key.Id,
         Category = m.Key.Content,
@@ -33,39 +33,9 @@ public class CategoryProvider
       .ToListAsync();
   }
 
-  public async Task<List<CategoryItem>> Categories()
+  public async Task<List<CategoryItemDto>> SearchCategories(string term)
   {
-    var cats = new List<CategoryItem>();
-
-    if (_dbContext.Posts != null && _dbContext.Posts.Count() > 0)
-    {
-      foreach (var pc in _dbContext.PostCategories.Include(pc => pc.Category).AsNoTracking())
-      {
-        if (!cats.Exists(c => c.Category.ToLower() == pc.Category.Content.ToLower()))
-        {
-          cats.Add(new CategoryItem
-          {
-            Selected = false,
-            Id = pc.CategoryId,
-            Category = pc.Category.Content.ToLower(),
-            PostCount = 1,
-            DateCreated = pc.Category.CreatedAt
-          });
-        }
-        else
-        {
-          // update post count
-          var tmp = cats.Where(c => c.Category.ToLower() == pc.Category.Content.ToLower()).FirstOrDefault();
-          tmp.PostCount++;
-        }
-      }
-    }
-    return await Task.FromResult(cats);
-  }
-
-  public async Task<List<CategoryItem>> SearchCategories(string term)
-  {
-    var cats = await Categories();
+    var cats = await GetItemsAsync();
 
     if (term == "*")
       return cats;

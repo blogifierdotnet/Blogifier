@@ -14,10 +14,10 @@ public class CategoryController : ControllerBase
 {
   private readonly CategoryProvider _categoryProvider;
 
-  [HttpGet]
-  public async Task<List<CategoryItem>> GetCategories()
+  [HttpGet("items")]
+  public async Task<IEnumerable<CategoryItemDto>> GetItemsAsync()
   {
-    return await _categoryProvider.Categories();
+    return await _categoryProvider.GetItemsAsync();
   }
 
   public CategoryController(CategoryProvider categoryProvider)
@@ -38,7 +38,7 @@ public class CategoryController : ControllerBase
   }
 
   [HttpGet("{term}")]
-  public async Task<List<CategoryItem>> SearchCategories(string term = "*")
+  public async Task<List<CategoryItemDto>> SearchCategories(string term = "*")
   {
     return await _categoryProvider.SearchCategories(term);
   }
