@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Blogifier.Interfaces;
 
 [Route("api/import")]
+[Authorize]
 [ApiController]
 public class ImportController : ControllerBase
 {
@@ -22,14 +23,12 @@ public class ImportController : ControllerBase
     _importProvider = importProvider;
   }
 
-  [Authorize]
   [HttpGet("rss")]
-  public ImportDto Rss([FromQuery] ImportRssRequest request)
+  public ImportDto Rss([FromQuery] ImportRssDto request)
   {
     return _importProvider.Rss(request.FeedUrl);
   }
 
-  [Authorize]
   [HttpPost("write")]
   public async Task<ActionResult<bool>> Write(Post post)
   {

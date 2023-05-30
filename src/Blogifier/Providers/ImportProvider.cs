@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace Blogifier.Providers;
 
-public class ImportProvider 
+public class ImportProvider
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _dbContext;
@@ -32,25 +32,24 @@ public class ImportProvider
     var result = new ImportDto
     {
       BaseUrl = feed.Id,
-      Posts = new List<ImportPostDto>(),
+      Posts = new List<PostEditorDto>(),
     };
 
-    foreach (var syndicationItem in feed.Items)
+    foreach (var item in feed.Items)
     {
-      var content = ((TextSyndicationContent)syndicationItem.Content).Text;
-      var post = new ImportPostDto
+      var content = ((TextSyndicationContent)item.Content).Text;
+      var post = new PostEditorDto
       {
-        UpdatedAt = syndicationItem.LastUpdatedTime.DateTime,
-        Title = syndicationItem.Title.Text,
-        Description = GetDescription(syndicationItem.Summary.Text),
+        Title = item.Title.Text,
+        Description = GetDescription(item.Summary.Text),
         Content = content,
         Cover = BlogifierConstant.DefaultCover,
-        Published = syndicationItem.PublishDate.DateTime,
+        PublishedAt = item.PublishDate.DateTime,
       };
 
-      if (syndicationItem.ElementExtensions != null)
+      if (item.ElementExtensions != null)
       {
-        foreach (SyndicationElementExtension ext in syndicationItem.ElementExtensions)
+        foreach (SyndicationElementExtension ext in item.ElementExtensions)
         {
           if (ext.GetObject<XElement>().Name.LocalName == "summary")
             post.Description = GetDescription(ext.GetObject<XElement>().Value);
@@ -60,26 +59,19 @@ public class ImportProvider
         }
       }
 
-      if (syndicationItem.Categories != null)
+      if (item.Categories != null)
       {
-        if (post.PostCategories == null)
+        post.Categories ??= new List<CategoryDto>();
+        foreach (var category in item.Categories)
         {
-          post.PostCategories = new List<ImportPostCategory>();
-        }
-        foreach (var category in syndicationItem.Categories)
-        {
-          post.PostCategories.Add(new ImportPostCategory()
+          post.Categories.Add(new CategoryDto
           {
-            Category = new ImportCategory
-            {
-              Content = category.Name,
-            }
+            Content = category.Name
           });
         }
       };
       result.Posts.Add(post);
     }
-
     return result;
   }
 

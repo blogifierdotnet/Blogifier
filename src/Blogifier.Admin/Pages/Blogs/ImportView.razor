@@ -11,12 +11,12 @@
 {
   <h1 class="section-title">@_localizer["import"]</h1>
   <div class="section-content -half">
-    <EditForm Model="@Model" OnValidSubmit="OnAnalysis">
+    <EditForm Model="@ImportRss" OnValidSubmit="OnAnalysis">
       <DataAnnotationsValidator />
       <div class="form-item">
         <label class="form-label">@_localizer["feed-URL"]</label>
-        <input class="form-control" type="text" @bind="Model.FeedUrl" placeholder="https://example.com/feed.xml" />
-        <ValidationMessage For="@(() => Model.FeedUrl)"></ValidationMessage>
+        <input class="form-control" type="text" @bind="ImportRss.FeedUrl" placeholder="https://example.com/feed.xml" />
+        <ValidationMessage For="@(() => ImportRss.FeedUrl)"></ValidationMessage>
       </div>
       <div class="form-item">
         <button class="btn btn-blogifier px-5" type="submit">@_localizer["load"]</button>
@@ -52,11 +52,14 @@ else
             </svg>
           </span>
           <div class="list-title">@post.Title</div>
-          <div class="list-text ms-auto">@post.Published.ToFriendlyShortDateString()</div>
+          <div class="list-text ms-auto">@DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt)</div>
         </li>
       }
     </ul>
-    <div class="alert @StatusMsgCss mb-4">@StatusMsg</div>
+    @if (Status != null)
+    {
+      <div class="alert @Status.MsgCss mb-4">@Status.Msg</div>
+    }
     <div class="form-item">
       <button class="btn btn-blogifier px-5 me-3" type="button" @onclick="OnImport">@_localizer["import"]</button>
       <button class="btn btn-default" type="button" @onclick="OnLoad">@_localizer["cancel"]</button>
@@ -65,10 +68,9 @@ else
 }
 
 @code {
-  protected ImportRssRequest Model { get; set; } = default!;
+  protected ImportRssDto ImportRss { get; set; } = default!;
   protected ImportDto? Import { get; set; }
-  protected string StatusMsg { get; set; } = default!;
-  protected string StatusMsgCss { get; set; } = default!;
+  protected AlertStatus? Status { get; set; }
 
   protected override void OnInitialized()
   {
@@ -77,55 +79,65 @@ else
 
   protected void OnLoad()
   {
-    Model = new ImportRssRequest { FeedUrl = "" };
+    ImportRss = new ImportRssDto { FeedUrl = string.Empty };
     Import = null;
-    StatusMsg = "";
+    Status = null;
   }
 
   protected async Task OnAnalysis()
   {
-    Import = await _http.GetFromJsonAsync<ImportDto>($"api/import/rss?feedUrl={Model.FeedUrl}");
+    Import = await _http.GetFromJsonAsync<ImportDto>($"api/import/rss?feedUrl={ImportRss.FeedUrl}");
   }
 
   protected async Task OnImport()
   {
-    int successCnt = 0;
-    int failedCnt = 0;
+    //int successCnt = 0;
+    //int failedCnt = 0;
 
-    foreach (var post in Import!.Posts!)
-    {
-      if (!post.Selected)
-        continue;
+    //foreach (var post in Import!.Posts!)
+    //{
+    //  if (!post.Selected)
+    //    continue;
 
-      var result = await _http.PostAsJsonAsync<ImportPostDto>("api/import/write", post);
-      if (result.IsSuccessStatusCode)
-      {
-        await _jsRuntime.InvokeAsync<string>("commonJsFunctions.replaceElement", post.Slug, true);
-        successCnt++;
-      }
-      else
-      {
-        await _jsRuntime.InvokeAsync<string>("commonJsFunctions.replaceElement", post.Slug, false);
-        failedCnt++;
-      }
-    }
+    //  var result = await _http.PostAsJsonAsync<ImportPostDto>("api/import/write", post);
+    //  if (result.IsSuccessStatusCode)
+    //  {
+    //    await _jsRuntime.InvokeAsync<string>("commonJsFunctions.replaceElement", post.Slug, true);
+    //    successCnt++;
+    //  }
+    //  else
+    //  {
+    //    await _jsRuntime.InvokeAsync<string>("commonJsFunctions.replaceElement", post.Slug, false);
+    //    failedCnt++;
+    //  }
+    //}
 
-    if (failedCnt == 0 && successCnt > 0)
-    {
-      StatusMsg = $"Imported {successCnt} posts.";
-      StatusMsgCss = $"alert-success";
-    }
-    else
-    {
-      StatusMsg = $"Imported {successCnt} posts out of {successCnt + failedCnt}. Please check logs for errors.";
-      StatusMsgCss = $"alert-warning";
-    }
+    //if (failedCnt == 0 && successCnt > 0)
+    //{
+    //  Status = new AlertStatus($"Imported {successCnt} posts.", "alert-success");
+    //}
+    //else
+    //{
+    //  Status = new AlertStatus($"Imported {successCnt} posts out of {successCnt + failedCnt}. Please check logs for errors.", "alert-warning");
+    //}
   }
 
-  public void CheckAll(object? checkValue)
+  protected void CheckAll(object? checkValue)
   {
     bool isChecked = checkValue != null ? (bool)checkValue : false;
     Import!.Posts.ForEach(p => p.Selected = isChecked);
     StateHasChanged();
+  }
+
+  protected class AlertStatus
+  {
+    public string Msg { get; set; }
+    public string MsgCss { get; set; }
+
+    public AlertStatus(string msg, string msgCss)
+    {
+      Msg = msg;
+      MsgCss = msgCss;
+    }
   }
 }
