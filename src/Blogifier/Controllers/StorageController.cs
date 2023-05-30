@@ -8,10 +8,10 @@ namespace Blogifier.Controllers;
 
 public class StorageController : ControllerBase
 {
-  private readonly StorageManager _storageManager;
+  private readonly StorageProvider _storageManager;
 
   public StorageController(
-    StorageManager storageManager)
+    StorageProvider storageManager)
   {
     _storageManager = storageManager;
   }

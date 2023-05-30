@@ -26,10 +26,10 @@ public class ImportController : ControllerBase
   }
 
   [HttpPost("write")]
-  public async Task<IEnumerable<PostItemDto>> Write([FromBody] ImportDto request)
+  public async Task<IEnumerable<PostEditorDto>> Write([FromBody] ImportDto request)
   {
     var userId = User.FirstUserId();
     var webRoot = Url.Content("~/");
-    return await _importProvider.Write(request, webRoot, userId);
+    return await _importProvider.WriteAsync(request, webRoot, userId);
   }
 }

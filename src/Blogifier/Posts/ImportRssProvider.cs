@@ -25,13 +25,13 @@ public class ImportRssProvider
       var content = ((TextSyndicationContent)item.Content).Text;
       var post = new PostEditorDto
       {
+        Slug = item.Id,
         Title = item.Title.Text,
         Description = GetDescription(item.Summary.Text),
         Content = content,
         Cover = BlogifierConstant.DefaultCover,
         PublishedAt = item.PublishDate.DateTime,
         PostType = PostType.Post,
-        State = PostState.Draft,
       };
 
       if (item.ElementExtensions != null)

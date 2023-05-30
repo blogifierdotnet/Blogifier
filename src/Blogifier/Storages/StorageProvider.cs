@@ -15,19 +15,26 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Storages;
 
-public class StorageManager
+public class StorageProvider
 {
   private readonly ILogger _logger;
-  private readonly AppDbContext _appDbContext;
+  private readonly AppDbContext _dbContext;
+  private readonly IHttpClientFactory _httpClientFactory;
   private readonly MinioProvider _minioProvider;
   private readonly string _publicStorageRoot;
   private readonly string _slash = Path.DirectorySeparatorChar.ToString();
   private readonly IConfiguration _configuration;
 
-  public StorageManager(ILogger<StorageManager> logger, AppDbContext appDbContext, MinioProvider minioProvider, IConfiguration configuration)
+  public StorageProvider(
+    ILogger<StorageProvider> logger,
+    AppDbContext dbContext,
+    IHttpClientFactory httpClientFactory,
+    MinioProvider minioProvider,
+    IConfiguration configuration)
   {
     _logger = logger;
-    _appDbContext = appDbContext;
+    _dbContext = dbContext;
+    _httpClientFactory = httpClientFactory;
     _minioProvider = minioProvider;
     _configuration = configuration;
     _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
@@ -39,7 +46,7 @@ public class StorageManager
   public async Task<Storage?> GetAsync(string storagePath, Func<Stream, CancellationToken, Task> callback)
   {
     _logger.LogInformation("Storage Url:{storagePath}", storagePath);
-    var storage = await _appDbContext.Storages.FirstOrDefaultAsync(m => m.Path == storagePath);
+    var storage = await _dbContext.Storages.FirstOrDefaultAsync(m => m.Path == storagePath);
     if (storage == null) return null;
     var objectStat = await _minioProvider.GetObjectAsync(storagePath, callback);
     if (objectStat == null) return null;
@@ -143,20 +150,22 @@ public class StorageManager
     return true;
   }
 
-  public async Task<string> UploadFromWeb(Uri requestUri, string root, string path = "")
+  public async Task<string> UploadFromWeb(string root, string userid, string baseUrl, string requestUri, DateTime createdAt)
   {
-    path = path.Replace("/", _slash);
+    var path = $"{userid}/{createdAt.Year}/{createdAt.Month}";
+    var slash = Path.DirectorySeparatorChar.ToString();
+    path = path.Replace("/", slash);
     VerifyPath(_publicStorageRoot, path);
-
     var fileName = TitleFromUri(requestUri);
-    var filePath = string.IsNullOrEmpty(path) ?
-         Path.Combine(_publicStorageRoot, fileName) :
-         Path.Combine(_publicStorageRoot, path + _slash + fileName);
-
-    var client = new HttpClient();
-    var response = await client.GetAsync(requestUri);
-    using var fs = new FileStream(filePath, FileMode.CreateNew);
-    await response.Content.CopyToAsync(fs);
+    var filePath = Path.Combine(_publicStorageRoot, path + _slash + fileName);
+    if (!File.Exists(filePath))
+    {
+      var client = _httpClientFactory.CreateClient();
+      client.BaseAddress = new Uri(baseUrl);
+      var response = await client.GetAsync(requestUri);
+      using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+      await response.Content.CopyToAsync(fileStream);
+    }
     return $"![{fileName}]({root}{PathToUrl(filePath)})";
   }
 
@@ -263,9 +272,9 @@ public class StorageManager
       }
     }
   }
-  static string TitleFromUri(Uri uri)
+  static string TitleFromUri(string uri)
   {
-    var title = uri.ToString().ToLower();
+    var title = uri.ToLower();
     title = title.Replace("%2f", "/");
 
     if (title.EndsWith(".axdx"))
@@ -285,14 +294,11 @@ public class StorageManager
       var rnd = new Random();
       title = string.Format("{0}.png", rnd.Next(1000, 9999));
     }
-
-    if (title.Contains("/"))
+    if (title.Contains('/'))
     {
       title = title[title.LastIndexOf("/")..];
     }
-
     title = title.Replace(" ", "-");
-
     return title.Replace("/", "").SanitizeFileName();
   }
   string PathToUrl(string path)

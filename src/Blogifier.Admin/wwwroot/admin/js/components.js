@@ -34,19 +34,6 @@ window.commonJsFunctions = {
       element.focus();
     }, 500);
   },
-  replaceElement: function (id, success) {
-    var el = document.getElementById(id);
-    el.style.display = 'none';
-
-    if (success) {
-      var el2 = document.getElementById('s-' + id);
-      el2.style.display = 'block';
-    }
-    else {
-      var el3 = document.getElementById('f-' + id);
-      el3.style.display = 'block';
-    }
-  },
   writeCookie: function (name, value, days) {
 
     var expires;

@@ -1,10 +1,7 @@
 using Blogifier.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
-using Org.BouncyCastle.Utilities;
 using System;
 using System.Linq;
 using System.Text;
@@ -12,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Options;
 
-public class OptionStore
+public class OptionProvider
 {
   private readonly ILogger _logger;
   private readonly IDistributedCache _distributedCache;
   private readonly AppDbContext _dbContext;
 
-  public OptionStore(
-    ILogger<OptionStore> logger,
+  public OptionProvider(
+    ILogger<OptionProvider> logger,
     IDistributedCache distributedCache,
     AppDbContext dbContext)
   {

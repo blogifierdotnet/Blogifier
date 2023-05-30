@@ -17,7 +17,19 @@ public class MarkdigProvider
         .UsePipeTables()
         .UseAdvancedExtensions()
         .Build();
-    _converter = new ReverseMarkdown.Converter();
+
+    var config = new Config
+    {
+      // generate GitHub flavoured markdown, supported for BR, PRE and table tags
+      GithubFlavored = true,
+      // will ignore all comments
+      RemoveComments = true,
+      // Include the unknown tag completely in the result (default as well)
+      UnknownTags = Config.UnknownTagsOption.Bypass,
+      // remove markdown output for links where appropriate
+      SmartHrefHandling = false
+    };
+    _converter = new Converter(config);
   }
 
   public string ToHtml(string markdown)

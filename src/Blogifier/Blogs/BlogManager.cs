@@ -8,12 +8,12 @@ namespace Blogifier.Blogs;
 public class BlogManager
 {
   private readonly ILogger _logger;
-  private readonly OptionStore _optionStore;
+  private readonly OptionProvider _optionStore;
   private BlogData? _blogData;
 
   public BlogManager(
     ILogger<BlogManager> logger,
-    OptionStore optionStore)
+    OptionProvider optionStore)
   {
     _logger = logger;
     _optionStore = optionStore;

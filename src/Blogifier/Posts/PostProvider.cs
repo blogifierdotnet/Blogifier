@@ -253,7 +253,8 @@ public class PostProvider
     var postCategories = await CheckPostCategories(postInput.Categories);
     var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
     var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
-    var publishedAt = postInput.State >= PostState.Release ? DateTime.UtcNow : DateTime.MinValue;
+    var publishedAt = postInput.PublishedAt;
+    if (postInput.State >= PostState.Release) if (!publishedAt.HasValue) publishedAt = DateTime.UtcNow; else publishedAt = null;
     var post = new Post
     {
       UserId = userId,
@@ -314,6 +315,9 @@ public class PostProvider
   {
     if (input == null || !input.Any()) return null;
 
+    // 去重
+    var categories = input.GroupBy(d => new { d.Content }).Select(m => m.Key.Content).ToList();
+
     if (original == null)
     {
       original = new List<PostCategory>();
@@ -322,27 +326,26 @@ public class PostProvider
     {
       original = original.Where(p =>
       {
-        var item = input.FirstOrDefault(m => p.Category.Content.Equals(m.Content, StringComparison.Ordinal));
+        var item = categories.FirstOrDefault(m => p.Category.Content.Equals(m, StringComparison.Ordinal));
         if (item != null)
         {
-          input.Remove(item);
+          categories.Remove(item);
           return true;
         }
         return false;
       }).ToList();
     }
 
-    if (input.Any())
+    if (categories.Any())
     {
-      var nameCategories = input.Select(m => m.Content);
       var categoriesDb = await _dbContext.Categories
-        .Where(m => nameCategories.Contains(m.Content))
+        .Where(m => categories.Contains(m.Content))
         .ToListAsync();
 
-      foreach (var item in input)
+      foreach (var item in categories)
       {
-        var categoryDb = categoriesDb.FirstOrDefault(m => item.Content.Equals(m.Content, StringComparison.Ordinal));
-        original.Add(new PostCategory { Category = categoryDb != null ? categoryDb : new Category { Content = item.Content } });
+        var categoryDb = categoriesDb.FirstOrDefault(m => item.Equals(m.Content, StringComparison.Ordinal));
+        original.Add(new PostCategory { Category = categoryDb ?? new Category { Content = item } });
       }
     }
     return original;

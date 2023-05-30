@@ -1,13 +1,15 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
+using Blogifier.Identity;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -18,38 +20,77 @@ public class ImportProvider
 {
   private readonly ILogger _logger;
   private readonly AppDbContext _dbContext;
+  private readonly UserProvider _userProvider;
   private readonly MarkdigProvider _markdigProvider;
   private readonly PostProvider _postProvider;
+  private readonly StorageProvider _storageProvider;
 
   public ImportProvider(
     ILogger<ImportProvider> logger,
     AppDbContext dbContext,
+    UserProvider userProvider,
     MarkdigProvider markdigProvider,
-    PostProvider postProvider)
+    PostProvider postProvider,
+    StorageProvider storageProvider)
   {
     _logger = logger;
     _dbContext = dbContext;
+    _userProvider = userProvider;
     _markdigProvider = markdigProvider;
     _postProvider = postProvider;
+    _storageProvider = storageProvider;
   }
 
-  public async Task<IEnumerable<PostItemDto>> Write(ImportDto request, string webRoot, string userId)
+  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, string webRoot, string userId)
   {
+    var user = await _userProvider.FindByIdAsync(userId);
     var titles = request.Posts.Select(m => m.Title);
     var matchPosts = await _postProvider.MatchTitleAsync(titles);
+
+    var posts = new List<PostEditorDto>();
+
     foreach (var post in request.Posts)
     {
       var postDb = matchPosts.FirstOrDefault(m => m.Title.Equals(post.Title, StringComparison.Ordinal));
-      if (postDb != null) continue;
-
-      if (BlogifierConstant.DefaultCover.Equals(post.Cover, StringComparison.Ordinal))
+      if (postDb != null)
       {
-        //await _storageProvider.UploadFromWeb(new Uri(post.Cover), webRoot, path);
+        posts.Add(postDb);
+        continue;
       }
-      var imgTags = StringHelper.MatchesImgImgTags(post.Content);
+
+      var publishedAt = post.PublishedAt!.Value;
+
+      if (post.Cover != null && !post.Cover.Equals(BlogifierConstant.DefaultCover, StringComparison.Ordinal))
+      {
+        await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, post.Cover, publishedAt);
+      }
+      var imgTagsMatches = StringHelper.MatchesImgTags(post.Content);
+      if (imgTagsMatches.Any())
+      {
+        var contentBuilder = new StringBuilder(post.Content);
+        foreach (Match match in imgTagsMatches.Cast<Match>())
+        {
+          var tag = match.Value;
+          var matchUrl = StringHelper.MatchImgSrc(tag);
+          var urlString = matchUrl.Groups[1].Value;
+          var uploadTag = await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, urlString, publishedAt);
+          contentBuilder.Replace(tag, uploadTag);
+        }
+        post.Content = contentBuilder.ToString();
+      }
+      var markdownDescription = _markdigProvider.ToMarkdown(post.Description);
+      _logger.LogDebug("ToMarkdown html: {} , markdown: {}", post.Description, markdownDescription);
+      var markdownContent = _markdigProvider.ToMarkdown(post.Content);
+      _logger.LogDebug("ToMarkdown html: {} , markdown: {}", post.Content, markdownContent);
+
+      post.Description = markdownDescription;
+      post.Content = markdownContent;
+      post.State = PostState.Release;
+      var inputPost = await _postProvider.AddAsync(post, userId);
+      posts.Add(inputPost);
     }
 
-    throw new NotImplementedException();
+    return posts;
   }
 
   public async Task<bool> ImportPost(Post post)

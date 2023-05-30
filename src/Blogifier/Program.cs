@@ -75,6 +75,7 @@ builder.Services.AddSingleton<MinioProvider>();
 builder.Services.AddSingleton<MarkdigProvider>();
 builder.Services.AddSingleton<ImportRssProvider>();
 
+builder.Services.AddScoped<UserProvider>();
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
 builder.Services.AddScoped<PostProvider>();
@@ -85,8 +86,8 @@ builder.Services.AddScoped<EmailProvider>();
 builder.Services.AddScoped<ThemeProvider>();
 builder.Services.AddScoped<ImportProvider>();
 builder.Services.AddScoped<AboutProvider>();
-builder.Services.AddScoped<OptionStore>();
-builder.Services.AddScoped<StorageManager>();
+builder.Services.AddScoped<StorageProvider>();
+builder.Services.AddScoped<OptionProvider>();
 builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();
 builder.Services.AddScoped<MainMamager>();
