@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : IdentityUserContext<UserInfo, int>
+public class AppDbContext : IdentityUserContext<UserInfo, string>
 {
   protected readonly DbContextOptions<AppDbContext> _options;
 
@@ -34,6 +34,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, int>
     modelBuilder.Entity<UserInfo>(e =>
     {
       e.ToTable("User");
+      e.Property(p => p.Id).HasMaxLength(128);
       e.Property(p => p.CreatedAt).HasColumnOrder(0);
       e.Property(p => p.PasswordHash).HasMaxLength(256);
       e.Property(p => p.SecurityStamp).HasMaxLength(32);
@@ -41,18 +42,18 @@ public class AppDbContext : IdentityUserContext<UserInfo, int>
       e.Property(p => p.PhoneNumber).HasMaxLength(32);
     });
 
-    modelBuilder.Entity<IdentityUserClaim<int>>(e =>
+    modelBuilder.Entity<IdentityUserClaim<string>>(e =>
     {
       e.ToTable("UserClaim");
       e.Property(p => p.ClaimType).HasMaxLength(16);
       e.Property(p => p.ClaimValue).HasMaxLength(256);
     });
-    modelBuilder.Entity<IdentityUserLogin<int>>(e =>
+    modelBuilder.Entity<IdentityUserLogin<string>>(e =>
     {
       e.ToTable("UserLogin");
       e.Property(p => p.ProviderDisplayName).HasMaxLength(128);
     });
-    modelBuilder.Entity<IdentityUserToken<int>>(e =>
+    modelBuilder.Entity<IdentityUserToken<string>>(e =>
     {
       e.ToTable("UserToken");
       e.Property(p => p.Value).HasMaxLength(1024);

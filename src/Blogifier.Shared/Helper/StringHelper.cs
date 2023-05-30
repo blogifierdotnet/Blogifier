@@ -6,6 +6,8 @@ public static class StringHelper
 {
   private static Regex _regexScript = new("<script[^>]*>[\\s\\S]*?</script>", RegexOptions.Compiled);
   private static Regex _regexImg = new("<img[^>]*>[\\s\\S]*?>", RegexOptions.Compiled);
+  private static Regex _regexImgSrc = new("<img[^>]*?src\\s*=\\s*[\"']?([^'\" >]+?)[ '\"][^>]*?>", RegexOptions.IgnoreCase);
   public static string RemoveScriptTags(string input) => _regexScript.Replace(input, string.Empty);
   public static string RemoveImgTags(string input) => _regexImg.Replace(input, string.Empty);
+  public static MatchCollection MatchesImgImgTags(string input) => _regexImgSrc.Matches(input);
 }

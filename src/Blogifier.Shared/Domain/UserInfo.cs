@@ -5,8 +5,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Identity;
 
-public class UserInfo : IdentityUser<int>
+public class UserInfo : IdentityUser<string>
 {
+  public UserInfo() : base()
+  {
+
+  }
+
+  public UserInfo(string userName) : base()
+  {
+    Id = Guid.NewGuid().ToString();
+    UserName = userName;
+  }
+
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   [StringLength(256)]

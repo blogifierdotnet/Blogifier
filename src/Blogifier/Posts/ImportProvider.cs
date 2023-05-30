@@ -1,10 +1,12 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
+using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,14 +33,23 @@ public class ImportProvider
     _postProvider = postProvider;
   }
 
-  public async Task<IEnumerable<PostItemDto>> Write(ImportDto request, string webRoot, int userId)
+  public async Task<IEnumerable<PostItemDto>> Write(ImportDto request, string webRoot, string userId)
   {
     var titles = request.Posts.Select(m => m.Title);
     var matchPosts = await _postProvider.MatchTitleAsync(titles);
     foreach (var post in request.Posts)
     {
-      
+      var postDb = matchPosts.FirstOrDefault(m => m.Title.Equals(post.Title, StringComparison.Ordinal));
+      if (postDb != null) continue;
+
+      if (BlogifierConstant.DefaultCover.Equals(post.Cover, StringComparison.Ordinal))
+      {
+        //await _storageProvider.UploadFromWeb(new Uri(post.Cover), webRoot, path);
+      }
+      var imgTags = StringHelper.MatchesImgImgTags(post.Content);
     }
+
+    throw new NotImplementedException();
   }
 
   public async Task<bool> ImportPost(Post post)

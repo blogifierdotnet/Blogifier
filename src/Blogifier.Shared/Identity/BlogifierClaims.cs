@@ -13,7 +13,6 @@ public class BlogifierClaims
   public string? Avatar { get; set; }
   public string? Gender { get; set; }
   public string? Authority { get; set; }
-
   public static BlogifierClaims? Analysis(ClaimsPrincipal principal)
   {
     if (principal.Identity == null || !principal.Identity.IsAuthenticated)

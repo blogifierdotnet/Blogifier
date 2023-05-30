@@ -74,9 +74,8 @@ public class AccountController : Controller
   {
     if (ModelState.IsValid)
     {
-      var user = new UserInfo
+      var user = new UserInfo(model.UserName)
       {
-        UserName = model.UserName,
         NickName = model.NickName,
         Email = model.Email
       };
@@ -116,9 +115,8 @@ public class AccountController : Controller
 
     if (ModelState.IsValid)
     {
-      var user = new UserInfo
+      var user = new UserInfo(model.UserName)
       {
-        UserName = model.UserName,
         NickName = model.NickName,
         Email = model.Email
       };

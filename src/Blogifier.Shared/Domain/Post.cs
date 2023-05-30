@@ -15,7 +15,8 @@ public class Post
   public DateTime CreatedAt { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
   public DateTime UpdatedAt { get; set; }
-  public int UserId { get; set; }
+  [StringLength(128)]
+  public string UserId { get; set; } = default!;
   public UserInfo User { get; set; } = default!;
   [Required]
   [StringLength(160)]

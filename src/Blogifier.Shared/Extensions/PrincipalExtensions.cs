@@ -13,13 +13,6 @@ public static class PrincipalExtensions
     return value;
   }
 
-  public static string? FirstOrDefault(this ClaimsPrincipal principal, string claimType)
-    => principal.FindFirstValue(claimType);
-
-
-  public static int FirstUserId(this ClaimsPrincipal principal)
-  {
-    var value = FirstValue(principal, BlogifierClaimTypes.UserId);
-    return int.Parse(value);
-  }
+  public static string? FirstOrDefault(this ClaimsPrincipal principal, string claimType) => principal.FindFirstValue(claimType);
+  public static string FirstUserId(this ClaimsPrincipal principal) => FirstValue(principal, BlogifierClaimTypes.UserId);
 }

@@ -247,7 +247,7 @@ public class PostProvider
     return true;
   }
 
-  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, int userId)
+  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
   {
     var slug = await GetSlugFromTitle(postInput.Title);
     var postCategories = await CheckPostCategories(postInput.Categories);
@@ -272,7 +272,7 @@ public class PostProvider
     return _mapper.Map<PostEditorDto>(post);
   }
 
-  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, int userId)
+  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, string userId)
   {
     var post = await _dbContext.Posts
       .Include(m => m.PostCategories)!

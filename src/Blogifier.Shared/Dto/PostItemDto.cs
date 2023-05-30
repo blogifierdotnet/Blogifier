@@ -7,7 +7,7 @@ namespace Blogifier.Shared;
 public class PostItemDto
 {
   public int Id { get; set; }
-  public int UserId { get; set; }
+  public string UserId { get; set; }
   public UserDto User { get; set; } = default!;
   public PostType PostType { get; set; }
   [Required]
