@@ -1,10 +1,104 @@
 @page "/admin/blogs/categories"
+
 @layout BlogsLayout
+
 @inject HttpClient _http
+
+@inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
-@inject NavigationManager _navigation
+
+
+@code {
+  protected List<CategoryItem> Categories { get; set; }
+  protected Category CurrentCategory { get; set; }
+  protected string SearchTerm { get; set; }
+  protected bool IsEdit = false;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await Load();
+  }
+
+  protected async Task Load()
+  {
+    Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category");
+  }
+
+  protected async Task ShowEdit(int categoryId)
+  {
+    CurrentCategory = await _http.GetFromJsonAsync<Category>($"api/category/byId/{categoryId}");
+    IsEdit = true;
+  }
+
+  protected void CancelEdit()
+  {
+    CurrentCategory = null;
+    IsEdit = false;
+  }
+
+  protected async Task SaveEdit()
+  {
+    Toast(await _http.PutAsJsonAsync<Category>("api/category", CurrentCategory));
+    CurrentCategory = null;
+    IsEdit = false;
+    await Load();
+  }
+
+  public void CheckAll(object checkValue)
+  {
+    bool isChecked = (bool)checkValue;
+    Categories.ForEach(p => p.Selected = isChecked);
+    StateHasChanged();
+  }
+
+  public async Task RunAction(GroupAction action)
+  {
+    string confirm = _localizer["confirm-delete"];
+    bool confirmed = false;
+
+    if (action == GroupAction.Delete)
+    {
+      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
+      if (!confirmed)
+        return;
+    }
+
+    foreach (var category in Categories)
+    {
+      if (category.Selected)
+      {
+        await _http.DeleteAsync($"api/category/{category.Id}");
+      }
+    }
+    await Load();
+  }
+
+  protected async Task SearchKeyPress(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      await SearchCategories();
+  }
+
+  protected async Task SearchCategories()
+  {
+    if (string.IsNullOrEmpty(SearchTerm))
+      SearchTerm = "*";
+
+    Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category/{SearchTerm}");
+    SearchTerm = "";
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}
+
 
 <PageTitleComponent Title="@_localizer["categories"]" />
 
@@ -107,86 +201,3 @@
   </EditForm>
 }
 
-<ToasterComponent @ref="Toaster" />
-
-@code {
-  protected ToasterComponent Toaster;
-  protected List<CategoryItem> Categories { get; set; }
-  protected Category CurrentCategory { get; set; }
-  protected string SearchTerm { get; set; }
-  protected bool IsEdit = false;
-
-  protected override async Task OnInitializedAsync()
-  {
-    await Load();
-  }
-
-  protected async Task Load()
-  {
-    Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category");
-  }
-
-  protected async Task ShowEdit(int categoryId)
-  {
-    CurrentCategory = await _http.GetFromJsonAsync<Category>($"api/category/byId/{categoryId}");
-    IsEdit = true;
-  }
-
-  protected void CancelEdit()
-  {
-    CurrentCategory = null;
-    IsEdit = false;
-  }
-
-  protected async Task SaveEdit()
-  {
-    Toaster.Toast(await _http.PutAsJsonAsync<Category>("api/category", CurrentCategory));
-    CurrentCategory = null;
-    IsEdit = false;
-    await Load();
-  }
-
-  public void CheckAll(object checkValue)
-  {
-    bool isChecked = (bool)checkValue;
-    Categories.ForEach(p => p.Selected = isChecked);
-    StateHasChanged();
-  }
-
-  public async Task RunAction(GroupAction action)
-  {
-    string confirm = _localizer["confirm-delete"];
-    bool confirmed = false;
-
-    if (action == GroupAction.Delete)
-    {
-      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
-      if (!confirmed)
-        return;
-    }
-
-    foreach (var category in Categories)
-    {
-      if (category.Selected)
-      {
-        await _http.DeleteAsync($"api/category/{category.Id}");
-      }
-    }
-    await Load();
-  }
-
-  protected async Task SearchKeyPress(KeyboardEventArgs e)
-  {
-    if (e.Key == "Enter")
-      await SearchCategories();
-  }
-
-  protected async Task SearchCategories()
-  {
-    if (string.IsNullOrEmpty(SearchTerm))
-      SearchTerm = "*";
-
-    Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category/{SearchTerm}");
-    SearchTerm = "";
-  }
-}
