@@ -93,6 +93,16 @@ public class PostProvider
     return await _mapper.ProjectTo<PostEditorDto>(query).FirstAsync();
   }
 
+  public async Task<List<PostEditorDto>> MatchTitleAsync(IEnumerable<string> titles)
+  {
+    var query = _dbContext.Posts
+      .AsNoTracking()
+      .Include(m => m.PostCategories)!
+      .ThenInclude(m => m.Category)
+      .Where(p => titles.Contains(p.Title));
+    return await _mapper.ProjectTo<PostEditorDto>(query).ToListAsync();
+  }
+
   public async Task<IEnumerable<PostItemDto>> GetAsync(PublishedStatus filter, PostType postType)
   {
     var query = _dbContext.Posts.AsNoTracking()

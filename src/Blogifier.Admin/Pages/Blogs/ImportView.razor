@@ -94,6 +94,24 @@ else
 
   protected async Task OnImport()
   {
+    var request = new ImportDto { BaseUrl = Import!.BaseUrl, Posts = new List<PostEditorDto>() };
+    foreach (var post in Import!.Posts!)
+    {
+      if (!post.Selected) continue;
+      var inputPost = _mapper.Map<PostEditorDto>(post);
+      request.Posts.Add(inputPost);
+    }
+    if (!request.Posts.Any()) return;
+
+    var result = await _http.PostAsJsonAsync("api/import/write", request);
+    if (result.IsSuccessStatusCode)
+    {
+    }
+    else
+    {
+      Status = new AlertStatus("import posts errors.", "alert-warning");
+    }
+
     //int successCnt = 0;
     //int failedCnt = 0;
 

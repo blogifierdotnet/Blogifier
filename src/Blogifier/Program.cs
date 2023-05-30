@@ -73,6 +73,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddSingleton<MinioProvider>();
 builder.Services.AddSingleton<MarkdigProvider>();
+builder.Services.AddSingleton<ImportRssProvider>();
 
 builder.Services.AddScoped<AuthorProvider>();
 builder.Services.AddScoped<BlogProvider>();
