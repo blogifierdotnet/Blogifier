@@ -116,9 +116,15 @@ builder.Services.AddRazorPages().AddViewLocalization();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
-using var scope = app.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-if (dbContext.Database.GetPendingMigrations().Any()) await dbContext.Database.MigrateAsync();
+
+using (var scope = app.Services.CreateScope())
+{
+  var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+  if (dbContext.Database.GetPendingMigrations().Any())
+  {
+    await dbContext.Database.MigrateAsync();
+  }
+}
 
 app.UseSerilogRequestLogging();
 

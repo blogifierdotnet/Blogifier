@@ -23,52 +23,33 @@ public class OptionProvider
     _dbContext = dbContext;
   }
 
-  public async Task<bool> AnyKey(string key)
+  public async Task<bool> AnyKeyAsync(string key)
   {
     return await _dbContext.Options.AnyAsync(m => m.Key == key);
   }
 
-  public async Task<string?> GetByValue(string key)
+  public async Task<string?> GetByValueAsync(string key)
   {
-    return await _dbContext.Options.AsNoTracking().Where(m => m.Key == key).Select(m => m.Value).FirstOrDefaultAsync();
+    return await _dbContext.Options
+      .AsNoTracking()
+      .Where(m => m.Key == key)
+      .Select(m => m.Value)
+      .FirstOrDefaultAsync();
   }
 
-  public async Task<string?> GetByCacheValue(string key, DistributedCacheEntryOptions? options = null)
+  public async Task SetValue(string key, string value)
   {
-    _logger.LogDebug("get option {key}", key);
-    string? value;
-    var cache = await _distributedCache.GetAsync(key);
-    if (cache != null)
+    var option = await _dbContext.Options
+      .Where(m => m.Key == key)
+      .FirstOrDefaultAsync();
+    if (option == null)
     {
-      value = Encoding.UTF8.GetString(cache);
+      _dbContext.Options.Add(new OptionInfo { Key = key, Value = value });
     }
     else
     {
-      value = await _dbContext.Options.AsNoTracking().Where(m => m.Key == key).Select(m => m.Value).FirstOrDefaultAsync();
-      if (value != null)
-      {
-        var bytes = Encoding.UTF8.GetBytes(value);
-        var cacheOptions = options ?? new() { SlidingExpiration = TimeSpan.FromMinutes(15) };
-        await _distributedCache.SetAsync(key, bytes, cacheOptions);
-      }
+      option.Value = value;
     }
-    _logger.LogDebug("return option {key}:{value}", key, value);
-    return value;
-  }
-
-  public async Task SetByCacheValue(string key, string value, DistributedCacheEntryOptions? options = null)
-  {
-    var option = await _dbContext.Options.Where(m => m.Key == key).FirstOrDefaultAsync();
-    if (option == null) _dbContext.Options.Add(new OptionInfo { Key = key, Value = value });
-    else option.Value = value;
     await _dbContext.SaveChangesAsync();
-    var bytes = Encoding.UTF8.GetBytes(value);
-    var cacheOptions = options ?? new() { SlidingExpiration = TimeSpan.FromMinutes(15) };
-    await _distributedCache.SetAsync(key, bytes, cacheOptions);
-  }
-
-  public async Task RemoveCacheValue(string key)
-  {
-    await _distributedCache.RemoveAsync(key);
   }
 }

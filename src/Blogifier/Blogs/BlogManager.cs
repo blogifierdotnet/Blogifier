@@ -1,7 +1,10 @@
 using Blogifier.Options;
+using Blogifier.Posts;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -34,30 +37,46 @@ public class BlogManager
     if (cache != null)
     {
       var value = Encoding.UTF8.GetString(cache);
-      _blogData = JsonSerializer.Deserialize<BlogData>(value);
-      return _blogData!;
+      return Deserialize(value);
     }
     else
     { 
-      var value = _optionStore.GetByValue(key);
+      var value = await _optionStore.GetByValueAsync(key);
+      if (value != null)
+      {
+
+        var bytes = Encoding.UTF8.GetBytes(value);
+        await _distributedCache.SetAsync(key, bytes, new() { SlidingExpiration = TimeSpan.FromMinutes(15) });
+        return Deserialize(value);
+      }
     }
     throw new BlogNotIitializeException();
+
+    BlogData Deserialize(string value)
+    {
+      _logger.LogDebug("return option {key}:{value}", key, value);
+      _blogData = JsonSerializer.Deserialize<BlogData>(value);
+      return _blogData!;
+    }
   }
 
   public async Task<bool> AnyAsync()
   {
-    if (await _optionStore.AnyKey(BlogData.CacheKey))
+    var key = BlogData.CacheKey;
+    if (await _optionStore.AnyKeyAsync(key))
       return true;
-    await _optionStore.RemoveCacheValue(BlogData.CacheKey);
+    await _distributedCache.RemoveAsync(key);
     return false;
   }
 
   public async Task SetAsync(BlogData blogData)
   {
+    var key = BlogData.CacheKey;
     var value = JsonSerializer.Serialize(blogData);
-    _logger.LogCritical("blog initialize {value}", value);
-    await _optionStore.SetByCacheValue(BlogData.CacheKey, value);
+    _logger.LogCritical("blog set {value}", value);
+    var bytes = Encoding.UTF8.GetBytes(value);
+    await _distributedCache.SetAsync(key, bytes, new() { SlidingExpiration = TimeSpan.FromMinutes(15) });
+    await _optionStore.SetValue(key, value);
   }
-
 
 }
