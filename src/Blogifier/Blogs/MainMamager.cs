@@ -1,6 +1,6 @@
 using AutoMapper;
 using Blogifier.Identity;
-using Blogifier.Providers;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;

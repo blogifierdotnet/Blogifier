@@ -12,7 +12,6 @@ namespace Blogifier.Options;
 public class OptionProvider
 {
   private readonly ILogger _logger;
-  private readonly IDistributedCache _distributedCache;
   private readonly AppDbContext _dbContext;
 
   public OptionProvider(
@@ -21,13 +20,17 @@ public class OptionProvider
     AppDbContext dbContext)
   {
     _logger = logger;
-    _distributedCache = distributedCache;
     _dbContext = dbContext;
   }
 
   public async Task<bool> AnyKey(string key)
   {
     return await _dbContext.Options.AnyAsync(m => m.Key == key);
+  }
+
+  public async Task<string?> GetByValue(string key)
+  {
+    return await _dbContext.Options.AsNoTracking().Where(m => m.Key == key).Select(m => m.Value).FirstOrDefaultAsync();
   }
 
   public async Task<string?> GetByCacheValue(string key, DistributedCacheEntryOptions? options = null)
