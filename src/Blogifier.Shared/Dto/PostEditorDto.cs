@@ -11,10 +11,8 @@ public class PostEditorDto
   public string Description { get; set; } = default!;
   public string Content { get; set; } = default!;
   public string? Cover { get; set; }
-  public bool IsFeatured { get; set; }
   public DateTime? PublishedAt { get; set; }
   public PostType PostType { get; set; }
   public PostState State { get; set; }
   public List<CategoryDto>? Categories { get; set; }
-  public bool Selected { get; set; }
 }

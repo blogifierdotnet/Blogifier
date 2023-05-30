@@ -45,6 +45,8 @@ public class ImportProvider
         Content = content,
         Cover = BlogifierConstant.DefaultCover,
         PublishedAt = item.PublishDate.DateTime,
+        PostType = PostType.Post,
+        State = PostState.Draft,
       };
 
       if (item.ElementExtensions != null)

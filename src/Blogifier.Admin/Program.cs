@@ -8,6 +8,7 @@ using System;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddLocalization();
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore(options =>
@@ -23,4 +24,4 @@ builder.Services.AddToaster(config =>
   config.PreventDuplicates = true;
   config.NewestOnTop = false;
 });
-builder.Build().RunAsync();
+await builder.Build().RunAsync();
