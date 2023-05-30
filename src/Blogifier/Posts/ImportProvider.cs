@@ -86,11 +86,10 @@ public class ImportProvider
       post.Description = markdownDescription;
       post.Content = markdownContent;
       post.State = PostState.Release;
-      var inputPost = await _postProvider.AddAsync(post, userId);
-      posts.Add(inputPost);
+      posts.Add(post);
     }
 
-    return posts;
+    return await _postProvider.AddAsync(posts, userId);
   }
 
   public async Task<bool> ImportPost(Post post)

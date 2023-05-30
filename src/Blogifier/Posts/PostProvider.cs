@@ -5,6 +5,7 @@ using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -249,12 +250,29 @@ public class PostProvider
 
   public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
   {
+    var post = await AddInternalAsync(postInput, userId);
+    await _dbContext.SaveChangesAsync();
+    return _mapper.Map<PostEditorDto>(post);
+  }
+
+  private async Task<Post> AddInternalAsync(PostEditorDto postInput, string userId)
+  {
     var slug = await GetSlugFromTitle(postInput.Title);
     var postCategories = await CheckPostCategories(postInput.Categories);
     var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
     var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
     var publishedAt = postInput.PublishedAt;
-    if (postInput.State >= PostState.Release) if (!publishedAt.HasValue) publishedAt = DateTime.UtcNow; else publishedAt = null;
+    if (postInput.State >= PostState.Release)
+    {
+      if (!publishedAt.HasValue)
+      {
+        publishedAt = DateTime.UtcNow;
+      }
+    }
+    else
+    {
+      publishedAt = null;
+    }
     var post = new Post
     {
       UserId = userId,
@@ -269,8 +287,19 @@ public class PostProvider
       PostCategories = postCategories,
     };
     _dbContext.Posts.Add(post);
+    return post;
+  }
+
+  public async Task<IEnumerable<PostEditorDto>> AddAsync(IEnumerable<PostEditorDto> posts, string userId)
+  {
+    var postsInput = new List<Post>();
+    foreach (var post in posts)
+    {
+      var postInput = await AddInternalAsync(post, userId);
+      postsInput.Add(postInput);
+    }
     await _dbContext.SaveChangesAsync();
-    return _mapper.Map<PostEditorDto>(post);
+    return _mapper.Map<IEnumerable<PostEditorDto>>(postsInput);
   }
 
   public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, string userId)
