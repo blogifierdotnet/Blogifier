@@ -1,3 +1,4 @@
+@model AccountProfileModel
 @inject IStringLocalizer<Resource> _localizer
 
 <!DOCTYPE html>
@@ -31,8 +32,22 @@
             </svg>
           </button>
           <div class="sidebar-nav d-lg-block">
-            <a class="sidebar-link" href="/admin/profile/">@_localizer["profile"]</a>
-            <a class="sidebar-link" href="/admin/profile/password/">@_localizer["password"]</a>
+            @if (Model.IsProfile)
+            {
+              <a class="sidebar-link active" href="/account/profile">@_localizer["profile"]</a>
+            }
+            else
+            {
+              <a class="sidebar-link" href="/account/profile">@_localizer["profile"]</a>
+            }
+            @if (Model.IsPassword)
+            {
+              <a class="sidebar-link active" href="/account/profile/password">@_localizer["password"]</a>
+            }
+            else
+            {
+              <a class="sidebar-link" href="/account/profile/password">@_localizer["password"]</a>
+            }
           </div>
         </div>
         <div class="page-content flex-grow-1">

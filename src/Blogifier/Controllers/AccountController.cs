@@ -140,12 +140,4 @@ public class AccountController : Controller
     model.ShowError = true;
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
   }
-
-  [HttpGet("profile")]
-  public async Task<IActionResult> Profile([FromQuery] AccountModel parameter)
-  {
-    var model = new AccountProfileModel { RedirectUri = parameter.RedirectUri };
-    var data = await _blogManager.GetAsync();
-    return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
-  }
 }

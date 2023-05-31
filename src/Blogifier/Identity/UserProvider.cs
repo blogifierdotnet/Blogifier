@@ -21,7 +21,9 @@ public class UserProvider
 
   public async Task<UserDto> FindByIdAsync(string userId)
   {
-    var query = _dbContext.Users.Where(m => m.Id == userId);
+    var query = _dbContext.Users
+      .AsNoTracking()
+      .Where(m => m.Id == userId);
     return await _mapper.ProjectTo<UserDto>(query).FirstAsync();
   }
 }
