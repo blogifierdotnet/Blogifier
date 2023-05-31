@@ -1,6 +1,7 @@
 using Blogifier.Data;
 using Blogifier.Shared;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Blogifier.Providers;
@@ -17,9 +18,12 @@ public class AboutProvider
   {
     var model = new AboutDto
     {
-      Version = typeof(AboutProvider)?.GetTypeInfo()?.Assembly?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion,
+      Version = typeof(AboutProvider)?
+        .GetTypeInfo()?.Assembly?
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+        .InformationalVersion,
       DatabaseProvider = _dbContext.Database.ProviderName,
-      OperatingSystem = System.Runtime.InteropServices.RuntimeInformation.OSDescription
+      OperatingSystem = RuntimeInformation.OSDescription
     };
     return await Task.FromResult(model);
   }
