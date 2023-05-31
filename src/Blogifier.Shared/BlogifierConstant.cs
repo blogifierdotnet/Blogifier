@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace Blogifier;
 
-public class BlogifierConstant
+public static class BlogifierConstant
 {
   public const string PolicyCorsName = "BlogifierPolicy";
   public const string OptionsName = "Blogifier";
@@ -63,6 +63,12 @@ public class BlogifierConstant
   public static string PostPublished = "P";
   public static string IdentityCookieName = ".AspNetCore.Identity.Application";
   public static readonly JsonSerializerOptions DefaultJsonSerializerOptionss = new(JsonSerializerDefaults.Web);
+
+  public static class CacheKeys
+  {
+    public const string BlogData = "blogifier";
+    public const string CategoryItemes = $"{BlogData}:category:itemes";
+  }
 
 
   public static string CheckGetAvatarUrl(string? avatar)

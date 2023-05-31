@@ -16,6 +16,22 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<List<CategoryItemDto>> GetItemsAsync()
   {
+    return await _dbContext.Categories
+      .Include(pc => pc.PostCategories)
+      .GroupBy(m => new { m.Id, m.Content, m.Description })
+      .Select(m => new CategoryItemDto
+      {
+        Id = m.Key.Id,
+        Category = m.Key.Content,
+        Description = m.Key.Description,
+        PostCount = m.Sum(p => p.PostCategories!.Count())
+      })
+      .AsNoTracking()
+      .ToListAsync();
+  }
+
+  public async Task<List<CategoryItemDto>> GetItemsExistPostAsync()
+  {
     return await _dbContext.PostCategories
       .Include(pc => pc.Category)
       .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })

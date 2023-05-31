@@ -28,7 +28,7 @@ public class BlogManager
   public async Task<BlogData> GetAsync()
   {
     if (_blogData != null) return _blogData;
-    var key = BlogData.CacheKey;
+    var key = BlogifierConstant.CacheKeys.BlogData;
     _logger.LogDebug("get option {key}", key);
     var cache = await _distributedCache.GetAsync(key);
     if (cache != null)
@@ -59,7 +59,7 @@ public class BlogManager
 
   public async Task<bool> AnyAsync()
   {
-    var key = BlogData.CacheKey;
+    var key = BlogifierConstant.CacheKeys.BlogData;
     if (await _optionStore.AnyKeyAsync(key))
       return true;
     await _distributedCache.RemoveAsync(key);
@@ -68,7 +68,7 @@ public class BlogManager
 
   public async Task SetAsync(BlogData blogData)
   {
-    var key = BlogData.CacheKey;
+    var key = BlogifierConstant.CacheKeys.BlogData;
     var value = JsonSerializer.Serialize(blogData);
     _logger.LogCritical("blog set {value}", value);
     var bytes = Encoding.UTF8.GetBytes(value);

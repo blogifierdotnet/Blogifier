@@ -2,7 +2,6 @@ namespace Blogifier.Blogs;
 
 public class BlogData
 {
-  public const string CacheKey = "blogifier";
   public string Title { get; set; } = default!;
   public string Description { get; set; } = default!;
   public string? Logo { get; set; }

@@ -22,7 +22,6 @@ using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, builder) => builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-builder.Services.Configure<BlogifierConstant>(builder.Configuration.GetSection(BlogifierConstant.OptionsName));
 var redis = builder.Configuration.GetSection("Blogifier:Redis").Value;
 if (redis == null) builder.Services.AddDistributedMemoryCache();
 else builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redis; options.InstanceName = "blogifier:"; });

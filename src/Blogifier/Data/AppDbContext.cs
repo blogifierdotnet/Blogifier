@@ -65,18 +65,19 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
       e.HasIndex(b => b.Key).IsUnique();
     });
 
-    modelBuilder.Entity<PostCategory>()
-        .HasKey(t => new { t.PostId, t.CategoryId });
+    modelBuilder.Entity<PostCategory>(e =>
+    {
+      e.ToTable("PostCategories");
+      e.HasKey(t => new { t.PostId, t.CategoryId });
+      e.HasOne(pt => pt.Post)
+       .WithMany(p => p.PostCategories)
+       .HasForeignKey(pt => pt.PostId)
+       .OnDelete(DeleteBehavior.Cascade);
 
-    modelBuilder.Entity<PostCategory>()
-        .HasOne(pt => pt.Post)
-        .WithMany(p => p.PostCategories)
-        .HasForeignKey(pt => pt.PostId);
-
-    modelBuilder.Entity<PostCategory>()
-        .HasOne(pt => pt.Category)
-        .WithMany(t => t.PostCategories)
-        .HasForeignKey(pt => pt.CategoryId)
-        .OnDelete(DeleteBehavior.ClientCascade);
+      e.HasOne(pt => pt.Category)
+       .WithMany(t => t.PostCategories)
+       .HasForeignKey(pt => pt.CategoryId)
+       .OnDelete(DeleteBehavior.Cascade);
+    });
   }
 }
