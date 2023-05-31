@@ -36,7 +36,7 @@ public class AccountController : Controller
   {
     var data = await _blogManager.GetAsync();
     var model = new AccountLoginModel { RedirectUri = parameter.RedirectUri };
-    return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/account/login.cshtml", model);
   }
 
   [HttpPost("login")]
@@ -58,7 +58,7 @@ public class AccountController : Controller
     }
     model.ShowError = true;
     var data = await _blogManager.GetAsync();
-    return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/account/login.cshtml", model);
   }
 
   [HttpGet("register")]
@@ -87,7 +87,7 @@ public class AccountController : Controller
     }
     model.ShowError = true;
     var data = await _blogManager.GetAsync();
-    return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/account/register.cshtml", model);
   }
 
   [HttpGet("logout")]
@@ -104,7 +104,7 @@ public class AccountController : Controller
       return RedirectToAction("login", routeValues: parameter);
 
     var model = new AccountInitializeModel { RedirectUri = parameter.RedirectUri };
-    return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
+    return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/account/initialize.cshtml", model);
   }
 
   [HttpPost("initialize")]
@@ -138,6 +138,6 @@ public class AccountController : Controller
       }
     }
     model.ShowError = true;
-    return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
+    return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/account/initialize.cshtml", model);
   }
 }
