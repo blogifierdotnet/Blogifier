@@ -1,4 +1,5 @@
 using Blogifier.Blogs;
+using Blogifier.Data.Migrations;
 using Blogifier.Identity;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -139,5 +140,42 @@ public class AccountController : Controller
     }
     model.ShowError = true;
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
+  }
+
+
+  [HttpGet("profile")]
+  public async Task<IActionResult> Profile([FromQuery] AccountModel parameter)
+  {
+    var userId = User.FirstUserId();
+    var user = (await _userManager.FindByIdAsync(userId))!;
+    var model = new AccountProfileEditModel
+    {
+      RedirectUri = parameter.RedirectUri,
+      IsProfile = true,
+      Email = user.Email,
+      NickName = user.NickName,
+      Avatar = user.Avatar,
+      Bio = user.Bio,
+    };
+    var data = await _blogManager.GetAsync();
+    return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
+  }
+
+  [HttpPost("profile")]
+  public async Task<IActionResult> ProfileForm([FromForm] AccountProfileEditModel model)
+  {
+    if (ModelState.IsValid)
+    {
+      var userId = User.FirstUserId();
+      var user = (await _userManager.FindByIdAsync(userId))!;
+      user.Email = model.Email;
+      user.NickName = model.NickName;
+      user.Avatar = model.Avatar;
+      user.Bio = model.Bio;
+      await _userManager.UpdateAsync(user);
+      await _signInManager.SignInAsync(user, isPersistent: true);
+    }
+    var data = await _blogManager.GetAsync();
+    return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
   }
 }

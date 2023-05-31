@@ -2,10 +2,8 @@ using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Blogifier.Identity;
 
