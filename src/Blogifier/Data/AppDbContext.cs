@@ -76,6 +76,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
     modelBuilder.Entity<PostCategory>()
         .HasOne(pt => pt.Category)
         .WithMany(t => t.PostCategories)
-        .HasForeignKey(pt => pt.CategoryId);
+        .HasForeignKey(pt => pt.CategoryId)
+        .OnDelete(DeleteBehavior.ClientCascade);
   }
 }

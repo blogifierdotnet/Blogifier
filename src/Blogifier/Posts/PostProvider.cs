@@ -13,17 +13,16 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class PostProvider
+public class PostProvider : AppProvider<Post, int>
 {
   private readonly IMapper _mapper;
-  private readonly AppDbContext _dbContext;
 
   public PostProvider(
     IMapper mapper,
     AppDbContext dbContext)
+    : base(dbContext)
   {
     _mapper = mapper;
-    _dbContext = dbContext;
   }
 
   public async Task<IEnumerable<PostDto>> GetAsync()
@@ -236,17 +235,6 @@ public class PostProvider
     return await _dbContext.SaveChangesAsync() > 0;
   }
 
-  public async Task<bool> Remove(int id)
-  {
-    var existing = await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
-    if (existing == null)
-      return false;
-
-    _dbContext.Posts.Remove(existing);
-    await _dbContext.SaveChangesAsync();
-    return true;
-  }
-
   public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
   {
     var post = await AddInternalAsync(postInput, userId);
@@ -378,5 +366,4 @@ public class PostProvider
     }
     return original;
   }
-
 }

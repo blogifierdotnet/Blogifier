@@ -1,6 +1,5 @@
 using Blogifier.Data;
 using Blogifier.Shared;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class CategoryProvider
+public class CategoryProvider : AppProvider<Category, int>
 {
-  private readonly AppDbContext _dbContext;
-
-  public CategoryProvider(AppDbContext dbContext)
+  public CategoryProvider(AppDbContext dbContext) : base(dbContext)
   {
-    _dbContext = dbContext;
   }
 
   public async Task<List<CategoryItemDto>> GetItemsAsync()
@@ -144,22 +140,5 @@ public class CategoryProvider
     }
 
     return await _dbContext.SaveChangesAsync() > 0;
-  }
-
-  public async Task DeleteAsync(int categoryId)
-  {
-    await _dbContext.Categories
-      .Where(m => m.Id == categoryId)
-      .ExecuteDeleteAsync();
-  }
-
-  public async Task DeleteAsync(IEnumerable<int>? categoryeIds)
-  {
-    if (categoryeIds != null && categoryeIds.Any())
-    {
-      await _dbContext.Categories
-        .Where(m => categoryeIds.Contains(m.Id))
-        .ExecuteDeleteAsync();
-    }
   }
 }

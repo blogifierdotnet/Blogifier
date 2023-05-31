@@ -15,12 +15,10 @@ public class CategoryController : ControllerBase
 {
   private readonly CategoryProvider _categoryProvider;
 
-  public CategoryController(
-    CategoryProvider categoryProvider)
+  public CategoryController(CategoryProvider categoryProvider)
   {
     _categoryProvider = categoryProvider;
   }
-
 
   [HttpGet("items")]
   public async Task<IEnumerable<CategoryItemDto>> GetItemsAsync()
@@ -28,17 +26,17 @@ public class CategoryController : ControllerBase
     return await _categoryProvider.GetItemsAsync();
   }
 
-  [HttpDelete("{categoryeId:int}")]
-  public async Task DeleteAsync(int categoryeId)
+  [HttpDelete("{id:int}")]
+  public async Task DeleteAsync([FromRoute] int id)
   {
-    await _categoryProvider.DeleteAsync(categoryeId);
+    await _categoryProvider.DeleteAsync(id);
   }
 
-  [HttpDelete("{categoryeIdsString}")]
-  public async Task DeleteAsync(string categoryeIdsString)
+  [HttpDelete("{idsString}")]
+  public async Task DeleteAsync([FromRoute] string idsString)
   {
-    var categoryeIds = categoryeIdsString.Split(',').Select(m => int.Parse(m));
-    await _categoryProvider.DeleteAsync(categoryeIds);
+    var ids = idsString.Split(',').Select(int.Parse);
+    await _categoryProvider.DeleteAsync(ids);
   }
 
   [HttpGet("{postId:int}")]

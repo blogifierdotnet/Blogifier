@@ -35,14 +35,14 @@ public class MarkdigProvider
   public string ToHtml(string markdown)
   {
     var html = Markdown.ToHtml(markdown, _markdownPipeline);
-    _logger.LogDebug("ToHtml markdown:{markdown}, html:{html}", markdown, html);
+    //_logger.LogDebug("ToHtml markdown:{markdown}, html:{html}", markdown, html);
     return html;
   }
 
   public string ToMarkdown(string html)
   {
     var markdown = _converter.Convert(html);
-    _logger.LogDebug("ToMarkdown  html:{html}, markdown:{markdown}", html, markdown);
+    //_logger.LogDebug("ToMarkdown  html:{html}, markdown:{markdown}", html, markdown);
     return markdown;
   }
 }

@@ -1,3 +1,4 @@
+using Blogifier.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -5,10 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared;
 
-public class Category
+public class Category : AppEntity<int>
 {
-  [Key]
-  public int Id { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   [StringLength(120)]

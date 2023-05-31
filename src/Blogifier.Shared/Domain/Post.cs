@@ -1,3 +1,4 @@
+using Blogifier.Data;
 using Blogifier.Identity;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared;
 
-public class Post
+public class Post : AppEntity<int>
 {
-  [Key]
-  public int Id { get; set; }
-
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

@@ -3,6 +3,7 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
@@ -64,8 +65,15 @@ public class PostController : ControllerBase
   }
 
   [HttpDelete("{id:int}")]
-  public async Task<ActionResult<bool>> RemovePost(int id)
+  public async Task DeleteAsync([FromRoute] int id)
   {
-    return await _postProvider.Remove(id);
+    await _postProvider.DeleteAsync(id);
+  }
+
+  [HttpDelete("{idsString}")]
+  public async Task DeleteAsync([FromRoute] string idsString)
+  {
+    var ids = idsString.Split(',').Select(int.Parse);
+    await _postProvider.DeleteAsync(ids);
   }
 }

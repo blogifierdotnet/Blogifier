@@ -41,14 +41,10 @@
 
   private async Task RunAction(GroupAction action)
   {
-    string confirm = _localizer["confirm-delete"];
-    bool confirmed = false;
-
     if (action == GroupAction.Delete)
     {
-      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
-      if (!confirmed)
-        return;
+      var confirmed = await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]);
+      if (!confirmed) return;
     }
 
     foreach (var post in Posts!)
@@ -72,7 +68,6 @@
         }
       }
     }
-
     await LoadAsync();
   }
 
