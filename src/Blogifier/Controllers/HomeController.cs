@@ -1,4 +1,3 @@
-using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Models;
 using Blogifier.Posts;

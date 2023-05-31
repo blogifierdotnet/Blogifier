@@ -1,9 +1,6 @@
 using Blogifier.Options;
-using Blogifier.Posts;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Text;
 using System.Text.Json;
@@ -40,7 +37,7 @@ public class BlogManager
       return Deserialize(value);
     }
     else
-    { 
+    {
       var value = await _optionStore.GetByValueAsync(key);
       if (value != null)
       {

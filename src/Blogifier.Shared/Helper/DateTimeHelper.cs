@@ -6,7 +6,7 @@ public static class DateTimeHelper
 {
   public static string ToFriendlyShortDateString(DateTime? date)
   {
-    if(!date.HasValue) return string.Empty;
+    if (!date.HasValue) return string.Empty;
     return ToFriendlyShortDateString(date.Value);
   }
 

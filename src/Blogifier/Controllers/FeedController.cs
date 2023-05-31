@@ -1,7 +1,5 @@
-using AutoMapper;
 using Blogifier.Blogs;
 using Blogifier.Posts;
-using Markdig.Extensions.MediaLinks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

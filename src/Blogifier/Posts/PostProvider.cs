@@ -5,7 +5,6 @@ using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;

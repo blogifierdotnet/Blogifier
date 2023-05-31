@@ -1,9 +1,9 @@
+using Blogifier.Extensions;
 using Blogifier.Shared;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
-using System.Xml.Linq;
 using System.Xml;
-using Blogifier.Extensions;
+using System.Xml.Linq;
 
 namespace Blogifier.Posts;
 

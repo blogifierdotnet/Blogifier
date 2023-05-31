@@ -2,9 +2,7 @@ using Blogifier.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blogifier.Options;
