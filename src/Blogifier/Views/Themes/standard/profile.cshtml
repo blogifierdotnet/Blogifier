@@ -1,0 +1,11 @@
+@model AccountProfileModel
+@{
+  Layout = "layouts/_profile.cshtml";
+}
+@inject IStringLocalizer<Resource> _localizer
+
+@section HeadMeta{
+  <title>@_localizer["edit-profile"]</title>
+}
+
+<h1 class="section-title">@_localizer["edit-profile"]</h1>

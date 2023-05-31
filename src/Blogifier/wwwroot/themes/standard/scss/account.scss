@@ -102,13 +102,12 @@ $form-floating-padding-y: .875rem;
 $form-floating-label-opacity: .65;
 $form-floating-label-transform: scale(.8) translateY(-.325rem) translateX(.15rem);
 
-
-
 @import "helpers/bootstrap";
+@import "layout/sidebar";
 @import "include/buttons";
 @import "include/forms";
 @import "page/account";
-
+@import "page/profile";
 
 html {
   height: 100%;

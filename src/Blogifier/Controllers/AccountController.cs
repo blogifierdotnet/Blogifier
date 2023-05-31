@@ -141,7 +141,7 @@ public class AccountController : Controller
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
   }
 
-  [HttpPost("profile")]
+  [HttpGet("profile")]
   public async Task<IActionResult> Profile([FromQuery] AccountModel parameter)
   {
     var model = new AccountProfileModel { RedirectUri = parameter.RedirectUri };
