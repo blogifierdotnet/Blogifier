@@ -12,10 +12,16 @@ namespace Blogifier.Controllers;
 public class AccountProfileController : Controller
 {
   private readonly UserProvider _userProvider;
+  private readonly SignInManager _signInManager;
   private readonly BlogManager _blogManager;
-  public AccountProfileController(UserProvider userProvider, BlogManager blogManager)
+
+  public AccountProfileController(
+    UserProvider userProvider,
+    SignInManager signInManager,
+    BlogManager blogManager)
   {
     _blogManager = blogManager;
+    _signInManager = signInManager;
     _userProvider = userProvider;
   }
 
@@ -28,8 +34,32 @@ public class AccountProfileController : Controller
     {
       RedirectUri = parameter.RedirectUri,
       IsProfile = true,
-      User = user
+      Email = user.Email,
+      NickName = user.NickName,
+      Avatar = user.Avatar,
+      Bio = user.Bio,
     };
+    var data = await _blogManager.GetAsync();
+    return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> ProfileForm([FromForm] AccountProfileEditModel model)
+  {
+    if (ModelState.IsValid)
+    {
+      var userId = User.FirstUserId();
+      var input = new UserDto
+      {
+        Id = userId,
+        Avatar = model.Avatar,
+        Bio = model.Bio,
+        Email = model.Email,
+        NickName = model.NickName,
+      };
+      var user = await _userProvider.UpdateAsync(input);
+      await _signInManager.SignInAsync(user, isPersistent: true);
+    }
     var data = await _blogManager.GetAsync();
     return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
   }

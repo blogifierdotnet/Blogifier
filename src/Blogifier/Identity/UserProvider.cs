@@ -2,8 +2,10 @@ using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Blogifier.Identity;
 
@@ -25,5 +27,17 @@ public class UserProvider
       .AsNoTracking()
       .Where(m => m.Id == userId);
     return await _mapper.ProjectTo<UserDto>(query).FirstAsync();
+  }
+
+  public async Task<UserInfo> UpdateAsync(UserDto input)
+  {
+    var user = await _dbContext.Users.FirstAsync(m => m.Id == input.Id);
+    user.Email = input.Email;
+    user.NickName = input.NickName;
+    user.Avatar = input.Avatar;
+    user.Bio = input.Bio;
+    _dbContext.Update(user);
+    await _dbContext.SaveChangesAsync();
+    return user;
   }
 }
