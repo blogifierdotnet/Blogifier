@@ -3,6 +3,7 @@ using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
@@ -14,15 +15,30 @@ public class CategoryController : ControllerBase
 {
   private readonly CategoryProvider _categoryProvider;
 
+  public CategoryController(
+    CategoryProvider categoryProvider)
+  {
+    _categoryProvider = categoryProvider;
+  }
+
+
   [HttpGet("items")]
   public async Task<IEnumerable<CategoryItemDto>> GetItemsAsync()
   {
     return await _categoryProvider.GetItemsAsync();
   }
 
-  public CategoryController(CategoryProvider categoryProvider)
+  [HttpDelete("{categoryeId:int}")]
+  public async Task DeleteAsync(int categoryeId)
   {
-    _categoryProvider = categoryProvider;
+    await _categoryProvider.DeleteAsync(categoryeId);
+  }
+
+  [HttpDelete("{categoryeIdsString}")]
+  public async Task DeleteAsync(string categoryeIdsString)
+  {
+    var categoryeIds = categoryeIdsString.Split(',').Select(m => int.Parse(m));
+    await _categoryProvider.DeleteAsync(categoryeIds);
   }
 
   [HttpGet("{postId:int}")]
@@ -59,11 +75,5 @@ public class CategoryController : ControllerBase
   public async Task<ActionResult<bool>> SavePostCategories(int postId, List<Category> categories)
   {
     return await _categoryProvider.SavePostCategories(postId, categories);
-  }
-
-  [HttpDelete("{categoryId:int}")]
-  public async Task<ActionResult<bool>> RemoveCategory(int categoryId)
-  {
-    return await _categoryProvider.RemoveCategory(categoryId);
   }
 }

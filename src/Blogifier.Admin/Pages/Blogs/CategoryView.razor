@@ -47,11 +47,13 @@
       if (!confirmed) return;
     }
 
-    foreach (var category in Categories)
+    if (Categories != null)
     {
-      if (category.Selected)
+      var categoryeId = Categories.Where(m => m.Selected).Select(m => m.Id);
+      if (categoryeId.Any())
       {
-        await _http.DeleteAsync($"api/category/{category.Id}");
+        var categoryeIdsString = string.Join(",", categoryeId);
+        await _http.DeleteAsync($"api/category/{categoryeIdsString}");
       }
     }
     await LoadAsync();

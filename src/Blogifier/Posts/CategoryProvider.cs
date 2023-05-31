@@ -1,5 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -145,19 +146,20 @@ public class CategoryProvider
     return await _dbContext.SaveChangesAsync() > 0;
   }
 
-  public async Task<bool> RemoveCategory(int categoryId)
+  public async Task DeleteAsync(int categoryId)
   {
-    List<PostCategory> postCategories = await _dbContext.PostCategories
-        .AsNoTracking()
-        .Where(pc => pc.CategoryId == categoryId)
-        .ToListAsync();
-    _dbContext.PostCategories.RemoveRange(postCategories);
+    await _dbContext.Categories
+      .Where(m => m.Id == categoryId)
+      .ExecuteDeleteAsync();
+  }
 
-    Category category = _dbContext.Categories
-                .Where(c => c.Id == categoryId)
-                .FirstOrDefault();
-    _dbContext.Categories.Remove(category);
-
-    return await _dbContext.SaveChangesAsync() > 0;
+  public async Task DeleteAsync(IEnumerable<int>? categoryeIds)
+  {
+    if (categoryeIds != null && categoryeIds.Any())
+    {
+      await _dbContext.Categories
+        .Where(m => categoryeIds.Contains(m.Id))
+        .ExecuteDeleteAsync();
+    }
   }
 }

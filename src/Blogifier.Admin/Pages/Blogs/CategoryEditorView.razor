@@ -1,4 +1,4 @@
-@page "/admin/blogs/category/{Id?}"
+@page "/admin/blogs/category/{Id:int?}"
 
 @layout BlogsLayout
 
@@ -12,7 +12,7 @@
 
 @code{
 
-  [Parameter] public string? Id { get; set; }
+  [Parameter] public int? Id { get; set; }
 
   protected Category Category { get; set; } = new Category();
 
