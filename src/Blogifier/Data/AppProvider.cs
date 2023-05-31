@@ -33,7 +33,7 @@ public class AppProvider<T, TKey> where T : AppEntity<TKey> where TKey : IEquata
     return Task.CompletedTask;
   }
 
-  private static async Task DeleteInternalAsync(IQueryable<T> query)
+  protected static async Task DeleteInternalAsync(IQueryable<T> query)
   {
     await query.ExecuteDeleteAsync();
   }

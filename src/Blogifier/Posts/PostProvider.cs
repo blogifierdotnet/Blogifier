@@ -104,7 +104,8 @@ public class PostProvider : AppProvider<Post, int>
 
   public async Task<IEnumerable<PostItemDto>> GetAsync(PublishedStatus filter, PostType postType)
   {
-    var query = _dbContext.Posts.AsNoTracking()
+    var query = _dbContext.Posts
+      .AsNoTracking()
       .Where(p => p.PostType == postType);
 
     query = filter switch
@@ -118,7 +119,7 @@ public class PostProvider : AppProvider<Post, int>
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
-  public async Task<IEnumerable<PostItemDto>> SearchAsync(string term, int page, int items)
+  public async Task<IEnumerable<PostItemDto>> GetSearchAsync(string term, int page, int items)
   {
     var query = _dbContext.Posts
      .AsNoTracking()
@@ -182,7 +183,7 @@ public class PostProvider : AppProvider<Post, int>
     return results;
   }
 
-  public async Task<IEnumerable<PostItemDto>> CategoryAsync(string category, int page, int items)
+  public async Task<IEnumerable<PostItemDto>> GetByCategoryAsync(string category, int page, int items)
   {
     var skip = (page - 1) * items;
     var query = _dbContext.PostCategories
@@ -193,46 +194,41 @@ public class PostProvider : AppProvider<Post, int>
        .Select(m => m.Post)
        .Skip(skip)
        .Take(items);
-    var posts = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
-    return posts;
+    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
-  public async Task<List<Post>> SearchPosts(string term)
+  public async Task<IEnumerable<PostItemDto>> GetSearchAsync(string term)
   {
-    if (term == "*")
-      return await _dbContext.Posts.ToListAsync();
-
-    return await _dbContext.Posts
-        .AsNoTracking()
-        .Where(p => p.Title.ToLower().Contains(term.ToLower()))
-        .ToListAsync();
+    var query = _dbContext.Posts .AsNoTracking();
+    if ("*".Equals(term, StringComparison.Ordinal))
+      query = query.Where(p => p.Title.ToLower().Contains(term.ToLower()));
+    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
-  public async Task<Post> GetPostById(int id)
+  public async Task<Post?> GetPostById(int id)
   {
     return await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
   }
 
-  public async Task<bool> Publish(int id, bool publish)
+  public Task StateAsynct(int id, PostState state)
   {
-    var existing = await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
-    if (existing == null)
-      return false;
-
-    existing.PublishedAt = publish ? DateTime.UtcNow : DateTime.MinValue;
-
-    return await _dbContext.SaveChangesAsync() > 0;
+    var query = _dbContext.Posts
+      .Where(p => p.Id == id);
+    return StateInternalAsynct(query, state);
   }
 
-  public async Task<bool> Featured(int id, bool featured)
+  public Task StateAsynct(IEnumerable<int> ids, PostState state)
   {
-    var existing = await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
-    if (existing == null)
-      return false;
+    var query = _dbContext.Posts
+     .Where(p => ids.Contains(p.Id));
+    return StateInternalAsynct(query, state);
+  }
 
-    existing.IsFeatured = featured;
-
-    return await _dbContext.SaveChangesAsync() > 0;
+  public async Task StateInternalAsynct(IQueryable<Post> query, PostState state)
+  {
+    await query.ExecuteUpdateAsync(setters =>
+        setters.SetProperty(b => b.State, state)
+        .SetProperty(b => b.PublishedAt, b => b.PublishedAt ?? (state >= PostState.Release ? DateTime.UtcNow : null)));
   }
 
   public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
@@ -366,4 +362,6 @@ public class PostProvider : AppProvider<Post, int>
     }
     return original;
   }
+
+
 }

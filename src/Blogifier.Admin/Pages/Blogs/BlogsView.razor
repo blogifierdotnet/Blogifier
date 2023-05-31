@@ -3,27 +3,27 @@
 @layout BlogsLayout
 
 @inject HttpClient _http
+@inject IMapper _mapper
+@inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
-@inject NavigationManager _navigation
 
 @code {
 
-  protected List<PostItemDto>? Posts { get; set; }
+  protected List<FrontPostItemDto>? Posts { get; set; }
   protected string? SearchTerm { get; set; }
-  protected string FilterLabel { get; set; } = default!;
   protected PublishedStatus FilterValue { get; set; } = PublishedStatus.All;
 
   protected override async Task OnInitializedAsync()
   {
-    FilterLabel = _localizer["all"];
     await LoadAsync();
   }
 
   protected async Task LoadAsync()
   {
-    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{(int)FilterValue}/{(int)PostType.Post}");
+    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/{(int)FilterValue}/{(int)PostType.Post}");
+    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
   }
 
   public void CheckAll(object? checkValue)
@@ -47,23 +47,22 @@
       if (!confirmed) return;
     }
 
-    foreach (var post in Posts!)
+    if (Posts != null)
     {
-      if (post.Selected)
+      var ids = Posts.Where(m => m.Selected).Select(m => m.Id);
+      if (ids.Any())
       {
+        var idsString = string.Join(",", ids);
         switch (action)
         {
           case GroupAction.Publish:
-            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", true);
+            await _http.PutAsJsonAsync($"api/post/state/{idsString}", PostState.Release);
             break;
           case GroupAction.Unpublish:
-            await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", false);
-            break;
-          case GroupAction.Feature:
-            await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured);
+            await _http.PutAsJsonAsync($"api/post/state/{idsString}", PostState.Draft);
             break;
           case GroupAction.Delete:
-            await _http.DeleteAsync($"api/post/{post.Id}");
+            await _http.DeleteAsync($"api/post/{idsString}");
             break;
         }
       }
@@ -79,43 +78,28 @@
 
   protected async Task SearchPosts()
   {
-    if (string.IsNullOrEmpty(SearchTerm))
-      SearchTerm = "*";
-
-    Posts = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/search/{SearchTerm}");
-    SearchTerm = "";
+    if (string.IsNullOrEmpty(SearchTerm)) SearchTerm = "*";
+    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/search/{SearchTerm}");
+    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
   }
 
   public async Task Filter(PublishedStatus filter)
   {
     FilterValue = filter;
-    switch (filter)
-    {
-      case PublishedStatus.Published:
-        FilterLabel = _localizer["published"];
-        break;
-      case PublishedStatus.Drafts:
-        FilterLabel = _localizer["draft", true];
-        break;
-      case PublishedStatus.Featured:
-        FilterLabel = _localizer["featured"];
-        break;
-      default:
-        FilterLabel = _localizer["all"];
-        break;
-    }
     await LoadAsync();
   }
 
   public async Task Publish(PostItemDto post)
   {
-    Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
+    var state = post.State != PostState.Release ? PostState.Release : PostState.Draft;
+    Toast(await _http.PutAsJsonAsync($"api/post/state/{post.Id}", state));
     await LoadAsync();
   }
 
   public async Task Featured(PostItemDto post)
   {
-    Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
+    var state = post.State != PostState.Featured ? PostState.Featured : PostState.Release;
+    Toast(await _http.PutAsJsonAsync($"api/post/state/{post.Id}", state));
     await LoadAsync();
   }
 
@@ -140,12 +124,6 @@
       @_localizer["actions"]
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
-      <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Feature))" class="dropdown-item text-gold">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-        </svg>
-        <span>@_localizer["featured"]</span>
-      </button>
       <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item text-success">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
           <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
@@ -169,7 +147,21 @@
 
   <div class="dropdown dropdown-flush ms-auto ms-3">
     <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
-      @FilterLabel
+      @switch (FilterValue)
+      {
+        case PublishedStatus.Published:
+          @_localizer["published"]
+          break;
+        case PublishedStatus.Drafts:
+          @_localizer["draft", true]
+          break;
+        case PublishedStatus.Featured:
+          @_localizer["featured"]
+          break;
+        default:
+          @_localizer["all"]
+          break;
+      }
     </button>
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByStatus">
       <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@_localizer["all"]</button>
@@ -197,12 +189,6 @@
   <div style="height:650px;overflow-y:scroll">
     <ul class="list" aria-label="posts">
       <Virtualize Items="Posts" Context="post">
-        @{
-          string pubDate = post.PublishedAt > DateTime.MinValue ? post.PublishedAt.ToFriendlyShortDateString() : @_localizer["draft"];
-          string pubStatus = post.PublishedAt > DateTime.MinValue ? "published" : "";
-          string featured = post.IsFeatured ? "featured" : "";
-        }
-
         <li class="list-item">
           <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select"]">
             <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
@@ -211,10 +197,10 @@
             @post.Title
           </a>
           <span class="list-text -nowrap ms-auto">
-            @pubDate
+            @DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt, _localizer["draft"])
           </span>
           <button class="list-btn" @onclick="(async () => await Publish(post))">
-            @if (@pubStatus == "published")
+            @if (@post.State >= PostState.Release)
             {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check link-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["published"]">
                 <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
@@ -228,7 +214,7 @@
             }
           </button>
           <button class="list-btn" @onclick="(async () => await Featured(post))">
-            @if (@featured == "featured")
+            @if (@post.State == PostState.Featured)
             {
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-star-fill link-gold" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["featured"]">
                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />

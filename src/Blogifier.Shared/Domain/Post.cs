@@ -29,7 +29,6 @@ public class Post : AppEntity<int>
   [StringLength(160)]
   public string? Cover { get; set; }
   public int Views { get; set; }
-  public bool IsFeatured { get; set; }
   public DateTime? PublishedAt { get; set; }
   public PostType PostType { get; set; }
   public PostState State { get; set; }

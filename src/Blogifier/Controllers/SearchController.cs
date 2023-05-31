@@ -26,7 +26,7 @@ public class SearchController : Controller
     if (!string.IsNullOrEmpty(term))
     {
       var main = await _mainMamager.GetAsync();
-      var posts = await _postProvider.SearchAsync(term, page, main.ItemsPerPage);
+      var posts = await _postProvider.GetSearchAsync(term, page, main.ItemsPerPage);
       var model = new SearchModel(posts, page, main);
       return View($"~/Views/Themes/{main.Theme}/search.cshtml", model);
     }

@@ -20,16 +20,16 @@ public class PostController : ControllerBase
     _postProvider = postProvider;
   }
 
-  [HttpGet("list/{filter}/{postType}")]
-  public async Task<IEnumerable<PostItemDto>> GetPosts(PublishedStatus filter, PostType postType)
+  [HttpGet("items/{filter}/{postType}")]
+  public async Task<IEnumerable<PostItemDto>> GetItemsAsync([FromRoute] PublishedStatus filter, [FromRoute] PostType postType)
   {
     return await _postProvider.GetAsync(filter, postType);
   }
 
-  [HttpGet("list/search/{term}")]
-  public async Task<ActionResult<List<Post>>> SearchPosts(string term)
+  [HttpGet("items/search/{term}")]
+  public async Task<IEnumerable<PostItemDto>> GetSearchAsync([FromRoute] string term)
   {
-    return await _postProvider.SearchPosts(term);
+    return await _postProvider.GetSearchAsync(term);
   }
 
   [HttpGet("byslug/{slug}")]
@@ -52,16 +52,17 @@ public class PostController : ControllerBase
     return await _postProvider.UpdateAsync(post, userId);
   }
 
-  [HttpPut("publish/{id:int}")]
-  public async Task<ActionResult<bool>> PublishPost(int id, [FromBody] bool publish)
+  [HttpPut("state/{id:int}")]
+  public async Task StateAsynct([FromRoute] int id, [FromBody] PostState state)
   {
-    return await _postProvider.Publish(id, publish);
+    await _postProvider.StateAsynct(id, state);
   }
 
-  [HttpPut("featured/{id:int}")]
-  public async Task<ActionResult<bool>> FeaturedPost(int id, [FromBody] bool featured)
+  [HttpPut("state/{idsString}")]
+  public async Task StateAsynct([FromRoute] string idsString, [FromBody] PostState state)
   {
-    return await _postProvider.Featured(id, featured);
+    var ids = idsString.Split(',').Select(int.Parse);
+    await _postProvider.StateAsynct(ids, state);
   }
 
   [HttpDelete("{id:int}")]

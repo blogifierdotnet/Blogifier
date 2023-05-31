@@ -4,7 +4,6 @@ public enum GroupAction
 {
   Publish,
   Unpublish,
-  Feature,
   Delete,
 }
 

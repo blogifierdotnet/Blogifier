@@ -4,9 +4,9 @@ namespace Blogifier.Helper;
 
 public static class DateTimeHelper
 {
-  public static string ToFriendlyShortDateString(DateTime? date)
+  public static string ToFriendlyShortDateString(DateTime? date, string defaultString = "")
   {
-    if (!date.HasValue) return string.Empty;
+    if (!date.HasValue) return defaultString;
     return ToFriendlyShortDateString(date.Value);
   }
 
