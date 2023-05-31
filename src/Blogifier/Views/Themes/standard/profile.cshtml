@@ -10,6 +10,10 @@
 
 <h1 class="section-title">@_localizer["edit-profile"]</h1>
 <div class="section-content -half">
+  @if (!string.IsNullOrEmpty(Model.Error))
+  {
+    <div class="account-message -error">@Model.Error</div>
+  }
   <form method="post" asp-controller="account" asp-action="profile">
     <input type="hidden" asp-for="RedirectUri" />
     <input type="hidden" asp-for="IsProfile" />

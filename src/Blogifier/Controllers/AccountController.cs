@@ -2,8 +2,10 @@ using Blogifier.Blogs;
 using Blogifier.Data.Migrations;
 using Blogifier.Identity;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -142,7 +144,7 @@ public class AccountController : Controller
     return View($"~/Views/Themes/{BlogifierConstant.DefaultTheme}/initialize.cshtml", model);
   }
 
-
+  [Authorize]
   [HttpGet("profile")]
   public async Task<IActionResult> Profile([FromQuery] AccountModel parameter)
   {
@@ -161,6 +163,7 @@ public class AccountController : Controller
     return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
   }
 
+  [Authorize]
   [HttpPost("profile")]
   public async Task<IActionResult> ProfileForm([FromForm] AccountProfileEditModel model)
   {
@@ -172,10 +175,53 @@ public class AccountController : Controller
       user.NickName = model.NickName;
       user.Avatar = model.Avatar;
       user.Bio = model.Bio;
-      await _userManager.UpdateAsync(user);
-      await _signInManager.SignInAsync(user, isPersistent: true);
+      var result = await _userManager.UpdateAsync(user);
+      if (result.Succeeded)
+      {
+        await _signInManager.SignInAsync(user, isPersistent: true);
+      }
+      else
+      {
+        model.Error = result.Errors.FirstOrDefault()?.Description;
+      }
     }
     var data = await _blogManager.GetAsync();
     return View($"~/Views/Themes/{data.Theme}/profile.cshtml", model);
+  }
+
+  [Authorize]
+  [HttpGet("password")]
+  public async Task<IActionResult> Password([FromQuery] AccountModel parameter)
+  {
+    var model = new AccountProfilePasswordModel
+    {
+      RedirectUri = parameter.RedirectUri,
+      IsPassword = true,
+    };
+    var data = await _blogManager.GetAsync();
+    return View($"~/Views/Themes/{data.Theme}/password.cshtml", model);
+  }
+
+  [Authorize]
+  [HttpPost("password")]
+  public async Task<IActionResult> Password([FromForm] AccountProfilePasswordModel model)
+  {
+    if (ModelState.IsValid)
+    {
+      var userId = User.FirstUserId();
+      var user = (await _userManager.FindByIdAsync(userId))!;
+      var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+      var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
+      if (result.Succeeded)
+      {
+        return await Logout();
+      }
+      else
+      {
+        model.Error = result.Errors.FirstOrDefault()?.Description;
+      }
+    }
+    var data = await _blogManager.GetAsync();
+    return View($"~/Views/Themes/{data.Theme}/password.cshtml", model);
   }
 }
