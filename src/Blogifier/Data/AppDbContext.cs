@@ -17,7 +17,6 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
   }
 
   public DbSet<OptionInfo> Options { get; set; }
-  public DbSet<Author> Authors { get; set; }
   public DbSet<Blog> Blogs { get; set; }
   public DbSet<Post> Posts { get; set; }
   public DbSet<Storage> Storages { get; set; }

@@ -17,18 +17,15 @@ namespace Blogifier.Interfaces;
 public class StorageController : ControllerBase
 {
   private readonly StorageProvider _storageProvider;
-  private readonly AuthorProvider _authorProvider;
   private readonly BlogManager _blogManager;
   private readonly PostProvider _postProvider;
 
   public StorageController(
     StorageProvider storageProvider,
-    AuthorProvider authorProvider,
     BlogManager blogManager,
     PostProvider postProvider)
   {
     _storageProvider = storageProvider;
-    _authorProvider = authorProvider;
     _blogManager = blogManager;
     _postProvider = postProvider;
   }
@@ -51,10 +48,10 @@ public class StorageController : ControllerBase
   [HttpPost("upload/{uploadType}")]
   public async Task<ActionResult> Upload(IFormFile file, UploadType uploadType, int postId = 0)
   {
-    var author = await _authorProvider.FindByEmail(User.Identity.Name);
+    var userId = User.FirstUserId();
     var post = postId == 0 ? new Post() : await _postProvider.GetPostById(postId);
 
-    var path = $"{author.Id}/{DateTime.Now.Year}/{DateTime.Now.Month}";
+    var path = $"{userId}/{DateTime.Now.Year}/{DateTime.Now.Month}";
     var fileName = $"data/{path}/{file.FileName}";
 
     if (uploadType == UploadType.PostImage)
@@ -66,9 +63,9 @@ public class StorageController : ControllerBase
 
       switch (uploadType)
       {
-        case UploadType.Avatar:
-          author.Avatar = fileName;
-          return (await _authorProvider.Update(author)) ? new JsonResult(fileName) : BadRequest();
+        //case UploadType.Avatar:
+        //  author.Avatar = fileName;
+        //  return (await _authorProvider.Update(author)) ? new JsonResult(fileName) : BadRequest();
         case UploadType.AppLogo:
           blog.Logo = fileName;
           await _blogManager.SetAsync(blog);

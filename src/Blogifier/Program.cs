@@ -75,8 +75,6 @@ builder.Services.AddSingleton<MarkdigProvider>();
 builder.Services.AddSingleton<ImportRssProvider>();
 
 builder.Services.AddScoped<UserProvider>();
-builder.Services.AddScoped<AuthorProvider>();
-builder.Services.AddScoped<BlogProvider>();
 builder.Services.AddScoped<PostProvider>();
 builder.Services.AddScoped<CategoryProvider>();
 builder.Services.AddScoped<AnalyticsProvider>();

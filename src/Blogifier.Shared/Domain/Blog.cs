@@ -30,5 +30,4 @@ public class Blog
   public int AnalyticsListType { get; set; }
   public int AnalyticsPeriod { get; set; }
   public List<Post>? Posts { get; set; }
-  public List<Author>? Authors { get; set; }
 }
