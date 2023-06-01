@@ -30,4 +30,5 @@ public class UserInfo : IdentityUser<string>
   [StringLength(32)]
   public string? Gender { get; set; }
   public UserType Type { get; set; }
+  public UserState State { get; set; }
 }

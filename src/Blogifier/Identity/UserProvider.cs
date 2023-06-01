@@ -13,9 +13,7 @@ public class UserProvider
   private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
 
-  public UserProvider(
-    IMapper mapper,
-    AppDbContext dbContext)
+  public UserProvider(IMapper mapper, AppDbContext dbContext)
   {
     _mapper = mapper;
     _dbContext = dbContext;
@@ -36,13 +34,13 @@ public class UserProvider
     return await _mapper.ProjectTo<UserInfoDto>(query).ToListAsync();
   }
 
-  public async Task<UserInfo> UpdateAsync(UserDto input)
+  public async Task<UserInfo> UpdateAsync(UserInfoDto input)
   {
     var user = await _dbContext.Users.FirstAsync(m => m.Id == input.Id);
-    user.Email = input.Email;
     user.NickName = input.NickName;
     user.Avatar = input.Avatar;
     user.Bio = input.Bio;
+    user.Type = input.Type;
     _dbContext.Update(user);
     await _dbContext.SaveChangesAsync();
     return user;
