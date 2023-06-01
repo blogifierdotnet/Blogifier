@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
@@ -16,7 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="assets\**" Pack="false" />
+    <Content Remove="assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="assets\**" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('node_modules') ">
