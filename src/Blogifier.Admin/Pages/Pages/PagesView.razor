@@ -21,7 +21,7 @@
 
   protected async Task LoadAsync()
   {
-    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/list/{(int)FilterValue}/{(int)PostType.Page}");
+    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/{(int)FilterValue}/{(int)PostType.Page}");
     Posts = _mapper.Map<List<FrontPostItemDto>>(result);
   }
 

@@ -120,12 +120,12 @@ public class AccountController : Controller
       var user = new UserInfo(model.UserName)
       {
         NickName = model.NickName,
-        Email = model.Email
+        Email = model.Email,
+        Type = UserType.Administrator,
       };
       var result = await _userManager.CreateAsync(user, model.Password);
       if (result.Succeeded)
       {
-        await _userManager.AddClaimAsync(user, new Claim(BlogifierClaimTypes.AuthorityAdmin, "y"));
         var blogData = new BlogData
         {
           Title = model.Title,

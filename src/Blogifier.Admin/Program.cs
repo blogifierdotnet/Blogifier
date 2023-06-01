@@ -1,3 +1,4 @@
+using Blogifier;
 using Blogifier.Admin;
 using Blogifier.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -13,8 +14,8 @@ builder.Services.AddLocalization();
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore(options =>
 {
-  options.AddPolicy(BlogifierClaimTypes.AuthorityAdmin,
-    policy => policy.RequireClaim(BlogifierClaimTypes.AuthorityAdmin, BlogifierClaimTypes.AuthorityYes));
+  options.AddPolicy(BlogifierConstant.PolicyAdminName,
+    policy => policy.RequireClaim(BlogifierClaimTypes.Type, BlogifierConstant.PolicyAdminValue));
 });
 builder.Services.AddHttpClient(string.Empty, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();

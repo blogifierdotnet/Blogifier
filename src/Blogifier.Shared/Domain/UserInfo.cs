@@ -1,3 +1,4 @@
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -28,4 +29,5 @@ public class UserInfo : IdentityUser<string>
   public string? Bio { get; set; }
   [StringLength(32)]
   public string? Gender { get; set; }
+  public UserType Type { get; set; }
 }

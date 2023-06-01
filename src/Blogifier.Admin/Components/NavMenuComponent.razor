@@ -49,7 +49,7 @@
           </svg>
         </NavLink>
       </li>
-      <AuthorizeView Policy="@BlogifierClaimTypes.AuthorityAdmin">
+      <AuthorizeView Policy="@BlogifierConstant.PolicyAdminName">
         <li class="menu-item">
           <NavLink class="menu-link" href="/admin/newsletter/" title="@_localizer["newsletter"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
             <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
@@ -67,7 +67,7 @@
       </li>
     </ul>
     <ul class="menu-list d-flex ms-auto">
-      <AuthorizeView Policy="@BlogifierClaimTypes.AuthorityAdmin">
+      <AuthorizeView Policy="@BlogifierConstant.PolicyAdminName">
         <li class="menu-item">
           <NavLink class="menu-link" href="/admin/settings/" title="@_localizer["settings"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
             <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">

@@ -9,8 +9,8 @@ namespace Blogifier.Admin;
 
 public class BlogAuthStateProvider : AuthenticationStateProvider
 {
-  protected readonly IHttpClientFactory _httpClientFactory;
   private readonly ILogger _logger;
+  protected readonly IHttpClientFactory _httpClientFactory;
   protected AuthenticationState? _state;
 
   public BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger, IHttpClientFactory httpClientFactory)
