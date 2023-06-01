@@ -30,7 +30,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogifier.Themes.Standard", "src\Blogifier.Themes.Standard\Blogifier.Themes.Standard.csproj", "{7784DF02-6BCF-40A9-B327-C1F173975714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Themes.Standard", "src\Blogifier.Themes.Standard\Blogifier.Themes.Standard.csproj", "{7784DF02-6BCF-40A9-B327-C1F173975714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogifier.Admin.Rcl", "src\Blogifier.Admin.Rcl\Blogifier.Admin.Rcl.csproj", "{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,18 @@ Global
 		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x64.Build.0 = Release|Any CPU
 		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x86.ActiveCfg = Release|Any CPU
 		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x86.Build.0 = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|x64.Build.0 = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Debug|x86.Build.0 = Debug|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|x64.ActiveCfg = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|x64.Build.0 = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|x86.ActiveCfg = Release|Any CPU
+		{595CE6FA-C3A4-4822-A971-B3EF7F8DF905}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
