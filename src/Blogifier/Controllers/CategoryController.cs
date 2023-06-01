@@ -21,7 +21,7 @@ public class CategoryController : Controller
   }
 
   [HttpGet("{category}")]
-  public async Task<IActionResult> Category([FromRoute]string category, [FromQuery] int page = 1)
+  public async Task<IActionResult> Category([FromRoute] string category, [FromQuery] int page = 1)
   {
     var main = await _mainMamager.GetAsync();
     var pager = await _postProvider.GetByCategoryAsync(category, page, main.ItemsPerPage);

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Data.Migrations
 {
   [DbContext(typeof(AppDbContext))]
-  [Migration("20230530061806_Init")]
+  [Migration("20230601085559_Init")]
   partial class Init
   {
     /// <inheritdoc />
@@ -381,9 +381,6 @@ namespace Blogifier.Data.Migrations
                       .HasMaxLength(450)
                       .HasColumnType("varchar(450)");
 
-            b.Property<bool>("IsFeatured")
-                      .HasColumnType("tinyint(1)");
-
             b.Property<int>("PostType")
                       .HasColumnType("int");
 
@@ -436,7 +433,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasIndex("CategoryId");
 
-            b.ToTable("PostCategories");
+            b.ToTable("PostCategories", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Shared.Storage", b =>

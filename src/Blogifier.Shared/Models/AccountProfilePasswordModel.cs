@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Shared;
 
-public class AccountProfilePasswordModel: AccountProfileModel
+public class AccountProfilePasswordModel : AccountProfileModel
 {
   public string? Error { get; set; }
   [Required]

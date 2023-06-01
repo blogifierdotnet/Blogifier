@@ -280,7 +280,6 @@ namespace Blogifier.Data.Migrations
             Cover = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: true)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             Views = table.Column<int>(type: "int", nullable: false),
-            IsFeatured = table.Column<bool>(type: "tinyint(1)", nullable: false),
             PublishedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
             PostType = table.Column<int>(type: "int", nullable: false),
             State = table.Column<int>(type: "int", nullable: false),
