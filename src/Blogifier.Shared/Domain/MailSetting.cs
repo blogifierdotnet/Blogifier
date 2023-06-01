@@ -26,5 +26,4 @@ public class MailSetting
   [StringLength(120)]
   public string ToName { get; set; } = default!;
   public bool Enabled { get; set; }
-  public Blog? Blog { get; set; }
 }

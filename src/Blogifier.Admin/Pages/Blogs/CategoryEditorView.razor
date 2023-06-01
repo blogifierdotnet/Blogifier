@@ -14,7 +14,7 @@
 
   [Parameter] public int? Id { get; set; }
 
-  protected Category Category { get; set; } = new Category();
+  protected CategoryEitorDto Category { get; set; } = new CategoryEitorDto();
 
   protected override async Task OnInitializedAsync()
   {
@@ -23,8 +23,8 @@
 
   protected async Task LoadAsync()
   {
-    var result = await _http.GetFromJsonAsync<Category>($"api/category/byId/{Id}"); ;
-    Category = _mapper.Map<Category>(result);
+    var result = await _http.GetFromJsonAsync<CategoryEitorDto>($"api/category/byId/{Id}");
+    if (result != null) Category = result;
   }
 
   protected void Cancel()
@@ -34,7 +34,7 @@
 
   protected async Task Save()
   {
-    Toast(await _http.PutAsJsonAsync<Category>("api/category", Category));
+    Toast(await _http.PutAsJsonAsync<CategoryEitorDto>("api/category", Category));
     Cancel();
   }
 

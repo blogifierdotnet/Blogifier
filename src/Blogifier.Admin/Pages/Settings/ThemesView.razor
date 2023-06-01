@@ -52,9 +52,8 @@
 
 
 @code {
-  protected Blog? Blog { get; set; }
   protected List<ThemeItem> Themes { get; set; } = default!;
-  protected ThemeItem CurrentTheme { get; set; }
+  protected ThemeItem? CurrentTheme { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
@@ -63,38 +62,38 @@
 
   public async Task Load()
   {
-    Themes = new List<ThemeItem>();
-    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-    var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
+    //Themes = new List<ThemeItem>();
+    //Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+    //var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
 
-    foreach (var theme in allThemes)
-    {
-      if (theme.ToLower() == Blog.Theme.ToLower())
-      {
-        CurrentTheme = new ThemeItem
-          {
-            Title = theme.Capitalize(),
-            IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
-            Cover = await GetCover(theme)
-          };
-      }
-      else
-      {
-        Themes.Add(new ThemeItem
-          {
-            Title = theme.Capitalize(),
-            IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
-            Cover = await GetCover(theme)
-          });
-      }
-    }
+    //foreach (var theme in allThemes)
+    //{
+    //  if (theme.ToLower() == Blog.Theme.ToLower())
+    //  {
+    //    CurrentTheme = new ThemeItem
+    //      {
+    //        Title = theme.Capitalize(),
+    //        IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+    //        Cover = await GetCover(theme)
+    //      };
+    //  }
+    //  else
+    //  {
+    //    Themes.Add(new ThemeItem
+    //      {
+    //        Title = theme.Capitalize(),
+    //        IsCurrent = (Blog.Theme.ToLower() == theme.ToLower()),
+    //        Cover = await GetCover(theme)
+    //      });
+    //  }
+    //}
   }
 
   protected async Task SelectTheme(string theme)
   {
-    Blog.Theme = theme;
-    Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
-    await Load();
+    //Blog.Theme = theme;
+    //Toast(await _http.PutAsJsonAsync<Blog>($"api/blog", Blog));
+    //await Load();
   }
 
   private async Task<string> GetCover(string theme)
@@ -116,5 +115,4 @@
     else
       _toaster.Error(_localizer["generic-error"]);
   }
-
 }

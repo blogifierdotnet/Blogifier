@@ -136,7 +136,6 @@ public class NewsletterProvider
         FromName = mail.FromName,
         ToName = mail.ToName,
         Enabled = mail.Enabled,
-        Blog = _db.Blogs.FirstOrDefault()
       };
       _db.MailSettings.Add(newMail);
     }

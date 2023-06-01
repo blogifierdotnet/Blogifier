@@ -21,5 +21,4 @@ public class Subscriber
   public string? Country { get; set; }
   [StringLength(120)]
   public string? Region { get; set; }
-  public Blog? Blog { get; set; }
 }

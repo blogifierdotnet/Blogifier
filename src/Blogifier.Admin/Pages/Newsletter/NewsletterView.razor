@@ -54,11 +54,10 @@
     </ul>
   }
 </div>
-<ToasterComponent @ref="Toaster" />
+
 
 @code {
-  protected ToasterComponent Toaster;
-  protected List<Newsletter> Newsletters;
+  protected List<NewsletterDto>? Newsletters;
 
   protected override async Task OnInitializedAsync()
   {
@@ -67,12 +66,12 @@
 
   protected async Task Load()
   {
-    Newsletters = await _http.GetFromJsonAsync<List<Newsletter>>($"api/newsletter/newsletters");
+    Newsletters = await _http.GetFromJsonAsync<List<NewsletterDto>>($"api/newsletter/newsletters");
   }
 
   protected async Task RemoveNewsletter(int id)
   {
-    Toaster.Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
+    Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
     await Load();
   }
 
@@ -84,5 +83,13 @@
     else
       _toaster.Error(_localizer["generic-error"]);
     await Load();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
   }
 }

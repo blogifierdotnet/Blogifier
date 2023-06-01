@@ -2,6 +2,7 @@
 @page "/admin/newsletter/subscribers/"
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
 
 <PageTitleComponent Title="@_localizer["subscribers"]" />
 
@@ -34,11 +35,10 @@
     </ul>
   }
 </div>
-<ToasterComponent @ref="Toaster" />
 
 @code {
-  protected ToasterComponent Toaster;
-  protected List<Subscriber> Subscribers;
+
+  protected List<SubscriberDto>? Subscribers;
 
   protected override async Task OnInitializedAsync()
   {
@@ -47,12 +47,20 @@
 
   protected async Task Load()
   {
-    Subscribers = await _http.GetFromJsonAsync<List<Subscriber>>($"api/newsletter/subscribers");
+    Subscribers = await _http.GetFromJsonAsync<List<SubscriberDto>>($"api/newsletter/subscribers");
   }
 
   protected async Task RemoveSubscription(int id)
   {
-    Toaster.Toast(await _http.DeleteAsync($"api/newsletter/unsubscribe/{id}"));
+    Toast(await _http.DeleteAsync($"api/newsletter/unsubscribe/{id}"));
     await Load();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
   }
 }

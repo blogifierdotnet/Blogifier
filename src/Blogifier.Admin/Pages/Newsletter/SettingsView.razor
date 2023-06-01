@@ -1,7 +1,10 @@
 @layout NewsletterLayout
+
 @page "/admin/newsletter/settings/"
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
 
 <PageTitleComponent Title="@_localizer["newsletter-settings"]" />
 
@@ -54,17 +57,14 @@
   }
 
 </div>
-<ToasterComponent @ref="Toaster" />
-
 @code {
-  protected ToasterComponent Toaster;
 
-  protected Blog Blog { get; set; }
-  protected MailSetting Mail { get; set; }
+
+  //protected Blog Blog { get; set; }
+  protected MailSetting? Mail { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
-    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
     Mail = await _http.GetFromJsonAsync<MailSetting>("api/newsletter/mailsettings");
     if (Mail == null)
       Mail = new MailSetting();
@@ -72,6 +72,14 @@
 
   protected async Task Save()
   {
-    Toaster.Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
+    Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
   }
 }
