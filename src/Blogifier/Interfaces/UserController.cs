@@ -1,7 +1,8 @@
-using AutoMapper;
 using Blogifier.Identity;
-using Microsoft.AspNetCore.Authorization;
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
 
@@ -9,14 +10,16 @@ namespace Blogifier.Interfaces;
 [ApiController]
 public class UserController : ControllerBase
 {
-  protected readonly IMapper _mapper;
+  private readonly UserProvider _userProvider;
 
-  public UserController(IMapper mapper)
+  public UserController(UserProvider userProvider)
   {
-    _mapper = mapper;
+    _userProvider = userProvider;
   }
 
-  [HttpGet("identity")]
-  [Authorize]
-  public BlogifierClaims? GetInfo() => BlogifierClaims.Analysis(User);
+  [HttpGet("items")]
+  public async Task<IEnumerable<UserInfoDto>> GetItemsAsync()
+  {
+    return await _userProvider.GetAsync();
+  }
 }

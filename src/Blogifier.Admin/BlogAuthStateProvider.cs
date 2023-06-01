@@ -24,7 +24,7 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
     if (_state == null)
     {
       var client = _httpClientFactory.CreateClient();
-      var response = await client.GetAsync("/api/user/identity");
+      var response = await client.GetAsync("/api/token/userinfo");
       BlogifierClaims? claims;
       if (response.IsSuccessStatusCode)
       {
