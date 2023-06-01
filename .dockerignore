@@ -1,0 +1,5 @@
+**/bin
+**/obj
+dist
+Dockerfile
+build.sh
