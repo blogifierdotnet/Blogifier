@@ -32,19 +32,19 @@
           <div class="sidebar-nav d-lg-block">
             @if (Model.IsProfile)
             {
-              <a class="sidebar-link active" href="/account/profile">@_localizer["profile"]</a>
+              <a class="sidebar-link active" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
             }
             else
             {
-              <a class="sidebar-link" href="/account/profile">@_localizer["profile"]</a>
+              <a class="sidebar-link" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
             }
             @if (Model.IsPassword)
             {
-              <a class="sidebar-link active" href="/account/password">@_localizer["password"]</a>
+              <a class="sidebar-link active" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
             }
             else
             {
-              <a class="sidebar-link" href="/account/password">@_localizer["password"]</a>
+              <a class="sidebar-link" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
             }
           </div>
         </div>
