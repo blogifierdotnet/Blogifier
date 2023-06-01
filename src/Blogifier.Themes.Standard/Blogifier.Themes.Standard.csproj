@@ -11,4 +11,12 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

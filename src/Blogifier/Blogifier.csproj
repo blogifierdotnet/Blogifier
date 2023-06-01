@@ -37,6 +37,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Blogifier.Admin\Blogifier.Admin.csproj" />
     <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+    <ProjectReference Include="..\Blogifier.Themes.Standard\Blogifier.Themes.Standard.csproj" />
   </ItemGroup>
 
 </Project>
