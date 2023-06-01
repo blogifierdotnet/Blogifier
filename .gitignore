@@ -356,3 +356,5 @@ Blog.db-wal
 App_Data/
 
 appsettings.Development.json
+
+dist
