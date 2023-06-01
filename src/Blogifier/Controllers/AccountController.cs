@@ -61,7 +61,7 @@ public class AccountController : Controller
     }
     model.ShowError = true;
     var data = await _blogManager.GetAsync();
-    return View($"~/Views/Themes/{data.Theme}/account/login.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/login.cshtml", model);
   }
 
   [HttpGet("register")]
@@ -90,7 +90,7 @@ public class AccountController : Controller
     }
     model.ShowError = true;
     var data = await _blogManager.GetAsync();
-    return View($"~/Views/Themes/{data.Theme}/account/register.cshtml", model);
+    return View($"~/Views/Themes/{data.Theme}/register.cshtml", model);
   }
 
   [HttpGet("logout")]
