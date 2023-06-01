@@ -1,6 +1,7 @@
 .git
 **/bin
 **/obj
+**/node_modules
 dist
 Dockerfile
 build.sh
