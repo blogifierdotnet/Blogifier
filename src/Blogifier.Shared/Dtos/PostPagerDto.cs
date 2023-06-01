@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Blogifier.Shared;
@@ -21,7 +20,6 @@ public class PostPagerDto
   public bool Pagination { get; set; }
   public string? LinkToOlder { get; set; }
   public string? LinkToNewer { get; set; }
-
   public void Configure(string? path, string queryKey)
   {
     if (path != null && Pagination)

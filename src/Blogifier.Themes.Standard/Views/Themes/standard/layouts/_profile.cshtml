@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @await RenderSectionAsync("HeadMeta",false)
   <!-- TODO: These variables comes from customfiedls -->
-  <link rel="stylesheet" href="~/themes/standard/css/account.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/_content/Blogifier.Themes.Standard/css/account.css" asp-append-version="true">
 </head>
 
 <body>
@@ -32,19 +32,19 @@
           <div class="sidebar-nav d-lg-block">
             @if (Model.IsProfile)
             {
-              <a class="sidebar-link active" href="/account/profile">@_localizer["profile"]</a>
+              <a class="sidebar-link active" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
             }
             else
             {
-              <a class="sidebar-link" href="/account/profile">@_localizer["profile"]</a>
+              <a class="sidebar-link" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
             }
             @if (Model.IsPassword)
             {
-              <a class="sidebar-link active" href="/account/password">@_localizer["password"]</a>
+              <a class="sidebar-link active" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
             }
             else
             {
-              <a class="sidebar-link" href="/account/password">@_localizer["password"]</a>
+              <a class="sidebar-link" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
             }
           </div>
         </div>
@@ -54,7 +54,7 @@
       </div>
     </div>
   </main>
-  <script src="~/themes/standard/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+  <script src="~/_content/Blogifier.Themes.Standard/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 </body>
 
 </html>

@@ -18,6 +18,7 @@
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Admin.Rcl\Blogifier.Admin.Rcl.csproj" />
     <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
   </ItemGroup>
 </Project>
