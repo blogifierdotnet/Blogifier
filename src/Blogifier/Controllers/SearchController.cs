@@ -21,12 +21,13 @@ public class SearchController : Controller
   }
 
   [HttpPost]
-  public async Task<IActionResult> Post(string term, int page = 1)
+  public async Task<IActionResult> Post([FromQuery] string term, [FromQuery] int page = 1)
   {
     if (!string.IsNullOrEmpty(term))
     {
       var main = await _mainMamager.GetAsync();
       var pager = await _postProvider.GetSearchAsync(term, page, main.ItemsPerPage);
+      pager.Configure(main.PathUrl, "page");
       var model = new SearchModel(pager, main);
       return View($"~/Views/Themes/{main.Theme}/search.cshtml", model);
     }

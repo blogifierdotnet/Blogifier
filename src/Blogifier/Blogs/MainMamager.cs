@@ -43,6 +43,7 @@ public class MainMamager
     {
       var request = httpContext.Request;
       main.AbsoluteUrl = $"{request.Scheme}://{request.Host.ToUriComponent()}{request.PathBase.ToUriComponent()}";
+      main.PathUrl = request.Path;
       main.Claims = BlogifierClaims.Analysis(httpContext.User);
     }
     return main;

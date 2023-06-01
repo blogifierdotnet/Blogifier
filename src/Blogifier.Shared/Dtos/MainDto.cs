@@ -15,5 +15,6 @@ public class MainDto
   public int ItemsPerPage { get; set; }
   public IEnumerable<CategoryItemDto> Categories { get; set; } = default!;
   public string? AbsoluteUrl { get; set; }
+  public string? PathUrl { get; set; }
   public BlogifierClaims? Claims { get; set; }
 }

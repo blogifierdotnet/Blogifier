@@ -4,6 +4,7 @@ using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -25,7 +26,7 @@ public class HomeController : Controller
   }
 
   [HttpGet]
-  public async Task<IActionResult> Index(int page = 1)
+  public async Task<IActionResult> Index([FromQuery] int page = 1)
   {
     MainDto main;
     try
@@ -38,6 +39,7 @@ public class HomeController : Controller
       return Redirect("~/account/initialize");
     }
     var pager = await _postProvider.GetAsync(page, main.ItemsPerPage);
+    pager.Configure(main.PathUrl, "page");
     var model = new IndexModel(pager, main);
     return View($"~/Views/Themes/{main.Theme}/index.cshtml", model);
   }
