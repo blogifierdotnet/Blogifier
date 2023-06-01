@@ -58,9 +58,10 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<Category> GetCategory(int categoryId)
   {
-    return await _dbContext.Categories.AsNoTracking()
-        .Where(c => c.Id == categoryId)
-        .FirstOrDefaultAsync();
+    return await _dbContext.Categories
+      .AsNoTracking()
+      .Where(c => c.Id == categoryId)
+      .FirstAsync();
   }
 
   public async Task<ICollection<Category>> GetPostCategories(int postId)
@@ -73,13 +74,7 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<bool> SaveCategory(Category category)
   {
-    //Category existing = await _db.Categories.AsNoTracking()
-    //    .Where(c => c.Content.ToLower() == category.Content.ToLower()).FirstOrDefaultAsync();
-
-    //if (existing != null)
-    //    return false; // already exists category with the same title
-
-    Category dbCategory = await _dbContext.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
+    var dbCategory = await _dbContext.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
     if (dbCategory == null)
       return false;
 
@@ -90,7 +85,7 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<Category> SaveCategory(string tag)
   {
-    Category category = await _dbContext.Categories
+    var category = await _dbContext.Categories
         .AsNoTracking()
         .Where(c => c.Content == tag)
         .FirstOrDefaultAsync();
@@ -111,18 +106,18 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<bool> AddPostCategory(int postId, string tag)
   {
-    Category category = await SaveCategory(tag);
+    var category = await SaveCategory(tag);
 
     if (category == null)
       return false;
 
-    Post post = await _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+    var post = await _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
     if (post == null)
       return false;
 
     post.PostCategories ??= new List<PostCategory>();
 
-    PostCategory postCategory = await _dbContext.PostCategories
+    var postCategory = await _dbContext.PostCategories
         .AsNoTracking()
         .Where(pc => pc.CategoryId == category.Id)
         .Where(pc => pc.PostId == postId)

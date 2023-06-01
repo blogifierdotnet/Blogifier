@@ -16,5 +16,5 @@ public class PostDto
   public DateTime? PublishedAt { get; set; }
   public PostType PostType { get; set; }
   public PostState State { get; set; }
-  public List<Category>? Categories { get; set; }
+  public List<CategoryDto>? Categories { get; set; }
 }

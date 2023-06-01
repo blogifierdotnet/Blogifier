@@ -1,6 +1,7 @@
 using Blogifier.Shared;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,12 @@ namespace Blogifier.Providers;
 
 public class EmailProvider
 {
-  public EmailProvider() { }
+  private readonly ILogger _logger;
+
+  public EmailProvider(ILogger<EmailProvider> logger)
+  {
+    _logger = logger;
+  }
 
   public async Task<bool> SendEmail(MailSetting settings, List<Subscriber> subscribers, string subject, string content)
   {
@@ -18,27 +24,29 @@ public class EmailProvider
     if (client == null)
       return false;
 
-    var bodyBuilder = new BodyBuilder();
-    bodyBuilder.HtmlBody = content;
+    var bodyBuilder = new BodyBuilder
+    {
+      HtmlBody = content
+    };
 
     foreach (var subscriber in subscribers)
     {
       try
       {
-        var message = new MimeMessage();
-        message.Subject = subject;
-        message.Body = bodyBuilder.ToMessageBody();
-
+        var message = new MimeMessage
+        {
+          Subject = subject,
+          Body = bodyBuilder.ToMessageBody()
+        };
         message.From.Add(new MailboxAddress(settings.FromName, settings.FromEmail));
         message.To.Add(new MailboxAddress(settings.ToName, subscriber.Email));
         client.Send(message);
       }
       catch (Exception ex)
       {
-        Serilog.Log.Warning($"Error sending email to {subscriber.Email}: {ex.Message}");
+        _logger.LogWarning("Error sending email to {Email}: {Message}", subscriber.Email, ex.Message);
       }
     }
-
     client.Disconnect(true);
     return await Task.FromResult(true);
   }
@@ -47,17 +55,18 @@ public class EmailProvider
   {
     try
     {
-      var client = new SmtpClient();
-      client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+      var client = new SmtpClient
+      {
+        ServerCertificateValidationCallback = (s, c, h, e) => true
+      };
       client.Connect(settings.Host, settings.Port, SecureSocketOptions.Auto);
       client.Authenticate(settings.UserEmail, settings.UserPassword);
-
       return client;
     }
     catch (Exception ex)
     {
-      Serilog.Log.Error($"Error connecting to SMTP client: {ex.Message}");
-      return null;
+      _logger.LogError(ex, "Error connecting to SMTP client");
+      throw;
     }
 
   }

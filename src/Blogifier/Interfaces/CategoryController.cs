@@ -45,10 +45,10 @@ public class CategoryController : ControllerBase
     return await _categoryProvider.GetPostCategories(postId);
   }
 
-  [HttpGet("byId/{categoryId:int}")]
-  public async Task<Category> GetCategory(int categoryId)
+  [HttpGet("byId/{id:int}")]
+  public async Task<Category> GetCategory(int id)
   {
-    return await _categoryProvider.GetCategory(categoryId);
+    return await _categoryProvider.GetCategory(id);
   }
 
   [HttpGet("{term}")]

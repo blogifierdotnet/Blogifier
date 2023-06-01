@@ -25,6 +25,13 @@ public class PostProvider : AppProvider<Post, int>
     _mapper = mapper;
   }
 
+  public async Task<PostDto> FirstAsync(int id)
+  {
+    var query = _dbContext.Posts
+      .Where(p => p.Id == id);
+    return await _mapper.ProjectTo<PostDto>(query).FirstAsync();
+  }
+
   public async Task<IEnumerable<PostDto>> GetAsync()
   {
     var query = _dbContext.Posts
@@ -204,11 +211,6 @@ public class PostProvider : AppProvider<Post, int>
     if ("*".Equals(term, StringComparison.Ordinal))
       query = query.Where(p => p.Title.ToLower().Contains(term.ToLower()));
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
-  }
-
-  public async Task<Post?> GetPostById(int id)
-  {
-    return await _dbContext.Posts.Where(p => p.Id == id).FirstOrDefaultAsync();
   }
 
   public Task StateAsynct(int id, PostState state)

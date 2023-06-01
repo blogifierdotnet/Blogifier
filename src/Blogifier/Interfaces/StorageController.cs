@@ -1,6 +1,5 @@
 using Blogifier.Blogs;
 using Blogifier.Posts;
-using Blogifier.Providers;
 using Blogifier.Shared;
 using Blogifier.Storages;
 using Microsoft.AspNetCore.Authorization;
@@ -49,7 +48,7 @@ public class StorageController : ControllerBase
   public async Task<ActionResult> Upload(IFormFile file, UploadType uploadType, int postId = 0)
   {
     var userId = User.FirstUserId();
-    var post = postId == 0 ? new Post() : await _postProvider.GetPostById(postId);
+
 
     var path = $"{userId}/{DateTime.Now.Year}/{DateTime.Now.Month}";
     var fileName = $"data/{path}/{file.FileName}";
@@ -71,8 +70,11 @@ public class StorageController : ControllerBase
           await _blogManager.SetAsync(blog);
           return new JsonResult(fileName);
         case UploadType.PostCover:
-          post.Cover = fileName;
-          return new JsonResult(fileName);
+          {
+            var post = await _postProvider.FirstAsync(postId);
+            post.Cover = fileName;
+            return new JsonResult(fileName);
+          }
         case UploadType.PostImage:
           return new JsonResult(fileName);
       }
