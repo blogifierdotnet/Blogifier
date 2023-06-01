@@ -68,18 +68,18 @@ public class PostProvider : AppProvider<Post, int>
     return new PostSlugDto { Post = post, Older = older, Newer = newer, Related = related };
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetAsync(int page, int items)
+  public async Task<PostPagerDto> GetAsync(int page, int pageSize)
   {
-    var skip = (page - 1) * items;
-
+    var skip = (page - 1) * pageSize;
     var query = _dbContext.Posts
        .AsNoTracking()
        .Include(pc => pc.User)
-       .OrderByDescending(m => m.CreatedAt)
-       .Skip(skip)
-       .Take(items);
+       .Where(m => 1 == 1);
 
-    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+    var total = await query.CountAsync();
+    query = query.Skip(skip).Take(pageSize);
+    var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+    return new PostPagerDto(items, total, page, pageSize);
   }
 
   public async Task<PostEditorDto> GetEditorAsync(string slug)
@@ -119,7 +119,7 @@ public class PostProvider : AppProvider<Post, int>
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetSearchAsync(string term, int page, int items)
+  public async Task<PostPagerDto> GetSearchAsync(string term, int page, int pageSize)
   {
     var query = _dbContext.Posts
      .AsNoTracking()
@@ -171,35 +171,36 @@ public class PostProvider : AppProvider<Post, int>
       }
     }
 
-    var skip = page * items - items;
-
-    var results = postsSearch
+    var total = postsSearch.Count;
+    var skip = page * pageSize - pageSize;
+    var items = postsSearch
       .OrderByDescending(r => r.Rank)
       .Skip(skip)
-      .Take(items)
+      .Take(pageSize)
       .Select(m => m.Post)
       .ToList();
 
-    return results;
+    return new PostPagerDto(items, total, page, pageSize);
   }
 
-  public async Task<IEnumerable<PostItemDto>> GetByCategoryAsync(string category, int page, int items)
+  public async Task<PostPagerDto> GetByCategoryAsync(string category, int page, int pageSize)
   {
-    var skip = (page - 1) * items;
+    var skip = (page - 1) * pageSize;
     var query = _dbContext.PostCategories
        .AsNoTracking()
        .Include(pc => pc.Post)
        .ThenInclude(m => m.User)
        .Where(m => m.Category.Content.Contains(category))
-       .Select(m => m.Post)
-       .Skip(skip)
-       .Take(items);
-    return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+       .Select(m => m.Post);
+    var total = await query.CountAsync();
+    query = query.Skip(skip).Take(pageSize);
+    var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+    return new PostPagerDto(items, total, page, pageSize);
   }
 
   public async Task<IEnumerable<PostItemDto>> GetSearchAsync(string term)
   {
-    var query = _dbContext.Posts .AsNoTracking();
+    var query = _dbContext.Posts.AsNoTracking();
     if ("*".Equals(term, StringComparison.Ordinal))
       query = query.Where(p => p.Title.ToLower().Contains(term.ToLower()));
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();

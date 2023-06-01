@@ -9,7 +9,7 @@
     <input type="text" placeholder="Search...">
   </form>
   <h1 class="search-title">Search Results</h1>
-  @foreach (var post in Model.Items)
+  @foreach (var post in Model.Pager.Items)
   {
     <div class="row mb-3">
       <div class="col-4">

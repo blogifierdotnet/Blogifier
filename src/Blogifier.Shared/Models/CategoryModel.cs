@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-
 namespace Blogifier.Shared;
 
-public class CategoryModel : PostsModel
+public class CategoryModel : PostPagerModel
 {
   public string Category { get; set; }
 
-  public CategoryModel(string category, IEnumerable<PostItemDto> items, int page, MainDto main) : base(items, page, main)
+  public CategoryModel(string category, PostPagerDto pager, MainDto main) : base(pager, main)
   {
     Category = category;
   }

@@ -37,7 +37,7 @@ public class FeedController : Controller
   {
     var host = Request.Scheme + "://" + Request.Host;
     var data = await _blogManager.GetAsync();
-    var posts = await _postProvider.GetAsync(1, data.ItemsPerPage);
+    var posts = await _postProvider.GetAsync();
     var items = new List<SyndicationItem>();
 
     var publishedAt = DateTime.UtcNow;

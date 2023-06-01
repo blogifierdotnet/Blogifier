@@ -1,6 +1,7 @@
-@model PostsModel
+@model PostPagerModel
+
 @{
-  var featured = Model.Items.Where(p => p.State == PostState.Featured).Take(3).ToList();
+  var featured = Model.Pager.Items.Where(p => p.State == PostState.Featured).Take(3).ToList();
 }
 
 @if (featured.Any())
@@ -72,7 +73,6 @@
           </div>
         }
       }
-
 
     </div>
     <button class="carousel-control-next featured-next d-none d-xl-block" type="button" data-bs-target="#carouselFeatured"

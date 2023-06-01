@@ -37,8 +37,8 @@ public class HomeController : Controller
       _logger.LogError(ex, "blgo not iitialize redirect");
       return Redirect("~/account/initialize");
     }
-    var posts = await _postProvider.GetAsync(page, main.ItemsPerPage);
-    var model = new IndexModel(posts, page, main);
+    var pager = await _postProvider.GetAsync(page, main.ItemsPerPage);
+    var model = new IndexModel(pager, main);
     return View($"~/Views/Themes/{main.Theme}/index.cshtml", model);
   }
 }

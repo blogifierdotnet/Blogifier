@@ -1,9 +1,9 @@
-@model PostsModel
+@model PostPagerModel
 @inject IStringLocalizer<Resource> _localizer
 
-@if (Model.Items.Any())
+@if (Model.Pager.Items.Any())
 {
-  @foreach (var post in Model.Items)
+  @foreach (var post in Model.Pager.Items)
   {
     <article class="post-list d-flex">
       <figure class="post-list-cover">

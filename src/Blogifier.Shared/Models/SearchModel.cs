@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-
 namespace Blogifier.Shared;
 
-public class SearchModel : PostsModel
+public class SearchModel : PostPagerModel
 {
-  public SearchModel(IEnumerable<PostItemDto> items, int page, MainDto main) : base(items, page, main)
+  public SearchModel(PostPagerDto pager, MainDto main) : base(pager, main)
   {
   }
 }

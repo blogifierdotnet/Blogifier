@@ -1,10 +1,9 @@
 using Blogifier.Shared;
-using System.Collections.Generic;
 namespace Blogifier.Models;
 
-public class IndexModel : PostsModel
+public class IndexModel : PostPagerModel
 {
-  public IndexModel(IEnumerable<PostItemDto> items, int page, MainDto main) : base(items, page, main)
+  public IndexModel(PostPagerDto pager, MainDto main) : base(pager, main)
   {
   }
 }

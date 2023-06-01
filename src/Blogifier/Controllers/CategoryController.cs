@@ -24,8 +24,8 @@ public class CategoryController : Controller
   public async Task<IActionResult> Category(string category, int page = 1)
   {
     var main = await _mainMamager.GetAsync();
-    var posts = await _postProvider.GetByCategoryAsync(category, page, main.ItemsPerPage);
-    var model = new CategoryModel(category, posts, page, main);
+    var pager = await _postProvider.GetByCategoryAsync(category, page, main.ItemsPerPage);
+    var model = new CategoryModel(category, pager, main);
     return View($"~/Views/Themes/{main.Theme}/category.cshtml", model);
   }
 }

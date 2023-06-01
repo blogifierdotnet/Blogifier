@@ -1,11 +1,11 @@
+@model PostPagerModel
 
 @inject IStringLocalizer<Resource> _localizer
-@model PostsModel
 
-@if (Model.Items.Any())
+@if (Model.Pager.Items.Any())
 {
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @foreach (var post in Model.Items)
+    @foreach (var post in Model.Pager.Items)
     {
       <div class="col">
         <article class="post-grid d-flex flex-column">
