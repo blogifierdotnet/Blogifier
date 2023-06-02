@@ -24,7 +24,6 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
   public DbSet<Category> Categories { get; set; }
   public DbSet<Subscriber> Subscribers { get; set; }
   public DbSet<Newsletter> Newsletters { get; set; }
-  public DbSet<MailSetting> MailSettings { get; set; }
   public DbSet<PostCategory> PostCategories { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -33,7 +33,7 @@ public class SubscriberController : ControllerBase
   }
 
   [HttpPost("apply")]
-  public async Task Apply([FromBody] SubscriberApplyDto subscriber)
+  public async Task Apply([FromForm] SubscriberApplyDto subscriber)
   {
     await _subscriberProvider.ApplyAsync(subscriber);
   }

@@ -12,17 +12,17 @@ public class BlogManager
 {
   private readonly ILogger _logger;
   private readonly IDistributedCache _distributedCache;
-  private readonly OptionProvider _optionStore;
+  private readonly OptionProvider _optionProvider;
   private BlogData? _blogData;
 
   public BlogManager(
     ILogger<BlogManager> logger,
     IDistributedCache distributedCache,
-    OptionProvider optionStore)
+    OptionProvider optionProvider)
   {
     _logger = logger;
     _distributedCache = distributedCache;
-    _optionStore = optionStore;
+    _optionProvider = optionProvider;
   }
 
   public async Task<BlogData> GetAsync()
@@ -38,7 +38,7 @@ public class BlogManager
     }
     else
     {
-      var value = await _optionStore.GetByValueAsync(key);
+      var value = await _optionProvider.GetByValueAsync(key);
       if (value != null)
       {
 
@@ -60,7 +60,7 @@ public class BlogManager
   public async Task<bool> AnyAsync()
   {
     var key = BlogifierConstant.CacheKeys.BlogData;
-    if (await _optionStore.AnyKeyAsync(key))
+    if (await _optionProvider.AnyKeyAsync(key))
       return true;
     await _distributedCache.RemoveAsync(key);
     return false;
@@ -73,7 +73,7 @@ public class BlogManager
     _logger.LogCritical("blog set {value}", value);
     var bytes = Encoding.UTF8.GetBytes(value);
     await _distributedCache.SetAsync(key, bytes, new() { SlidingExpiration = TimeSpan.FromMinutes(15) });
-    await _optionStore.SetValue(key, value);
+    await _optionProvider.SetValue(key, value);
   }
 
 }

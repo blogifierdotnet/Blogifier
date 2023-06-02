@@ -32,20 +32,8 @@ public class NewsletterController : ControllerBase
   }
 
   [HttpGet("send/{postId:int}")]
-  public async Task<bool> SendNewsletter(int postId)
+  public async Task SendNewsletter([FromRoute] int postId, [FromServices] EmailManager emailManager)
   {
-    return await _newsletterProvider.SendNewsletter(postId);
-  }
-
-  [HttpGet("mailsettings")]
-  public async Task<MailSetting> GetMailSettings()
-  {
-    return await _newsletterProvider.GetMailSettings();
-  }
-
-  [HttpPut("mailsettings")]
-  public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
-  {
-    return await _newsletterProvider.SaveMailSettings(mailSettings);
+    await emailManager.SendNewsletter(postId);
   }
 }

@@ -32,6 +32,14 @@ public class PostProvider : AppProvider<Post, int>
     return await _mapper.ProjectTo<PostDto>(query).FirstAsync();
   }
 
+  public async Task<PostDto> GetAsync(int id)
+  {
+    var query = _dbContext.Posts
+      .AsNoTracking()
+      .Where(p => p.Id == id);
+    return await _mapper.ProjectTo<PostDto>(query).FirstAsync();
+  }
+
   public async Task<IEnumerable<PostDto>> GetAsync()
   {
     var query = _dbContext.Posts
