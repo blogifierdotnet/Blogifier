@@ -40,7 +40,7 @@
     <Exec WorkingDirectory="assets" Command="npm install" />
   </Target>
 
-  <Target Name="NpmBuild" BeforeTargets="NpmInstall">
+  <Target Name="NpmBuild" BeforeTargets="NpmInstall" Condition="'$(Configuration)' == 'Debug'">
     <Exec WorkingDirectory="assets" Command="npm run build" />
   </Target>
 
