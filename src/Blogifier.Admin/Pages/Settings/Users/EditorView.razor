@@ -8,7 +8,15 @@
 @inject IMapper _mapper
 @inject IToaster _toaster
 
-<h1 class="section-title">@_localizer["add-user"]</h1>
+@if (!IsUpdate)
+{
+  <h1 class="section-title">@_localizer["add-user"]</h1>
+}
+else
+{
+  <h1 class="section-title">@_localizer["edit"]</h1>
+}
+
 <div class="section-content -half">
   <EditForm Model="@User" OnValidSubmit="Save">
     <DataAnnotationsValidator />

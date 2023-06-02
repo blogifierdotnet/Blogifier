@@ -1,8 +1,11 @@
 using AutoMapper;
 using Blogifier.Blogs;
+using Blogifier.Data;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
@@ -40,5 +43,21 @@ public class BlogController : ControllerBase
     data.IncludeFeatured = blog.IncludeFeatured;
     data.ItemsPerPage = blog.ItemsPerPage;
     await _blogManager.SetAsync(data);
+  }
+
+  [HttpGet("about")]
+  public AboutDto GetAboutAsync([FromServices] AppDbContext dbContext)
+  {
+    var result = new AboutDto
+    {
+      Version = typeof(BlogController)?
+        .GetTypeInfo()?
+        .Assembly?
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+        .InformationalVersion,
+      DatabaseProvider = dbContext.Database.ProviderName,
+      OperatingSystem = RuntimeInformation.OSDescription
+    };
+    return result;
   }
 }

@@ -1,5 +1,7 @@
-@layout NewsletterLayout
 @page "/admin/newsletter/"
+
+@layout NewsletterLayout
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
@@ -8,11 +10,7 @@
 
 <h1 class="section-title">@_localizer["newsletters"]</h1>
 <div class="section-content">
-  @if (Newsletters == null || Newsletters.Count == 0)
-  {
-    <p class="list-notfound">@_localizer["not-found"]</p>
-  }
-  else
+  @if (Newsletters != null && Newsletters.Any())
   {
     <ul class="list">
       @foreach (var newsletter in Newsletters)
@@ -52,6 +50,10 @@
         </li>
       }
     </ul>
+  }
+  else
+  {
+    <p class="list-notfound">@_localizer["not-found"]</p>
   }
 </div>
 
