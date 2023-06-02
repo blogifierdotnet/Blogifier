@@ -1,6 +1,6 @@
+using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
@@ -68,6 +68,35 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
+          name: "MailSettings",
+          columns: table => new
+          {
+            Id = table.Column<int>(type: "int", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            Host = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Port = table.Column<int>(type: "int", nullable: false),
+            UserEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            UserPassword = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            FromName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            FromEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            ToName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Enabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_MailSettings", x => x.Id);
+          })
+          .Annotation("MySql:CharSet", "utf8mb4");
+
+      migrationBuilder.CreateTable(
           name: "Options",
           columns: table => new
           {
@@ -115,6 +144,31 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
+          name: "Subscribers",
+          columns: table => new
+          {
+            Id = table.Column<int>(type: "int", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
+            Email = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Ip = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: true)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Country = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Region = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true)
+                  .Annotation("MySql:CharSet", "utf8mb4")
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_Subscribers", x => x.Id);
+          })
+          .Annotation("MySql:CharSet", "utf8mb4");
+
+      migrationBuilder.CreateTable(
           name: "User",
           columns: table => new
           {
@@ -130,6 +184,8 @@ namespace Blogifier.Data.Migrations
                   .Annotation("MySql:CharSet", "utf8mb4"),
             Gender = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true)
                   .Annotation("MySql:CharSet", "utf8mb4"),
+            Type = table.Column<int>(type: "int", nullable: false),
+            State = table.Column<int>(type: "int", nullable: false),
             UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -160,104 +216,6 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
-          name: "Authors",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            Email = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Password = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            DisplayName = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Bio = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Avatar = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            IsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: false),
-            BlogId = table.Column<int>(type: "int", nullable: true)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_Authors", x => x.Id);
-            table.ForeignKey(
-                      name: "FK_Authors_Blogs_BlogId",
-                      column: x => x.BlogId,
-                      principalTable: "Blogs",
-                      principalColumn: "Id");
-          })
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
-          name: "MailSettings",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            Host = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Port = table.Column<int>(type: "int", nullable: false),
-            UserEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            UserPassword = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            FromName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            FromEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            ToName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Enabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-            BlogId = table.Column<int>(type: "int", nullable: true)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_MailSettings", x => x.Id);
-            table.ForeignKey(
-                      name: "FK_MailSettings_Blogs_BlogId",
-                      column: x => x.BlogId,
-                      principalTable: "Blogs",
-                      principalColumn: "Id");
-          })
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
-          name: "Subscribers",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
-            Email = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Ip = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Country = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Region = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            BlogId = table.Column<int>(type: "int", nullable: true)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_Subscribers", x => x.Id);
-            table.ForeignKey(
-                      name: "FK_Subscribers_Blogs_BlogId",
-                      column: x => x.BlogId,
-                      principalTable: "Blogs",
-                      principalColumn: "Id");
-          })
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
           name: "Posts",
           columns: table => new
           {
@@ -282,17 +240,11 @@ namespace Blogifier.Data.Migrations
             Views = table.Column<int>(type: "int", nullable: false),
             PublishedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
             PostType = table.Column<int>(type: "int", nullable: false),
-            State = table.Column<int>(type: "int", nullable: false),
-            BlogId = table.Column<int>(type: "int", nullable: true)
+            State = table.Column<int>(type: "int", nullable: false)
           },
           constraints: table =>
           {
             table.PrimaryKey("PK_Posts", x => x.Id);
-            table.ForeignKey(
-                      name: "FK_Posts_Blogs_BlogId",
-                      column: x => x.BlogId,
-                      principalTable: "Blogs",
-                      principalColumn: "Id");
             table.ForeignKey(
                       name: "FK_Posts_User_UserId",
                       column: x => x.UserId,
@@ -428,16 +380,6 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateIndex(
-          name: "IX_Authors_BlogId",
-          table: "Authors",
-          column: "BlogId");
-
-      migrationBuilder.CreateIndex(
-          name: "IX_MailSettings_BlogId",
-          table: "MailSettings",
-          column: "BlogId");
-
-      migrationBuilder.CreateIndex(
           name: "IX_Newsletters_PostId",
           table: "Newsletters",
           column: "PostId");
@@ -454,19 +396,9 @@ namespace Blogifier.Data.Migrations
           column: "CategoryId");
 
       migrationBuilder.CreateIndex(
-          name: "IX_Posts_BlogId",
-          table: "Posts",
-          column: "BlogId");
-
-      migrationBuilder.CreateIndex(
           name: "IX_Posts_UserId",
           table: "Posts",
           column: "UserId");
-
-      migrationBuilder.CreateIndex(
-          name: "IX_Subscribers_BlogId",
-          table: "Subscribers",
-          column: "BlogId");
 
       migrationBuilder.CreateIndex(
           name: "EmailIndex",
@@ -494,7 +426,7 @@ namespace Blogifier.Data.Migrations
     protected override void Down(MigrationBuilder migrationBuilder)
     {
       migrationBuilder.DropTable(
-          name: "Authors");
+          name: "Blogs");
 
       migrationBuilder.DropTable(
           name: "MailSettings");
@@ -528,9 +460,6 @@ namespace Blogifier.Data.Migrations
 
       migrationBuilder.DropTable(
           name: "Posts");
-
-      migrationBuilder.DropTable(
-          name: "Blogs");
 
       migrationBuilder.DropTable(
           name: "User");

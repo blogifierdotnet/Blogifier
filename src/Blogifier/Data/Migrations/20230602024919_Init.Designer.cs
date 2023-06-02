@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Data.Migrations
 {
   [DbContext(typeof(AppDbContext))]
-  [Migration("20230601085559_Init")]
+  [Migration("20230602024919_Init")]
   partial class Init
   {
     /// <inheritdoc />
@@ -94,8 +94,14 @@ namespace Blogifier.Data.Migrations
                       .HasMaxLength(32)
                       .HasColumnType("varchar(32)");
 
+            b.Property<int>("State")
+                      .HasColumnType("int");
+
             b.Property<bool>("TwoFactorEnabled")
                       .HasColumnType("tinyint(1)");
+
+            b.Property<int>("Type")
+                      .HasColumnType("int");
 
             b.Property<string>("UserName")
                       .HasMaxLength(256)
@@ -142,52 +148,6 @@ namespace Blogifier.Data.Migrations
                       .IsUnique();
 
             b.ToTable("Options", (string)null);
-          });
-
-      modelBuilder.Entity("Blogifier.Shared.Author", b =>
-          {
-            b.Property<int>("Id")
-                      .ValueGeneratedOnAdd()
-                      .HasColumnType("int");
-
-            b.Property<string>("Avatar")
-                      .HasMaxLength(400)
-                      .HasColumnType("varchar(400)");
-
-            b.Property<string>("Bio")
-                      .HasMaxLength(2000)
-                      .HasColumnType("varchar(2000)");
-
-            b.Property<int?>("BlogId")
-                      .HasColumnType("int");
-
-            b.Property<DateTime>("CreatedAt")
-                      .ValueGeneratedOnAdd()
-                      .HasColumnType("datetime(6)");
-
-            b.Property<string>("DisplayName")
-                      .IsRequired()
-                      .HasMaxLength(160)
-                      .HasColumnType("varchar(160)");
-
-            b.Property<string>("Email")
-                      .IsRequired()
-                      .HasMaxLength(160)
-                      .HasColumnType("varchar(160)");
-
-            b.Property<bool>("IsAdmin")
-                      .HasColumnType("tinyint(1)");
-
-            b.Property<string>("Password")
-                      .IsRequired()
-                      .HasMaxLength(160)
-                      .HasColumnType("varchar(160)");
-
-            b.HasKey("Id");
-
-            b.HasIndex("BlogId");
-
-            b.ToTable("Authors");
           });
 
       modelBuilder.Entity("Blogifier.Shared.Blog", b =>
@@ -278,9 +238,6 @@ namespace Blogifier.Data.Migrations
                       .ValueGeneratedOnAdd()
                       .HasColumnType("int");
 
-            b.Property<int?>("BlogId")
-                      .HasColumnType("int");
-
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
                       .HasColumnType("datetime(6)");
@@ -323,8 +280,6 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.HasIndex("BlogId");
-
             b.ToTable("MailSettings");
           });
 
@@ -359,9 +314,6 @@ namespace Blogifier.Data.Migrations
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("int");
-
-            b.Property<int?>("BlogId")
                       .HasColumnType("int");
 
             b.Property<string>("Content")
@@ -413,8 +365,6 @@ namespace Blogifier.Data.Migrations
                       .HasColumnType("int");
 
             b.HasKey("Id");
-
-            b.HasIndex("BlogId");
 
             b.HasIndex("UserId");
 
@@ -487,9 +437,6 @@ namespace Blogifier.Data.Migrations
                       .ValueGeneratedOnAdd()
                       .HasColumnType("int");
 
-            b.Property<int?>("BlogId")
-                      .HasColumnType("int");
-
             b.Property<string>("Country")
                       .HasMaxLength(120)
                       .HasColumnType("varchar(120)");
@@ -516,8 +463,6 @@ namespace Blogifier.Data.Migrations
                       .HasColumnType("datetime(6)");
 
             b.HasKey("Id");
-
-            b.HasIndex("BlogId");
 
             b.ToTable("Subscribers");
           });
@@ -590,22 +535,6 @@ namespace Blogifier.Data.Migrations
             b.ToTable("UserToken", (string)null);
           });
 
-      modelBuilder.Entity("Blogifier.Shared.Author", b =>
-          {
-            b.HasOne("Blogifier.Shared.Blog", null)
-                      .WithMany("Authors")
-                      .HasForeignKey("BlogId");
-          });
-
-      modelBuilder.Entity("Blogifier.Shared.MailSetting", b =>
-          {
-            b.HasOne("Blogifier.Shared.Blog", "Blog")
-                      .WithMany()
-                      .HasForeignKey("BlogId");
-
-            b.Navigation("Blog");
-          });
-
       modelBuilder.Entity("Blogifier.Shared.Newsletter", b =>
           {
             b.HasOne("Blogifier.Shared.Post", "Post")
@@ -619,10 +548,6 @@ namespace Blogifier.Data.Migrations
 
       modelBuilder.Entity("Blogifier.Shared.Post", b =>
           {
-            b.HasOne("Blogifier.Shared.Blog", null)
-                      .WithMany("Posts")
-                      .HasForeignKey("BlogId");
-
             b.HasOne("Blogifier.Identity.UserInfo", "User")
                       .WithMany()
                       .HasForeignKey("UserId")
@@ -651,15 +576,6 @@ namespace Blogifier.Data.Migrations
             b.Navigation("Post");
           });
 
-      modelBuilder.Entity("Blogifier.Shared.Subscriber", b =>
-          {
-            b.HasOne("Blogifier.Shared.Blog", "Blog")
-                      .WithMany()
-                      .HasForeignKey("BlogId");
-
-            b.Navigation("Blog");
-          });
-
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
@@ -685,13 +601,6 @@ namespace Blogifier.Data.Migrations
                       .HasForeignKey("UserId")
                       .OnDelete(DeleteBehavior.Cascade)
                       .IsRequired();
-          });
-
-      modelBuilder.Entity("Blogifier.Shared.Blog", b =>
-          {
-            b.Navigation("Authors");
-
-            b.Navigation("Posts");
           });
 
       modelBuilder.Entity("Blogifier.Shared.Category", b =>
