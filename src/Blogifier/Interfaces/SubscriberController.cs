@@ -9,7 +9,6 @@ namespace Blogifier.Interfaces;
 
 [Route("api/subscriber")]
 [ApiController]
-[Authorize]
 public class SubscriberController : ControllerBase
 {
   private readonly SubscriberProvider _subscriberProvider;
@@ -20,14 +19,22 @@ public class SubscriberController : ControllerBase
   }
 
   [HttpGet("items")]
+  [Authorize]
   public async Task<IEnumerable<SubscriberDto>> GetItemsAsync()
   {
     return await _subscriberProvider.GetItemsAsync();
   }
 
   [HttpDelete("{id:int}")]
+  [Authorize]
   public async Task DeleteAsync([FromRoute] int id)
   {
     await _subscriberProvider.DeleteAsync(id);
+  }
+
+  [HttpPost("apply")]
+  public async Task Apply([FromBody] SubscriberApplyDto subscriber)
+  {
+    await _subscriberProvider.ApplyAsync(subscriber);
   }
 }

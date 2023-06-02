@@ -31,19 +31,11 @@ public class NewsletterController : ControllerBase
     await _newsletterProvider.DeleteAsync(id);
   }
 
-  [HttpPost("subscribe")]
-  public async Task<ActionResult<bool>> Subscribe([FromBody] Subscriber subscriber)
-  {
-    return await _newsletterProvider.AddSubscriber(subscriber);
-  }
-
   [HttpGet("send/{postId:int}")]
   public async Task<bool> SendNewsletter(int postId)
   {
     return await _newsletterProvider.SendNewsletter(postId);
   }
-
-
 
   [HttpGet("mailsettings")]
   public async Task<MailSetting> GetMailSettings()

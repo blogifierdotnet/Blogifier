@@ -9,5 +9,6 @@ public class SubscriberProfile : Profile
   public SubscriberProfile()
   {
     CreateMap<Subscriber, SubscriberDto>();
+    CreateMap<SubscriberApplyDto, Subscriber>();
   }
 }

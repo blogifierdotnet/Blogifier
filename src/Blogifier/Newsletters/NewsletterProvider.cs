@@ -35,20 +35,6 @@ public class NewsletterProvider : AppProvider<Newsletter, int>
     return await _mapper.ProjectTo<NewsletterDto>(query).ToListAsync();
   }
 
-
-
-  public async Task<bool> AddSubscriber(Subscriber subscriber)
-  {
-    var existing = await _dbContext.Subscribers.AsNoTracking().Where(s => s.Email == subscriber.Email).FirstOrDefaultAsync();
-    if (existing == null)
-    {
-      subscriber.CreatedAt = DateTime.UtcNow;
-      _dbContext.Subscribers.Add(subscriber);
-      return await _dbContext.SaveChangesAsync() > 0;
-    }
-    return true;
-  }
-
   public async Task<bool> RemoveSubscriber(int id)
   {
     var existing = _dbContext.Subscribers.Where(s => s.Id == id).FirstOrDefault();

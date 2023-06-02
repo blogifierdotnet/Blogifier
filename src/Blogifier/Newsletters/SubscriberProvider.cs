@@ -26,4 +26,15 @@ public class SubscriberProvider : AppProvider<Subscriber, int>
      .OrderByDescending(n => n.CreatedAt);
     return await _mapper.ProjectTo<SubscriberDto>(query).ToListAsync();
   }
+
+  public async Task ApplyAsync(SubscriberApplyDto input)
+  {
+    if (await _dbContext.Subscribers.AnyAsync(m => m.Email == input.Email))
+    {
+      var data = _mapper.Map<Subscriber>(input);
+      _dbContext.Subscribers.Add(data);
+      await _dbContext.SaveChangesAsync();
+    }
+  }
+
 }
