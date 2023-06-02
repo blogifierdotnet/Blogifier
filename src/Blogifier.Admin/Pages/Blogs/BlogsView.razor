@@ -31,10 +31,7 @@
     if (checkValue != null)
     {
       var isChecked = (bool)checkValue;
-      foreach (var item in Posts!)
-      {
-        item.Selected = isChecked;
-      }
+      if (Posts != null) Posts.ForEach(item => item.Selected = isChecked);
       StateHasChanged();
     }
   }
