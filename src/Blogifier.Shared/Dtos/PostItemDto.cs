@@ -10,10 +10,8 @@ public class PostItemDto
   public string Title { get; set; } = default!;
   public string Slug { get; set; } = default!;
   public string Description { get; set; } = default!;
-  public string Content { get; set; } = default!;
   public List<CategoryDto>? Categories { get; set; }
   public string? Cover { get; set; }
-  public DateTime Published { get; set; }
   public PostState State { get; set; }
   public DateTime? PublishedAt { get; set; }
 }

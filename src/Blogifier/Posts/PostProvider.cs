@@ -166,10 +166,10 @@ public class PostProvider : AppProvider<Post, int>
           hits = Regex.Matches(post.Description.ToLower(), termItem).Count;
           rank += hits * 3;
         }
-        if (post.Content.ToLower().Contains(termItem))
-        {
-          rank += Regex.Matches(post.Content.ToLower(), termItem).Count;
-        }
+        //if (post.Content.ToLower().Contains(termItem))
+        //{
+        //  rank += Regex.Matches(post.Content.ToLower(), termItem).Count;
+        //}
       }
 
       if (rank > 0)
