@@ -10,6 +10,7 @@ using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -137,17 +139,6 @@ else
 app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-app.UseCookiePolicy();
-app.UseCors(BlogifierConstant.PolicyCorsName);
-app.UseRouting();
-app.UseResponseCaching();
-app.UseOutputCache();
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-  ApplyCurrentCultureToResponseHeaders = true
-});
-app.UseAuthentication();
-app.UseAuthorization();
 var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
 if (!Directory.Exists(fileProviderRoot)) Directory.CreateDirectory(fileProviderRoot);
 app.UseStaticFiles(new StaticFileOptions
@@ -155,6 +146,29 @@ app.UseStaticFiles(new StaticFileOptions
   FileProvider = new PhysicalFileProvider(fileProviderRoot),
   RequestPath = "/data"
 });
+app.UseCookiePolicy();
+app.UseRouting();
+
+var supportedCultures = new[] {
+  "zh-CN",
+  "zh-TW",
+  "el-GR",
+  "es",
+  "fa",
+  "pt-BR",
+  "ru",
+  "sv-SE",
+  "ur-PK"
+};
+app.UseRequestLocalization(new RequestLocalizationOptions()
+  .AddSupportedCultures(supportedCultures)
+  .AddSupportedUICultures(supportedCultures));
+
+app.UseCors(BlogifierConstant.PolicyCorsName);
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseResponseCaching();
+app.UseOutputCache();
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapFallbackToFile("admin/{*path:nonfile}", "index.html");
