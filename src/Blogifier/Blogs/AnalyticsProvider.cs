@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blogifier.Providers;
+namespace Blogifier.Blogs;
 
 public class AnalyticsProvider
 {

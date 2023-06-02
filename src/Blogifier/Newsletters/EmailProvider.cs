@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blogifier.Providers;
+namespace Blogifier.Newsletters;
 
 public class EmailProvider
 {

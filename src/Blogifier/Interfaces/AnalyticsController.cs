@@ -1,4 +1,4 @@
-using Blogifier.Providers;
+using Blogifier.Blogs;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

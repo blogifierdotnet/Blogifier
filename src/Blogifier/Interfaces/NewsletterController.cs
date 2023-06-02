@@ -1,4 +1,4 @@
-using Blogifier.Providers;
+using Blogifier.Newsletters;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
