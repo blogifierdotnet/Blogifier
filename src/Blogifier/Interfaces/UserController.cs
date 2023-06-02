@@ -22,4 +22,16 @@ public class UserController : ControllerBase
   {
     return await _userProvider.GetAsync();
   }
+
+  [HttpGet("{id:int}")]
+  public async Task<UserInfoDto?> GetAsync([FromRoute] string id)
+  {
+    return await _userProvider.GetAsync(id);
+  }
+
+  [HttpPut("{id?}")]
+  public async Task EditorAsync([FromRoute] string? id, [FromBody] UserEditorDto input)
+  {
+
+  }
 }

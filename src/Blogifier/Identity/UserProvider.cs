@@ -19,11 +19,11 @@ public class UserProvider
     _dbContext = dbContext;
   }
 
-  public async Task<UserDto> FindByIdAsync(string userId)
+  public async Task<UserDto> FindByIdAsync(string id)
   {
     var query = _dbContext.Users
       .AsNoTracking()
-      .Where(m => m.Id == userId);
+      .Where(m => m.Id == id);
     return await _mapper.ProjectTo<UserDto>(query).FirstAsync();
   }
 
@@ -32,6 +32,14 @@ public class UserProvider
     var query = _dbContext.Users
       .AsNoTracking();
     return await _mapper.ProjectTo<UserInfoDto>(query).ToListAsync();
+  }
+
+  public async Task<UserInfoDto?> GetAsync(string id)
+  {
+    var query = _dbContext.Users
+      .AsNoTracking()
+      .Where(m => m.Id == id);
+    return await _mapper.ProjectTo<UserInfoDto>(query).FirstOrDefaultAsync();
   }
 
   public async Task<UserInfo> UpdateAsync(UserInfoDto input)
