@@ -30,7 +30,9 @@ public class AccountController : Controller
   }
 
   [HttpGet]
-  public IActionResult Index([FromQuery] AccountModel parameter) => RedirectToAction("login", routeValues: parameter);
+  [HttpPost]
+  public IActionResult Index([FromQuery] AccountModel parameter)
+    => RedirectToAction("login", routeValues: parameter);
 
   [HttpGet("login")]
   public async Task<IActionResult> Login([FromQuery] AccountModel parameter)
@@ -52,8 +54,8 @@ public class AccountController : Controller
         if (result.Succeeded)
         {
           _logger.LogInformation("User logged in.");
-          model.RedirectUri ??= "/";
-          return LocalRedirect(model.RedirectUri);
+          if (string.IsNullOrEmpty(model.RedirectUri)) return LocalRedirect("~/");
+          return Redirect(model.RedirectUri);
         }
       }
     }

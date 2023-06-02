@@ -3,6 +3,6 @@
 @code {
   protected override void OnInitialized()
   {
-    _navigationManager.NavigateTo($"account/?redirectUri={Uri.EscapeDataString(_navigationManager.Uri)}");
+    _navigationManager.NavigateTo($"account?redirectUri={Uri.EscapeDataString(_navigationManager.Uri)}", true, true);
   }
 }

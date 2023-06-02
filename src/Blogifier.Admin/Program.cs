@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Sotsera.Blazor.Toaster.Core.Models;
 using System;
+using System.Net.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,7 +18,9 @@ builder.Services.AddAuthorizationCore(options =>
   options.AddPolicy(BlogifierConstant.PolicyAdminName,
     policy => policy.RequireClaim(BlogifierClaimTypes.Type, BlogifierConstant.PolicyAdminValue));
 });
-builder.Services.AddHttpClient(string.Empty, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+builder.Services.AddHttpClient(string.Empty, client =>
+  client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler() { AllowAutoRedirect = false });
 builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();
 builder.Services.AddToaster(config =>
 {
