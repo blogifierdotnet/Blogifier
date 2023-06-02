@@ -1,7 +1,2 @@
-
-# Local machine
-dotnet publish -c Release /p:RuntimeIdentifier=linux-x64 ./src/Blogifier/Blogifier.csproj --output dist
-
-# docker
-# docker build -t dorthl/blogifier:latest .
-# docker push dorthl/blogifier:latest
+dotnet clean
+dotnet build -c Debug /p:RuntimeIdentifier=win-x64 ./src/Blogifier/Blogifier.csproj --output dist
