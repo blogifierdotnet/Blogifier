@@ -40,7 +40,8 @@
   {
     if (action == GroupAction.Delete)
     {
-      var confirmed = await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]);
+      var confirmedString = _localizer["confirm-delete"].Value;
+      var confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirmedString);
       if (!confirmed) return;
     }
 

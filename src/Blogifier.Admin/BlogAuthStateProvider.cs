@@ -25,17 +25,19 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
     {
       var client = _httpClientFactory.CreateClient();
       var response = await client.GetAsync("/api/token/userinfo");
-      BlogifierClaims? claims;
+      BlogifierClaims? claims = null;
       if (response.IsSuccessStatusCode)
       {
         var stream = await response.Content.ReadAsStreamAsync();
-        claims = JsonSerializer.Deserialize<BlogifierClaims>(stream, BlogifierConstant.DefaultJsonSerializerOptionss)!;
-        _logger.LogInformation("claims success userName:{UserName}", claims.UserName);
+        if (stream.Length > 0)
+        {
+          claims = JsonSerializer.Deserialize<BlogifierClaims>(stream, BlogifierConstant.DefaultJsonSerializerOptionss)!;
+          _logger.LogInformation("claims success userName:{UserName}", claims.UserName);
+        }
       }
       else
       {
         _logger.LogError("claims http error StatusCode:{StatusCode}", response.StatusCode);
-        claims = null;
       }
       var principal = BlogifierClaims.Generate(claims);
       _state = new AuthenticationState(principal);
