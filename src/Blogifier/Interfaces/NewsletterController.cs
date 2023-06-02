@@ -9,13 +9,26 @@ namespace Blogifier.Interfaces;
 
 [Route("api/newsletter")]
 [ApiController]
+[Authorize]
 public class NewsletterController : ControllerBase
 {
-  protected readonly NewsletterProvider _newsletterProvider;
+  private readonly NewsletterProvider _newsletterProvider;
 
   public NewsletterController(NewsletterProvider newsletterProvider)
   {
     _newsletterProvider = newsletterProvider;
+  }
+
+  [HttpGet("items")]
+  public async Task<IEnumerable<NewsletterDto>> GetItemsAsync()
+  {
+    return await _newsletterProvider.GetItemsAsync();
+  }
+
+  [HttpDelete("{id:int}")]
+  public async Task DeleteAsync([FromRoute] int id)
+  {
+    await _newsletterProvider.DeleteAsync(id);
   }
 
   [HttpPost("subscribe")]
@@ -24,48 +37,20 @@ public class NewsletterController : ControllerBase
     return await _newsletterProvider.AddSubscriber(subscriber);
   }
 
-  [Authorize]
-  [HttpGet("subscribers")]
-  public async Task<List<Subscriber>> GetSubscribers()
-  {
-    return await _newsletterProvider.GetSubscribers();
-  }
-
-  [HttpDelete("unsubscribe/{id:int}")]
-  public async Task<ActionResult<bool>> RemoveSubscriber(int id)
-  {
-    return await _newsletterProvider.RemoveSubscriber(id);
-  }
-
-  [Authorize]
-  [HttpGet("newsletters")]
-  public async Task<List<Newsletter>> GetNewsletters()
-  {
-    return await _newsletterProvider.GetNewsletters();
-  }
-
-  [Authorize]
   [HttpGet("send/{postId:int}")]
   public async Task<bool> SendNewsletter(int postId)
   {
     return await _newsletterProvider.SendNewsletter(postId);
   }
 
-  [Authorize]
-  [HttpDelete("remove/{id:int}")]
-  public async Task<ActionResult<bool>> RemoveNewsletter(int id)
-  {
-    return await _newsletterProvider.RemoveNewsletter(id);
-  }
 
-  [Authorize]
+
   [HttpGet("mailsettings")]
   public async Task<MailSetting> GetMailSettings()
   {
     return await _newsletterProvider.GetMailSettings();
   }
 
-  [Authorize]
   [HttpPut("mailsettings")]
   public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
   {

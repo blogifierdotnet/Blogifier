@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Shared;
@@ -9,58 +10,59 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Newsletters;
 
-public class NewsletterProvider
+public class NewsletterProvider : AppProvider<Newsletter, int>
 {
-  private readonly AppDbContext _db;
+  private readonly IMapper _mapper;
   private readonly EmailProvider _emailProvider;
 
-  public NewsletterProvider(AppDbContext db, EmailProvider emailProvider)
+  public NewsletterProvider(
+    IMapper mapper,
+    AppDbContext dbContext,
+    EmailProvider emailProvider)
+    : base(dbContext)
   {
-    _db = db;
+    _mapper = mapper;
+
     _emailProvider = emailProvider;
   }
 
-
-  public async Task<List<Subscriber>> GetSubscribers()
+  public async Task<IEnumerable<NewsletterDto>> GetItemsAsync()
   {
-    return await _db.Subscribers.AsNoTracking().OrderByDescending(s => s.Id).ToListAsync();
+    var query = _dbContext.Newsletters
+       .AsNoTracking()
+       .Include(n => n.Post)
+       .OrderByDescending(n => n.CreatedAt);
+    return await _mapper.ProjectTo<NewsletterDto>(query).ToListAsync();
   }
+
+
 
   public async Task<bool> AddSubscriber(Subscriber subscriber)
   {
-    var existing = await _db.Subscribers.AsNoTracking().Where(s => s.Email == subscriber.Email).FirstOrDefaultAsync();
+    var existing = await _dbContext.Subscribers.AsNoTracking().Where(s => s.Email == subscriber.Email).FirstOrDefaultAsync();
     if (existing == null)
     {
       subscriber.CreatedAt = DateTime.UtcNow;
-      _db.Subscribers.Add(subscriber);
-      return await _db.SaveChangesAsync() > 0;
+      _dbContext.Subscribers.Add(subscriber);
+      return await _dbContext.SaveChangesAsync() > 0;
     }
     return true;
   }
 
   public async Task<bool> RemoveSubscriber(int id)
   {
-    var existing = _db.Subscribers.Where(s => s.Id == id).FirstOrDefault();
+    var existing = _dbContext.Subscribers.Where(s => s.Id == id).FirstOrDefault();
     if (existing != null)
     {
-      _db.Subscribers.Remove(existing);
-      return await _db.SaveChangesAsync() > 0;
+      _dbContext.Subscribers.Remove(existing);
+      return await _dbContext.SaveChangesAsync() > 0;
     }
     return false;
   }
 
-
-  public async Task<List<Newsletter>> GetNewsletters()
-  {
-    return await _db.Newsletters.AsNoTracking()
-        .Include(n => n.Post)
-        .OrderByDescending(n => n.Id)
-        .ToListAsync();
-  }
-
   private async Task<bool> SaveNewsletter(int postId, bool success)
   {
-    var existing = await _db.Newsletters.Where(n => n.PostId == postId).FirstOrDefaultAsync();
+    var existing = await _dbContext.Newsletters.Where(n => n.PostId == postId).FirstOrDefaultAsync();
 
     if (existing != null)
     {
@@ -72,25 +74,25 @@ public class NewsletterProvider
       {
         PostId = postId,
         Success = success,
-        Post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault()
+        Post = _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefault()
       };
-      _db.Newsletters.Add(newsletter);
+      _dbContext.Newsletters.Add(newsletter);
     }
 
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 
   public async Task<bool> SendNewsletter(int postId)
   {
-    var post = await _db.Posts.AsNoTracking().Where(p => p.Id == postId).FirstOrDefaultAsync();
+    var post = await _dbContext.Posts.AsNoTracking().Where(p => p.Id == postId).FirstOrDefaultAsync();
     if (post == null)
       return false;
 
-    var subscribers = await _db.Subscribers.AsNoTracking().ToListAsync();
+    var subscribers = await _dbContext.Subscribers.AsNoTracking().ToListAsync();
     if (subscribers == null || subscribers.Count == 0)
       return false;
 
-    var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+    var settings = await _dbContext.MailSettings.AsNoTracking().FirstOrDefaultAsync();
     if (settings == null || settings.Enabled == false)
       return false;
 
@@ -103,27 +105,18 @@ public class NewsletterProvider
     return sent && saved;
   }
 
-  public async Task<bool> RemoveNewsletter(int id)
-  {
-    var existing = _db.Newsletters.Where(s => s.Id == id).FirstOrDefault();
-    if (existing != null)
-    {
-      _db.Newsletters.Remove(existing);
-      return await _db.SaveChangesAsync() > 0;
-    }
-    return false;
-  }
+
 
 
   public async Task<MailSetting> GetMailSettings()
   {
-    var settings = await _db.MailSettings.AsNoTracking().FirstOrDefaultAsync();
+    var settings = await _dbContext.MailSettings.AsNoTracking().FirstOrDefaultAsync();
     return settings == null ? new MailSetting() : settings;
   }
 
   public async Task<bool> SaveMailSettings(MailSetting mail)
   {
-    var existing = await _db.MailSettings.FirstOrDefaultAsync();
+    var existing = await _dbContext.MailSettings.FirstOrDefaultAsync();
     if (existing == null)
     {
       var newMail = new MailSetting()
@@ -137,7 +130,7 @@ public class NewsletterProvider
         ToName = mail.ToName,
         Enabled = mail.Enabled,
       };
-      _db.MailSettings.Add(newMail);
+      _dbContext.MailSettings.Add(newMail);
     }
     else
     {
@@ -150,6 +143,6 @@ public class NewsletterProvider
       existing.ToName = mail.ToName;
       existing.Enabled = mail.Enabled;
     }
-    return await _db.SaveChangesAsync() > 0;
+    return await _dbContext.SaveChangesAsync() > 0;
   }
 }

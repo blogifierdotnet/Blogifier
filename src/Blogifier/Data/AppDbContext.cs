@@ -1,4 +1,5 @@
 using Blogifier.Identity;
+using Blogifier.Newsletters;
 using Blogifier.Options;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Identity;

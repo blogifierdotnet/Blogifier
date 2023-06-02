@@ -1,13 +1,12 @@
+using Blogifier.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blogifier.Shared;
+namespace Blogifier.Newsletters;
 
-public class Subscriber
+public class Subscriber : AppEntity<int>
 {
-  [Key]
-  public int Id { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

@@ -77,12 +77,13 @@ builder.Services.AddSingleton<ImportRssProvider>();
 builder.Services.AddScoped<UserProvider>();
 builder.Services.AddScoped<PostProvider>();
 builder.Services.AddScoped<CategoryProvider>();
-builder.Services.AddScoped<AnalyticsProvider>();
 builder.Services.AddScoped<NewsletterProvider>();
-builder.Services.AddScoped<EmailProvider>();
+builder.Services.AddScoped<SubscriberProvider>();
 builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<OptionProvider>();
+builder.Services.AddScoped<AnalyticsProvider>();
 
+builder.Services.AddScoped<EmailProvider>();
 builder.Services.AddScoped<ImportManager>();
 builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();

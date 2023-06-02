@@ -1,5 +1,7 @@
-@layout NewsletterLayout
 @page "/admin/newsletter/subscribers/"
+
+@layout NewsletterLayout
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
@@ -9,23 +11,19 @@
 <h1 class="section-title">@_localizer["subscribers"]</h1>
 <div class="section-content">
 
-  @if (Subscribers == null || Subscribers.Count == 0)
-  {
-    <p class="list-notfound">@_localizer["not-found"]</p>
-  }
-  else
+  @if (Subscribers != null && Subscribers.Any())
   {
     <ul class="list">
-      @foreach (var subscriber in Subscribers)
+      @foreach (var item in Subscribers)
       {
         <li class="list-item">
           @{
-            string title = $"{subscriber.Email} / {subscriber.Country} / {subscriber.Region} / {subscriber.Ip}";
-            string pubDate = subscriber.CreatedAt.ToFriendlyDateTimeString();
+            string title = $"{item.Email} / {item.Country} / {item.Region} / {item.Ip}";
+            string pubDate = item.CreatedAt.ToFriendlyDateTimeString();
           }
           <span class="list-title">@title</span>
           <span class="list-text">@pubDate</span>
-          <button class="list-btn" @onclick="(async () => await RemoveSubscription(subscriber.Id))" data-bs-toggle="tooltip" title="@_localizer["remove"]">
+          <button class="list-btn" @onclick="(async () => await DeleteAsync(item.Id))" data-bs-toggle="tooltip" title="@_localizer["remove"]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x text-danger" viewBox="0 0 16 16">
               <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
             </svg>
@@ -33,6 +31,11 @@
         </li>
       }
     </ul>
+
+  }
+  else
+  {
+    <p class="list-notfound">@_localizer["not-found"]</p>
   }
 </div>
 
@@ -42,18 +45,18 @@
 
   protected override async Task OnInitializedAsync()
   {
-    await Load();
+    await LoadAsync();
   }
 
-  protected async Task Load()
+  protected async Task LoadAsync()
   {
-    Subscribers = await _http.GetFromJsonAsync<List<SubscriberDto>>($"api/newsletter/subscribers");
+    Subscribers = await _http.GetFromJsonAsync<List<SubscriberDto>>($"api/subscriber/items");
   }
 
-  protected async Task RemoveSubscription(int id)
+  protected async Task DeleteAsync(int id)
   {
-    Toast(await _http.DeleteAsync($"api/newsletter/unsubscribe/{id}"));
-    await Load();
+    Toast(await _http.DeleteAsync($"api/subscriber/{id}"));
+    await LoadAsync();
   }
 
   protected void Toast(HttpResponseMessage msg)
