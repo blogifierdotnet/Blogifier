@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Newsletters;
 
-public class EmailProvider
+public class EmailManager
 {
   private readonly ILogger _logger;
 
-  public EmailProvider(ILogger<EmailProvider> logger)
+  public EmailManager(ILogger<EmailManager> logger)
   {
     _logger = logger;
   }

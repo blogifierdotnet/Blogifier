@@ -13,12 +13,12 @@ namespace Blogifier.Newsletters;
 public class NewsletterProvider : AppProvider<Newsletter, int>
 {
   private readonly IMapper _mapper;
-  private readonly EmailProvider _emailProvider;
+  private readonly EmailManager _emailProvider;
 
   public NewsletterProvider(
     IMapper mapper,
     AppDbContext dbContext,
-    EmailProvider emailProvider)
+    EmailManager emailProvider)
     : base(dbContext)
   {
     _mapper = mapper;

@@ -83,7 +83,7 @@ builder.Services.AddScoped<StorageProvider>();
 builder.Services.AddScoped<OptionProvider>();
 builder.Services.AddScoped<AnalyticsProvider>();
 
-builder.Services.AddScoped<EmailProvider>();
+builder.Services.AddScoped<EmailManager>();
 builder.Services.AddScoped<ImportManager>();
 builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();
