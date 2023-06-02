@@ -1,11 +1,14 @@
-@layout SettingsLayout
+
 @page "/admin/settings/users"
 
+@layout SettingsLayout
+
 @inject HttpClient _http
-@inject IMapper _mapper
 @inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
+@inject IMapper _mapper
 @inject IToaster _toaster
+
 
 <PageTitleComponent Title="@_localizer["users-settings"]" />
 
@@ -81,39 +84,6 @@
     <div>@_localizer["list-is-empty"]</div>
   }
 </div>
-
-@*@if (showForm && SelectedAuthor != null)
-{
-  <h1 class="section-title">@_localizer["add-user"]</h1>
-  <div class="section-content -half">
-    <EditForm Model="@SelectedAuthor" OnValidSubmit="Save">
-      <DataAnnotationsValidator />
-      <div class="form-item">
-        <label class="form-label">@_localizer["email"]</label>
-        <input class="form-control" type="email" @bind="SelectedAuthor.Email" />
-        <ValidationMessage For="@(() => SelectedAuthor.Email)"></ValidationMessage>
-      </div>
-      <div class="form-item">
-        <label class="form-label">@_localizer["user-name"]</label>
-        <input class="form-control" tyoe="text" @bind="SelectedAuthor.DisplayName" />
-        <ValidationMessage For="@(() => SelectedAuthor.DisplayName)"></ValidationMessage>
-      </div>
-      <div class="form-item">
-        <label class="form-label">@_localizer["password"]</label>
-        <input class="form-control" type="password" @bind="SelectedAuthor.Password" />
-        <ValidationMessage For="@(() => SelectedAuthor.Password)"></ValidationMessage>
-      </div>
-      <div class="form-item">
-        <label class="form-label">@_localizer["user-bio"]</label>
-        <textarea class="form-control" rows="3" @bind="SelectedAuthor.Bio" />
-      </div>
-      <div class="form-item">
-        <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
-        <button type="button" @onclick="Cancel" class="btn btn-default px-4">@_localizer["cancel"]</button>
-      </div>
-    </EditForm>
-  </div>
-}*@
 
 @code {
 
