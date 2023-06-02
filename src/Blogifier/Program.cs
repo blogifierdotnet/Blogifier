@@ -142,7 +142,10 @@ app.UseCors(BlogifierConstant.PolicyCorsName);
 app.UseRouting();
 app.UseResponseCaching();
 app.UseOutputCache();
-app.UseRequestLocalization();
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+  ApplyCurrentCultureToResponseHeaders = true
+});
 app.UseAuthentication();
 app.UseAuthorization();
 var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
