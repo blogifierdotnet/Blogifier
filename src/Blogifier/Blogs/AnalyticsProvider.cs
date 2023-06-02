@@ -33,17 +33,18 @@ public class AnalyticsProvider
     return await query.ToListAsync();
   }
 
-  public async Task<bool> SaveDisplayType(int type)
-  {
-    var blog = await _dbContext.Blogs.FirstAsync();
-    blog.AnalyticsListType = type;
-    return await _dbContext.SaveChangesAsync() > 0;
-  }
+  //public async Task SaveDisplayType(int type)
+  //{
+  //  var blog = await _dbContext.Blogs.FirstAsync();
+  //  blog.AnalyticsListType = type;
+  //  await _dbContext.SaveChangesAsync();
+  //}
 
-  public async Task<bool> SaveDisplayPeriod(int period)
-  {
-    var blog = await _dbContext.Blogs.OrderBy(b => b.Id).FirstAsync();
-    blog.AnalyticsPeriod = period;
-    return await _dbContext.SaveChangesAsync() > 0;
-  }
+  //public async Task SaveDisplayPeriod(int period)
+  //{
+  //  var blog = await _dbContext.Blogs.OrderBy(b => b.Id).FirstAsync();
+  //  blog.AnalyticsPeriod = period;
+  //  await _dbContext.SaveChangesAsync();
+  //}
+
 }

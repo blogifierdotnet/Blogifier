@@ -1,6 +1,6 @@
-using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -13,39 +13,6 @@ namespace Blogifier.Data.Migrations
     protected override void Up(MigrationBuilder migrationBuilder)
     {
       migrationBuilder.AlterDatabase()
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
-          name: "Blogs",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            Title = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Description = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Theme = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            IncludeFeatured = table.Column<bool>(type: "tinyint(1)", nullable: false),
-            ItemsPerPage = table.Column<int>(type: "int", nullable: false),
-            Cover = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Logo = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            HeaderScript = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            FooterScript = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: true)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            AnalyticsListType = table.Column<int>(type: "int", nullable: false),
-            AnalyticsPeriod = table.Column<int>(type: "int", nullable: false)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_Blogs", x => x.Id);
-          })
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
@@ -64,35 +31,6 @@ namespace Blogifier.Data.Migrations
           constraints: table =>
           {
             table.PrimaryKey("PK_Categories", x => x.Id);
-          })
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
-          name: "MailSettings",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            Host = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Port = table.Column<int>(type: "int", nullable: false),
-            UserEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            UserPassword = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            FromName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            FromEmail = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            ToName = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Enabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_MailSettings", x => x.Id);
           })
           .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -425,12 +363,6 @@ namespace Blogifier.Data.Migrations
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-      migrationBuilder.DropTable(
-          name: "Blogs");
-
-      migrationBuilder.DropTable(
-          name: "MailSettings");
-
       migrationBuilder.DropTable(
           name: "Newsletters");
 

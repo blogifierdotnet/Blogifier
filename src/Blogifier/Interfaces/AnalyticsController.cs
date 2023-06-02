@@ -8,6 +8,7 @@ namespace Blogifier.Interfaces;
 
 [Route("api/analytics")]
 [ApiController]
+[Authorize]
 public class AnalyticsController : ControllerBase
 {
   private readonly AnalyticsProvider _analyticsProvider;
@@ -16,7 +17,6 @@ public class AnalyticsController : ControllerBase
     _analyticsProvider = analyticsProvider;
   }
 
-  [Authorize]
   [HttpGet]
   public async Task<AnalyticsDto> GetAnalytics()
   {
@@ -24,17 +24,15 @@ public class AnalyticsController : ControllerBase
     return new AnalyticsDto { Blogs = blogs };
   }
 
-  [Authorize]
-  [HttpPut("displayType/{typeId:int}")]
-  public async Task<ActionResult<bool>> SaveDisplayType(int typeId)
-  {
-    return await _analyticsProvider.SaveDisplayType(typeId);
-  }
+  //[HttpPut("displayType/{typeId:int}")]
+  //public async Task SaveDisplayType(int typeId)
+  //{
+  //  await _analyticsProvider.SaveDisplayType(typeId);
+  //}
 
-  [Authorize]
-  [HttpPut("displayPeriod/{typeId:int}")]
-  public async Task<ActionResult<bool>> SaveDisplayPeriod(int typeId)
-  {
-    return await _analyticsProvider.SaveDisplayPeriod(typeId);
-  }
+  //[HttpPut("displayPeriod/{typeId:int}")]
+  //public async Task SaveDisplayPeriod(int typeId)
+  //{
+  //  await _analyticsProvider.SaveDisplayPeriod(typeId);
+  //}
 }

@@ -12,21 +12,35 @@
 @inject IToaster _toaster
 
 @code {
-  protected BarConfig _config;
-  protected List<PostVisit> _visits;
+
+  protected BarConfig _config = default!;
+  protected List<OptionItem> _dateOptions = default!;
+  protected List<PostVisit> _visits = default!;
   protected bool _hideGraph = false;
   protected bool _hideList = true;
-  protected List<OptionItem> _dateOptions;
   protected AnalyticsDto? _analytics;
+
   protected override async Task OnInitializedAsync()
   {
-    _config = GetConfig();
-    _dateOptions = new List<OptionItem>();
-    _dateOptions.Add(new OptionItem { Id = 1, Title = _localizer["today"] });
-    _dateOptions.Add(new OptionItem { Id = 2, Title = _localizer["yesterday"] });
-    _dateOptions.Add(new OptionItem { Id = 3, Title = _localizer["7-days"] });
-    _dateOptions.Add(new OptionItem { Id = 4, Title = _localizer["30-days"] });
-    _dateOptions.Add(new OptionItem { Id = 5, Title = _localizer["90-days"] });
+    _config = new BarConfig
+    {
+      Options = new BarOptions
+      {
+        Responsive = true,
+        Legend = new Legend
+        {
+          Position = Position.Top
+        }
+      }
+    };
+    _dateOptions = new List<OptionItem>
+    {
+      new OptionItem { Id = 1, Title = _localizer["today"] },
+      new OptionItem { Id = 2, Title = _localizer["yesterday"] },
+      new OptionItem { Id = 3, Title = _localizer["7-days"] },
+      new OptionItem { Id = 4, Title = _localizer["30-days"] },
+      new OptionItem { Id = 5, Title = _localizer["90-days"] },
+    };
     Load();
     _analytics = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
   }
@@ -61,20 +75,6 @@
   }
 
 
-  protected BarConfig GetConfig()
-  {
-    return new BarConfig
-      {
-        Options = new BarOptions
-        {
-          Responsive = true,
-          Legend = new Legend
-          {
-            Position = Position.Top
-          }
-        }
-      };
-  }
 
   protected void LoadData(IDataset<int> dataset, BarChartModel model)
   {
@@ -104,13 +104,13 @@
     Toast(await _http.PutAsJsonAsync<int>($"api/analytics/displayType/{typeId}", typeId));
   }
 
-  protected async Task DateOptionSelect(int id)
+  protected void DateOptionSelect(int id)
   {
-    Blog blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-    blog.AnalyticsPeriod = id;
-    _analytics.DisplayPeriod = (AnalyticsPeriod)id;
-    Toast(await _http.PutAsJsonAsync<Blog>("api/blog", blog));
-    Load();
+    //var blog = await _http.GetFromJsonAsync<BlogEitorDto>("api/blog");
+    //blog.AnalyticsPeriod = id;
+    //_analytics.DisplayPeriod = (AnalyticsPeriod)id;
+    //Toast(await _http.PutAsJsonAsync<Blog>("api/blog", blog));
+    //Load();
   }
 
   protected BarChartModel TestData()
@@ -205,11 +205,11 @@
             <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="dropdownAnalytics">
               <div class="mb-1 text-muted">@_localizer["date"]:</div>
               <ul class="mb-3 list-unstyled">
-                @if (_dateOptions != null && Analytics != null)
+                @if (_dateOptions != null && _analytics != null)
                 {
                   foreach (var option in _dateOptions)
                   {
-                    var cls = Analytics.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
+                    var cls = _analytics.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
                     "py-1 px-2 rounded dropdown-item";
                     <li>
                       <button type="button" class="@cls" @onclick="() => DateOptionSelect(option.Id)">@option.Title</button>

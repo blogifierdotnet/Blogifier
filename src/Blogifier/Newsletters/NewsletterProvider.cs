@@ -2,7 +2,6 @@ using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

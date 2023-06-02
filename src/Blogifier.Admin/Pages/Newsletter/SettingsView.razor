@@ -60,8 +60,15 @@
 
   protected override async Task OnInitializedAsync()
   {
-    var result = await _http.GetFromJsonAsync<MailSettingDto>("api/mail/settings");
-    if (result != null) Mail = result;
+    var response = await _http.GetAsync("api/mail/settings");
+    if (response.IsSuccessStatusCode)
+    {
+      var stream = await response.Content.ReadAsStreamAsync();
+      if (stream.Length > 0)
+      {
+        Mail = (await JsonSerializer.DeserializeAsync<MailSettingDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      }
+    }
   }
 
   protected async Task SaveAsync()
@@ -69,9 +76,9 @@
     Toast(await _http.PutAsJsonAsync("api/mail/settings", Mail));
   }
 
-  protected void Toast(HttpResponseMessage msg)
+  protected void Toast(HttpResponseMessage response)
   {
-    if (msg.IsSuccessStatusCode)
+    if (response.IsSuccessStatusCode)
       _toaster.Success(_localizer["completed"]);
     else
       _toaster.Error(_localizer["generic-error"]);
