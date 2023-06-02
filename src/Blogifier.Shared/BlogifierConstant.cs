@@ -6,7 +6,7 @@ namespace Blogifier;
 public static class BlogifierConstant
 {
   public const string PolicyAdminName = "Administrator";
-  public static readonly string PolicyAdminValue =$"{((int)UserType.Administrator)}" ;
+  public static readonly string PolicyAdminValue = $"{((int)UserType.Administrator)}";
 
   public const string PolicyCorsName = "BlogifierPolicy";
   public const string OptionsName = "Blogifier";
