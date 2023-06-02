@@ -85,8 +85,14 @@
 
   protected async Task Save()
   {
-    Toast(await _http.PutAsJsonAsync($"api/user/{Id}", User));
-    Cancel();
+    var response = await _http.PutAsJsonAsync($"api/user/{Id}", User);
+    if (response.IsSuccessStatusCode)
+    {
+      _toaster.Success(_localizer["completed"]);
+      Cancel();
+      return;
+    }
+    _toaster.Error(_localizer["generic-error"]);
   }
 
   protected void Cancel()
@@ -94,11 +100,4 @@
     _navigation.NavigateTo("/admin/settings/users");
   }
 
-  protected void Toast(HttpResponseMessage response)
-  {
-    if (response.IsSuccessStatusCode)
-      _toaster.Success(_localizer["completed"]);
-    else
-      _toaster.Error(_localizer["generic-error"]);
-  }
 }

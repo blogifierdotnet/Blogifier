@@ -41,16 +41,4 @@ public class UserProvider
       .Where(m => m.Id == id);
     return await _mapper.ProjectTo<UserInfoDto>(query).FirstOrDefaultAsync();
   }
-
-  public async Task<UserInfo> UpdateAsync(UserInfoDto input)
-  {
-    var user = await _dbContext.Users.FirstAsync(m => m.Id == input.Id);
-    user.NickName = input.NickName;
-    user.Avatar = input.Avatar;
-    user.Bio = input.Bio;
-    user.Type = input.Type;
-    _dbContext.Update(user);
-    await _dbContext.SaveChangesAsync();
-    return user;
-  }
 }
