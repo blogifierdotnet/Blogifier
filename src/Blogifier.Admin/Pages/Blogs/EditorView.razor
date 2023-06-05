@@ -81,12 +81,14 @@
       </div>
     </div>
   </div>
-  <EditorComponent Content="@Post.Content" Toolbar="fullToolbar" />
+  <EditorComponent @ref="_editorComponent" Content="@Post.Content" Toolbar="fullToolbar" />
 </div>
 
 @code {
 
   [Parameter] public string? Slug { get; set; }
+
+  private EditorComponent _editorComponent = default!;
 
   protected PostEditorDto Post { get; set; } = new PostEditorDto
     {
@@ -112,13 +114,14 @@
   protected async Task SavePostAsync(PostState postState)
   {
     Post.State = postState;
-    Post.Content = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getEditorValue", "");
-    if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(Post.Content))
+
+    var content = await _editorComponent.GetValueAsync();
+    if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(content))
     {
       _toaster.Error(_localizer["title-content-required"]);
       return;
     }
-
+    Post.Content = content;
     Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
@@ -129,12 +132,12 @@
     if (Post.Id == 0)
     {
       var response = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
-      await CheckSetEditorResponseAsync(response);
+      await CheckResponseAsync(response);
     }
     else
     {
       var response = await client.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
-      await CheckSetEditorResponseAsync(response);
+      await CheckResponseAsync(response);
     }
   }
 
@@ -183,7 +186,7 @@
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
   }
 
-  private async Task CheckSetEditorResponseAsync(HttpResponseMessage response)
+  private async Task CheckResponseAsync(HttpResponseMessage response)
   {
     if (response.IsSuccessStatusCode)
     {

@@ -6,11 +6,22 @@
   "scripts": {
     "start": "sass --watch scss:../wwwroot/admin/css --style=compressed",
     "rtl": "rtlcss ../wwwroot/admin/css/styles.css css/styles.rtl.css",
-    "build": "sass scss:../wwwroot/admin/css --style=compressed"
+    "build-sass": "sass scss:../wwwroot/admin/css --style=compressed",
+    "rollup": "rollup --config",
+    "build": "npm run build-sass && npm run rollup"
   },
+  "type": "module",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
     "bootstrap": "~5.1.0",
+    "glob": "^10.2.6",
+    "rollup": "^3.23.1",
     "rtlcss": "^3.3.0",
     "sass": "^1.32.12"
+  },
+  "dependencies": {
+    "easymde": "^2.18.0"
   }
 }

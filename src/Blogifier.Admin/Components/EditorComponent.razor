@@ -1,19 +1,46 @@
-
-@inject IJSRuntime _jsRuntime
 @inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime _jsRuntime
+@implements IAsyncDisposable
 
 @code {
 
   [Parameter] public string Content { get; set; } = default!;
   [Parameter] public string Toolbar { get; set; } = default!;
 
+  private IJSObjectReference? module;
+
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
     if (firstRender)
     {
-      await _jsRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+      module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
+      if (module is not null)
+      {
+        await module.InvokeVoidAsync("loadEditor", Toolbar);
+      }
     }
-    await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+
+    if (module is not null)
+    {
+      await module.InvokeVoidAsync("setEditorValue", Content);
+    }
+  }
+
+  async ValueTask IAsyncDisposable.DisposeAsync()
+  {
+    if (module is not null)
+    {
+      await module.DisposeAsync();
+    }
+  }
+
+  public async ValueTask<string?> GetValueAsync()
+  {
+    if (module is not null)
+    {
+      return await module.InvokeAsync<string>("getEditorValue");
+    }
+    return null;
   }
 }
 

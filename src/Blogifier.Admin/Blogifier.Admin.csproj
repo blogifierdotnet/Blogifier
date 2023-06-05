@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.5" />
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
   </ItemGroup>
@@ -30,7 +31,8 @@
     <None Include="assets\**" />
   </ItemGroup>
 
-  <Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+  <!--<Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">-->
+  <Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug_NPM'">
     <Exec WorkingDirectory="assets" Command="npm run build" />
   </Target>
 

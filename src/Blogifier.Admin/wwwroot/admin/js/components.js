@@ -56,28 +56,6 @@ window.commonJsFunctions = {
       });
     }, 1000);
   },
-  loadEditor: function (toolbar) {
-    autosize(document.querySelectorAll('.autosize'));
-    easymde = getEditor(toolbar);
-    easymde.codemirror.on("paste", function(self,event)
-    {
-      _editor = easymde;
-      fileManager.clipBoardUpload(event)
-    });
-    window.onscroll = function () { stickyToolbar(toolbar) };
-    editorToolbarTooltip();
-  },
-  setEditorValue: function (txt) {
-    easymde.value(txt
-      .replace(/&#xA;/g, '\r\n')
-      .replace(/&#xD;/g, '')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"'));
-  },
-  getEditorValue: function () {
-    return easymde.value();
-  },
   showModal: function (id) {
     document.getElementById(id).showModal();
   },
