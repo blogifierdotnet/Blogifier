@@ -81,7 +81,7 @@
       </div>
     </div>
   </div>
-  <EditorComponent @ref="_editorComponent" Content="@Post.Content" Toolbar="fullToolbar" />
+  <EditorComponent @ref="_editorComponent" Toolbar="fullToolbar" />
 </div>
 
 @code {
@@ -184,6 +184,7 @@
   {
     var headTitle = _localizer["edit"] + " - " + Post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+    await _editorComponent.SetValueAsync(Post.Content);
   }
 
   private async Task CheckResponseAsync(HttpResponseMessage response)

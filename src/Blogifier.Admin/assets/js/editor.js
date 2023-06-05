@@ -169,41 +169,6 @@ const miniToolbar = [
   editorToolbar_preview,
 ];
 
-function getEditor(_toolbar) {
-  let selectedToolbar = fullToolbar;
-  if (_toolbar == "miniToolbar") {
-    selectedToolbar = miniToolbar;
-  }
-
-  let bf_editor = document.getElementById('bf_editor');
-  let easyMDE = new EasyMDE({
-    element: bf_editor,
-    autoDownloadFontAwesome: false,
-    indentWithTabs: false,
-    status: false,
-    height: "200px",
-    minHeight: "200px",
-    parsingConfig: {
-      allowAtxHeaderWithoutSpace: true,
-      underscoresBreakWords: true
-    },
-    renderingConfig: {
-      singleLineBreaks: false,
-      codeSyntaxHighlighting: true
-    },
-    toolbar: selectedToolbar,
-    insertTexts: {
-      horizontalRule: ["", "\n---\n"]
-    }
-  });
-  return easyMDE;
-}
-
-
-// Image Upload
-async function insertImage(editor) {
-  await DotNet.invokeMethodAsync('Blogifier.Admin', '{.NET METHOD ID}', { ARGUMENTS });
-}
 
 // TODO: insert video or embed not only YouTube.
 function insertYoutube(editor) {
@@ -230,7 +195,6 @@ function stickyToolbar(tool) {
 }
 
 function editorToolbarTooltip() {
-  console.log('x');
   let buttons = document.querySelectorAll('.editor-toolbar button');
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].setAttribute('data-bs-toggle', 'tooltip');
@@ -240,11 +204,37 @@ function editorToolbarTooltip() {
   commonJsFunctions.setTooltip();
 }
 
-let easymde = {};
+let easymde;
+let _uploadElement;
 
-export function loadEditor(toolbar) {
+export function loadEditor(toolbar, textareaElement, uploadElement) {
+  _uploadElement = uploadElement;
   autosize(document.querySelectorAll('.autosize'));
-  easymde = getEditor(toolbar);
+  let selectedToolbar = fullToolbar;
+  if (toolbar == "miniToolbar") {
+    selectedToolbar = miniToolbar;
+  }
+  let easyMDE = new EasyMDE({
+    element: textareaElement,
+    autoDownloadFontAwesome: false,
+    indentWithTabs: false,
+    status: false,
+    height: "200px",
+    minHeight: "200px",
+    parsingConfig: {
+      allowAtxHeaderWithoutSpace: true,
+      underscoresBreakWords: true
+    },
+    renderingConfig: {
+      singleLineBreaks: false,
+      codeSyntaxHighlighting: true
+    },
+    toolbar: selectedToolbar,
+    insertTexts: {
+      horizontalRule: ["", "\n---\n"]
+    }
+  });
+  easymde = easyMDE;
   easymde.codemirror.on("paste", function (self, event) {
     _editor = easymde;
     fileManager.clipBoardUpload(event)
@@ -253,7 +243,13 @@ export function loadEditor(toolbar) {
   editorToolbarTooltip();
 }
 
+// Image Upload
+async function insertImage(editor) {
+  _uploadElement.click();
+}
+
 export function setEditorValue(txt) {
+  console.log(txt);
   easymde.value(txt
     .replace(/&#xA;/g, '\r\n')
     .replace(/&#xD;/g, '')
@@ -263,5 +259,19 @@ export function setEditorValue(txt) {
 }
 
 export function getEditorValue() {
+  return easymde.value();
+}
+
+export function previewImage(inputElem) {
+  console.log(inputElem);
+  const file = inputElem.files[0];
+  const fileName = file.name;
+  const url = URL.createObjectURL(file);
+  console.log(url);
+  let output = '\r\n![' + fileName + '](' + url + ')';
+  let codemirror = easymde.codemirror;
+  let currSelection = codemirror.selection;
+  console.log(currSelection);
+  let transactionSpec = codemirror.replaceSelection(output);
   return easymde.value();
 }

@@ -7,8 +7,9 @@
     "start": "sass --watch scss:../wwwroot/admin/css --style=compressed",
     "rtl": "rtlcss ../wwwroot/admin/css/styles.css css/styles.rtl.css",
     "build-sass": "sass scss:../wwwroot/admin/css --style=compressed",
-    "rollup": "rollup --config",
-    "build": "npm run build-sass && npm run rollup"
+    "build-rollup": "rollup --config",
+    "rollup":"rollup --config -w",
+    "build": "npm run build-sass && npm run build-rollup"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",

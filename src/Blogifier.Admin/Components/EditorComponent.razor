@@ -1,14 +1,15 @@
+@implements IAsyncDisposable
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsRuntime
-@implements IAsyncDisposable
+@inject ILogger<EditorComponent> _logger
 
 @code {
-
-  [Parameter] public string Content { get; set; } = default!;
   [Parameter] public string Toolbar { get; set; } = default!;
 
   private IJSObjectReference? module;
-  private InputFile? inputFile;
+  private ElementReference? _textareaReference { get; set; }
+  private InputFile? inputImageFiles;
+  private List<IBrowserFile> loadedImageFiles = new();
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
@@ -17,20 +18,27 @@
       module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
       if (module is not null)
       {
-        await module.InvokeVoidAsync("loadEditor", Toolbar, );
+        await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
       }
     }
+  }
 
+  protected async Task LoadImageFiles()
+  {
     if (module is not null)
     {
-      await module.InvokeVoidAsync("setEditorValue", Content);
+      await module.InvokeAsync<string>("previewImage", inputImageFiles?.Element);
     }
   }
 
-  private async Task LoadFiles(InputFileChangeEventArgs e)
+  public async ValueTask SetValueAsync(string value)
   {
-
+    if (module is not null)
+    {
+      await module.InvokeVoidAsync("setEditorValue", value);
+    }
   }
+
 
   public async ValueTask<string?> GetValueAsync()
   {
@@ -51,7 +59,7 @@
 }
 
 <div class="easymde-wrapper">
-  <textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
+  <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
 </div>
 
-<InputFile @ref="inputFile" OnChange="@LoadFiles" style="display:none;" />
+<InputFile @ref="inputImageFiles" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />

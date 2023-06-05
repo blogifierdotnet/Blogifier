@@ -6,7 +6,7 @@ export default {
   output: {
     format: 'iife',
     file: '../wwwroot/js/index.js',
-    plugins: [terser()]
+    //plugins: [terser()]
   },
   plugins: [
     resolve()
