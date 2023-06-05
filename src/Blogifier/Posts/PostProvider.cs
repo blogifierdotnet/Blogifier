@@ -17,10 +17,7 @@ public class PostProvider : AppProvider<Post, int>
 {
   private readonly IMapper _mapper;
 
-  public PostProvider(
-    IMapper mapper,
-    AppDbContext dbContext)
-    : base(dbContext)
+  public PostProvider(IMapper mapper, AppDbContext dbContext) : base(dbContext)
   {
     _mapper = mapper;
   }
@@ -83,13 +80,13 @@ public class PostProvider : AppProvider<Post, int>
     return new PostSlugDto { Post = post, Older = older, Newer = newer, Related = related };
   }
 
-  public async Task<PostPagerDto> GetAsync(int page, int pageSize)
+  public async Task<PostPagerDto> GetPostsAsync(int page, int pageSize)
   {
     var skip = (page - 1) * pageSize;
     var query = _dbContext.Posts
-       .AsNoTracking()
-       .Include(pc => pc.User)
-       .Where(m => 1 == 1);
+      .AsNoTracking()
+      .Include(pc => pc.User)
+      .Where(m => m.PostType == PostType.Post && m.State >= PostState.Release);
 
     var total = await query.CountAsync();
     query = query.Skip(skip).Take(pageSize);
@@ -239,7 +236,7 @@ public class PostProvider : AppProvider<Post, int>
   {
     await query.ExecuteUpdateAsync(setters =>
         setters.SetProperty(b => b.State, state)
-        .SetProperty(b => b.PublishedAt, b => b.PublishedAt ?? (state >= PostState.Release ? DateTime.UtcNow : null)));
+        .SetProperty(b => b.PublishedAt, b => GetPublishedAt(b.PublishedAt, state)));
   }
 
   public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
@@ -255,18 +252,7 @@ public class PostProvider : AppProvider<Post, int>
     var postCategories = await CheckPostCategories(postInput.Categories);
     var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
     var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
-    var publishedAt = postInput.PublishedAt;
-    if (postInput.State >= PostState.Release)
-    {
-      if (!publishedAt.HasValue)
-      {
-        publishedAt = DateTime.UtcNow;
-      }
-    }
-    else
-    {
-      publishedAt = null;
-    }
+    var publishedAt = GetPublishedAt(postInput.PublishedAt, postInput.State);
     var post = new Post
     {
       UserId = userId,
@@ -282,6 +268,22 @@ public class PostProvider : AppProvider<Post, int>
     };
     _dbContext.Posts.Add(post);
     return post;
+  }
+
+  private static DateTime? GetPublishedAt(DateTime? inputPublishedAt, PostState inputState)
+  {
+    if (inputState >= PostState.Release)
+    {
+      if (!inputPublishedAt.HasValue)
+      {
+        return DateTime.UtcNow;
+      }
+      return inputPublishedAt;
+    }
+    else
+    {
+      return null;
+    }
   }
 
   public async Task<IEnumerable<PostEditorDto>> AddAsync(IEnumerable<PostEditorDto> posts, string userId)
@@ -310,11 +312,12 @@ public class PostProvider : AppProvider<Post, int>
     post.Title = postInput.Title;
     var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
     var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
-    post.Description = contentFiltr;
-    post.Content = descriptionFiltr;
+    post.Description = descriptionFiltr;
+    post.Content = contentFiltr;
     post.Cover = postInput.Cover;
     post.PostCategories = postCategories;
-
+    post.PublishedAt = GetPublishedAt(postInput.PublishedAt, postInput.State);
+    post.State = postInput.State;
     _dbContext.Update(post);
     await _dbContext.SaveChangesAsync();
     return _mapper.Map<PostEditorDto>(post);
@@ -373,6 +376,5 @@ public class PostProvider : AppProvider<Post, int>
     }
     return original;
   }
-
 
 }
