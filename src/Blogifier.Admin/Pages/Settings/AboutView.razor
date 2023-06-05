@@ -9,7 +9,7 @@
   protected AboutDto? About { get; set; }
   protected override async Task OnInitializedAsync()
   {
-    About = await _http.GetFromJsonAsync<AboutDto>($"api/about");
+    About = await _http.GetFromJsonAsync<AboutDto>($"api/blog/about");
   }
 }
 
