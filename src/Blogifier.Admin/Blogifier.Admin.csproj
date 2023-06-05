@@ -31,8 +31,8 @@
     <None Include="assets\**" />
   </ItemGroup>
 
-  <!--<Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">-->
-  <Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug_NPM'">
+  <Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+  <!--<Target Name="NpmBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug_NPM'">-->
     <Exec WorkingDirectory="assets" Command="npm run build" />
   </Target>
 
