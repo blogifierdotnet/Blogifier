@@ -199,22 +199,18 @@ function getEditor(_toolbar) {
   return easyMDE;
 }
 
-let _editor = {};
 
 // Image Upload
-function insertImage(editor) {
-  _editor = editor;
-  fileManager.uploadClick('PostImage');
+async function insertImage(editor) {
+  await DotNet.invokeMethodAsync('Blogifier.Admin', '{.NET METHOD ID}', { ARGUMENTS });
 }
 
 // TODO: insert video or embed not only YouTube.
 function insertYoutube(editor) {
-  _editor = editor;
   let id = prompt("Please enter video ID", "");
-
   if (id !== null && id !== "") {
     let tag = `<iframe width="700" height="400" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    let cm = _editor.codemirror;
+    let cm = editor.codemirror;
     cm.replaceSelection(tag);
   }
 }

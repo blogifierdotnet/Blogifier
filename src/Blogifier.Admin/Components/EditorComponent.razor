@@ -8,6 +8,7 @@
   [Parameter] public string Toolbar { get; set; } = default!;
 
   private IJSObjectReference? module;
+  private InputFile? inputFile;
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
@@ -16,7 +17,7 @@
       module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
       if (module is not null)
       {
-        await module.InvokeVoidAsync("loadEditor", Toolbar);
+        await module.InvokeVoidAsync("loadEditor", Toolbar, );
       }
     }
 
@@ -24,6 +25,11 @@
     {
       await module.InvokeVoidAsync("setEditorValue", Content);
     }
+  }
+
+  private async Task LoadFiles(InputFileChangeEventArgs e)
+  {
+
   }
 
   public async ValueTask<string?> GetValueAsync()
@@ -47,3 +53,5 @@
 <div class="easymde-wrapper">
   <textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
 </div>
+
+<InputFile @ref="inputFile" OnChange="@LoadFiles" style="display:none;" />

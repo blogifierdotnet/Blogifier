@@ -88,7 +88,6 @@ window.commonJsFunctions = {
   }
 };
 
-
 window.DataService = function () {
   let upload = function (url, obj, success, fail) {
     fetch(url, {
