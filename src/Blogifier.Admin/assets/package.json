@@ -22,6 +22,8 @@
     "sass": "^1.32.12"
   },
   "dependencies": {
-    "easymde": "^2.18.0"
+    "autosize": "^6.0.1",
+    "easymde": "^2.18.0",
+    "highlight.js": "^11.8.0"
   }
 }

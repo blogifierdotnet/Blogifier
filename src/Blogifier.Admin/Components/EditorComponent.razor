@@ -26,14 +26,6 @@
     }
   }
 
-  async ValueTask IAsyncDisposable.DisposeAsync()
-  {
-    if (module is not null)
-    {
-      await module.DisposeAsync();
-    }
-  }
-
   public async ValueTask<string?> GetValueAsync()
   {
     if (module is not null)
@@ -41,6 +33,14 @@
       return await module.InvokeAsync<string>("getEditorValue");
     }
     return null;
+  }
+
+  async ValueTask IAsyncDisposable.DisposeAsync()
+  {
+    if (module is not null)
+    {
+      await module.DisposeAsync();
+    }
   }
 }
 
