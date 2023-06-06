@@ -263,15 +263,11 @@ export function getEditorValue() {
 }
 
 export function previewImage(inputElem) {
-  console.log(inputElem);
   const file = inputElem.files[0];
   const fileName = file.name;
   const url = URL.createObjectURL(file);
-  console.log(url);
   let output = '\r\n![' + fileName + '](' + url + ')';
   let codemirror = easymde.codemirror;
-  let currSelection = codemirror.selection;
-  console.log(currSelection);
-  let transactionSpec = codemirror.replaceSelection(output);
-  return easymde.value();
+  codemirror.selection;
+  codemirror.replaceSelection(output);
 }

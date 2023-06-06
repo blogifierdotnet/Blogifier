@@ -267,17 +267,13 @@ function getEditorValue() {
 }
 
 function previewImage(inputElem) {
-  console.log(inputElem);
   const file = inputElem.files[0];
   const fileName = file.name;
   const url = URL.createObjectURL(file);
-  console.log(url);
   let output = '\r\n![' + fileName + '](' + url + ')';
   let codemirror = easymde.codemirror;
-  let currSelection = codemirror.selection;
-  console.log(currSelection);
+  codemirror.selection;
   codemirror.replaceSelection(output);
-  return easymde.value();
 }
 
 export { getEditorValue, loadEditor, previewImage, setEditorValue };
