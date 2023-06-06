@@ -21,11 +21,11 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
   public DbSet<OptionInfo> Options { get; set; }
   public DbSet<Post> Posts { get; set; }
   public DbSet<Storage> Storages { get; set; }
+  public DbSet<StorageReference> StorageReferences { get; set; }
   public DbSet<Category> Categories { get; set; }
   public DbSet<PostCategory> PostCategories { get; set; }
   public DbSet<Subscriber> Subscribers { get; set; }
   public DbSet<Newsletter> Newsletters { get; set; }
-
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -69,44 +69,18 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
     {
       e.ToTable("StorageReferences");
       e.HasKey(t => new { t.StorageId, t.EntityId, t.Type });
-      e.HasOne(pt => pt.Storage)
-       .WithMany(p => p.StorageReferences)
-       .HasForeignKey(pt => pt.StorageId)
-       .OnDelete(DeleteBehavior.Cascade);
     });
 
     modelBuilder.Entity<PostCategory>(e =>
     {
       e.ToTable("PostCategories");
       e.HasKey(t => new { t.PostId, t.CategoryId });
-      e.HasOne(pt => pt.Post)
-       .WithMany(p => p.PostCategories)
-       .HasForeignKey(pt => pt.PostId)
-       .OnDelete(DeleteBehavior.Cascade);
-
-      e.HasOne(pt => pt.Category)
-       .WithMany(t => t.PostCategories)
-       .HasForeignKey(pt => pt.CategoryId)
-       .OnDelete(DeleteBehavior.Cascade);
-    });
-
-    modelBuilder.Entity<Category>(e =>
-    {
-      e.HasMany(e => e.PostCategories)
-       .WithOne(e => e.Category)
-       .HasForeignKey(e => e.CategoryId)
-       .OnDelete(DeleteBehavior.Cascade);
     });
 
     modelBuilder.Entity<Post>(e =>
     {
       e.ToTable("Post");
       e.HasIndex(b => b.Slug).IsUnique();
-
-      e.HasMany(e => e.PostCategories)
-       .WithOne(e => e.Post)
-       .HasForeignKey(e => e.PostId)
-       .OnDelete(DeleteBehavior.Cascade);
 
       e.HasMany(e => e.StorageReferences)
        .WithOne(e => e.Post)

@@ -140,7 +140,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasIndex("PostId");
 
-            b.ToTable("Newsletters");
+            b.ToTable("Newsletters", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Newsletters.Subscriber", b =>
@@ -176,7 +176,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.ToTable("Subscribers");
+            b.ToTable("Subscribers", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Options.OptionInfo", b =>
@@ -231,7 +231,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.ToTable("Categories");
+            b.ToTable("Categories", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Shared.Post", b =>
@@ -355,7 +355,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.ToTable("Storages");
+            b.ToTable("Storages", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>
