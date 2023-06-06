@@ -261,10 +261,10 @@ export function getEditorValue() {
   return easymde.value();
 }
 
-export function previewImage(inputElem) {
-  const file = inputElem.files[0];
-  const fileName = file.name;
-  const url = URL.createObjectURL(file);
+export function previewImage(url) {
+  // const file = inputElem.files[0];
+  // const fileName = file.name;
+  // const url = URL.createObjectURL(file);
   let output = '\r\n![' + fileName + '](' + url + ')';
   let codemirror = easymde.codemirror;
   codemirror.selection;

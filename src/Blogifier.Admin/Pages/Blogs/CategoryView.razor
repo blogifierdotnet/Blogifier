@@ -30,7 +30,7 @@
   {
     if (checkValue != null && Categories != null)
     {
-      bool isChecked = (bool)checkValue;
+      var isChecked = (bool)checkValue;
       Categories.ForEach(p => p.Selected = isChecked);
       StateHasChanged();
     }
@@ -38,12 +38,10 @@
 
   public async Task RunAction(GroupAction action)
   {
-    var confirm = _localizer["confirm-delete"];
-    bool confirmed = false;
-
     if (action == GroupAction.Delete)
     {
-      confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm);
+      var confirm = _localizer["confirm-delete"];
+      var confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirm.Value);
       if (!confirmed) return;
     }
 

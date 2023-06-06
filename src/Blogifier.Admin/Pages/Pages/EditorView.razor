@@ -1,6 +1,6 @@
 @page "/admin/pages/editor/{Slug?}/"
 
-@inject IHttpClientFactory _httpClientFactory
+@inject HttpClient _httpClient
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
@@ -102,8 +102,7 @@
   {
     if (!string.IsNullOrEmpty(Slug))
     {
-      var client = _httpClientFactory.CreateClient();
-      Post = (await client.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
+      Post = (await _httpClient.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
       if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
       await SetJsPostAsync(Post);
     }
@@ -125,15 +124,14 @@
 
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
 
-    var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
     {
-      var response = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
+      var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
       await CheckSetEditorResponseAsync(response);
     }
     else
     {
-      var response = await client.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
+      var response = await _httpClient.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
       await CheckSetEditorResponseAsync(response);
     }
   }
@@ -155,10 +153,9 @@
 
   protected async Task RemoveAsync(int id)
   {
-    var client = _httpClientFactory.CreateClient();
     if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
-      var result = await client.DeleteAsync($"api/post/{id}");
+      var result = await _httpClient.DeleteAsync($"api/post/{id}");
       if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
       else _toaster.Error(_localizer["generic-error"]);
       _navigation.NavigateTo($"admin");

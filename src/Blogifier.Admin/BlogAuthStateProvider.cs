@@ -10,21 +10,20 @@ namespace Blogifier.Admin;
 public class BlogAuthStateProvider : AuthenticationStateProvider
 {
   private readonly ILogger _logger;
-  protected readonly IHttpClientFactory _httpClientFactory;
+  protected readonly HttpClient _httpClient;
   protected AuthenticationState? _state;
 
-  public BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger, IHttpClientFactory httpClientFactory)
+  public BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger, HttpClient httpClient)
   {
     _logger = logger;
-    _httpClientFactory = httpClientFactory;
+    _httpClient = httpClient;
   }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync()
   {
     if (_state == null)
     {
-      var client = _httpClientFactory.CreateClient();
-      var response = await client.GetAsync("/api/token/userinfo");
+      var response = await _httpClient.GetAsync("/api/token/userinfo");
       BlogifierClaims? claims = null;
       if (response.IsSuccessStatusCode)
       {
