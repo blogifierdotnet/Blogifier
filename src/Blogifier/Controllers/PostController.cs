@@ -43,6 +43,6 @@ public class PostController : Controller
     }
     var categoriesUrl = Url.Content("~/category");
     var model = new PostModel(postSlug, categoriesUrl, main);
-    return View($"~/Views/Themes/{main.Theme}/page.cshtml", model);
+    return View($"~/Views/Themes/{main.Theme}/post.cshtml", model);
   }
 }
