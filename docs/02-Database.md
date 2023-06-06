@@ -18,6 +18,10 @@ as Default project and run these commands:
 ```
 Add-Migration Init -o Data\Migrations
 Update-Database
+
+# cil
+dotnet ef migrations Init -o Data\Migrations
+dotnet ef migrations remove
 ```
 
 First command should re-generate provider specific code migrations and second will 

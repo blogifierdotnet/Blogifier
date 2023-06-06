@@ -40,7 +40,7 @@ public class CategoryController : ControllerBase
   }
 
   [HttpGet("{postId:int}")]
-  public async Task<ICollection<Category>> GetPostCategories(int postId)
+  public async Task<IEnumerable<Category>> GetPostCategories(int postId)
   {
     return await _categoryProvider.GetPostCategories(postId);
   }
@@ -57,21 +57,9 @@ public class CategoryController : ControllerBase
     return await _categoryProvider.SearchCategories(term);
   }
 
-  [HttpPost("{postId:int}/{tag}")]
-  public async Task<ActionResult<bool>> AddPostCategory(int postId, string tag)
-  {
-    return await _categoryProvider.AddPostCategory(postId, tag);
-  }
-
   [HttpPut]
   public async Task<ActionResult<bool>> SaveCategory(Category category)
   {
     return await _categoryProvider.SaveCategory(category);
-  }
-
-  [HttpPut("{postId:int}")]
-  public async Task<ActionResult<bool>> SavePostCategories(int postId, List<Category> categories)
-  {
-    return await _categoryProvider.SavePostCategories(postId, categories);
   }
 }

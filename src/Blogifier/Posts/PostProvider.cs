@@ -48,7 +48,9 @@ public class PostProvider : AppProvider<Post, int>
 
   public async Task<PostSlugDto> GetAsync(string slug)
   {
-    var postQuery = _dbContext.Posts.Include(m => m.User).Where(p => p.Slug == slug);
+    var postQuery = _dbContext.Posts
+      .Include(m => m.User)
+      .Where(p => p.Slug == slug);
     var post = await _mapper.ProjectTo<PostToHtmlDto>(postQuery).FirstAsync();
     post.Views++;
     await _dbContext.SaveChangesAsync();
@@ -89,7 +91,7 @@ public class PostProvider : AppProvider<Post, int>
       .Where(m => m.PostType == PostType.Post && m.State >= PostState.Release);
 
     var total = await query.CountAsync();
-    query = query.Skip(skip).Take(pageSize);
+    query = query.OrderByDescending(m => m.CreatedAt).Skip(skip).Take(pageSize);
     var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
     return new PostPagerDto(items, total, page, pageSize);
   }
@@ -198,12 +200,13 @@ public class PostProvider : AppProvider<Post, int>
   public async Task<PostPagerDto> GetByCategoryAsync(string category, int page, int pageSize)
   {
     var skip = (page - 1) * pageSize;
-    var query = _dbContext.PostCategories
+    var query = _dbContext.Categories
        .AsNoTracking()
-       .Include(pc => pc.Post)
+       .Include(pc => pc.PostCategories)!
+       .ThenInclude(m => m.Post)
        .ThenInclude(m => m.User)
-       .Where(m => m.Category.Content.Contains(category))
-       .Select(m => m.Post);
+       .Where(m => m.Content.Contains(category))
+       .SelectMany(pc => pc.PostCategories!, (parent, child) => child.Post);
     var total = await query.CountAsync();
     query = query.Skip(skip).Take(pageSize);
     var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();

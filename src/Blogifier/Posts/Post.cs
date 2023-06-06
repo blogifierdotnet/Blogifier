@@ -1,5 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Identity;
+using Blogifier.Storages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,4 +34,5 @@ public class Post : AppEntity<int>
   public PostType PostType { get; set; }
   public PostState State { get; set; }
   public List<PostCategory>? PostCategories { get; set; }
+  public List<StorageReference>? StorageReferences { get; set; }
 }

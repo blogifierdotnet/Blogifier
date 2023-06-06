@@ -64,11 +64,12 @@ public class CategoryProvider : AppProvider<Category, int>
       .FirstAsync();
   }
 
-  public async Task<ICollection<Category>> GetPostCategories(int postId)
+  public async Task<IEnumerable<Category>> GetPostCategories(int postId)
   {
-    return await _dbContext.PostCategories.AsNoTracking()
-        .Where(pc => pc.PostId == postId)
-        .Select(pc => pc.Category)
+    return await _dbContext.Posts
+        .AsNoTracking()
+        .Where(pc => pc.Id == postId)
+        .SelectMany(pc => pc.PostCategories!, (parent, child) => child.Category)
         .ToListAsync();
   }
 
@@ -102,54 +103,5 @@ public class CategoryProvider : AppProvider<Category, int>
     await _dbContext.SaveChangesAsync();
 
     return category;
-  }
-
-  public async Task<bool> AddPostCategory(int postId, string tag)
-  {
-    var category = await SaveCategory(tag);
-
-    if (category == null)
-      return false;
-
-    var post = await _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
-    if (post == null)
-      return false;
-
-    post.PostCategories ??= new List<PostCategory>();
-
-    var postCategory = await _dbContext.PostCategories
-        .AsNoTracking()
-        .Where(pc => pc.CategoryId == category.Id)
-        .Where(pc => pc.PostId == postId)
-        .FirstOrDefaultAsync();
-
-    if (postCategory == null)
-    {
-      _dbContext.PostCategories.Add(new PostCategory
-      {
-        CategoryId = category.Id,
-        PostId = postId
-      });
-      return await _dbContext.SaveChangesAsync() > 0;
-    }
-
-    return false;
-  }
-
-  public async Task<bool> SavePostCategories(int postId, List<Category> categories)
-  {
-    List<PostCategory> existingPostCategories = await _dbContext.PostCategories.AsNoTracking()
-        .Where(pc => pc.PostId == postId).ToListAsync();
-
-    _dbContext.PostCategories.RemoveRange(existingPostCategories);
-
-    await _dbContext.SaveChangesAsync();
-
-    foreach (var cat in categories)
-    {
-      await AddPostCategory(postId, cat.Content);
-    }
-
-    return await _dbContext.SaveChangesAsync() > 0;
   }
 }

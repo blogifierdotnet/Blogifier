@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,4 +22,5 @@ public class Storage
   [StringLength(128)]
   public string ContentType { get; set; } = default!;
   public int StorageType { get; set; }
+  public List<StorageReference>? StorageReferences { get; set; }
 }
