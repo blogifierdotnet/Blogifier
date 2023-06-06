@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blogifier.Data.Migrations
 {
   /// <inheritdoc />
-  public partial class StorageReference : Migration
+  public partial class Storage : Migration
   {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,14 +28,40 @@ namespace Blogifier.Data.Migrations
           name: "PK_Posts",
           table: "Posts");
 
+      migrationBuilder.DropColumn(
+          name: "AuthorId",
+          table: "Storages");
+
       migrationBuilder.RenameTable(
           name: "Posts",
           newName: "Post");
+
+      migrationBuilder.RenameColumn(
+          name: "StorageType",
+          table: "Storages",
+          newName: "Type");
 
       migrationBuilder.RenameIndex(
           name: "IX_Posts_UserId",
           table: "Post",
           newName: "IX_Post_UserId");
+
+      migrationBuilder.AddColumn<string>(
+          name: "Slug",
+          table: "Storages",
+          type: "varchar(2048)",
+          maxLength: 2048,
+          nullable: false,
+          defaultValue: "")
+          .Annotation("MySql:CharSet", "utf8mb4");
+
+      migrationBuilder.AddColumn<string>(
+          name: "UserId",
+          table: "Storages",
+          type: "varchar(128)",
+          nullable: false,
+          defaultValue: "")
+          .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.AddPrimaryKey(
           name: "PK_Post",
@@ -71,6 +97,11 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateIndex(
+          name: "IX_Storages_UserId",
+          table: "Storages",
+          column: "UserId");
+
+      migrationBuilder.CreateIndex(
           name: "IX_Post_Slug",
           table: "Post",
           column: "Slug",
@@ -104,6 +135,14 @@ namespace Blogifier.Data.Migrations
           principalTable: "Post",
           principalColumn: "Id",
           onDelete: ReferentialAction.Cascade);
+
+      migrationBuilder.AddForeignKey(
+          name: "FK_Storages_User_UserId",
+          table: "Storages",
+          column: "UserId",
+          principalTable: "User",
+          principalColumn: "Id",
+          onDelete: ReferentialAction.Cascade);
     }
 
     /// <inheritdoc />
@@ -121,8 +160,16 @@ namespace Blogifier.Data.Migrations
           name: "FK_PostCategories_Post_PostId",
           table: "PostCategories");
 
+      migrationBuilder.DropForeignKey(
+          name: "FK_Storages_User_UserId",
+          table: "Storages");
+
       migrationBuilder.DropTable(
           name: "StorageReferences");
+
+      migrationBuilder.DropIndex(
+          name: "IX_Storages_UserId",
+          table: "Storages");
 
       migrationBuilder.DropPrimaryKey(
           name: "PK_Post",
@@ -132,14 +179,34 @@ namespace Blogifier.Data.Migrations
           name: "IX_Post_Slug",
           table: "Post");
 
+      migrationBuilder.DropColumn(
+          name: "Slug",
+          table: "Storages");
+
+      migrationBuilder.DropColumn(
+          name: "UserId",
+          table: "Storages");
+
       migrationBuilder.RenameTable(
           name: "Post",
           newName: "Posts");
+
+      migrationBuilder.RenameColumn(
+          name: "Type",
+          table: "Storages",
+          newName: "StorageType");
 
       migrationBuilder.RenameIndex(
           name: "IX_Post_UserId",
           table: "Posts",
           newName: "IX_Posts_UserId");
+
+      migrationBuilder.AddColumn<int>(
+          name: "AuthorId",
+          table: "Storages",
+          type: "int",
+          nullable: false,
+          defaultValue: 0);
 
       migrationBuilder.AddPrimaryKey(
           name: "PK_Posts",

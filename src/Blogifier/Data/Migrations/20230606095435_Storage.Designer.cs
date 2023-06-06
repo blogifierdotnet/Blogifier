@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Data.Migrations
 {
   [DbContext(typeof(AppDbContext))]
-  [Migration("20230606090137_StorageReference")]
-  partial class StorageReference
+  [Migration("20230606095435_Storage")]
+  partial class Storage
   {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,9 +322,6 @@ namespace Blogifier.Data.Migrations
                       .ValueGeneratedOnAdd()
                       .HasColumnType("int");
 
-            b.Property<int>("AuthorId")
-                      .HasColumnType("int");
-
             b.Property<string>("ContentType")
                       .IsRequired()
                       .HasMaxLength(128)
@@ -353,10 +350,21 @@ namespace Blogifier.Data.Migrations
                       .HasMaxLength(2048)
                       .HasColumnType("varchar(2048)");
 
-            b.Property<int>("StorageType")
+            b.Property<string>("Slug")
+                      .IsRequired()
+                      .HasMaxLength(2048)
+                      .HasColumnType("varchar(2048)");
+
+            b.Property<int>("Type")
                       .HasColumnType("int");
 
+            b.Property<string>("UserId")
+                      .IsRequired()
+                      .HasColumnType("varchar(128)");
+
             b.HasKey("Id");
+
+            b.HasIndex("UserId");
 
             b.ToTable("Storages");
           });
@@ -490,6 +498,17 @@ namespace Blogifier.Data.Migrations
             b.Navigation("Category");
 
             b.Navigation("Post");
+          });
+
+      modelBuilder.Entity("Blogifier.Storages.Storage", b =>
+          {
+            b.HasOne("Blogifier.Identity.UserInfo", "User")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+
+            b.Navigation("User");
           });
 
       modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>

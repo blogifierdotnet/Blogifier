@@ -140,7 +140,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasIndex("PostId");
 
-            b.ToTable("Newsletters", (string)null);
+            b.ToTable("Newsletters");
           });
 
       modelBuilder.Entity("Blogifier.Newsletters.Subscriber", b =>
@@ -176,7 +176,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.ToTable("Subscribers", (string)null);
+            b.ToTable("Subscribers");
           });
 
       modelBuilder.Entity("Blogifier.Options.OptionInfo", b =>
@@ -231,7 +231,7 @@ namespace Blogifier.Data.Migrations
 
             b.HasKey("Id");
 
-            b.ToTable("Categories", (string)null);
+            b.ToTable("Categories");
           });
 
       modelBuilder.Entity("Blogifier.Shared.Post", b =>
@@ -319,9 +319,6 @@ namespace Blogifier.Data.Migrations
                       .ValueGeneratedOnAdd()
                       .HasColumnType("int");
 
-            b.Property<int>("AuthorId")
-                      .HasColumnType("int");
-
             b.Property<string>("ContentType")
                       .IsRequired()
                       .HasMaxLength(128)
@@ -350,12 +347,23 @@ namespace Blogifier.Data.Migrations
                       .HasMaxLength(2048)
                       .HasColumnType("varchar(2048)");
 
-            b.Property<int>("StorageType")
+            b.Property<string>("Slug")
+                      .IsRequired()
+                      .HasMaxLength(2048)
+                      .HasColumnType("varchar(2048)");
+
+            b.Property<int>("Type")
                       .HasColumnType("int");
+
+            b.Property<string>("UserId")
+                      .IsRequired()
+                      .HasColumnType("varchar(128)");
 
             b.HasKey("Id");
 
-            b.ToTable("Storages", (string)null);
+            b.HasIndex("UserId");
+
+            b.ToTable("Storages");
           });
 
       modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>
@@ -487,6 +495,17 @@ namespace Blogifier.Data.Migrations
             b.Navigation("Category");
 
             b.Navigation("Post");
+          });
+
+      modelBuilder.Entity("Blogifier.Storages.Storage", b =>
+          {
+            b.HasOne("Blogifier.Identity.UserInfo", "User")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+
+            b.Navigation("User");
           });
 
       modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>

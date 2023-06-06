@@ -15,4 +15,5 @@ public class PostEditorDto
   public PostType PostType { get; set; }
   public PostState State { get; set; }
   public List<CategoryDto>? Categories { get; set; }
+  public List<StorageDto>? Storages { get; set; }
 }
