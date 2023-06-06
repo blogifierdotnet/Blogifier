@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blogifier.Shared;
+namespace Blogifier.Storages;
 
 public class Storage
 {

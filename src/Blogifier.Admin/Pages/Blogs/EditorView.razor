@@ -2,10 +2,10 @@
 
 @inject IHttpClientFactory _httpClientFactory
 @inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager _navigation
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject ToasterService _toasterService
-@inject NavigationManager _navigation
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
 

@@ -2,6 +2,7 @@ using Blogifier.Identity;
 using Blogifier.Newsletters;
 using Blogifier.Options;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
   public DbSet<OptionInfo> Options { get; set; }
   public DbSet<Post> Posts { get; set; }
   public DbSet<Storage> Storages { get; set; }
+  public DbSet<StorageReference> StorageReferences { get; set; }
   public DbSet<Category> Categories { get; set; }
   public DbSet<Subscriber> Subscribers { get; set; }
   public DbSet<Newsletter> Newsletters { get; set; }
