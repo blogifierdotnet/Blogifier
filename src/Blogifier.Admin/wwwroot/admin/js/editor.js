@@ -273,6 +273,11 @@ function previewImage(inputElem) {
   let codemirror = easymde.codemirror;
   codemirror.selection;
   codemirror.replaceSelection(output);
+  return {
+    name: fileName,
+    url,
+    selection: output,
+  };
 }
 
 export { getEditorValue, loadEditor, previewImage, setEditorValue };

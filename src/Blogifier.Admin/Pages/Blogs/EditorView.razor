@@ -111,8 +111,6 @@
 
   protected async Task SavePostAsync(PostState postState)
   {
-    Post.State = postState;
-
     var content = await _editorComponent.GetValueAsync();
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(content))
     {
@@ -123,9 +121,8 @@
     Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
-
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
-
+    Post.State = postState;
     var client = _httpClientFactory.CreateClient();
     if (Post.Id == 0)
     {

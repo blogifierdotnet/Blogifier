@@ -26,7 +26,7 @@
   {
     if (module is not null)
     {
-      await module.InvokeVoidAsync("previewImage", inputImageFiles?.Element);
+      var selection = await module.InvokeAsync<FrontFileMarkdownDto>("previewImage", inputImageFiles?.Element);
     }
   }
 
