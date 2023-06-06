@@ -265,10 +265,10 @@ function getEditorValue() {
   return easymde.value();
 }
 
-function previewImage(url) {
-  // const file = inputElem.files[0];
-  // const fileName = file.name;
-  // const url = URL.createObjectURL(file);
+function previewImage(inputElem) {
+  const file = inputElem.files[0];
+  const fileName = file.name;
+  const url = URL.createObjectURL(file);
   let output = '\r\n![' + fileName + '](' + url + ')';
   let codemirror = easymde.codemirror;
   codemirror.selection;
@@ -277,6 +277,7 @@ function previewImage(url) {
     name: fileName,
     url,
     selection: output,
+    content: easymde.value(),
   };
 }
 

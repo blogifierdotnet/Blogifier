@@ -1,18 +1,11 @@
-@using KristofferStrube.Blazor.FileSystem
-@using KristofferStrube.Blazor.FileSystemAccess
-@using KristofferStrube.Blazor.FileAPI
-
 @implements IAsyncDisposable
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsRuntime
-@inject ILogger<EditorComponent> _logger
-@inject IFileSystemAccessServiceInProcess _fileSystemAccessService
-@inject IURLServiceInProcess _urlServiceInProcess
-@inject ILogger<EditorComponent> _logger
 
 @code {
 
   [Parameter] public string Toolbar { get; set; } = default!;
+  [Parameter] public EventCallback<FrontFileMarkdownDto> OnFileUploadCallback { get; set; }
 
   private IJSObjectReference? module;
   private ElementReference? _textareaReference;
@@ -32,17 +25,10 @@
 
   protected async Task LoadImageFiles(InputFileChangeEventArgs args)
   {
-    var saveFilePicker = await _fileSystemAccessService.ShowSaveFilePickerAsync();
-    var readFile = args.File;
-    using var stream = readFile.OpenReadStream(maxAllowedSize: 10000000000);
-    await using var writable = await saveFilePicker.CreateWritableAsync(new() { KeepExistingData = false });
-    await stream.CopyToAsync(writable);
-    var file = await saveFilePicker.GetFileAsync();
-    var url = _urlServiceInProcess.CreateObjectURL(file);
     if (module is not null)
     {
-      var selection = await module.InvokeAsync<FrontFileMarkdownDto>("previewImage", url);
-      _logger.LogWarning("previewImage {},", selection);
+      var selection = await module.InvokeAsync<FrontFileMarkdownDto>("previewImage", inputImageFiles?.Element);
+      await OnFileUploadCallback.InvokeAsync(selection);
     }
   }
 

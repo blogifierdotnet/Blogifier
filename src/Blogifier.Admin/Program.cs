@@ -2,8 +2,6 @@ using Blogifier;
 using Blogifier.Admin;
 using Blogifier.Admin.Services;
 using Blogifier.Identity;
-using KristofferStrube.Blazor.FileAPI;
-using KristofferStrube.Blazor.FileSystemAccess;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,14 +30,5 @@ builder.Services.AddToaster(config =>
   config.PreventDuplicates = true;
   config.NewestOnTop = false;
 });
-// Configure with custom script path
-builder.Services.AddFileSystemAccessServiceInProcess(options =>
-{
-  // The file at this path in this example is manually copied to wwwroot folder
-  // options.BasePath = "content/";
-  // options.ScriptPath = $"custom-path/{FileSystemAccessOptions.DefaultNamespace}.js";
-});
 builder.Services.AddScoped<ToasterService>();
-builder.Services.AddURLServiceInProcess();
-
 await builder.Build().RunAsync();

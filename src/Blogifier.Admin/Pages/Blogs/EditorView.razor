@@ -6,6 +6,7 @@
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
 @inject ToasterService _toasterService
+@inject ILogger<EditorView> _logger
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
 
@@ -79,7 +80,7 @@
       </div>
     </div>
   </div>
-  <EditorComponent @ref="_editorComponent" Toolbar="fullToolbar" />
+  <EditorComponent @ref="_editorComponent" OnFileUploadCallback="OnFileUpload" Toolbar="fullToolbar" />
 </div>
 
 @code {
@@ -169,6 +170,11 @@
   {
     Post.Cover = null;
     await SaveAsync();
+  }
+
+  protected async Task OnFileUpload(FrontFileMarkdownDto data)
+  {
+    _logger.LogInformation("OnFileUpload:{}", data.Selection);
   }
 
   private async Task SetJsPostAsync(PostEditorDto post)

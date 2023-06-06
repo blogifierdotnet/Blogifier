@@ -1,10 +1,7 @@
-
 @inject IJSRuntime _jsRuntime;
 
 @code {
-
-  [Parameter]
-  public string Title { get; set; } = default!;
+  [Parameter] public string Title { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
