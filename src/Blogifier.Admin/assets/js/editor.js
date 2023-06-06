@@ -249,7 +249,6 @@ async function insertImage(editor) {
 }
 
 export function setEditorValue(txt) {
-  console.log(txt);
   easymde.value(txt
     .replace(/&#xA;/g, '\r\n')
     .replace(/&#xD;/g, '')

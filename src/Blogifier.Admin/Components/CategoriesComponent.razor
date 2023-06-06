@@ -2,7 +2,6 @@
 
 @code {
   [Parameter] public List<CategoryDto> Categories { get; set; } = default!;
-  [Parameter] public EventCallback<List<CategoryDto>> CategoriesChanged { get; set; }
 
   protected string Tag { get; set; } = default!;
 

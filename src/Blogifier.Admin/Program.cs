@@ -1,5 +1,6 @@
 using Blogifier;
 using Blogifier.Admin;
+using Blogifier.Admin.Services;
 using Blogifier.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -28,4 +29,5 @@ builder.Services.AddToaster(config =>
   config.PreventDuplicates = true;
   config.NewestOnTop = false;
 });
+builder.Services.AddScoped<ToasterService>();
 await builder.Build().RunAsync();

@@ -4,6 +4,7 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
 @inject IToaster _toaster
+@inject ToasterService _toasterService
 @inject NavigationManager _navigation
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
@@ -76,7 +77,7 @@
               </li>
             </ul>
           </div>
-          <CategoriesComponent @bind-Categories="Post.Categories" />
+          <CategoriesComponent Categories="Post.Categories" />
         </div>
       </div>
     </div>
@@ -132,12 +133,12 @@
     if (Post.Id == 0)
     {
       var response = await client.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
-      await CheckResponseAsync(response);
+      _toasterService.CheckResponse(response);
     }
     else
     {
       var response = await client.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
-      await CheckResponseAsync(response);
+      _toasterService.CheckResponse(response);
     }
   }
 
@@ -161,9 +162,8 @@
     var client = _httpClientFactory.CreateClient();
     if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
-      var result = await client.DeleteAsync($"api/post/{id}");
-      if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
-      else _toaster.Error(_localizer["generic-error"]);
+      var response = await client.DeleteAsync($"api/post/{id}");
+      _toasterService.CheckResponse(response);
       _navigation.NavigateTo($"admin");
     }
   }
@@ -186,20 +186,4 @@
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
     await _editorComponent.SetValueAsync(Post.Content);
   }
-
-  private async Task CheckResponseAsync(HttpResponseMessage response)
-  {
-    if (response.IsSuccessStatusCode)
-    {
-      var stream = await response.Content.ReadAsStreamAsync();
-      Post = (await JsonSerializer.DeserializeAsync<PostEditorDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
-      await SetJsPostAsync(Post);
-      _toaster.Success(_localizer["completed"]);
-    }
-    else
-    {
-      _toaster.Error(_localizer["generic-error"]);
-    }
-  }
-
 }

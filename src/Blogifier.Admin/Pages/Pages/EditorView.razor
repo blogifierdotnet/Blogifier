@@ -78,13 +78,15 @@
         </div>
       </div>
     </div>
-    <EditorComponent Content="@Post.Content" Toolbar="fullToolbar" />
+    <EditorComponent Toolbar="fullToolbar" />
   }
 </div>
 
 @code {
 
   [Parameter] public string? Slug { get; set; }
+
+  private EditorComponent _editorComponent = default!;
 
   protected PostEditorDto Post { get; set; } = new PostEditorDto
     {
@@ -179,6 +181,7 @@
   {
     var headTitle = _localizer["edit"] + " - " + Post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+    await _editorComponent.SetValueAsync(Post.Content);
   }
 
   private async Task CheckSetEditorResponseAsync(HttpResponseMessage response)
