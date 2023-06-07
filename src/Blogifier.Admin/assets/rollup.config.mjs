@@ -19,7 +19,7 @@ export default [
   //   ),
   //   output: {
   //     format: 'es',
-  //     dir: '../wwwroot/admin/js',
+  //     dir: 'dist/admin/js',
   //     //minifyInternalExports: true,
   //     //plugins: [terser()]
   //   },
@@ -31,7 +31,7 @@ export default [
     input: 'js/blogifier.js',
     output: {
       format: 'iife',
-      file: '../wwwroot/admin/js/blogifier.min.js',
+      file: 'dist/admin/js/blogifier.min.js',
       sourcemap: true,
       minifyInternalExports: true,
       plugins: [terser()]
@@ -44,7 +44,7 @@ export default [
     input: 'js/editor.js',
     output: {
       format: 'es',
-      file: '../wwwroot/admin/js/editor.min.js',
+      file: 'dist/admin/js/editor.min.js',
       sourcemap: true,
       minifyInternalExports: true,
       plugins: [terser()]

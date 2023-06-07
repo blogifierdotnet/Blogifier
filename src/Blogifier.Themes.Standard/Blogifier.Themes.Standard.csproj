@@ -24,7 +24,6 @@
 
   <!-- https://devblogs.microsoft.com/dotnet/build-client-web-assets-for-your-razor-class-library -->
   <PropertyGroup>
-    <ClientAssetsDistDirectory>$(ClientAssetsDirectory)\dist</ClientAssetsDistDirectory>
     <ClientAssetsRestoreInputs>$(ClientAssetsDirectory)package-lock.json;$(ClientAssetsDirectory)package.json</ClientAssetsRestoreInputs>
     <ClientAssetsRestoreOutputs>$(ClientAssetsDirectory)node_modules\.package-lock.json</ClientAssetsRestoreOutputs>
     <ClientAssetsRestoreInputs>$(MSBuildProjectFile);$(ClientAssetsRestoreInputs)</ClientAssetsRestoreInputs>
@@ -32,6 +31,7 @@
     <ClientAssetsRestoreBeforeTargets Condition="'$(TargetFramework)' == ''">DispatchToInnerBuilds</ClientAssetsRestoreBeforeTargets>
     <!-- Allow multitargeting projects to choose the target framework in which they run by setting this value to true only for a given target framework -->
     <ShouldRunClientAssetsBuild Condition="'$(ShouldRunClientAssetsBuild)' == ''">true</ShouldRunClientAssetsBuild>
+    <ClientAssetsBuildOutput>$(ClientAssetsDirectory)\dist\</ClientAssetsBuildOutput>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,24 +39,23 @@
     <ProjectCapability Include="ClientAssetsAlpha"/>
   </ItemGroup>
 
+  <Target Name="ClientAssetsClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(ClientAssetsBuildOutput)" />
+    <Delete Files="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
+  </Target>
+
   <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
     <Message Importance="high" Text="Running npm ci ..." />
     <Exec Command="npm ci" WorkingDirectory="$(ClientAssetsDirectory)" />
   </Target>
 
   <Target Name="ClientAssetsBuild" Condition="'$(ShouldRunClientAssetsBuild)' == 'true'" DependsOnTargets="ClientAssetsRestore" BeforeTargets="AssignTargetPaths" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
-    <RemoveDir Directories="$(ClientAssetsDistDirectory)" />
     <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="npm run build" />
     <PropertyGroup>
-      <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)clientassets'))/</_ClientAssetsOutputFullPath>
+      <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(ClientAssetsBuildOutput)'))/</_ClientAssetsOutputFullPath>
     </PropertyGroup>
-    <MakeDir Directories="$(_ClientAssetsOutputFullPath)" />
     <ItemGroup>
-      <_ClientAssetsBuildFiles Include="$(ClientAssetsDistDirectory)\**\*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(_ClientAssetsBuildFiles)" DestinationFolder="$(IntermediateOutputPath)clientassets\%(RecursiveDir)"></Copy>
-    <ItemGroup>
-      <_ClientAssetsBuildOutput Include="$(IntermediateOutputPath)clientassets\**"></_ClientAssetsBuildOutput>
+      <_ClientAssetsBuildOutput Include="$(ClientAssetsBuildOutput)**"></_ClientAssetsBuildOutput>
     </ItemGroup>
     <WriteLinesToFile File="$(IntermediateOutputPath)clientassetsbuild.complete.txt" Lines="@(_ClientAssetsBuildOutput)" />
   </Target>
