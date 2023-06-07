@@ -5,7 +5,7 @@ export default {
   input: 'js/index.js',
   output: {
     format: 'iife',
-    file: '../wwwroot/js/index.js',
+    file: '../wwwroot/js/index.min.js',
     sourcemap: true,
     minifyInternalExports: true,
     plugins: [terser()]
