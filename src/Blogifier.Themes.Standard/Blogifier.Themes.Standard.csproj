@@ -5,6 +5,21 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <AssetsRoot>assets\</AssetsRoot>
+
+    <ClientAssetsDirectory Condition="'$(ClientAssetsDirectory)' == ''">assets\</ClientAssetsDirectory>
+    <ClientAssetsRestoreInputs Condition="'$(ClientAssetsRestoreInputs)' == ''">$(ClientAssetsDirectory)package-lock.json;$(ClientAssetsDirectory)package.json</ClientAssetsRestoreInputs>
+    <ClientAssetsRestoreOutputs Condition="'$(ClientAssetsRestoreOutputs)' == ''">$(ClientAssetsDirectory)node_modules\.package-lock.json</ClientAssetsRestoreOutputs>
+    <ClientAssetsRestoreCommand Condition="'$(ClientAssetsRestoreCommand)' == ''">npm ci</ClientAssetsRestoreCommand>
+    <ClientAssetsBuildCommand Condition="'$(ClientAssetsBuildCommand)' == ''">npm run build:$(Configuration)</ClientAssetsBuildCommand>
+    <ClientAssetsBuildOutputParameter Condition="'$(ClientAssetsBuildOutputParameter)' == ''">--output-path</ClientAssetsBuildOutputParameter>
+
+    <ClientAssetsRestoreInputs>$(MSBuildProjectFile);$(ClientAssetsRestoreInputs)</ClientAssetsRestoreInputs>
+
+    <!-- Run restore only once for multi targeting builds -->
+    <ClientAssetsRestoreBeforeTargets Condition="'$(TargetFramework)' == ''">DispatchToInnerBuilds</ClientAssetsRestoreBeforeTargets>
+    <!-- Allow multitargeting projects to choose the target framework in which they run by setting this value to true only for a given target framework -->
+    <ShouldRunClientAssetsBuild Condition="'$(ShouldRunClientAssetsBuild)' == ''">true</ShouldRunClientAssetsBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,30 +31,54 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="assets\**" />
+    <Content Remove="$(AssetsRoot)\**" />
+    <None Remove="$(AssetsRoot)\**" />
+    <None Include="$(AssetsRoot)**" Exclude="$(AssetsRoot)node_modules\**" />
   </ItemGroup>
+
 
   <ItemGroup>
-    <None Include="assets\**" />
+    <ClientAssetsInputs Include="$(ClientAssetsDirectory)**" Exclude="$(DefaultItemExcludes)" />
+    <ProjectCapability Include="ClientAssetsAlpha"/>
   </ItemGroup>
 
-  <Target Name="NpmInstall" Condition=" '!Exists('$(AssetsRoot)/node_modules') ">
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(AssetsRoot)" Command="npm install" />
+  <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
+    <Message Importance="high" Text="Running $(ClientAssetsRestoreCommand)..." />
+    <Exec Command="$(ClientAssetsRestoreCommand)" WorkingDirectory="$(ClientAssetsDirectory)" />
   </Target>
 
-  <!-- <Target Name="NpmBuild" BeforeTargets="Build" AfterTargets="NpmInstall" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec WorkingDirectory="$(AssetsRoot)" ConsoleToMsBuild="true" Command="npm run start" />
-  </Target> -->
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(AssetsRoot)" Command="npm ci" />
+  <Target Name="ClientAssetsBuild" Condition="'$(ShouldRunClientAssetsBuild)' == 'true'" DependsOnTargets="ClientAssetsRestore" BeforeTargets="AssignTargetPaths" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
+    <RemoveDir Directories="$(AssetsRoot)\dist" />
     <Exec WorkingDirectory="$(AssetsRoot)" Command="npm run build" />
+
+    <PropertyGroup>
+      <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)clientassets'))/</_ClientAssetsOutputFullPath>
+    </PropertyGroup>
+    <MakeDir Directories="$(_ClientAssetsOutputFullPath)" />
+    <ItemGroup>
+      <_ClientAssetsBuildFiles Include="$(AssetsRoot)\dist\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ClientAssetsBuildFiles)" DestinationFolder="$(IntermediateOutputPath)clientassets\%(RecursiveDir)"></Copy>
+    <ItemGroup>
+      <_ClientAssetsBuildOutput Include="$(IntermediateOutputPath)clientassets\**"></_ClientAssetsBuildOutput>
+    </ItemGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)clientassetsbuild.complete.txt" Lines="@(_ClientAssetsBuildOutput)" />
+  </Target>
+
+  <Target Name="DefineClientAssets" AfterTargets="ClientAssetsBuild" DependsOnTargets="ResolveStaticWebAssetsConfiguration">
+    <ItemGroup>
+      <FileWrites Include="@(_ClientAssetsBuildOutput)" />
+      <FileWrites Include="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
+      <Content Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND $([MSBuild]::VersionLessThan('$(TargetFrameworkVersion)', '6.0')) " Include="@(_ClientAssetsBuildOutput)" Link="wwwroot\%(_ClientAssetsBuildOutput.RecursiveDir)\%(_ClientAssetsBuildOutput.FileName)%(_ClientAssetsBuildOutput.Extension)" />
+    </ItemGroup>
+    <!-- Note: We separate this target into two because content assets from outside the wwwroot folder won't get the right content root due to a bug/limitation
+      within DiscoverStaticWebAssets. That doesn't matter for when the assets are being packaged, as the content root doesn't matter in that case, but will impact
+      the ability to consume them from project references. As a workaround, we are using the Task directly on this package, to make sure this scenario works. In a future
+      release we will address this by aligning DiscoverStaticWebAssets behavior with DefineStaticWebAssets to follow the same heuristics for determining the content root.
+    -->
+    <DefineStaticWebAssets Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '6.0'))" CandidateAssets="@(_ClientAssetsBuildOutput)" SourceId="$(PackageId)" SourceType="Computed" ContentRoot="$(_ClientAssetsOutputFullPath)" BasePath="$(StaticWebAssetBasePath)">
+      <Output TaskParameter="Assets" ItemName="StaticWebAsset" />
+    </DefineStaticWebAssets>
   </Target>
 
 </Project>

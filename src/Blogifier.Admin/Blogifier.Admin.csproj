@@ -29,23 +29,4 @@
     <None Include="$(AssetsRoot)**" Exclude="$(AssetsRoot)node_modules\**" />
   </ItemGroup>
 
-  <Target Name="NpmInstall" Condition=" '!Exists('$(AssetsRoot)/node_modules') ">
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(AssetsRoot)" Command="npm install" />
-  </Target>
-
-  <!-- <Target Name="NpmBuild" BeforeTargets="Build" AfterTargets="NpmInstall" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec WorkingDirectory="$(AssetsRoot)" ConsoleToMsBuild="true" Command="npm run start" />
-  </Target> -->
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(AssetsRoot)" Command="npm ci" />
-    <Exec WorkingDirectory="$(AssetsRoot)" Command="npm run build" />
-  </Target>
-
 </Project>
