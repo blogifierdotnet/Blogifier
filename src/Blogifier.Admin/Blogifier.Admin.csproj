@@ -29,6 +29,8 @@
     <None Include="$(ClientAssetsDirectory)**" Exclude="$(ClientAssetsDirectory)node_modules\**" />
   </ItemGroup>
 
+  <!-- https://devblogs.microsoft.com/dotnet/build-client-web-assets-for-your-razor-class-library -->
+  <!-- https://github.com/aspnet/AspLabs/blob/main/src/ClientAssets/Microsoft.AspNetCore.ClientAssets/build/netstandard2.0/Microsoft.AspNetCore.ClientAssets.targets -->
   <PropertyGroup>
     <ClientAssetsRestoreInputs>$(ClientAssetsDirectory)package-lock.json;$(ClientAssetsDirectory)package.json</ClientAssetsRestoreInputs>
     <ClientAssetsRestoreOutputs>$(ClientAssetsDirectory)node_modules\.package-lock.json</ClientAssetsRestoreOutputs>
