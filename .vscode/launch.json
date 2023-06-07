@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch and Debug Blazor WebAssembly App",
+      "name": "Launch and Debug",
       "type": "coreclr",
       "request": "launch",
       "program": "dotnet",
