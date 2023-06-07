@@ -5,9 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-
-    <ClientAssetsDirectory >assets\</ClientAssetsDirectory>
-
+    <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
   </PropertyGroup>
 
   <ItemGroup>

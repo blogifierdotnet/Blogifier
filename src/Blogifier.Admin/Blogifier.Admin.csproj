@@ -3,7 +3,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BlazorEnableCompression>false</BlazorEnableCompression>
-    <AssetsRoot>assets\</AssetsRoot>
+    <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
+    <ClientAssetsDistDirectory>wwwroot\admin\</ClientAssetsDistDirectory>
+    <ClientAssetsRestoreDirectories>$(ClientAssetsDistDirectory)js\;$(ClientAssetsDistDirectory)css\;</ClientAssetsRestoreDirectories>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,9 +26,39 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="$(AssetsRoot)\**" />
-    <None Remove="$(AssetsRoot)\**" />
-    <None Include="$(AssetsRoot)**" Exclude="$(AssetsRoot)node_modules\**" />
+    <Content Remove="$(ClientAssetsDirectory)\**" />
+    <None Remove="$(ClientAssetsDirectory)\**" />
+    <None Include="$(ClientAssetsDirectory)**" Exclude="$(ClientAssetsDirectory)node_modules\**" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <ClientAssetsRestoreInputs>$(ClientAssetsDirectory)package-lock.json;$(ClientAssetsDirectory)package.json</ClientAssetsRestoreInputs>
+    <ClientAssetsRestoreOutputs>$(ClientAssetsDirectory)node_modules\.package-lock.json</ClientAssetsRestoreOutputs>
+    <ClientAssetsRestoreInputs>$(MSBuildProjectFile);$(ClientAssetsRestoreInputs)</ClientAssetsRestoreInputs>
+    <!-- Run restore only once for multi targeting builds -->
+    <ClientAssetsRestoreBeforeTargets Condition="'$(TargetFramework)' == ''">DispatchToInnerBuilds</ClientAssetsRestoreBeforeTargets>
+  </PropertyGroup>
+
+  <Target Name="ClientAssetsClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(ClientAssetsRestoreDirectories)" />
+    <Delete Files="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
+  </Target>
+
+  <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
+    <Message Importance="high" Text="Running npm ci ..." />
+    <Exec Command="npm ci" WorkingDirectory="$(ClientAssetsDirectory)" />
+  </Target>
+
+  <ItemGroup>
+    <ClientAssetsInputs Include="$(ClientAssetsDirectory)**" Exclude="$(DefaultItemExcludes)" />
+  </ItemGroup>
+
+  <Target Name="ClientAssetsBuild" DependsOnTargets="ClientAssetsRestore" BeforeTargets="Build" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
+    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="npm run build" />
+    <ItemGroup>
+      <_ClientAssetsOutputs Include="$(ClientAssetsDistDirectory)**" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)clientassetsbuild.complete.txt" Lines="@(_ClientAssetsOutputs)" />
+  </Target>
 
 </Project>
