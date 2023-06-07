@@ -2,12 +2,16 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsRuntime
 
+<div class="easymde-wrapper">
+  <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
+</div>
+<InputFile @ref="inputImageFiles" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
+
 @code {
 
   [Parameter] public string Toolbar { get; set; } = default!;
-  [Parameter] public EventCallback<FrontFileMarkdownDto> OnFileUploadCallback { get; set; }
 
-  private IJSObjectReference? module;
+  private ValueTask<IJSObjectReference> _taskModule;
   private ElementReference? _textareaReference;
   private InputFile? inputImageFiles;
 
@@ -15,49 +19,34 @@
   {
     if (firstRender)
     {
-      module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
-      if (module is not null)
-      {
-        await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
-      }
+      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
+      var module = await _taskModule;
+      await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
     }
   }
 
   protected async Task LoadImageFiles(InputFileChangeEventArgs args)
   {
-    if (module is not null)
-    {
-      var selection = await module.InvokeAsync<FrontFileMarkdownDto>("previewImage", inputImageFiles?.Element);
-      await OnFileUploadCallback.InvokeAsync(selection);
-    }
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("previewImage", inputImageFiles?.Element);
   }
 
   public async ValueTask SetValueAsync(string value)
   {
-    if (module is not null)
-    {
-      await module.InvokeVoidAsync("setEditorValue", value);
-    }
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("setEditorValue", value);
   }
-
 
   public async ValueTask<string?> GetValueAsync()
   {
-    if (module is not null)
-    {
-      return await module.InvokeAsync<string>("getEditorValue");
-    }
-    return null;
+    var module = await _taskModule;
+    var content = await module.InvokeAsync<string>("getEditorValue");
+    return content;
   }
 
   async ValueTask IAsyncDisposable.DisposeAsync()
   {
-    if (module is not null)
-    {
-      await module.DisposeAsync();
-    }
+    var module = await _taskModule;
+    await module.DisposeAsync();
   }
 }
-
-<div class="easymde-wrapper"><textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea></div>
-<InputFile @ref="inputImageFiles" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />

@@ -1,5 +1,5 @@
 
-import 'easymde/dist/easymde.min.js';
+import EasyMDE from 'easymde';
 
 const
   editorIcon_heading = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3 2H5V7.25L11 7.25V2H13V14H11V8.75L5 8.75V14H3V2Z" /></svg>`
@@ -269,10 +269,4 @@ export function previewImage(inputElem) {
   let codemirror = easymde.codemirror;
   codemirror.selection;
   codemirror.replaceSelection(output);
-  return {
-    name: fileName,
-    url,
-    selection: output,
-    content: easymde.value(),
-  };
 }

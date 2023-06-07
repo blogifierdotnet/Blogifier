@@ -6,7 +6,9 @@ export default {
   output: {
     format: 'iife',
     file: '../wwwroot/js/index.js',
-    //plugins: [terser()]
+    sourcemap: true,
+    minifyInternalExports: true,
+    plugins: [terser()]
   },
   plugins: [
     resolve()

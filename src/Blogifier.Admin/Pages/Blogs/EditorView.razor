@@ -80,7 +80,7 @@
       </div>
     </div>
   </div>
-  <EditorComponent @ref="_editorComponent" OnFileUploadCallback="OnFileUpload" Toolbar="fullToolbar" />
+  <EditorComponent @ref="_editorComponent" Toolbar="fullToolbar" />
 </div>
 
 @code {
@@ -170,11 +170,6 @@
   {
     Post.Cover = null;
     await SaveAsync();
-  }
-
-  protected async Task OnFileUpload(FrontFileMarkdownDto data)
-  {
-    _logger.LogInformation("OnFileUpload:{}", data.Selection);
   }
 
   private async Task SetJsPostAsync(PostEditorDto post)
