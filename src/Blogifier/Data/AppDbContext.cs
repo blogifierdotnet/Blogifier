@@ -18,14 +18,14 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
     _options = options;
   }
 
-  public DbSet<OptionInfo> Options { get; set; }
-  public DbSet<Post> Posts { get; set; }
-  public DbSet<Storage> Storages { get; set; }
-  public DbSet<StorageReference> StorageReferences { get; set; }
-  public DbSet<Category> Categories { get; set; }
-  public DbSet<PostCategory> PostCategories { get; set; }
-  public DbSet<Subscriber> Subscribers { get; set; }
-  public DbSet<Newsletter> Newsletters { get; set; }
+  public DbSet<OptionInfo> Options { get; set; } = default!;
+  public DbSet<Post> Posts { get; set; } = default!;
+  public DbSet<Storage> Storages { get; set; } = default!;
+  public DbSet<StorageReference> StorageReferences { get; set; } = default!;
+  public DbSet<Category> Categories { get; set; } = default!;
+  public DbSet<PostCategory> PostCategories { get; set; } = default!;
+  public DbSet<Subscriber> Subscribers { get; set; } = default!;
+  public DbSet<Newsletter> Newsletters { get; set; } = default!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
