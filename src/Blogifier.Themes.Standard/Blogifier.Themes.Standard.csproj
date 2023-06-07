@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <ClientAssetsInputs Include="$(ClientAssetsDirectory)**" Exclude="$(DefaultItemExcludes)" />
-    <ProjectCapability Include="ClientAssetsAlpha"/>
+    <ProjectCapability Include="ClientAssetsAlpha" />
   </ItemGroup>
 
   <Target Name="ClientAssetsClean" BeforeTargets="Clean">
