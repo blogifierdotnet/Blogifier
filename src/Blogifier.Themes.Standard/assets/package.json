@@ -5,11 +5,13 @@
   "author": "Farzin",
   "private": true,
   "scripts": {
-    "start": "sass --watch scss:../wwwroot/css --style=compressed",
-    "rtl": "rtlcss ../wwwroot/css/styles.css css/styles.rtl.css",
-    "build-sass": "sass scss:../wwwroot/css --style=compressed",
-    "rollup": "rollup --config",
-    "build": "npm run build-sass && npm run rollup"
+    "start": "npm run rollup | npm run sass ",
+    "rtl": "rtlcss ../wwwroot/admin/css/styles.css css/styles.rtl.css",
+    "sass": "sass --watch scss:../wwwroot/admin/css --style=compressed",
+    "rollup": "rollup --config -w",
+    "build-sass": "sass scss:../wwwroot/admin/css --style=compressed",
+    "build-rollup": "rollup --config",
+    "build": "npm run build-sass && npm run build-rollup"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.1.0",
