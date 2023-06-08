@@ -73,6 +73,10 @@ else if ("MySql".Equals(provider, StringComparison.OrdinalIgnoreCase))
   var version = ServerVersion.AutoDetect(connectionString);
   builder.Services.AddDbContext<AppDbContext, MySqlDbContext>(o => o.UseMySql(connectionString, version));
 }
+else if ("Postgres".Equals(provider, StringComparison.OrdinalIgnoreCase))
+{
+  builder.Services.AddDbContext<AppDbContext, PostgresDbContext>(o => o.UseNpgsql(connectionString));
+}
 else
 {
   throw new Exception($"Unsupported provider: {provider}");
