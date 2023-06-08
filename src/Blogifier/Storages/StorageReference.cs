@@ -6,7 +6,6 @@ namespace Blogifier.Storages;
 
 public class StorageReference
 {
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   public int StorageId { get; set; }
   public Storage Storage { get; set; } = default!;

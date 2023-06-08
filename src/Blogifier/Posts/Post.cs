@@ -4,15 +4,12 @@ using Blogifier.Storages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Shared;
 
 public class Post : AppEntity<int>
 {
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
-  [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
   public DateTime UpdatedAt { get; set; }
   [StringLength(128)]
   public string UserId { get; set; } = default!;

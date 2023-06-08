@@ -57,15 +57,17 @@ builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 var section = builder.Configuration.GetSection("Blogifier");
-var conn = section.GetValue<string>("ConnString");
-if (section.GetValue<string>("DbProvider") == "SQLite")
-  builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(conn));
-else if (section.GetValue<string>("DbProvider") == "SqlServer")
-  builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(conn));
-else if (section.GetValue<string>("DbProvider") == "Postgres")
-  builder.Services.AddDbContext<AppDbContext>(o => o.UseNpgsql(conn));
-else if (section.GetValue<string>("DbProvider") == "MySql")
-  builder.Services.AddDbContext<AppDbContext>(o => o.UseMySql(conn, ServerVersion.AutoDetect(conn)));
+var provider = section.GetValue<string>("DbProvider");
+var connectionString = section.GetValue<string>("ConnString");
+
+if ("Sqlite".Equals(provider, StringComparison.OrdinalIgnoreCase))
+{
+  builder.Services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(connectionString));
+}
+else
+{
+  throw new Exception($"Unsupported provider: {provider}");
+}
 
 if (builder.Environment.IsDevelopment())
   builder.Services.AddDatabaseDeveloperPageExceptionFilter();

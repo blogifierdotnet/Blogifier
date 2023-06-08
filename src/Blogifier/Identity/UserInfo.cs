@@ -19,8 +19,8 @@ public class UserInfo : IdentityUser<string>
     UserName = userName;
   }
 
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
+  public DateTime UpdatedAt { get; set; }
   [StringLength(256)]
   public string NickName { get; set; } = default!;
   [StringLength(1024)]

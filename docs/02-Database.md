@@ -9,7 +9,7 @@
    ...
 }
 ```
-Valid providers: `SQLite`, `SqlServer`, `Postgres`, `MySql` (you'll need to supply valid connection string)
+Valid providers: `Sqlite`, `SqlServer`, `Postgres`, `MySql` (you'll need to supply valid connection string)
 
 2. Remove `Blogifier/Data/Migrations` folder with existing migrations
 3. In the Visual Studio, open `Package Manager Console`, set `Blogifier`
@@ -22,6 +22,8 @@ Update-Database
 # cil
 dotnet ef migrations Init -o Data\Migrations
 dotnet ef migrations remove
+
+dotnet ef migrations add Init --context SqliteDbContext --output-dir Data/Migrations/Sqlite
 ```
 
 First command should re-generate provider specific code migrations and second will 

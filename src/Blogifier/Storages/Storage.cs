@@ -13,7 +13,6 @@ public class Storage
   public int Id { get; set; }
   public string UserId { get; set; } = default!;
   public UserInfo User { get; set; } = default!;
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
   public bool IsDeleted { get; set; }
   public DateTime? DeletedAt { get; set; }

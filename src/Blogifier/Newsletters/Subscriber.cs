@@ -7,9 +7,7 @@ namespace Blogifier.Newsletters;
 
 public class Subscriber : AppEntity<int>
 {
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public DateTime CreatedAt { get; set; }
-  [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
   public DateTime UpdatedAt { get; set; }
   [EmailAddress]
   [StringLength(160)]

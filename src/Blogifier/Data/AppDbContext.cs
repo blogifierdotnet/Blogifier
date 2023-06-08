@@ -11,21 +11,18 @@ namespace Blogifier.Data;
 
 public class AppDbContext : IdentityUserContext<UserInfo, string>
 {
-  protected readonly DbContextOptions<AppDbContext> _options;
-
-  public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+  public AppDbContext(DbContextOptions options) : base(options)
   {
-    _options = options;
-  }
 
+  }
   public DbSet<OptionInfo> Options { get; set; } = default!;
   public DbSet<Post> Posts { get; set; } = default!;
-  public DbSet<Storage> Storages { get; set; } = default!;
-  public DbSet<StorageReference> StorageReferences { get; set; } = default!;
   public DbSet<Category> Categories { get; set; } = default!;
   public DbSet<PostCategory> PostCategories { get; set; } = default!;
-  public DbSet<Subscriber> Subscribers { get; set; } = default!;
   public DbSet<Newsletter> Newsletters { get; set; } = default!;
+  public DbSet<Subscriber> Subscribers { get; set; } = default!;
+  public DbSet<Storage> Storages { get; set; } = default!;
+  public DbSet<StorageReference> StorageReferences { get; set; } = default!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -36,6 +33,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
       e.ToTable("User");
       e.Property(p => p.Id).HasMaxLength(128);
       e.Property(p => p.CreatedAt).HasColumnOrder(0);
+      e.Property(p => p.UpdatedAt).HasColumnOrder(1);
       e.Property(p => p.PasswordHash).HasMaxLength(256);
       e.Property(p => p.SecurityStamp).HasMaxLength(32);
       e.Property(p => p.ConcurrencyStamp).HasMaxLength(64);
@@ -65,6 +63,17 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
       e.HasIndex(b => b.Key).IsUnique();
     });
 
+    modelBuilder.Entity<Post>(e =>
+    {
+      e.ToTable("Post");
+      e.HasIndex(b => b.Slug).IsUnique();
+
+      e.HasMany(e => e.StorageReferences)
+       .WithOne(e => e.Post)
+       .HasForeignKey(e => e.EntityId)
+       .IsRequired();
+    });
+
     modelBuilder.Entity<StorageReference>(e =>
     {
       e.ToTable("StorageReferences");
@@ -75,17 +84,6 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
     {
       e.ToTable("PostCategories");
       e.HasKey(t => new { t.PostId, t.CategoryId });
-    });
-
-    modelBuilder.Entity<Post>(e =>
-    {
-      e.ToTable("Post");
-      e.HasIndex(b => b.Slug).IsUnique();
-
-      e.HasMany(e => e.StorageReferences)
-       .WithOne(e => e.Post)
-       .HasForeignKey(e => e.EntityId)
-       .IsRequired();
     });
   }
 }
