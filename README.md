@@ -51,7 +51,7 @@ Then you can open `localhost:5000` with your browser
 Please read [contributing guidelines](https://github.com/blogifierdotnet/Blogifier/blob/main/.github/CONTRIBUTING.md). We have a list of things there that you can help us with.
 
 ## Team
-[![@dorthl](https://avatars.githubusercontent.com/u/13906219?s=60&v=4)](https://github.com/dorthl)
+[![@dorthl](https://avatars.githubusercontent.com/u/13906219?s=60&v=4)](https://github.com/dorthl) &nbsp;
 [![@farzindev](https://avatars.githubusercontent.com/u/6384978?s=60&v=4)](https://github.com/farzindev) &nbsp;
 [![@rxtur](https://avatars.githubusercontent.com/u/1932785?s=60&v=4)](https://github.com/rxtur)
 
