@@ -1,7 +1,13 @@
 using Blogifier.Shared;
+using Microsoft.Identity.Client.Extensions.Msal;
 using System;
-
 namespace Blogifier.Storages;
+
+
+// TOTO In the sql server implementation,
+// it is found that there may be problems in the design of StorageReference table,
+// and the storage reference function is not implemented for the time being, so it is commented out
+
 
 //public class StorageReference
 //{

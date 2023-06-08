@@ -68,6 +68,11 @@ else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))
 {
   builder.Services.AddDbContext<AppDbContext, SqlServerDbContext>(o => o.UseSqlServer(connectionString));
 }
+else if ("MySql".Equals(provider, StringComparison.OrdinalIgnoreCase))
+{
+  var version = ServerVersion.AutoDetect(connectionString);
+  builder.Services.AddDbContext<AppDbContext, MySqlDbContext>(o => o.UseMySql(connectionString, version));
+}
 else
 {
   throw new Exception($"Unsupported provider: {provider}");
