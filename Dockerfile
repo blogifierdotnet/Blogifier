@@ -1,4 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine as sdk
+# TOTO zh-CH
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN apk add --no-cache npm
 # Copy everything else and build
 COPY ./ /opt/blogifier
 WORKDIR /opt/blogifier
