@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="$(ClientAssetsDirectory)\**" />
+    <None Remove="$(ClientAssetsDirectory)\**" />
+    <None Include="$(ClientAssetsDirectory)**" Exclude="$(ClientAssetsDirectory)node_modules\**" />
+  </ItemGroup>
+
+  <!-- https://devblogs.microsoft.com/dotnet/build-client-web-assets-for-your-razor-class-library -->
+  <!-- https://github.com/aspnet/AspLabs/blob/main/src/ClientAssets/Microsoft.AspNetCore.ClientAssets/build/netstandard2.0/Microsoft.AspNetCore.ClientAssets.targets -->
+  <PropertyGroup>
+    <ClientAssetsRestoreInputs>$(ClientAssetsDirectory)package-lock.json;$(ClientAssetsDirectory)package.json</ClientAssetsRestoreInputs>
+    <ClientAssetsRestoreOutputs>$(ClientAssetsDirectory)node_modules\.package-lock.json</ClientAssetsRestoreOutputs>
+    <ClientAssetsRestoreInputs>$(MSBuildProjectFile);$(ClientAssetsRestoreInputs)</ClientAssetsRestoreInputs>
+    <!-- Run restore only once for multi targeting builds -->
+    <ClientAssetsRestoreBeforeTargets Condition="'$(TargetFramework)' == ''">DispatchToInnerBuilds</ClientAssetsRestoreBeforeTargets>
+    <!-- Allow multitargeting projects to choose the target framework in which they run by setting this value to true only for a given target framework -->
+    <ShouldRunClientAssetsBuild Condition="'$(ShouldRunClientAssetsBuild)' == ''">true</ShouldRunClientAssetsBuild>
+    <ClientAssetsBuildOutput>$(ClientAssetsDirectory)\dist\</ClientAssetsBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ClientAssetsInputs Include="$(ClientAssetsDirectory)**" Exclude="$(DefaultItemExcludes)" />
+    <ProjectCapability Include="ClientAssetsAlpha" />
+  </ItemGroup>
+
+  <Target Name="ClientAssetsClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(ClientAssetsBuildOutput)" />
+    <Delete Files="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
+  </Target>
+
+  <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
+    <Message Importance="high" Text="Running npm ci ..." />
+    <Exec Command="npm ci" WorkingDirectory="$(ClientAssetsDirectory)" />
+  </Target>
+
+  <Target Name="ClientAssetsBuild" Condition="'$(ShouldRunClientAssetsBuild)' == 'true'" DependsOnTargets="ClientAssetsRestore" BeforeTargets="AssignTargetPaths" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
+    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="npm run build" />
+    <PropertyGroup>
+      <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(ClientAssetsBuildOutput)'))/</_ClientAssetsOutputFullPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <_ClientAssetsBuildOutput Include="$(ClientAssetsBuildOutput)**"></_ClientAssetsBuildOutput>
+    </ItemGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)clientassetsbuild.complete.txt" Lines="@(_ClientAssetsBuildOutput)" />
+  </Target>
+
+  <Target Name="DefineClientAssets" AfterTargets="ClientAssetsBuild" DependsOnTargets="ResolveStaticWebAssetsConfiguration">
+    <ItemGroup>
+      <FileWrites Include="@(_ClientAssetsBuildOutput)" />
+      <FileWrites Include="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
+      <Content Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND $([MSBuild]::VersionLessThan('$(TargetFrameworkVersion)', '6.0')) " Include="@(_ClientAssetsBuildOutput)" Link="wwwroot\%(_ClientAssetsBuildOutput.RecursiveDir)\%(_ClientAssetsBuildOutput.FileName)%(_ClientAssetsBuildOutput.Extension)" />
+    </ItemGroup>
+    <!-- Note: We separate this target into two because content assets from outside the wwwroot folder won't get the right content root due to a bug/limitation
+      within DiscoverStaticWebAssets. That doesn't matter for when the assets are being packaged, as the content root doesn't matter in that case, but will impact
+      the ability to consume them from project references. As a workaround, we are using the Task directly on this package, to make sure this scenario works. In a future
+      release we will address this by aligning DiscoverStaticWebAssets behavior with DefineStaticWebAssets to follow the same heuristics for determining the content root.
+    -->
+    <DefineStaticWebAssets Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '6.0'))" CandidateAssets="@(_ClientAssetsBuildOutput)" SourceId="$(PackageId)" SourceType="Computed" ContentRoot="$(_ClientAssetsOutputFullPath)" BasePath="$(StaticWebAssetBasePath)">
+      <Output TaskParameter="Assets" ItemName="StaticWebAsset" />
+    </DefineStaticWebAssets>
+  </Target>
+
+</Project>

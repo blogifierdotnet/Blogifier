@@ -1,0 +1,153 @@
+@charset "utf-8";
+
+@import "helpers/variables";
+
+// contrast
+$min-contrast-ratio: 2.5;
+
+// body
+$body-bg: #f8f8f8;
+$body-color: #1c1c1c;
+$font-size-base: 0.875rem;
+
+// Link
+$link-color: $blogifier;
+$link-hover-color: $black;
+
+// shadow
+$bf-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+
+// input
+$input-border-color: $default;
+$input-focus-border-color: darken($default, 10%);
+$input-box-shadow: 0;
+$input-focus-box-shadow: 0;
+
+// check
+$form-check-input-width: 1rem;
+$form-check-input-bg: transparent;
+$form-check-padding-start: 2rem;
+$form-check-input-border-radius: 0.3rem;
+$form-check-input-border: 1px solid $secondary;
+$form-check-input-checked-color: $black;
+$form-check-input-checked-border-color: $black;
+$form-check-input-checked-bg-color: $body-bg;
+$form-check-input-focus-border: $black;
+$form-check-input-focus-box-shadow: 0;
+
+// switch
+$form-check-label-color: $black;
+$form-check-label-cursor: pointer;
+$form-switch-color: #6c757d;
+$form-switch-focus-color: $black;
+
+// active
+$component-active-bg: $blogifier;
+
+// font and text
+$link-decoration: none;
+
+// buttons
+$input-btn-font-size: 0.875rem;
+$input-btn-padding-y: 0.625rem;
+$input-btn-padding-x: 1rem;
+$input-btn-focus-width: 0;
+$btn-border-radius: 0.325rem;
+
+// button link
+$btn-link-color: #495057;
+$btn-link-hover-color: $black;
+
+// accordion
+$accordion-border-width: 0;
+$accordion-body-padding-y: 1rem;
+$accordion-body-padding-x: 0;
+$accordion-button-focus-box-shadow: none;
+$accordion-button-active-bg: none;
+$accordion-button-active-color: $blogifier;
+$accordion-button-padding-y: 0.5rem;
+$accordion-button-padding-x: 0;
+
+// list
+$list-height: 3rem;
+
+// headings
+$h1-font-size: $font-size-base * 1.75;
+$h2-font-size: $font-size-base * 1.5;
+$h3-font-size: $font-size-base * 1.25;
+$h4-font-size: $font-size-base * 1.125;
+$h5-font-size: $font-size-base * 1;
+$h6-font-size: $font-size-base;
+
+// tooltips
+$tooltip-font-size: 0.625rem;
+$tooltip-bg: #57606b;
+$tooltip-border-radius: 5rem;
+$tooltip-padding-y: 0.125rem;
+$tooltip-arrow-color: transparent;
+$tooltip-arrow-width: 0;
+$tooltip-arrow-height: 0;
+$tooltip-opacity: 1;
+
+// dropdown
+$dropdown-link-hover-bg: #f8f9fa;
+
+// container
+$container-max-widths: ( xl: 1024px, );
+
+// floating input
+$form-floating-height: 3.25rem;
+$form-floating-padding-x: .875rem;
+$form-floating-padding-y: .875rem;
+$form-floating-label-opacity: .65;
+$form-floating-label-transform: scale(.8) translateY(-.325rem) translateX(.15rem);
+
+@import "helpers/bootstrap";
+@import "layout/sidebar";
+@import "include/buttons";
+@import "include/forms";
+@import "page/account";
+@import "page/profile";
+
+html {
+  height: 100%;
+}
+body {
+  cursor: default;
+  overflow-y: scroll;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &::-webkit-scrollbar {
+    width: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-500;
+    border-radius: 5rem;
+    &:hover {
+      background: $gray-600;
+    }
+  }
+}
+
+// index.html
+.blogifier {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// shared/MainLayout.razor
+.content {
+}
+
+// Components/NavMenuComponent.razor
+.menu {
+}

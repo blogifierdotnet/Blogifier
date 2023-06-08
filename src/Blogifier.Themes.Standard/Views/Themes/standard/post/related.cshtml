@@ -1,0 +1,81 @@
+@model PostModel
+
+@inject IStringLocalizer<Resource> _localizer
+
+<!--
+    TODO:
+    List of related posts.
+
+    Custom Fields:
+    - on or off
+    - Title (Related Posts)
+    - How many items
+ -->
+@if (Model.PostSlug.Related.Any())
+{
+  <section class="related">
+    <header class="related-header">
+      <h3 class="related-header-title">Related Posts</h3>
+      <a class="related-header-link ms-auto" href="~/">
+        View All
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-right"
+          viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+        </svg>
+      </a>
+    </header>
+
+    <div class="row">
+      @foreach (var post in Model.PostSlug.Related)
+      {
+        <div class="col-12 col-md mb-4 mb-md-0">
+          <article class="post-grid d-flex flex-column">
+            <figure class="post-grid-cover" aria-hidden="true">
+              <img class="post-grid-img" src="~/@post.Cover" alt="@post.Title">
+            </figure>
+            @if (post.Categories != null)
+            {
+              <div class="post-grid-cats">
+                @foreach (var cat in post.Categories)
+                {
+                  <a class="post-grid-cats-link" href="~/category/@cat.Content" tabindex="-1">@cat.Content</a>
+                }
+              </div>
+            }
+            <h2 class="post-grid-title">
+              <a class="post-grid-link" href="~/posts/@post.Slug">@post.Title</a>
+            </h2>
+            <p class="post-grid-desc">@Html.Raw(post.DescriptionHtml)</p>
+            <div class="post-grid-meta d-flex">
+              <div class="post-grid-author">
+                <img class="post-grid-author-img" src="@post.User.Avatar" width="16" height="16"
+                     alt="@post.User.NickName" aria-hidden="true">
+                <span class="post-grid-author-name">@post.User.NickName</span>
+              </div>
+              <div class="post-grid-date">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                  class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
+                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                  <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                </svg>
+                <time class="post-grid-date-time">@DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt)</time>
+              </div>
+              <a class="post-grid-more ms-auto" href="~/posts/@post.Slug" tabindex="-1">
+                <span>Read</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                </svg>
+              </a>
+            </div>
+
+          </article>
+        </div>
+      }
+    </div>
+
+  </section>
+}

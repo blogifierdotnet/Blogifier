@@ -1,80 +1,48 @@
-﻿using Blogifier.Core.Providers;
+using AutoMapper;
+using Blogifier.Blogs;
+using Blogifier.Posts;
 using Blogifier.Shared;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace Blogifier.Controllers
+namespace Blogifier.Controllers;
+
+[Route("post")]
+public class PostController : Controller
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class PostController : ControllerBase
-	{
-		private readonly IPostProvider _postProvider;
+  protected readonly ILogger _logger;
+  protected readonly IMapper _mapper;
+  protected readonly MainMamager _mainMamager;
+  protected readonly PostManager _postManager;
+  public PostController(
+    ILogger<PageController> logger,
+    IMapper mapper,
+    MainMamager mainMamager,
+    PostManager postManager)
+  {
+    _logger = logger;
+    _mapper = mapper;
+    _mainMamager = mainMamager;
+    _postManager = postManager;
+  }
 
-		public PostController(IPostProvider postProvider)
-		{
-			_postProvider = postProvider;
-		}
-
-		[HttpGet("list/{filter}/{postType}")]
-		public async Task<ActionResult<List<Post>>> GetPosts(PublishedStatus filter, PostType postType)
-		{
-			return await _postProvider.GetPosts(filter, postType);
-		}
-
-		[HttpGet("list/search/{term}")]
-		public async Task<ActionResult<List<Post>>> SearchPosts(string term)
-		{
-			return await _postProvider.SearchPosts(term);
-		}
-
-		[HttpGet("byslug/{slug}")]
-		public async Task<ActionResult<Post>> GetPostBySlug(string slug)
-		{
-			return await _postProvider.GetPostBySlug(slug);
-		}
-
-		[HttpGet("getslug/{title}")]
-		public async Task<ActionResult<string>> GetSlug(string title)
-		{
-			return await _postProvider.GetSlugFromTitle(title);
-		}
-
-		[Authorize]
-		[HttpPost("add")]
-		public async Task<ActionResult<bool>> AddPost(Post post)
-		{
-			return await _postProvider.Add(post);
-		}
-
-		[Authorize]
-		[HttpPut("update")]
-		public async Task<ActionResult<bool>> UpdatePost(Post post)
-		{
-			return await _postProvider.Update(post);
-		}
-
-		[Authorize]
-		[HttpPut("publish/{id:int}")]
-		public async Task<ActionResult<bool>> PublishPost(int id, [FromBody] bool publish)
-		{
-			return await _postProvider.Publish(id, publish);
-		}
-
-		[Authorize]
-		[HttpPut("featured/{id:int}")]
-		public async Task<ActionResult<bool>> FeaturedPost(int id, [FromBody] bool featured)
-		{
-			return await _postProvider.Featured(id, featured);
-		}
-
-		[Authorize]
-		[HttpDelete("{id:int}")]
-		public async Task<ActionResult<bool>> RemovePost(int id)
-		{
-			return await _postProvider.Remove(id);
-		}
-	}
+  [HttpGet("{slug}")]
+  public async Task<IActionResult> GetAsync([FromRoute] string slug)
+  {
+    var main = await _mainMamager.GetAsync();
+    var postSlug = await _postManager.GetToHtmlAsync(slug);
+    if (postSlug.Post.State == PostState.Draft)
+    {
+      if (User.Identity == null || User.FirstUserId() != postSlug.Post.User.Id)
+        return Redirect("~/404");
+    }
+    else if (postSlug.Post.PostType == PostType.Page)
+    {
+      return Redirect($"~/page/{postSlug.Post.Slug}");
+    }
+    var categoriesUrl = Url.Content("~/category");
+    var model = new PostModel(postSlug, categoriesUrl, main);
+    return View($"~/Views/Themes/{main.Theme}/post.cshtml", model);
+  }
 }

@@ -1,0 +1,30 @@
+@inject IStringLocalizer<Resource> _localizer
+@model MainModel
+@{
+  @* TODO: Customfield *@
+  var siteMark = "titleDesc";
+}
+
+<header class="header">
+  <div class="container d-md-flex align-items-md-center">
+    <section class="header-sign py-4 py-md-0 text-center text-md-start me-md-auto">
+      @if (siteMark == "logo")
+      {
+        <a class="header-logo" href="@Model.Main.AbsoluteUrl">
+          <img class="header-logo-img" src="~/@Model.Main.Logo" alt="@Model.Main.Title @_localizer["logo"]">
+        </a>
+      }
+      else if (siteMark == "title")
+      {
+        <a class="header-title" href="@Model.Main.AbsoluteUrl">@Model.Main.Title</a>
+      }
+      else if (siteMark == "titleDesc")
+      {
+        <a class="header-title" href="@Model.Main.AbsoluteUrl">@Model.Main.Title</a>
+        <p class="header-desc">@Model.Main.Description</p>
+      }
+    </section>
+
+    <partial name="../components/nav.cshtml" />
+  </div>
+</header>

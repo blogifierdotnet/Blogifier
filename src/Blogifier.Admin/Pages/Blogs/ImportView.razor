@@ -1,0 +1,155 @@
+@page "/admin/blogs/import"
+@layout BlogsLayout
+@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+@inject IJSRuntime _jsRuntime
+@inject IMapper _mapper
+
+<PageTitleComponent Title="@_localizer["import"]" />
+
+@if (Status != null)
+{
+  <div class="alert @Status.MsgCss mb-4">@Status.Msg</div>
+}
+@if (Import == null)
+{
+  <h1 class="section-title">@_localizer["import"]</h1>
+  <div class="section-content -half">
+    <EditForm Model="@ImportRss" OnValidSubmit="OnAnalysis">
+      <DataAnnotationsValidator />
+      <div class="form-item">
+        <label class="form-label">@_localizer["feed-URL"]</label>
+        <input class="form-control" type="text" @bind="ImportRss.FeedUrl" placeholder="https://example.com/feed.xml" />
+        <ValidationMessage For="@(() => ImportRss.FeedUrl)"></ValidationMessage>
+      </div>
+      <div class="form-item">
+        <button class="btn btn-blogifier px-5" type="submit">@_localizer["load"]</button>
+      </div>
+    </EditForm>
+  </div>
+}
+else
+{
+  <div class="section-content">
+    <div class="section-title">@Import.Posts.Count @_localizer["import-message-found"].</div>
+    <div class="list-toolbar">
+      <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
+        <input type="checkbox" class="list-check-input form-check-input" @onchange="EventArgs => { CheckAll(EventArgs.Value); }">
+        <span>@_localizer["import-all"]</span>
+      </label>
+    </div>
+    <ul id="import-list" class="list mb-4">
+      @foreach (var post in Import.Posts)
+      {
+        <li class="list-item">
+
+          @if (!post.ImportComplete.HasValue)
+          {
+            <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select"]">
+              <input type="checkbox" class="list-check-input form-check-input" style="display: block" @bind="post.Selected">
+            </label>
+          }
+          else if (post.ImportComplete.Value)
+          {
+            <span class="list-icon ps-0 pe-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["published"]">
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            </span>
+          }
+          else
+          {
+            <span class="list-icon ps-0 pe-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-exclamation-triangle-fill text-danger" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+              </svg>
+            </span>
+          }
+          <div class="list-title">@post.Title</div>
+          <div class="list-text ms-auto">@DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt)</div>
+        </li>
+      }
+    </ul>
+    <div class="form-item">
+      <button class="btn btn-blogifier px-5 me-3" type="button" @onclick="OnImport">@_localizer["import"]</button>
+      <button class="btn btn-default" type="button" @onclick="OnLoad">@_localizer["cancel"]</button>
+    </div>
+  </div>
+}
+
+@code {
+  protected ImportRssDto ImportRss { get; set; } = default!;
+  protected FrontImportDto? Import { get; set; }
+  protected AlertStatus? Status { get; set; }
+
+  protected override void OnInitialized()
+  {
+    OnLoad();
+  }
+
+  protected void OnLoad()
+  {
+    ImportRss = new ImportRssDto { FeedUrl = string.Empty };
+    Import = null;
+    Status = null;
+  }
+
+  protected async Task OnAnalysis()
+  {
+    Status = null;
+    var result = await _http.GetFromJsonAsync<ImportDto>($"api/import/rss?feedUrl={ImportRss.FeedUrl}");
+    var front = _mapper.Map<FrontImportDto>(result);
+    Import = front;
+  }
+
+  protected async Task OnImport()
+  {
+    var request = new ImportDto { BaseUrl = Import!.BaseUrl, Posts = new List<PostEditorDto>() };
+    foreach (var post in Import!.Posts!)
+    {
+      if (!post.Selected) continue;
+      var inputPost = _mapper.Map<PostEditorDto>(post);
+      request.Posts.Add(inputPost);
+    }
+    if (!request.Posts.Any()) return;
+
+    var response = await _http.PostAsJsonAsync("api/import/write", request);
+    if (response.IsSuccessStatusCode)
+    {
+      var stream = await response.Content.ReadAsStreamAsync();
+      var inputPosts = (await JsonSerializer.DeserializeAsync<List<PostEditorDto>>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      var successCount = 0;
+      foreach (var post in inputPosts)
+      {
+        var importPost = Import.Posts.First(m => m.Title.Equals(post.Title, StringComparison.Ordinal));
+        importPost.ImportComplete = true;
+        successCount++;
+      }
+      Status = new AlertStatus($"Imported {successCount} posts.", "alert-success");
+    }
+    else
+    {
+      Status = new AlertStatus("import posts errors.", "alert-warning");
+    }
+  }
+
+  protected void CheckAll(object? checkValue)
+  {
+    bool isChecked = checkValue != null ? (bool)checkValue : false;
+    Import!.Posts.ForEach(p => p.Selected = isChecked);
+    StateHasChanged();
+  }
+
+  protected class AlertStatus
+  {
+    public string Msg { get; set; }
+    public string MsgCss { get; set; }
+
+    public AlertStatus(string msg, string msgCss)
+    {
+      Msg = msg;
+      MsgCss = msgCss;
+    }
+  }
+}

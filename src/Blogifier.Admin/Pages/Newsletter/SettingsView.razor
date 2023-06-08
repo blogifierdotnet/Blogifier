@@ -1,77 +1,86 @@
-﻿@layout NewsletterLayout
+@layout NewsletterLayout
+
 @page "/admin/newsletter/settings/"
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
 
-<BlogPageTitle Title="@_localizer["newsletter-settings"]" />
+<PageTitleComponent Title="@_localizer["newsletter-settings"]" />
 
 <h1 class="section-title">@_localizer["newsletter-settings"]</h1>
 <div class="section-content -half">
-    @if (Mail != null)
-    {
-        <EditForm model="@Mail" OnValidSubmit="Save">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-item">
-                <label class="form-label">@_localizer["host"]</label>
-                <input type="text" class="form-control" @bind="Mail.Host" name="host" placeholder="smtp.gmail.com" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["port"]</label>
-                <input type="text" class="form-control" @bind="Mail.Port" name="port" placeholder="465" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["email"]</label>
-                <input type="text" class="form-control" @bind="Mail.UserEmail" name="useremail" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["password"]</label>
-                <input type="password" class="form-control" @bind="Mail.UserPassword" name="password" />
-            </div>
+  <EditForm model="@Mail" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-item">
+      <label class="form-label">@_localizer["host"]</label>
+      <input type="text" class="form-control" @bind="Mail.Host" name="host" placeholder="smtp.gmail.com" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["port"]</label>
+      <input type="text" class="form-control" @bind="Mail.Port" name="port" placeholder="465" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["email"]</label>
+      <input type="text" class="form-control" @bind="Mail.UserEmail" name="useremail" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["password"]</label>
+      <input type="password" class="form-control" @bind="Mail.UserPassword" name="password" />
+    </div>
 
-            <div class="form-item">
-                <label class="form-label">@_localizer["to-name"]</label>
-                <input type="text" class="form-control" @bind="Mail.ToName" name="toname" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["from-email"]</label>
-                <input type="text" class="form-control" @bind="Mail.FromEmail" name="fromemail" placeholder="noreply@webmaster.com" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["from-name"]</label>
-                <input type="text" class="form-control" @bind="Mail.FromName" name="fromname" />
-            </div>
-            <div class="form-item">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" @bind="Mail.Enabled" id="mailStatusSwitch">
-                    <label class="form-check-label" for="mailStatusSwitch">@_localizer["enabled"]</label>
-                </div>
-            </div>
-            <div class="form-item">
-                <button class="btn btn-blogifier px-5" type="button">@_localizer["save"]</button>
-            </div>
-        </EditForm>
-    }
-
+    <div class="form-item">
+      <label class="form-label">@_localizer["to-name"]</label>
+      <input type="text" class="form-control" @bind="Mail.ToName" name="toname" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["from-email"]</label>
+      <input type="text" class="form-control" @bind="Mail.FromEmail" name="fromemail" placeholder="noreply@webmaster.com" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["from-name"]</label>
+      <input type="text" class="form-control" @bind="Mail.FromName" name="fromname" />
+    </div>
+    <div class="form-item">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" @bind="Mail.Enabled" id="mailStatusSwitch">
+        <label class="form-check-label" for="mailStatusSwitch">@_localizer["enabled"]</label>
+      </div>
+    </div>
+    <div class="form-item">
+      <button class="btn btn-blogifier px-5" type="button">@_localizer["save"]</button>
+    </div>
+  </EditForm>
 </div>
-<ToasterComponent @ref="Toaster" />
 
 @code {
-    protected ToasterComponent Toaster;
 
-    protected Blog Blog { get; set; }
-    protected MailSetting Mail { get; set; }
+  protected MailSettingDto Mail { get; set; } = new MailSettingDto();
 
-    protected override async Task OnInitializedAsync()
+  protected override async Task OnInitializedAsync()
+  {
+    var response = await _http.GetAsync("api/mail/settings");
+    if (response.IsSuccessStatusCode)
     {
-        Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-        Mail = await _http.GetFromJsonAsync<MailSetting>("api/newsletter/mailsettings");
-        if (Mail == null)
-            Mail = new MailSetting();
+      var stream = await response.Content.ReadAsStreamAsync();
+      if (stream.Length > 0)
+      {
+        Mail = (await JsonSerializer.DeserializeAsync<MailSettingDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      }
     }
+  }
 
-    protected async Task Save()
-    {
-        Toaster.Toast(await _http.PutAsJsonAsync<MailSetting>("api/newsletter/mailsettings", Mail));
-    }
+  protected async Task SaveAsync()
+  {
+    Toast(await _http.PutAsJsonAsync("api/mail/settings", Mail));
+  }
+
+  protected void Toast(HttpResponseMessage response)
+  {
+    if (response.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
 }

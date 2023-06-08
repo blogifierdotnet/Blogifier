@@ -1,0 +1,24 @@
+@model SearchModel
+@inject IStringLocalizer<Resource> _localizer
+@{
+  Layout = "layouts/_main.cshtml";
+}
+
+<main class="container search">
+  <form action="" method="GET">
+    <input type="text" placeholder="Search...">
+  </form>
+  <h1 class="search-title">Search Results</h1>
+  @foreach (var post in Model.Pager.Items)
+  {
+    <div class="row mb-3">
+      <div class="col-4">
+        <img src="~/@post.Cover" alt="@post.Title">
+      </div>
+      <div class="col-8">
+        <a href="~/post/@post.Slug">@post.Title</a>
+        <p>@post.Description</p>
+      </div>
+    </div>
+  }
+</main>
