@@ -49,7 +49,7 @@ public class ImportManager
         continue;
       }
 
-      var publishedAt = post.PublishedAt!.Value;
+      var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
 
       if (post.Cover != null && !post.Cover.Equals(BlogifierConstant.DefaultCover, StringComparison.Ordinal))
       {
@@ -66,6 +66,7 @@ public class ImportManager
       post.Description = markdownDescription;
 
       post.State = PostState.Release;
+      post.PublishedAt = publishedAt;
       posts.Add(post);
     }
 

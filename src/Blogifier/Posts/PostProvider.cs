@@ -102,7 +102,7 @@ public class PostProvider : AppProvider<Post, int>
       .AsNoTracking()
       .Include(m => m.PostCategories)!
       .ThenInclude(m => m.Category)
-      .Include(m => m.StorageReferences!.Where(s => s.Type == StorageReferenceType.Post))
+      //.Include(m => m.StorageReferences!.Where(s => s.Type == StorageReferenceType.Post))
       .AsSingleQuery()
       .Where(p => p.Slug == slug);
     return await _mapper.ProjectTo<PostEditorDto>(query).FirstAsync();

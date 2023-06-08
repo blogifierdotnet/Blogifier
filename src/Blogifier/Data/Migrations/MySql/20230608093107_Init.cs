@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Blogifier.Data.Migrations
+namespace Blogifier.Data.Migrations.MySql
 {
   /// <inheritdoc />
   public partial class Init : Migration
@@ -56,32 +56,6 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
-          name: "Storages",
-          columns: table => new
-          {
-            Id = table.Column<int>(type: "int", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            AuthorId = table.Column<int>(type: "int", nullable: false),
-            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-            DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-            Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Path = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            Length = table.Column<long>(type: "bigint", nullable: false),
-            ContentType = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
-            StorageType = table.Column<int>(type: "int", nullable: false)
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_Storages", x => x.Id);
-          })
-          .Annotation("MySql:CharSet", "utf8mb4");
-
-      migrationBuilder.CreateTable(
           name: "Subscribers",
           columns: table => new
           {
@@ -112,6 +86,8 @@ namespace Blogifier.Data.Migrations
           {
             CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
             Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             NickName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
@@ -154,7 +130,7 @@ namespace Blogifier.Data.Migrations
           .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
-          name: "Posts",
+          name: "Post",
           columns: table => new
           {
             Id = table.Column<int>(type: "int", nullable: false)
@@ -182,9 +158,44 @@ namespace Blogifier.Data.Migrations
           },
           constraints: table =>
           {
-            table.PrimaryKey("PK_Posts", x => x.Id);
+            table.PrimaryKey("PK_Post", x => x.Id);
             table.ForeignKey(
-                      name: "FK_Posts_User_UserId",
+                      name: "FK_Post_User_UserId",
+                      column: x => x.UserId,
+                      principalTable: "User",
+                      principalColumn: "Id",
+                      onDelete: ReferentialAction.Cascade);
+          })
+          .Annotation("MySql:CharSet", "utf8mb4");
+
+      migrationBuilder.CreateTable(
+          name: "Storages",
+          columns: table => new
+          {
+            Id = table.Column<int>(type: "int", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            UserId = table.Column<string>(type: "varchar(128)", nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+            IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+            DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+            Slug = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Path = table.Column<string>(type: "varchar(2048)", maxLength: 2048, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Length = table.Column<long>(type: "bigint", nullable: false),
+            ContentType = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Type = table.Column<int>(type: "int", nullable: false)
+          },
+          constraints: table =>
+          {
+            table.PrimaryKey("PK_Storages", x => x.Id);
+            table.ForeignKey(
+                      name: "FK_Storages_User_UserId",
                       column: x => x.UserId,
                       principalTable: "User",
                       principalColumn: "Id",
@@ -284,9 +295,9 @@ namespace Blogifier.Data.Migrations
           {
             table.PrimaryKey("PK_Newsletters", x => x.Id);
             table.ForeignKey(
-                      name: "FK_Newsletters_Posts_PostId",
+                      name: "FK_Newsletters_Post_PostId",
                       column: x => x.PostId,
-                      principalTable: "Posts",
+                      principalTable: "Post",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           })
@@ -309,9 +320,9 @@ namespace Blogifier.Data.Migrations
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
             table.ForeignKey(
-                      name: "FK_PostCategories_Posts_PostId",
+                      name: "FK_PostCategories_Post_PostId",
                       column: x => x.PostId,
-                      principalTable: "Posts",
+                      principalTable: "Post",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           })
@@ -329,13 +340,24 @@ namespace Blogifier.Data.Migrations
           unique: true);
 
       migrationBuilder.CreateIndex(
+          name: "IX_Post_Slug",
+          table: "Post",
+          column: "Slug",
+          unique: true);
+
+      migrationBuilder.CreateIndex(
+          name: "IX_Post_UserId",
+          table: "Post",
+          column: "UserId");
+
+      migrationBuilder.CreateIndex(
           name: "IX_PostCategories_CategoryId",
           table: "PostCategories",
           column: "CategoryId");
 
       migrationBuilder.CreateIndex(
-          name: "IX_Posts_UserId",
-          table: "Posts",
+          name: "IX_Storages_UserId",
+          table: "Storages",
           column: "UserId");
 
       migrationBuilder.CreateIndex(
@@ -391,7 +413,7 @@ namespace Blogifier.Data.Migrations
           name: "Categories");
 
       migrationBuilder.DropTable(
-          name: "Posts");
+          name: "Post");
 
       migrationBuilder.DropTable(
           name: "User");
