@@ -5,9 +5,7 @@
     It can be used to quickly and easily set up a lightweight, but fully functional personal or group blog.
 </p>
 
-<br><br>
 ## Installation
-
 ### Currently built from source [Not Released]
 Can build in windows linux not tested on macOS, I prefer to deploy tests in docker.
 #### native build
