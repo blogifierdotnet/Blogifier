@@ -1,0 +1,11 @@
+@model PostModel
+
+<section class="post-author d-md-flex align-items-md-center text-center text-md-start">
+  <figure class="post-author-cover mb-3 mb-md-0">
+    <img class="post-author-img" width="96" height="96" src="~/@BlogifierConstant.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)" alt="@Model.PostSlug.Post.User.NickName" />
+  </figure>
+  <div class="post-author-details">
+    <h5 class="post-author-name">@Model.PostSlug.Post.User.NickName</h5>
+    <p class="post-author-bio">@Model.PostSlug.Post.User.Bio</p>
+  </div>
+</section>

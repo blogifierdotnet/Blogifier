@@ -1,0 +1,58 @@
+@model AccountInitializeModel
+@inject IStringLocalizer<Resource> _localizer
+@{
+  Layout = "layouts/_account.cshtml";
+}
+
+@section HeadMeta{
+  <title>@_localizer["initialize"]</title>
+}
+
+<div class="account-header">
+  <h2 class="account-title text-lg-center">@_localizer["welcome-blogifier"]</h2>
+</div>
+
+@if (Model.ShowError)
+{
+  <div class="account-message -error">@_localizer["register-failed"].</div>
+}
+<form method="post" asp-controller="account" asp-action="initialize">
+  <input type="hidden" asp-for="RedirectUri" />
+  <div class="form-floating form-item">
+    <input id="title" asp-for="Title" class="form-control" type="text" placeholder="@_localizer["title"]" autofocus>
+    <label for="title">@_localizer["title"]</label>
+    <span class="validation-message" asp-validation-for="Title"></span>
+  </div>
+  <div class="form-floating form-item">
+    <textarea id="description" asp-for="Description" class="form-control" rows="5" cols="33" placeholder="@_localizer["description"]">
+    </textarea>
+    <label for="description">@_localizer["description"]</label>
+    <span class="validation-message" asp-validation-for="Description"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="userName" asp-for="UserName" class="form-control" type="text" placeholder="@_localizer["user-name"]">
+    <label for="userName">@_localizer["user-name"]</label>
+    <span class="validation-message" asp-validation-for="UserName"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="nickname" asp-for="NickName" class="form-control" type="text" placeholder="@_localizer["nick-name"]">
+    <label for="nickname">@_localizer["nick-name"]</label>
+    <span class="validation-message" asp-validation-for="UserName"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="loginEmail" class="form-control" asp-for="Email" placeholder="@_localizer["email"]">
+    <label for="loginEmail">@_localizer["email"]</label>
+    <span class="validation-message" asp-validation-for="Email"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="loginPassword" class="form-control" asp-for="Password" placeholder="@_localizer["password"]">
+    <label for="loginPassword"> @_localizer["password"]</label>
+    <span class="validation-message" asp-validation-for="Password"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="registerConfirmPassword" asp-for="PasswordConfirm" class="form-control" type="password" placeholder="@_localizer["confirm-password"]">
+    <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
+    <span class="validation-message" asp-validation-for="PasswordConfirm"></span>
+  </div>
+  <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["register"]</button>
+</form>

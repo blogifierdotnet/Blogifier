@@ -1,0 +1,30 @@
+{
+  "name": "blogifier.admin",
+  "Author": "https://github.com/farzindev",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run rollup | npm run sass ",
+    "rtl": "rtlcss dist/admin/css/styles.css css/styles.rtl.css",
+    "sass": "sass --watch scss:dist/admin/css --style=compressed",
+    "rollup": "rollup --config -w",
+    "build-sass": "sass scss:dist/admin/css --style=compressed",
+    "build-rollup": "rollup --config",
+    "build": "npm run build-sass && npm run build-rollup"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "bootstrap": "~5.1.0",
+    "glob": "^10.2.6",
+    "rollup": "^3.23.1",
+    "rtlcss": "^3.3.0",
+    "sass": "^1.32.12"
+  },
+  "dependencies": {
+    "autosize": "^6.0.1",
+    "easymde": "^2.18.0",
+    "highlight.js": "^11.8.0"
+  }
+}

@@ -1,0 +1,60 @@
+@model PostPagerModel
+@inject IStringLocalizer<Resource> _localizer
+
+@if (Model.Pager.Items.Any())
+{
+  @foreach (var post in Model.Pager.Items)
+  {
+    <article class="post-list d-flex">
+      <figure class="post-list-cover">
+        <img class="post-list-img" src="~/@post.Cover" alt="@post.Title">
+      </figure>
+      <section class="post-list-details">
+        <h2 class="post-list-title">
+          <a class="post-list-link" href="~/post/@post.Slug">@post.Title</a>
+        </h2>
+        <div class="post-list-meta d-flex">
+          <div class="post-list-meta-item post-list-author">
+            <img class="post-list-author-img" src="~/@BlogifierConstant.CheckGetAvatarUrl(post.User.Avatar)" width="16" height="16"
+                 alt="@post.User.NickName">
+            <span class="post-list-author-name">@post.User.NickName</span>
+          </div>
+          <div class="post-list-meta-item post-list-date">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                 class="bi bi-calendar-event post-list-date-icon" viewBox="0 0 16 16">
+              <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+            </svg>
+            <time class="post-list-date-time">@DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt)</time>
+          </div>
+          @if (post.Categories != null)
+          {
+            <div class="post-list-meta-item post-list-cat">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor"
+                   class="bi bi-hash post-list-cat-icon" viewBox="0 0 16 16">
+                <path d="M8.39 12.648a1.32 1.32 0 0 0-.015.18c0 .305.21.508.5.508.266 0 .492-.172.555-.477l.554-2.703h1.204c.421 0 .617-.234.617-.547 0-.312-.188-.53-.617-.53h-.985l.516-2.524h1.265c.43 0 .618-.227.618-.547 0-.313-.188-.524-.618-.524h-1.046l.476-2.304a1.06 1.06 0 0 0 .016-.164.51.51 0 0 0-.516-.516.54.54 0 0 0-.539.43l-.523 2.554H7.617l.477-2.304c.008-.04.015-.118.015-.164a.512.512 0 0 0-.523-.516.539.539 0 0 0-.531.43L6.53 5.484H5.414c-.43 0-.617.22-.617.532 0 .312.187.539.617.539h.906l-.515 2.523H4.609c-.421 0-.609.219-.609.531 0 .313.188.547.61.547h.976l-.516 2.492c-.008.04-.015.125-.015.18 0 .305.21.508.5.508.265 0 .492-.172.554-.477l.555-2.703h2.242l-.515 2.492zm-1-6.109h2.266l-.515 2.563H6.859l.532-2.563z" />
+              </svg>
+              @foreach (var cat in post.Categories)
+              {
+                <a class="post-list-cat-title" tabindex="-1" href="~/category/@cat.Content">@cat.Content</a>
+              }
+            </div>
+          }
+        </div>
+        <p class="post-list-desc">@Html.Raw(post.Description)</p>
+        <a class="post-list-more" href="~/post/@post.Slug" tabindex="-1">
+          Read More
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+               viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+          </svg>
+        </a>
+      </section>
+    </article>
+  }
+}
+else
+{
+  <div class="h1 text-capitalize">@_localizer["empty"]!</div>
+}

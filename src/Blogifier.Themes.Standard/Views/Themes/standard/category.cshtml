@@ -1,0 +1,12 @@
+@model CategoryModel
+
+@inject IStringLocalizer<Resource> _localizer
+
+@{
+  Layout = "layouts/_main.cshtml";
+}
+
+<main class="container">
+  <h1 class="h3 mb-5">@_localizer["categories"]: <strong>@Model.Category</strong></h1>
+  <partial name="post/view-list.cshtml" />
+</main>

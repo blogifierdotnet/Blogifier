@@ -1,0 +1,142 @@
+
+@page "/admin/settings/users"
+
+@layout SettingsLayout
+
+@inject HttpClient _http
+@inject NavigationManager _navigation
+@inject IStringLocalizer<Resource> _localizer
+@inject IMapper _mapper
+@inject IToaster _toaster
+
+
+<PageTitleComponent Title="@_localizer["users-settings"]" />
+
+<h1 class="section-title">@_localizer["users-settings"]</h1>
+<div class="section-content">
+  <div class="list-toolbar">
+    <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
+      <input type="checkbox" class="list-check-input form-check-input">
+    </label>
+    <button class="btn btn-blogifier btn-rounded -add me-3" type="button" @onclick="(()=> ShowEditor())" @onclick:preventDefault>
+      @_localizer["new-user"]
+    </button>
+    <div class="dropdown dropdown-flush">
+      <button class="btn btn-link dropdown-toggle" type="button" id="dropdownUsersAction" data-bs-toggle="dropdown" aria-expanded="false">
+        @_localizer["actions"]
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownUsersAction">
+        <button type="button" class="dropdown-item text-blogifier" @onclick="(()=> SetTypeAsync(UserType.Administrator))">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="15" fill="currentColor" class="bi bi-shield-fill-check" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
+          </svg>
+          <span>@_localizer["admin"]</span>
+        </button>
+        <button type="button" class="dropdown-item text-secondary" @onclick="(()=> SetTypeAsync(UserType.Ordinary))">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+          </svg>
+          <span>@_localizer["user"]</span>
+        </button>
+        <button type="button" class="dropdown-item text-danger" @onclick="(()=> SetStateAsync(UserState.Disable))">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+          <span>@_localizer["remove"]</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (Users != null && Users.Any())
+  {
+    <ul class="list">
+      @foreach (var item in Users)
+      {
+        <li class="list-item">
+          <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select"]">
+            <input type="checkbox" class="list-check-input form-check-input" @bind="item.Selected">
+          </label>
+          <a class="list-title -link" href="#" @onclick="(()=> ShowEditor(item.Id))" @onclick:preventDefault>@item.NickName</a>
+          <span class="list-text ms-auto">@item.Email</span>
+          @if (item.Type == UserType.Administrator)
+          {
+            <span class="list-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" fill="currentColor" class="bi bi-shield-fill-check text-blogifier" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["admin"]">
+                <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
+              </svg>
+            </span>
+          }
+          else
+          {
+            <span class="list-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" fill="currentColor" class="bi bi-person-fill text-secondary" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["user"]">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+            </span>
+          }
+        </li>
+      }
+    </ul>
+  }
+  else
+  {
+    <div>@_localizer["list-is-empty"]</div>
+  }
+</div>
+
+@code {
+
+  protected List<FrontUserInfoDto>? Users { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    await LoadAsync();
+  }
+
+  protected async Task LoadAsync()
+  {
+    var result = await _http.GetFromJsonAsync<IEnumerable<UserInfoDto>>("api/user/items");
+    Users = _mapper.Map<List<FrontUserInfoDto>>(result);
+  }
+
+
+  protected async Task SetTypeAsync(UserType type)
+  {
+    if (Users != null)
+    {
+      var ids = Users.Where(m => m.Selected).Select(m => m.Id);
+      if (ids.Any())
+      {
+        var idsString = string.Join(",", ids);
+        await _http.PutAsJsonAsync($"api/user/type/{idsString}", type);
+      }
+    }
+  }
+
+  protected async Task SetStateAsync(UserState state)
+  {
+    if (Users != null)
+    {
+      var ids = Users.Where(m => m.Selected).Select(m => m.Id);
+      if (ids.Any())
+      {
+        var idsString = string.Join(",", ids);
+        await _http.PutAsJsonAsync($"api/user/state/{idsString}", state);
+      }
+    }
+  }
+
+  protected void ShowEditor(string? Id = null)
+  {
+    _navigation.NavigateTo($"/admin/settings/user/{Id}");
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}

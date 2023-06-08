@@ -1,39 +1,34 @@
+using Blogifier;
+using Blogifier.Admin;
+using Blogifier.Admin.Services;
+using Blogifier.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Sotsera.Blazor.Toaster.Core.Models;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace Blogifier.Admin
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddLocalization();
+builder.Services.AddOptions();
+
+builder.Services.AddAuthorizationCore(options =>
+  options.AddPolicy(BlogifierConstant.PolicyAdminName, policy =>
+    policy.RequireClaim(BlogifierClaimTypes.Type, BlogifierConstant.PolicyAdminValue)));
+
+builder.Services.AddScoped(sp => new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
 {
-	public class Program
-	{
-		public static async Task Main(string[] args)
-		{
-			var builder = WebAssemblyHostBuilder.CreateDefault(args);
-			builder.RootComponents.Add<App>("#app");
-
-			builder.Services.AddLocalization();
-
-			builder.Services.AddOptions();
-			builder.Services.AddAuthorizationCore();
-
-			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-			builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthenticationStateProvider>();
-
-			builder.Services.AddToaster(config =>
-			{
-				config.PositionClass = Defaults.Classes.Position.BottomRight;
-				config.PreventDuplicates = true;
-				config.NewestOnTop = false;
-			});
-
-            builder.Services.AddSingleton<BlogStateProvider>();
-
-			await builder.Build().RunAsync();
-		}
-	}
-}
+  BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+});
+builder.Services.AddScoped<AuthenticationStateProvider, BlogAuthStateProvider>();
+builder.Services.AddToaster(config =>
+{
+  config.PositionClass = Defaults.Classes.Position.BottomRight;
+  config.PreventDuplicates = true;
+  config.NewestOnTop = false;
+});
+builder.Services.AddScoped<ToasterService>();
+await builder.Build().RunAsync();

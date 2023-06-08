@@ -1,0 +1,126 @@
+@inject HttpClient _http
+@inject NavigationManager _navigationManager
+@inject AuthenticationStateProvider _stateProvider
+@inject IJSRuntime _jsRuntime
+@inject IStringLocalizer<Resource> _localizer
+
+@code {
+
+  protected BlogifierClaims? _claims;
+
+
+  protected override async Task OnInitializedAsync()
+  {
+    var state = await _stateProvider.GetAuthenticationStateAsync();
+    var identity = state.User.Identity;
+    _claims = BlogifierClaims.Analysis(state.User);
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
+    }
+  }
+}
+
+<nav class="menu">
+  <div class="container d-flex">
+    <ul class="menu-list d-flex">
+      <li class="menu-item">
+        <NavLink class="menu-link" href="/admin/" Match="NavLinkMatch.All" title="@_localizer["dashboard"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+          <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.09091 3H4C3.44771 3 3 3.44772 3 4V18C3 18.5523 3.44772 19 4 19H7.09091C7.64319 19 8.09091 18.5523 8.09091 18V4C8.09091 3.44771 7.64319 3 7.09091 3ZM4 1C2.34315 1 1 2.34315 1 4V18C1 19.6569 2.34315 21 4 21H7.09091C8.74776 21 10.0909 19.6569 10.0909 18V4C10.0909 2.34315 8.74776 1 7.09091 1H4ZM18 3H14.9091C14.3568 3 13.9091 3.44772 13.9091 4V7.09091C13.9091 7.64319 14.3568 8.09091 14.9091 8.09091H18C18.5523 8.09091 19 7.64319 19 7.09091V4C19 3.44771 18.5523 3 18 3ZM14.9091 1C13.2522 1 11.9091 2.34315 11.9091 4V7.09091C11.9091 8.74776 13.2522 10.0909 14.9091 10.0909H18C19.6569 10.0909 21 8.74776 21 7.09091V4C21 2.34315 19.6569 1 18 1H14.9091ZM14.9091 13.9091H18C18.5523 13.9091 19 14.3568 19 14.9091V18C19 18.5523 18.5523 19 18 19H14.9091C14.3568 19 13.9091 18.5523 13.9091 18V14.9091C13.9091 14.3568 14.3568 13.9091 14.9091 13.9091ZM11.9091 14.9091C11.9091 13.2522 13.2522 11.9091 14.9091 11.9091H18C19.6569 11.9091 21 13.2522 21 14.9091V18C21 19.6569 19.6569 21 18 21H14.9091C13.2522 21 11.9091 19.6569 11.9091 18V14.9091Z" />
+          </svg>
+        </NavLink>
+      </li>
+      <li class="menu-item">
+        <NavLink class="menu-link" href="/admin/blogs/" title="@_localizer["blog"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+          <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2H16C17.6569 2 19 3.34315 19 5V17C19 18.6569 17.6569 20 16 20H6C4.34315 20 3 18.6569 3 17V5C3 3.34315 4.34315 2 6 2ZM1 5C1 2.23858 3.23858 0 6 0H16C18.7614 0 21 2.23858 21 5V17C21 19.7614 18.7614 22 16 22H6C3.23858 22 1 19.7614 1 17V5ZM10.8639 16.919C10.3868 16.6435 10.2233 16.0334 10.4988 15.5563L15.1573 7.48748C15.4328 7.01034 16.0429 6.84686 16.52 7.12234C16.9972 7.39782 17.1606 8.00793 16.8852 8.48507L12.2266 16.5539C11.9512 17.031 11.3411 17.1945 10.8639 16.919ZM7 7.00002H13.1306L11.9759 9.00002H7C6.44771 9.00002 6 8.55231 6 8.00002C6 7.44774 6.44771 7.00002 7 7.00002ZM7 11H10.8212L9.6665 13H7C6.44771 13 6 12.5523 6 12C6 11.4477 6.44771 11 7 11ZM8.5118 15H7C6.44771 15 6 15.4477 6 16C6 16.5523 6.44771 17 7 17H8.48621C8.15216 16.4081 8.13077 15.66 8.49519 15.0288L8.5118 15Z" />
+          </svg>
+        </NavLink>
+      </li>
+      <li class="menu-item">
+        <NavLink class="menu-link" href="/admin/pages/" title="@_localizer["pages"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+          <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 2.23858 3.23858 0 6 0H16L21 5V17C21 19.7614 18.7614 22 16 22H6C3.23858 22 1 19.7614 1 17V5ZM19 6H16C15.4477 6 15 5.55228 15 5V2H6C4.34315 2 3 3.34315 3 5V17C3 18.6569 4.34315 20 6 20H16C17.6569 20 19 18.6569 19 17V6ZM7 9C6.44772 9 6 8.55228 6 8C6 7.44772 6.44772 7 7 7H11C11.5523 7 12 7.44772 12 8C12 8.55228 11.5523 9 11 9H7ZM6 12C6 12.5523 6.44772 13 7 13H15C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11H7C6.44772 11 6 11.4477 6 12ZM6 16C6 16.5523 6.44772 17 7 17H15C15.5523 17 16 16.5523 16 16C16 15.4477 15.5523 15 15 15H7C6.44772 15 6 15.4477 6 16Z" />
+          </svg>
+        </NavLink>
+      </li>
+      <AuthorizeView Policy="@BlogifierConstant.PolicyAdminName">
+        <li class="menu-item">
+          <NavLink class="menu-link" href="/admin/newsletter/" title="@_localizer["newsletter"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M5 2H16C17.6569 2 19 3.34315 19 5V17C19 18.6569 17.6569 20 16 20H5C3.34315 20 2 18.6569 2 17V5C2 3.34315 3.34315 2 5 2ZM0 5C0 2.23858 2.23858 0 5 0H16C18.7614 0 21 2.23858 21 5V17C21 19.7614 18.7614 22 16 22H5C2.23858 22 0 19.7614 0 17V5ZM5 7C5 6.44772 5.44772 6 6 6H9C9.55228 6 10 6.44772 10 7V11C10 11.5523 9.55228 12 9 12H6C5.44772 12 5 11.5523 5 11V7ZM12 7C12 6.44772 12.4477 6 13 6H15C15.5523 6 16 6.44772 16 7C16 7.55228 15.5523 8 15 8H13C12.4477 8 12 7.55228 12 7ZM12 11C12 10.4477 12.4477 10 13 10H15C15.5523 10 16 10.4477 16 11C16 11.5523 15.5523 12 15 12H13C12.4477 12 12 11.5523 12 11ZM5 15C5 14.4477 5.44772 14 6 14H15C15.5523 14 16 14.4477 16 15C16 15.5523 15.5523 16 15 16H6C5.44771 16 5 15.5523 5 15Z" />
+            </svg>
+          </NavLink>
+        </li>
+      </AuthorizeView>
+      <li class="menu-item">
+        <NavLink class="menu-link" href="/admin/drive/" title="@_localizer["drive"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+          <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17 5C19.2091 5 21 6.79086 21 9V17C21 19.2091 19.2091 21 17 21H5C2.79086 21 1 19.2091 1 17V5C1 2.79086 2.79086 1 5 1H10C10.3788 1 10.725 1.214 10.8944 1.55279L12.618 5H17ZM3 17V5C3 3.89543 3.89542 3 5 3H9.38196L11.1056 6.44721C11.275 6.786 11.6212 7 12 7H17C18.1046 7 19 7.89543 19 9V17C19 18.1046 18.1046 19 17 19H5C3.89542 19 3 18.1046 3 17Z" />
+          </svg>
+        </NavLink>
+      </li>
+    </ul>
+    <ul class="menu-list d-flex ms-auto">
+      <AuthorizeView Policy="@BlogifierConstant.PolicyAdminName">
+        <li class="menu-item">
+          <NavLink class="menu-link" href="/admin/settings/" title="@_localizer["settings"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5995 11C14.5995 12.9879 12.9879 14.5995 11 14.5995C9.01206 14.5995 7.40051 12.9879 7.40051 11C7.40051 9.01206 9.01206 7.40051 11 7.40051C12.9879 7.40051 14.5995 9.01206 14.5995 11ZM12.7997 11C12.7997 11.994 11.994 12.7997 11 12.7997C10.006 12.7997 9.20026 11.994 9.20026 11C9.20026 10.006 10.006 9.20026 11 9.20026C11.994 9.20026 12.7997 10.006 12.7997 11Z" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3149 2.31067C12.2664 0.563107 9.73364 0.56311 8.6851 2.31067L8.22109 3.08402C8.01583 3.42613 7.60981 3.59224 7.22362 3.49212L6.62856 3.33784C4.63574 2.82118 2.82118 4.63573 3.33784 6.62856L3.49212 7.22362C3.59224 7.60981 3.42613 8.01583 3.08402 8.22109L2.31067 8.6851C0.563107 9.73364 0.56311 12.2664 2.31067 13.3149L3.08402 13.7789C3.42613 13.9842 3.59224 14.3902 3.49212 14.7764L3.33784 15.3714C2.82118 17.3643 4.63573 19.1788 6.62856 18.6622L7.22362 18.5079C7.60981 18.4078 8.01583 18.5739 8.22109 18.916L8.6851 19.6893C9.73364 21.4369 12.2664 21.4369 13.3149 19.6893L13.7789 18.916C13.9842 18.5739 14.3902 18.4078 14.7764 18.5079L15.3714 18.6622C17.3643 19.1788 19.1788 17.3643 18.6622 15.3714L18.5079 14.7764C18.4078 14.3902 18.5739 13.9842 18.916 13.7789L19.6893 13.3149C21.4369 12.2664 21.4369 9.73364 19.6893 8.6851L18.916 8.22109C18.5739 8.01583 18.4078 7.60981 18.5079 7.22362L18.6622 6.62856C19.1788 4.63574 17.3643 2.82118 15.3714 3.33784L14.7764 3.49212C14.3902 3.59224 13.9842 3.42613 13.7789 3.08402L13.3149 2.31067ZM10.2284 3.23663C10.5779 2.65411 11.4221 2.65411 11.7716 3.23663L12.2356 4.00998C12.8514 5.0363 14.0695 5.53463 15.228 5.23426L15.8231 5.07999C16.4874 4.90777 17.0922 5.51262 16.92 6.17689L16.7657 6.77196C16.4654 7.93053 16.9637 9.14857 17.99 9.76436L18.7634 10.2284C19.3459 10.5779 19.3459 11.4221 18.7634 11.7716L17.99 12.2356C16.9637 12.8514 16.4654 14.0695 16.7657 15.228L16.92 15.8231C17.0922 16.4874 16.4874 17.0922 15.8231 16.92L15.228 16.7657C14.0695 16.4654 12.8514 16.9637 12.2356 17.99L11.7716 18.7634C11.4221 19.3459 10.5779 19.3459 10.2284 18.7634L9.76436 17.99C9.14857 16.9637 7.93053 16.4654 6.77195 16.7657L6.17689 16.92C5.51262 17.0922 4.90777 16.4874 5.07999 15.8231L5.23426 15.228C5.53463 14.0695 5.0363 12.8514 4.00998 12.2356L3.23663 11.7716C2.65411 11.4221 2.65411 10.5779 3.23663 10.2284L4.00998 9.76436C5.0363 9.14857 5.53463 7.93053 5.23426 6.77196L5.07999 6.17689C4.90777 5.51262 5.51262 4.90777 6.17689 5.07999L6.77196 5.23426C7.93053 5.53463 9.14857 5.0363 9.76436 4.00998L10.2284 3.23663Z" />
+            </svg>
+          </NavLink>
+        </li>
+      </AuthorizeView>
+      <li class="menu-item">
+        <a class="menu-link" href="@_navigationManager.BaseUri" target="_blank" title="@_localizer["home-page"]" data-bs-toggle="tooltip" data-bs-placement="bottom">
+          <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12V12.1716C1 13.0625 2.07714 13.5086 2.70711 12.8787L3 12.5858V17C3 19.2091 4.79086 21 7 21H15C17.2091 21 19 19.2091 19 17V12.5858L19.2929 12.8787C19.9229 13.5086 21 13.0625 21 12.1716V12C21 11.7348 20.8946 11.4804 20.7071 11.2929L11.7071 2.29289C11.3166 1.90237 10.6834 1.90237 10.2929 2.29289L1.29289 11.2929C1.10536 11.4804 1 11.7348 1 12ZM17 10.5858L11 4.58579L5 10.5858V17C5 18.1046 5.89543 19 7 19H15C16.1046 19 17 18.1046 17 17V10.5858Z" />
+          </svg>
+        </a>
+      </li>
+      @if (_claims != null)
+      {
+        <li class="menu-item dropdown" title="@_claims.NickName" data-bs-toggle="tooltip">
+          <NavLink class="menu-link" href="/admin/profile/" role="button" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="rounded-circle profilePicture" width="32" height="32" src="@BlogifierConstant.CheckGetAvatarUrl(_claims.Avatar)" alt="@_claims.NickName">
+          </NavLink>
+          <div class="user-nav dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdownMenu">
+            <div class="user-nav-info">
+              @if (_claims.Avatar != null)
+              {
+                <img class="user-nav-img profilePicture" width="64" src="@_claims.Avatar" alt="@_claims.NickName">
+              }
+              <span class="user-nav-name">@_claims.NickName</span>
+              <span class="user-nav-email">@_claims.Email</span>
+            </div>
+            <ul class="user-nav-list">
+              <li class="user-nav-item">
+                <a class="user-nav-link" href="/account/profile?redirecturi=@_navigationManager.Uri">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-person-lines-fill" viewBox="0 0 16 16">
+                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                  </svg>
+                  @_localizer["edit-profile"]
+                </a>
+              </li>
+              <li class="user-nav-item">
+                <a class="user-nav-link -logout" href="/account/logout?redirecturi=@_navigationManager.Uri">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="user-nav-icon bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                  </svg>
+                  @_localizer["logout"]
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</nav>
