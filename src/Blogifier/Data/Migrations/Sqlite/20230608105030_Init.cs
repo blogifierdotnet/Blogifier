@@ -1,5 +1,5 @@
-using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -61,7 +61,7 @@ namespace Blogifier.Data.Migrations.Sqlite
           });
 
       migrationBuilder.CreateTable(
-          name: "User",
+          name: "Users",
           columns: table => new
           {
             CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime()"),
@@ -90,11 +90,11 @@ namespace Blogifier.Data.Migrations.Sqlite
           },
           constraints: table =>
           {
-            table.PrimaryKey("PK_User", x => x.Id);
+            table.PrimaryKey("PK_Users", x => x.Id);
           });
 
       migrationBuilder.CreateTable(
-          name: "Post",
+          name: "Posts",
           columns: table => new
           {
             Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -114,11 +114,11 @@ namespace Blogifier.Data.Migrations.Sqlite
           },
           constraints: table =>
           {
-            table.PrimaryKey("PK_Post", x => x.Id);
+            table.PrimaryKey("PK_Posts", x => x.Id);
             table.ForeignKey(
-                      name: "FK_Post_User_UserId",
+                      name: "FK_Posts_Users_UserId",
                       column: x => x.UserId,
-                      principalTable: "User",
+                      principalTable: "Users",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -144,9 +144,9 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             table.PrimaryKey("PK_Storages", x => x.Id);
             table.ForeignKey(
-                      name: "FK_Storages_User_UserId",
+                      name: "FK_Storages_Users_UserId",
                       column: x => x.UserId,
-                      principalTable: "User",
+                      principalTable: "Users",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -165,9 +165,9 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             table.PrimaryKey("PK_UserClaim", x => x.Id);
             table.ForeignKey(
-                      name: "FK_UserClaim_User_UserId",
+                      name: "FK_UserClaim_Users_UserId",
                       column: x => x.UserId,
-                      principalTable: "User",
+                      principalTable: "Users",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -185,9 +185,9 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             table.PrimaryKey("PK_UserLogin", x => new { x.LoginProvider, x.ProviderKey });
             table.ForeignKey(
-                      name: "FK_UserLogin_User_UserId",
+                      name: "FK_UserLogin_Users_UserId",
                       column: x => x.UserId,
-                      principalTable: "User",
+                      principalTable: "Users",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -205,9 +205,9 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             table.PrimaryKey("PK_UserToken", x => new { x.UserId, x.LoginProvider, x.Name });
             table.ForeignKey(
-                      name: "FK_UserToken_User_UserId",
+                      name: "FK_UserToken_Users_UserId",
                       column: x => x.UserId,
-                      principalTable: "User",
+                      principalTable: "Users",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -227,9 +227,9 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             table.PrimaryKey("PK_Newsletters", x => x.Id);
             table.ForeignKey(
-                      name: "FK_Newsletters_Post_PostId",
+                      name: "FK_Newsletters_Posts_PostId",
                       column: x => x.PostId,
-                      principalTable: "Post",
+                      principalTable: "Posts",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -251,9 +251,9 @@ namespace Blogifier.Data.Migrations.Sqlite
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
             table.ForeignKey(
-                      name: "FK_PostCategories_Post_PostId",
+                      name: "FK_PostCategories_Posts_PostId",
                       column: x => x.PostId,
-                      principalTable: "Post",
+                      principalTable: "Posts",
                       principalColumn: "Id",
                       onDelete: ReferentialAction.Cascade);
           });
@@ -270,36 +270,25 @@ namespace Blogifier.Data.Migrations.Sqlite
           unique: true);
 
       migrationBuilder.CreateIndex(
-          name: "IX_Post_Slug",
-          table: "Post",
-          column: "Slug",
-          unique: true);
-
-      migrationBuilder.CreateIndex(
-          name: "IX_Post_UserId",
-          table: "Post",
-          column: "UserId");
-
-      migrationBuilder.CreateIndex(
           name: "IX_PostCategories_CategoryId",
           table: "PostCategories",
           column: "CategoryId");
 
       migrationBuilder.CreateIndex(
-          name: "IX_Storages_UserId",
-          table: "Storages",
+          name: "IX_Posts_Slug",
+          table: "Posts",
+          column: "Slug",
+          unique: true);
+
+      migrationBuilder.CreateIndex(
+          name: "IX_Posts_UserId",
+          table: "Posts",
           column: "UserId");
 
       migrationBuilder.CreateIndex(
-          name: "EmailIndex",
-          table: "User",
-          column: "NormalizedEmail");
-
-      migrationBuilder.CreateIndex(
-          name: "UserNameIndex",
-          table: "User",
-          column: "NormalizedUserName",
-          unique: true);
+          name: "IX_Storages_UserId",
+          table: "Storages",
+          column: "UserId");
 
       migrationBuilder.CreateIndex(
           name: "IX_UserClaim_UserId",
@@ -310,6 +299,17 @@ namespace Blogifier.Data.Migrations.Sqlite
           name: "IX_UserLogin_UserId",
           table: "UserLogin",
           column: "UserId");
+
+      migrationBuilder.CreateIndex(
+          name: "EmailIndex",
+          table: "Users",
+          column: "NormalizedEmail");
+
+      migrationBuilder.CreateIndex(
+          name: "UserNameIndex",
+          table: "Users",
+          column: "NormalizedUserName",
+          unique: true);
     }
 
     /// <inheritdoc />
@@ -343,10 +343,10 @@ namespace Blogifier.Data.Migrations.Sqlite
           name: "Categories");
 
       migrationBuilder.DropTable(
-          name: "Post");
+          name: "Posts");
 
       migrationBuilder.DropTable(
-          name: "User");
+          name: "Users");
     }
   }
 }
