@@ -5,10 +5,12 @@
   "author": "Farzin",
   "private": true,
   "scripts": {
-    "start": "sass --watch scss:css --style=compressed"
+    "start": "sass --watch scss:css --style=compressed",
+    "rtl": "rtlcss css/styles.css css/styles.rtl.css"
   },
   "devDependencies": {
-    "bootstrap": "^5.0.0",
+    "bootstrap": "~5.1.0",
+    "rtlcss": "^3.3.0",
     "sass": "^1.32.12"
   }
 }

@@ -1,14 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.0.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 16.0.0.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier", "src\Blogifier\Blogifier.csproj", "{30113938-1040-459A-A0B6-3663E9534C8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Admin", "src\Blogifier.Admin\Blogifier.Admin.csproj", "{ABD5820B-6A81-42C3-89C7-B324329345C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Shared", "src\Blogifier.Shared\Blogifier.Shared.csproj", "{A0173B1A-FDC9-4E48-94E1-21D6C0B19257}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Core", "src\Blogifier.Core\Blogifier.Core.csproj", "{99296F5E-F267-4483-97BF-647080D21C35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{512E41FF-25A7-49D6-B126-EC1450E17B72}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,19 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{512E41FF-2
 		docs\04-Localization.md = docs\04-Localization.md
 		docs\05-Emails.md = docs\05-Emails.md
 		docs\06-Newsletters.md = docs\06-Newsletters.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Tests", "tests\Blogifier.Tests\Blogifier.Tests.csproj", "{27EB38D0-E275-4033-93B6-3ED6E6B7B442}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{84FCDE15-5F12-484E-A8C2-DA9A1D3122BB}"
-	ProjectSection(SolutionItems) = preProject
-		tests\data\test3.xml = tests\data\test3.xml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA-AC43-4A35-88D9-8D63D26884B8}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
@@ -80,18 +76,6 @@ Global
 		{A0173B1A-FDC9-4E48-94E1-21D6C0B19257}.Release|x64.Build.0 = Release|Any CPU
 		{A0173B1A-FDC9-4E48-94E1-21D6C0B19257}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0173B1A-FDC9-4E48-94E1-21D6C0B19257}.Release|x86.Build.0 = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|x64.Build.0 = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Debug|x86.Build.0 = Debug|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|x64.ActiveCfg = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|x64.Build.0 = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|x86.ActiveCfg = Release|Any CPU
-		{99296F5E-F267-4483-97BF-647080D21C35}.Release|x86.Build.0 = Release|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -110,7 +94,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442} = {8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}
-		{84FCDE15-5F12-484E-A8C2-DA9A1D3122BB} = {8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AA706E7-D820-4892-9F60-FCEEDC51FF5E}

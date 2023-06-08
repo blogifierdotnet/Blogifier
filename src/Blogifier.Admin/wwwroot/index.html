@@ -1,74 +1,74 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blogifier</title>
-    <base href="/" />
-    <link href="admin/css/blogifier.css" rel="stylesheet" />
-    <!--
-        TODO: for rtl:
-        <link href="admin/css/blogifier.rtl.css" rel="stylesheet" />
-    -->
-    <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blogifier</title>
+  <base href="/" />
+  <link href="admin/css/blogifier.css" rel="stylesheet" />
+  <!--
+      TODO: for rtl:
+      <link href="admin/css/blogifier.rtl.css" rel="stylesheet" />
+  -->
+  <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="admin/favicons/apple-touch-icon.png?v=2">
-    <link rel="icon" type="image/png" sizes="32x32" href="admin/favicons/favicon-32x32.png?v=2">
-    <link rel="icon" type="image/png" sizes="16x16" href="admin/favicons/favicon-16x16.png?v=2">
-    <link rel="manifest" href="admin/favicons/site.webmanifest?v=2">
-    <link rel="mask-icon" href="admin/favicons/safari-pinned-tab.svg?v=2" color="#622aff">
-    <link rel="shortcut icon" href="admin/favicons/favicon.ico?v=2">
-    <meta name="apple-mobile-web-app-title" content="Blogifier">
-    <meta name="application-name" content="Blogifier">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-config" content="admin/favicons/browserconfig.xml?v=2"/>
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="admin/favicons/apple-touch-icon.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="admin/favicons/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="admin/favicons/favicon-16x16.png?v=2">
+  <link rel="manifest" href="admin/favicons/site.webmanifest?v=2">
+  <link rel="mask-icon" href="admin/favicons/safari-pinned-tab.svg?v=2" color="#622aff">
+  <link rel="shortcut icon" href="admin/favicons/favicon.ico?v=2">
+  <meta name="apple-mobile-web-app-title" content="Blogifier">
+  <meta name="application-name" content="Blogifier">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-config" content="admin/favicons/browserconfig.xml?v=2" />
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
 
-    <main id="app" class="blogifier">
-        <div class="blogifier-loading d-flex">
-            <div class="spinner-border text-blogifier m-auto" role="status"></div>
-        </div>
-    </main>
-
-    <div id="blazor-error-ui" class="blogifier-error">
-        <div class="container d-flex align-items-center">
-            <p class="blogifier-error-message">An unhandled error has occurred.</p>
-            <button class="blogifier-error-btn reload ms-auto" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-                  </svg>
-            </button>
-            <button class="blogifier-error-btn dismiss" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                  </svg>
-            </button>
-        </div>
+  <main id="app" class="blogifier">
+    <div class="blogifier-loading d-flex">
+      <div class="spinner-border text-blogifier m-auto" role="status"></div>
     </div>
+  </main>
 
-    <form class="d-none" method="post" name="frmUpload" id="frmUpload" action="upload" enctype="multipart/form-data">
-        <input type="file" name="file" id="frmUploadFile" onchange="fileManager.uploadSubmit(); return false;" />
-        <input type="submit" value="Upload" />
-    </form>
+  <div id="blazor-error-ui" class="blogifier-error">
+    <div class="container d-flex align-items-center">
+      <p class="blogifier-error-message">An unhandled error has occurred.</p>
+      <button class="blogifier-error-btn reload ms-auto" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+          <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+          <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+        </svg>
+      </button>
+      <button class="blogifier-error-btn dismiss" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </button>
+    </div>
+  </div>
 
-    <script src="admin/js/frameworks/bootstrap.bundle.min.js"></script>
-    <script src="admin/js/frameworks/easymde.min.js"></script>
-    <script src="admin/js/frameworks/highlight.js"></script>
-    <script src="admin/js/frameworks/autosize.min.js"></script>
-    <script src="admin/js/frameworks/Chart.min.js"></script>
+  <form class="d-none" method="post" name="frmUpload" id="frmUpload" action="upload" enctype="multipart/form-data">
+    <input type="file" name="file" id="frmUploadFile" onchange="fileManager.uploadSubmit(); return false;" />
+    <input type="submit" value="Upload" />
+  </form>
 
-    <script src="_content/ChartJs.Blazor.Fork/ChartJsBlazorInterop.js"></script>
-    <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
+  <script src="admin/js/frameworks/bootstrap.bundle.min.js"></script>
+  <script src="admin/js/frameworks/easymde.min.js"></script>
+  <script src="admin/js/frameworks/highlight.js"></script>
+  <script src="admin/js/frameworks/autosize.min.js"></script>
+  <script src="admin/js/frameworks/Chart.min.js"></script>
 
-    <script src="admin/js/components.js"></script>
-    <script src="admin/js/editor.js"></script>
-    <script src="admin/js/dataService.js"></script>
-    <script src="admin/js/fileManager.js"></script>
+  <script src="_content/ChartJs.Blazor.Fork/ChartJsBlazorInterop.js"></script>
+  <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
 
-    <script src="_framework/blazor.webassembly.js"></script>
+  <script src="admin/js/components.js"></script>
+  <script src="admin/js/editor.js"></script>
+  <script src="admin/js/dataService.js"></script>
+  <script src="admin/js/fileManager.js"></script>
+
+  <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>

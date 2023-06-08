@@ -1,0 +1,28 @@
+@model AccountLoginModel
+@{
+  Layout = "layouts/_account.cshtml";
+}
+@inject IStringLocalizer<Resource> _localizer
+
+@section HeadMeta{
+  <title>@_localizer["login"]</title>
+}
+
+@if (Model.ShowError)
+{
+  <div class="account-message -error">@_localizer["login-failed"].</div>
+}
+<form method="post" asp-controller="account" asp-action="login">
+  <input type="hidden" asp-for="RedirectUri" />
+  <div class="form-floating form-item">
+    <input id="loginEmail" class="form-control" asp-for="Email" placeholder="@_localizer["email"]" autofocus>
+    <label for="loginEmail">@_localizer["email"]</label>
+    <span asp-validation-for="Email"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="loginPassword" class="form-control" asp-for="Password" placeholder="@_localizer["password"]" autofocus>
+    <label for="loginPassword"> @_localizer["password"]</label>
+    <span asp-validation-for="Password"></span>
+  </div>
+  <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["login"]</button>
+</form>

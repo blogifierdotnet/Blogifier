@@ -12,50 +12,53 @@
   }
 </style>
 <div class="d-flex">
-    @if (PostCategories != null)
+  @if (PostCategories != null)
+  {
+    foreach (var item in PostCategories)
     {
-        foreach (var item in PostCategories)
-        {
-            <div>
-                <label>@item.Content</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" @onclick="()=> Remove(item.Content)">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
-        }
+      <div>
+        <label>@item.Content</label>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+          viewBox="0 0 16 16" @onclick="()=> Remove(item.Content)">
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+      </div>
     }
-    <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed" name="tagItem" placeholder="@_localizer["add-category"]" />
+  }
+  <input type="text" id="add_category_control" class="editor-add-category" @bind="Tag" @onkeyup="KeyPressed"
+    name="tagItem" placeholder="@_localizer["add-category"]" />
 </div>
 
 @code {
-   [Parameter] public Post Post { get; set; }
+  [Parameter] public Post Post { get; set; }
 
-   protected string Tag { get; set; }
-   public List<Category> PostCategories { get; set; }
+  protected string Tag { get; set; }
+  public List<Category> PostCategories { get; set; }
 
-   protected override async Task OnInitializedAsync()
-   {
-       await Load();
-   }
+  protected override async Task OnInitializedAsync()
+  {
+    await Load();
+  }
 
-   protected async Task Load()
-   {
-       Tag = "";
-       PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
-   }
+  protected async Task Load()
+  {
+    Tag = "";
+    PostCategories = (await _http.GetFromJsonAsync<ICollection<Category>>($"api/category/{Post.Id}")).ToList();
+  }
 
-   protected async Task KeyPressed(KeyboardEventArgs eventArgs)
-   {
-       if (eventArgs.Code == "Enter")
-       {
-           PostCategories.Add(new Category { Content = Tag, DateUpdated = DateTime.UtcNow });
-           Tag = await Task.FromResult("");
-       }
-   }
+  protected async Task KeyPressed(KeyboardEventArgs eventArgs)
+  {
+    if (eventArgs.Code == "Enter")
+    {
+      PostCategories.Add(new Category { Content = Tag });
+      Tag = await Task.FromResult("");
+    }
+  }
 
-   protected async Task Remove(string tag)
-   {
-       var tagToRemove = await Task.FromResult(PostCategories.Where(c => c.Content == tag).FirstOrDefault());
-       PostCategories.Remove(tagToRemove);
-   }
+  protected async Task Remove(string tag)
+  {
+    var tagToRemove = await Task.FromResult(PostCategories.Where(c => c.Content == tag).FirstOrDefault());
+    PostCategories.Remove(tagToRemove);
+  }
 }

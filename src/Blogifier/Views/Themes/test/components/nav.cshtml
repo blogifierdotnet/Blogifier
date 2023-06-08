@@ -1,8 +1,7 @@
-@using Blogifier.Shared.Resources
-@using Blogifier.Shared
-@using Microsoft.Extensions.Localization
+@using Blogifier.Providers;
+
 @inject IStringLocalizer<Resource> _localizer
-@inject ICategoryProvider _categoryProvider
+@inject CategoryProvider _categoryProvider
 
 @{
     var categories = await _categoryProvider.Categories();

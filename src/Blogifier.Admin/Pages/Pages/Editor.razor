@@ -22,7 +22,7 @@
                 }
                 else
                 {
-                    if (Post.Published > DateTime.MinValue)
+                    if (Post.PublishedAt > DateTime.MinValue)
                     {
                         <button type="button" class="btn btn-blogifier me-3 px-4" @onclick="() => Save()">@_localizer["save"]</button>
                         <button type="button" class="btn btn-default me-auto" @onclick="() => Unpublish()" @onclick:preventDefault>@_localizer["unpublish"]</button>
@@ -136,10 +136,10 @@
        }
 
        if (postAction == PostAction.Publish)
-           Post.Published = DateTime.UtcNow;
+           Post.PublishedAt = DateTime.UtcNow;
 
        if (postAction == PostAction.Unpublish)
-           Post.Published = DateTime.MinValue;
+           Post.PublishedAt = DateTime.MinValue;
 
        if (Post.Id == 0)
        {

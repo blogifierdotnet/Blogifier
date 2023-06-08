@@ -1,441 +1,450 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!--
-        Microsoft ResX Schema
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-        Version 2.0
-
-        The primary goals of this format is to allow a simple XML format
-        that is mostly human readable. The generation and parsing of the
-        various data types are done through the TypeConverter classes
-        associated with the data types.
-
-        Example:
-
-        ... ado.net/XML headers & schema ...
-        <resheader name="resmimetype">text/microsoft-resx</resheader>
-        <resheader name="version">2.0</resheader>
-        <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-        <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-        <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-        <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-        <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-            <value>[base64 mime encoded serialized .NET Framework object]</value>
-        </data>
-        <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-            <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-            <comment>This is a comment</comment>
-        </data>
-
-        There are any number of "resheader" rows that contain simple
-        name/value pairs.
-
-        Each data row contains a name, and value. The row also contains a
-        type or mimetype. Type corresponds to a .NET class that support
-        text/value conversion through the TypeConverter architecture.
-        Classes that don't support this are serialized and stored with the
-        mimetype set.
-
-        The mimetype is used for serialized objects, and tells the
-        ResXResourceReader how to depersist the object. This is currently not
-        extensible. For a given mimetype the value must be set accordingly:
-
-        Note - application/x-microsoft.net.object.binary.base64 is the format
-        that the ResXResourceWriter will generate, however the reader can
-        read any of the formats listed below.
-
-        mimetype: application/x-microsoft.net.object.binary.base64
-        value   : The object must be serialized with
-                : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-                : and then encoded with base64 encoding.
-
-        mimetype: application/x-microsoft.net.object.soap.base64
-        value   : The object must be serialized with
-                : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-                : and then encoded with base64 encoding.
-
-        mimetype: application/x-microsoft.net.object.bytearray.base64
-        value   : The object must be serialized into a byte array
-                : using a System.ComponentModel.TypeConverter
-                : and then encoded with base64 encoding.
-        -->
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-        <xsd:element name="root" msdata:IsDataSet="true">
-        <xsd:complexType>
-            <xsd:choice maxOccurs="unbounded">
-            <xsd:element name="metadata">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" />
-                </xsd:sequence>
-                <xsd:attribute name="name" use="required" type="xsd:string" />
-                <xsd:attribute name="type" type="xsd:string" />
-                <xsd:attribute name="mimetype" type="xsd:string" />
-                <xsd:attribute ref="xml:space" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="assembly">
-                <xsd:complexType>
-                <xsd:attribute name="alias" type="xsd:string" />
-                <xsd:attribute name="name" type="xsd:string" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="data">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                    <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-                </xsd:sequence>
-                <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-                <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-                <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-                <xsd:attribute ref="xml:space" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="resheader">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                </xsd:sequence>
-                <xsd:attribute name="name" type="xsd:string" use="required" />
-                </xsd:complexType>
-            </xsd:element>
-            </xsd:choice>
-        </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="general" xml:space="preserve">
-        <value>常规</value>
-    </data>
-    <data name="profile" xml:space="preserve">
-        <value>个人资料</value>
-    </data>
-    <data name="password" xml:space="preserve">
-        <value>密码</value>
-    </data>
-    <data name="themes" xml:space="preserve">
-        <value>主题</value>
-    </data>
-    <data name="users" xml:space="preserve">
-        <value>用户</value>
-    </data>
-    <data name="new-user" xml:space="preserve">
-        <value>新增用户</value>
-    </data>
-    <data name="import" xml:space="preserve">
-        <value>导入</value>
-    </data>
-    <data name="new-post" xml:space="preserve">
-        <value>写文章</value>
-    </data>
-    <data name="posts" xml:space="preserve">
-        <value>文章列表</value>
-    </data>
-    <data name="settings" xml:space="preserve">
-        <value>设置</value>
-    </data>
-    <data name="notifications" xml:space="preserve">
-        <value>通知</value>
-    </data>
-    <data name="visit-blog" xml:space="preserve">
-        <value>访问博客</value>
-    </data>
-    <data name="title" xml:space="preserve">
-        <value>标题</value>
-    </data>
-    <data name="description" xml:space="preserve">
-        <value>描述</value>
-    </data>
-    <data name="items-per-page" xml:space="preserve">
-        <value>每页的文章数量</value>
-    </data>
-    <data name="logo" xml:space="preserve">
-        <value>徽标图片</value>
-    </data>
-    <data name="cover" xml:space="preserve">
-        <value>封面图片</value>
-    </data>
-    <data name="language" xml:space="preserve">
-        <value>语言</value>
-    </data>
-    <data name="save" xml:space="preserve">
-        <value>保存</value>
-    </data>
-    <data name="select" xml:space="preserve">
-        <value>选择</value>
-    </data>
-    <data name="selected" xml:space="preserve">
-        <value>已选择</value>
-    </data>
-    <data name="search" xml:space="preserve">
-        <value>搜索</value>
-    </data>
-    <data name="all" xml:space="preserve">
-        <value>所有</value>
-    </data>
-    <data name="published" xml:space="preserve">
-        <value>已发布</value>
-    </data>
-    <data name="draft" xml:space="preserve">
-        <value>草稿</value>
-    </data>
-    <data name="status" xml:space="preserve">
-        <value>状态</value>
-    </data>
-    <data name="not-found" xml:space="preserve">
-        <value>未找到</value>
-    </data>
-    <data name="publish" xml:space="preserve">
-        <value>发布</value>
-    </data>
-    <data name="unpublish" xml:space="preserve">
-        <value>取消发布</value>
-    </data>
-    <data name="featured" xml:space="preserve">
-        <value>已顶置</value>
-    </data>
-    <data name="add-to-featured" xml:space="preserve">
-        <value>添加顶置</value>
-    </data>
-    <data name="cancel" xml:space="preserve">
-        <value>取消</value>
-    </data>
-    <data name="delete" xml:space="preserve">
-        <value>删除</value>
-    </data>
-    <data name="categories" xml:space="preserve">
-        <value>分类</value>
-    </data>
-    <data name="view" xml:space="preserve">
-        <value>查看</value>
-    </data>
-    <data name="user-name" xml:space="preserve">
-        <value>用户名</value>
-    </data>
-    <data name="email" xml:space="preserve">
-        <value>电子邮箱</value>
-    </data>
-    <data name="user-bio" xml:space="preserve">
-        <value>用户简介</value>
-    </data>
-    <data name="avatar" xml:space="preserve">
-        <value>头像</value>
-    </data>
-    <data name="remove" xml:space="preserve">
-        <value>移除</value>
-    </data>
-    <data name="removed" xml:space="preserve">
-        <value>已移除</value>
-    </data>
-    <data name="new-password" xml:space="preserve">
-        <value>新密码</value>
-    </data>
-    <data name="confirm-password" xml:space="preserve">
-        <value>确认密码</value>
-    </data>
-    <data name="close" xml:space="preserve">
-        <value>关闭</value>
-    </data>
-    <data name="set-as-admin" xml:space="preserve">
-        <value>设置为管理员</value>
-    </data>
-    <data name="select-rss-file" xml:space="preserve">
-        <value>选择RSS（.xml）文件以便导入文章</value>
-    </data>
-    <data name="images" xml:space="preserve">
-        <value>图像</value>
-    </data>
-    <data name="attachments" xml:space="preserve">
-        <value>附件</value>
-    </data>
-    <data name="upload" xml:space="preserve">
-        <value>上传</value>
-    </data>
-    <data name="filters" xml:space="preserve">
-        <value>筛选</value>
-    </data>
-    <data name="change-password" xml:space="preserve">
-        <value>更改密码</value>
-    </data>
-    <data name="theme" xml:space="preserve">
-        <value>主题</value>
-    </data>
-    <data name="read" xml:space="preserve">
-        <value>阅读</value>
-    </data>
-    <data name="updated" xml:space="preserve">
-        <value>已更新</value>
-    </data>
-    <data name="created" xml:space="preserve">
-        <value>已创建</value>
-    </data>
-    <data name="about" xml:space="preserve">
-        <value>关于</value>
-    </data>
-    <data name="newsletter" xml:space="preserve">
-        <value>内容订阅</value>
-    </data>
-    <data name="newsletter-subscribers" xml:space="preserve">
-        <value>电子邮件订阅列表</value>
-    </data>
-    <data name="contact" xml:space="preserve">
-        <value>联系</value>
-    </data>
-    <data name="dashboard" xml:space="preserve">
-        <value>仪表盘</value>
-    </data>
-    <data name="popular" xml:space="preserve">
-        <value>热门</value>
-    </data>
-    <data name="empty" xml:space="preserve">
-        <value>空的</value>
-    </data>
-    <data name="edit" xml:space="preserve">
-        <value>编辑</value>
-    </data>
-    <data name="details" xml:space="preserve">
-        <value>详情</value>
-    </data>
-    <data name="custom-field" xml:space="preserve">
-        <value>自定义字段</value>
-    </data>
-    <data name="error-msg" xml:space="preserve">
-        <value>抱歉，出现了一些错误或者这个地址什么都没有。</value>
-    </data>
-    <data name="send" xml:space="preserve">
-        <value>发送</value>
-    </data>
-    <data name="send-to" xml:space="preserve">
-        <value>发送到</value>
-    </data>
-    <data name="subject" xml:space="preserve">
-        <value>主题</value>
-    </data>
-    <data name="content" xml:space="preserve">
-        <value>内容</value>
-    </data>
-    <data name="completed" xml:space="preserve">
-        <value>完成</value>
-    </data>
-    <data name="email-info" xml:space="preserve">
-        <value>在这里，您可以通过发送测试电子邮件来验证新闻稿设置</value>
-    </data>
-    <data name="disqus-info" xml:space="preserve">
-        <value>在这里您可以输入或更新脚本以添加Disqus评论</value>
-    </data>
-    <data name="demo-disabled" xml:space="preserve">
-        <value>在演示模式下禁用</value>
-    </data>
-    <data name="email-sent-success" xml:space="preserve">
-        <value>电子邮件发送成功</value>
-    </data>
-    <data name="email-sent-error" xml:space="preserve">
-        <value>发送电子邮件时出错，请查看日志以了解详细信息</value>
-    </data>
-    <data name="email-sent-count" xml:space="preserve">
-        <value>已发送{0}封新闻稿</value>
-    </data>
-    <data name="social-accounts" xml:space="preserve">
-        <value>社交账户</value>
-    </data>
-    <data name="name" xml:space="preserve">
-        <value>姓名</value>
-    </data>
-    <data name="post-title" xml:space="preserve">
-        <value>文章标题...</value>
-    </data>
-    <data name="type-here" xml:space="preserve">
-        <value>在此处输入...</value>
-    </data>
-    <data name="thank-you" xml:space="preserve">
-        <value>谢谢你！</value>
-    </data>
-    <data name="enter-email" xml:space="preserve">
-        <value>输入电子邮件</value>
-    </data>
-    <data name="subscribe" xml:space="preserve">
-        <value>订阅</value>
-    </data>
-    <data name="join-subscribers" xml:space="preserve">
-        <value>加入我们的订阅者列表，直接在您的收件箱中获取最新消息和更新。</value>
-    </data>
-    <data name="login" xml:space="preserve">
-        <value>登录</value>
-    </data>
-    <data name="home" xml:space="preserve">
-        <value>首页</value>
-    </data>
-    <data name="blog" xml:space="preserve">
-        <value>博客</value>
-    </data>
-    <data name="admin" xml:space="preserve">
-        <value>管理</value>
-    </data>
-    <data name="tag" xml:space="preserve">
-        <value>标签|标签</value>
-    </data>
-    <data name="quick-links" xml:space="preserve">
-        <value>快速链接</value>
-    </data>
-    <data name="navigation" xml:space="preserve">
-        <value>导航</value>
-    </data>
-    <data name="previous" xml:space="preserve">
-        <value>向前</value>
-    </data>
-    <data name="next" xml:space="preserve">
-        <value>向后</value>
-    </data>
-    <data name="confirm-delete" xml:space="preserve">
-        <value>刪除文章？</value>
-    </data>
-    <data name="include-featured" xml:space="preserve">
-        <value>包含在列表中</value>
-    </data>
-    <data name="include-scripts" xml:space="preserve">
-        <value>包含在页眉和页脚中的脚本（主题、分析等）。</value>
-    </data>
-    <data name="subscribers" xml:space="preserve">
-        <value>订阅者</value>
-    </data>
-    <data name="last-week" xml:space="preserve">
-        <value>上一周</value>
-    </data>
-    <data name="last-month" xml:space="preserve">
-        <value>上个月</value>
-    </data>
-    <data name="email-provider" xml:space="preserve">
-        <value>电子邮件服务提供商</value>
-    </data>
-    <data name="sendgrid-key" xml:space="preserve">
-        <value>SendGrid API 密钥</value>
-    </data>
-    <data name="server" xml:space="preserve">
-        <value>服务器</value>
-    </data>
-    <data name="port" xml:space="preserve">
-        <value>端口</value>
-    </data>
-    <data name="smtp-email" xml:space="preserve">
-        <value>SMTP 电子邮件服务器</value>
-    </data>
-    <data name="send-test-email" xml:space="preserve">
-        <value>发送测试邮件</value>
-    </data>
-    <data name="unsubscribe" xml:space="preserve">
-        <value>取消订阅</value>
-    </data>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>个人资料</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>新增用户</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>写文章</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>文章列表</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>访问博客</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>每页的文章数量</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>徽标图片</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>封面图片</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>已选择</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>已发布</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>草稿</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>未找到</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>发布</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>取消发布</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>已顶置</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>添加顶置</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>分类</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>电子邮箱</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>用户简介</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>头像</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>已移除</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>设置为管理员</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>选择RSS（.xml）文件以便导入文章</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>图像</value>
+  </data>
+  <data name="attachments" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>筛选</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>阅读</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>已更新</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>内容订阅</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>电子邮件订阅列表</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>联系</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>仪表盘</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>热门</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>空的</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>自定义字段</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>抱歉，出现了一些错误或者这个地址什么都没有。</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>发送</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>发送到</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>内容</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>在这里，您可以通过发送测试电子邮件来验证新闻稿设置</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>在这里您可以输入或更新脚本以添加Disqus评论</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>在演示模式下禁用</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>电子邮件发送成功</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>发送电子邮件时出错，请查看日志以了解详细信息</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>已发送{0}封新闻稿</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>社交账户</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>文章标题...</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>在此处输入...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>谢谢你！</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>输入电子邮件</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>加入我们的订阅者列表，直接在您的收件箱中获取最新消息和更新。</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>博客</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>管理</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>标签|标签</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>快速链接</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>导航</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>向前</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>向后</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>刪除文章？</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>包含在列表中</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>包含在页眉和页脚中的脚本（主题、分析等）。</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>订阅者</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>上一周</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>上个月</value>
+  </data>
+  <data name="email-provider" xml:space="preserve">
+    <value>电子邮件服务提供商</value>
+  </data>
+  <data name="sendgrid-key" xml:space="preserve">
+    <value>SendGrid API 密钥</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>端口</value>
+  </data>
+  <data name="smtp-email" xml:space="preserve">
+    <value>SMTP 电子邮件服务器</value>
+  </data>
+  <data name="send-test-email" xml:space="preserve">
+    <value>发送测试邮件</value>
+  </data>
+  <data name="unsubscribe" xml:space="preserve">
+    <value>取消订阅</value>
+  </data>
+  <data name="under-development" xml:space="preserve">
+    <value>开发中</value>
+  </data>
+  <data name="more-info" xml:space="preserve">
+    <value>更多信息</value>
+  </data>
+  <data name="drive-describe" xml:space="preserve">
+    <value>Drive 是一种文件存储，您可以上传和管理您的文件并在整个网站上使用。</value>
+  </data>
 </root>

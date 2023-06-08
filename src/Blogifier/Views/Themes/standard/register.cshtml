@@ -1,0 +1,42 @@
+@model AccountRegisterModel
+@inject IStringLocalizer<Resource> _localizer
+@{
+  Layout = "layouts/_account.cshtml";
+}
+
+@section HeadMeta{
+  <title>@_localizer["register"]</title>
+}
+
+<div class="account-header">
+  <h2 class="account-title text-lg-center">@_localizer["welcome-blogifier"]</h2>
+</div>
+
+@if (Model.ShowError)
+{
+  <div class="account-message -error">@_localizer["register-failed"].</div>
+}
+<form method="post" asp-controller="account" asp-action="register">
+  <input type="hidden" asp-for="RedirectUri" />
+  <div class="form-floating form-item">
+    <input id="registerName" asp-for="UserName" class="form-control" type="text" placeholder="@_localizer["name"]">
+    <label for="registerName">@_localizer["name"]</label>
+    <span class="validation-message" asp-validation-for="UserName"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="loginEmail" class="form-control" asp-for="Email" placeholder="@_localizer["email"]" autofocus>
+    <label for="loginEmail">@_localizer["email"]</label>
+    <span class="validation-message" asp-validation-for="Email"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="loginPassword" class="form-control" asp-for="Password" placeholder="@_localizer["password"]" autofocus>
+    <label for="loginPassword"> @_localizer["password"]</label>
+    <span class="validation-message" asp-validation-for="Password"></span>
+  </div>
+  <div class="form-floating form-item">
+    <input id="registerConfirmPassword" asp-for="PasswordConfirm" class="form-control" type="password" placeholder="@_localizer["confirm-password"]">
+    <label for="registerConfirmPassword">@_localizer["confirm-password"]</label>
+    <span class="validation-message" asp-validation-for="PasswordConfirm"></span>
+  </div>
+  <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["login"]</button>
+</form>

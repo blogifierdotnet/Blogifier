@@ -1,28 +1,27 @@
+
 @inject HttpClient _http
 @inject NavigationManager _navigationManager
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime _jsRuntime
 
 @code {
-   protected override async Task OnInitializedAsync()
-   {
-       try
-       {
-           Blog blog = null;
-           try
-           {
-               blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-               await JSRuntime.InvokeAsync<string>("commonJsFunctions.hideLoader", "blazor-loading-ui");
-           }
-           catch { }
-
-           if (blog == null)
-               _navigationManager.NavigateTo("admin/register/");
-           else
-               _navigationManager.NavigateTo($"admin/login/?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
-       }
-       catch (Exception ex)
-       {
-           _navigationManager.NavigateTo($"admin/login/?error={ex.Message}");
-       }
-   }
+  protected override async Task OnInitializedAsync()
+  {
+    try
+    {
+      try
+      {
+        var blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+        await _jsRuntime.InvokeAsync<string>("commonJsFunctions.hideLoader", "blazor-loading-ui");
+      }
+      catch
+      {
+        _navigationManager.NavigateTo("admin/register/");
+      }
+      _navigationManager.NavigateTo($"admin/login/?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+    }
+    catch (Exception ex)
+    {
+      _navigationManager.NavigateTo($"admin/login/?error={ex.Message}");
+    }
+  }
 }

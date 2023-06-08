@@ -20,7 +20,7 @@
                 <li class="list-item">
                     @{
                         string title = $"{subscriber.Email} / {subscriber.Country} / {subscriber.Region} / {subscriber.Ip}";
-                        string pubDate = subscriber.DateCreated.ToFriendlyDateTimeString();
+                        string pubDate = subscriber.CreatedAt.ToFriendlyDateTimeString();
                     }
                     <span class="list-title">@title</span>
                     <span class="list-text">@pubDate</span>

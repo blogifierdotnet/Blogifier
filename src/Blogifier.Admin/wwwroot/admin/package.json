@@ -8,7 +8,7 @@
     "rtl": "rtlcss css/blogifier.css css/blogifier.rtl.css"
   },
   "devDependencies": {
-    "bootstrap": "^5.1.0",
+    "bootstrap": "~5.1.0",
     "rtlcss": "^3.3.0",
     "sass": "^1.32.12"
   }

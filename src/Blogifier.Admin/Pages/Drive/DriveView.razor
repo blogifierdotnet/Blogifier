@@ -1,14 +1,18 @@
 @page "/admin/drive/"
 @inject IStringLocalizer<Resource> _localizer
+
+<BlogPageTitle Title="@_localizer["drive"]" />
+
 <div class="container">
-    <h1 class="section-title">@_localizer["Drive"]</h1>
-    <div class="section-content">
-        <p class="mb-2">Drive is a file storage that you are able to upload and manage your files and use throughout the website.</p>
-        <div class="alert alert-secondary d-flex align-items-center">
-            @_localizer["under-development"].
-            <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank" href="https://github.com/blogifierdotnet/blogifier/projects/">
-                @_localizer["more-info"]
-            </a>
-         </div>
+  <h1 class="section-title">@_localizer["drive"]</h1>
+  <div class="section-content">
+    <p class="mb-2">@_localizer["drive-describe"]</p>
+    <div class="alert alert-secondary d-flex align-items-center">
+      @_localizer["under-development"].
+      <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank"
+         href="https://github.com/blogifierdotnet/blogifier/projects/">
+        @_localizer["more-info"]
+      </a>
     </div>
+  </div>
 </div>
