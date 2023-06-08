@@ -1,3 +1,4 @@
+<br>
 <h3 align="center">Blogifier</h3>
 <p align="center">
     Blogifier is a self-hosted open source publishing platform written in ASP.NET and Blazor WebAssembly. 
