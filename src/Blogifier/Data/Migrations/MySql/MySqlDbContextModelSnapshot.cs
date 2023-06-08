@@ -118,7 +118,7 @@ namespace Blogifier.Data.Migrations.MySql
                       .IsUnique()
                       .HasDatabaseName("UserNameIndex");
 
-            b.ToTable("User", (string)null);
+            b.ToTable("Users", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Newsletters.Newsletter", b =>
@@ -300,7 +300,7 @@ namespace Blogifier.Data.Migrations.MySql
 
             b.HasIndex("UserId");
 
-            b.ToTable("Post", (string)null);
+            b.ToTable("Posts", (string)null);
           });
 
       modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>
@@ -368,7 +368,7 @@ namespace Blogifier.Data.Migrations.MySql
 
             b.HasIndex("UserId");
 
-            b.ToTable("Storages");
+            b.ToTable("Storages", (string)null);
           });
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

@@ -30,7 +30,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
 
     modelBuilder.Entity<UserInfo>(e =>
     {
-      e.ToTable("User");
+      e.ToTable("Users");
       e.Property(p => p.Id).HasMaxLength(128);
       e.Property(p => p.CreatedAt).HasColumnOrder(0);
       e.Property(p => p.UpdatedAt).HasColumnOrder(1);
@@ -65,8 +65,13 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
 
     modelBuilder.Entity<Post>(e =>
     {
-      e.ToTable("Post");
+      e.ToTable("Posts");
       e.HasIndex(b => b.Slug).IsUnique();
+    });
+
+    modelBuilder.Entity<Storage>(e =>
+    {
+      e.ToTable("Storages");
     });
 
     //modelBuilder.Entity<StorageReference>(e =>

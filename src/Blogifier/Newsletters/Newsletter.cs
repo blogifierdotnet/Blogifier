@@ -1,7 +1,6 @@
 using Blogifier.Data;
 using Blogifier.Shared;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blogifier.Newsletters;
 

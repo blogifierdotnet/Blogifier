@@ -3,109 +3,114 @@ using System;
 using Blogifier.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Blogifier.Data.Migrations.Sqlite
+namespace Blogifier.Data.Migrations.MySql
 {
-  [DbContext(typeof(SqliteDbContext))]
-  partial class SqliteDbContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(MySqlDbContext))]
+  [Migration("20230608104710_Init")]
+  partial class Init
   {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
-      modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+      modelBuilder
+          .HasAnnotation("ProductVersion", "7.0.5")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
       modelBuilder.Entity("Blogifier.Identity.UserInfo", b =>
           {
             b.Property<string>("Id")
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.Property<int>("AccessFailedCount")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("Avatar")
                       .HasMaxLength(1024)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(1024)");
 
             b.Property<string>("Bio")
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(2048)");
 
             b.Property<string>("ConcurrencyStamp")
                       .IsConcurrencyToken()
                       .HasMaxLength(64)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(64)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasColumnOrder(0)
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)")
+                      .HasColumnOrder(0);
 
             b.Property<string>("Email")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<bool>("EmailConfirmed")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<string>("Gender")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(32)");
 
             b.Property<bool>("LockoutEnabled")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<DateTimeOffset?>("LockoutEnd")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("NickName")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("NormalizedEmail")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("NormalizedUserName")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("PasswordHash")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("PhoneNumber")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(32)");
 
             b.Property<bool>("PhoneNumberConfirmed")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<string>("SecurityStamp")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(32)");
 
             b.Property<int>("State")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<bool>("TwoFactorEnabled")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<int>("Type")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT")
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)")
                       .HasColumnOrder(1);
 
             b.Property<string>("UserName")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.HasKey("Id");
 
@@ -123,21 +128,21 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<int>("PostId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<bool>("Success")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
 
             b.HasKey("Id");
 
@@ -150,32 +155,32 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("Country")
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(120)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Email")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(160)");
 
             b.Property<string>("Ip")
                       .HasMaxLength(80)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(80)");
 
             b.Property<string>("Region")
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(120)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
 
             b.HasKey("Id");
 
@@ -186,24 +191,24 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Key")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Value")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("longtext");
 
             b.HasKey("Id");
 
@@ -217,21 +222,20 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("Content")
                       .IsRequired()
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(120)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Description")
                       .HasMaxLength(255)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(255)");
 
             b.HasKey("Id");
 
@@ -242,55 +246,55 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("Content")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("longtext");
 
             b.Property<string>("Cover")
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(160)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Description")
                       .IsRequired()
                       .HasMaxLength(450)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(450)");
 
             b.Property<int>("PostType")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<DateTime?>("PublishedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("Slug")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(160)");
 
             b.Property<int>("State")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("Title")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(160)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .ValueGeneratedOnAddOrUpdate()
+                      .HasColumnType("datetime(6)");
 
             b.Property<string>("UserId")
                       .IsRequired()
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.Property<int>("Views")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.HasKey("Id");
 
@@ -305,10 +309,10 @@ namespace Blogifier.Data.Migrations.Sqlite
       modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>
           {
             b.Property<int>("PostId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<int>("CategoryId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.HasKey("PostId", "CategoryId");
 
@@ -321,48 +325,47 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("ContentType")
                       .IsRequired()
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("datetime(6)");
 
             b.Property<DateTime?>("DeletedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("datetime(6)");
 
             b.Property<bool>("IsDeleted")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("tinyint(1)");
 
             b.Property<long>("Length")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("bigint");
 
             b.Property<string>("Name")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("Path")
                       .IsRequired()
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(2048)");
 
             b.Property<string>("Slug")
                       .IsRequired()
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(2048)");
 
             b.Property<int>("Type")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("UserId")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.HasKey("Id");
 
@@ -375,19 +378,19 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("int");
 
             b.Property<string>("ClaimType")
                       .HasMaxLength(16)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(16)");
 
             b.Property<string>("ClaimValue")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(256)");
 
             b.Property<string>("UserId")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.HasKey("Id");
 
@@ -399,18 +402,18 @@ namespace Blogifier.Data.Migrations.Sqlite
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
           {
             b.Property<string>("LoginProvider")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(255)");
 
             b.Property<string>("ProviderKey")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(255)");
 
             b.Property<string>("ProviderDisplayName")
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.Property<string>("UserId")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.HasKey("LoginProvider", "ProviderKey");
 
@@ -422,17 +425,17 @@ namespace Blogifier.Data.Migrations.Sqlite
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
           {
             b.Property<string>("UserId")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(128)");
 
             b.Property<string>("LoginProvider")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(255)");
 
             b.Property<string>("Name")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(255)");
 
             b.Property<string>("Value")
                       .HasMaxLength(1024)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("varchar(1024)");
 
             b.HasKey("UserId", "LoginProvider", "Name");
 
