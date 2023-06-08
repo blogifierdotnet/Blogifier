@@ -61,13 +61,14 @@ window.commonJsFunctions = {
     document.cookie = name + "=" + value + expires + "; path=/";
   },
   setTooltip: function (args) {
-    setTimeout(function () {
-      let options = { "trigger": "hover", fallbackPlacements: ['bottom'] };
-      let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, options)
-      });
-    }, 1000);
+    let options = {
+      "trigger": "hover",
+      fallbackPlacements: ['bottom']
+    }
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl, options)
+    });
   },
   loadEditor: function (toolbar) {
     autosize(document.querySelectorAll('.autosize'));
