@@ -5,10 +5,10 @@
 
 <BlogPageTitle Title="@_localizer["logout"]" />
 
-@code{
-    protected override async Task OnInitializedAsync()
-    {
-        await _http.GetFromJsonAsync<bool>("api/author/logout");
-        _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
-    }
+@code {
+  protected override async Task OnInitializedAsync()
+  {
+    await _http.GetFromJsonAsync<bool>("api/author/logout");
+    _navigationManager.NavigateTo(_navigationManager.BaseUri, true);
+  }
 }

@@ -1,14 +1,13 @@
 @inherits LayoutComponentBase
-@inject IJSRuntime JSRuntime
 
 <AuthorizeView>
-	<Authorized>
-		<NavMenu />
-        @Body
-	</Authorized>
-	<NotAuthorized>
-		<RedirectToLogin />
-	</NotAuthorized>
+  <Authorized>
+    <NavMenu />
+    @Body
+  </Authorized>
+  <NotAuthorized>
+    <RedirectToLogin />
+  </NotAuthorized>
 </AuthorizeView>
 
 <ToastContainer />

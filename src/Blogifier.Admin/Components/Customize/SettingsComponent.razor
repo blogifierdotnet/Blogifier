@@ -4,95 +4,97 @@
 
 @if (Settings != null)
 {
-   <div class="accordion accordion-flush" id="accordionFlushExample">
-      @foreach (var item in Settings.Sections)
-      {
-        var sec = item.Label.GetHashCode();
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    @foreach (var item in Settings.Sections)
+    {
+      var sec = item.Label.GetHashCode();
 
-         <div class="accordion-item">
-            <h2 class="accordion-header" id="head-@sec">
-               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@sec" aria-expanded="false" aria-controls="id-@sec">
-                  @item.Label
-               </button>
-            </h2>
-            <div id="id-@sec" class="accordion-collapse collapse" aria-labelledby="head-@sec" data-bs-parent="#accordionFlushExample">
-                <!-- Test if this -half is good for this section, theme developers may need full width -->
-                <div class="accordion-body section-content -half">
-                    @foreach (var field in item.Fields)
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="head-@sec">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#id-@sec"
+            aria-expanded="false" aria-controls="id-@sec">
+            @item.Label
+          </button>
+        </h2>
+        <div id="id-@sec" class="accordion-collapse collapse" aria-labelledby="head-@sec"
+          data-bs-parent="#accordionFlushExample">
+          <!-- Test if this -half is good for this section, theme developers may need full width -->
+          <div class="accordion-body section-content -half">
+            @foreach (var field in item.Fields)
+            {
+              <div class="form-item">
+                @if (field.Type == "select")
+                {
+                  <label class="form-label">@field.Label</label>
+                  <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
+                    @foreach (var opt in field.Options)
                     {
-                        <div class="form-item">
-                            @if (field.Type == "select")
-                            {
-                                <label class="form-label">@field.Label</label>
-                                <select class="form-select selectpicker" id="@field.Id" name="@field.Id">
-                                    @foreach (var opt in field.Options)
-                                    {
-                                        if (field.Value == opt)
-                                        {
-                                            <option value="@opt" selected>@opt</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@opt">@opt</option>
-                                        }
-                                    }
-                                </select>
-                            }
-                            else if (field.Type == "checkbox")
-                            {
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
-                                    <label class="form-check-label" for="@field.Id">@field.Label</label>
-                                </div>
-                            }
-                            else if (field.Type == "textarea")
-                            {
-                                <label class="form-label">@field.Label</label>
-                                <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
-                            }
-                            else
-                            {
-                                <label class="form-label">@field.Label</label>
-                                <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
-                            }
-                        </div>
+                      if (field.Value == opt)
+                      {
+                        <option value="@opt" selected>@opt</option>
+                      }
+                      else
+                      {
+                        <option value="@opt">@opt</option>
+                      }
                     }
-                </div>
-            </div>
-         </div>
-      }
-   </div>
+                  </select>
+                }
+                else if (field.Type == "checkbox")
+                {
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="@field.Id" name="@field.Id" value="@field.Value">
+                    <label class="form-check-label" for="@field.Id">@field.Label</label>
+                  </div>
+                }
+                else if (field.Type == "textarea")
+                {
+                  <label class="form-label">@field.Label</label>
+                  <textarea class="form-control" id="@field.Id" name="@field.Id" rows="3" cols="50">@field.Value</textarea>
+                }
+                else
+                {
+                  <label class="form-label">@field.Label</label>
+                  <input type="text" class="form-control" id="@field.Id" name="@field.Id" value="@field.Value" />
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
 }
 
 @code {
-   protected Blog Blog { get; set; }
-   protected ThemeItem CurrentTheme { get; set; }
-   protected ToasterComponent Toaster;
-   protected ThemeSettings Settings { get; set; }
+  protected Blog Blog { get; set; }
+  protected ThemeItem CurrentTheme { get; set; }
+  protected ToasterComponent Toaster;
+  protected ThemeSettings Settings { get; set; }
 
-   protected override async Task OnInitializedAsync()
-   {
-      await Load();
-   }
+  protected override async Task OnInitializedAsync()
+  {
+    await Load();
+  }
 
-   public async Task Load()
-   {
-      Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-      var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
+  public async Task Load()
+  {
+    Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
+    var allThemes = await _http.GetFromJsonAsync<IList<string>>($"api/storage/themes");
 
-      Settings = await _http.GetFromJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}");
-   }
+    Settings = await _http.GetFromJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}");
+  }
 
-   public async Task<HttpResponseMessage> Save()
-   {
-      foreach (var section in Settings.Sections)
+  public async Task<HttpResponseMessage> Save()
+  {
+    foreach (var section in Settings.Sections)
+    {
+      foreach (var field in section.Fields)
       {
-         foreach (var field in section.Fields)
-         {
-            var val = await JSRuntime.InvokeAsync<object>("commonJsFunctions.getFieldValue", field);
-            field.Value = val.ToString();
-         }
+        var val = await JSRuntime.InvokeAsync<object>("commonJsFunctions.getFieldValue", field);
+        field.Value = val.ToString();
       }
-      return await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings);
-   }
+    }
+    return await _http.PostAsJsonAsync<ThemeSettings>($"api/theme/{Blog.Theme}", Settings);
+  }
 }

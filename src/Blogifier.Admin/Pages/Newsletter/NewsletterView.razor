@@ -8,76 +8,84 @@
 
 <h1 class="section-title">@_localizer["newsletters"]</h1>
 <div class="section-content">
-    @if (Newsletters == null || Newsletters.Count == 0)
-    {
-        <p class="list-notfound">@_localizer["not-found"]</p>
-    }
-    else
-    {
-        <ul class="list">
-            @foreach (var newsletter in Newsletters)
+  @if (Newsletters == null || Newsletters.Count == 0)
+  {
+    <p class="list-notfound">@_localizer["not-found"]</p>
+  }
+  else
+  {
+    <ul class="list">
+      @foreach (var newsletter in Newsletters)
+      {
+        <li class="list-item">
+          @{
+            string title = $"{newsletter.Post.Title}";
+            string pubDate = newsletter.CreatedAt.ToLocalTime().ToFriendlyDateTimeString();
+            string pubStatus = newsletter.Success ? "published" : "";
+          }
+          <span class="list-title">@title</span>
+          <button class="list-btn" @onclick="(async () => await Resend(newsletter.PostId))" data-bs-toggle="tooltip"
+            title="@_localizer["resend"]">
+            @if (@pubStatus == "published")
             {
-                <li class="list-item">
-                    @{
-                        string title = $"{newsletter.Post.Title}";
-                        string pubDate = newsletter.DateCreated.ToLocalTime().ToFriendlyDateTimeString();
-                        string pubStatus = newsletter.Success ? "published" : "";
-                    }
-                    <span class="list-title">@title</span>
-                    <button class="list-btn" @onclick="(async () => await Resend(newsletter.PostId))" data-bs-toggle="tooltip" title="@_localizer["resend"]">
-                        @if (@pubStatus == "published")
-                        {
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check text-success" viewBox="0 0 16 16">
-                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                            </svg>
-                        }
-                        else
-                        {
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash text-secondary" viewBox="0 0 24 24">
-                                <path d="M6 12.5C6 11.6716 6.67157 11 7.5 11H16.5C17.3284 11 18 11.6716 18 12.5C18 13.3284 17.3284 14 16.5 14H7.5C6.67157 14 6 13.3284 6 12.5Z" />
-                            </svg>
-                        }
-                    </button>
-                    <span class="list-text">@pubDate</span>
-                    <button class="list-btn" @onclick="(async () => await RemoveNewsletter(newsletter.Id))" data-bs-toggle="tooltip" title="@_localizer["remove"]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x text-danger" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                    </button>
-                </li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-check text-success" viewBox="0 0 16 16">
+                <path
+                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
             }
-        </ul>
-    }
+            else
+            {
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-dash text-secondary" viewBox="0 0 24 24">
+                <path
+                  d="M6 12.5C6 11.6716 6.67157 11 7.5 11H16.5C17.3284 11 18 11.6716 18 12.5C18 13.3284 17.3284 14 16.5 14H7.5C6.67157 14 6 13.3284 6 12.5Z" />
+              </svg>
+            }
+          </button>
+          <span class="list-text">@pubDate</span>
+          <button class="list-btn" @onclick="(async () => await RemoveNewsletter(newsletter.Id))" data-bs-toggle="tooltip"
+            title="@_localizer["remove"]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x text-danger"
+              viewBox="0 0 16 16">
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </button>
+        </li>
+      }
+    </ul>
+  }
 </div>
 <ToasterComponent @ref="Toaster" />
 
 @code {
-    protected ToasterComponent Toaster;
-    protected List<Newsletter> Newsletters;
+  protected ToasterComponent Toaster;
+  protected List<Newsletter> Newsletters;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await Load();
-    }
+  protected override async Task OnInitializedAsync()
+  {
+    await Load();
+  }
 
-    protected async Task Load()
-    {
-        Newsletters = await _http.GetFromJsonAsync<List<Newsletter>>($"api/newsletter/newsletters");
-    }
+  protected async Task Load()
+  {
+    Newsletters = await _http.GetFromJsonAsync<List<Newsletter>>($"api/newsletter/newsletters");
+  }
 
-    protected async Task RemoveNewsletter(int id)
-    {
-        Toaster.Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
-        await Load();
-    }
+  protected async Task RemoveNewsletter(int id)
+  {
+    Toaster.Toast(await _http.DeleteAsync($"api/newsletter/remove/{id}"));
+    await Load();
+  }
 
-    protected async Task Resend(int postId)
-    {
-        bool success = await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{postId}");
-        if (success)
-            _toaster.Success(_localizer["completed"]);
-        else
-            _toaster.Error(_localizer["generic-error"]);
-        await Load();
-    }
+  protected async Task Resend(int postId)
+  {
+    bool success = await _http.GetFromJsonAsync<bool>($"api/newsletter/send/{postId}");
+    if (success)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+    await Load();
+  }
 }

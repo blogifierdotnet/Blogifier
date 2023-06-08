@@ -1,62 +1,67 @@
 @using Blogifier.Shared.Resources
 @using Blogifier.Shared
 @using Microsoft.Extensions.Localization
+
 @inject IStringLocalizer<Resource> _localizer
 
 @{
-    ListModel listModel = (ListModel)Model;
-    string root = Url.Content("~/");
+  var listModel = (ListModel)Model;
+  var root = Url.Content("~/");
 }
 
 @if (listModel.Posts.Count() > 0)
 {
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     @foreach (var post in listModel.Posts)
     {
-        <div class="col">
-            <article class="post-grid d-flex flex-column">
-                <figure class="post-grid-cover">
-                    <img class="post-grid-img" src="~/@post.Cover" alt="@post.Title">
-                </figure>
-                @if(post.Categories != null)
-                {
-                <div class="post-grid-cats">
-                    @foreach (var cat in post.Categories)
-                    {
-                        <a class="post-grid-cats-link" href="~/categories/@cat.Content" tabindex="-1">@cat.Content</a>
-                    }
-                </div>
-                }
-                <h2 class="post-grid-title">
-                    <a class="post-grid-link" href="~/posts/@post.Slug">@post.Title</a>
-                </h2>
-                <p class="post-grid-desc">@Html.Raw(post.Description)</p>
-                <div class="post-grid-meta d-flex">
-                    <div class="post-grid-author">
-                        <img class="post-grid-author-img" src="@post.Author.Avatar" width="16" height="16" alt="@post.Author.DisplayName">
-                        <span class="post-grid-author-name">@post.Author.DisplayName</span>
-                    </div>
-                    <div class="post-grid-date">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
-                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                        </svg>
-                        <time class="post-grid-date-time">@post.Published.ToFriendlyShortDateString()</time>
-                    </div>
-                    <a class="post-grid-more ms-auto" href="~/posts/@post.Slug" tabindex="-1">
-                        <span>Read</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
-                        </svg>
-                    </a>
-                </div>
+      <div class="col">
+        <article class="post-grid d-flex flex-column">
+          <figure class="post-grid-cover">
+            <img class="post-grid-img" src="~/@post.Cover" alt="@post.Title">
+          </figure>
+          @if (post.Categories != null)
+          {
+            <div class="post-grid-cats">
+              @foreach (var cat in post.Categories)
+              {
+                <a class="post-grid-cats-link" href="~/categories/@cat.Content" tabindex="-1">@cat.Content</a>
+              }
+            </div>
+          }
+          <h2 class="post-grid-title">
+            <a class="post-grid-link" href="~/posts/@post.Slug">@post.Title</a>
+          </h2>
+          <p class="post-grid-desc">@Html.Raw(post.Description)</p>
+          <div class="post-grid-meta d-flex">
+            <div class="post-grid-author">
+              <img class="post-grid-author-img" src="@post.Author.Avatar" width="16" height="16"
+                   alt="@post.Author.DisplayName">
+              <span class="post-grid-author-name">@post.Author.DisplayName</span>
+            </div>
+            <div class="post-grid-date">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                   class="bi bi-calendar-event post-grid-date-icon" viewBox="0 0 16 16">
+                <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+              </svg>
+              <time class="post-grid-date-time">@post.Published.ToFriendlyShortDateString()</time>
+            </div>
+            <a class="post-grid-more ms-auto" href="~/posts/@post.Slug" tabindex="-1">
+              <span>Read</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+              </svg>
+            </a>
+          </div>
 
-            </article>
-        </div>
+        </article>
+      </div>
     }
-    </div>
+  </div>
 }
 else
 {
-    <div class="h1 text-capitalize">@_localizer["empty"]!</div>
+  <div class="h1 text-capitalize">@_localizer["empty"]!</div>
 }

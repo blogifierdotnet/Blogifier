@@ -8,23 +8,25 @@
 
 @if (showError)
 {
-    <div class="account-message -error">@_localizer["login-failed"].</div>
+  <div class="account-message -error">@_localizer["login-failed"].</div>
 }
 
 @if (model != null)
 {
-    <EditForm Model="@model" OnValidSubmit="LoginUser">
-        <DataAnnotationsValidator />
-        <div class="form-floating form-item">
-            <input @bind="model.Email" type="email" class="form-control" id="loginEmail" placeholder="@_localizer["email"]" autofocus>
-            <label for="loginEmail">@_localizer["email"]</label>
-            <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
-        </div>
-        <div class="form-floating form-item">
-            <input @bind="model.Password" type="password" class="form-control" id="loginPassword" placeholder="@_localizer["password"]">
-            <label for="loginPassword">@_localizer["password"]</label>
-            <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
-        </div>
-        <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["login"]</button>
-    </EditForm>
+  <EditForm Model="@model" OnValidSubmit="LoginUser">
+    <DataAnnotationsValidator />
+    <div class="form-floating form-item">
+      <input @bind="model.Email" type="email" class="form-control" id="loginEmail" placeholder="@_localizer["email"]"
+        autofocus>
+      <label for="loginEmail">@_localizer["email"]</label>
+      <ValidationMessage For="@(() => model.Email)"></ValidationMessage>
+    </div>
+    <div class="form-floating form-item">
+      <input @bind="model.Password" type="password" class="form-control" id="loginPassword"
+        placeholder="@_localizer["password"]">
+      <label for="loginPassword">@_localizer["password"]</label>
+      <ValidationMessage For="@(() => model.Password)"></ValidationMessage>
+    </div>
+    <button type="submit" class="btn btn-blogifier btn-block btn-floating">@_localizer["login"]</button>
+  </EditForm>
 }

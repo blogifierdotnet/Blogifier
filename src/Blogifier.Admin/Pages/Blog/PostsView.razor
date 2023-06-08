@@ -86,8 +86,8 @@
             <Virtualize Items="Posts" Context="post">
 
                 @{
-                    string pubDate = post.Published > DateTime.MinValue ? post.Published.ToFriendlyShortDateString() : @_localizer["draft"];
-                    string pubStatus = post.Published > DateTime.MinValue ? "published" : "";
+                    string pubDate = post.PublishedAt > DateTime.MinValue ? post.PublishedAt.ToFriendlyShortDateString() : @_localizer["draft"];
+                    string pubStatus = post.PublishedAt > DateTime.MinValue ? "published" : "";
                     string featured = post.IsFeatured ? "featured" : "";
                 }
 
@@ -285,7 +285,7 @@ else
 
    public async Task Publish(Post post)
    {
-       Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.Published == DateTime.MinValue)));
+       Toast(await _http.PutAsJsonAsync($"api/post/publish/{post.Id}", (post.PublishedAt == DateTime.MinValue)));
        await Load();
    }
 
@@ -293,14 +293,6 @@ else
    {
        Toast(await _http.PutAsJsonAsync($"api/post/featured/{post.Id}", !post.IsFeatured));
        await Load();
-   }
-
-   protected override async Task OnAfterRenderAsync(bool firstRender)
-   {
-       if (firstRender)
-       {
-           await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-       }
    }
 
    protected void Toast(HttpResponseMessage msg)
