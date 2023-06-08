@@ -1,20 +1,52 @@
-@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
 @inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime _jsRuntime
+
 <div class="easymde-wrapper">
-  <textarea id="bf_editor" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
+  <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
 </div>
+<InputFile @ref="inputImageFiles" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
 
 @code {
-  [Parameter] public string Content { get; set; }
-  [Parameter] public string Toolbar { get; set; }
+
+  [Parameter] public string Toolbar { get; set; } = default!;
+
+  private ValueTask<IJSObjectReference> _taskModule;
+  private ElementReference? _textareaReference;
+  private InputFile? inputImageFiles;
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
     if (firstRender)
     {
-      await JSRuntime.InvokeAsync<string>("commonJsFunctions.loadEditor", Toolbar);
+      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.min.js");
+      var module = await _taskModule;
+      await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
     }
+  }
 
-    await JSRuntime.InvokeAsync<string>("commonJsFunctions.setEditorValue", Content);
+  protected async Task LoadImageFiles(InputFileChangeEventArgs args)
+  {
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("previewImage", inputImageFiles?.Element);
+  }
+
+  public async ValueTask SetValueAsync(string value)
+  {
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("setEditorValue", value);
+  }
+
+  public async ValueTask<string?> GetValueAsync()
+  {
+    var module = await _taskModule;
+    var content = await module.InvokeAsync<string>("getEditorValue");
+    return content;
+  }
+
+  async ValueTask IAsyncDisposable.DisposeAsync()
+  {
+    var module = await _taskModule;
+    await module.DisposeAsync();
   }
 }

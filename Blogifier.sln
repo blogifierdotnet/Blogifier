@@ -30,6 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{D2E9C8BA
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blogifier.Themes.Standard", "src\Blogifier.Themes.Standard\Blogifier.Themes.Standard.csproj", "{7784DF02-6BCF-40A9-B327-C1F173975714}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "themes", "themes", "{4155E512-4F91-48D3-823A-45B7C71125A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,12 +92,25 @@ Global
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x64.Build.0 = Release|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x86.ActiveCfg = Release|Any CPU
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442}.Release|x86.Build.0 = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|x64.Build.0 = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Debug|x86.Build.0 = Debug|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x64.ActiveCfg = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x64.Build.0 = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x86.ActiveCfg = Release|Any CPU
+		{7784DF02-6BCF-40A9-B327-C1F173975714}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27EB38D0-E275-4033-93B6-3ED6E6B7B442} = {8DDBCDEC-BFD8-4737-93BD-5259C3AE9CAE}
+		{7784DF02-6BCF-40A9-B327-C1F173975714} = {4155E512-4F91-48D3-823A-45B7C71125A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AA706E7-D820-4892-9F60-FCEEDC51FF5E}

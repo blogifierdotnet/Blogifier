@@ -1,4 +1,4 @@
-using Blogifier.Providers;
+using Blogifier.Blogs;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,33 +8,31 @@ namespace Blogifier.Interfaces;
 
 [Route("api/analytics")]
 [ApiController]
+[Authorize]
 public class AnalyticsController : ControllerBase
 {
   private readonly AnalyticsProvider _analyticsProvider;
-
   public AnalyticsController(AnalyticsProvider analyticsProvider)
   {
     _analyticsProvider = analyticsProvider;
   }
 
-  [Authorize]
   [HttpGet]
-  public async Task<AnalyticsModel> GetAnalytics()
+  public async Task<AnalyticsDto> GetAnalytics()
   {
-    return await _analyticsProvider.GetAnalytics();
+    var blogs = await _analyticsProvider.GetPostSummaryAsync();
+    return new AnalyticsDto { Blogs = blogs };
   }
 
-  [Authorize]
-  [HttpPut("displayType/{typeId:int}")]
-  public async Task<ActionResult<bool>> SaveDisplayType(int typeId)
-  {
-    return await _analyticsProvider.SaveDisplayType(typeId);
-  }
+  //[HttpPut("displayType/{typeId:int}")]
+  //public async Task SaveDisplayType(int typeId)
+  //{
+  //  await _analyticsProvider.SaveDisplayType(typeId);
+  //}
 
-  [Authorize]
-  [HttpPut("displayPeriod/{typeId:int}")]
-  public async Task<ActionResult<bool>> SaveDisplayPeriod(int typeId)
-  {
-    return await _analyticsProvider.SaveDisplayPeriod(typeId);
-  }
+  //[HttpPut("displayPeriod/{typeId:int}")]
+  //public async Task SaveDisplayPeriod(int typeId)
+  //{
+  //  await _analyticsProvider.SaveDisplayPeriod(typeId);
+  //}
 }

@@ -19,19 +19,20 @@ jobs:
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
             ${{ runner.os }}-nuget-
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '7.0.x'
 
     - name: Publish Blogifier
-      run: dotnet publish -c Release -o release --nologo
+      run: dotnet publish -c Release /p:RuntimeIdentifier=linux-x64 ./src/Blogifier/Blogifier.csproj --output dist
 
     - name: Add .nojekyll file
-      run: touch release/.nojekyll
+      run: touch dist/.nojekyll
 
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-        branch: demo
-        folder: release
+    #- name: Deploy
+    #  uses: JamesIves/github-pages-deploy-action@4.1.4
+    #  with:
+    #    branch: demo
+    #    folder: release

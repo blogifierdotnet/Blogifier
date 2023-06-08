@@ -1,4 +1,4 @@
-using Blogifier.Providers;
+using Blogifier.Newsletters;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,66 +9,31 @@ namespace Blogifier.Interfaces;
 
 [Route("api/newsletter")]
 [ApiController]
+[Authorize]
 public class NewsletterController : ControllerBase
 {
-  protected readonly NewsletterProvider _newsletterProvider;
+  private readonly NewsletterProvider _newsletterProvider;
 
   public NewsletterController(NewsletterProvider newsletterProvider)
   {
     _newsletterProvider = newsletterProvider;
   }
 
-  [HttpPost("subscribe")]
-  public async Task<ActionResult<bool>> Subscribe([FromBody] Subscriber subscriber)
+  [HttpGet("items")]
+  public async Task<IEnumerable<NewsletterDto>> GetItemsAsync()
   {
-    return await _newsletterProvider.AddSubscriber(subscriber);
+    return await _newsletterProvider.GetItemsAsync();
   }
 
-  [Authorize]
-  [HttpGet("subscribers")]
-  public async Task<List<Subscriber>> GetSubscribers()
+  [HttpDelete("{id:int}")]
+  public async Task DeleteAsync([FromRoute] int id)
   {
-    return await _newsletterProvider.GetSubscribers();
+    await _newsletterProvider.DeleteAsync(id);
   }
 
-  [HttpDelete("unsubscribe/{id:int}")]
-  public async Task<ActionResult<bool>> RemoveSubscriber(int id)
-  {
-    return await _newsletterProvider.RemoveSubscriber(id);
-  }
-
-  [Authorize]
-  [HttpGet("newsletters")]
-  public async Task<List<Newsletter>> GetNewsletters()
-  {
-    return await _newsletterProvider.GetNewsletters();
-  }
-
-  [Authorize]
   [HttpGet("send/{postId:int}")]
-  public async Task<bool> SendNewsletter(int postId)
+  public async Task SendNewsletter([FromRoute] int postId, [FromServices] EmailManager emailManager)
   {
-    return await _newsletterProvider.SendNewsletter(postId);
-  }
-
-  [Authorize]
-  [HttpDelete("remove/{id:int}")]
-  public async Task<ActionResult<bool>> RemoveNewsletter(int id)
-  {
-    return await _newsletterProvider.RemoveNewsletter(id);
-  }
-
-  [Authorize]
-  [HttpGet("mailsettings")]
-  public async Task<MailSetting> GetMailSettings()
-  {
-    return await _newsletterProvider.GetMailSettings();
-  }
-
-  [Authorize]
-  [HttpPut("mailsettings")]
-  public async Task<ActionResult<bool>> SaveMailSettings([FromBody] MailSetting mailSettings)
-  {
-    return await _newsletterProvider.SaveMailSettings(mailSettings);
+    await emailManager.SendNewsletter(postId);
   }
 }

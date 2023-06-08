@@ -1,0 +1,111 @@
+@page "/admin/settings/user/{Id?}"
+
+@layout SettingsLayout
+
+@inject HttpClient _http
+@inject NavigationManager _navigation
+@inject IStringLocalizer<Resource> _localizer
+@inject IMapper _mapper
+@inject IToaster _toaster
+
+@if (!IsUpdate)
+{
+  <h1 class="section-title">@_localizer["add-user"]</h1>
+}
+else
+{
+  <h1 class="section-title">@_localizer["edit"]</h1>
+}
+
+<div class="section-content -half">
+  <EditForm Model="@User" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <div class="form-item">
+      <label class="form-label">@_localizer["email"]</label>
+      <input class="form-control" type="email" @bind="User.Email" disabled="@IsUpdate" />
+      <ValidationMessage For="@(() => User.Email)"></ValidationMessage>
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["user-name"]</label>
+      <input class="form-control" tyoe="text" @bind="User.UserName" disabled="@IsUpdate" />
+      <ValidationMessage For="@(() => User.UserName)"></ValidationMessage>
+    </div>
+    @if (IsUpdate)
+    {
+      <div class="form-item">
+        <div class="form-check form-switch">
+          <input id="isUpdatePasswordSwitch" class="form-check-input" type="checkbox" @bind="IsUpdatePassword">
+          <label for="isUpdatePasswordSwitch" class="form-check-label">@_localizer["change-password"]</label>
+        </div>
+      </div>
+    }
+    @if (!IsUpdate || IsUpdatePassword)
+    {
+      <div class="form-item">
+        <label class="form-label">@_localizer["password"]</label>
+        <input class="form-control" type="password" @bind="User.Password" />
+        <ValidationMessage For="@(() => User.Password)"></ValidationMessage>
+      </div>
+      <div class="form-item">
+        <label class="form-label">@_localizer["confirm-password"]</label>
+        <input class="form-control" type="password" @bind="User.PasswordConfirm" />
+        <ValidationMessage For="@(() => User.PasswordConfirm)"></ValidationMessage>
+      </div>
+    }
+    <div class="form-item">
+      <label class="form-label">@_localizer["nick-name"]</label>
+      <input class="form-control" type="text" @bind="User.NickName" />
+      <ValidationMessage For="@(() => User.NickName)"></ValidationMessage>
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["user-bio"]</label>
+      <textarea class="form-control" rows="3" @bind="User.Bio" />
+    </div>
+    <div class="form-item">
+      <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+      <button type="button" @onclick="Cancel" class="btn btn-default px-4">@_localizer["cancel"]</button>
+    </div>
+  </EditForm>
+</div>
+
+@code {
+
+  [Parameter] public string? Id { get; set; }
+
+  protected UserEditorDto User { get; set; } = new UserEditorDto();
+  protected bool IsUpdate { get; set; }
+  protected bool IsUpdatePassword { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    await LoadAsync();
+  }
+
+  protected async Task LoadAsync()
+  {
+    if (!string.IsNullOrEmpty(Id))
+    {
+      var result = await _http.GetFromJsonAsync<UserInfoDto>($"api/user/{Id}");
+      User = _mapper.Map<UserEditorDto>(result);
+      IsUpdate = true;
+    }
+  }
+
+  protected async Task Save()
+  {
+    var response = await _http.PutAsJsonAsync($"api/user/{Id}", User);
+    if (response.IsSuccessStatusCode)
+    {
+      _toaster.Success(_localizer["completed"]);
+      Cancel();
+      return;
+    }
+    _toaster.Error(_localizer["generic-error"]);
+  }
+
+  protected void Cancel()
+  {
+    _navigation.NavigateTo("/admin/settings/users");
+  }
+
+}

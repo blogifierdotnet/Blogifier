@@ -1,13 +1,15 @@
 using Blogifier.Identity;
+using Blogifier.Newsletters;
 using Blogifier.Options;
 using Blogifier.Shared;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
+public class AppDbContext : IdentityUserContext<UserInfo, string>
 {
   protected readonly DbContextOptions<AppDbContext> _options;
 
@@ -16,30 +18,23 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
     _options = options;
   }
 
-  public DbSet<OptionInfo> Options { get; set; }
-  public DbSet<Author> Authors { get; set; }
-  public DbSet<Blog> Blogs { get; set; }
-  public DbSet<Post> Posts { get; set; }
-  public DbSet<Storage> Storages { get; set; }
-  public DbSet<Category> Categories { get; set; }
-  public DbSet<Subscriber> Subscribers { get; set; }
-  public DbSet<Newsletter> Newsletters { get; set; }
-  public DbSet<MailSetting> MailSettings { get; set; }
-  public DbSet<PostCategory> PostCategories { get; set; }
+  public DbSet<OptionInfo> Options { get; set; } = default!;
+  public DbSet<Post> Posts { get; set; } = default!;
+  public DbSet<Storage> Storages { get; set; } = default!;
+  public DbSet<StorageReference> StorageReferences { get; set; } = default!;
+  public DbSet<Category> Categories { get; set; } = default!;
+  public DbSet<PostCategory> PostCategories { get; set; } = default!;
+  public DbSet<Subscriber> Subscribers { get; set; } = default!;
+  public DbSet<Newsletter> Newsletters { get; set; } = default!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
 
-    modelBuilder.Entity<OptionInfo>(e =>
-    {
-      e.ToTable("Options");
-      e.HasIndex(b => b.Key).IsUnique();
-    });
-
     modelBuilder.Entity<UserInfo>(e =>
     {
       e.ToTable("User");
+      e.Property(p => p.Id).HasMaxLength(128);
       e.Property(p => p.CreatedAt).HasColumnOrder(0);
       e.Property(p => p.PasswordHash).HasMaxLength(256);
       e.Property(p => p.SecurityStamp).HasMaxLength(32);
@@ -47,50 +42,50 @@ public class AppDbContext : IdentityDbContext<UserInfo, RoleInfo, int>
       e.Property(p => p.PhoneNumber).HasMaxLength(32);
     });
 
-    modelBuilder.Entity<IdentityUserClaim<int>>(e =>
+    modelBuilder.Entity<IdentityUserClaim<string>>(e =>
     {
       e.ToTable("UserClaim");
       e.Property(p => p.ClaimType).HasMaxLength(16);
       e.Property(p => p.ClaimValue).HasMaxLength(256);
     });
-    modelBuilder.Entity<IdentityUserLogin<int>>(e =>
+    modelBuilder.Entity<IdentityUserLogin<string>>(e =>
     {
       e.ToTable("UserLogin");
       e.Property(p => p.ProviderDisplayName).HasMaxLength(128);
     });
-    modelBuilder.Entity<IdentityUserToken<int>>(e =>
+    modelBuilder.Entity<IdentityUserToken<string>>(e =>
     {
       e.ToTable("UserToken");
       e.Property(p => p.Value).HasMaxLength(1024);
     });
 
-    modelBuilder.Entity<RoleInfo>(e =>
+    modelBuilder.Entity<OptionInfo>(e =>
     {
-      e.ToTable("Role");
-      e.Property(p => p.ConcurrencyStamp).HasMaxLength(64);
-    });
-    modelBuilder.Entity<IdentityUserRole<int>>(e =>
-    {
-      e.ToTable("UserRole");
-    });
-    modelBuilder.Entity<IdentityRoleClaim<int>>(e =>
-    {
-      e.ToTable("RoleClaim");
-      e.Property(p => p.ClaimType).HasMaxLength(16);
-      e.Property(p => p.ClaimValue).HasMaxLength(256);
+      e.ToTable("Options");
+      e.HasIndex(b => b.Key).IsUnique();
     });
 
-    modelBuilder.Entity<PostCategory>()
-        .HasKey(t => new { t.PostId, t.CategoryId });
+    modelBuilder.Entity<StorageReference>(e =>
+    {
+      e.ToTable("StorageReferences");
+      e.HasKey(t => new { t.StorageId, t.EntityId, t.Type });
+    });
 
-    modelBuilder.Entity<PostCategory>()
-        .HasOne(pt => pt.Post)
-        .WithMany(p => p.PostCategories)
-        .HasForeignKey(pt => pt.PostId);
+    modelBuilder.Entity<PostCategory>(e =>
+    {
+      e.ToTable("PostCategories");
+      e.HasKey(t => new { t.PostId, t.CategoryId });
+    });
 
-    modelBuilder.Entity<PostCategory>()
-        .HasOne(pt => pt.Category)
-        .WithMany(t => t.PostCategories)
-        .HasForeignKey(pt => pt.CategoryId);
+    modelBuilder.Entity<Post>(e =>
+    {
+      e.ToTable("Post");
+      e.HasIndex(b => b.Slug).IsUnique();
+
+      e.HasMany(e => e.StorageReferences)
+       .WithOne(e => e.Post)
+       .HasForeignKey(e => e.EntityId)
+       .IsRequired();
+    });
   }
 }

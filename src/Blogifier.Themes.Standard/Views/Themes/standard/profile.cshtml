@@ -1,0 +1,57 @@
+@model AccountProfileEditModel
+@{
+  Layout = "layouts/_profile.cshtml";
+}
+@inject IStringLocalizer<Resource> _localizer
+
+@section HeadMeta{
+  <title>@_localizer["edit-profile"]</title>
+}
+
+<h1 class="section-title">@_localizer["edit-profile"]</h1>
+<div class="section-content -half">
+  @if (!string.IsNullOrEmpty(Model.Error))
+  {
+    <div class="account-message -error">@Model.Error</div>
+  }
+  <form method="post" asp-controller="account" asp-action="profile">
+    <input type="hidden" asp-for="RedirectUri" />
+    <input type="hidden" asp-for="IsProfile" />
+    <input type="hidden" asp-for="Avatar" />
+    <div class="form-item">
+      <label class="form-label mb-1">@_localizer["profile-picture"]</label>
+      <div class="d-flex">
+        <img src="~/@BlogifierConstant.CheckGetAvatarUrl(Model.Avatar)" width="39" height="39" class="profilePicture rounded me-3" alt="@Model.NickName" />
+        <button class="btn btn-link" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button" title="@_localizer["upload"]" data-bs-toggle="tooltip">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+          </svg>
+        </button>
+        <button class="btn btn-link" type="button" title="@_localizer["reset"]" data-bs-toggle="tooltip">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <label for="profileNickName" class="form-label">@_localizer["user-name"]</label>
+      <input id="profileNickName" class="form-control" type="text" asp-for="NickName" />
+      <span asp-validation-for="NickName"></span>
+    </div>
+    <div class="form-item">
+      <label for="profileEmail" class="form-label">@_localizer["email"]</label>
+      <input id="profileEmail" class="form-control" type="email" asp-for="Email" />
+      <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-item">
+      <label for="profileBio" class="form-label">@_localizer["user-bio"]</label>
+      <textarea id="profileBio" class="form-control" rows="4" asp-for="Bio"></textarea>
+      <span asp-validation-for="Bio"></span>
+    </div>
+    <div class="form-item">
+      <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
+    </div>
+  </form>
+</div>

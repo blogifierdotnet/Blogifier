@@ -1,4 +1,4 @@
-using Blogifier.Providers;
+using Blogifier.Storages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using System.IO;
@@ -8,12 +8,12 @@ namespace Blogifier.Controllers;
 
 public class StorageController : ControllerBase
 {
-  private readonly StorageProvider _storageProvider;
+  private readonly StorageProvider _storageManager;
 
   public StorageController(
-    StorageProvider storageProvider)
+    StorageProvider storageManager)
   {
-    _storageProvider = storageProvider;
+    _storageManager = storageManager;
   }
 
   [HttpGet($"{BlogifierConstant.StorageObjectUrl}/{{**storageUrl}}")]
@@ -22,7 +22,7 @@ public class StorageController : ControllerBase
   public async Task<IActionResult> ObjectAsync([FromRoute] string storageUrl)
   {
     var memoryStream = new MemoryStream();
-    var storage = await _storageProvider.GetAsync(storageUrl,
+    var storage = await _storageManager.GetAsync(storageUrl,
       (stream, cancellationToken) => stream.CopyToAsync(memoryStream, cancellationToken));
     if (storage == null) return NotFound();
     memoryStream.Position = 0;

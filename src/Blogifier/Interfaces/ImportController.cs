@@ -1,41 +1,35 @@
-using Blogifier.Data;
-using Blogifier.Providers;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
 
 [Route("api/import")]
+[Authorize]
 [ApiController]
 public class ImportController : ControllerBase
 {
-  private readonly AppDbContext _dbContext;
-  private readonly ImportProvider _importProvider;
+  private readonly ImportManager _importManager;
 
-  public ImportController(AppDbContext dbContext, ImportProvider importProvider)
+  public ImportController(ImportManager importManager)
   {
-    _dbContext = dbContext;
-    _importProvider = importProvider;
+    _importManager = importManager;
   }
 
-  [Authorize]
   [HttpGet("rss")]
-  public ImportDto Rss([FromQuery] ImportRssRequest request)
+  public ImportDto Rss([FromQuery] ImportRssDto request, [FromServices] ImportRssProvider importRssProvider)
   {
-    return _importProvider.Rss(request.FeedUrl);
+    return importRssProvider.Analysis(request.FeedUrl);
   }
 
-  [Authorize]
   [HttpPost("write")]
-  public async Task<ActionResult<bool>> Write(Post post)
+  public async Task<IEnumerable<PostEditorDto>> Write([FromBody] ImportDto request)
   {
-    var author = await _dbContext.Authors.Where(a => a.Email == User.Identity!.Name).FirstAsync();
+    var userId = User.FirstUserId();
     var webRoot = Url.Content("~/");
-    var success = await _importProvider.ImportPost(post);
-    return success ? Ok() : BadRequest();
+    return await _importManager.WriteAsync(request, webRoot, userId);
   }
 }

@@ -1,8 +1,7 @@
-namespace Blogifier.Shared
+namespace Blogifier.Shared;
+
+public class PostVisit
 {
-  public class PostVisit
-  {
-    public string Name { get; set; }
-    public int Value { get; set; }
-  }
+  public string Name { get; set; } = default!;
+  public int Value { get; set; }
 }

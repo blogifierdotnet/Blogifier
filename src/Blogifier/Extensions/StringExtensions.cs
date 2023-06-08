@@ -90,9 +90,7 @@ public static class StringExtensions
     str = Regex.Replace(str, @"\s", "-", RegexOptions.Compiled);
 
     str = Regex.Replace(str, @"([-_]){2,}", "$1", RegexOptions.Compiled);
-
     str = RemoveIllegalCharacters(str);
-
     return str;
   }
 

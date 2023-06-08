@@ -1,14 +1,16 @@
-using Blogifier.Providers;
+using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogifier.Interfaces;
 
-[Route("api/post")]
 [ApiController]
+[Authorize]
+[Route("api/post")]
 public class PostController : ControllerBase
 {
   private readonly PostProvider _postProvider;
@@ -18,62 +20,61 @@ public class PostController : ControllerBase
     _postProvider = postProvider;
   }
 
-  [HttpGet("list/{filter}/{postType}")]
-  public async Task<ActionResult<List<Post>>> GetPosts(PublishedStatus filter, PostType postType)
+  [HttpGet("items/{filter}/{postType}")]
+  public async Task<IEnumerable<PostItemDto>> GetItemsAsync([FromRoute] PublishedStatus filter, [FromRoute] PostType postType)
   {
-    return await _postProvider.GetPosts(filter, postType);
+    return await _postProvider.GetAsync(filter, postType);
   }
 
-  [HttpGet("list/search/{term}")]
-  public async Task<ActionResult<List<Post>>> SearchPosts(string term)
+  [HttpGet("items/search/{term}")]
+  public async Task<IEnumerable<PostItemDto>> GetSearchAsync([FromRoute] string term)
   {
-    return await _postProvider.SearchPosts(term);
+    return await _postProvider.GetSearchAsync(term);
   }
 
   [HttpGet("byslug/{slug}")]
-  public async Task<ActionResult<Post>> GetPostBySlug(string slug)
+  public async Task<PostEditorDto> GetPostBySlug(string slug)
   {
-    return await _postProvider.GetPostBySlug(slug);
+    return await _postProvider.GetEditorAsync(slug);
   }
 
-  [HttpGet("getslug/{title}")]
-  public async Task<ActionResult<string>> GetSlug(string title)
-  {
-    return await _postProvider.GetSlugFromTitle(title);
-  }
-
-  [Authorize]
   [HttpPost("add")]
-  public async Task<ActionResult<bool>> AddPost(Post post)
+  public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto post)
   {
-    return await _postProvider.Add(post);
+    var userId = User.FirstUserId();
+    return await _postProvider.AddAsync(post, userId);
   }
 
-  [Authorize]
   [HttpPut("update")]
-  public async Task<ActionResult<bool>> UpdatePost(Post post)
+  public async Task<ActionResult<PostEditorDto>> UpdateAsync(PostEditorDto post)
   {
-    return await _postProvider.Update(post);
+    var userId = User.FirstUserId();
+    return await _postProvider.UpdateAsync(post, userId);
   }
 
-  [Authorize]
-  [HttpPut("publish/{id:int}")]
-  public async Task<ActionResult<bool>> PublishPost(int id, [FromBody] bool publish)
+  [HttpPut("state/{id:int}")]
+  public async Task StateAsynct([FromRoute] int id, [FromBody] PostState state)
   {
-    return await _postProvider.Publish(id, publish);
+    await _postProvider.StateAsynct(id, state);
   }
 
-  [Authorize]
-  [HttpPut("featured/{id:int}")]
-  public async Task<ActionResult<bool>> FeaturedPost(int id, [FromBody] bool featured)
+  [HttpPut("state/{idsString}")]
+  public async Task StateAsynct([FromRoute] string idsString, [FromBody] PostState state)
   {
-    return await _postProvider.Featured(id, featured);
+    var ids = idsString.Split(',').Select(int.Parse);
+    await _postProvider.StateAsynct(ids, state);
   }
 
-  [Authorize]
   [HttpDelete("{id:int}")]
-  public async Task<ActionResult<bool>> RemovePost(int id)
+  public async Task DeleteAsync([FromRoute] int id)
   {
-    return await _postProvider.Remove(id);
+    await _postProvider.DeleteAsync(id);
+  }
+
+  [HttpDelete("{idsString}")]
+  public async Task DeleteAsync([FromRoute] string idsString)
+  {
+    var ids = idsString.Split(',').Select(int.Parse);
+    await _postProvider.DeleteAsync(ids);
   }
 }

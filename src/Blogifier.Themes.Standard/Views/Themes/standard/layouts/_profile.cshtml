@@ -1,0 +1,60 @@
+@model AccountProfileModel
+@inject IStringLocalizer<Resource> _localizer
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  @await RenderSectionAsync("HeadMeta",false)
+  <!-- TODO: These variables comes from customfiedls -->
+  <link rel="stylesheet" href="~/_content/Blogifier.Themes.Standard/css/account.css" asp-append-version="true">
+</head>
+
+<body>
+  <main class="blogifier">
+    <a class="account-back link-secondary" href="@Model.RedirectUri" data-bs-toggle="tooltip" title="@_localizer["back-to-website"]" data-placement="right">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left"
+           viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg>
+    </a>
+    <div class="container profile">
+      <div class="page d-lg-flex">
+        <div class="sidebar">
+          <button class="sidebar-toggle d-lg-none">
+            Page Title
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </button>
+          <div class="sidebar-nav d-lg-block">
+            @if (Model.IsProfile)
+            {
+              <a class="sidebar-link active" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
+            }
+            else
+            {
+              <a class="sidebar-link" href="/account/profile?redirecturi=@Model.RedirectUri">@_localizer["profile"]</a>
+            }
+            @if (Model.IsPassword)
+            {
+              <a class="sidebar-link active" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
+            }
+            else
+            {
+              <a class="sidebar-link" href="/account/password?redirecturi=@Model.RedirectUri">@_localizer["password"]</a>
+            }
+          </div>
+        </div>
+        <div class="page-content flex-grow-1">
+          @RenderBody()
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="~/_content/Blogifier.Themes.Standard/js/index.min.js" asp-append-version="true"></script>
+</body>
+
+</html>

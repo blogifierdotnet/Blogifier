@@ -4,14 +4,14 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 
-<BlogPageTitle Title="@_localizer["comments-settings"]" />
+<PageTitleComponent Title="@_localizer["comments-settings"]" />
 
 <h1 class="section-title">@_localizer["comments-settings"]</h1>
 <div class="section-content">
-    <div class="alert alert-secondary d-flex align-items-center">
-        @_localizer["under-development"].
-        <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank" href="https://github.com/blogifierdotnet/blogifier/projects/">
-            @_localizer["more-info"]
-        </a>
-    </div>
+  <div class="alert alert-secondary d-flex align-items-center">
+    @_localizer["under-development"].
+    <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank" href="https://github.com/blogifierdotnet/blogifier/projects/">
+      @_localizer["more-info"]
+    </a>
+  </div>
 </div>

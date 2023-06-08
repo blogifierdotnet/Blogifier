@@ -1,0 +1,24 @@
+{
+  "name": "blogifier-themes-standard",
+  "version": "1.0.0",
+  "description": "only for compiling sass files",
+  "author": "Farzin",
+  "private": true,
+  "scripts": {
+    "start": "npm run rollup | npm run sass ",
+    "rtl": "rtlcss dist/css css/styles.rtl.css",
+    "sass": "sass --watch scss:dist/css --style=compressed",
+    "rollup": "rollup --config -w",
+    "build-sass": "sass scss:dist/css --style=compressed",
+    "build-rollup": "rollup --config",
+    "build": "npm run build-sass && npm run build-rollup"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "bootstrap": "~5.1.0",
+    "rollup": "^3.23.1",
+    "rtlcss": "^3.3.0",
+    "sass": "^1.32.12"
+  }
+}

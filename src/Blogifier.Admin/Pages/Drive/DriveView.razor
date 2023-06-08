@@ -1,7 +1,7 @@
 @page "/admin/drive/"
 @inject IStringLocalizer<Resource> _localizer
 
-<BlogPageTitle Title="@_localizer["drive"]" />
+<PageTitleComponent Title="@_localizer["drive"]" />
 
 <div class="container">
   <h1 class="section-title">@_localizer["drive"]</h1>
@@ -9,8 +9,7 @@
     <p class="mb-2">@_localizer["drive-describe"]</p>
     <div class="alert alert-secondary d-flex align-items-center">
       @_localizer["under-development"].
-      <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank"
-         href="https://github.com/blogifierdotnet/blogifier/projects/">
+      <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank" href="https://github.com/blogifierdotnet/blogifier/projects/">
         @_localizer["more-info"]
       </a>
     </div>

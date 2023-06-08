@@ -1,0 +1,68 @@
+@page "/admin/blogs/category/{Id:int?}"
+
+@layout BlogsLayout
+
+@inject HttpClient _http
+@inject IMapper _mapper
+@inject NavigationManager _navigation
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime _jsruntime
+@inject IToaster _toaster
+
+<h1 class="section-title">@_localizer["edit-category"]</h1>
+<EditForm model="@Category" OnValidSubmit="Save">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  <div class="section-content -half">
+    <div class="form-item">
+      <label class="form-label">@_localizer["title"]</label>
+      <input type="text" class="form-control" name="title" @bind="Category.Content" />
+    </div>
+    <div class="form-item">
+      <label class="form-label">@_localizer["description"]</label>
+      <textarea class="form-control" cols="30" rows="5" name="description" @bind="Category.Description"></textarea>
+    </div>
+    <div class="form-item">
+      <button type="submit" class="btn btn-blogifier px-5 me-3">@_localizer["save"]</button>
+      <button type="button" class="btn btn-default px-4" @onclick="Cancel">@_localizer["cancel"]</button>
+    </div>
+  </div>
+</EditForm>
+
+@code {
+
+  [Parameter] public int? Id { get; set; }
+
+  protected CategoryEitorDto Category { get; set; } = new CategoryEitorDto();
+
+  protected override async Task OnInitializedAsync()
+  {
+    await LoadAsync();
+  }
+
+  protected async Task LoadAsync()
+  {
+    var result = await _http.GetFromJsonAsync<CategoryEitorDto>($"api/category/byId/{Id}");
+    if (result != null) Category = result;
+  }
+
+  protected void Cancel()
+  {
+    _navigation.NavigateTo("/admin/blogs/category");
+  }
+
+  protected async Task Save()
+  {
+    Toast(await _http.PutAsJsonAsync<CategoryEitorDto>("api/category", Category));
+    Cancel();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+
+}

@@ -1,0 +1,249 @@
+@page "/admin/blogs"
+
+@layout BlogsLayout
+
+@inject HttpClient _http
+@inject IMapper _mapper
+@inject NavigationManager _navigation
+@inject IStringLocalizer<Resource> _localizer
+@inject IJSRuntime _jsruntime
+@inject IToaster _toaster
+
+@code {
+
+  protected List<FrontPostItemDto>? Posts { get; set; }
+  protected string? SearchTerm { get; set; }
+  protected PublishedStatus FilterValue { get; set; } = PublishedStatus.All;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await LoadAsync();
+  }
+
+  protected async Task LoadAsync()
+  {
+    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/{(int)FilterValue}/{(int)PostType.Post}");
+    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
+  }
+
+  public void CheckAll(object? checkValue)
+  {
+    if (checkValue != null)
+    {
+      var isChecked = (bool)checkValue;
+      if (Posts != null) Posts.ForEach(item => item.Selected = isChecked);
+      StateHasChanged();
+    }
+  }
+
+  private async Task RunAction(GroupAction action)
+  {
+    if (action == GroupAction.Delete)
+    {
+      var confirmedString = _localizer["confirm-delete"].Value;
+      var confirmed = await _jsruntime.InvokeAsync<bool>("confirm", confirmedString);
+      if (!confirmed) return;
+    }
+
+    if (Posts != null)
+    {
+      var ids = Posts.Where(m => m.Selected).Select(m => m.Id);
+      if (ids.Any())
+      {
+        var idsString = string.Join(",", ids);
+        switch (action)
+        {
+          case GroupAction.Publish:
+            await _http.PutAsJsonAsync($"api/post/state/{idsString}", PostState.Release);
+            break;
+          case GroupAction.Unpublish:
+            await _http.PutAsJsonAsync($"api/post/state/{idsString}", PostState.Draft);
+            break;
+          case GroupAction.Delete:
+            await _http.DeleteAsync($"api/post/{idsString}");
+            break;
+        }
+      }
+    }
+    await LoadAsync();
+  }
+
+  protected async Task SearchKeyPress(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      await SearchPosts();
+  }
+
+  protected async Task SearchPosts()
+  {
+    if (string.IsNullOrEmpty(SearchTerm)) SearchTerm = "*";
+    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/search/{SearchTerm}");
+    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
+  }
+
+  public async Task Filter(PublishedStatus filter)
+  {
+    FilterValue = filter;
+    await LoadAsync();
+  }
+
+  public async Task Publish(PostItemDto post)
+  {
+    var state = post.State != PostState.Release ? PostState.Release : PostState.Draft;
+    Toast(await _http.PutAsJsonAsync($"api/post/state/{post.Id}", state));
+    await LoadAsync();
+  }
+
+  public async Task Featured(PostItemDto post)
+  {
+    var state = post.State != PostState.Featured ? PostState.Featured : PostState.Release;
+    Toast(await _http.PutAsJsonAsync($"api/post/state/{post.Id}", state));
+    await LoadAsync();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}
+
+<PageTitleComponent Title="@_localizer["blog"]" />
+
+<div class="list-toolbar">
+  <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select-all"]">
+    <input type="checkbox" @onchange="EventArgs => { CheckAll(EventArgs.Value); }" class="list-check-input form-check-input">
+  </label>
+  <a class="btn btn-blogifier btn-rounded me-3 -add" href="/admin/blogs/editor">@_localizer["new-post"]</a>
+  <div class="dropdown dropdown-flush">
+    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPostAction" data-bs-toggle="dropdown" aria-expanded="false">
+      @_localizer["actions"]
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownPostAction">
+      <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Publish))" class="dropdown-item text-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+        </svg>
+        <span>@_localizer["publish"]</span>
+      </button>
+      <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Unpublish))" class="dropdown-item text-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 24 24">
+          <path d="M6 12.5C6 11.6716 6.67157 11 7.5 11H16.5C17.3284 11 18 11.6716 18 12.5C18 13.3284 17.3284 14 16.5 14H7.5C6.67157 14 6 13.3284 6 12.5Z" />
+        </svg>
+        <span>@_localizer["unpublish"]</span>
+      </button>
+      <button type="button" @onclick="(async ()=> await RunAction(GroupAction.Delete))" class="dropdown-item text-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+        </svg>
+        <span>@_localizer["delete"]</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="dropdown dropdown-flush ms-auto ms-3">
+    <button class="btn btn-link dropdown-toggle" type="button" id="filterByStatus" data-bs-toggle="dropdown" aria-expanded="false">
+      @switch (FilterValue)
+      {
+        case PublishedStatus.Published:
+          @_localizer["published"]
+          break;
+        case PublishedStatus.Drafts:
+          @_localizer["draft", true]
+          break;
+        case PublishedStatus.Featured:
+          @_localizer["featured"]
+          break;
+        default:
+          @_localizer["all"]
+          break;
+      }
+    </button>
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filterByStatus">
+      <button @onclick="(async ()=> await Filter(PublishedStatus.All))" class="dropdown-item">@_localizer["all"]</button>
+      <button @onclick="(async ()=> await Filter(PublishedStatus.Drafts))" class="dropdown-item">@_localizer["draft", true]</button>
+      <button @onclick="(async ()=> await Filter(PublishedStatus.Published))" class="dropdown-item">@_localizer["published"]</button>
+      <button @onclick="(async ()=> await Filter(PublishedStatus.Featured))" class="dropdown-item">@_localizer["featured"]</button>
+    </div>
+  </div>
+  <button type="button" class="btn btn-link list-search-toggle" data-bs-toggle="collapse" data-bs-target="#collapseSearch">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" title="@_localizer["search"]">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4765 11.8908C9.4957 12.5892 8.29582 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7C13 8.29584 12.5892 9.49573 11.8907 10.4766L15.0549 13.6407C15.4454 14.0312 15.4454 14.6644 15.0549 15.0549C14.6644 15.4455 14.0312 15.4455 13.6407 15.0549L10.4765 11.8908ZM11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z" />
+    </svg>
+  </button>
+</div>
+
+<div class="list-search collapse" id="collapseSearch">
+  <input @bind="SearchTerm" @onkeyup="SearchKeyPress" class="list-search-input" type="search">
+  <button @onclick="(async () => await SearchPosts())" class="list-search-button" type="button">
+    @_localizer["search"]
+  </button>
+</div>
+
+@if (Posts != null && Posts.Count > 0)
+{
+  <div style="height:650px;overflow-y:scroll">
+    <ul class="list" aria-label="posts">
+      <Virtualize Items="Posts" Context="post">
+        <li class="list-item">
+          <label class="list-check form-check" data-bs-toggle="tooltip" title="@_localizer["select"]">
+            <input type="checkbox" @bind="post.Selected" class="list-check-input form-check-input">
+          </label>
+          <a class="list-title -link" href="/admin/blogs/editor/@post.Slug">
+            @post.Title
+          </a>
+          <span class="list-text -nowrap ms-auto">
+            @DateTimeHelper.ToFriendlyShortDateString(post.PublishedAt, _localizer["draft"])
+          </span>
+          <button class="list-btn" @onclick="(async () => await Publish(post))">
+            @if (@post.State >= PostState.Release)
+            {
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check link-success" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["published"]">
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+            }
+            else
+            {
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash link-secondary" viewBox="0 0 24 24" data-bs-toggle="tooltip" title="@_localizer["draft"]">
+                <path d="M6 12.5C6 11.6716 6.67157 11 7.5 11H16.5C17.3284 11 18 11.6716 18 12.5C18 13.3284 17.3284 14 16.5 14H7.5C6.67157 14 6 13.3284 6 12.5Z" />
+              </svg>
+            }
+          </button>
+          <button class="list-btn" @onclick="(async () => await Featured(post))">
+            @if (@post.State == PostState.Featured)
+            {
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-star-fill link-gold" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["featured"]">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+              </svg>
+            }
+            else
+            {
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-star-fill link-secondary" viewBox="0 0 16 16" data-bs-toggle="tooltip" title="@_localizer["not-featured"]">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+              </svg>
+            }
+          </button>
+          <a class="list-btn" href="posts/@post.Slug" target="_blank">
+            <svg class="bi" width="15" height="15" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" title="@_localizer["view"]">
+              <path d="M7.85724 2.17097L6 4L7 5L8.93201 3.24577C9.89935 2.27845 11.4719 2.27845 12.4393 3.24577C13.4066 4.21308 13.4066 5.78571 12.4393 6.75303L10.5141 8.75674L11.5141 9.75674L13.5141 7.82783C15.0754 6.26652 15.0754 3.73225 13.5141 2.17094C11.9528 0.609657 9.41852 0.609688 7.85724 2.17097Z" />
+              <path d="M3.24575 12.4392C2.2784 11.4719 2.2784 9.89935 3.24575 8.93201L5 7L4 6L2.17098 7.85721C0.609703 9.41849 0.609642 11.9528 2.17098 13.514C3.73226 15.0753 6.26656 15.0753 7.82784 13.514L9.5141 11.7567L8.5141 10.7567L6.75301 12.4392C5.78573 13.4066 4.2131 13.4066 3.24575 12.4392Z" />
+              <path d="M4.99941 9.55426L9.52486 5.02878L10.6563 6.16016L6.13076 10.6856L4.99941 9.55426Z" />
+            </svg>
+          </a>
+        </li>
+      </Virtualize>
+    </ul>
+  </div>
+}
+else
+{
+  <div class="list-notfound -crazy">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-upside-down" viewBox="0 0 16 16">
+      <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0-1a8 8 0 1 1 0 16A8 8 0 0 1 8 0z" />
+      <path d="M4.285 6.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 4.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 3.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 9.5C7 8.672 6.552 8 6 8s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5z" />
+    </svg>
+    <p>@_localizer["list-is-empty"]</p>
+  </div>
+}
