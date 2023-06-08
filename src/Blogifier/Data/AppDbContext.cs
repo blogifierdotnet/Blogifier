@@ -22,7 +22,7 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
   public DbSet<Newsletter> Newsletters { get; set; } = default!;
   public DbSet<Subscriber> Subscribers { get; set; } = default!;
   public DbSet<Storage> Storages { get; set; } = default!;
-  public DbSet<StorageReference> StorageReferences { get; set; } = default!;
+  //public DbSet<StorageReference> StorageReferences { get; set; } = default!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -67,18 +67,13 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
     {
       e.ToTable("Post");
       e.HasIndex(b => b.Slug).IsUnique();
-
-      e.HasMany(e => e.StorageReferences)
-       .WithOne(e => e.Post)
-       .HasForeignKey(e => e.EntityId)
-       .IsRequired();
     });
 
-    modelBuilder.Entity<StorageReference>(e =>
-    {
-      e.ToTable("StorageReferences");
-      e.HasKey(t => new { t.StorageId, t.EntityId, t.Type });
-    });
+    //modelBuilder.Entity<StorageReference>(e =>
+    //{
+    //  e.ToTable("StorageReferences");
+    //  e.HasKey(t => new { t.StorageId, t.EntityId });
+    //});
 
     modelBuilder.Entity<PostCategory>(e =>
     {

@@ -9,8 +9,8 @@ public class StorageProfile : Profile
   public StorageProfile()
   {
     CreateMap<Storage, StorageDto>().ReverseMap();
-    CreateMap<StorageReference, StorageDto>()
-      .IncludeMembers(m => m.Storage)
-      .ReverseMap();
+    //CreateMap<StorageReference, StorageDto>()
+    //  .IncludeMembers(m => m.Storage)
+    //  .ReverseMap();
   }
 }

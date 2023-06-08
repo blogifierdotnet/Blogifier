@@ -24,6 +24,7 @@ dotnet ef migrations Init -o Data\Migrations
 dotnet ef migrations remove
 
 dotnet ef migrations add Init --context SqliteDbContext --output-dir Data/Migrations/Sqlite
+dotnet ef migrations add Init --context SqlServerDbContext --output-dir Data/Migrations/SqlServer
 ```
 
 First command should re-generate provider specific code migrations and second will 

@@ -64,6 +64,10 @@ if ("Sqlite".Equals(provider, StringComparison.OrdinalIgnoreCase))
 {
   builder.Services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(connectionString));
 }
+else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))
+{
+  builder.Services.AddDbContext<AppDbContext, SqlServerDbContext>(o => o.UseSqlServer(connectionString));
+}
 else
 {
   throw new Exception($"Unsupported provider: {provider}");

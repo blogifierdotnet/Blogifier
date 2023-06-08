@@ -26,5 +26,5 @@ public class Storage
   [StringLength(128)]
   public string ContentType { get; set; } = default!;
   public StorageType Type { get; set; }
-  public List<StorageReference>? StorageReferences { get; set; }
+  //public List<StorageReference>? StorageReferences { get; set; }
 }

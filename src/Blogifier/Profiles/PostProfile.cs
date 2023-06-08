@@ -13,9 +13,10 @@ public class PostProfile : Profile
     CreateMap<Post, PostToHtmlDto>();
     CreateMap<Post, PostEditorDto>()
       .ForMember(d => d.Categories, opt => opt.MapFrom(src => src.PostCategories))
-      .ForMember(d => d.Storages, opt => opt.MapFrom(src => src.StorageReferences))
+      //.ForMember(d => d.Storages, opt => opt.MapFrom(src => src.StorageReferences))
       .ReverseMap()
       .ForMember(d => d.PostCategories, opt => opt.MapFrom(src => src.Categories))
-      .ForMember(d => d.StorageReferences, opt => opt.MapFrom(src => src.Storages));
+      //.ForMember(d => d.StorageReferences, opt => opt.MapFrom(src => src.Storages))
+      ;
   }
 }

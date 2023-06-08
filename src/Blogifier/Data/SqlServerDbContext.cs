@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class SqliteDbContext : AppDbContext
+public class SqlServerDbContext : AppDbContext
 {
-  public SqliteDbContext(DbContextOptions<SqliteDbContext> options) : base(options)
+  public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options)
   {
-
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,7 +20,7 @@ public class SqliteDbContext : AppDbContext
 
     modelBuilder.Entity<UserInfo>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
 
       // https://github.com/dotnet/EntityFramework.Docs/issues/3057
       // https://github.com/dotnet/efcore/issues/19765
@@ -32,46 +31,45 @@ public class SqliteDbContext : AppDbContext
     });
     modelBuilder.Entity<OptionInfo>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
       e.Property(b => b.UpdatedAt)
         .HasValueGenerator(typeof(DateTimetValueGenerator));
     });
 
     modelBuilder.Entity<Post>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
       e.Property(b => b.UpdatedAt)
         .HasValueGenerator(typeof(DateTimetValueGenerator));
     });
 
     modelBuilder.Entity<Category>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
     });
 
     modelBuilder.Entity<Newsletter>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
       e.Property(b => b.UpdatedAt)
         .HasValueGenerator(typeof(DateTimetValueGenerator));
     });
 
     modelBuilder.Entity<Subscriber>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
       e.Property(b => b.UpdatedAt)
         .HasValueGenerator(typeof(DateTimetValueGenerator));
     });
 
     modelBuilder.Entity<Storage>(e =>
     {
-      e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+      e.Property(b => b.CreatedAt).HasDefaultValueSql("getdate()");
     });
 
     //modelBuilder.Entity<StorageReference>(e =>
     //{
-    //  e.Property(b => b.CreatedAt).HasDefaultValueSql("datetime()");
+    //  e.Property(b => b.CreatedAt).ValueGeneratedOnAdd();
     //});
-
   }
 }

@@ -31,5 +31,5 @@ public class Post : AppEntity<int>
   public PostType PostType { get; set; }
   public PostState State { get; set; }
   public List<PostCategory>? PostCategories { get; set; }
-  public List<StorageReference>? StorageReferences { get; set; }
+  //public List<StorageReference>? StorageReferences { get; set; }
 }

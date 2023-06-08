@@ -258,32 +258,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       onDelete: ReferentialAction.Cascade);
           });
 
-      migrationBuilder.CreateTable(
-          name: "StorageReferences",
-          columns: table => new
-          {
-            StorageId = table.Column<int>(type: "INTEGER", nullable: false),
-            EntityId = table.Column<int>(type: "INTEGER", nullable: false),
-            Type = table.Column<int>(type: "INTEGER", nullable: false),
-            CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime()")
-          },
-          constraints: table =>
-          {
-            table.PrimaryKey("PK_StorageReferences", x => new { x.StorageId, x.EntityId, x.Type });
-            table.ForeignKey(
-                      name: "FK_StorageReferences_Post_EntityId",
-                      column: x => x.EntityId,
-                      principalTable: "Post",
-                      principalColumn: "Id",
-                      onDelete: ReferentialAction.Cascade);
-            table.ForeignKey(
-                      name: "FK_StorageReferences_Storages_StorageId",
-                      column: x => x.StorageId,
-                      principalTable: "Storages",
-                      principalColumn: "Id",
-                      onDelete: ReferentialAction.Cascade);
-          });
-
       migrationBuilder.CreateIndex(
           name: "IX_Newsletters_PostId",
           table: "Newsletters",
@@ -310,11 +284,6 @@ namespace Blogifier.Data.Migrations.Sqlite
           name: "IX_PostCategories_CategoryId",
           table: "PostCategories",
           column: "CategoryId");
-
-      migrationBuilder.CreateIndex(
-          name: "IX_StorageReferences_EntityId",
-          table: "StorageReferences",
-          column: "EntityId");
 
       migrationBuilder.CreateIndex(
           name: "IX_Storages_UserId",
@@ -356,7 +325,7 @@ namespace Blogifier.Data.Migrations.Sqlite
           name: "PostCategories");
 
       migrationBuilder.DropTable(
-          name: "StorageReferences");
+          name: "Storages");
 
       migrationBuilder.DropTable(
           name: "Subscribers");
@@ -375,9 +344,6 @@ namespace Blogifier.Data.Migrations.Sqlite
 
       migrationBuilder.DropTable(
           name: "Post");
-
-      migrationBuilder.DropTable(
-          name: "Storages");
 
       migrationBuilder.DropTable(
           name: "User");

@@ -100,7 +100,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("INTEGER");
 
             b.Property<DateTime>("UpdatedAt")
-                      .ValueGeneratedOnAddOrUpdate()
                       .HasColumnType("TEXT")
                       .HasColumnOrder(1);
 
@@ -138,7 +137,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("INTEGER");
 
             b.Property<DateTime>("UpdatedAt")
-                      .ValueGeneratedOnAddOrUpdate()
                       .HasColumnType("TEXT");
 
             b.HasKey("Id");
@@ -177,7 +175,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("TEXT");
 
             b.Property<DateTime>("UpdatedAt")
-                      .ValueGeneratedOnAddOrUpdate()
                       .HasColumnType("TEXT");
 
             b.HasKey("Id");
@@ -202,7 +199,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("TEXT");
 
             b.Property<DateTime>("UpdatedAt")
-                      .ValueGeneratedOnAddOrUpdate()
                       .HasColumnType("TEXT");
 
             b.Property<string>("Value")
@@ -286,7 +282,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("TEXT");
 
             b.Property<DateTime>("UpdatedAt")
-                      .ValueGeneratedOnAddOrUpdate()
                       .HasColumnType("TEXT");
 
             b.Property<string>("UserId")
@@ -374,29 +369,6 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.HasIndex("UserId");
 
             b.ToTable("Storages");
-          });
-
-      modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>
-          {
-            b.Property<int>("StorageId")
-                      .HasColumnType("INTEGER");
-
-            b.Property<int>("EntityId")
-                      .HasColumnType("INTEGER");
-
-            b.Property<int>("Type")
-                      .HasColumnType("INTEGER");
-
-            b.Property<DateTime>("CreatedAt")
-                      .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
-
-            b.HasKey("StorageId", "EntityId", "Type");
-
-            b.HasIndex("EntityId");
-
-            b.ToTable("StorageReferences", (string)null);
           });
 
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -519,25 +491,6 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.Navigation("User");
           });
 
-      modelBuilder.Entity("Blogifier.Storages.StorageReference", b =>
-          {
-            b.HasOne("Blogifier.Shared.Post", "Post")
-                      .WithMany("StorageReferences")
-                      .HasForeignKey("EntityId")
-                      .OnDelete(DeleteBehavior.Cascade)
-                      .IsRequired();
-
-            b.HasOne("Blogifier.Storages.Storage", "Storage")
-                      .WithMany("StorageReferences")
-                      .HasForeignKey("StorageId")
-                      .OnDelete(DeleteBehavior.Cascade)
-                      .IsRequired();
-
-            b.Navigation("Post");
-
-            b.Navigation("Storage");
-          });
-
       modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
@@ -573,13 +526,6 @@ namespace Blogifier.Data.Migrations.Sqlite
       modelBuilder.Entity("Blogifier.Shared.Post", b =>
           {
             b.Navigation("PostCategories");
-
-            b.Navigation("StorageReferences");
-          });
-
-      modelBuilder.Entity("Blogifier.Storages.Storage", b =>
-          {
-            b.Navigation("StorageReferences");
           });
 #pragma warning restore 612, 618
     }
