@@ -190,12 +190,4 @@
        Categories = await _http.GetFromJsonAsync<List<CategoryItem>>($"api/category/{SearchTerm}");
        SearchTerm = "";
    }
-
-   protected override async Task OnAfterRenderAsync(bool firstRender)
-   {
-       if (firstRender)
-       {
-           await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTooltip");
-       }
-   }
 }

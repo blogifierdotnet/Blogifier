@@ -765,4 +765,7 @@
     <data name="welcome-blogifier" xml:space="preserve">
         <value>Welcome to the Blogifier</value>
     </data>
+    <data name="drive-describe" xml:space="preserve">
+        <value>Drive is a file storage that you are able to upload and manage your files and use throughout the website.</value>
+    </data>
 </root>

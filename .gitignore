@@ -350,3 +350,9 @@ MigrationBackup/
 .ionide/
 
 .DS_Store
+Blog.db-shm
+Blog.db-wal
+
+App_Data/
+
+appsettings.Development.json
