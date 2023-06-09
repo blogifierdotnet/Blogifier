@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +23,11 @@ public static class AppDbContextExtensions
 
     if ("Sqlite".Equals(provider, StringComparison.OrdinalIgnoreCase))
     {
-      services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(connectionString));
+      var sonnectionStringBuilder = new SqliteConnectionStringBuilder(connectionString);
+      var dataSourcePath = Path.Combine(environment.ContentRootPath, sonnectionStringBuilder.DataSource);
+      var dataSourceDirectory = Path.GetDirectoryName(dataSourcePath);
+      if (!string.IsNullOrEmpty(dataSourceDirectory)&& !Directory.Exists(dataSourceDirectory)) Directory.CreateDirectory(dataSourceDirectory);
+      services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(sonnectionStringBuilder.ToString()));
     }
     else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))
     {
