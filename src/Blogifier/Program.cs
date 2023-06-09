@@ -8,6 +8,7 @@ using Blogifier.Posts;
 using Blogifier.Shared.Resources;
 using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,45 +17,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using StackExchange.Redis;
 using System;
 using System.IO;
 using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, builder) => builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-var redis = builder.Configuration.GetSection("Blogifier:Redis").Value;
-if (redis == null) builder.Services.AddDistributedMemoryCache();
-else builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redis; options.InstanceName = "blogifier:"; });
 
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
-builder.Services.AddScoped<UserClaimsPrincipalFactory>();
-builder.Services.AddIdentityCore<UserInfo>(options =>
-{
-  options.User.RequireUniqueEmail = true;
-  options.Password.RequireUppercase = false;
-  options.Password.RequireNonAlphanumeric = false;
-  options.ClaimsIdentity.UserIdClaimType = BlogifierClaimTypes.UserId;
-  options.ClaimsIdentity.UserNameClaimType = BlogifierClaimTypes.UserName;
-  options.ClaimsIdentity.EmailClaimType = BlogifierClaimTypes.Email;
-  options.ClaimsIdentity.SecurityStampClaimType = BlogifierClaimTypes.SecurityStamp;
-}).AddUserManager<UserManager>()
-  .AddSignInManager<SignInManager>()
-  .AddEntityFrameworkStores<AppDbContext>()
-  .AddDefaultTokenProviders()
-  .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-  options.AccessDeniedPath = "/account/accessdenied";
-  options.LoginPath = "/account/login";
-});
-
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
-
-builder.Services.AddAuthorization();
-builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
-  builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 var section = builder.Configuration.GetSection("Blogifier");
 var provider = section.GetValue<string>("DbProvider");
@@ -81,6 +53,54 @@ else
 {
   throw new Exception($"Unsupported provider: {provider}");
 }
+
+var redisConnectionString = builder.Configuration.GetSection("Blogifier:Redis").Value;
+if (string.IsNullOrEmpty(redisConnectionString))
+{
+  builder.Services.AddDistributedMemoryCache();
+  var dataProtectionPath = $"{builder.Environment.ContentRootPath}\\App_Data\\DataProtection-Keys\\";
+  var dataProtectionDirectory = new DirectoryInfo(dataProtectionPath);
+  builder.Services.AddDataProtection().PersistKeysToFileSystem(dataProtectionDirectory);
+}
+else
+{
+  builder.Services.AddStackExchangeRedisCache(options =>
+  {
+    options.Configuration = redisConnectionString;
+    options.InstanceName = "blogifier:";
+  });
+  var redisConnectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+  builder.Services.AddDataProtection().PersistKeysToStackExchangeRedis(redisConnectionMultiplexer, "DataProtection-Keys");
+}
+
+builder.Services.AddScoped<UserClaimsPrincipalFactory>();
+builder.Services.AddIdentityCore<UserInfo>(options =>
+{
+  options.User.RequireUniqueEmail = true;
+  options.Password.RequireUppercase = false;
+  options.Password.RequireNonAlphanumeric = false;
+  options.ClaimsIdentity.UserIdClaimType = BlogifierClaimTypes.UserId;
+  options.ClaimsIdentity.UserNameClaimType = BlogifierClaimTypes.UserName;
+  options.ClaimsIdentity.EmailClaimType = BlogifierClaimTypes.Email;
+  options.ClaimsIdentity.SecurityStampClaimType = BlogifierClaimTypes.SecurityStamp;
+}).AddUserManager<UserManager>()
+  .AddSignInManager<SignInManager>()
+  .AddEntityFrameworkStores<AppDbContext>()
+  .AddDefaultTokenProviders()
+  .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  options.AccessDeniedPath = "/account/accessdenied";
+  options.LoginPath = "/account/login";
+});
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
+  builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
 if (builder.Environment.IsDevelopment())
   builder.Services.AddDatabaseDeveloperPageExceptionFilter();
