@@ -1,5 +1,8 @@
 
 import EasyMDE from 'easymde';
+import autosize from "autosize";
+import hljs from 'highlight.js';
+
 
 const
   editorIcon_heading = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3 2H5V7.25L11 7.25V2H13V14H11V8.75L5 8.75V14H3V2Z" /></svg>`
@@ -116,7 +119,7 @@ const
   },
   editorToolbar_sidebyside = {
     name: "side-by-side",
-    action: EasyMDE.toggleSideBySide,
+    action: toggleSideBySide,
     icon: editorIcon_sidebyside,
     title: "Toggle Side by Side",
     noDisable: true,
@@ -207,6 +210,14 @@ function editorToolbarTooltip() {
 let easymde;
 let _uploadElement;
 
+function toggleSideBySide() {
+  EasyMDE.toggleSideBySide(easymde);
+  // Wait for the screen to complete
+  setTimeout(() => {
+    hljs.highlightElement(easymde.gui.sideBySide);
+  }, 1000);
+}
+
 export function loadEditor(toolbar, textareaElement, uploadElement) {
   _uploadElement = uploadElement;
   autosize(document.querySelectorAll('.autosize'));
@@ -255,6 +266,7 @@ export function setEditorValue(txt) {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"'));
+
 }
 
 export function getEditorValue() {

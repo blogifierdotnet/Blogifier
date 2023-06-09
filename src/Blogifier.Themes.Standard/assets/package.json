@@ -22,7 +22,7 @@
     "@rollup/plugin-terser": "^0.4.3",
     "rollup": "^3.23.1",
     "rtlcss": "^3.3.0",
-    "sass": "^1.32.12"
+    "sass": "~1.32.12"
   },
   "dependencies": {
     "bootstrap": "~5.1.0",
