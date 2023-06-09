@@ -37,7 +37,10 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton<MinioProvider>();
-builder.Services.AddSingleton<MarkdigProvider>();
+
+builder.Services.AddScoped<MarkdigProvider>();
+builder.Services.AddScoped<ReverseProvider>();
+
 builder.Services.AddSingleton<ImportRssProvider>();
 
 builder.Services.AddScoped<UserProvider>();

@@ -2,7 +2,6 @@ using Blogifier.Extensions;
 using Blogifier.Identity;
 using Blogifier.Shared;
 using Blogifier.Storages;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +11,19 @@ namespace Blogifier.Posts;
 
 public class ImportManager
 {
-  private readonly ILogger _logger;
   private readonly UserProvider _userProvider;
-  private readonly MarkdigProvider _markdigProvider;
+  private readonly ReverseProvider _reverseProvider;
   private readonly PostProvider _postProvider;
   private readonly StorageProvider _storageProvider;
 
   public ImportManager(
-    ILogger<ImportManager> logger,
     UserProvider userProvider,
-    MarkdigProvider markdigProvider,
+    ReverseProvider reverseProvider,
     PostProvider postProvider,
     StorageProvider storageProvider)
   {
-    _logger = logger;
     _userProvider = userProvider;
-    _markdigProvider = markdigProvider;
+    _reverseProvider = reverseProvider;
     _postProvider = postProvider;
     _storageProvider = storageProvider;
   }
@@ -58,10 +54,10 @@ public class ImportManager
       var importImagesContent = await _storageProvider.UploadImagesFoHtml(webRoot, user.Id, post.Slug!, publishedAt, post.Content);
       var importFilesContent = await _storageProvider.UploadFilesFoHtml(webRoot, user.Id, post.Slug!, publishedAt, post.Content);
 
-      var markdownContent = _markdigProvider.ToMarkdown(importFilesContent);
+      var markdownContent = _reverseProvider.ToMarkdown(importFilesContent);
       post.Content = markdownContent;
 
-      var markdownDescription = _markdigProvider.ToMarkdown(post.Description);
+      var markdownDescription = _reverseProvider.ToMarkdown(post.Description);
       post.Description = markdownDescription;
 
       post.State = PostState.Release;
