@@ -24,16 +24,16 @@ public class UserController : ControllerBase
     return await _userProvider.GetAsync();
   }
 
-  [HttpGet("{id}")]
-  public async Task<UserInfoDto?> GetAsync([FromRoute] string id)
+  [HttpGet("{id:int}")]
+  public async Task<UserInfoDto?> GetAsync([FromRoute] int id)
   {
     return await _userProvider.GetAsync(id);
   }
 
-  [HttpPut("{id?}")]
-  public async Task<IActionResult> EditorAsync([FromRoute] string? id, [FromBody] UserEditorDto input, [FromServices] UserManager userManager)
+  [HttpPut("{id:int?}")]
+  public async Task<IActionResult> EditorAsync([FromRoute] int? id, [FromBody] UserEditorDto input, [FromServices] UserManager userManager)
   {
-    if (string.IsNullOrEmpty(id))
+    if (!id.HasValue)
     {
       var user = new UserInfo(input.UserName)
       {
@@ -52,7 +52,7 @@ public class UserController : ControllerBase
     }
     else
     {
-      var user = (await userManager.FindByIdAsync(id))!;
+      var user = await _userProvider.FindAsync(id.Value);
       user.NickName = input.NickName;
       user.Avatar = input.Avatar;
       user.Bio = input.Bio;

@@ -24,9 +24,12 @@ namespace Blogifier.Data.Migrations.SqlServer
 
       modelBuilder.Entity("Blogifier.Identity.UserInfo", b =>
           {
-            b.Property<string>("Id")
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
                       .HasMaxLength(128)
-                      .HasColumnType("nvarchar(128)");
+                      .HasColumnType("int");
+
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
             b.Property<int>("AccessFailedCount")
                       .HasColumnType("int");
@@ -300,10 +303,8 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.Property<DateTime>("UpdatedAt")
                       .HasColumnType("datetime2");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasMaxLength(128)
-                      .HasColumnType("nvarchar(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("int");
 
             b.Property<int>("Views")
                       .HasColumnType("int");
@@ -378,9 +379,8 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.Property<int>("Type")
                       .HasColumnType("int");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("nvarchar(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("int");
 
             b.HasKey("Id");
 
@@ -389,7 +389,7 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.ToTable("Storages", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
@@ -405,9 +405,8 @@ namespace Blogifier.Data.Migrations.SqlServer
                       .HasMaxLength(256)
                       .HasColumnType("nvarchar(256)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("nvarchar(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("int");
 
             b.HasKey("Id");
 
@@ -416,7 +415,7 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.ToTable("UserClaim", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.Property<string>("LoginProvider")
                       .HasColumnType("nvarchar(450)");
@@ -428,9 +427,8 @@ namespace Blogifier.Data.Migrations.SqlServer
                       .HasMaxLength(128)
                       .HasColumnType("nvarchar(128)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("nvarchar(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("int");
 
             b.HasKey("LoginProvider", "ProviderKey");
 
@@ -439,10 +437,10 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.ToTable("UserLogin", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
-            b.Property<string>("UserId")
-                      .HasColumnType("nvarchar(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("int");
 
             b.Property<string>("LoginProvider")
                       .HasColumnType("nvarchar(450)");
@@ -511,7 +509,7 @@ namespace Blogifier.Data.Migrations.SqlServer
             b.Navigation("User");
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -520,7 +518,7 @@ namespace Blogifier.Data.Migrations.SqlServer
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -529,7 +527,7 @@ namespace Blogifier.Data.Migrations.SqlServer
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()

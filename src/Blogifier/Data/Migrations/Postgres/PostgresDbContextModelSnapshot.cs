@@ -24,9 +24,12 @@ namespace Blogifier.Data.Migrations.Postgres
 
       modelBuilder.Entity("Blogifier.Identity.UserInfo", b =>
           {
-            b.Property<string>("Id")
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
                       .HasMaxLength(128)
-                      .HasColumnType("character varying(128)");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<int>("AccessFailedCount")
                       .HasColumnType("integer");
@@ -299,10 +302,8 @@ namespace Blogifier.Data.Migrations.Postgres
             b.Property<DateTime>("UpdatedAt")
                       .HasColumnType("timestamp with time zone");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasMaxLength(128)
-                      .HasColumnType("character varying(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.Property<int>("Views")
                       .HasColumnType("integer");
@@ -377,9 +378,8 @@ namespace Blogifier.Data.Migrations.Postgres
             b.Property<int>("Type")
                       .HasColumnType("integer");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("character varying(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("Id");
 
@@ -388,7 +388,7 @@ namespace Blogifier.Data.Migrations.Postgres
             b.ToTable("Storages", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
@@ -404,9 +404,8 @@ namespace Blogifier.Data.Migrations.Postgres
                       .HasMaxLength(256)
                       .HasColumnType("character varying(256)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("character varying(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("Id");
 
@@ -415,7 +414,7 @@ namespace Blogifier.Data.Migrations.Postgres
             b.ToTable("UserClaim", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.Property<string>("LoginProvider")
                       .HasColumnType("text");
@@ -427,9 +426,8 @@ namespace Blogifier.Data.Migrations.Postgres
                       .HasMaxLength(128)
                       .HasColumnType("character varying(128)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("character varying(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("LoginProvider", "ProviderKey");
 
@@ -438,10 +436,10 @@ namespace Blogifier.Data.Migrations.Postgres
             b.ToTable("UserLogin", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
-            b.Property<string>("UserId")
-                      .HasColumnType("character varying(128)");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.Property<string>("LoginProvider")
                       .HasColumnType("text");
@@ -510,7 +508,7 @@ namespace Blogifier.Data.Migrations.Postgres
             b.Navigation("User");
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -519,7 +517,7 @@ namespace Blogifier.Data.Migrations.Postgres
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -528,7 +526,7 @@ namespace Blogifier.Data.Migrations.Postgres
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()

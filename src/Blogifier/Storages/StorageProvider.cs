@@ -155,7 +155,7 @@ public class StorageProvider
     return true;
   }
 
-  public async Task<string> UploadFromWeb(string root, string userid, string baseUrl, string requestUri, DateTime createdAt)
+  public async Task<string> UploadFromWeb(string root, int userid, string baseUrl, string requestUri, DateTime createdAt)
   {
     var path = $"{userid}/{createdAt.Year}/{createdAt.Month}";
     var slash = Path.DirectorySeparatorChar.ToString();
@@ -174,7 +174,7 @@ public class StorageProvider
     return $"![{fileName}]({root}{PathToUrl(filePath)})";
   }
 
-  public async Task<string> UploadImagesFoHtml(string webRoot, string userid, string baseUrl, DateTime createdAt, string input)
+  public async Task<string> UploadImagesFoHtml(string webRoot, int userid, string baseUrl, DateTime createdAt, string input)
   {
     var matches = StringHelper.MatchesImgTags(input);
     if (matches.Any())
@@ -194,7 +194,7 @@ public class StorageProvider
   }
 
   private static readonly string[] _arrayfileExts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
-  public async Task<string> UploadFilesFoHtml(string webRoot, string userid, string baseUrl, DateTime createdAt, string input)
+  public async Task<string> UploadFilesFoHtml(string webRoot, int userid, string baseUrl, DateTime createdAt, string input)
   {
     var matches = StringHelper.MatchesFile(input);
     if (matches.Any())

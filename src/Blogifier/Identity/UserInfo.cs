@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Identity;
 
-public class UserInfo : IdentityUser<string>
+public class UserInfo : IdentityUser<int>
 {
   public UserInfo() : base()
   {
@@ -14,7 +14,6 @@ public class UserInfo : IdentityUser<string>
 
   public UserInfo(string userName) : base()
   {
-    Id = Guid.NewGuid().ToString();
     UserName = userName;
   }
 

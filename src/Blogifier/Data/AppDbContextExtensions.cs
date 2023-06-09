@@ -12,6 +12,7 @@ namespace Blogifier.Data;
 
 public static class AppDbContextExtensions
 {
+
   public static IServiceCollection AddDbContext(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration configuration)
   {
     var section = configuration.GetSection("Blogifier");

@@ -5,110 +5,118 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Blogifier.Data.Migrations.Sqlite
+namespace Blogifier.Data.Migrations.Postgres
 {
-  [DbContext(typeof(SqliteDbContext))]
-  [Migration("20230608105030_Init")]
+  [DbContext(typeof(PostgresDbContext))]
+  [Migration("20230609053331_Init")]
   partial class Init
   {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
-      modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+      modelBuilder
+          .HasAnnotation("ProductVersion", "7.0.5")
+          .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+      NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
       modelBuilder.Entity("Blogifier.Identity.UserInfo", b =>
           {
-            b.Property<string>("Id")
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<int>("AccessFailedCount")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<string>("Avatar")
                       .HasMaxLength(1024)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(1024)");
 
             b.Property<string>("Bio")
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(2048)");
 
             b.Property<string>("ConcurrencyStamp")
                       .IsConcurrencyToken()
                       .HasMaxLength(64)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(64)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
+                      .HasColumnType("timestamp with time zone")
                       .HasColumnOrder(0)
-                      .HasDefaultValueSql("datetime()");
+                      .HasDefaultValueSql("now()");
 
             b.Property<string>("Email")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<bool>("EmailConfirmed")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<string>("Gender")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(32)");
 
             b.Property<bool>("LockoutEnabled")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<DateTimeOffset?>("LockoutEnd")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.Property<string>("NickName")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<string>("NormalizedEmail")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<string>("NormalizedUserName")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<string>("PasswordHash")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<string>("PhoneNumber")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(32)");
 
             b.Property<bool>("PhoneNumberConfirmed")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<string>("SecurityStamp")
                       .HasMaxLength(32)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(32)");
 
             b.Property<int>("State")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<bool>("TwoFactorEnabled")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<int>("Type")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT")
+                      .HasColumnType("timestamp with time zone")
                       .HasColumnOrder(1);
 
             b.Property<string>("UserName")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.HasKey("Id");
 
@@ -126,21 +134,23 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<int>("PostId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<bool>("Success")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.HasKey("Id");
 
@@ -153,32 +163,34 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<string>("Country")
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(120)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<string>("Email")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(160)");
 
             b.Property<string>("Ip")
                       .HasMaxLength(80)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(80)");
 
             b.Property<string>("Region")
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(120)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.HasKey("Id");
 
@@ -189,24 +201,26 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<string>("Key")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.Property<string>("Value")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.HasKey("Id");
 
@@ -220,21 +234,23 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<string>("Content")
                       .IsRequired()
                       .HasMaxLength(120)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(120)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<string>("Description")
                       .HasMaxLength(255)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(255)");
 
             b.HasKey("Id");
 
@@ -245,55 +261,55 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<string>("Content")
                       .IsRequired()
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.Property<string>("Cover")
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(160)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<string>("Description")
                       .IsRequired()
                       .HasMaxLength(450)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(450)");
 
             b.Property<int>("PostType")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<DateTime?>("PublishedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.Property<string>("Slug")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(160)");
 
             b.Property<int>("State")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<string>("Title")
                       .IsRequired()
                       .HasMaxLength(160)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(160)");
 
             b.Property<DateTime>("UpdatedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.Property<int>("Views")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.HasKey("Id");
 
@@ -308,10 +324,10 @@ namespace Blogifier.Data.Migrations.Sqlite
       modelBuilder.Entity("Blogifier.Shared.PostCategory", b =>
           {
             b.Property<int>("PostId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.Property<int>("CategoryId")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
             b.HasKey("PostId", "CategoryId");
 
@@ -324,48 +340,49 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<string>("ContentType")
                       .IsRequired()
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(128)");
 
             b.Property<DateTime>("CreatedAt")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("TEXT")
-                      .HasDefaultValueSql("datetime()");
+                      .HasColumnType("timestamp with time zone")
+                      .HasDefaultValueSql("now()");
 
             b.Property<DateTime?>("DeletedAt")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("timestamp with time zone");
 
             b.Property<bool>("IsDeleted")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("boolean");
 
             b.Property<long>("Length")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("bigint");
 
             b.Property<string>("Name")
                       .IsRequired()
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
             b.Property<string>("Path")
                       .IsRequired()
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(2048)");
 
             b.Property<string>("Slug")
                       .IsRequired()
                       .HasMaxLength(2048)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(2048)");
 
             b.Property<int>("Type")
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("Id");
 
@@ -374,23 +391,24 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("Storages", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
-                      .HasColumnType("INTEGER");
+                      .HasColumnType("integer");
+
+            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
             b.Property<string>("ClaimType")
                       .HasMaxLength(16)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(16)");
 
             b.Property<string>("ClaimValue")
                       .HasMaxLength(256)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(256)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("Id");
 
@@ -399,21 +417,20 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("UserClaim", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.Property<string>("LoginProvider")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.Property<string>("ProviderKey")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.Property<string>("ProviderDisplayName")
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(128)");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.HasKey("LoginProvider", "ProviderKey");
 
@@ -422,20 +439,20 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("UserLogin", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
-            b.Property<string>("UserId")
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("integer");
 
             b.Property<string>("LoginProvider")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.Property<string>("Name")
-                      .HasColumnType("TEXT");
+                      .HasColumnType("text");
 
             b.Property<string>("Value")
                       .HasMaxLength(1024)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("character varying(1024)");
 
             b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -494,7 +511,7 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.Navigation("User");
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -503,7 +520,7 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -512,7 +529,7 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()

@@ -244,14 +244,14 @@ public class PostProvider : AppProvider<Post, int>
         .SetProperty(b => b.PublishedAt, b => GetPublishedAt(b.PublishedAt, state)));
   }
 
-  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, string userId)
+  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, int userId)
   {
     var post = await AddInternalAsync(postInput, userId);
     await _dbContext.SaveChangesAsync();
     return _mapper.Map<PostEditorDto>(post);
   }
 
-  private async Task<Post> AddInternalAsync(PostEditorDto postInput, string userId)
+  private async Task<Post> AddInternalAsync(PostEditorDto postInput, int userId)
   {
     var slug = await GetSlugFromTitle(postInput.Title);
     var postCategories = await CheckPostCategories(postInput.Categories);
@@ -291,7 +291,7 @@ public class PostProvider : AppProvider<Post, int>
     }
   }
 
-  public async Task<IEnumerable<PostEditorDto>> AddAsync(IEnumerable<PostEditorDto> posts, string userId)
+  public async Task<IEnumerable<PostEditorDto>> AddAsync(IEnumerable<PostEditorDto> posts, int userId)
   {
     var postsInput = new List<Post>();
     foreach (var post in posts)
@@ -303,7 +303,7 @@ public class PostProvider : AppProvider<Post, int>
     return _mapper.Map<IEnumerable<PostEditorDto>>(postsInput);
   }
 
-  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, string userId)
+  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, int userId)
   {
     var post = await _dbContext.Posts
       .Include(m => m.PostCategories)!

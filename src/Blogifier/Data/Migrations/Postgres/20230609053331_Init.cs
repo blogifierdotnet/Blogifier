@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using System;
 
@@ -67,7 +67,8 @@ namespace Blogifier.Data.Migrations.Postgres
           {
             CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
             UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-            Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+            Id = table.Column<int>(type: "integer", maxLength: 128, nullable: false)
+                  .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
             NickName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
             Avatar = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
             Bio = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
@@ -102,7 +103,7 @@ namespace Blogifier.Data.Migrations.Postgres
                   .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
             CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
             UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-            UserId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+            UserId = table.Column<int>(type: "integer", nullable: false),
             Title = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
             Slug = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
             Description = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
@@ -130,7 +131,7 @@ namespace Blogifier.Data.Migrations.Postgres
           {
             Id = table.Column<int>(type: "integer", nullable: false)
                   .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-            UserId = table.Column<string>(type: "character varying(128)", nullable: false),
+            UserId = table.Column<int>(type: "integer", nullable: false),
             CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
             IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
             DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -158,7 +159,7 @@ namespace Blogifier.Data.Migrations.Postgres
           {
             Id = table.Column<int>(type: "integer", nullable: false)
                   .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-            UserId = table.Column<string>(type: "character varying(128)", nullable: false),
+            UserId = table.Column<int>(type: "integer", nullable: false),
             ClaimType = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
             ClaimValue = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true)
           },
@@ -180,7 +181,7 @@ namespace Blogifier.Data.Migrations.Postgres
             LoginProvider = table.Column<string>(type: "text", nullable: false),
             ProviderKey = table.Column<string>(type: "text", nullable: false),
             ProviderDisplayName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-            UserId = table.Column<string>(type: "character varying(128)", nullable: false)
+            UserId = table.Column<int>(type: "integer", nullable: false)
           },
           constraints: table =>
           {
@@ -197,7 +198,7 @@ namespace Blogifier.Data.Migrations.Postgres
           name: "UserToken",
           columns: table => new
           {
-            UserId = table.Column<string>(type: "character varying(128)", nullable: false),
+            UserId = table.Column<int>(type: "integer", nullable: false),
             LoginProvider = table.Column<string>(type: "text", nullable: false),
             Name = table.Column<string>(type: "text", nullable: false),
             Value = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true)

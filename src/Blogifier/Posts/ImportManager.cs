@@ -32,9 +32,9 @@ public class ImportManager
     _storageProvider = storageProvider;
   }
 
-  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, string webRoot, string userId)
+  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, string webRoot, int userId)
   {
-    var user = await _userProvider.FindByIdAsync(userId);
+    var user = await _userProvider.FirstByIdAsync(userId);
     var titles = request.Posts.Select(m => m.Title);
     var matchPosts = await _postProvider.MatchTitleAsync(titles);
 
@@ -42,7 +42,7 @@ public class ImportManager
 
     foreach (var post in request.Posts)
     {
-      var postDb = matchPosts.FirstOrDefault(m => m.Title.Equals(post.Title, StringComparison.Ordinal));
+      var postDb = matchPosts.FirstOrDefault(m => m.Title.Equals(post.Title, StringComparison.OrdinalIgnoreCase));
       if (postDb != null)
       {
         posts.Add(postDb);
@@ -50,8 +50,7 @@ public class ImportManager
       }
 
       var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
-
-      if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.Ordinal))
+      if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.OrdinalIgnoreCase))
       {
         await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, post.Cover, publishedAt);
       }
