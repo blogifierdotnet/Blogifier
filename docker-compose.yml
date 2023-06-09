@@ -25,9 +25,8 @@ services:
     command: --requirepass "blogifier"
     volumes:
       - ./data/redis/data:/data
-
   blogifier:
-    container_name: server_blogifier
+    container_name: example_blogifier
     # image: dorthl/blogifier:latest
     restart: always
     build: .
@@ -39,7 +38,6 @@ services:
       Blogifier__ConnString: Server=mysql;Database=blogifier;User=root;Password=blogifier;
       Blogifier__Redis: redis:6379,password=blogifier,defaultDatabase=0
     volumes:
-      - ./data/blogifier/aspnet:/root/.aspnet
       - ./data/blogifier/app_data:/opt/blogifier/App_Data
     mem_limit: 256MB
 
