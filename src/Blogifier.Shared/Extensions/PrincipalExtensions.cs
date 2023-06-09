@@ -1,5 +1,6 @@
 using Blogifier.Identity;
 using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Blogifier.Shared;
@@ -8,12 +9,15 @@ public static class PrincipalExtensions
 {
   public static string FirstValue(this ClaimsPrincipal principal, string claimType)
   {
-    var value = FirstOrDefault(principal, claimType);
-    if (value == null) throw new NullReferenceException(nameof(value));
-    return value;
+    var claim = principal.Claims.First(m => claimType.Equals(m.Type, StringComparison.OrdinalIgnoreCase));
+    return claim.Value;
   }
 
-  public static string? FirstOrDefault(this ClaimsPrincipal principal, string claimType) => principal.FindFirstValue(claimType);
+  public static string? FirstOrDefault(this ClaimsPrincipal principal, string claimType)
+  {
+    var claim = principal.Claims.FirstOrDefault(m => claimType.Equals(m.Type, StringComparison.OrdinalIgnoreCase));
+    return claim?.Value;
+  }
 
   public static int FirstUserId(this ClaimsPrincipal principal)
   {
