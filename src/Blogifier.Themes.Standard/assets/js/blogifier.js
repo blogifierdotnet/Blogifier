@@ -1,6 +1,6 @@
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import '../lib/highlight.js'
-
+import "bootstrap";
+import hljs from 'highlight.js';
+hljs.initHighlightingOnLoad();
 // get the newsletter form elements
 const form = document.getElementById("newsletter");
 const form_email = document.getElementById("newsletter_email");

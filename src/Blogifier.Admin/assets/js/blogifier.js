@@ -1,8 +1,8 @@
 
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "autosize/dist/autosize.min.js";
-import "../lib/highlight.js"
-import "../lib/Chart.min.js"
+import { Tooltip } from 'bootstrap'
+
+// Chart.js v2.9.4
+import "chart.js"
 
 window.commonJsFunctions = {
   setTitle: function (title) {
@@ -56,7 +56,7 @@ window.commonJsFunctions = {
       let options = { "trigger": "hover", fallbackPlacements: ['bottom'] };
       let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
       let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, options)
+        return new Tooltip(tooltipTriggerEl, options)
       });
     }, 1000);
   },

@@ -1,4 +1,5 @@
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
   input: 'js/blogifier.js',
@@ -8,6 +9,7 @@ export default {
     sourcemap: true,
   },
   plugins: [
-    resolve()
+    commonjs(),
+    nodeResolve({ browser: true }),
   ]
 };

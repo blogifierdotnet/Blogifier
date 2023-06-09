@@ -1,4 +1,4 @@
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 
@@ -13,7 +13,8 @@ export default [
       plugins: [terser()]
     },
     plugins: [
-      resolve()
+      commonjs(),
+      nodeResolve({ browser: true }),
     ]
   },
   {
@@ -27,7 +28,7 @@ export default [
     },
     plugins: [
       commonjs(),
-      resolve({ browser: true }),
+      nodeResolve({ browser: true }),
     ]
   }
 ];

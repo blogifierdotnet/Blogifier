@@ -8,22 +8,24 @@
     "start": "npm run rollup | npm run sass ",
     "rtl": "rtlcss dist/css css/styles.rtl.css",
     "sass": "sass --watch scss:dist/css --style=compressed",
-    "rollup": "rollup --config -w",
-
+    "rollup": "rollup --config rollup.config.dev.mjs -w",
     "sass:Debug": "sass scss:dist/css",
     "rollup:Debug": "rollup --config rollup.config.dev.mjs",
     "build:Debug": "npm run sass:Debug && npm run rollup:Debug",
-
     "sass:Release": "sass scss:dist/css --style=compressed",
     "rollup:Release": "rollup --config rollup.config.mjs",
     "build:Release": "npm run sass:Release && npm run rollup:Release"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-terser": "^0.4.3",
-    "bootstrap": "~5.1.0",
     "rollup": "^3.23.1",
     "rtlcss": "^3.3.0",
-    "sass": "^1.32.12"
+    "sass": "~1.32.12"
+  },
+  "dependencies": {
+    "bootstrap": "~5.1.0",
+    "highlight.js": "^11.8.0"
   }
 }
