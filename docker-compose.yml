@@ -24,10 +24,11 @@ services:
     restart: always
     command: --requirepass "blogifier"
     volumes:
-      - ./deploy/deploy/redis/data:/data
+      - ./deploy/data/redis/data:/data
+
   blogifier:
     container_name: example_blogifier
-    # image: dorthl/blogifier:latest
+    image: dorthl/blogifier:latest
     restart: always
     build: .
     ports:
