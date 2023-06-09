@@ -51,7 +51,7 @@ public class ImportManager
 
       var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
 
-      if (post.Cover != null && !post.Cover.Equals(BlogifierConstant.DefaultCover, StringComparison.Ordinal))
+      if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.Ordinal))
       {
         await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, post.Cover, publishedAt);
       }

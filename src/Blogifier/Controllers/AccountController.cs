@@ -134,7 +134,7 @@ public class AccountController : Controller
           Theme = BlogifierConstant.DefaultTheme,
           ItemsPerPage = BlogifierConstant.DefaultItemsPerPage,
           Version = BlogifierConstant.DefaultVersion,
-          Logo = BlogifierConstant.DefaultLogo
+          Logo = BlogifierSharedConstant.DefaultLogo
         };
         await _blogManager.SetAsync(blogData);
         return Redirect("~/");

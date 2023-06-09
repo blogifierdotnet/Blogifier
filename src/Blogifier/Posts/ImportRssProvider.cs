@@ -29,7 +29,7 @@ public class ImportRssProvider
         Title = item.Title.Text,
         Description = GetDescription(item.Summary.Text),
         Content = content,
-        Cover = BlogifierConstant.DefaultCover,
+        Cover = BlogifierSharedConstant.DefaultCover,
         PublishedAt = item.PublishDate.DateTime,
         PostType = PostType.Post,
       };

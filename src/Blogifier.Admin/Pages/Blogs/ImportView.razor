@@ -118,7 +118,7 @@ else
     if (response.IsSuccessStatusCode)
     {
       var stream = await response.Content.ReadAsStreamAsync();
-      var inputPosts = (await JsonSerializer.DeserializeAsync<List<PostEditorDto>>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      var inputPosts = (await JsonSerializer.DeserializeAsync<List<PostEditorDto>>(stream, BlogifierSharedConstant.DefaultJsonSerializerOptionss))!;
       var successCount = 0;
       foreach (var post in inputPosts)
       {
