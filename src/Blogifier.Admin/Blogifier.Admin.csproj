@@ -4,6 +4,8 @@
     <Nullable>enable</Nullable>
     <BlazorEnableCompression>false</BlazorEnableCompression>
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
+    <ClientAssetsRestoreCommand>npm ci</ClientAssetsRestoreCommand>
+    <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,7 +46,7 @@
 
   <ItemGroup>
     <ClientAssetsInputs Include="$(ClientAssetsDirectory)**" Exclude="$(DefaultItemExcludes)" />
-    <ProjectCapability Include="ClientAssetsAlpha"/>
+    <ProjectCapability Include="ClientAssetsAlpha" />
   </ItemGroup>
 
   <Target Name="ClientAssetsClean" BeforeTargets="Clean">
@@ -53,12 +55,12 @@
   </Target>
 
   <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
-    <Message Importance="high" Text="Running npm ci ..." />
-    <Exec Command="npm ci" WorkingDirectory="$(ClientAssetsDirectory)" />
+    <Message Importance="high" Text="Running $(ClientAssetsRestoreCommand)..." />
+    <Exec Command="$(ClientAssetsRestoreCommand)" WorkingDirectory="$(ClientAssetsDirectory)" />
   </Target>
 
   <Target Name="ClientAssetsBuild" Condition="'$(ShouldRunClientAssetsBuild)' == 'true'" DependsOnTargets="ClientAssetsRestore" BeforeTargets="AssignTargetPaths" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
-    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="npm run build" />
+    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="$(ClientAssetsBuildCommand)" />
     <PropertyGroup>
       <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(ClientAssetsBuildOutput)'))/</_ClientAssetsOutputFullPath>
     </PropertyGroup>
@@ -83,5 +85,4 @@
       <Output TaskParameter="Assets" ItemName="StaticWebAsset" />
     </DefineStaticWebAssets>
   </Target>
-
 </Project>
