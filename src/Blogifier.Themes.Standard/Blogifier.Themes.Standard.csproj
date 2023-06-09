@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
+    <ClientAssetsRestoreCommand>npm ci</ClientAssetsRestoreCommand>
+    <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,12 +48,12 @@
   </Target>
 
   <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
-    <Message Importance="high" Text="Running npm ci ..." />
-    <Exec Command="npm ci" WorkingDirectory="$(ClientAssetsDirectory)" />
+    <Message Importance="high" Text="Running $(ClientAssetsRestoreCommand)..." />
+    <Exec Command="$(ClientAssetsRestoreCommand)" WorkingDirectory="$(ClientAssetsDirectory)" />
   </Target>
 
   <Target Name="ClientAssetsBuild" Condition="'$(ShouldRunClientAssetsBuild)' == 'true'" DependsOnTargets="ClientAssetsRestore" BeforeTargets="AssignTargetPaths" Inputs="@(ClientAssetsInputs)" Outputs="$(IntermediateOutputPath)clientassetsbuild.complete.txt">
-    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="npm run build" />
+    <Exec WorkingDirectory="$(ClientAssetsDirectory)" Command="$(ClientAssetsBuildCommand)" />
     <PropertyGroup>
       <_ClientAssetsOutputFullPath>$([System.IO.Path]::GetFullPath('$(ClientAssetsBuildOutput)'))/</_ClientAssetsOutputFullPath>
     </PropertyGroup>

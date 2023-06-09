@@ -1,4 +1,5 @@
 using AutoMapper;
+using Blogifier.Caches;
 using Blogifier.Options;
 using Blogifier.Posts;
 using Blogifier.Shared;
@@ -73,7 +74,7 @@ public class EmailManager
 
   public async Task<MailSettingDto?> GetSettingsAsync()
   {
-    var key = BlogifierConstant.CacheKeys.BlogMailData;
+    var key = CacheKeys.BlogMailData;
     var value = await _optionProvider.GetByValueAsync(key);
     if (value != null)
     {
@@ -85,7 +86,7 @@ public class EmailManager
 
   public async Task PutSettingsAsync(MailSettingDto input)
   {
-    var key = BlogifierConstant.CacheKeys.BlogMailData;
+    var key = CacheKeys.BlogMailData;
     var data = _mapper.Map<MailSettingData>(input);
     var value = JsonSerializer.Serialize(data);
     await _optionProvider.SetValue(key, value);

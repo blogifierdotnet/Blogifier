@@ -30,7 +30,7 @@ public class BlogAuthStateProvider : AuthenticationStateProvider
         var stream = await response.Content.ReadAsStreamAsync();
         if (stream.Length > 0)
         {
-          claims = JsonSerializer.Deserialize<BlogifierClaims>(stream, BlogifierConstant.DefaultJsonSerializerOptionss)!;
+          claims = JsonSerializer.Deserialize<BlogifierClaims>(stream, BlogifierSharedConstant.DefaultJsonSerializerOptionss)!;
           _logger.LogInformation("claims success userName:{UserName}", claims.UserName);
         }
       }

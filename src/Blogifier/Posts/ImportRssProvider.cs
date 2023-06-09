@@ -11,7 +11,7 @@ public class ImportRssProvider
 {
   public ImportDto Analysis(string feedUrl)
   {
-    var xml = XmlReader.Create(feedUrl);
+    using var xml = XmlReader.Create(feedUrl);
     var feed = SyndicationFeed.Load(xml);
 
     var result = new ImportDto
@@ -29,7 +29,7 @@ public class ImportRssProvider
         Title = item.Title.Text,
         Description = GetDescription(item.Summary.Text),
         Content = content,
-        Cover = BlogifierConstant.DefaultCover,
+        Cover = BlogifierSharedConstant.DefaultCover,
         PublishedAt = item.PublishDate.DateTime,
         PostType = PostType.Post,
       };

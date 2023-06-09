@@ -1,4 +1,5 @@
 using AutoMapper;
+using Blogifier.Caches;
 using Blogifier.Identity;
 using Blogifier.Posts;
 using Blogifier.Shared;
@@ -51,7 +52,7 @@ public class MainMamager
 
   public async Task<List<CategoryItemDto>> GetCategoryItemesCacheAsync()
   {
-    var key = BlogifierConstant.CacheKeys.CategoryItemes;
+    var key = CacheKeys.CategoryItemes;
     var cache = await _distributedCache.GetAsync(key);
     if (cache != null)
     {

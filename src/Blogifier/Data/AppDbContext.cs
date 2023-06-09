@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : IdentityUserContext<UserInfo, string>
+public class AppDbContext : IdentityUserContext<UserInfo, int>
 {
   public AppDbContext(DbContextOptions options) : base(options)
   {
@@ -40,18 +40,18 @@ public class AppDbContext : IdentityUserContext<UserInfo, string>
       e.Property(p => p.PhoneNumber).HasMaxLength(32);
     });
 
-    modelBuilder.Entity<IdentityUserClaim<string>>(e =>
+    modelBuilder.Entity<IdentityUserClaim<int>>(e =>
     {
       e.ToTable("UserClaim");
       e.Property(p => p.ClaimType).HasMaxLength(16);
       e.Property(p => p.ClaimValue).HasMaxLength(256);
     });
-    modelBuilder.Entity<IdentityUserLogin<string>>(e =>
+    modelBuilder.Entity<IdentityUserLogin<int>>(e =>
     {
       e.ToTable("UserLogin");
       e.Property(p => p.ProviderDisplayName).HasMaxLength(128);
     });
-    modelBuilder.Entity<IdentityUserToken<string>>(e =>
+    modelBuilder.Entity<IdentityUserToken<int>>(e =>
     {
       e.ToTable("UserToken");
       e.Property(p => p.Value).HasMaxLength(1024);

@@ -1,5 +1,6 @@
 using Blogifier;
 using Blogifier.Blogs;
+using Blogifier.Caches;
 using Blogifier.Data;
 using Blogifier.Identity;
 using Blogifier.Newsletters;
@@ -10,83 +11,36 @@ using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
-using System.IO;
-using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog((context, builder) => builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
-var redis = builder.Configuration.GetSection("Blogifier:Redis").Value;
-if (redis == null) builder.Services.AddDistributedMemoryCache();
-else builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = redis; options.InstanceName = "blogifier:"; });
 
+builder.Host.UseSerilog((context, builder) =>
+{
+  builder.ReadFrom
+    .Configuration(context.Configuration)
+    .Enrich
+    .FromLogContext();
+});
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
-builder.Services.AddScoped<UserClaimsPrincipalFactory>();
-builder.Services.AddIdentityCore<UserInfo>(options =>
-{
-  options.User.RequireUniqueEmail = true;
-  options.Password.RequireUppercase = false;
-  options.Password.RequireNonAlphanumeric = false;
-  options.ClaimsIdentity.UserIdClaimType = BlogifierClaimTypes.UserId;
-  options.ClaimsIdentity.UserNameClaimType = BlogifierClaimTypes.UserName;
-  options.ClaimsIdentity.EmailClaimType = BlogifierClaimTypes.Email;
-  options.ClaimsIdentity.SecurityStampClaimType = BlogifierClaimTypes.SecurityStamp;
-}).AddUserManager<UserManager>()
-  .AddSignInManager<SignInManager>()
-  .AddEntityFrameworkStores<AppDbContext>()
-  .AddDefaultTokenProviders()
-  .AddClaimsPrincipalFactory<UserClaimsPrincipalFactory>();
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-  options.AccessDeniedPath = "/account/accessdenied";
-  options.LoginPath = "/account/login";
-});
+builder.Services.AddDbContext(builder.Environment, builder.Configuration);
+builder.Services.AddCache(builder.Environment, builder.Configuration);
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
-
+builder.Services.AddIdentity();
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+  .AddIdentityCookies();
 builder.Services.AddAuthorization();
-builder.Services.AddCors(o => o.AddPolicy(BlogifierConstant.PolicyCorsName,
-  builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-
-var section = builder.Configuration.GetSection("Blogifier");
-var provider = section.GetValue<string>("DbProvider");
-var connectionString = section.GetValue<string>("ConnString");
-
-if ("Sqlite".Equals(provider, StringComparison.OrdinalIgnoreCase))
-{
-  builder.Services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(connectionString));
-}
-else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))
-{
-  builder.Services.AddDbContext<AppDbContext, SqlServerDbContext>(o => o.UseSqlServer(connectionString));
-}
-else if ("MySql".Equals(provider, StringComparison.OrdinalIgnoreCase))
-{
-  var version = ServerVersion.AutoDetect(connectionString);
-  builder.Services.AddDbContext<AppDbContext, MySqlDbContext>(o => o.UseMySql(connectionString, version));
-}
-else if ("Postgres".Equals(provider, StringComparison.OrdinalIgnoreCase))
-{
-  builder.Services.AddDbContext<AppDbContext, PostgresDbContext>(o => o.UseNpgsql(connectionString));
-}
-else
-{
-  throw new Exception($"Unsupported provider: {provider}");
-}
-
-if (builder.Environment.IsDevelopment())
-  builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton<MinioProvider>();
-builder.Services.AddSingleton<MarkdigProvider>();
+
+builder.Services.AddScoped<MarkdigProvider>();
+builder.Services.AddScoped<ReverseProvider>();
+
 builder.Services.AddSingleton<ImportRssProvider>();
 
 builder.Services.AddScoped<UserProvider>();
@@ -104,38 +58,39 @@ builder.Services.AddScoped<PostManager>();
 builder.Services.AddScoped<BlogManager>();
 builder.Services.AddScoped<MainMamager>();
 
+builder.Services.AddCors(option =>
+{
+  option.AddPolicy(BlogifierConstant.PolicyCorsName, builder =>
+  {
+    builder.AllowAnyOrigin()
+      .AllowAnyMethod()
+      .AllowAnyHeader();
+  });
+});
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
   options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
   options.KnownNetworks.Clear();
   options.KnownProxies.Clear();
 });
-
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache(options =>
 {
-  options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder => builder.Expire(TimeSpan.FromMinutes(15)));
+  options.AddPolicy(BlogifierConstant.OutputCacheExpire1, builder =>
+    builder.Expire(TimeSpan.FromMinutes(15)));
 });
 
 builder.Services.AddControllersWithViews()
-  .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Resource)));
-
+  .AddDataAnnotationsLocalization(options =>
+    options.DataAnnotationLocalizerProvider =
+      (type, factory) => factory.Create(typeof(Resource)));
 builder.Services.AddRazorPages().AddViewLocalization();
-
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-  var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-  if (dbContext.Database.GetPendingMigrations().Any())
-  {
-    await dbContext.Database.MigrateAsync();
-  }
-}
+await app.RunDbContextMigrateAsync();
 
 app.UseSerilogRequestLogging();
 
@@ -152,31 +107,12 @@ else
 app.UseForwardedHeaders();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
-if (!Directory.Exists(fileProviderRoot)) Directory.CreateDirectory(fileProviderRoot);
-app.UseStaticFiles(new StaticFileOptions
-{
-  FileProvider = new PhysicalFileProvider(fileProviderRoot),
-  RequestPath = "/data"
-});
+app.UseStorageStaticFiles();
 app.UseCookiePolicy();
 app.UseRouting();
-
-var supportedCultures = new[] {
-  "zh-CN",
-  "zh-TW",
-  "el-GR",
-  "es",
-  "fa",
-  "pt-BR",
-  "ru",
-  "sv-SE",
-  "ur-PK"
-};
 app.UseRequestLocalization(new RequestLocalizationOptions()
-  .AddSupportedCultures(supportedCultures)
-  .AddSupportedUICultures(supportedCultures));
-
+  .AddSupportedCultures(BlogifierConstant.SupportedCultures)
+  .AddSupportedUICultures(BlogifierConstant.SupportedCultures));
 app.UseCors(BlogifierConstant.PolicyCorsName);
 app.UseAuthentication();
 app.UseAuthorization();

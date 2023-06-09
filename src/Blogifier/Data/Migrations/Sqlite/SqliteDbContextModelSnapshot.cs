@@ -19,9 +19,10 @@ namespace Blogifier.Data.Migrations.Sqlite
 
       modelBuilder.Entity("Blogifier.Identity.UserInfo", b =>
           {
-            b.Property<string>("Id")
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
                       .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+                      .HasColumnType("INTEGER");
 
             b.Property<int>("AccessFailedCount")
                       .HasColumnType("INTEGER");
@@ -284,10 +285,8 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.Property<DateTime>("UpdatedAt")
                       .HasColumnType("TEXT");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasMaxLength(128)
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("INTEGER");
 
             b.Property<int>("Views")
                       .HasColumnType("INTEGER");
@@ -360,9 +359,8 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.Property<int>("Type")
                       .HasColumnType("INTEGER");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("INTEGER");
 
             b.HasKey("Id");
 
@@ -371,7 +369,7 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("Storages", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.Property<int>("Id")
                       .ValueGeneratedOnAdd()
@@ -385,9 +383,8 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasMaxLength(256)
                       .HasColumnType("TEXT");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("INTEGER");
 
             b.HasKey("Id");
 
@@ -396,7 +393,7 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("UserClaim", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.Property<string>("LoginProvider")
                       .HasColumnType("TEXT");
@@ -408,9 +405,8 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasMaxLength(128)
                       .HasColumnType("TEXT");
 
-            b.Property<string>("UserId")
-                      .IsRequired()
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("INTEGER");
 
             b.HasKey("LoginProvider", "ProviderKey");
 
@@ -419,10 +415,10 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.ToTable("UserLogin", (string)null);
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
-            b.Property<string>("UserId")
-                      .HasColumnType("TEXT");
+            b.Property<int>("UserId")
+                      .HasColumnType("INTEGER");
 
             b.Property<string>("LoginProvider")
                       .HasColumnType("TEXT");
@@ -491,7 +487,7 @@ namespace Blogifier.Data.Migrations.Sqlite
             b.Navigation("User");
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -500,7 +496,7 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()
@@ -509,7 +505,7 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .IsRequired();
           });
 
-      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
           {
             b.HasOne("Blogifier.Identity.UserInfo", null)
                       .WithMany()

@@ -66,7 +66,8 @@ namespace Blogifier.Data.Migrations.SqlServer
           {
             CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
             UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-            Id = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+            Id = table.Column<int>(type: "int", maxLength: 128, nullable: false)
+                  .Annotation("SqlServer:Identity", "1, 1"),
             NickName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
             Avatar = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
             Bio = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
@@ -101,7 +102,7 @@ namespace Blogifier.Data.Migrations.SqlServer
                   .Annotation("SqlServer:Identity", "1, 1"),
             CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
             UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-            UserId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+            UserId = table.Column<int>(type: "int", nullable: false),
             Title = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: false),
             Slug = table.Column<string>(type: "nvarchar(160)", maxLength: 160, nullable: false),
             Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
@@ -129,7 +130,7 @@ namespace Blogifier.Data.Migrations.SqlServer
           {
             Id = table.Column<int>(type: "int", nullable: false)
                   .Annotation("SqlServer:Identity", "1, 1"),
-            UserId = table.Column<string>(type: "nvarchar(128)", nullable: false),
+            UserId = table.Column<int>(type: "int", nullable: false),
             CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
             IsDeleted = table.Column<bool>(type: "bit", nullable: false),
             DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -157,7 +158,7 @@ namespace Blogifier.Data.Migrations.SqlServer
           {
             Id = table.Column<int>(type: "int", nullable: false)
                   .Annotation("SqlServer:Identity", "1, 1"),
-            UserId = table.Column<string>(type: "nvarchar(128)", nullable: false),
+            UserId = table.Column<int>(type: "int", nullable: false),
             ClaimType = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
             ClaimValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
           },
@@ -179,7 +180,7 @@ namespace Blogifier.Data.Migrations.SqlServer
             LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
             ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
             ProviderDisplayName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-            UserId = table.Column<string>(type: "nvarchar(128)", nullable: false)
+            UserId = table.Column<int>(type: "int", nullable: false)
           },
           constraints: table =>
           {
@@ -196,7 +197,7 @@ namespace Blogifier.Data.Migrations.SqlServer
           name: "UserToken",
           columns: table => new
           {
-            UserId = table.Column<string>(type: "nvarchar(128)", nullable: false),
+            UserId = table.Column<int>(type: "int", nullable: false),
             LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
             Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
             Value = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true)

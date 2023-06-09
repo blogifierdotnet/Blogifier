@@ -16,8 +16,8 @@ builder.Services.AddLocalization();
 builder.Services.AddOptions();
 
 builder.Services.AddAuthorizationCore(options =>
-  options.AddPolicy(BlogifierConstant.PolicyAdminName, policy =>
-    policy.RequireClaim(BlogifierClaimTypes.Type, BlogifierConstant.PolicyAdminValue)));
+  options.AddPolicy(BlogifierSharedConstant.PolicyAdminName, policy =>
+    policy.RequireClaim(BlogifierClaimTypes.Type, BlogifierSharedConstant.PolicyAdminValue)));
 
 builder.Services.AddScoped(sp => new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
 {

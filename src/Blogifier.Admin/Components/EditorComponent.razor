@@ -19,7 +19,7 @@
   {
     if (firstRender)
     {
-      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.min.js");
+      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
       var module = await _taskModule;
       await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
     }

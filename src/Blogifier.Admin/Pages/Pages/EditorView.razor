@@ -94,7 +94,7 @@
       Description = string.Empty,
       Content = string.Empty,
       PostType = PostType.Page,
-      Cover = BlogifierConstant.DefaultCover,
+      Cover = BlogifierSharedConstant.DefaultCover,
       Categories = new List<CategoryDto>(),
     };
 
@@ -120,7 +120,7 @@
 
     Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
     Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
-    if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierConstant.DefaultCover;
+    if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
 
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
 
@@ -164,7 +164,7 @@
 
   protected async Task ResetCoverAsync()
   {
-    Post.Cover = BlogifierConstant.DefaultCover;
+    Post.Cover = BlogifierSharedConstant.DefaultCover;
     await SaveAsync();
   }
 
@@ -186,7 +186,7 @@
     if (response.IsSuccessStatusCode)
     {
       var stream = await response.Content.ReadAsStreamAsync();
-      Post = (await JsonSerializer.DeserializeAsync<PostEditorDto>(stream, BlogifierConstant.DefaultJsonSerializerOptionss))!;
+      Post = (await JsonSerializer.DeserializeAsync<PostEditorDto>(stream, BlogifierSharedConstant.DefaultJsonSerializerOptionss))!;
       await SetJsPostAsync(Post);
       _toaster.Success(_localizer["completed"]);
     }

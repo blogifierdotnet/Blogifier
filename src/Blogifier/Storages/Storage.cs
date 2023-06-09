@@ -9,7 +9,7 @@ public class Storage
 {
   [Key]
   public int Id { get; set; }
-  public string UserId { get; set; } = default!;
+  public int UserId { get; set; }
   public UserInfo User { get; set; } = default!;
   public DateTime CreatedAt { get; set; }
   public bool IsDeleted { get; set; }

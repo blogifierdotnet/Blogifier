@@ -10,8 +10,7 @@ public class Post : AppEntity<int>
 {
   public DateTime CreatedAt { get; set; }
   public DateTime UpdatedAt { get; set; }
-  [StringLength(128)]
-  public string UserId { get; set; } = default!;
+  public int UserId { get; set; }
   public UserInfo User { get; set; } = default!;
   [Required]
   [StringLength(160)]

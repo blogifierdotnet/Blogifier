@@ -66,7 +66,8 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime()"),
             UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-            Id = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+            Id = table.Column<int>(type: "INTEGER", maxLength: 128, nullable: false)
+                  .Annotation("Sqlite:Autoincrement", true),
             NickName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
             Avatar = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: true),
             Bio = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: true),
@@ -101,7 +102,7 @@ namespace Blogifier.Data.Migrations.Sqlite
                   .Annotation("Sqlite:Autoincrement", true),
             CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime()"),
             UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-            UserId = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+            UserId = table.Column<int>(type: "INTEGER", nullable: false),
             Title = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
             Slug = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
             Description = table.Column<string>(type: "TEXT", maxLength: 450, nullable: false),
@@ -129,7 +130,7 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             Id = table.Column<int>(type: "INTEGER", nullable: false)
                   .Annotation("Sqlite:Autoincrement", true),
-            UserId = table.Column<string>(type: "TEXT", nullable: false),
+            UserId = table.Column<int>(type: "INTEGER", nullable: false),
             CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime()"),
             IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
             DeletedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
@@ -157,7 +158,7 @@ namespace Blogifier.Data.Migrations.Sqlite
           {
             Id = table.Column<int>(type: "INTEGER", nullable: false)
                   .Annotation("Sqlite:Autoincrement", true),
-            UserId = table.Column<string>(type: "TEXT", nullable: false),
+            UserId = table.Column<int>(type: "INTEGER", nullable: false),
             ClaimType = table.Column<string>(type: "TEXT", maxLength: 16, nullable: true),
             ClaimValue = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true)
           },
@@ -179,7 +180,7 @@ namespace Blogifier.Data.Migrations.Sqlite
             LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
             ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
             ProviderDisplayName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
-            UserId = table.Column<string>(type: "TEXT", nullable: false)
+            UserId = table.Column<int>(type: "INTEGER", nullable: false)
           },
           constraints: table =>
           {
@@ -196,7 +197,7 @@ namespace Blogifier.Data.Migrations.Sqlite
           name: "UserToken",
           columns: table => new
           {
-            UserId = table.Column<string>(type: "TEXT", nullable: false),
+            UserId = table.Column<int>(type: "INTEGER", nullable: false),
             LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
             Name = table.Column<string>(type: "TEXT", nullable: false),
             Value = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: true)

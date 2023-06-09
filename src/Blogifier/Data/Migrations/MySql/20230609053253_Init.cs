@@ -88,8 +88,8 @@ namespace Blogifier.Data.Migrations.MySql
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
-            Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
+            Id = table.Column<int>(type: "int", maxLength: 128, nullable: false)
+                  .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             NickName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             Avatar = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: true)
@@ -139,8 +139,7 @@ namespace Blogifier.Data.Migrations.MySql
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
-            UserId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
+            UserId = table.Column<int>(type: "int", nullable: false),
             Title = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             Slug = table.Column<string>(type: "varchar(160)", maxLength: 160, nullable: false)
@@ -174,8 +173,7 @@ namespace Blogifier.Data.Migrations.MySql
           {
             Id = table.Column<int>(type: "int", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            UserId = table.Column<string>(type: "varchar(128)", nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
+            UserId = table.Column<int>(type: "int", nullable: false),
             CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
             IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -209,8 +207,7 @@ namespace Blogifier.Data.Migrations.MySql
           {
             Id = table.Column<int>(type: "int", nullable: false)
                   .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-            UserId = table.Column<string>(type: "varchar(128)", nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
+            UserId = table.Column<int>(type: "int", nullable: false),
             ClaimType = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             ClaimValue = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -238,8 +235,7 @@ namespace Blogifier.Data.Migrations.MySql
                   .Annotation("MySql:CharSet", "utf8mb4"),
             ProviderDisplayName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                   .Annotation("MySql:CharSet", "utf8mb4"),
-            UserId = table.Column<string>(type: "varchar(128)", nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4")
+            UserId = table.Column<int>(type: "int", nullable: false)
           },
           constraints: table =>
           {
@@ -257,8 +253,7 @@ namespace Blogifier.Data.Migrations.MySql
           name: "UserToken",
           columns: table => new
           {
-            UserId = table.Column<string>(type: "varchar(128)", nullable: false)
-                  .Annotation("MySql:CharSet", "utf8mb4"),
+            UserId = table.Column<int>(type: "int", nullable: false),
             LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
                   .Annotation("MySql:CharSet", "utf8mb4"),
             Name = table.Column<string>(type: "varchar(255)", nullable: false)

@@ -134,7 +134,7 @@ public class AccountController : Controller
           Theme = BlogifierConstant.DefaultTheme,
           ItemsPerPage = BlogifierConstant.DefaultItemsPerPage,
           Version = BlogifierConstant.DefaultVersion,
-          Logo = BlogifierConstant.DefaultLogo
+          Logo = BlogifierSharedConstant.DefaultLogo
         };
         await _blogManager.SetAsync(blogData);
         return Redirect("~/");
@@ -149,7 +149,7 @@ public class AccountController : Controller
   public async Task<IActionResult> Profile([FromQuery] AccountModel parameter)
   {
     var userId = User.FirstUserId();
-    var user = (await _userManager.FindByIdAsync(userId))!;
+    var user = await _userManager.FindByIdAsync(userId);
     var model = new AccountProfileEditModel
     {
       RedirectUri = parameter.RedirectUri,
@@ -170,7 +170,7 @@ public class AccountController : Controller
     if (ModelState.IsValid)
     {
       var userId = User.FirstUserId();
-      var user = (await _userManager.FindByIdAsync(userId))!;
+      var user = await _userManager.FindByIdAsync(userId);
       user.Email = model.Email;
       user.NickName = model.NickName;
       user.Avatar = model.Avatar;
@@ -209,7 +209,7 @@ public class AccountController : Controller
     if (ModelState.IsValid)
     {
       var userId = User.FirstUserId();
-      var user = (await _userManager.FindByIdAsync(userId))!;
+      var user = await _userManager.FindByIdAsync(userId);
       var token = await _userManager.GeneratePasswordResetTokenAsync(user);
       var result = await _userManager.ResetPasswordAsync(user, token, model.Password);
       if (result.Succeeded)
