@@ -25,6 +25,9 @@ builder.Host.UseSerilog((context, builder) =>
     .Enrich
     .FromLogContext();
 });
+
+builder.Services.Configure<BlogifierConfigure>(builder.Configuration.GetSection(BlogifierConstant.Key));
+
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 
@@ -36,22 +39,19 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
   .AddIdentityCookies();
 builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<MinioProvider>();
+builder.Services.AddStorageStaticFiles(builder.Configuration);
 
 builder.Services.AddScoped<MarkdigProvider>();
 builder.Services.AddScoped<ReverseProvider>();
-
-builder.Services.AddSingleton<ImportRssProvider>();
-
+builder.Services.AddScoped<ImportRssProvider>();
 builder.Services.AddScoped<UserProvider>();
 builder.Services.AddScoped<PostProvider>();
 builder.Services.AddScoped<CategoryProvider>();
 builder.Services.AddScoped<NewsletterProvider>();
 builder.Services.AddScoped<SubscriberProvider>();
-builder.Services.AddScoped<StorageProvider>();
+
 builder.Services.AddScoped<OptionProvider>();
 builder.Services.AddScoped<AnalyticsProvider>();
-
 builder.Services.AddScoped<EmailManager>();
 builder.Services.AddScoped<ImportManager>();
 builder.Services.AddScoped<PostManager>();

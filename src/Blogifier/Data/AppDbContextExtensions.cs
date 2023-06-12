@@ -26,7 +26,7 @@ public static class AppDbContextExtensions
       var sonnectionStringBuilder = new SqliteConnectionStringBuilder(connectionString);
       var dataSourcePath = Path.Combine(environment.ContentRootPath, sonnectionStringBuilder.DataSource);
       var dataSourceDirectory = Path.GetDirectoryName(dataSourcePath);
-      if (!string.IsNullOrEmpty(dataSourceDirectory)&& !Directory.Exists(dataSourceDirectory)) Directory.CreateDirectory(dataSourceDirectory);
+      if (!string.IsNullOrEmpty(dataSourceDirectory) && !Directory.Exists(dataSourceDirectory)) Directory.CreateDirectory(dataSourceDirectory);
       services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(sonnectionStringBuilder.ToString()));
     }
     else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))

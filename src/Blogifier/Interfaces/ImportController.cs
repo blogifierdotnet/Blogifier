@@ -29,7 +29,6 @@ public class ImportController : ControllerBase
   public async Task<IEnumerable<PostEditorDto>> Write([FromBody] ImportDto request)
   {
     var userId = User.FirstUserId();
-    var webRoot = Url.Content("~/");
-    return await _importManager.WriteAsync(request, webRoot, userId);
+    return await _importManager.WriteAsync(request, userId);
   }
 }

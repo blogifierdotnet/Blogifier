@@ -14,21 +14,21 @@ public class ImportManager
   private readonly UserProvider _userProvider;
   private readonly ReverseProvider _reverseProvider;
   private readonly PostProvider _postProvider;
-  private readonly StorageProvider _storageProvider;
+  private readonly StorageManager _storageManager;
 
   public ImportManager(
     UserProvider userProvider,
     ReverseProvider reverseProvider,
     PostProvider postProvider,
-    StorageProvider storageProvider)
+    StorageManager storageManager)
   {
     _userProvider = userProvider;
     _reverseProvider = reverseProvider;
     _postProvider = postProvider;
-    _storageProvider = storageProvider;
+    _storageManager = storageManager;
   }
 
-  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, string webRoot, int userId)
+  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, int userId)
   {
     var user = await _userProvider.FirstByIdAsync(userId);
     var titles = request.Posts.Select(m => m.Title);
@@ -46,15 +46,13 @@ public class ImportManager
       }
 
       var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
+      var baseAddress = new Uri(post.Slug!);
       if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.OrdinalIgnoreCase))
-      {
-        await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, post.Cover, publishedAt);
-      }
+        await _storageManager.UploadAsync(publishedAt, user.Id, baseAddress, post.Cover);
 
-      var importImagesContent = await _storageProvider.UploadImagesFoHtml(webRoot, user.Id, post.Slug!, publishedAt, post.Content);
-      var importFilesContent = await _storageProvider.UploadFilesFoHtml(webRoot, user.Id, post.Slug!, publishedAt, post.Content);
+      var uploadeContent = await _storageManager.UploadsFoHtmlAsync(publishedAt, user.Id, baseAddress, post.Content);
 
-      var markdownContent = _reverseProvider.ToMarkdown(importFilesContent);
+      var markdownContent = _reverseProvider.ToMarkdown(uploadeContent);
       post.Content = markdownContent;
 
       var markdownDescription = _reverseProvider.ToMarkdown(post.Description);

@@ -11,8 +11,7 @@ namespace Blogifier.Newsletters;
 public class NewsletterProvider : AppProvider<Newsletter, int>
 {
   private readonly IMapper _mapper;
-
-  public NewsletterProvider(IMapper mapper, AppDbContext dbContext) : base(dbContext)
+  public NewsletterProvider(AppDbContext dbContext, IMapper mapper) : base(dbContext)
   {
     _mapper = mapper;
   }
@@ -40,8 +39,7 @@ public class NewsletterProvider : AppProvider<Newsletter, int>
       PostId = postId,
       Success = success,
     };
-    _dbContext.Newsletters.Add(entry);
-    await _dbContext.SaveChangesAsync();
+    await AddAsync(entry);
   }
 
   public async Task UpdateAsync(int id, bool success)

@@ -1,12 +1,15 @@
+using System.Collections.Generic;
+
 namespace Blogifier;
 
 public static class BlogifierConstant
 {
+  public const string Key = "Blogifier";
   public const string DefaultTheme = "standard";
   public const string DefaultVersion = "3.0";
   public const int DefaultItemsPerPage = 10;
   public const string OutputCacheExpire1 = "Expire1";
-  public const string StorageObjectUrl = "/storage/object";
+
   public const string PolicyCorsName = "BlogifierPolicy";
   public static readonly string[] SupportedCultures = new[] {
     "zh-CN",
@@ -19,6 +22,13 @@ public static class BlogifierConstant
     "sv-SE",
     "ur-PK"
   };
+
+  public const string StorageLocalRoot = "App_Data/storages";
+  public const string StorageLocalPhysicalRoot = "/data";
+  public const string StorageRowPhysicalRoot = "/row";
+
+  public static readonly List<string> FileExtensions = new()
+  { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
 
   #region NotUse
   public const string DefaultTitle = "Blog Title";

@@ -11,10 +11,7 @@ namespace Blogifier.Newsletters;
 public class SubscriberProvider : AppProvider<Subscriber, int>
 {
   private readonly IMapper _mapper;
-  public SubscriberProvider(
-    IMapper mapper,
-    AppDbContext dbContext)
-    : base(dbContext)
+  public SubscriberProvider(IMapper mapper, AppDbContext dbContext) : base(dbContext)
   {
     _mapper = mapper;
   }
