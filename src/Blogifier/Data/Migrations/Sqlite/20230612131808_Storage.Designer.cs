@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogifier.Data.Migrations.Sqlite
 {
   [DbContext(typeof(SqliteDbContext))]
-  [Migration("20230612130814_Storage")]
+  [Migration("20230612131808_Storage")]
   partial class Storage
   {
     /// <inheritdoc />
@@ -326,7 +326,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("INTEGER");
 
             b.Property<string>("ContentType")
-                      .IsRequired()
                       .HasMaxLength(128)
                       .HasColumnType("TEXT");
 

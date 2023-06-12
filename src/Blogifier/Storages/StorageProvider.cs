@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Minio.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,7 +65,7 @@ public class StorageProvider
     }
     else
     {
-      if (existsing)
+      if (!existsing)
       {
         await _dbContext.Storages
           .Where(m => m.Id == storage.Id)
@@ -83,7 +82,7 @@ public class StorageProvider
     return Task.CompletedTask;
   }
 
-  public async Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, Stream stream)
+  public async Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, Stream stream, string? contentType = null)
   {
     var virtualPath = await _storageLocalProvider.WriteAsync(path, stream);
     var storage = new Storage
@@ -94,6 +93,7 @@ public class StorageProvider
       Name = fileName,
       Path = path,
       Length = stream.Length,
+      ContentType = contentType,
       Type = StorageType.Local,
     };
     _dbContext.Storages.Add(storage);
@@ -130,7 +130,8 @@ public class StorageProvider
     var storage = await GetCheckStoragAsync(path);
     if (storage != null) return storage;
     using var stream = await response.Content.ReadAsStreamAsync();
-    storage = await AddAsync(uploadAt, userid, path, fileName, stream);
+    var contentType = response.Content.Headers.ContentType?.ToString();
+    storage = await AddAsync(uploadAt, userid, path, fileName, stream, contentType);
     return storage;
   }
 
@@ -149,7 +150,7 @@ public class StorageProvider
     if (storage != null) return storage;
 
     var stream = file.OpenReadStream();
-    storage = await AddAsync(uploadAt, userid, path, fileName, stream);
+    storage = await AddAsync(uploadAt, userid, path, fileName, stream, file.ContentType);
     return storage;
   }
 

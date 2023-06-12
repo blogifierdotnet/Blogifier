@@ -323,7 +323,6 @@ namespace Blogifier.Data.Migrations.Sqlite
                       .HasColumnType("INTEGER");
 
             b.Property<string>("ContentType")
-                      .IsRequired()
                       .HasMaxLength(128)
                       .HasColumnType("TEXT");
 
