@@ -23,6 +23,20 @@ public class StorageLocalProvider
     return $"{BlogifierConstant.StorageLocalPhysicalRoot}/{path}";
   }
 
+  public void Delete(string path)
+  {
+    var storagePath = Path.Combine(_pathLocalRoot, path);
+    _logger.LogInformation("file delete: {storagePath}", storagePath);
+    File.Delete(storagePath);
+  }
+
+  public bool Exists(string path)
+  {
+    var storagePath = Path.Combine(_pathLocalRoot, path);
+    _logger.LogInformation("file exists: {storagePath}", storagePath);
+    return File.Exists(storagePath);
+  }
+
   public async Task<string> WriteAsync(string path, Stream stream)
   {
     var storagePath = Path.Combine(_pathLocalRoot, path);
@@ -30,14 +44,9 @@ public class StorageLocalProvider
     if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
     using var fileStream = new FileStream(storagePath, FileMode.CreateNew);
     await stream.CopyToAsync(fileStream);
-    return $"{BlogifierConstant.StorageLocalPhysicalRoot}/{path}";
-  }
-
-  public bool Exists(string path)
-  {
-    var storagePath = Path.Combine(_pathLocalRoot, path);
-    _logger.LogInformation("File exists: {storagePath}", storagePath);
-    return File.Exists(storagePath);
+    var virtualPath = $"{BlogifierConstant.StorageLocalPhysicalRoot}/{path}";
+    _logger.LogInformation("file Write: {storagePath} => {virtualPath}", storagePath, virtualPath);
+    return virtualPath;
   }
 
 }

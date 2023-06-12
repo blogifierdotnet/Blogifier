@@ -24,7 +24,7 @@ public class StorageController : ControllerBase
   [HttpPut("exists")]
   public async Task<ActionResult> ExistsAsync([FromBody] string path)
   {
-    if (await _storageProvider.ExistsAsync(path))
+    if (await _storageProvider.ExistsFileAsync(path))
     {
       return Ok();
     }
@@ -32,11 +32,10 @@ public class StorageController : ControllerBase
   }
 
   [HttpPost("upload")]
-  public async Task<string?> Upload([FromForm] IFormFile file)
+  public async Task<StorageDto?> Upload([FromForm] IFormFile file)
   {
     var userId = User.FirstUserId();
     var currTime = DateTime.UtcNow;
-    var url = await _storageProvider.UploadAsync(currTime, userId, file);
-    return url;
+    return await _storageProvider.UploadAsync(currTime, userId, file);
   }
 }

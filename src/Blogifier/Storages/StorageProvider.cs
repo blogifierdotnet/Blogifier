@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Minio.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,56 +26,90 @@ public class StorageProvider
   private readonly ILogger _logger;
   private readonly IHttpClientFactory _httpClientFactory;
   private readonly BlogifierConfigure _blogifierConfigure;
+  private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
-  private readonly StorageLocalProvider _storageProvider;
+  private readonly StorageLocalProvider _storageLocalProvider;
   private readonly MinioProvider _minioProvider;
 
   public StorageProvider(
     ILogger<StorageProvider> logger,
     IHttpClientFactory httpClientFactory,
     IOptions<BlogifierConfigure> blogifierConfigure,
+    IMapper mapper,
     AppDbContext dbContext,
-    StorageLocalProvider storageProvider,
+    StorageLocalProvider storageLocalProvider,
     MinioProvider minioProvider)
   {
     _logger = logger;
     _httpClientFactory = httpClientFactory;
     _blogifierConfigure = blogifierConfigure.Value;
+    _mapper = mapper;
     _dbContext = dbContext;
     _minioProvider = minioProvider;
-    _storageProvider = storageProvider;
+    _storageLocalProvider = storageLocalProvider;
   }
 
-  public async Task<Storage> UploadAsync(DateTime createdAt, int userid, Uri baseAddress, string url, string? fileName = null)
+
+  public async Task<StorageDto?> GetCheckStoragAsync(string path)
+  {
+    var query = _dbContext.Storages
+      .AsNoTracking()
+      .Where(m => m.Path == path);
+    var storage = await _mapper.ProjectTo<StorageDto>(query).FirstOrDefaultAsync();
+    var existsing = await ExistsFileAsync(path);
+    if (storage == null)
+    {
+      if (existsing)
+      {
+        await DeleteFileAsync(path);
+      }
+    }
+    else
+    {
+      if (existsing)
+      {
+        await _dbContext.Storages
+          .Where(m => m.Id == storage.Id)
+          .ExecuteDeleteAsync();
+        return null;
+      }
+    }
+    return storage;
+  }
+
+  public Task DeleteFileAsync(string path)
+  {
+    _storageLocalProvider.Delete(path);
+    return Task.CompletedTask;
+  }
+
+  public async Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, Stream stream)
+  {
+    var virtualPath = await _storageLocalProvider.WriteAsync(path, stream);
+    var storage = new Storage
+    {
+      UploadAt = uploadAt,
+      UserId = userid,
+      Slug = virtualPath,
+      Name = fileName,
+      Path = path,
+      Length = stream.Length,
+      Type = StorageType.Local,
+    };
+    _dbContext.Storages.Add(storage);
+    await _dbContext.SaveChangesAsync();
+    return _mapper.Map<StorageDto>(storage);
+  }
+
+  public async Task<StorageDto> UploadAsync(DateTime uploadAt, int userid, Uri baseAddress, string url, string? fileName = null)
   {
     using var client = _httpClientFactory.CreateClient();
     client.BaseAddress = baseAddress;
     using var response = await client.GetAsync(url);
     if (!response.IsSuccessStatusCode) throw new HttpRequestException("url not content");
-    using var stream = await response.Content.ReadAsStreamAsync();
 
-    var folder = $"{userid}/{createdAt.Year}{createdAt.Month}";
+    var folder = $"{userid}/{uploadAt.Year}{uploadAt.Month}";
     string? path = null;
-    string? virtualPath;
-    if (fileName != null)
-    {
-      path = $"{folder}/{fileName}";
-      virtualPath = await GetVirtualPathAsync(path);
-      if (virtualPath != null)
-      {
-        return new Storage
-        {
-          CreatedAt = createdAt,
-          UserId = userid,
-          Slug = virtualPath,
-          Name = fileName,
-          Path = path,
-          Length = stream.Length,
-          Type = StorageType.Local,
-        };
-      }
-    }
-
     if (fileName == null)
     {
       fileName = response.Content.Headers.ContentDisposition?.FileNameStar;
@@ -86,66 +122,45 @@ public class StorageProvider
         fileName = GetFileNameByUrl(url);
         path = $"{folder}/{fileName}";
       }
-      virtualPath = await GetVirtualPathAsync(path);
-      if (virtualPath != null)
-      {
-        return new Storage
-        {
-          CreatedAt = createdAt,
-          UserId = userid,
-          Slug = virtualPath,
-          Name = fileName,
-          Path = path,
-          Length = stream.Length,
-          Type = StorageType.Local,
-        };
-      }
     }
-
-    virtualPath = await _storageProvider.WriteAsync(path!, stream);
-    return new Storage
+    else
     {
-      CreatedAt = createdAt,
-      UserId = userid,
-      Slug = virtualPath,
-      Name = fileName,
-      Path = path!,
-      Length = stream.Length,
-      Type = StorageType.Local,
-    }; ;
+      path = $"{folder}/{fileName}";
+    }
+    var storage = await GetCheckStoragAsync(path);
+    if (storage != null) return storage;
+    using var stream = await response.Content.ReadAsStreamAsync();
+    storage = await AddAsync(uploadAt, userid, path, fileName, stream);
+    return storage;
   }
-  public async Task<string> UploadAsync(string path, Stream stream)
-  {
-    var virtualPath = await GetVirtualPathAsync(path);
-    if (virtualPath != null) return virtualPath;
-    virtualPath = await _storageProvider.WriteAsync(path, stream);
-    return virtualPath;
-  }
-  public async Task<string?> UploadAsync(DateTime createdAt, int userid, IFormFile file)
+
+  public async Task<StorageDto?> UploadAsync(DateTime uploadAt, int userid, IFormFile file)
   {
     var fileName = GetFileName(file.FileName);
-
     if (InvalidFileName(fileName))
     {
       _logger.LogError("Invalid file name: {fileName}", fileName);
       return null;
     }
 
-    var folder = $"{userid}/{createdAt.Year}{createdAt.Month}";
+    var folder = $"{userid}/{uploadAt.Year}{uploadAt.Month}";
     var path = Path.Combine(folder, fileName);
+    var storage = await GetCheckStoragAsync(path);
+    if (storage != null) return storage;
+
     var stream = file.OpenReadStream();
-    var virtualPath = await UploadAsync(path, stream);
-    return virtualPath;
+    storage = await AddAsync(uploadAt, userid, path, fileName, stream);
+    return storage;
   }
-  public async Task<string> UploadsFoHtmlAsync(DateTime createdAt, int userid, Uri baseAddress, string content)
+
+  public async Task<string> UploadsFoHtmlAsync(DateTime uploadAt, int userid, Uri baseAddress, string content)
   {
-    var uploadeImageContent = await UploadImagesFoHtml(createdAt, userid, baseAddress, content);
-
-    var uploadeFileContent = await UploadFilesFoHtml(createdAt, userid, baseAddress, uploadeImageContent);
-
+    var uploadeImageContent = await UploadImagesFoHtml(uploadAt, userid, baseAddress, content);
+    var uploadeFileContent = await UploadFilesFoHtml(uploadAt, userid, baseAddress, uploadeImageContent);
     return uploadeFileContent;
   }
-  public async Task<string> UploadImagesFoHtml(DateTime createdAt, int userid, Uri baseAddress, string content)
+
+  public async Task<string> UploadImagesFoHtml(DateTime uploadAt, int userid, Uri baseAddress, string content)
   {
     var matches = StringHelper.MatchesImgTags(content);
     if (matches.Any())
@@ -156,7 +171,7 @@ public class StorageProvider
         var tag = match.Value;
         var matchUrl = StringHelper.MatchImgSrc(tag);
         var urlString = matchUrl.Groups[1].Value;
-        var storage = await UploadAsync(createdAt, userid, baseAddress, urlString);
+        var storage = await UploadAsync(uploadAt, userid, baseAddress, urlString);
         var uploadTag = $"![{storage.Name}]({storage.Slug})";
         contentBuilder.Replace(tag, uploadTag);
       }
@@ -165,7 +180,7 @@ public class StorageProvider
     return content;
   }
 
-  public async Task<string> UploadFilesFoHtml(DateTime createdAt, int userid, Uri baseAddress, string content)
+  public async Task<string> UploadFilesFoHtml(DateTime uploadAt, int userid, Uri baseAddress, string content)
   {
     var matches = StringHelper.MatchesFile(content);
     if (matches.Any())
@@ -177,7 +192,7 @@ public class StorageProvider
         var urlString = XElement.Parse(tag).Attribute("href")!.Value;
         if (InvalidFileName(urlString))
         {
-          var storage = await UploadAsync(createdAt, userid, baseAddress, urlString);
+          var storage = await UploadAsync(uploadAt, userid, baseAddress, urlString);
           var uploadTag = $"![{storage.Name}]({storage.Slug})";
           contentBuilder.Replace(tag, uploadTag);
         }
@@ -185,12 +200,6 @@ public class StorageProvider
       content = contentBuilder.ToString();
     }
     return content;
-  }
-
-  public Task<string?> GetVirtualPathAsync(string path)
-  {
-    var virtualPath = _storageProvider.GetVirtualPath(path);
-    return Task.FromResult(virtualPath);
   }
 
   /// <summary>
@@ -208,9 +217,9 @@ public class StorageProvider
     return storage;
   }
 
-  public Task<bool> ExistsAsync(string path)
+  public Task<bool> ExistsFileAsync(string path)
   {
-    var existsing = _storageProvider.Exists(path);
+    var existsing = _storageLocalProvider.Exists(path);
     return Task.FromResult(existsing);
   }
 

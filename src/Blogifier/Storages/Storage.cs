@@ -12,11 +12,10 @@ public class Storage
   public int UserId { get; set; }
   public UserInfo User { get; set; } = default!;
   public DateTime CreatedAt { get; set; }
-  public bool IsDeleted { get; set; }
-  public DateTime? DeletedAt { get; set; }
+  public DateTime UploadAt { get; set; }
   [StringLength(2048)]
   public string Slug { get; set; } = default!;
-  [StringLength(256)]
+  [StringLength(1024)]
   public string Name { get; set; } = default!;
   [StringLength(2048)]
   public string Path { get; set; } = default!;
