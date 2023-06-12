@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
   .AddIdentityCookies();
 builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<MinioProvider>();
+builder.Services.AddSingleton<StorageMinioProvider>();
 
 builder.Services.AddScoped<MarkdigProvider>();
 builder.Services.AddScoped<ReverseProvider>();

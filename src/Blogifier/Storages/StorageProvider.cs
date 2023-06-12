@@ -28,7 +28,7 @@ public class StorageProvider
   private readonly IMapper _mapper;
   private readonly AppDbContext _dbContext;
   private readonly StorageLocalProvider _storageLocalProvider;
-  private readonly MinioProvider _minioProvider;
+  private readonly StorageMinioProvider _minioProvider;
 
   public StorageProvider(
     ILogger<StorageProvider> logger,
@@ -37,7 +37,7 @@ public class StorageProvider
     IMapper mapper,
     AppDbContext dbContext,
     StorageLocalProvider storageLocalProvider,
-    MinioProvider minioProvider)
+    StorageMinioProvider minioProvider)
   {
     _logger = logger;
     _httpClientFactory = httpClientFactory;

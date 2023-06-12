@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Storages;
 
-public class MinioProvider : IDisposable
+public class StorageMinioProvider : IDisposable
 {
   private readonly ILogger _logger;
   private readonly string _bucketName = default!;
   private readonly MinioClient _minioClient = default!;
 
-  public MinioProvider(ILogger<MinioProvider> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+  public StorageMinioProvider(ILogger<StorageMinioProvider> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
   {
     _logger = logger;
     var section = configuration.GetSection("Blogifier:Minio");
@@ -43,7 +43,7 @@ public class MinioProvider : IDisposable
 
   private bool _disposedValue;
 
-  ~MinioProvider() => Dispose(false);
+  ~StorageMinioProvider() => Dispose(false);
 
   // Public implementation of Dispose pattern callable by consumers.
   public void Dispose()
