@@ -3,9 +3,8 @@ using Blogifier.Extensions;
 using Blogifier.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,39 +21,149 @@ namespace Blogifier.Storages;
 public class StorageProvider
 {
   private readonly ILogger _logger;
-  private readonly string _pathLocalRoot;
-  private readonly AppDbContext _dbContext;
   private readonly IHttpClientFactory _httpClientFactory;
+  private readonly BlogifierConfigure _blogifierConfigure;
+  private readonly AppDbContext _dbContext;
+  private readonly StorageLocalProvider _storageProvider;
   private readonly MinioProvider _minioProvider;
-
-  private readonly string _slash = Path.DirectorySeparatorChar.ToString();
-  private readonly IConfiguration _configuration;
 
   public StorageProvider(
     ILogger<StorageProvider> logger,
-    IHostEnvironment hostEnvironment,
-    AppDbContext dbContext,
     IHttpClientFactory httpClientFactory,
-    MinioProvider minioProvider,
-    IConfiguration configuration)
+    IOptions<BlogifierConfigure> blogifierConfigure,
+    AppDbContext dbContext,
+    StorageLocalProvider storageProvider,
+    MinioProvider minioProvider)
   {
     _logger = logger;
-    _pathLocalRoot = Path.Combine(hostEnvironment.ContentRootPath, BlogifierConstant.FileProviderRoot);
-    _dbContext = dbContext;
     _httpClientFactory = httpClientFactory;
+    _blogifierConfigure = blogifierConfigure.Value;
+    _dbContext = dbContext;
     _minioProvider = minioProvider;
-    _configuration = configuration;
-
+    _storageProvider = storageProvider;
   }
 
-  public string GetVirtualPath(string path)
+  public async Task<string> UploadAsync(string folder, Uri baseAddress, string url, string? fileName = null)
   {
-    throw new NotImplementedException();
+    string? path = null;
+    string? virtualPath;
+    if (fileName != null)
+    {
+      path = $"{folder}/{fileName}";
+      virtualPath = await GetVirtualPathAsync(path);
+      if (virtualPath != null) return virtualPath;
+    }
+
+    var client = _httpClientFactory.CreateClient();
+    client.BaseAddress = baseAddress;
+    var response = await client.GetAsync(url);
+    if (!response.IsSuccessStatusCode) throw new HttpRequestException("url not content");
+    var stream = await response.Content.ReadAsStreamAsync();
+
+    if (fileName == null)
+    {
+      fileName = response.Content.Headers.ContentDisposition?.FileNameStar;
+      if (!string.IsNullOrEmpty(fileName))
+      {
+        path = $"{folder}/{fileName}";
+        virtualPath = await GetVirtualPathAsync(path);
+        if (virtualPath != null) return virtualPath;
+      }
+      else
+      {
+        fileName = Guid.NewGuid().ToString();
+        path = $"{folder}/{fileName}";
+      }
+    }
+
+    if (path == null) throw new NullReferenceException(path);
+
+    virtualPath = await _storageProvider.WriteAsync(path, stream);
+    return virtualPath;
+  }
+  public async Task<string> UploadAsync(string path, Stream stream)
+  {
+    var virtualPath = await GetVirtualPathAsync(path);
+    if (virtualPath != null) return virtualPath;
+    virtualPath = await _storageProvider.WriteAsync(path, stream);
+    return virtualPath;
+  }
+  public Task<string> UploadAsync(DateTime createdAt, int userid, Uri baseAddress, string url, string? fileName = null)
+  {
+    var path = $"{userid}/{createdAt.Year}{createdAt.Month}";
+    return UploadAsync(path, baseAddress, url, fileName);
+  }
+  public async Task<string?> UploadAsync(DateTime createdAt, int userid, IFormFile file)
+  {
+    var fileName = GetFileName(file.FileName);
+
+    if (InvalidFileName(fileName))
+    {
+      _logger.LogError("Invalid file name: {fileName}", fileName);
+      return null;
+    }
+
+    var folder = $"{userid}/{createdAt.Year}{createdAt.Month}";
+    var path = Path.Combine(folder, fileName);
+    var stream = file.OpenReadStream();
+    var virtualPath = await UploadAsync(path, stream);
+    return virtualPath;
+  }
+  public async Task<string> UploadsFoHtmlAsync(DateTime createdAt, int userid, Uri baseAddress, string content)
+  {
+    var uploadeImageContent = await UploadImagesFoHtml(createdAt, userid, baseAddress, content);
+
+    var uploadeFileContent = await UploadFilesFoHtml(createdAt, userid, baseAddress, uploadeImageContent);
+
+    return uploadeFileContent;
+  }
+  public async Task<string> UploadImagesFoHtml(DateTime createdAt, int userid, Uri baseAddress, string content)
+  {
+    var matches = StringHelper.MatchesImgTags(content);
+    if (matches.Any())
+    {
+      var contentBuilder = new StringBuilder(content);
+      foreach (Match match in matches.Cast<Match>())
+      {
+        var tag = match.Value;
+        var matchUrl = StringHelper.MatchImgSrc(tag);
+        var urlString = matchUrl.Groups[1].Value;
+        var uploadTag = await UploadAsync(createdAt, userid, baseAddress, urlString);
+        contentBuilder.Replace(tag, uploadTag);
+      }
+      content = contentBuilder.ToString();
+    }
+    return content;
   }
 
-  public string Write(string path, Stream stream)
+  private static readonly string[] _arrayfileExts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
+  public async Task<string> UploadFilesFoHtml(DateTime createdAt, int userid, Uri baseAddress, string content)
   {
-    throw new NotImplementedException();
+    var matches = StringHelper.MatchesFile(content);
+    if (matches.Any())
+    {
+      var contentBuilder = new StringBuilder(content);
+      foreach (Match match in matches.Cast<Match>())
+      {
+        var tag = match.Value;
+        var urlString = XElement.Parse(tag).Attribute("href")!.Value;
+        if (_arrayfileExts.Any(m => urlString.ToLower().EndsWith($".{m}")))
+        {
+          var uploadTag = await UploadAsync(createdAt, userid, baseAddress, urlString);
+          contentBuilder.Replace(tag, uploadTag);
+        }
+
+
+      }
+      content = contentBuilder.ToString();
+    }
+    return content;
+  }
+
+  public Task<string?> GetVirtualPathAsync(string path)
+  {
+    var virtualPath = _storageProvider.GetVirtualPath(path);
+    return Task.FromResult(virtualPath);
   }
 
   /// <summary>
@@ -72,187 +181,30 @@ public class StorageProvider
     return storage;
   }
 
-  public bool FileExistsAsync(string path)
+  public Task<bool> ExistsAsync(string path)
   {
-    var absolutePath = Path.Combine(ContentRoot, path);
-    _logger.LogInformation("File exists: {absolutePath}", absolutePath);
-    return File.Exists(absolutePath);
+    var existsing = _storageProvider.Exists(path);
+    return Task.FromResult(existsing);
   }
 
-  public async Task<bool> UploadFormFileAsync(IFormFile file, string path = "")
+  private bool InvalidFileName(string fileName)
   {
-    path = path.Replace("/", _slash);
-    VerifyPath(_pathLocalRoot, path);
-
-    var fileName = GetFileName(file.FileName);
-
-    if (InvalidFileName(fileName))
-    {
-      _logger.LogError("Invalid file name: {fileName}", fileName);
-      return false;
-    }
-
-    var filePath = string.IsNullOrEmpty(path) ?
-         Path.Combine(_pathLocalRoot, fileName) :
-         Path.Combine(_pathLocalRoot, path + _slash + fileName);
-
-    _logger.LogInformation("Storage root: {_publicStorageRoot}", _pathLocalRoot);
-    _logger.LogInformation("Uploading file: {filePath}", filePath);
-    try
-    {
-      using var fileStream = new FileStream(filePath, FileMode.Create);
-      await file.CopyToAsync(fileStream);
-      _logger.LogInformation("Uploaded file: {filePath}", filePath);
-    }
-    catch (Exception ex)
-    {
-      _logger.LogInformation("Error uploading file: {Message}", ex.Message);
-    }
-
-    return true;
+    var fileExtensions = BlogifierConstant.FileExtensions;
+    var configFileExtensions = _blogifierConfigure.FileExtensions;
+    if (!string.IsNullOrEmpty(configFileExtensions))
+      fileExtensions = new List<string>(configFileExtensions.Split(','));
+    return fileExtensions.Any(fileName.EndsWith);
   }
 
-  public async Task<string> UploadFromWeb(string root, int userid, string baseUrl, string requestUri, DateTime createdAt)
-  {
-    var path = $"{userid}/{createdAt.Year}/{createdAt.Month}";
-    var slash = Path.DirectorySeparatorChar.ToString();
-    path = path.Replace("/", slash);
-    VerifyPath(_pathLocalRoot, path);
-    var fileName = TitleFromUri(requestUri);
-    var filePath = Path.Combine(_pathLocalRoot, path + _slash + fileName);
-    if (!File.Exists(filePath))
-    {
-      var client = _httpClientFactory.CreateClient();
-      client.BaseAddress = new Uri(baseUrl);
-      var response = await client.GetAsync(requestUri);
-      using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-      await response.Content.CopyToAsync(fileStream);
-    }
-    return $"![{fileName}]({root}{PathToUrl(filePath)})";
-  }
-
-  public async Task<string> UploadImagesFoHtml(string webRoot, int userid, string baseUrl, DateTime createdAt, string input)
-  {
-    var matches = StringHelper.MatchesImgTags(input);
-    if (matches.Any())
-    {
-      var contentBuilder = new StringBuilder(input);
-      foreach (Match match in matches.Cast<Match>())
-      {
-        var tag = match.Value;
-        var matchUrl = StringHelper.MatchImgSrc(tag);
-        var urlString = matchUrl.Groups[1].Value;
-        var uploadTag = await UploadFromWeb(webRoot, userid, baseUrl, urlString, createdAt);
-        contentBuilder.Replace(tag, uploadTag);
-      }
-      input = contentBuilder.ToString();
-    }
-    return input;
-  }
-
-  private static readonly string[] _arrayfileExts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
-  public async Task<string> UploadFilesFoHtml(string webRoot, int userid, string baseUrl, DateTime createdAt, string input)
-  {
-    var matches = StringHelper.MatchesFile(input);
-    if (matches.Any())
-    {
-      var contentBuilder = new StringBuilder(input);
-      foreach (Match match in matches.Cast<Match>())
-      {
-        var tag = match.Value;
-        var urlString = XElement.Parse(tag).Attribute("href")!.Value;
-        if (_arrayfileExts.Any(m => urlString.ToLower().EndsWith($".{m}")))
-        {
-          var uploadTag = await UploadFromWeb(webRoot, userid, baseUrl, urlString, createdAt);
-          contentBuilder.Replace(tag, uploadTag);
-        }
-
-
-      }
-      input = contentBuilder.ToString();
-    }
-    return input;
-  }
-
-  public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")
-  {
-    path = path.Replace("/", _slash);
-    var fileName = "";
-
-    VerifyPath(_pathLocalRoot, path);
-    string imgSrc = GetImgSrcValue(baseImg);
-
-    var rnd = new Random();
-    if (imgSrc.StartsWith("data:image/png;base64,"))
-    {
-      fileName = string.Format("{0}.png", rnd.Next(1000, 9999));
-      imgSrc = imgSrc.Replace("data:image/png;base64,", "");
-    }
-    if (imgSrc.StartsWith("data:image/jpeg;base64,"))
-    {
-      fileName = string.Format("{0}.jpeg", rnd.Next(1000, 9999));
-      imgSrc = imgSrc.Replace("data:image/jpeg;base64,", "");
-    }
-    if (imgSrc.StartsWith("data:image/gif;base64,"))
-    {
-      fileName = string.Format("{0}.gif", rnd.Next(1000, 9999));
-      imgSrc = imgSrc.Replace("data:image/gif;base64,", "");
-    }
-
-    var filePath = string.IsNullOrEmpty(path) ?
-         Path.Combine(_pathLocalRoot, fileName) :
-         Path.Combine(_pathLocalRoot, path + _slash + fileName);
-
-    await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
-
-    return $"![{fileName}]({root}{PathToUrl(filePath)})";
-  }
-
-  #region Private members
-
-  private string ContentRoot
-  {
-    get
-    {
-      string path = Directory.GetCurrentDirectory();
-      string testsDirectory = $"tests{_slash}Blogifier.Tests";
-      string appDirectory = $"src{_slash}Blogifier";
-
-      _logger.LogInformation("Current directory path: {path}", path);
-
-      // development unit test run
-      if (path.LastIndexOf(testsDirectory) > 0)
-      {
-        path = path[..path.LastIndexOf(testsDirectory)];
-        var rootPath = $"{path}src{_slash}Blogifier";
-        _logger.LogInformation("Unit test path: {rootPath}", rootPath);
-        return rootPath;
-      }
-
-      // this needed to make sure we have correct data directory
-      // when running in debug mode in Visual Studio
-      // so instead of debug (src/Blogifier/bin/Debug..)
-      // will be used src/Blogifier/wwwroot/data
-      // !! this can mess up installs that have "src/Blogifier" in the path !!
-      if (path.LastIndexOf(appDirectory) > 0)
-      {
-        path = path[..path.LastIndexOf(appDirectory)];
-        var rootPath = $"{path}src{_slash}Blogifier";
-        _logger.LogInformation("Development debug path: {rootPath}", rootPath);
-        return rootPath;
-      }
-      _logger.LogInformation($"Final path: {path}");
-      return path;
-    }
-  }
-  string GetFileName(string fileName)
+  private static string GetFileName(string fileName)
   {
     // some browsers pass uploaded file name as short file name
     // and others include the path; remove path part if needed
-    if (fileName.Contains(_slash))
+    const string slash = "/";
+    if (fileName.Contains(slash))
     {
-      fileName = fileName.Substring(fileName.LastIndexOf(_slash));
-      fileName = fileName.Replace(_slash, "");
+      fileName = fileName.Substring(fileName.LastIndexOf(slash));
+      fileName = fileName.Replace(slash, "");
     }
     // when drag-and-drop or copy image to TinyMce editor
     // it uses "mceclip0" as file name; randomize it for multiple uploads
@@ -263,97 +215,111 @@ public class StorageProvider
     }
     return fileName.SanitizePath();
   }
-  static void VerifyPath(string basePath, string path)
-  {
-    path = path.SanitizePath();
-
-    if (!string.IsNullOrEmpty(path))
-    {
-      var dir = Path.Combine(basePath, path);
-
-      if (!Directory.Exists(dir))
-      {
-        Directory.CreateDirectory(dir);
-      }
-    }
-  }
-  static string TitleFromUri(string uri)
-  {
-    var title = uri.ToLower();
-    title = title.Replace("%2f", "/");
-
-    if (title.EndsWith(".axdx"))
-    {
-      title = title.Replace(".axdx", "");
-    }
-    if (title.Contains("image.axd?picture="))
-    {
-      title = title[(title.IndexOf("image.axd?picture=") + 18)..];
-    }
-    if (title.Contains("file.axd?file="))
-    {
-      title = title[(title.IndexOf("file.axd?file=") + 14)..];
-    }
-    if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
-    {
-      var rnd = new Random();
-      title = string.Format("{0}.png", rnd.Next(1000, 9999));
-    }
-    if (title.Contains('/'))
-    {
-      title = title[title.LastIndexOf("/")..];
-    }
-    title = title.Replace(" ", "-");
-    return title.Replace("/", "").SanitizeFileName();
-  }
-  string PathToUrl(string path)
-  {
-    string url = path.ReplaceIgnoreCase(_pathLocalRoot, "").Replace(_slash, "/");
-    return $"data/{url}";
-  }
-  static string GetImgSrcValue(string imgTag)
-  {
-    if (!(imgTag.Contains("data:image") && imgTag.Contains("src=")))
-      return imgTag;
-
-    int start = imgTag.IndexOf("src=");
-    int srcStart = imgTag.IndexOf("\"", start) + 1;
-
-    if (srcStart < 2)
-      return imgTag;
-
-    int srcEnd = imgTag.IndexOf("\"", srcStart);
-
-    if (srcEnd < 1 || srcEnd <= srcStart)
-      return imgTag;
-
-    return imgTag.Substring(srcStart, srcEnd - srcStart);
-  }
-  bool InvalidFileName(string fileName)
-  {
-    List<string> fileExtensions = new List<string>() { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
-    var configFileExtensions = _configuration.GetSection("Blogifier").GetValue<string>("FileExtensions");
-
-    if (!string.IsNullOrEmpty(configFileExtensions))
-    {
-      fileExtensions = new List<string>(configFileExtensions.Split(','));
-    }
-
-    foreach (string ext in fileExtensions)
-    {
-      if (fileName.EndsWith(ext))
-      {
-        return false;
-      }
-    }
-
-    return true;
-  }
 
 
+  #region no use code
 
+  //public async Task<string> UploadBase64Image(string baseImg, string root, string path = "")
+  //{
+  //  path = path.Replace("/", _slash);
+  //  var fileName = "";
+
+  //  VerifyPath(_pathLocalRoot, path);
+  //  string imgSrc = GetImgSrcValue(baseImg);
+
+  //  var rnd = new Random();
+  //  if (imgSrc.StartsWith("data:image/png;base64,"))
+  //  {
+  //    fileName = string.Format("{0}.png", rnd.Next(1000, 9999));
+  //    imgSrc = imgSrc.Replace("data:image/png;base64,", "");
+  //  }
+  //  if (imgSrc.StartsWith("data:image/jpeg;base64,"))
+  //  {
+  //    fileName = string.Format("{0}.jpeg", rnd.Next(1000, 9999));
+  //    imgSrc = imgSrc.Replace("data:image/jpeg;base64,", "");
+  //  }
+  //  if (imgSrc.StartsWith("data:image/gif;base64,"))
+  //  {
+  //    fileName = string.Format("{0}.gif", rnd.Next(1000, 9999));
+  //    imgSrc = imgSrc.Replace("data:image/gif;base64,", "");
+  //  }
+
+  //  var filePath = string.IsNullOrEmpty(path) ?
+  //       Path.Combine(_pathLocalRoot, fileName) :
+  //       Path.Combine(_pathLocalRoot, path + _slash + fileName);
+
+  //  await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
+
+  //  return $"![{fileName}]({root}{PathToUrl(filePath)})";
+  //}
+
+  //static void VerifyPath(string basePath, string path)
+  //{
+  //  path = path.SanitizePath();
+
+  //  if (!string.IsNullOrEmpty(path))
+  //  {
+  //    var dir = Path.Combine(basePath, path);
+
+  //    if (!Directory.Exists(dir))
+  //    {
+  //      Directory.CreateDirectory(dir);
+  //    }
+  //  }
+  //}
+  //static string TitleFromUri(string uri)
+  //{
+  //  var title = uri.ToLower();
+  //  title = title.Replace("%2f", "/");
+
+  //  if (title.EndsWith(".axdx"))
+  //  {
+  //    title = title.Replace(".axdx", "");
+  //  }
+  //  if (title.Contains("image.axd?picture="))
+  //  {
+  //    title = title[(title.IndexOf("image.axd?picture=") + 18)..];
+  //  }
+  //  if (title.Contains("file.axd?file="))
+  //  {
+  //    title = title[(title.IndexOf("file.axd?file=") + 14)..];
+  //  }
+  //  if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
+  //  {
+  //    var rnd = new Random();
+  //    title = string.Format("{0}.png", rnd.Next(1000, 9999));
+  //  }
+  //  if (title.Contains('/'))
+  //  {
+  //    title = title[title.LastIndexOf("/")..];
+  //  }
+  //  title = title.Replace(" ", "-");
+  //  return title.Replace("/", "").SanitizeFileName();
+  //}
+  //string PathToUrl(string path)
+  //{
+  //  string url = path.ReplaceIgnoreCase(_pathLocalRoot, "").Replace(_slash, "/");
+  //  return $"data/{url}";
+  //}
+  //static string GetImgSrcValue(string imgTag)
+  //{
+  //  if (!(imgTag.Contains("data:image") && imgTag.Contains("src=")))
+  //    return imgTag;
+
+  //  int start = imgTag.IndexOf("src=");
+  //  int srcStart = imgTag.IndexOf("\"", start) + 1;
+
+  //  if (srcStart < 2)
+  //    return imgTag;
+
+  //  int srcEnd = imgTag.IndexOf("\"", srcStart);
+
+  //  if (srcEnd < 1 || srcEnd <= srcStart)
+  //    return imgTag;
+
+  //  return imgTag.Substring(srcStart, srcEnd - srcStart);
+  //}
   #endregion
-
 
   #region theme no use code
 

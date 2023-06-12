@@ -8,12 +8,12 @@ namespace Blogifier.Controllers;
 
 public class StorageController : ControllerBase
 {
-  private readonly StorageProvider _storageManager;
+  private readonly StorageProvider _storageProvider;
 
   public StorageController(
-    StorageProvider storageManager)
+    StorageProvider storageProvider)
   {
-    _storageManager = storageManager;
+    _storageProvider = storageProvider;
   }
 
   [HttpGet($"{BlogifierConstant.StorageObjectUrl}/{{**storageUrl}}")]
@@ -22,7 +22,7 @@ public class StorageController : ControllerBase
   public async Task<IActionResult> ObjectAsync([FromRoute] string storageUrl)
   {
     var memoryStream = new MemoryStream();
-    var storage = await _storageManager.GetAsync(storageUrl,
+    var storage = await _storageProvider.GetAsync(storageUrl,
       (stream, cancellationToken) => stream.CopyToAsync(memoryStream, cancellationToken));
     if (storage == null) return NotFound();
     memoryStream.Position = 0;
