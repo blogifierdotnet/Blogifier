@@ -38,7 +38,7 @@ public class MainMamager
   {
     var blog = await _blogManager.GetAsync();
     var main = _mapper.Map<MainDto>(blog);
-    main.Categories = await GetCategoryItemesCacheAsync();
+    main.Categories = await GetCategoryItemesAsync();
     var httpContext = _httpContextAccessor.HttpContext;
     if (httpContext != null)
     {
@@ -61,11 +61,16 @@ public class MainMamager
     }
     else
     {
-      var data = await _categoryProvider.GetItemsExistPostAsync();
+      var data = await GetCategoryItemesAsync();
       var value = JsonSerializer.Serialize(data);
       var bytes = Encoding.UTF8.GetBytes(value);
       await _distributedCache.SetAsync(key, bytes, new() { SlidingExpiration = TimeSpan.FromMinutes(15) });
       return data;
     }
+  }
+
+  public async Task<List<CategoryItemDto>> GetCategoryItemesAsync()
+  {
+    return await _categoryProvider.GetItemsExistPostAsync();
   }
 }

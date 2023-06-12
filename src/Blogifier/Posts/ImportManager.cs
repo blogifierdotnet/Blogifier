@@ -28,7 +28,7 @@ public class ImportManager
     _storageProvider = storageProvider;
   }
 
-  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, string webRoot, int userId)
+  public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, int userId)
   {
     var user = await _userProvider.FirstByIdAsync(userId);
     var titles = request.Posts.Select(m => m.Title);
@@ -48,7 +48,7 @@ public class ImportManager
       var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
       if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.OrdinalIgnoreCase))
       {
-        await _storageProvider.UploadFromWeb(webRoot, user.Id, post.Slug!, post.Cover, publishedAt);
+        await _storageProvider.UploadFromWeb(user.Id, post.Slug!, post.Cover, publishedAt);
       }
 
       var importImagesContent = await _storageProvider.UploadImagesFoHtml(webRoot, user.Id, post.Slug!, publishedAt, post.Content);

@@ -1,10 +1,10 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
-using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,26 +22,39 @@ namespace Blogifier.Storages;
 public class StorageProvider
 {
   private readonly ILogger _logger;
+  private readonly string _pathLocalRoot;
   private readonly AppDbContext _dbContext;
   private readonly IHttpClientFactory _httpClientFactory;
   private readonly MinioProvider _minioProvider;
-  private readonly string _publicStorageRoot;
+
   private readonly string _slash = Path.DirectorySeparatorChar.ToString();
   private readonly IConfiguration _configuration;
 
   public StorageProvider(
     ILogger<StorageProvider> logger,
+    IHostEnvironment hostEnvironment,
     AppDbContext dbContext,
     IHttpClientFactory httpClientFactory,
     MinioProvider minioProvider,
     IConfiguration configuration)
   {
     _logger = logger;
+    _pathLocalRoot = Path.Combine(hostEnvironment.ContentRootPath, BlogifierConstant.FileProviderRoot);
     _dbContext = dbContext;
     _httpClientFactory = httpClientFactory;
     _minioProvider = minioProvider;
     _configuration = configuration;
-    _publicStorageRoot = Path.Combine(ContentRoot, "App_Data", "public");
+
+  }
+
+  public string GetVirtualPath(string path)
+  {
+    throw new NotImplementedException();
+  }
+
+  public string Write(string path, Stream stream)
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -67,65 +79,10 @@ public class StorageProvider
     return File.Exists(absolutePath);
   }
 
-  public async Task<IList<string>> GetThemesAsync()
-  {
-    var themes = new List<string>();
-    var themesDirectory = Path.Combine(ContentRoot, $"Views{_slash}Themes");
-    foreach (string dir in Directory.GetDirectories(themesDirectory))
-    {
-      themes.Add(Path.GetFileName(dir));
-    }
-    return await Task.FromResult(themes);
-  }
-
-  public async Task<ThemeSettings?> GetThemeSettingsAsync(string theme)
-  {
-    var settings = new ThemeSettings();
-    var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
-    if (File.Exists(fileName))
-    {
-      try
-      {
-        string jsonString = File.ReadAllText(fileName);
-        settings = JsonSerializer.Deserialize<ThemeSettings>(jsonString);
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError("Error reading theme settings: {Message}", ex.Message);
-        return null;
-      }
-    }
-
-    return await Task.FromResult(settings);
-  }
-
-  public async Task<bool> SaveThemeSettingsAsync(string theme, ThemeSettings settings)
-  {
-    var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
-    try
-    {
-      if (File.Exists(fileName))
-        File.Delete(fileName);
-
-      var options = new JsonSerializerOptions { WriteIndented = true, PropertyNameCaseInsensitive = true };
-
-      string jsonString = JsonSerializer.Serialize(settings, options);
-
-      using FileStream createStream = File.Create(fileName);
-      await JsonSerializer.SerializeAsync(createStream, settings, options);
-    }
-    catch (Exception ex)
-    {
-      _logger.LogError("Error writing theme settings: {Message}", ex.Message);
-      return false;
-    }
-    return true;
-  }
-
   public async Task<bool> UploadFormFileAsync(IFormFile file, string path = "")
   {
     path = path.Replace("/", _slash);
-    VerifyPath(_publicStorageRoot, path);
+    VerifyPath(_pathLocalRoot, path);
 
     var fileName = GetFileName(file.FileName);
 
@@ -136,10 +93,10 @@ public class StorageProvider
     }
 
     var filePath = string.IsNullOrEmpty(path) ?
-         Path.Combine(_publicStorageRoot, fileName) :
-         Path.Combine(_publicStorageRoot, path + _slash + fileName);
+         Path.Combine(_pathLocalRoot, fileName) :
+         Path.Combine(_pathLocalRoot, path + _slash + fileName);
 
-    _logger.LogInformation("Storage root: {_publicStorageRoot}", _publicStorageRoot);
+    _logger.LogInformation("Storage root: {_publicStorageRoot}", _pathLocalRoot);
     _logger.LogInformation("Uploading file: {filePath}", filePath);
     try
     {
@@ -160,9 +117,9 @@ public class StorageProvider
     var path = $"{userid}/{createdAt.Year}/{createdAt.Month}";
     var slash = Path.DirectorySeparatorChar.ToString();
     path = path.Replace("/", slash);
-    VerifyPath(_publicStorageRoot, path);
+    VerifyPath(_pathLocalRoot, path);
     var fileName = TitleFromUri(requestUri);
-    var filePath = Path.Combine(_publicStorageRoot, path + _slash + fileName);
+    var filePath = Path.Combine(_pathLocalRoot, path + _slash + fileName);
     if (!File.Exists(filePath))
     {
       var client = _httpClientFactory.CreateClient();
@@ -222,7 +179,7 @@ public class StorageProvider
     path = path.Replace("/", _slash);
     var fileName = "";
 
-    VerifyPath(_publicStorageRoot, path);
+    VerifyPath(_pathLocalRoot, path);
     string imgSrc = GetImgSrcValue(baseImg);
 
     var rnd = new Random();
@@ -243,8 +200,8 @@ public class StorageProvider
     }
 
     var filePath = string.IsNullOrEmpty(path) ?
-         Path.Combine(_publicStorageRoot, fileName) :
-         Path.Combine(_publicStorageRoot, path + _slash + fileName);
+         Path.Combine(_pathLocalRoot, fileName) :
+         Path.Combine(_pathLocalRoot, path + _slash + fileName);
 
     await File.WriteAllBytesAsync(filePath, Convert.FromBase64String(imgSrc));
 
@@ -351,7 +308,7 @@ public class StorageProvider
   }
   string PathToUrl(string path)
   {
-    string url = path.ReplaceIgnoreCase(_publicStorageRoot, "").Replace(_slash, "/");
+    string url = path.ReplaceIgnoreCase(_pathLocalRoot, "").Replace(_slash, "/");
     return $"data/{url}";
   }
   static string GetImgSrcValue(string imgTag)
@@ -393,5 +350,66 @@ public class StorageProvider
     return true;
   }
 
+
+
+  #endregion
+
+
+  #region theme no use code
+
+  //public async Task<IList<string>> GetThemesAsync()
+  //{
+  //  var themes = new List<string>();
+  //  var themesDirectory = Path.Combine(ContentRoot, $"Views{_slash}Themes");
+  //  foreach (string dir in Directory.GetDirectories(themesDirectory))
+  //  {
+  //    themes.Add(Path.GetFileName(dir));
+  //  }
+  //  return await Task.FromResult(themes);
+  //}
+
+  //public async Task<ThemeSettings?> GetThemeSettingsAsync(string theme)
+  //{
+  //  var settings = new ThemeSettings();
+  //  var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
+  //  if (File.Exists(fileName))
+  //  {
+  //    try
+  //    {
+  //      string jsonString = File.ReadAllText(fileName);
+  //      settings = JsonSerializer.Deserialize<ThemeSettings>(jsonString);
+  //    }
+  //    catch (Exception ex)
+  //    {
+  //      _logger.LogError("Error reading theme settings: {Message}", ex.Message);
+  //      return null;
+  //    }
+  //  }
+
+  //  return await Task.FromResult(settings);
+  //}
+
+  //public async Task<bool> SaveThemeSettingsAsync(string theme, ThemeSettings settings)
+  //{
+  //  var fileName = Path.Combine(ContentRoot, $"wwwroot{_slash}themes{_slash}{theme.ToLower()}{_slash}settings.json");
+  //  try
+  //  {
+  //    if (File.Exists(fileName))
+  //      File.Delete(fileName);
+
+  //    var options = new JsonSerializerOptions { WriteIndented = true, PropertyNameCaseInsensitive = true };
+
+  //    string jsonString = JsonSerializer.Serialize(settings, options);
+
+  //    using FileStream createStream = File.Create(fileName);
+  //    await JsonSerializer.SerializeAsync(createStream, settings, options);
+  //  }
+  //  catch (Exception ex)
+  //  {
+  //    _logger.LogError("Error writing theme settings: {Message}", ex.Message);
+  //    return false;
+  //  }
+  //  return true;
+  //}
   #endregion
 }

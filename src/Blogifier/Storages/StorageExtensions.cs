@@ -8,12 +8,12 @@ public static class StorageExtensions
 {
   public static WebApplication UseStorageStaticFiles(this WebApplication app)
   {
-    var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, "App_Data/public");
+    var fileProviderRoot = Path.Combine(app.Environment.ContentRootPath, BlogifierConstant.FileProviderRoot);
     if (!Directory.Exists(fileProviderRoot)) Directory.CreateDirectory(fileProviderRoot);
     app.UseStaticFiles(new StaticFileOptions
     {
       FileProvider = new PhysicalFileProvider(fileProviderRoot),
-      RequestPath = "/data"
+      RequestPath = BlogifierConstant.FileProviderPhysicalRoot,
     });
     return app;
   }

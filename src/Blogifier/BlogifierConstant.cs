@@ -20,6 +20,9 @@ public static class BlogifierConstant
     "ur-PK"
   };
 
+  public const string FileProviderRoot = "App_Data/data";
+  public const string FileProviderPhysicalRoot = "/data";
+
   #region NotUse
   public const string DefaultTitle = "Blog Title";
   public const string DefaultDescription = "Short Blog Description";
