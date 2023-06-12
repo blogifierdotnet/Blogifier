@@ -1,6 +1,7 @@
 using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
+using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -43,22 +44,35 @@ public class StorageProvider
     _storageProvider = storageProvider;
   }
 
-  public async Task<string> UploadAsync(string folder, Uri baseAddress, string url, string? fileName = null)
+  public async Task<Storage> UploadAsync(DateTime createdAt, int userid, Uri baseAddress, string url, string? fileName = null)
   {
+    using var client = _httpClientFactory.CreateClient();
+    client.BaseAddress = baseAddress;
+    using var response = await client.GetAsync(url);
+    if (!response.IsSuccessStatusCode) throw new HttpRequestException("url not content");
+    using var stream = await response.Content.ReadAsStreamAsync();
+
+    var folder = $"{userid}/{createdAt.Year}{createdAt.Month}";
     string? path = null;
     string? virtualPath;
     if (fileName != null)
     {
       path = $"{folder}/{fileName}";
       virtualPath = await GetVirtualPathAsync(path);
-      if (virtualPath != null) return virtualPath;
+      if (virtualPath != null)
+      {
+        return new Storage
+        {
+          CreatedAt = createdAt,
+          UserId = userid,
+          Slug = virtualPath,
+          Name = fileName,
+          Path = path,
+          Length = stream.Length,
+          Type = StorageType.Local,
+        };
+      }
     }
-
-    var client = _httpClientFactory.CreateClient();
-    client.BaseAddress = baseAddress;
-    var response = await client.GetAsync(url);
-    if (!response.IsSuccessStatusCode) throw new HttpRequestException("url not content");
-    var stream = await response.Content.ReadAsStreamAsync();
 
     if (fileName == null)
     {
@@ -66,20 +80,39 @@ public class StorageProvider
       if (!string.IsNullOrEmpty(fileName))
       {
         path = $"{folder}/{fileName}";
-        virtualPath = await GetVirtualPathAsync(path);
-        if (virtualPath != null) return virtualPath;
       }
       else
       {
-        fileName = Guid.NewGuid().ToString();
+        fileName = GetFileNameByUrl(url);
         path = $"{folder}/{fileName}";
+      }
+      virtualPath = await GetVirtualPathAsync(path);
+      if (virtualPath != null)
+      {
+        return new Storage
+        {
+          CreatedAt = createdAt,
+          UserId = userid,
+          Slug = virtualPath,
+          Name = fileName,
+          Path = path,
+          Length = stream.Length,
+          Type = StorageType.Local,
+        };
       }
     }
 
-    if (path == null) throw new NullReferenceException(path);
-
-    virtualPath = await _storageProvider.WriteAsync(path, stream);
-    return virtualPath;
+    virtualPath = await _storageProvider.WriteAsync(path!, stream);
+    return new Storage
+    {
+      CreatedAt = createdAt,
+      UserId = userid,
+      Slug = virtualPath,
+      Name = fileName,
+      Path = path!,
+      Length = stream.Length,
+      Type = StorageType.Local,
+    }; ;
   }
   public async Task<string> UploadAsync(string path, Stream stream)
   {
@@ -87,11 +120,6 @@ public class StorageProvider
     if (virtualPath != null) return virtualPath;
     virtualPath = await _storageProvider.WriteAsync(path, stream);
     return virtualPath;
-  }
-  public Task<string> UploadAsync(DateTime createdAt, int userid, Uri baseAddress, string url, string? fileName = null)
-  {
-    var path = $"{userid}/{createdAt.Year}{createdAt.Month}";
-    return UploadAsync(path, baseAddress, url, fileName);
   }
   public async Task<string?> UploadAsync(DateTime createdAt, int userid, IFormFile file)
   {
@@ -128,7 +156,8 @@ public class StorageProvider
         var tag = match.Value;
         var matchUrl = StringHelper.MatchImgSrc(tag);
         var urlString = matchUrl.Groups[1].Value;
-        var uploadTag = await UploadAsync(createdAt, userid, baseAddress, urlString);
+        var storage = await UploadAsync(createdAt, userid, baseAddress, urlString);
+        var uploadTag = $"![{storage.Name}]({storage.Slug})";
         contentBuilder.Replace(tag, uploadTag);
       }
       content = contentBuilder.ToString();
@@ -136,7 +165,6 @@ public class StorageProvider
     return content;
   }
 
-  private static readonly string[] _arrayfileExts = new string[] { "zip", "7z", "xml", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
   public async Task<string> UploadFilesFoHtml(DateTime createdAt, int userid, Uri baseAddress, string content)
   {
     var matches = StringHelper.MatchesFile(content);
@@ -147,13 +175,12 @@ public class StorageProvider
       {
         var tag = match.Value;
         var urlString = XElement.Parse(tag).Attribute("href")!.Value;
-        if (_arrayfileExts.Any(m => urlString.ToLower().EndsWith($".{m}")))
+        if (InvalidFileName(urlString))
         {
-          var uploadTag = await UploadAsync(createdAt, userid, baseAddress, urlString);
+          var storage = await UploadAsync(createdAt, userid, baseAddress, urlString);
+          var uploadTag = $"![{storage.Name}]({storage.Slug})";
           contentBuilder.Replace(tag, uploadTag);
         }
-
-
       }
       content = contentBuilder.ToString();
     }
@@ -216,6 +243,36 @@ public class StorageProvider
     return fileName.SanitizePath();
   }
 
+  private static string GetFileNameByUrl(string uri)
+  {
+    var title = uri.ToLower();
+    title = title.Replace("%2f", "/");
+
+    if (title.EndsWith(".axdx"))
+    {
+      title = title.Replace(".axdx", "");
+    }
+    if (title.Contains("image.axd?picture="))
+    {
+      title = title[(title.IndexOf("image.axd?picture=") + 18)..];
+    }
+    if (title.Contains("file.axd?file="))
+    {
+      title = title[(title.IndexOf("file.axd?file=") + 14)..];
+    }
+    if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
+    {
+      var rnd = new Random();
+      title = string.Format("{0}.png", rnd.Next(1000, 9999));
+    }
+    if (title.Contains('/'))
+    {
+      title = title[title.LastIndexOf("/")..];
+    }
+    title = title.Replace(" ", "-");
+    return title.Replace("/", "").SanitizeFileName();
+  }
+
 
   #region no use code
 
@@ -266,35 +323,6 @@ public class StorageProvider
   //      Directory.CreateDirectory(dir);
   //    }
   //  }
-  //}
-  //static string TitleFromUri(string uri)
-  //{
-  //  var title = uri.ToLower();
-  //  title = title.Replace("%2f", "/");
-
-  //  if (title.EndsWith(".axdx"))
-  //  {
-  //    title = title.Replace(".axdx", "");
-  //  }
-  //  if (title.Contains("image.axd?picture="))
-  //  {
-  //    title = title[(title.IndexOf("image.axd?picture=") + 18)..];
-  //  }
-  //  if (title.Contains("file.axd?file="))
-  //  {
-  //    title = title[(title.IndexOf("file.axd?file=") + 14)..];
-  //  }
-  //  if (title.Contains("encrypted-tbn") || title.Contains("base64,"))
-  //  {
-  //    var rnd = new Random();
-  //    title = string.Format("{0}.png", rnd.Next(1000, 9999));
-  //  }
-  //  if (title.Contains('/'))
-  //  {
-  //    title = title[title.LastIndexOf("/")..];
-  //  }
-  //  title = title.Replace(" ", "-");
-  //  return title.Replace("/", "").SanitizeFileName();
   //}
   //string PathToUrl(string path)
   //{

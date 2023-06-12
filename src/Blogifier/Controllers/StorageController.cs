@@ -16,13 +16,13 @@ public class StorageController : ControllerBase
     _storageProvider = storageProvider;
   }
 
-  [HttpGet($"{BlogifierConstant.StorageObjectUrl}/{{**storageUrl}}")]
+  [HttpGet($"{BlogifierConstant.StorageRowPhysicalRoot}/{{**slug}}")]
   [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
   [OutputCache(PolicyName = BlogifierConstant.OutputCacheExpire1)]
-  public async Task<IActionResult> ObjectAsync([FromRoute] string storageUrl)
+  public async Task<IActionResult> GetAsync([FromRoute] string slug)
   {
     var memoryStream = new MemoryStream();
-    var storage = await _storageProvider.GetAsync(storageUrl,
+    var storage = await _storageProvider.GetAsync(slug,
       (stream, cancellationToken) => stream.CopyToAsync(memoryStream, cancellationToken));
     if (storage == null) return NotFound();
     memoryStream.Position = 0;

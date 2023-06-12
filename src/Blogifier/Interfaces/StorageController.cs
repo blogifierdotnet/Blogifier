@@ -32,7 +32,7 @@ public class StorageController : ControllerBase
   }
 
   [HttpPost("upload")]
-  public async Task<string?> Upload([FromForm] IFormFile file, [FromRoute] UploadType uploadType)
+  public async Task<string?> Upload([FromForm] IFormFile file)
   {
     var userId = User.FirstUserId();
     var currTime = DateTime.UtcNow;
