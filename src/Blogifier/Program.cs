@@ -1,4 +1,3 @@
-using AutoMapper;
 using Blogifier;
 using Blogifier.Blogs;
 using Blogifier.Caches;
@@ -12,13 +11,10 @@ using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +39,8 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
   .AddIdentityCookies();
 builder.Services.AddAuthorization();
 
+builder.Services.AddStorageStaticFiles(builder.Configuration);
+
 builder.Services.AddScoped<MarkdigProvider>();
 builder.Services.AddScoped<ReverseProvider>();
 builder.Services.AddScoped<ImportRssProvider>();
@@ -54,27 +52,6 @@ builder.Services.AddScoped<SubscriberProvider>();
 
 builder.Services.AddScoped<OptionProvider>();
 builder.Services.AddScoped<AnalyticsProvider>();
-
-builder.Services.AddScoped<IStorageProvider>(sp =>
-{
-  var mapper = sp.GetRequiredService<IMapper>();
-  var dbContext = sp.GetRequiredService<AppDbContext>();
-  var section = builder.Configuration.GetSection("Blogifier:Minio");
-  var enable = section.GetValue<bool>("Enable");
-  if (enable)
-  {
-    var logger = sp.GetRequiredService<ILogger<StorageMinioProvider>>();
-    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-    return new StorageMinioProvider(logger, mapper, dbContext, httpClientFactory, section);
-  }
-  else
-  {
-    var logger = sp.GetRequiredService<ILogger<StorageLocalProvider>>();
-    var hostEnvironment = sp.GetRequiredService<IHostEnvironment>();
-    return new StorageLocalProvider(logger, mapper, dbContext, hostEnvironment);
-  }
-});
-builder.Services.AddScoped<StorageManager>();
 builder.Services.AddScoped<EmailManager>();
 builder.Services.AddScoped<ImportManager>();
 builder.Services.AddScoped<PostManager>();
