@@ -20,85 +20,23 @@ using System.Xml.Linq;
 
 namespace Blogifier.Storages;
 
-public class StorageProvider
+public class StorageManager
 {
   private readonly ILogger _logger;
   private readonly IHttpClientFactory _httpClientFactory;
   private readonly BlogifierConfigure _blogifierConfigure;
-  private readonly IMapper _mapper;
-  private readonly AppDbContext _dbContext;
-  private readonly StorageLocalProvider _storageLocalProvider;
-  private readonly StorageMinioProvider _minioProvider;
+  private readonly IStorageProvider _storageProvider;
 
-  public StorageProvider(
-    ILogger<StorageProvider> logger,
+  public StorageManager(
+    ILogger<StorageManager> logger,
     IHttpClientFactory httpClientFactory,
     IOptions<BlogifierConfigure> blogifierConfigure,
-    IMapper mapper,
-    AppDbContext dbContext,
-    StorageLocalProvider storageLocalProvider,
-    StorageMinioProvider minioProvider)
+    IStorageProvider storageProvider)
   {
     _logger = logger;
     _httpClientFactory = httpClientFactory;
     _blogifierConfigure = blogifierConfigure.Value;
-    _mapper = mapper;
-    _dbContext = dbContext;
-    _minioProvider = minioProvider;
-    _storageLocalProvider = storageLocalProvider;
-  }
-
-
-  public async Task<StorageDto?> GetCheckStoragAsync(string path)
-  {
-    var query = _dbContext.Storages
-      .AsNoTracking()
-      .Where(m => m.Path == path);
-    var storage = await _mapper.ProjectTo<StorageDto>(query).FirstOrDefaultAsync();
-    var existsing = await ExistsFileAsync(path);
-    if (storage == null)
-    {
-      if (existsing)
-      {
-        await DeleteFileAsync(path);
-      }
-    }
-    else
-    {
-      if (!existsing)
-      {
-        await _dbContext.Storages
-          .Where(m => m.Id == storage.Id)
-          .ExecuteDeleteAsync();
-        return null;
-      }
-    }
-    return storage;
-  }
-
-  public Task DeleteFileAsync(string path)
-  {
-    _storageLocalProvider.Delete(path);
-    return Task.CompletedTask;
-  }
-
-  public async Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, Stream stream, string? contentType = null)
-  {
-    var virtualPath = await _storageLocalProvider.WriteAsync(path, stream);
-    var storage = new Storage
-    {
-      UploadAt = uploadAt,
-      UserId = userid,
-      Slug = virtualPath,
-      Name = fileName,
-      Path = path,
-      Length = stream.Length,
-      ContentType = contentType,
-      Type = StorageType.Local,
-    };
-    _dbContext.Storages.Add(storage);
-    await _dbContext.SaveChangesAsync();
-    return _mapper.Map<StorageDto>(storage);
+    _storageProvider = storageProvider;
   }
 
   public async Task<StorageDto> UploadAsync(DateTime uploadAt, int userid, Uri baseAddress, string url, string? fileName = null)
@@ -127,11 +65,11 @@ public class StorageProvider
     {
       path = $"{folder}/{fileName}";
     }
-    var storage = await GetCheckStoragAsync(path);
+    var storage = await _storageProvider.GetCheckStoragAsync(path);
     if (storage != null) return storage;
     using var stream = await response.Content.ReadAsStreamAsync();
     var contentType = response.Content.Headers.ContentType?.ToString();
-    storage = await AddAsync(uploadAt, userid, path, fileName, stream, contentType);
+    storage = await _storageProvider.AddAsync(uploadAt, userid, path, fileName, stream, contentType!);
     return storage;
   }
 
@@ -146,11 +84,11 @@ public class StorageProvider
 
     var folder = $"{userid}/{uploadAt.Year}{uploadAt.Month}";
     var path = Path.Combine(folder, fileName);
-    var storage = await GetCheckStoragAsync(path);
+    var storage = await _storageProvider.GetCheckStoragAsync(path);
     if (storage != null) return storage;
 
     var stream = file.OpenReadStream();
-    storage = await AddAsync(uploadAt, userid, path, fileName, stream, file.ContentType);
+    storage = await _storageProvider.AddAsync(uploadAt, userid, path, fileName, stream, file.ContentType);
     return storage;
   }
 
@@ -203,26 +141,6 @@ public class StorageProvider
     return content;
   }
 
-  /// <summary>
-  /// 根据存储路径获取文件
-  /// </summary>
-  public async Task<Storage?> GetAsync(string storagePath, Func<Stream, CancellationToken, Task> callback)
-  {
-    _logger.LogInformation("Storage Url:{storagePath}", storagePath);
-    var storage = await _dbContext.Storages.FirstOrDefaultAsync(m => m.Path == storagePath);
-    if (storage == null) return null;
-    var objectStat = await _minioProvider.GetObjectAsync(storagePath, callback);
-    if (objectStat == null) return null;
-    storage.ContentType = objectStat.ContentType;
-    storage.Length = objectStat.Size;
-    return storage;
-  }
-
-  public Task<bool> ExistsFileAsync(string path)
-  {
-    var existsing = _storageLocalProvider.Exists(path);
-    return Task.FromResult(existsing);
-  }
 
   private bool InvalidFileName(string fileName)
   {
@@ -282,7 +200,6 @@ public class StorageProvider
     title = title.Replace(" ", "-");
     return title.Replace("/", "").SanitizeFileName();
   }
-
 
   #region no use code
 

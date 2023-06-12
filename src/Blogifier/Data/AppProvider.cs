@@ -15,6 +15,12 @@ public class AppProvider<T, TKey> where T : AppEntity<TKey> where TKey : IEquata
     _dbContext = dbContext;
   }
 
+  protected async Task AddAsync(T entity)
+  {
+    _dbContext.Set<T>().Add(entity);
+    await _dbContext.SaveChangesAsync();
+  }
+
   public Task DeleteAsync(TKey id)
   {
     var query = _dbContext.Set<T>()

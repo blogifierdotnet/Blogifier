@@ -13,18 +13,21 @@ namespace Blogifier.Interfaces;
 [Authorize]
 public class StorageController : ControllerBase
 {
-  private readonly StorageProvider _storageProvider;
+  private readonly IStorageProvider _storageProvider;
+  private readonly StorageManager _storageManager;
 
   public StorageController(
-    StorageProvider storageProvider)
+    IStorageProvider storageProvider,
+    StorageManager storageManager)
   {
     _storageProvider = storageProvider;
+    _storageManager = storageManager;
   }
 
   [HttpPut("exists")]
-  public async Task<ActionResult> ExistsAsync([FromBody] string path)
+  public async Task<ActionResult> ExistsAsync([FromBody] string slug)
   {
-    if (await _storageProvider.ExistsFileAsync(path))
+    if (await _storageProvider.ExistsAsync(slug))
     {
       return Ok();
     }
@@ -36,6 +39,6 @@ public class StorageController : ControllerBase
   {
     var userId = User.FirstUserId();
     var currTime = DateTime.UtcNow;
-    return await _storageProvider.UploadAsync(currTime, userId, file);
+    return await _storageManager.UploadAsync(currTime, userId, file);
   }
 }

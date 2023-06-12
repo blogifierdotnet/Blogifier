@@ -14,13 +14,13 @@ public class ImportManager
   private readonly UserProvider _userProvider;
   private readonly ReverseProvider _reverseProvider;
   private readonly PostProvider _postProvider;
-  private readonly StorageProvider _storageManager;
+  private readonly StorageManager _storageManager;
 
   public ImportManager(
     UserProvider userProvider,
     ReverseProvider reverseProvider,
     PostProvider postProvider,
-    StorageProvider storageManager)
+    StorageManager storageManager)
   {
     _userProvider = userProvider;
     _reverseProvider = reverseProvider;

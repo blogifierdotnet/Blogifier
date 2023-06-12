@@ -1,3 +1,4 @@
+using Blogifier.Data;
 using Blogifier.Identity;
 using Blogifier.Shared;
 using System;
@@ -5,10 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blogifier.Storages;
 
-public class Storage
+public class Storage : AppEntity<int>
 {
-  [Key]
-  public int Id { get; set; }
   public int UserId { get; set; }
   public UserInfo User { get; set; } = default!;
   public DateTime CreatedAt { get; set; }
@@ -21,7 +20,7 @@ public class Storage
   public string Path { get; set; } = default!;
   public long Length { get; set; }
   [StringLength(128)]
-  public string? ContentType { get; set; } = default!;
+  public string ContentType { get; set; } = default!;
   public StorageType Type { get; set; }
   //public List<StorageReference>? StorageReferences { get; set; }
 }
