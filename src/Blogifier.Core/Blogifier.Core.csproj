@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Version>2.7.8.0</Version>
     <Authors>blogifierdotnet</Authors>
     <Description>Blogifier Core Library provides Database and file I/O support to Blogifier projects via common service layer</Description>

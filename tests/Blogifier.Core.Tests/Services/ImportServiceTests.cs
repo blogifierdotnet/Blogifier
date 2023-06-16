@@ -79,7 +79,7 @@ namespace Core.Tests.Services
 
             assembly = Assembly.Load(new AssemblyName(assemblyName));
 
-            var uri = new UriBuilder(assembly.CodeBase);
+            var uri = new UriBuilder(assembly.Location);
             var path = Uri.UnescapeDataString(uri.Path);
             var root = Path.GetDirectoryName(path);
             root = root.Substring(0, root.IndexOf(assemblyName));
