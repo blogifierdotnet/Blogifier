@@ -20,7 +20,8 @@ public static class BlogifierConstant
     "pt-BR",
     "ru",
     "sv-SE",
-    "ur-PK"
+    "ur-PK",
+    "bn"
   };
 
   public const string StorageLocalRoot = "App_Data/storages";
