@@ -6,9 +6,13 @@
 </p>
 <br>
 
+English | [简体中文](README-zh_CN.md)
+
 ## Installation
+
 ### Currently built from source [Not Released]
 Can build in windows linux not tested on macOS, I prefer to deploy tests in docker.
+
 #### native build
 1. [Download](https://dotnet.microsoft.com/zh-cn/download) .NET 7.0 SDK Choose to install the system version on your host. [Download](https://nodejs.org/) Nodejs 14 and above and install it on your host. For linux you can use the package management tool
 2. Navigate to the project root directory, run ./publish.cmd on the command line in widnows, run sh ./publish.sh on the command line in linux.
