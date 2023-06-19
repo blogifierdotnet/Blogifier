@@ -39,17 +39,17 @@ public class PostController : ControllerBase
   }
 
   [HttpPost("add")]
-  public async Task<PostEditorDto> AddPostAsync([FromBody] PostEditorDto post)
+  public async Task<string> AddPostAsync([FromBody] PostEditorDto post)
   {
     var userId = User.FirstUserId();
     return await _postProvider.AddAsync(post, userId);
   }
 
   [HttpPut("update")]
-  public async Task<ActionResult<PostEditorDto>> UpdateAsync(PostEditorDto post)
+  public async Task UpdateAsync(PostEditorDto post)
   {
     var userId = User.FirstUserId();
-    return await _postProvider.UpdateAsync(post, userId);
+    await _postProvider.UpdateAsync(post, userId);
   }
 
   [HttpPut("state/{id:int}")]

@@ -244,11 +244,11 @@ public class PostProvider : AppProvider<Post, int>
         .SetProperty(b => b.PublishedAt, b => GetPublishedAt(b.PublishedAt, state)));
   }
 
-  public async Task<PostEditorDto> AddAsync(PostEditorDto postInput, int userId)
+  public async Task<string> AddAsync(PostEditorDto postInput, int userId)
   {
     var post = await AddInternalAsync(postInput, userId);
     await _dbContext.SaveChangesAsync();
-    return _mapper.Map<PostEditorDto>(post);
+    return post.Slug;
   }
 
   private async Task<Post> AddInternalAsync(PostEditorDto postInput, int userId)
@@ -303,7 +303,7 @@ public class PostProvider : AppProvider<Post, int>
     return _mapper.Map<IEnumerable<PostEditorDto>>(postsInput);
   }
 
-  public async Task<PostEditorDto> UpdateAsync(PostEditorDto postInput, int userId)
+  public async Task UpdateAsync(PostEditorDto postInput, int userId)
   {
     var post = await _dbContext.Posts
       .Include(m => m.PostCategories)!
@@ -325,7 +325,6 @@ public class PostProvider : AppProvider<Post, int>
     post.State = postInput.State;
     _dbContext.Update(post);
     await _dbContext.SaveChangesAsync();
-    return _mapper.Map<PostEditorDto>(post);
   }
 
   private async Task<string> GetSlugFromTitle(string title)
