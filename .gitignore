@@ -358,3 +358,5 @@ App_Data/
 appsettings.Development.json
 
 dist
+
+package-lock.json
