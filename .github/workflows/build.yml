@@ -26,11 +26,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node
 
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+            ${{ runner.os }}-nuget-
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.0.x'
-        cache: true
 
     - name: Publish Blogifier
       run: dotnet publish -c Release /p:RuntimeIdentifier=linux-x64 ./src/Blogifier/Blogifier.csproj --output dist
