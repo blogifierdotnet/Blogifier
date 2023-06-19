@@ -42,9 +42,7 @@ public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
 
   public async Task<StorageDto?> GetCheckStoragAsync(string path)
   {
-    var query = _dbContext.Storages
-      .AsNoTracking()
-      .Where(m => m.Path == path);
+    var query = _dbContext.Storages.AsNoTracking().Where(m => m.Path == path);
     var storage = await _mapper.ProjectTo<StorageDto>(query).FirstOrDefaultAsync();
     var existsing = Exists(path);
     if (storage == null)
@@ -82,21 +80,21 @@ public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
     return _mapper.Map<StorageDto>(storage);
   }
 
-  public void Delete(string path)
+  private void Delete(string path)
   {
     var storagePath = Path.Combine(_pathLocalRoot, path);
     _logger.LogInformation("file delete: {storagePath}", storagePath);
     File.Delete(storagePath);
   }
 
-  public bool Exists(string path)
+  private bool Exists(string path)
   {
     var storagePath = Path.Combine(_pathLocalRoot, path);
     _logger.LogInformation("file exists: {storagePath}", storagePath);
     return File.Exists(storagePath);
   }
 
-  public async Task<string> WriteAsync(string path, Stream stream)
+  private async Task<string> WriteAsync(string path, Stream stream)
   {
     var storagePath = Path.Combine(_pathLocalRoot, path);
     var directoryPath = Path.GetDirectoryName(storagePath)!;
@@ -107,6 +105,5 @@ public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
     _logger.LogInformation("file Write: {storagePath} => {virtualPath}", storagePath, virtualPath);
     return virtualPath;
   }
-
 
 }

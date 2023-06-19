@@ -6,7 +6,7 @@
     <!--<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>-->
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
-    <ClientAssetsRestoreCommand>npm ci</ClientAssetsRestoreCommand>
+    <ClientAssetsRestoreCommand>npm i</ClientAssetsRestoreCommand>
     <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
   </PropertyGroup>
 
