@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>সাধারণ</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>প্রোফাইল</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>পাসওয়ার্ড</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>থিম</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>ব্যবহারকারীদের</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>নতুন ব্যবহারকারী</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>আমদানি</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>নতুন পোস্ট</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>পোস্ট</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>সেটিংস</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>বিজ্ঞপ্তি</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>ব্লগে যান</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>শিরোনাম</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>বর্ণনা</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>প্রতি পাতায় আইটেম</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>প্রতীক ছবি</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>কভার ইমেজ</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>ভাষা</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>সংরক্ষণ</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>নির্বাচন করুন</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>নির্বাচিত</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>অনুসন্ধান করুন</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>সব</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>প্রকাশিত হয়েছে</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>খসড়া</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>স্ট্যাটাস</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>পাওয়া যায়নি</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>প্রকাশ করুন</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>অপ্রকাশিত করুন</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>বৈশিষ্ট্যযুক্ত</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>বৈশিষ্ট্যযুক্ত যোগ করুন</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>বাতিল করুন</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>মুছে ফেলা</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>ক্যাটাগরি</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>দেখুন</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>ব্যবহারকারীর নাম</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>ইমেইল</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>ব্যবহারকারীর বায়ো</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>অবতার</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>অপসারণ</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>সরানো হয়েছে</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>নতুন পাসওয়ার্ড</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>পাসওয়ার্ড নিশ্চিত করুন</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>বন্ধ</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>প্রশাসক হিসাবে সেট করুন</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>পোস্ট আমদানি করতে RSS (.xml) ফাইল নির্বাচন করুন</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>ছবি</value>
+  </data>
+  <data name="attachments" xml:space="preserve">
+    <value>সংযুক্তি</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>আপলোড করুন</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>ফিল্টার</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>পাসওয়ার্ড পরিবর্তন করুন</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>থিম</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>পড়ুন</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>আপডেট করা হয়েছে</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>তৈরি হয়েছে</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>সম্পর্কিত</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>নিউজলেটার</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>ইমেল গ্রাহকদের তালিকা</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>যোগাযোগ</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>ড্যাশবোর্ড</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>জনপ্রিয়</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>খালি</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>সম্পাদনা করুন</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>বিস্তারিত</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>কাস্টম ক্ষেত্র</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>দুঃখিত, কিছু ভুল হয়েছে বা এই ঠিকানায় কিছুই নেই৷</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>পাঠান</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>পাঠানো</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>বিষয়</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>বিষয়বস্তু</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>সম্পন্ন</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>এখানে আপনি পরীক্ষার ইমেল পাঠিয়ে নিউজলেটার সেটিংস যাচাই করতে পারেন</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>এখানে আপনি Disqus মন্তব্য যোগ করতে সাইট এবং স্ক্রিপ্ট লিখতে বা আপডেট করতে পারেন</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>ডেমো মোডে অক্ষম</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>ইমেল সফলভাবে পাঠানো হয়েছে</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>ইমেল প্রেরণে ত্রুটি, বিশদ বিবরণের জন্য লগ চেক করুন৷</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>{0}টি নিউজলেটার পাঠানো হয়েছে</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>সামাজিক অ্যাকাউন্ট</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>নাম</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>পোস্ট শিরোনাম</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>এখানে লিখুন...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>ধন্যবাদ!</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>ইমেইল প্রদান করুন</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>সাবস্ক্রাইব</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>সরাসরি আপনার ইনবক্সে সর্বশেষ খবর এবং আপডেট পেতে আমাদের গ্রাহক তালিকায় যোগ দিন।</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>প্রবেশ করুন</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>বাড়ি</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>ব্লগ</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>অ্যাডমিন</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>ট্যাগ</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>দ্রুত লিঙ্ক</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>নেভিগেশন</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>আগে</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>পরবর্তী</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>পোস্ট মুছবেন?</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>তালিকায় বৈশিষ্ট্যযুক্ত অন্তর্ভুক্ত করুন</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>পৃষ্ঠার শিরোনাম এবং পাদলেখ (Disqus, Analytics ইত্যাদি) অন্তর্ভুক্ত করতে হবে।</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>সাবস্ক্রাইবার</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>গত সপ্তাহে</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>গত মাসে</value>
+  </data>
+  <data name="email-provider" xml:space="preserve">
+    <value>ইমেল প্রদানকারী</value>
+  </data>
+  <data name="sendgrid-key" xml:space="preserve">
+    <value>সেন্ডগ্রিড কী</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>সার্ভার</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>বন্দর</value>
+  </data>
+  <data name="smtp-email" xml:space="preserve">
+    <value>SMTP ইমেল</value>
+  </data>
+  <data name="send-test-email" xml:space="preserve">
+    <value>পরীক্ষার ইমেল পাঠান</value>
+  </data>
+  <data name="unsubscribe" xml:space="preserve">
+    <value>সদস্যতা ত্যাগ করুন</value>
+  </data>
+  <data name="login-failed" xml:space="preserve">
+    <value>লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>স্বাগত</value>
+  </data>
+  <data name="you-can-sign-in" xml:space="preserve">
+    <value>আপনি সাইন ইন করতে পারেন</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>নিবন্ধন</value>
+  </data>
+  <data name="you-can-register" xml:space="preserve">
+    <value>আপনি নিবন্ধন করতে পারেন</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>নিবন্ধন</value>
+  </data>
+  <data name="generic-error" xml:space="preserve">
+    <value>কিছু ভুল হয়েছে আবার চেষ্টা করুন.</value>
+  </data>
+  <data name="title-content-required" xml:space="preserve">
+    <value>শিরোনাম এবং বিষয়বস্তু প্রয়োজন.</value>
+  </data>
+  <data name="views" xml:space="preserve">
+    <value>ভিউ</value>
+  </data>
+  <data name="pages" xml:space="preserve">
+    <value>পাতা</value>
+  </data>
+  <data name="advanced" xml:space="preserve">
+    <value>উন্নত</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>মন্তব্য</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>কাস্টমাইজ করুন</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>তথ্য</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>স্ক্রিপ্ট</value>
+  </data>
+  <data name="page-title" xml:space="preserve">
+    <value>আমার স্নাতকের</value>
+  </data>
+  <data name="about-blogifier" xml:space="preserve">
+    <value>ব্লগিফায়ার সম্পর্কে</value>
+  </data>
+  <data name="actions" xml:space="preserve">
+    <value>কর্ম</value>
+  </data>
+  <data name="advanced-settings" xml:space="preserve">
+    <value>উন্নত সেটিংস</value>
+  </data>
+  <data name="basic" xml:space="preserve">
+    <value>মৌলিক</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>মৌলিক বৈশিষ্ট্যসহ</value>
+  </data>
+  <data name="blogifier-desc" xml:space="preserve">
+    <value>ব্লগিফায়ার বর্ণনা</value>
+  </data>
+  <data name="comments-settings" xml:space="preserve">
+    <value>মন্তব্য সেটিংস</value>
+  </data>
+  <data name="edit-profile" xml:space="preserve">
+    <value>জীবন বৃত্তান্ত সম্পাদনা</value>
+  </data>
+  <data name="home-page" xml:space="preserve">
+    <value>হোম পেজ</value>
+  </data>
+  <data name="load" xml:space="preserve">
+    <value>বোঝা</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>প্রস্থান</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>মেনু</value>
+  </data>
+  <data name="new-page" xml:space="preserve">
+    <value>নতুন পাতা</value>
+  </data>
+  <data name="operating-system" xml:space="preserve">
+    <value>অপারেটিং সিস্টেম</value>
+  </data>
+  <data name="profile-picture" xml:space="preserve">
+    <value>প্রোফাইল ছবি</value>
+  </data>
+  <data name="feed-URL" xml:space="preserve">
+    <value>আরএসএস ফিড ইউআরএল</value>
+  </data>
+  <data name="script-footer" xml:space="preserve">
+    <value>স্ক্রিপ্ট ফুটার</value>
+  </data>
+  <data name="script-header" xml:space="preserve">
+    <value>স্ক্রিপ্ট হেডার</value>
+  </data>
+  <data name="script-settings" xml:space="preserve">
+    <value>স্ক্রিপ্ট সেটিংস</value>
+  </data>
+  <data name="specification" xml:space="preserve">
+    <value>স্পেসিফিকেশন</value>
+  </data>
+  <data name="list-is-empty" xml:space="preserve">
+    <value>দেখানোর মতো কিছুই নেই - এই তালিকাটি খালি</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>ব্যবহারকারী</value>
+  </data>
+  <data name="users-settings" xml:space="preserve">
+    <value>ব্যবহারকারীদের সেটিংস</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>সংস্করণ</value>
+  </data>
+  <data name="website-URL" xml:space="preserve">
+    <value>ওয়েবসাইট URL</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>উইজেট</value>
+  </data>
+  <data name="analytics" xml:space="preserve">
+    <value>বিশ্লেষণ</value>
+  </data>
+  <data name="chart" xml:space="preserve">
+    <value>চার্ট</value>
+  </data>
+  <data name="list" xml:space="preserve">
+    <value>তালিকা</value>
+  </data>
+  <data name="visits" xml:space="preserve">
+    <value>ভিজিট</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>তারিখ</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>দিন</value>
+  </data>
+  <data name="7-days" xml:space="preserve">
+    <value>7 দিন</value>
+  </data>
+  <data name="30-days" xml:space="preserve">
+    <value>30 দিন</value>
+  </data>
+  <data name="90-days" xml:space="preserve">
+    <value>90 দিন</value>
+  </data>
+  <data name="today" xml:space="preserve">
+    <value>আজ</value>
+  </data>
+  <data name="yesterday" xml:space="preserve">
+    <value>গতকাল</value>
+  </data>
+  <data name="drive" xml:space="preserve">
+    <value>ড্রাইভ</value>
+  </data>
+  <data name="select-all" xml:space="preserve">
+    <value>সব নির্বাচন করুন</value>
+  </data>
+  <data name="not-featured" xml:space="preserve">
+    <value>বৈশিষ্ট্যযুক্ত নয়</value>
+  </data>
+  <data name="change" xml:space="preserve">
+    <value>পরিবর্তন</value>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>রিসেট</value>
+  </data>
+  <data name="add-category" xml:space="preserve">
+    <value>বিভাগ যোগ করুন</value>
+  </data>
+  <data name="new-category" xml:space="preserve">
+    <value>নতুন বিভাগ</value>
+  </data>
+  <data name="edit-category" xml:space="preserve">
+    <value>বিভাগ সম্পাদনা করুন</value>
+  </data>
+  <data name="newsletters" xml:space="preserve">
+    <value>নিউজলেটার</value>
+  </data>
+  <data name="resend" xml:space="preserve">
+    <value>আবার পাঠান</value>
+  </data>
+  <data name="newsletter-settings" xml:space="preserve">
+    <value>নিউজলেটার সেটিংস</value>
+  </data>
+  <data name="host" xml:space="preserve">
+    <value>হোস্ট</value>
+  </data>
+  <data name="to-name" xml:space="preserve">
+    <value>নাম</value>
+  </data>
+  <data name="from-name" xml:space="preserve">
+    <value>নাম থেকে</value>
+  </data>
+  <data name="from-email" xml:space="preserve">
+    <value>ইমেল থেকে</value>
+  </data>
+  <data name="enabled" xml:space="preserve">
+    <value>সক্রিয়</value>
+  </data>
+  <data name="disabled" xml:space="preserve">
+    <value>অক্ষম</value>
+  </data>
+  <data name="default-cover" xml:space="preserve">
+    <value>ডিফল্ট কভার</value>
+  </data>
+  <data name="under-development" xml:space="preserve">
+    <value>উন্নয়নের অধীনে</value>
+  </data>
+  <data name="learn-more" xml:space="preserve">
+    <value>আরও জানুন</value>
+  </data>
+  <data name="read-more" xml:space="preserve">
+    <value>আরও পড়ুন</value>
+  </data>
+  <data name="more-info" xml:space="preserve">
+    <value>অধিক তথ্য</value>
+  </data>
+  <data name="add-user" xml:space="preserve">
+    <value>ব্যবহারকারী যোগ করুন</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>কারেন্ট</value>
+  </data>
+  <data name="developer" xml:space="preserve">
+    <value>বিকাশকারী</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>দ্বারা</value>
+  </data>
+  <data name="import-message-found" xml:space="preserve">
+    <value>পোস্ট পাওয়া গেছে এবং আমদানি করার জন্য প্রস্তুত</value>
+  </data>
+  <data name="import-all" xml:space="preserve">
+    <value>সব আমদানি করুন</value>
+  </data>
+  <data name="error-page" xml:space="preserve">
+    <value>ত্রুটি পৃষ্ঠা</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>ওয়েবসাইট</value>
+  </data>
+  <data name="database-provider" xml:space="preserve">
+    <value>ডাটাবেস প্রদানকারী</value>
+  </data>
+  <data name="back-to-website" xml:space="preserve">
+    <value>ওয়েবসাইটে ফিরে যান</value>
+  </data>
+  <data name="microsoft" xml:space="preserve">
+    <value>মাইক্রোসফট</value>
+  </data>
+  <data name="twitter" xml:space="preserve">
+    <value>টুইটার</value>
+  </data>
+  <data name="github" xml:space="preserve">
+    <value>গিটহাব</value>
+  </data>
+  <data name="facebook" xml:space="preserve">
+    <value>ফেসবুক</value>
+  </data>
+  <data name="instagram" xml:space="preserve">
+    <value>ইনস্টাগ্রাম</value>
+  </data>
+  <data name="linkedin" xml:space="preserve">
+    <value>লিঙ্কডইন</value>
+  </data>
+  <data name="google" xml:space="preserve">
+    <value>গুগল</value>
+  </data>
+  <data name="youtube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="pinterest" xml:space="preserve">
+    <value>Pinterest</value>
+  </data>
+  <data name="whatsapp" xml:space="preserve">
+    <value>হোয়াটসঅ্যাপ</value>
+  </data>
+  <data name="telegram" xml:space="preserve">
+    <value>টেলিগ্রাম</value>
+  </data>
+  <data name="powered-by-blogifier" xml:space="preserve">
+    <value>Blogifier দ্বারা চালিত</value>
+  </data>
+  <data name="copyright" xml:space="preserve">
+    <value>কপিরাইট</value>
+  </data>
+  <data name="next-page" xml:space="preserve">
+    <value>পরবর্তী পৃষ্ঠা</value>
+  </data>
+  <data name="previous-page" xml:space="preserve">
+    <value>আগের পৃষ্ঠা</value>
+  </data>
+  <data name="page-not-found" xml:space="preserve">
+    <value>পৃষ্ঠা খুঁজে পাওয়া যায়নি</value>
+  </data>
+  <data name="share" xml:space="preserve">
+    <value>শেয়ার করুন</value>
+  </data>
+  <data name="author" xml:space="preserve">
+    <value>লেখক</value>
+  </data>
+  <data name="customization" xml:space="preserve">
+    <value>কাস্টমাইজেশন</value>
+  </data>
+  <data name="theme-customization-desc" xml:space="preserve">
+    <value>থিমের বিভিন্ন বৈশিষ্ট্য রয়েছে। </value>
+  </data>
+  <data name="blog-settings" xml:space="preserve">
+    <value>ব্লগ সেটিংস</value>
+  </data>
+  <data name="set-current-theme" xml:space="preserve">
+    <value>বর্তমান থিম হিসেবে সেট করুন</value>
+  </data>
+  <data name="create-admin-account" xml:space="preserve">
+    <value>অ্যাডমিন অ্যাকাউন্ট তৈরি করুন</value>
+  </data>
+  <data name="welcome-blogifier" xml:space="preserve">
+    <value>ব্লগিফায়ারে স্বাগতম</value>
+  </data>
+  <data name="drive-describe" xml:space="preserve">
+    <value>ড্রাইভ হল একটি ফাইল সঞ্চয়স্থান যা আপনি আপনার ফাইলগুলি আপলোড করতে এবং পরিচালনা করতে এবং সমগ্র ওয়েবসাইট জুড়ে ব্যবহার করতে সক্ষম৷</value>
+  </data>
+  <data name="nick-name" xml:space="preserve">
+    <value>ডাকনাম</value>
+  </data>
+  <data name="page-not-found-message" xml:space="preserve">
+    <value>আপনি যে পৃষ্ঠাটি খুঁজছেন সেটি বিদ্যমান নেই বা ত্রুটি ঘটেছে৷</value>
+  </data>
+</root>
