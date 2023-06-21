@@ -73,7 +73,7 @@
       </div>
     </div>
   </div>
-  <EditorComponent @ref="_editorComponent" Toolbar="fullToolbar" />
+  <EditorComponent @ref="_editorComponent" OnFileUploadCallback="OnFileUploadCallback" Toolbar="fullToolbar" />
 </div>
 
 @code {
@@ -81,14 +81,21 @@
   [Parameter] public PostEditorDto Post { get; set; } = default!;
   [Parameter] public EventCallback<PostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
+  [Parameter] public EventCallback<FrontFilePreviewDto> OnFileUploadCallback { get; set; }
 
   private EditorComponent _editorComponent = default!;
 
-  protected override async Task OnParametersSetAsync()
+  public async Task SetPostInfoAsync(PostEditorDto post)
   {
-    var headTitle = _localizer["edit"] + " - " + Post.Title;
+    var headTitle = _localizer["edit"] + " - " + post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
-    await _editorComponent.SetValueAsync(Post.Content);
+    await _editorComponent.SetValueAsync(post.Content);
+  }
+
+
+  public async Task ReplaceSelectionAsync(FrontFilePreviewDto file, StorageDto storage)
+  {
+    await _editorComponent.ReplaceSelectionAsync(file, storage);
   }
 
   protected async Task SaveCoreAsync(PostState postState)
@@ -142,4 +149,5 @@
     Post.Cover = null;
     await SaveAsync();
   }
+
 }

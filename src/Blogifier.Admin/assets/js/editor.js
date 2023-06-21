@@ -281,4 +281,13 @@ export function previewImage(inputElem) {
   let codemirror = easymde.codemirror;
   codemirror.selection;
   codemirror.replaceSelection(output);
+  return {
+    fileName,
+    url,
+    selection: output
+  }
+}
+
+export function replaceSelection(file, storage) {
+  console.log(file, storage);
 }

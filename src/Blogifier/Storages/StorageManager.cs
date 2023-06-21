@@ -148,7 +148,7 @@ public class StorageManager
     var configFileExtensions = _blogifierConfigure.FileExtensions;
     if (!string.IsNullOrEmpty(configFileExtensions))
       fileExtensions = new List<string>(configFileExtensions.Split(','));
-    return fileExtensions.Any(fileName.EndsWith);
+    return !fileExtensions.Any(fileName.EndsWith);
   }
 
   private static string GetFileName(string fileName)

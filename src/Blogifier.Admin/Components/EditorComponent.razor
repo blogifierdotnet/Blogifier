@@ -5,15 +5,16 @@
 <div class="easymde-wrapper">
   <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
 </div>
-<InputFile @ref="inputImageFiles" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
+<InputFile @ref="inputImageFileReference" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
 
 @code {
 
   [Parameter] public string Toolbar { get; set; } = default!;
+  [Parameter] public EventCallback<FrontFilePreviewDto> OnFileUploadCallback { get; set; }
 
   private ValueTask<IJSObjectReference> _taskModule;
   private ElementReference? _textareaReference;
-  private InputFile? inputImageFiles;
+  private InputFile? inputImageFileReference;
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
@@ -21,14 +22,18 @@
     {
       _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
       var module = await _taskModule;
-      await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, inputImageFiles?.Element);
+      var element = inputImageFileReference?.Element;
+      await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, element);
     }
   }
 
   protected async Task LoadImageFiles(InputFileChangeEventArgs args)
   {
     var module = await _taskModule;
-    await module.InvokeVoidAsync("previewImage", inputImageFiles?.Element);
+    var element = inputImageFileReference?.Element;
+    var preview = await module.InvokeAsync<FrontFilePreviewDto>("previewImage", element);
+    preview.BrowserFile = args.File;
+    await OnFileUploadCallback.InvokeAsync(preview);
   }
 
   public async ValueTask SetValueAsync(string value)
@@ -43,6 +48,14 @@
     var content = await module.InvokeAsync<string>("getEditorValue");
     return content;
   }
+
+
+  public async Task ReplaceSelectionAsync(FrontFilePreviewDto file, StorageDto storage)
+  {
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("replaceSelection", file, storage);
+  }
+
 
   async ValueTask IAsyncDisposable.DisposeAsync()
   {
