@@ -17,7 +17,8 @@ public class ReverseProvider
       // Include the unknown tag completely in the result (default as well)
       UnknownTags = Config.UnknownTagsOption.Bypass,
       // remove markdown output for links where appropriate
-      SmartHrefHandling = false
+      SmartHrefHandling = false,
+      PassThroughTags = new string[] { "figure" }
     };
     _converter = new Converter(config);
   }
