@@ -1,6 +1,5 @@
 using AutoMapper;
 using Blogifier.Data;
-using Blogifier.Newsletters;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
