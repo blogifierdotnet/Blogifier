@@ -8,13 +8,7 @@
 @inject IMapper _mapper
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
-
-<PostEditorComponent @ref="_postEditorComponent"
-                     Post="@Post"
-                     OnSaveCallback="OnSaveAsync"
-                     OnRemoveCallback="OnRemoveAsync"
-                     OnFileUploadCallback="OnFileUploadAsync">
-</PostEditorComponent>
+<PostEditorComponent @ref="_postEditorComponent" Post="@Post" OnSaveCallback="OnSaveAsync" OnRemoveCallback="OnRemoveAsync" />
 
 @code {
 
