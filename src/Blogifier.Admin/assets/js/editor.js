@@ -273,21 +273,13 @@ export function getEditorValue() {
   return easymde.value();
 }
 
-export function previewImage(inputElem) {
-  const file = inputElem.files[0];
+export function writeFrontFile(inputElement) {
+  const file = inputElement.files[0];
   const fileName = file.name;
   const url = URL.createObjectURL(file);
   let output = '\r\n![' + fileName + '](' + url + ')';
   let codemirror = easymde.codemirror;
   codemirror.selection;
   codemirror.replaceSelection(output);
-  return {
-    fileName,
-    url,
-    selection: output
-  }
-}
-
-export function replaceSelection(file, storage) {
-  console.log(file, storage);
+  return { fileName, url, selection: output }
 }

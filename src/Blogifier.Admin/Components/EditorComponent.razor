@@ -5,16 +5,16 @@
 <div class="easymde-wrapper">
   <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
 </div>
-<InputFile @ref="inputImageFileReference" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
+<InputFile @ref="_inputFileReference" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
 
 @code {
 
   [Parameter] public string Toolbar { get; set; } = default!;
-  [Parameter] public EventCallback<FrontFilePreviewDto> OnFileUploadCallback { get; set; }
 
   private ValueTask<IJSObjectReference> _taskModule;
   private ElementReference? _textareaReference;
-  private InputFile? inputImageFileReference;
+  private InputFile? _inputFileReference;
+  private List<FrontFileDto> _frontFiles = new List<FrontFileDto>();
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
@@ -22,7 +22,7 @@
     {
       _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
       var module = await _taskModule;
-      var element = inputImageFileReference?.Element;
+      var element = _inputFileReference?.Element;
       await module.InvokeVoidAsync("loadEditor", Toolbar, _textareaReference, element);
     }
   }
@@ -30,10 +30,9 @@
   protected async Task LoadImageFiles(InputFileChangeEventArgs args)
   {
     var module = await _taskModule;
-    var element = inputImageFileReference?.Element;
-    var preview = await module.InvokeAsync<FrontFilePreviewDto>("previewImage", element);
-    preview.BrowserFile = args.File;
-    await OnFileUploadCallback.InvokeAsync(preview);
+    var element = _inputFileReference?.Element;
+    var file = await module.InvokeAsync<FrontFileDto>("writeFrontFile", element);
+    _frontFiles.Add(file);
   }
 
   public async ValueTask SetValueAsync(string value)
@@ -42,20 +41,12 @@
     await module.InvokeVoidAsync("setEditorValue", value);
   }
 
-  public async ValueTask<string?> GetValueAsync()
+  public async ValueTask<(string?, List<FrontFileDto>)> GetValueAsync()
   {
     var module = await _taskModule;
     var content = await module.InvokeAsync<string>("getEditorValue");
-    return content;
+    return (content, _frontFiles);
   }
-
-
-  public async Task ReplaceSelectionAsync(FrontFilePreviewDto file, StorageDto storage)
-  {
-    var module = await _taskModule;
-    await module.InvokeVoidAsync("replaceSelection", file, storage);
-  }
-
 
   async ValueTask IAsyncDisposable.DisposeAsync()
   {
