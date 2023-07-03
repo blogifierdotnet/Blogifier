@@ -1,11 +1,11 @@
 @page "/admin/blogs/editor/{Slug?}"
-@using System.Net.Http.Headers;
 
 @inject HttpClient _httpClient
 @inject IStringLocalizer<Resource> _localizer
 @inject NavigationManager _navigation
 @inject IToaster _toaster
 @inject ToasterService _toasterService
+@inject IMapper _mapper
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
 
@@ -43,11 +43,13 @@
     }
   }
 
-  protected async Task OnSaveAsync(PostEditorDto post)
+  protected async Task OnSaveAsync(FrontPostEditorDto input)
   {
-    if (Post.Id == 0)
+    var post = _mapper.Map<PostEditorDto>(input);
+
+    if (post.Id == 0)
     {
-      var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
+      var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", post);
       if (_toasterService.CheckResponse(response))
       {
         var slug = await response.Content.ReadAsStringAsync();
@@ -56,7 +58,7 @@
     }
     else
     {
-      var response = await _httpClient.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
+      var response = await _httpClient.PutAsJsonAsync<PostEditorDto>($"api/post/update", post);
       _toasterService.CheckResponse(response);
     }
   }
