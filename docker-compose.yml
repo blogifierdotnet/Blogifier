@@ -1,0 +1,44 @@
+version: "2.4"
+
+services:
+
+  mysql:
+    image: mysql:latest
+    container_name: example_mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --lower_case_table_names=1
+      - --performance_schema=off
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+      MYSQL_ROOT_PASSWORD: blogifier
+    volumes:
+      - ./deploy/data/mysql/data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    container_name: example_redis
+    restart: always
+    command: --requirepass "blogifier"
+    volumes:
+      - ./deploy/data/redis/data:/data
+
+  blogifier:
+    container_name: example_blogifier
+    image: dorthl/blogifier:latest
+    restart: always
+    build: .
+    ports:
+      - '8080:80'
+    environment:
+      TZ: 'Asia/Shanghai'
+      Blogifier__DbProvider: MySql
+      Blogifier__ConnString: Server=mysql;Database=blogifier;User=root;Password=blogifier;
+      Blogifier__Redis: redis:6379,password=blogifier,defaultDatabase=0
+    volumes:
+      - ./deploy/data/blogifier/app_data:/opt/blogifier/App_Data
+    mem_limit: 256MB
+

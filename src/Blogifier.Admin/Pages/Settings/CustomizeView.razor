@@ -1,27 +1,22 @@
-﻿@layout SettingsLayout
 @page "/admin/settings/customize/"
+
+@layout SettingsLayout
+
 @inject HttpClient _http
 @inject IStringLocalizer<Resource> _localizer
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime _jsRuntime
+@inject IToaster _toaster
 
-<BlogPageTitle Title="@_localizer["customize"]" />
+<PageTitleComponent Title="@_localizer["customize"]" />
 
-<h1 class="section-title">@_localizer["customization"]</h1>
+<h1 class="section-title">@_localizer["menus"]</h1>
 <p class="section-desc w-75">@_localizer["theme-customization-desc"]</p>
 <div class="section-content">
-    <SettingsComponent @ref="ChildSettings" />
-    <button @onclick="()=> SaveSettings()" class="btn btn-blogifier px-5 mt-4">@_localizer["save"]</button>
-
+  <div class="alert alert-secondary d-flex align-items-center">
+    @_localizer["under-development"].
+    <a class="ms-auto btn btn-sm btn-secondary py-1" target="_blank" href="https://github.com/blogifierdotnet/blogifier/projects/">
+      @_localizer["more-info"]
+    </a>
+  </div>
 </div>
 
-<ToasterComponent @ref="Toaster" />
-
-@code {
-   protected ToasterComponent Toaster;
-   SettingsComponent ChildSettings;
-
-   async Task SaveSettings()
-   {
-      Toaster.Toast(await ChildSettings.Save());
-   }
-}

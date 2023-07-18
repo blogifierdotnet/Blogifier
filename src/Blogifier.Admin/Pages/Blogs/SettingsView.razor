@@ -1,0 +1,56 @@
+@page "/admin/blogs/settings"
+@layout BlogsLayout
+
+@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+
+@code {
+  protected BlogEitorDto? Blog { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    Blog = await _http.GetFromJsonAsync<BlogEitorDto>("api/blog");
+  }
+
+  protected async Task Save()
+  {
+    Toast(await _http.PutAsJsonAsync<BlogEitorDto>("api/blog", Blog!));
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}
+
+<PageTitleComponent Title="@_localizer["blog-settings"]" />
+
+@if (Blog != null)
+{
+  <h1 class="section-title">@_localizer["blog-settings"]</h1>
+  <div class="section-content -half">
+    <EditForm model="@Blog" OnValidSubmit="Save">
+      <DataAnnotationsValidator />
+      <ValidationSummary />
+      <div class="form-item">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" @bind="Blog.IncludeFeatured" id="IncludeFeaturedSwitch">
+          <label class="form-check-label" for="IncludeFeaturedSwitch">@_localizer["include-featured"]</label>
+        </div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">@_localizer["items-per-page"]</label>
+        <input type="text" class="form-control" @bind="Blog.ItemsPerPage" name="pageitems" />
+      </div>
+      <div class="form-item">
+        <button type="submit" class="btn btn-blogifier px-5">@_localizer["save"]</button>
+      </div>
+    </EditForm>
+  </div>
+}
+
+

@@ -1,0 +1,62 @@
+@page "/admin/pages/editor/{Slug?}/"
+
+@inject HttpClient _httpClient
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+@inject NavigationManager _navigation
+@inject ToasterService _toasterService
+
+<PageTitleComponent Title="@_localizer["new-page"]" />
+
+<PostEditorComponent Post="@Post" OnSaveCallback="OnSaveAsync" OnRemoveCallback="OnRemoveAsync"></PostEditorComponent>
+
+@code {
+
+  [Parameter] public string? Slug { get; set; }
+
+  protected PostEditorDto Post { get; set; } = new PostEditorDto
+    {
+      Title = string.Empty,
+      Description = string.Empty,
+      Content = string.Empty,
+      PostType = PostType.Page,
+      Cover = BlogifierSharedConstant.DefaultCover,
+      Categories = new List<CategoryDto>(),
+    };
+
+  protected override async Task OnParametersSetAsync()
+  {
+    if (!string.IsNullOrEmpty(Slug))
+    {
+      Post = (await _httpClient.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
+      if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
+    }
+  }
+
+  protected async Task OnSaveAsync(PostEditorDto post)
+  {
+    if (Post.Id == 0)
+    {
+      var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", Post);
+      if (_toasterService.CheckResponse(response))
+      {
+        var slug = await response.Content.ReadAsStringAsync();
+        _navigation.NavigateTo($"/admin/pages/editor/{slug}");
+      }
+    }
+    else
+    {
+      var response = await _httpClient.PutAsJsonAsync<PostEditorDto>($"api/post/update", Post);
+      _toasterService.CheckResponse(response);
+    }
+  }
+
+  protected async Task OnRemoveAsync(int id)
+  {
+    var result = await _httpClient.DeleteAsync($"api/post/{id}");
+    if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
+    else _toaster.Error(_localizer["generic-error"]);
+    _navigation.NavigateTo($"admin");
+  }
+
+}

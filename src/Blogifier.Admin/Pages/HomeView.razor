@@ -1,0 +1,282 @@
+@using ChartJs.Blazor
+@using ChartJs.Blazor.Common
+@using ChartJs.Blazor.Common.Enums
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.BarChart
+@using System.Drawing
+
+@page "/admin"
+
+@inject HttpClient _http
+@inject IStringLocalizer<Resource> _localizer
+@inject IToaster _toaster
+
+@code {
+
+  protected BarConfig _config = default!;
+  protected List<OptionItem> _dateOptions = default!;
+  protected List<PostVisit> _visits = default!;
+  protected bool _hideGraph = false;
+  protected bool _hideList = true;
+  protected AnalyticsDto? _analytics;
+
+  protected override async Task OnInitializedAsync()
+  {
+    _config = new BarConfig
+    {
+      Options = new BarOptions
+      {
+        Responsive = true,
+        Legend = new Legend
+        {
+          Position = Position.Top
+        }
+      }
+    };
+    _dateOptions = new List<OptionItem>
+    {
+      new OptionItem { Id = 1, Title = _localizer["today"] },
+      new OptionItem { Id = 2, Title = _localizer["yesterday"] },
+      new OptionItem { Id = 3, Title = _localizer["7-days"] },
+      new OptionItem { Id = 4, Title = _localizer["30-days"] },
+      new OptionItem { Id = 5, Title = _localizer["90-days"] },
+    };
+    Load();
+    _analytics = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
+  }
+
+  protected void Load()
+  {
+    var dataset = new BarDataset<int>()
+      {
+        Label = "Latest Post Views",
+        BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
+        BorderWidth = 0
+      };
+
+    if (_analytics == null || _analytics.LatestPostViews == null)
+    {
+      LoadData(dataset, TestData());
+    }
+    else
+    {
+      _hideList = _analytics.DisplayType == AnalyticsListType.Graph;
+      _hideGraph = _analytics.DisplayType == AnalyticsListType.List;
+
+      LoadData(dataset, _analytics.LatestPostViews);
+    }
+
+    if (_config.Data.Datasets.Count > 0)
+    {
+      _config.Data.Datasets.Clear();
+    }
+
+    _config.Data.Datasets.Add(dataset);
+  }
+
+
+
+  protected void LoadData(IDataset<int> dataset, BarChartModel model)
+  {
+    _visits = new List<PostVisit>();
+    var labels = model.Labels.ToList();
+    var values = model.Data.ToList();
+
+    _config.Data.Labels.Clear();
+
+    for (int i = 0; i < labels.Count; i++)
+    {
+      _config.Data.Labels.Add(labels[i]);
+      dataset.Add(values[i]);
+
+      _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
+    }
+    _visits = _visits.OrderByDescending(v => v.Value).ToList();
+  }
+
+  protected async Task ToggleAnalyticsView(bool isGraph)
+  {
+    _hideGraph = await Task.FromResult(!isGraph);
+    _hideList = isGraph;
+
+    int typeId = isGraph ? 2 : 1;
+
+    Toast(await _http.PutAsJsonAsync<int>($"api/analytics/displayType/{typeId}", typeId));
+  }
+
+  protected void DateOptionSelect(int id)
+  {
+    //var blog = await _http.GetFromJsonAsync<BlogEitorDto>("api/blog");
+    //blog.AnalyticsPeriod = id;
+    //_analytics.DisplayPeriod = (AnalyticsPeriod)id;
+    //Toast(await _http.PutAsJsonAsync<Blog>("api/blog", blog));
+    //Load();
+  }
+
+  protected BarChartModel TestData()
+  {
+    return new BarChartModel()
+      {
+        Labels = new List<string>() { "Post One", "Post Two", "Post Three", "Post Four", "Post Five", "Post Six" },
+        Data = new List<int>() { 12036, 15350, 9457, 11104, 7938, 8136 }
+      };
+  }
+
+  protected string PeriodLabel()
+  {
+    if (_analytics == null)
+      return "";
+    return _analytics.DisplayPeriod.ToString();
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
+}
+
+<PageTitleComponent Title="@_localizer["dashboard"]" />
+
+<div class="container">
+  <div class="dashboard row no-gutters">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-6">
+          <a class="dash-widget dash-link dash-btn d-flex justify-content-center align-items-center" href="/admin/blogs/editor/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" fill="currentColor" class="me-3 bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+            </svg>
+            <span class="dash-btn-name">@_localizer["new-post"]</span>
+          </a>
+        </div>
+        <div class="col-6">
+          <a class="dash-widget dash-link dash-btn d-flex justify-content-center align-items-center" href="/admin/pages/editor/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="me-3 bi" viewBox="0 0 24 24">
+              <path d="M3 12C3 10.8954 3.89543 10 5 10H19C20.1046 10 21 10.8954 21 12C21 13.1046 20.1046 14 19 14H5C3.89543 14 3 13.1046 3 12Z" />
+              <path d="M12 3C13.1046 3 14 3.89543 14 5L14 19C14 20.1046 13.1046 21 12 21C10.8954 21 10 20.1046 10 19L10 5C10 3.89543 10.8954 3 12 3Z" />
+            </svg>
+            <span class="dash-btn-name">@_localizer["new-page"]</span>
+          </a>
+        </div>
+      </div>
+      @if (_analytics != null)
+      {
+        <div class="row">
+          <div class="col-4">
+            <a class="dash-widget dash-link dash-stats" href="/admin/blogs/">
+              <span class="dash-stats-value">@_analytics.TotalPosts</span>
+              <span class="dash-stats-name">@_localizer["posts"]</span>
+            </a>
+          </div>
+          <div class="col-4">
+            <a class="dash-widget dash-link dash-stats" href="/admin/pages/">
+              <span class="dash-stats-value">@_analytics.TotalPages</span>
+              <span class="dash-stats-name">@_localizer["pages"]</span>
+            </a>
+          </div>
+          <div class="col-4">
+            <a class="dash-widget dash-link dash-stats" href="/admin/newsletter/subscribers/">
+              <span class="dash-stats-value">@_analytics.TotalSubscribers</span>
+              <span class="dash-stats-name">@_localizer["subscribers"]</span>
+            </a>
+          </div>
+        </div>
+
+      }
+    </div>
+    <div class="col-md-6">
+      <div class="dash-widget dash-pan">
+        <div class="dash-pan-header">
+          <div class="dash-pan-title me-auto">@_localizer["analytics"]</div>
+          <div class="dropdown dropdown-flush">
+            <a class="text-muted" type="button" id="dropdownAnalytics" data-bs-toggle="dropdown" aria-expanded="false"
+               href="#">
+              <span>@(_hideList ? _localizer["chart"] : _localizer["list"])</span> - <span>@PeriodLabel()</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down"
+                   viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="dropdownAnalytics">
+              <div class="mb-1 text-muted">@_localizer["date"]:</div>
+              <ul class="mb-3 list-unstyled">
+                @if (_dateOptions != null && _analytics != null)
+                {
+                  foreach (var option in _dateOptions)
+                  {
+                    var cls = _analytics.DisplayPeriod == (AnalyticsPeriod)option.Id ? "py-1 px-2 rounded dropdown-item active" :
+                    "py-1 px-2 rounded dropdown-item";
+                    <li>
+                      <button type="button" class="@cls" @onclick="() => DateOptionSelect(option.Id)">@option.Title</button>
+                    </li>
+                  }
+                }
+              </ul>
+              <div class="mb-1 text-muted">@_localizer["view"]:</div>
+              <div class="btn-group w-100" role="group" aria-label="Basic radio toggle button group">
+                @if (_hideList)
+                {
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
+                  @onchange="() => ToggleAnalyticsView(true)">
+                }
+                else
+                {
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                  @onchange="() => ToggleAnalyticsView(true)">
+                }
+                <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio1">@_localizer["chart"]</label>
+                @if (_hideGraph)
+                {
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked
+                  @onchange="() => ToggleAnalyticsView(false)">
+                }
+                else
+                {
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                  @onchange="() => ToggleAnalyticsView(false)">
+                }
+                <label class="btn btn-sm btn-outline-blogifier w-50" for="btnradio2">@_localizer["list"]</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!--
+          The list of posts/pages in the selected time,
+          sorting by the higher visits.
+          Note:
+          A single visitor maybe visits 10 pages, so that's why we have Visits and Visitors.
+        -->
+        <ul hidden="@_hideList" class="dash-list">
+          <li class="dash-list-item">
+            <strong class="dash-list-title">@_localizer["title"]</strong>
+            <strong class="dash-list-text">@_localizer["visits"]</strong>
+          </li>
+          @if (_visits != null && _visits.Count > 0)
+          {
+            foreach (var visit in _visits)
+            {
+              <li class="dash-list-item">
+                <span class="dash-list-title">@visit.Name</span>
+                <span class="dash-list-text pe-2">@visit.Value</span>
+              </li>
+            }
+          }
+        </ul>
+
+        <!-- Chart must show visits per day not by the title of the post. -->
+        <div class="dash-pan-body" hidden="@_hideGraph">
+          <Chart Config="_config"></Chart>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

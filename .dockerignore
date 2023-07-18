@@ -1,0 +1,7 @@
+.git
+**/bin
+**/obj
+**/node_modules
+Dockerfile
+docker-compose.yml
+deploy/

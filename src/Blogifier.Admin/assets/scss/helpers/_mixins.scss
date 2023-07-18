@@ -1,0 +1,5 @@
+@mixin bf-shadow($rad: .25rem, $shad: $bf-shadow, $bg: #fff) {
+  background: $bg;
+  box-shadow: $shad;
+  border-radius: $rad;
+}

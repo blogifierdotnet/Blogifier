@@ -1,0 +1,37 @@
+{
+  "name": "blogifier.admin",
+  "Author": "https://github.com/farzindev",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run rollup | npm run sass ",
+    "rtl": "rtlcss dist/admin/css/styles.css css/styles.rtl.css",
+    "sass": "sass --watch scss:dist/admin/css --style=compressed",
+    "rollup": "rollup --config -w",
+    "build-sass": "sass scss:dist/admin/css --style=compressed",
+    "build-rollup": "rollup --config",
+    "build": "npm run build-sass && npm run build-rollup",
+    "sass:Debug": "sass scss:dist/admin/css",
+    "rollup:Debug": "rollup --config rollup.config.dev.mjs",
+    "build:Debug": "npm run sass:Debug && npm run rollup:Debug",
+    "sass:Release": "sass scss:dist/admin/css --style=compressed",
+    "rollup:Release": "rollup --config rollup.config.mjs",
+    "build:Release": "npm run sass:Release && npm run rollup:Release"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "glob": "^10.2.6",
+    "rollup": "^3.23.1",
+    "rtlcss": "^3.3.0",
+    "sass": "~1.32.12"
+  },
+  "dependencies": {
+    "bootstrap": "~5.1.0",
+    "autosize": "^6.0.1",
+    "chart.js": "~2.9.4",
+    "easymde": "^2.18.0",
+    "highlight.js": "~10.7.2"
+  }
+}

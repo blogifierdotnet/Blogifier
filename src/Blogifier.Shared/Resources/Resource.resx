@@ -1,768 +1,777 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-    <!--
-        Microsoft ResX Schema
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-        Version 2.0
-
-        The primary goals of this format is to allow a simple XML format
-        that is mostly human readable. The generation and parsing of the
-        various data types are done through the TypeConverter classes
-        associated with the data types.
-
-        Example:
-
-        ... ado.net/XML headers & schema ...
-        <resheader name="resmimetype">text/microsoft-resx</resheader>
-        <resheader name="version">2.0</resheader>
-        <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-        <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-        <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-        <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-        <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-            <value>[base64 mime encoded serialized .NET Framework object]</value>
-        </data>
-        <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-            <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-            <comment>This is a comment</comment>
-        </data>
-
-        There are any number of "resheader" rows that contain simple
-        name/value pairs.
-
-        Each data row contains a name, and value. The row also contains a
-        type or mimetype. Type corresponds to a .NET class that support
-        text/value conversion through the TypeConverter architecture.
-        Classes that don't support this are serialized and stored with the
-        mimetype set.
-
-        The mimetype is used for serialized objects, and tells the
-        ResXResourceReader how to depersist the object. This is currently not
-        extensible. For a given mimetype the value must be set accordingly:
-
-        Note - application/x-microsoft.net.object.binary.base64 is the format
-        that the ResXResourceWriter will generate, however the reader can
-        read any of the formats listed below.
-
-        mimetype: application/x-microsoft.net.object.binary.base64
-        value   : The object must be serialized with
-                : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-                : and then encoded with base64 encoding.
-
-        mimetype: application/x-microsoft.net.object.soap.base64
-        value   : The object must be serialized with
-                : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-                : and then encoded with base64 encoding.
-
-        mimetype: application/x-microsoft.net.object.bytearray.base64
-        value   : The object must be serialized into a byte array
-                : using a System.ComponentModel.TypeConverter
-                : and then encoded with base64 encoding.
-        -->
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-        <xsd:element name="root" msdata:IsDataSet="true">
-        <xsd:complexType>
-            <xsd:choice maxOccurs="unbounded">
-            <xsd:element name="metadata">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" />
-                </xsd:sequence>
-                <xsd:attribute name="name" use="required" type="xsd:string" />
-                <xsd:attribute name="type" type="xsd:string" />
-                <xsd:attribute name="mimetype" type="xsd:string" />
-                <xsd:attribute ref="xml:space" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="assembly">
-                <xsd:complexType>
-                <xsd:attribute name="alias" type="xsd:string" />
-                <xsd:attribute name="name" type="xsd:string" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="data">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                    <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-                </xsd:sequence>
-                <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-                <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-                <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-                <xsd:attribute ref="xml:space" />
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="resheader">
-                <xsd:complexType>
-                <xsd:sequence>
-                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                </xsd:sequence>
-                <xsd:attribute name="name" type="xsd:string" use="required" />
-                </xsd:complexType>
-            </xsd:element>
-            </xsd:choice>
-        </xsd:complexType>
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>2.0</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="general" xml:space="preserve">
-        <value>General</value>
-    </data>
-    <data name="profile" xml:space="preserve">
-        <value>Profile</value>
-    </data>
-    <data name="password" xml:space="preserve">
-        <value>Password</value>
-    </data>
-    <data name="themes" xml:space="preserve">
-        <value>Themes</value>
-    </data>
-    <data name="users" xml:space="preserve">
-        <value>Users</value>
-    </data>
-    <data name="new-user" xml:space="preserve">
-        <value>New user</value>
-    </data>
-    <data name="import" xml:space="preserve">
-        <value>Import</value>
-    </data>
-    <data name="new-post" xml:space="preserve">
-        <value>New post</value>
-    </data>
-    <data name="posts" xml:space="preserve">
-        <value>Posts</value>
-    </data>
-    <data name="settings" xml:space="preserve">
-        <value>Settings</value>
-    </data>
-    <data name="notifications" xml:space="preserve">
-        <value>Notifications</value>
-    </data>
-    <data name="visit-blog" xml:space="preserve">
-        <value>Visit Blog</value>
-    </data>
-    <data name="title" xml:space="preserve">
-        <value>Title</value>
-    </data>
-    <data name="description" xml:space="preserve">
-        <value>Description</value>
-    </data>
-    <data name="items-per-page" xml:space="preserve">
-        <value>Items per page</value>
-    </data>
-    <data name="logo" xml:space="preserve">
-        <value>Logo Image</value>
-    </data>
-    <data name="cover" xml:space="preserve">
-        <value>Cover Image</value>
-    </data>
-    <data name="language" xml:space="preserve">
-        <value>Language</value>
-    </data>
-    <data name="save" xml:space="preserve">
-        <value>Save</value>
-    </data>
-    <data name="select" xml:space="preserve">
-        <value>Select</value>
-    </data>
-    <data name="selected" xml:space="preserve">
-        <value>Selected</value>
-    </data>
-    <data name="search" xml:space="preserve">
-        <value>Search</value>
-    </data>
-    <data name="all" xml:space="preserve">
-        <value>All</value>
-    </data>
-    <data name="published" xml:space="preserve">
-        <value>Published</value>
-    </data>
-    <data name="draft" xml:space="preserve">
-        <value>Draft</value>
-    </data>
-    <data name="status" xml:space="preserve">
-        <value>Status</value>
-    </data>
-    <data name="not-found" xml:space="preserve">
-        <value>Not found</value>
-    </data>
-    <data name="publish" xml:space="preserve">
-        <value>Publish</value>
-    </data>
-    <data name="unpublish" xml:space="preserve">
-        <value>Unpublish</value>
-    </data>
-    <data name="featured" xml:space="preserve">
-        <value>Featured</value>
-    </data>
-    <data name="add-to-featured" xml:space="preserve">
-        <value>Add to featured</value>
-    </data>
-    <data name="cancel" xml:space="preserve">
-        <value>Cancel</value>
-    </data>
-    <data name="delete" xml:space="preserve">
-        <value>Delete</value>
-    </data>
-    <data name="categories" xml:space="preserve">
-        <value>Categories</value>
-    </data>
-    <data name="view" xml:space="preserve">
-        <value>View</value>
-    </data>
-    <data name="user-name" xml:space="preserve">
-        <value>User name</value>
-    </data>
-    <data name="email" xml:space="preserve">
-        <value>Email</value>
-    </data>
-    <data name="user-bio" xml:space="preserve">
-        <value>User bio</value>
-    </data>
-    <data name="avatar" xml:space="preserve">
-        <value>Avatar</value>
-    </data>
-    <data name="remove" xml:space="preserve">
-        <value>Remove</value>
-    </data>
-    <data name="removed" xml:space="preserve">
-        <value>Removed</value>
-    </data>
-    <data name="new-password" xml:space="preserve">
-        <value>New password</value>
-    </data>
-    <data name="confirm-password" xml:space="preserve">
-        <value>Confirm password</value>
-    </data>
-    <data name="close" xml:space="preserve">
-        <value>Close</value>
-    </data>
-    <data name="set-as-admin" xml:space="preserve">
-        <value>Set as administrator</value>
-    </data>
-    <data name="select-rss-file" xml:space="preserve">
-        <value>Select RSS (.xml) file to import posts from</value>
-    </data>
-    <data name="images" xml:space="preserve">
-        <value>Images</value>
-    </data>
-    <data name="attachments" xml:space="preserve">
-        <value>attachments</value>
-    </data>
-    <data name="upload" xml:space="preserve">
-        <value>Upload</value>
-    </data>
-    <data name="filters" xml:space="preserve">
-        <value>Filters</value>
-    </data>
-    <data name="change-password" xml:space="preserve">
-        <value>Change password</value>
-    </data>
-    <data name="theme" xml:space="preserve">
-        <value>Theme</value>
-    </data>
-    <data name="read" xml:space="preserve">
-        <value>Read</value>
-    </data>
-    <data name="updated" xml:space="preserve">
-        <value>Updated</value>
-    </data>
-    <data name="created" xml:space="preserve">
-        <value>Created</value>
-    </data>
-    <data name="about" xml:space="preserve">
-        <value>About</value>
-    </data>
-    <data name="newsletter" xml:space="preserve">
-        <value>Newsletter</value>
-    </data>
-    <data name="newsletter-subscribers" xml:space="preserve">
-        <value>List of email subscribers</value>
-    </data>
-    <data name="contact" xml:space="preserve">
-        <value>Contact</value>
-    </data>
-    <data name="dashboard" xml:space="preserve">
-        <value>Dashboard</value>
-    </data>
-    <data name="popular" xml:space="preserve">
-        <value>Popular</value>
-    </data>
-    <data name="empty" xml:space="preserve">
-        <value>Empty</value>
-    </data>
-    <data name="edit" xml:space="preserve">
-        <value>Edit</value>
-    </data>
-    <data name="details" xml:space="preserve">
-        <value>Details</value>
-    </data>
-    <data name="custom-field" xml:space="preserve">
-        <value>Custom field</value>
-    </data>
-    <data name="error-msg" xml:space="preserve">
-        <value>Sorry, something went wrong or there's nothing at this address.</value>
-    </data>
-    <data name="send" xml:space="preserve">
-        <value>Send</value>
-    </data>
-    <data name="send-to" xml:space="preserve">
-        <value>Send to</value>
-    </data>
-    <data name="subject" xml:space="preserve">
-        <value>Subject</value>
-    </data>
-    <data name="content" xml:space="preserve">
-        <value>Content</value>
-    </data>
-    <data name="completed" xml:space="preserve">
-        <value>Completed</value>
-    </data>
-    <data name="email-info" xml:space="preserve">
-        <value>Here you can verify newsletter settings by sending test email</value>
-    </data>
-    <data name="disqus-info" xml:space="preserve">
-        <value>Here you can enter or update site and script to add Disqus comments</value>
-    </data>
-    <data name="demo-disabled" xml:space="preserve">
-        <value>Disabled in the demo mode</value>
-    </data>
-    <data name="email-sent-success" xml:space="preserve">
-        <value>Email sent successfully</value>
-    </data>
-    <data name="email-sent-error" xml:space="preserve">
-        <value>Error sending email, check logs for details</value>
-    </data>
-    <data name="email-sent-count" xml:space="preserve">
-        <value>Sent {0} newsletters</value>
-    </data>
-    <data name="social-accounts" xml:space="preserve">
-        <value>Social accounts</value>
-    </data>
-    <data name="name" xml:space="preserve">
-        <value>Name</value>
-    </data>
-    <data name="post-title" xml:space="preserve">
-        <value>Post title</value>
-    </data>
-    <data name="type-here" xml:space="preserve">
-        <value>Type here...</value>
-    </data>
-    <data name="thank-you" xml:space="preserve">
-        <value>Thank you!</value>
-    </data>
-    <data name="enter-email" xml:space="preserve">
-        <value>Enter email</value>
-    </data>
-    <data name="subscribe" xml:space="preserve">
-        <value>Subscribe</value>
-    </data>
-    <data name="join-subscribers" xml:space="preserve">
-        <value>Join our subscribers list to get the latest news and updates directly in your inbox.</value>
-    </data>
-    <data name="login" xml:space="preserve">
-        <value>Login</value>
-    </data>
-    <data name="home" xml:space="preserve">
-        <value>Home</value>
-    </data>
-    <data name="blog" xml:space="preserve">
-        <value>Blog</value>
-    </data>
-    <data name="admin" xml:space="preserve">
-        <value>Admin</value>
-    </data>
-    <data name="tag" xml:space="preserve">
-        <value>Tag</value>
-    </data>
-    <data name="quick-links" xml:space="preserve">
-        <value>Quick links</value>
-    </data>
-    <data name="navigation" xml:space="preserve">
-        <value>Navigation</value>
-    </data>
-    <data name="previous" xml:space="preserve">
-        <value>Previous</value>
-    </data>
-    <data name="next" xml:space="preserve">
-        <value>Next</value>
-    </data>
-    <data name="confirm-delete" xml:space="preserve">
-        <value>Delete post?</value>
-    </data>
-    <data name="include-featured" xml:space="preserve">
-        <value>Include Featured in the List</value>
-    </data>
-    <data name="include-scripts" xml:space="preserve">
-        <value>Scripts to be included in the page header and footer (Disqus, Analytics etc.)</value>
-    </data>
-    <data name="subscribers" xml:space="preserve">
-        <value>Subscribers</value>
-    </data>
-    <data name="last-week" xml:space="preserve">
-        <value>Last week</value>
-    </data>
-    <data name="last-month" xml:space="preserve">
-        <value>Last month</value>
-    </data>
-    <data name="email-provider" xml:space="preserve">
-        <value>Email provider</value>
-    </data>
-    <data name="sendgrid-key" xml:space="preserve">
-        <value>Sendgrid key</value>
-    </data>
-    <data name="server" xml:space="preserve">
-        <value>Server</value>
-    </data>
-    <data name="port" xml:space="preserve">
-        <value>Port</value>
-    </data>
-    <data name="smtp-email" xml:space="preserve">
-        <value>SMTP Email</value>
-    </data>
-    <data name="send-test-email" xml:space="preserve">
-        <value>Send test email</value>
-    </data>
-    <data name="unsubscribe" xml:space="preserve">
-        <value>Unsubscribe</value>
-    </data>
-    <data name="login-failed" xml:space="preserve">
-        <value>Login failed, please try again</value>
-    </data>
-    <data name="welcome" xml:space="preserve">
-        <value>Welcome</value>
-    </data>
-    <data name="you-can-sign-in" xml:space="preserve">
-        <value>You can sign in or go &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
-    </data>
-    <data name="register" xml:space="preserve">
-        <value>Register</value>
-    </data>
-    <data name="you-can-register" xml:space="preserve">
-        <value>You can register or go &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
-    </data>
-    <data name="registration" xml:space="preserve">
-        <value>Registration</value>
-    </data>
-    <data name="generic-error" xml:space="preserve">
-        <value>Something went wrong, please try again.</value>
-    </data>
-    <data name="title-content-required" xml:space="preserve">
-        <value>Title and Content are required.</value>
-    </data>
-    <data name="views" xml:space="preserve">
-        <value>Views</value>
-    </data>
-    <data name="pages" xml:space="preserve">
-        <value>Pages</value>
-    </data>
-    <data name="advanced" xml:space="preserve">
-        <value>Advanced</value>
-    </data>
-    <data name="comments" xml:space="preserve">
-        <value>Comments</value>
-    </data>
-    <data name="customize" xml:space="preserve">
-        <value>Customize</value>
-    </data>
-    <data name="info" xml:space="preserve">
-        <value>Info</value>
-    </data>
-    <data name="scripts" xml:space="preserve">
-        <value>Scripts</value>
-    </data>
-    <data name="page-title" xml:space="preserve">
-        <value>Page title</value>
-    </data>
-    <data name="about-blogifier" xml:space="preserve">
-        <value>About Blogifier</value>
-    </data>
-    <data name="actions" xml:space="preserve">
-        <value>Actions</value>
-    </data>
-    <data name="advanced-settings" xml:space="preserve">
-        <value>Advanced settings</value>
-    </data>
-    <data name="basic" xml:space="preserve">
-        <value>Basic</value>
-    </data>
-    <data name="basic-settings" xml:space="preserve">
-        <value>Basic settings</value>
-    </data>
-    <data name="blogifier-desc" xml:space="preserve">
-        <value>Blogifier is an open-source publishing platform built with .NET Core 5.0 and the latest technologies.</value>
-    </data>
-    <data name="comments-settings" xml:space="preserve">
-        <value>Comments settings</value>
-    </data>
-    <data name="edit-profile" xml:space="preserve">
-        <value>Edit profile</value>
-    </data>
-    <data name="home-page" xml:space="preserve">
-        <value>Home page</value>
-    </data>
-    <data name="load" xml:space="preserve">
-        <value>Load</value>
-    </data>
-    <data name="logout" xml:space="preserve">
-        <value>Logout</value>
-    </data>
-    <data name="menus" xml:space="preserve">
-        <value>Menus</value>
-    </data>
-    <data name="new-page" xml:space="preserve">
-        <value>New page</value>
-    </data>
-    <data name="operating-system" xml:space="preserve">
-        <value>Operating system</value>
-    </data>
-    <data name="profile-picture" xml:space="preserve">
-        <value>Profile picture</value>
-    </data>
-    <data name="feed-URL" xml:space="preserve">
-        <value>RSS feed Url</value>
-    </data>
-    <data name="script-footer" xml:space="preserve">
-        <value>Script footer</value>
-    </data>
-    <data name="script-header" xml:space="preserve">
-        <value>Script header</value>
-    </data>
-    <data name="script-settings" xml:space="preserve">
-        <value>Script settings</value>
-    </data>
-    <data name="specification" xml:space="preserve">
-        <value>Specification</value>
-    </data>
-    <data name="list-is-empty" xml:space="preserve">
-        <value>Nothing to show - this list is empty</value>
-    </data>
-    <data name="user" xml:space="preserve">
-        <value>User</value>
-    </data>
-    <data name="users-settings" xml:space="preserve">
-        <value>Users settings</value>
-    </data>
-    <data name="version" xml:space="preserve">
-        <value>Version</value>
-    </data>
-    <data name="website-URL" xml:space="preserve">
-        <value>Website Url</value>
-    </data>
-    <data name="widgets" xml:space="preserve">
-        <value>Widgets</value>
-    </data>
-    <data name="analytics" xml:space="preserve">
-        <value>Analytics</value>
-    </data>
-    <data name="chart" xml:space="preserve">
-        <value>Chart</value>
-    </data>
-    <data name="list" xml:space="preserve">
-        <value>List</value>
-    </data>
-    <data name="visits" xml:space="preserve">
-        <value>Visits</value>
-    </data>
-    <data name="date" xml:space="preserve">
-        <value>Date</value>
-    </data>
-    <data name="days" xml:space="preserve">
-        <value>Days</value>
-    </data>
-    <data name="7-days" xml:space="preserve">
-        <value>7 Days</value>
-    </data>
-    <data name="30-days" xml:space="preserve">
-        <value>30 Days</value>
-    </data>
-    <data name="90-days" xml:space="preserve">
-        <value>90 Days</value>
-    </data>
-    <data name="today" xml:space="preserve">
-        <value>Today</value>
-    </data>
-    <data name="yesterday" xml:space="preserve">
-        <value>Yesterday</value>
-    </data>
-    <data name="drive" xml:space="preserve">
-        <value>Drive</value>
-    </data>
-    <data name="select-all" xml:space="preserve">
-        <value>Select all</value>
-    </data>
-    <data name="not-featured" xml:space="preserve">
-        <value>Not featured</value>
-    </data>
-    <data name="change" xml:space="preserve">
-        <value>Change</value>
-    </data>
-    <data name="reset" xml:space="preserve">
-        <value>Reset</value>
-    </data>
-    <data name="add-category" xml:space="preserve">
-        <value>Add category</value>
-    </data>
-    <data name="new-category" xml:space="preserve">
-        <value>New category</value>
-    </data>
-    <data name="edit-category" xml:space="preserve">
-        <value>Edit category</value>
-    </data>
-    <data name="newsletters" xml:space="preserve">
-        <value>Newsletters</value>
-    </data>
-    <data name="resend" xml:space="preserve">
-        <value>Resend</value>
-    </data>
-    <data name="newsletter-settings" xml:space="preserve">
-        <value>Newsletter Settings</value>
-    </data>
-    <data name="host" xml:space="preserve">
-        <value>Host</value>
-    </data>
-    <data name="to-name" xml:space="preserve">
-        <value>to-name</value>
-    </data>
-    <data name="from-name" xml:space="preserve">
-        <value>from-name</value>
-    </data>
-    <data name="from-email" xml:space="preserve">
-        <value>from-email</value>
-    </data>
-    <data name="enabled" xml:space="preserve">
-        <value>Enabled</value>
-    </data>
-    <data name="disabled" xml:space="preserve">
-        <value>Disabled</value>
-    </data>
-    <data name="default-cover" xml:space="preserve">
-        <value>Default cover</value>
-    </data>
-    <data name="under-development" xml:space="preserve">
-        <value>Under development</value>
-    </data>
-    <data name="learn-more" xml:space="preserve">
-        <value>Learn more</value>
-    </data>
-    <data name="read-more" xml:space="preserve">
-        <value>Read more</value>
-    </data>
-    <data name="more-info" xml:space="preserve">
-        <value>More info</value>
-    </data>
-    <data name="add-user" xml:space="preserve">
-        <value>Add user</value>
-    </data>
-    <data name="current" xml:space="preserve">
-        <value>Current</value>
-    </data>
-    <data name="developer" xml:space="preserve">
-        <value>Developer</value>
-    </data>
-    <data name="by" xml:space="preserve">
-        <value>By</value>
-    </data>
-    <data name="import-message-found" xml:space="preserve">
-        <value>Posts are found and ready to be imported</value>
-    </data>
-    <data name="import-all" xml:space="preserve">
-        <value>Import All</value>
-    </data>
-    <data name="error-page" xml:space="preserve">
-        <value>Error Page</value>
-    </data>
-    <data name="website" xml:space="preserve">
-        <value>Website</value>
-    </data>
-    <data name="database-provider" xml:space="preserve">
-        <value>Database provider</value>
-    </data>
-    <data name="back-to-website" xml:space="preserve">
-        <value>Back to website</value>
-    </data>
-    <data name="microsoft" xml:space="preserve">
-        <value>Microsoft</value>
-    </data>
-    <data name="twitter" xml:space="preserve">
-        <value>Twitter</value>
-    </data>
-    <data name="github" xml:space="preserve">
-        <value>GitHub</value>
-    </data>
-    <data name="facebook" xml:space="preserve">
-        <value>Facebook</value>
-    </data>
-    <data name="instagram" xml:space="preserve">
-        <value>Instagram</value>
-    </data>
-    <data name="linkedin" xml:space="preserve">
-        <value>LinkedIn</value>
-    </data>
-    <data name="google" xml:space="preserve">
-        <value>Google</value>
-    </data>
-    <data name="youtube" xml:space="preserve">
-        <value>YouTube</value>
-    </data>
-    <data name="pinterest" xml:space="preserve">
-        <value>Pinterest</value>
-    </data>
-    <data name="whatsapp" xml:space="preserve">
-        <value>WhatsApp</value>
-    </data>
-    <data name="telegram" xml:space="preserve">
-        <value>Telegram</value>
-    </data>
-    <data name="powered-by-blogifier" xml:space="preserve">
-        <value>Powered by Blogifier</value>
-    </data>
-    <data name="copyright" xml:space="preserve">
-        <value>Copyright</value>
-    </data>
-    <data name="next-page" xml:space="preserve">
-        <value>Next page</value>
-    </data>
-    <data name="previous-page" xml:space="preserve">
-        <value>Previous page</value>
-    </data>
-    <data name="page-not-found" xml:space="preserve">
-        <value>Page not found</value>
-    </data>
-    <data name="share" xml:space="preserve">
-        <value>Share</value>
-    </data>
-    <data name="author" xml:space="preserve">
-        <value>Author</value>
-    </data>
-    <data name="customization" xml:space="preserve">
-        <value>Customization</value>
-    </data>
-    <data name="theme-customization-desc" xml:space="preserve">
-        <value>Every theme has different features. You are customizing your current theme, and these changes only apply to the current theme.</value>
-    </data>
-    <data name="blog-settings" xml:space="preserve">
-        <value>Blog settings</value>
-    </data>
-    <data name="set-current-theme" xml:space="preserve">
-        <value>Set as current theme</value>
-    </data>
-    <data name="create-admin-account" xml:space="preserve">
-        <value>Create admin account</value>
-    </data>
-    <data name="welcome-blogifier" xml:space="preserve">
-        <value>Welcome to the Blogifier</value>
-    </data>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="themes" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="new-user" xml:space="preserve">
+    <value>New user</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="new-post" xml:space="preserve">
+    <value>New post</value>
+  </data>
+  <data name="posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="visit-blog" xml:space="preserve">
+    <value>Visit Blog</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="items-per-page" xml:space="preserve">
+    <value>Items per page</value>
+  </data>
+  <data name="logo" xml:space="preserve">
+    <value>Logo Image</value>
+  </data>
+  <data name="cover" xml:space="preserve">
+    <value>Cover Image</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="selected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="not-found" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="publish" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="unpublish" xml:space="preserve">
+    <value>Unpublish</value>
+  </data>
+  <data name="featured" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="add-to-featured" xml:space="preserve">
+    <value>Add to featured</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="view" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="user-name" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="user-bio" xml:space="preserve">
+    <value>User bio</value>
+  </data>
+  <data name="avatar" xml:space="preserve">
+    <value>Avatar</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="removed" xml:space="preserve">
+    <value>Removed</value>
+  </data>
+  <data name="new-password" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="confirm-password" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="set-as-admin" xml:space="preserve">
+    <value>Set as administrator</value>
+  </data>
+  <data name="select-rss-file" xml:space="preserve">
+    <value>Select RSS (.xml) file to import posts from</value>
+  </data>
+  <data name="images" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="attachments" xml:space="preserve">
+    <value>attachments</value>
+  </data>
+  <data name="upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="change-password" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="updated" xml:space="preserve">
+    <value>Updated</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="newsletter" xml:space="preserve">
+    <value>Newsletter</value>
+  </data>
+  <data name="newsletter-subscribers" xml:space="preserve">
+    <value>List of email subscribers</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="popular" xml:space="preserve">
+    <value>Popular</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="custom-field" xml:space="preserve">
+    <value>Custom field</value>
+  </data>
+  <data name="error-msg" xml:space="preserve">
+    <value>Sorry, something went wrong or there's nothing at this address.</value>
+  </data>
+  <data name="send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="send-to" xml:space="preserve">
+    <value>Send to</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="email-info" xml:space="preserve">
+    <value>Here you can verify newsletter settings by sending test email</value>
+  </data>
+  <data name="disqus-info" xml:space="preserve">
+    <value>Here you can enter or update site and script to add Disqus comments</value>
+  </data>
+  <data name="demo-disabled" xml:space="preserve">
+    <value>Disabled in the demo mode</value>
+  </data>
+  <data name="email-sent-success" xml:space="preserve">
+    <value>Email sent successfully</value>
+  </data>
+  <data name="email-sent-error" xml:space="preserve">
+    <value>Error sending email, check logs for details</value>
+  </data>
+  <data name="email-sent-count" xml:space="preserve">
+    <value>Sent {0} newsletters</value>
+  </data>
+  <data name="social-accounts" xml:space="preserve">
+    <value>Social accounts</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="post-title" xml:space="preserve">
+    <value>Post title</value>
+  </data>
+  <data name="type-here" xml:space="preserve">
+    <value>Type here...</value>
+  </data>
+  <data name="thank-you" xml:space="preserve">
+    <value>Thank you!</value>
+  </data>
+  <data name="enter-email" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="join-subscribers" xml:space="preserve">
+    <value>Join our subscribers list to get the latest news and updates directly in your inbox.</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="tag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="quick-links" xml:space="preserve">
+    <value>Quick links</value>
+  </data>
+  <data name="navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="confirm-delete" xml:space="preserve">
+    <value>Delete post?</value>
+  </data>
+  <data name="include-featured" xml:space="preserve">
+    <value>Include Featured in the List</value>
+  </data>
+  <data name="include-scripts" xml:space="preserve">
+    <value>Scripts to be included in the page header and footer (Disqus, Analytics etc.)</value>
+  </data>
+  <data name="subscribers" xml:space="preserve">
+    <value>Subscribers</value>
+  </data>
+  <data name="last-week" xml:space="preserve">
+    <value>Last week</value>
+  </data>
+  <data name="last-month" xml:space="preserve">
+    <value>Last month</value>
+  </data>
+  <data name="email-provider" xml:space="preserve">
+    <value>Email provider</value>
+  </data>
+  <data name="sendgrid-key" xml:space="preserve">
+    <value>Sendgrid key</value>
+  </data>
+  <data name="server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="smtp-email" xml:space="preserve">
+    <value>SMTP Email</value>
+  </data>
+  <data name="send-test-email" xml:space="preserve">
+    <value>Send test email</value>
+  </data>
+  <data name="unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="login-failed" xml:space="preserve">
+    <value>Login failed, please try again</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="you-can-sign-in" xml:space="preserve">
+    <value>You can sign in or go &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="you-can-register" xml:space="preserve">
+    <value>You can register or go &lt;a href="/"&gt;back to blog&lt;/a&gt;</value>
+  </data>
+  <data name="registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="generic-error" xml:space="preserve">
+    <value>Something went wrong, please try again.</value>
+  </data>
+  <data name="title-content-required" xml:space="preserve">
+    <value>Title and Content are required.</value>
+  </data>
+  <data name="views" xml:space="preserve">
+    <value>Views</value>
+  </data>
+  <data name="pages" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>Scripts</value>
+  </data>
+  <data name="page-title" xml:space="preserve">
+    <value>Page title</value>
+  </data>
+  <data name="about-blogifier" xml:space="preserve">
+    <value>About Blogifier</value>
+  </data>
+  <data name="actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="advanced-settings" xml:space="preserve">
+    <value>Advanced settings</value>
+  </data>
+  <data name="basic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>Basic settings</value>
+  </data>
+  <data name="blogifier-desc" xml:space="preserve">
+    <value>Blogifier is an open-source publishing platform built with .NET Core 5.0 and the latest technologies.</value>
+  </data>
+  <data name="comments-settings" xml:space="preserve">
+    <value>Comments settings</value>
+  </data>
+  <data name="edit-profile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="home-page" xml:space="preserve">
+    <value>Home page</value>
+  </data>
+  <data name="load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="new-page" xml:space="preserve">
+    <value>New page</value>
+  </data>
+  <data name="operating-system" xml:space="preserve">
+    <value>Operating system</value>
+  </data>
+  <data name="profile-picture" xml:space="preserve">
+    <value>Profile picture</value>
+  </data>
+  <data name="feed-URL" xml:space="preserve">
+    <value>RSS feed Url</value>
+  </data>
+  <data name="script-footer" xml:space="preserve">
+    <value>Script footer</value>
+  </data>
+  <data name="script-header" xml:space="preserve">
+    <value>Script header</value>
+  </data>
+  <data name="script-settings" xml:space="preserve">
+    <value>Script settings</value>
+  </data>
+  <data name="specification" xml:space="preserve">
+    <value>Specification</value>
+  </data>
+  <data name="list-is-empty" xml:space="preserve">
+    <value>Nothing to show - this list is empty</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="users-settings" xml:space="preserve">
+    <value>Users settings</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="website-URL" xml:space="preserve">
+    <value>Website Url</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>Widgets</value>
+  </data>
+  <data name="analytics" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
+  <data name="chart" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="list" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="visits" xml:space="preserve">
+    <value>Visits</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="7-days" xml:space="preserve">
+    <value>7 Days</value>
+  </data>
+  <data name="30-days" xml:space="preserve">
+    <value>30 Days</value>
+  </data>
+  <data name="90-days" xml:space="preserve">
+    <value>90 Days</value>
+  </data>
+  <data name="today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="drive" xml:space="preserve">
+    <value>Drive</value>
+  </data>
+  <data name="select-all" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="not-featured" xml:space="preserve">
+    <value>Not featured</value>
+  </data>
+  <data name="change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="add-category" xml:space="preserve">
+    <value>Add category</value>
+  </data>
+  <data name="new-category" xml:space="preserve">
+    <value>New category</value>
+  </data>
+  <data name="edit-category" xml:space="preserve">
+    <value>Edit category</value>
+  </data>
+  <data name="newsletters" xml:space="preserve">
+    <value>Newsletters</value>
+  </data>
+  <data name="resend" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="newsletter-settings" xml:space="preserve">
+    <value>Newsletter Settings</value>
+  </data>
+  <data name="host" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="to-name" xml:space="preserve">
+    <value>to-name</value>
+  </data>
+  <data name="from-name" xml:space="preserve">
+    <value>from-name</value>
+  </data>
+  <data name="from-email" xml:space="preserve">
+    <value>from-email</value>
+  </data>
+  <data name="enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="default-cover" xml:space="preserve">
+    <value>Default cover</value>
+  </data>
+  <data name="under-development" xml:space="preserve">
+    <value>Under development</value>
+  </data>
+  <data name="learn-more" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
+  <data name="read-more" xml:space="preserve">
+    <value>Read more</value>
+  </data>
+  <data name="more-info" xml:space="preserve">
+    <value>More info</value>
+  </data>
+  <data name="add-user" xml:space="preserve">
+    <value>Add user</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="developer" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="by" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="import-message-found" xml:space="preserve">
+    <value>Posts are found and ready to be imported</value>
+  </data>
+  <data name="import-all" xml:space="preserve">
+    <value>Import All</value>
+  </data>
+  <data name="error-page" xml:space="preserve">
+    <value>Error Page</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="database-provider" xml:space="preserve">
+    <value>Database provider</value>
+  </data>
+  <data name="back-to-website" xml:space="preserve">
+    <value>Back to website</value>
+  </data>
+  <data name="microsoft" xml:space="preserve">
+    <value>Microsoft</value>
+  </data>
+  <data name="twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="github" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="instagram" xml:space="preserve">
+    <value>Instagram</value>
+  </data>
+  <data name="linkedin" xml:space="preserve">
+    <value>LinkedIn</value>
+  </data>
+  <data name="google" xml:space="preserve">
+    <value>Google</value>
+  </data>
+  <data name="youtube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="pinterest" xml:space="preserve">
+    <value>Pinterest</value>
+  </data>
+  <data name="whatsapp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="telegram" xml:space="preserve">
+    <value>Telegram</value>
+  </data>
+  <data name="powered-by-blogifier" xml:space="preserve">
+    <value>Powered by Blogifier</value>
+  </data>
+  <data name="copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="next-page" xml:space="preserve">
+    <value>Next page</value>
+  </data>
+  <data name="previous-page" xml:space="preserve">
+    <value>Previous page</value>
+  </data>
+  <data name="page-not-found" xml:space="preserve">
+    <value>Page not found</value>
+  </data>
+  <data name="share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="customization" xml:space="preserve">
+    <value>Customization</value>
+  </data>
+  <data name="theme-customization-desc" xml:space="preserve">
+    <value>Every theme has different features. You are customizing your current theme, and these changes only apply to the current theme.</value>
+  </data>
+  <data name="blog-settings" xml:space="preserve">
+    <value>Blog settings</value>
+  </data>
+  <data name="set-current-theme" xml:space="preserve">
+    <value>Set as current theme</value>
+  </data>
+  <data name="create-admin-account" xml:space="preserve">
+    <value>Create admin account</value>
+  </data>
+  <data name="welcome-blogifier" xml:space="preserve">
+    <value>Welcome to the Blogifier</value>
+  </data>
+  <data name="drive-describe" xml:space="preserve">
+    <value>Drive is a file storage that you are able to upload and manage your files and use throughout the website.</value>
+  </data>
+  <data name="nick-name" xml:space="preserve">
+    <value>NickName</value>
+  </data>
+  <data name="page-not-found-message" xml:space="preserve">
+    <value>The Page you are looking for doesn't exist, or error occurred.</value>
+  </data>
 </root>

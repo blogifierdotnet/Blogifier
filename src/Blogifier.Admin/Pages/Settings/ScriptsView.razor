@@ -1,44 +1,51 @@
 @layout SettingsLayout
 @page "/admin/settings/scripts/"
 @inject HttpClient _http
+@inject IToaster _toaster
 @inject IStringLocalizer<Resource> _localizer
 
-<BlogPageTitle Title="@_localizer["script-settings"]" />
+<PageTitleComponent Title="@_localizer["script-settings"]" />
 
 <h1 class="section-title">@_localizer["script-settings"]</h1>
 <p class="section-desc">@_localizer["include-scripts"]</p>
 <div class="section-content">
-    @if (Blog != null)
-    {
-        <EditForm Model="@Blog" OnValidSubmit="Save">
-            <div class="form-item">
-                <label class="form-label">@_localizer["script-header"]</label>
-                <textarea readonly="@(isDemo)" class="form-control" rows="7" @bind="Blog.HeaderScript" name="headerScripts" />
-            </div>
-            <div class="form-item">
-                <label class="form-label">@_localizer["script-footer"]</label>
-                <textarea readonly="@(isDemo)" class="form-control" rows="7" @bind="Blog.FooterScript" name="footerScripts" />
-            </div>
-            <div class="form-item">
-                <button disabled="@(isDemo)" class="btn btn-blogifier px-5" type="submit">@_localizer["save"]</button>
-            </div>
-        </EditForm>
-    }
+  @if (Blog != null)
+  {
+    <EditForm Model="@Blog" OnValidSubmit="Save">
+      <div class="form-item">
+        <label class="form-label">@_localizer["script-header"]</label>
+        <textarea class="form-control" rows="7" @bind="Blog.HeaderScript" name="headerScripts" />
+      </div>
+      <div class="form-item">
+        <label class="form-label">@_localizer["script-footer"]</label>
+        <textarea class="form-control" rows="7" @bind="Blog.FooterScript" name="footerScripts" />
+      </div>
+      <div class="form-item">
+        <button class="btn btn-blogifier px-5" type="submit">@_localizer["save"]</button>
+      </div>
+    </EditForm>
+  }
 </div>
-<ToasterComponent @ref="Toaster" />
+
 
 @code {
-    protected Blog Blog;
-    protected ToasterComponent Toaster;
-    protected bool isDemo = false;
+  protected BlogEitorDto? Blog;
 
-    protected override async Task OnInitializedAsync()
-    {
-        Blog = await _http.GetFromJsonAsync<Blog>("api/blog");
-    }
+  protected override async Task OnInitializedAsync()
+  {
+    Blog = await _http.GetFromJsonAsync<BlogEitorDto>("api/blog");
+  }
 
-    protected async Task Save()
-    {
-        Toaster.Toast(await _http.PutAsJsonAsync<Blog>("api/blog", Blog));
-    }
+  protected async Task Save()
+  {
+    Toast(await _http.PutAsJsonAsync<BlogEitorDto>("api/blog", Blog!));
+  }
+
+  protected void Toast(HttpResponseMessage msg)
+  {
+    if (msg.IsSuccessStatusCode)
+      _toaster.Success(_localizer["completed"]);
+    else
+      _toaster.Error(_localizer["generic-error"]);
+  }
 }
