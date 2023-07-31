@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
-    <ClientAssetsRestoreCommand>npm i</ClientAssetsRestoreCommand>
+    <ClientAssetsRestoreCommand>npm ci</ClientAssetsRestoreCommand>
     <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
   </PropertyGroup>
 
