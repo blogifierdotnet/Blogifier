@@ -10,5 +10,5 @@ public static class BlogifierSharedConstant
   public static readonly string DefaultAvatar = "img/avatar.webp";
   public static readonly string DefaultCover = "img/cover.jpg";
   public static readonly string DefaultLogo = "img/logo-sm.png";
-  public static readonly JsonSerializerOptions DefaultJsonSerializerOptionss = new(JsonSerializerDefaults.Web);
+  public static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new(JsonSerializerDefaults.Web);
 }

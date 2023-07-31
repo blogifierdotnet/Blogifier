@@ -2,6 +2,7 @@
 @inject IJSRuntime _jsruntime
 @inject NavigationManager _navigation
 @inject IToaster _toaster
+@inject IMapper _mapper
 
 <div class="bfeditor">
   <div class="bfeditor-header">
@@ -79,21 +80,21 @@
 @code {
 
   [Parameter] public PostEditorDto Post { get; set; } = default!;
-  [Parameter] public EventCallback<PostEditorDto> OnSaveCallback { get; set; }
+  [Parameter] public EventCallback<FrontPostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
 
   private EditorComponent _editorComponent = default!;
 
-  protected override async Task OnParametersSetAsync()
+  public async Task SetPostInfoAsync(PostEditorDto post)
   {
-    var headTitle = _localizer["edit"] + " - " + Post.Title;
+    var headTitle = _localizer["edit"] + " - " + post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
-    await _editorComponent.SetValueAsync(Post.Content);
+    await _editorComponent.SetValueAsync(post.Content);
   }
 
   protected async Task SaveCoreAsync(PostState postState)
   {
-    var content = await _editorComponent.GetValueAsync();
+    var (content, frontFiles) = await _editorComponent.GetValueAsync();
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(content))
     {
       _toaster.Error(_localizer["title-content-required"]);
@@ -105,7 +106,10 @@
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
     Post.State = postState;
-    await OnSaveCallback.InvokeAsync(Post);
+
+    var post = _mapper.Map<FrontPostEditorDto>(Post);
+    post.Files = frontFiles;
+    await OnSaveCallback.InvokeAsync(post);
   }
 
   protected async Task SaveAsync()
@@ -142,4 +146,5 @@
     Post.Cover = null;
     await SaveAsync();
   }
+
 }

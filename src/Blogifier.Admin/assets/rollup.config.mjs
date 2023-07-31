@@ -8,7 +8,7 @@ export default [
     output: {
       format: 'iife',
       file: 'dist/admin/js/blogifier.js',
-      sourcemap: true,
+      sourcemap: false,
       minifyInternalExports: true,
       plugins: [terser()]
     },
@@ -22,7 +22,7 @@ export default [
     output: {
       format: 'es',
       file: 'dist/admin/js/editor.js',
-      sourcemap: true,
+      sourcemap: false,
       minifyInternalExports: true,
       plugins: [terser()]
     },

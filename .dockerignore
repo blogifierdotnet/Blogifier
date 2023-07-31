@@ -5,3 +5,4 @@
 Dockerfile
 docker-compose.yml
 deploy/
+**/package-lock.json

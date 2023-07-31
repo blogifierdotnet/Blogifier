@@ -7,7 +7,7 @@ export default {
   output: {
     format: 'iife',
     file: 'dist/js/blogifier.js',
-    sourcemap: true,
+    sourcemap: false,
     minifyInternalExports: true,
     plugins: [terser()]
   },

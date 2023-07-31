@@ -1,7 +1,7 @@
 @model PostModel
 
 @{
-  var postSlug = Model.Main.AbsoluteUrl + "/posts/" + Model.PostSlug.Post.Slug;
+  var postSlug = Model.Main.AbsoluteUrl + "/post/" + Model.PostSlug.Post.Slug;
   var share_facebook = "https://www.facebook.com/sharer/sharer.php?u=" + postSlug;
   var share_twitter = "https://twitter.com/intent/tweet?text=" + Model.PostSlug.Post.Title + "&url=" + postSlug;
   var share_email = "mailto:?&subject=" + Model.PostSlug.Post.Title + "&cc=&bcc=&body=" + Model.PostSlug.Post.Title + "%0" + postSlug;

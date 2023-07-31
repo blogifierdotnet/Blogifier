@@ -7,7 +7,7 @@
     @if (Model.PostSlug.Older != null)
     {
       <div class="col">
-        <a class="post-nav-item text-start" href="~/posts/@Model.PostSlug.Older.Slug" aria-label="@_localizer["Previous post"]">
+        <a class="post-nav-item text-start" href="~/post/@Model.PostSlug.Older.Slug" aria-label="@_localizer["Previous post"]">
           <span class="post-nav-text">@_localizer["Previous post"]</span>
           <h4 class="post-nav-title">@Model.PostSlug.Older.Title</h4>
         </a>
@@ -16,7 +16,7 @@
     @if (Model.PostSlug.Newer != null)
     {
       <div class="col">
-        <a class="post-nav-item text-end" href="~/posts/@Model.PostSlug.Newer.Slug" aria-label="@_localizer["Next post"]">
+        <a class="post-nav-item text-end" href="~/post/@Model.PostSlug.Newer.Slug" aria-label="@_localizer["Next post"]">
           <span class="post-nav-text">@_localizer["Next post"]</span>
           <h4 class="post-nav-title">@Model.PostSlug.Newer.Title</h4>
         </a>

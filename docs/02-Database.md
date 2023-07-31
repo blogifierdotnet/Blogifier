@@ -67,7 +67,7 @@ dotnet ef migrations remove --context MySqlDbContext
 
 # Postgres
 dotnet ef migrations add Init --context PostgresDbContext --output-dir Data/Migrations/Postgres
-dotnet ef migrations remove --context MySqlDbContext
+dotnet ef migrations remove --context PostgresDbContext
 ```
 
 ### Warn 

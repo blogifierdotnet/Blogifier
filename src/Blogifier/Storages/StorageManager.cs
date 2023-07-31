@@ -1,20 +1,15 @@
-using AutoMapper;
-using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -76,14 +71,13 @@ public class StorageManager
   public async Task<StorageDto?> UploadAsync(DateTime uploadAt, int userid, IFormFile file)
   {
     var fileName = GetFileName(file.FileName);
-    if (InvalidFileName(fileName))
+    if (!InvalidFileName(fileName))
     {
       _logger.LogError("Invalid file name: {fileName}", fileName);
       return null;
     }
 
-    var folder = $"{userid}/{uploadAt.Year}{uploadAt.Month}";
-    var path = Path.Combine(folder, fileName);
+    var path = $"{userid}/{uploadAt.Year}{uploadAt.Month}/{fileName}";
     var storage = await _storageProvider.GetCheckStoragAsync(path);
     if (storage != null) return storage;
 
