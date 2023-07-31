@@ -15,10 +15,10 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
     <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.9" />
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
   </ItemGroup>
 
@@ -50,10 +50,10 @@
     <ProjectCapability Include="ClientAssetsAlpha" />
   </ItemGroup>
 
-  <Target Name="ClientAssetsClean" BeforeTargets="Clean">
+  <!--<Target Name="ClientAssetsClean" BeforeTargets="Clean">
     <RemoveDir Directories="$(ClientAssetsBuildOutput)" />
     <Delete Files="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
-  </Target>
+  </Target>-->
 
   <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
     <Message Importance="high" Text="Running $(ClientAssetsRestoreCommand)..." />

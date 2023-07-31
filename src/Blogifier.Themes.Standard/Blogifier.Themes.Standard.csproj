@@ -42,10 +42,10 @@
     <ProjectCapability Include="ClientAssetsAlpha" />
   </ItemGroup>
 
-  <Target Name="ClientAssetsClean" BeforeTargets="Clean">
+  <!--<Target Name="ClientAssetsClean" BeforeTargets="Clean">
     <RemoveDir Directories="$(ClientAssetsBuildOutput)" />
     <Delete Files="$(IntermediateOutputPath)clientassetsbuild.complete.txt" />
-  </Target>
+  </Target>-->
 
   <Target Name="ClientAssetsRestore" BeforeTargets="$(ClientAssetsRestoreBeforeTargets)" Inputs="$(ClientAssetsRestoreInputs)" Outputs="$(ClientAssetsRestoreOutputs)">
     <Message Importance="high" Text="Running $(ClientAssetsRestoreCommand)..." />
