@@ -1,8 +1,8 @@
 .git
-**/bin
-**/obj
-**/node_modules
+**/bin/*
+**/obj/*
+**/node_modules/*
 Dockerfile
 docker-compose.yml
-deploy/
+deploy/*
 **/package-lock.json
