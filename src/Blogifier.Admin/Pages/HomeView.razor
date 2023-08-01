@@ -1,8 +1,8 @@
-@* @using ChartJs.Blazor
+@using ChartJs.Blazor
 @using ChartJs.Blazor.Common
 @using ChartJs.Blazor.Common.Enums
 @using ChartJs.Blazor.Util
-@using ChartJs.Blazor.BarChart *@
+@using ChartJs.Blazor.BarChart
 @using System.Drawing
 
 @page "/admin"
@@ -13,7 +13,7 @@
 
 @code {
 
-  // protected BarConfig _config = default!;
+  protected BarConfig _config = default!;
   protected List<OptionItem> _dateOptions = default!;
   protected List<PostVisit> _visits = default!;
   protected bool _hideGraph = false;
@@ -22,17 +22,17 @@
 
   protected override async Task OnInitializedAsync()
   {
-    // _config = new BarConfig
-    // {
-    //   Options = new BarOptions
-    //   {
-    //     Responsive = true,
-    //     Legend = new Legend
-    //     {
-    //       Position = Position.Top
-    //     }
-    //   }
-    // };
+    _config = new BarConfig
+    {
+      Options = new BarOptions
+      {
+        Responsive = true,
+        Legend = new Legend
+        {
+          Position = Position.Top
+        }
+      }
+    };
     _dateOptions = new List<OptionItem>
     {
       new OptionItem { Id = 1, Title = _localizer["today"] },
@@ -41,58 +41,58 @@
       new OptionItem { Id = 4, Title = _localizer["30-days"] },
       new OptionItem { Id = 5, Title = _localizer["90-days"] },
     };
-    // Load();
+    Load();
     _analytics = await _http.GetFromJsonAsync<AnalyticsDto>("api/analytics");
   }
 
-  // protected void Load()
-  // {
-  //   var dataset = new BarDataset<int>()
-  //     {
-  //       Label = "Latest Post Views",
-  //       BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
-  //       BorderWidth = 0
-  //     };
+  protected void Load()
+  {
+    var dataset = new BarDataset<int>()
+      {
+        Label = "Latest Post Views",
+        BackgroundColor = ColorUtil.FromDrawingColor(Color.FromArgb(98, 42, 255)),
+        BorderWidth = 0
+      };
 
-  //   if (_analytics == null || _analytics.LatestPostViews == null)
-  //   {
-  //     LoadData(dataset, TestData());
-  //   }
-  //   else
-  //   {
-  //     _hideList = _analytics.DisplayType == AnalyticsListType.Graph;
-  //     _hideGraph = _analytics.DisplayType == AnalyticsListType.List;
+    if (_analytics == null || _analytics.LatestPostViews == null)
+    {
+      LoadData(dataset, TestData());
+    }
+    else
+    {
+      _hideList = _analytics.DisplayType == AnalyticsListType.Graph;
+      _hideGraph = _analytics.DisplayType == AnalyticsListType.List;
 
-  //     LoadData(dataset, _analytics.LatestPostViews);
-  //   }
+      LoadData(dataset, _analytics.LatestPostViews);
+    }
 
-  //   if (_config.Data.Datasets.Count > 0)
-  //   {
-  //     _config.Data.Datasets.Clear();
-  //   }
+    if (_config.Data.Datasets.Count > 0)
+    {
+      _config.Data.Datasets.Clear();
+    }
 
-  //   _config.Data.Datasets.Add(dataset);
-  // }
+    _config.Data.Datasets.Add(dataset);
+  }
 
 
 
-  // protected void LoadData(IDataset<int> dataset, BarChartModel model)
-  // {
-  //   _visits = new List<PostVisit>();
-  //   var labels = model.Labels.ToList();
-  //   var values = model.Data.ToList();
+  protected void LoadData(IDataset<int> dataset, BarChartModel model)
+  {
+    _visits = new List<PostVisit>();
+    var labels = model.Labels.ToList();
+    var values = model.Data.ToList();
 
-  //   _config.Data.Labels.Clear();
+    _config.Data.Labels.Clear();
 
-  //   for (int i = 0; i < labels.Count; i++)
-  //   {
-  //     _config.Data.Labels.Add(labels[i]);
-  //     dataset.Add(values[i]);
+    for (int i = 0; i < labels.Count; i++)
+    {
+      _config.Data.Labels.Add(labels[i]);
+      dataset.Add(values[i]);
 
-  //     _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
-  //   }
-  //   _visits = _visits.OrderByDescending(v => v.Value).ToList();
-  // }
+      _visits.Add(new PostVisit { Name = labels[i], Value = values[i] });
+    }
+    _visits = _visits.OrderByDescending(v => v.Value).ToList();
+  }
 
   protected async Task ToggleAnalyticsView(bool isGraph)
   {
