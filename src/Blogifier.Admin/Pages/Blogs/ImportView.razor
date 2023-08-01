@@ -4,7 +4,6 @@
 @inject IStringLocalizer<Resource> _localizer
 @inject IToaster _toaster
 @inject IJSRuntime _jsRuntime
-@inject IMapper _mapper
 
 <PageTitleComponent Title="@_localizer["import"]" />
 
@@ -98,9 +97,8 @@ else
   protected async Task OnAnalysis()
   {
     Status = null;
-    var result = await _http.GetFromJsonAsync<ImportDto>($"api/import/rss?feedUrl={ImportRss.FeedUrl}");
-    var front = _mapper.Map<FrontImportDto>(result);
-    Import = front;
+    var result = await _http.GetFromJsonAsync<FrontImportDto>($"api/import/rss?feedUrl={ImportRss.FeedUrl}");
+    Import = result;
   }
 
   protected async Task OnImport()
@@ -109,8 +107,7 @@ else
     foreach (var post in Import!.Posts!)
     {
       if (!post.Selected) continue;
-      var inputPost = _mapper.Map<PostEditorDto>(post);
-      request.Posts.Add(inputPost);
+      request.Posts.Add(post);
     }
     if (!request.Posts.Any()) return;
 

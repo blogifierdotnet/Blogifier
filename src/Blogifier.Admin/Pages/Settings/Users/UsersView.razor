@@ -6,7 +6,6 @@
 @inject HttpClient _http
 @inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
-@inject IMapper _mapper
 @inject IToaster _toaster
 
 
@@ -96,8 +95,8 @@
 
   protected async Task LoadAsync()
   {
-    var result = await _http.GetFromJsonAsync<IEnumerable<UserInfoDto>>("api/user/items");
-    Users = _mapper.Map<List<FrontUserInfoDto>>(result);
+    var result = await _http.GetFromJsonAsync<List<FrontUserInfoDto>>("api/user/items");
+    Users = result;
   }
 
 

@@ -1,7 +1,6 @@
 @page "/admin/pages/"
 
 @inject HttpClient _http
-@inject IMapper _mapper
 @inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -21,8 +20,8 @@
 
   protected async Task LoadAsync()
   {
-    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/{(int)FilterValue}/{(int)PostType.Page}");
-    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
+    var result = await _http.GetFromJsonAsync<List<FrontPostItemDto>>($"api/post/items/{(int)FilterValue}/{(int)PostType.Page}");
+    Posts = result;
   }
 
   public void CheckAll(object? checkValue)
@@ -78,8 +77,8 @@
   protected async Task SearchPosts()
   {
     if (string.IsNullOrEmpty(SearchTerm)) SearchTerm = "*";
-    var result = await _http.GetFromJsonAsync<List<PostItemDto>>($"api/post/items/search/{SearchTerm}");
-    Posts = _mapper.Map<List<FrontPostItemDto>>(result);
+    var result = await _http.GetFromJsonAsync<List<FrontPostItemDto>>($"api/post/items/search/{SearchTerm}");
+    Posts = result;
   }
 
   public async Task Filter(PublishedStatus filter)

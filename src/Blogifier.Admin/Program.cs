@@ -11,7 +11,6 @@ using System.Net.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
-builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddLocalization();
 builder.Services.AddOptions();
 

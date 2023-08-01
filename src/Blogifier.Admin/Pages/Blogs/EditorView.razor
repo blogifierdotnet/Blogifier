@@ -5,7 +5,6 @@
 @inject NavigationManager _navigation
 @inject IToaster _toaster
 @inject ToasterService _toasterService
-@inject IMapper _mapper
 
 <PageTitleComponent Title="@_localizer["new-post"]" />
 <PostEditorComponent @ref="_postEditorComponent" Post="@Post" OnSaveCallback="OnSaveAsync" OnRemoveCallback="OnRemoveAsync" />
@@ -16,7 +15,7 @@
 
   private PostEditorComponent _postEditorComponent = default!;
 
-  protected PostEditorDto Post { get; set; } = new PostEditorDto
+  protected FrontPostEditorDto Post { get; set; } = new FrontPostEditorDto
     {
       Title = string.Empty,
       Description = string.Empty,
@@ -31,16 +30,14 @@
   {
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = (await _httpClient.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
+      Post = (await _httpClient.GetFromJsonAsync<FrontPostEditorDto>($"api/post/byslug/{Slug}"))!;
       if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
       await _postEditorComponent.SetPostInfoAsync(Post);
     }
   }
 
-  protected async Task OnSaveAsync(FrontPostEditorDto input)
+  protected async Task OnSaveAsync(FrontPostEditorDto post)
   {
-    var post = _mapper.Map<PostEditorDto>(input);
-
     if (post.Id == 0)
     {
       var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", post);
