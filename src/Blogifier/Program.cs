@@ -16,17 +16,19 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 
+
+var builderMigrations = WebApplication.CreateBuilder(args);
+builderMigrations.Host.UseSerilog((context, builder) =>
+  builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
+builderMigrations.Services.AddDbContext(builderMigrations.Environment, builderMigrations.Configuration);
+var appMigrations = builderMigrations.Build();
+await appMigrations.RunDbContextMigrateAsync();
+await appMigrations.DisposeAsync();
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, builder) =>
-{
-  builder.ReadFrom
-    .Configuration(context.Configuration)
-    .Enrich
-    .FromLogContext();
-});
-
-builder.Services.Configure<BlogifierConfigure>(builder.Configuration.GetSection(BlogifierConstant.Key));
+  builder.ReadFrom.Configuration(context.Configuration).Enrich.FromLogContext());
 
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
@@ -89,8 +91,6 @@ builder.Services.AddRazorPages().AddViewLocalization();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
-
-await app.RunDbContextMigrateAsync();
 
 app.UseSerilogRequestLogging();
 
