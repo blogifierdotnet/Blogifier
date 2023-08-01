@@ -1,4 +1,5 @@
 @page "/admin/blogs/editor/{Slug?}"
+@using System.Text;
 
 @inject HttpClient _httpClient
 @inject IStringLocalizer<Resource> _localizer
@@ -38,9 +39,23 @@
 
   protected async Task OnSaveAsync(FrontPostEditorDto post)
   {
+    var postData = JsonSerializer.Serialize<FrontPostEditorDto>(post);
+
+    var from = new MultipartFormDataContent();
+    from.Add(new StringContent(postData, Encoding.UTF8, "application/json"), "post");
+
+    if (post.Files != null)
+    {
+      foreach (var file in post.Files)
+      {
+        var fileBytes = await _httpClient.GetByteArrayAsync(file.Url);
+        from.Add(new ByteArrayContent(fileBytes), file.Url);
+      }
+    }
+
     if (post.Id == 0)
     {
-      var response = await _httpClient.PostAsJsonAsync<PostEditorDto>($"api/post/add", post);
+      var response = await _httpClient.PostAsync($"api/post/add", from);
       if (_toasterService.CheckResponse(response))
       {
         var slug = await response.Content.ReadAsStringAsync();
@@ -49,7 +64,7 @@
     }
     else
     {
-      var response = await _httpClient.PutAsJsonAsync<PostEditorDto>($"api/post/update", post);
+      var response = await _httpClient.PutAsync($"api/post/update", from);
       _toasterService.CheckResponse(response);
     }
   }
