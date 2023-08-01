@@ -3,7 +3,6 @@
 @layout BlogsLayout
 
 @inject HttpClient _http
-@inject IMapper _mapper
 @inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsruntime
@@ -22,8 +21,8 @@
 
   protected async Task LoadAsync()
   {
-    var result = await _http.GetFromJsonAsync<IEnumerable<CategoryItemDto>>($"api/category/items");
-    Categories = _mapper.Map<List<FrontCategoryItemDto>>(result);
+    var result = await _http.GetFromJsonAsync<List<FrontCategoryItemDto>>($"api/category/items");
+    Categories = result;
   }
 
   protected void CheckAll(object? checkValue)

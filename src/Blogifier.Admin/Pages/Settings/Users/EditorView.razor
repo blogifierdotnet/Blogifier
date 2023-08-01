@@ -5,7 +5,6 @@
 @inject HttpClient _http
 @inject NavigationManager _navigation
 @inject IStringLocalizer<Resource> _localizer
-@inject IMapper _mapper
 @inject IToaster _toaster
 
 @if (!IsUpdate)
@@ -85,8 +84,8 @@ else
   {
     if (!string.IsNullOrEmpty(Id))
     {
-      var result = await _http.GetFromJsonAsync<UserInfoDto>($"api/user/{Id}");
-      User = _mapper.Map<UserEditorDto>(result);
+      var result = await _http.GetFromJsonAsync<UserEditorDto>($"api/user/{Id}");
+      User = result!;
       IsUpdate = true;
     }
   }

@@ -2,7 +2,6 @@
 @inject IJSRuntime _jsruntime
 @inject NavigationManager _navigation
 @inject IToaster _toaster
-@inject IMapper _mapper
 
 <div class="bfeditor">
   <div class="bfeditor-header">
@@ -79,13 +78,13 @@
 
 @code {
 
-  [Parameter] public PostEditorDto Post { get; set; } = default!;
+  [Parameter] public FrontPostEditorDto Post { get; set; } = default!;
   [Parameter] public EventCallback<FrontPostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
 
   private EditorComponent _editorComponent = default!;
 
-  public async Task SetPostInfoAsync(PostEditorDto post)
+  public async Task SetPostInfoAsync(FrontPostEditorDto post)
   {
     var headTitle = _localizer["edit"] + " - " + post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
@@ -106,10 +105,8 @@
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
     Post.State = postState;
-
-    var post = _mapper.Map<FrontPostEditorDto>(Post);
-    post.Files = frontFiles;
-    await OnSaveCallback.InvokeAsync(post);
+    Post.Files = frontFiles;
+    await OnSaveCallback.InvokeAsync(Post);
   }
 
   protected async Task SaveAsync()
