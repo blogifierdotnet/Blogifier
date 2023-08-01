@@ -15,7 +15,7 @@ public static class CacheExtensions
     if (string.IsNullOrEmpty(redisConnectionString))
     {
       services.AddDistributedMemoryCache();
-      var dataProtectionPath = $"{environment.ContentRootPath}\\App_Data\\DataProtection-Keys\\";
+      var dataProtectionPath = Path.Combine(environment.ContentRootPath, "App_Data", "DataProtection-Keys");
       var dataProtectionDirectory = new DirectoryInfo(dataProtectionPath);
       services.AddDataProtection().PersistKeysToFileSystem(dataProtectionDirectory);
     }
