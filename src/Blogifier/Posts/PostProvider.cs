@@ -57,15 +57,15 @@ public class PostProvider : AppProvider<Post, int>
 
     var olderQuery = _dbContext.Posts
       .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
-      .OrderByDescending(p => p.PublishedAt);
+      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
+      .OrderBy(p => p.PublishedAt);
 
     var older = await _mapper.ProjectTo<PostItemDto>(olderQuery).FirstOrDefaultAsync();
 
     var newerQuery = _dbContext.Posts
       .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
-      .OrderBy(p => p.PublishedAt);
+      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
+      .OrderByDescending(p => p.PublishedAt);
 
     var newer = await _mapper.ProjectTo<PostItemDto>(newerQuery).FirstOrDefaultAsync();
 
