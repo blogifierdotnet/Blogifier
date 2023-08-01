@@ -2,8 +2,10 @@ using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +21,25 @@ public class StorageManager
 {
   private readonly ILogger _logger;
   private readonly IHttpClientFactory _httpClientFactory;
-  private readonly BlogifierConfigure _blogifierConfigure;
   private readonly IStorageProvider _storageProvider;
+  private readonly string[]? _fileExtensions;
 
   public StorageManager(
     ILogger<StorageManager> logger,
     IHttpClientFactory httpClientFactory,
-    IOptions<BlogifierConfigure> blogifierConfigure,
-    IStorageProvider storageProvider)
+    IStorageProvider storageProvider,
+    IConfiguration configuration)
   {
     _logger = logger;
     _httpClientFactory = httpClientFactory;
-    _blogifierConfigure = blogifierConfigure.Value;
     _storageProvider = storageProvider;
+
+    var fileExtensionsString = configuration[$"{BlogifierConstant.Key}:FileExtensions"];
+    if (!string.IsNullOrEmpty(fileExtensionsString))
+    {
+      _fileExtensions = fileExtensionsString.Split(',')!;
+    }
+
   }
 
   public async Task<StorageDto> UploadAsync(DateTime uploadAt, int userid, Uri baseAddress, string url, string? fileName = null)
@@ -138,10 +146,7 @@ public class StorageManager
 
   private bool InvalidFileName(string fileName)
   {
-    var fileExtensions = BlogifierConstant.FileExtensions;
-    var configFileExtensions = _blogifierConfigure.FileExtensions;
-    if (!string.IsNullOrEmpty(configFileExtensions))
-      fileExtensions = new List<string>(configFileExtensions.Split(','));
+    var fileExtensions = _fileExtensions ?? BlogifierConstant.FileExtensions;
     return fileExtensions.Any(fileName.EndsWith);
   }
 

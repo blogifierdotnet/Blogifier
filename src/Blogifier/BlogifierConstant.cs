@@ -28,7 +28,7 @@ public static class BlogifierConstant
   public const string StorageLocalPhysicalRoot = "/data";
   public const string StorageRowPhysicalRoot = "/row";
 
-  public static readonly List<string> FileExtensions = new()
+  public static readonly string[] FileExtensions = new string[]
   { "png", "gif", "jpeg", "jpg", "zip", "7z", "pdf", "doc", "docx", "xls", "xlsx", "mp3", "mp4", "avi" };
 
   #region NotUse
