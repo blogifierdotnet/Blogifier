@@ -43,6 +43,7 @@
   {
     var module = await _taskModule;
     var content = await module.InvokeAsync<string>("getEditorValue");
+    Console.WriteLine(content);
     return content;
   }
 

@@ -210,13 +210,6 @@ function editorToolbarTooltip() {
 let easymde;
 let _uploadElement;
 
-function toggleSideBySide() {
-  EasyMDE.toggleSideBySide(easymde);
-  // Wait for the screen to complete
-  setTimeout(() => {
-    hljs.highlightElement(easymde.gui.sideBySide);
-  }, 1000);
-}
 
 export function loadEditor(toolbar, textareaElement, uploadElement) {
   _uploadElement = uploadElement;
@@ -240,6 +233,8 @@ export function loadEditor(toolbar, textareaElement, uploadElement) {
       singleLineBreaks: false,
       codeSyntaxHighlighting: true
     },
+    // fullScreen: false,
+    // sideBySideFullscreen: false,
     toolbar: selectedToolbar,
     insertTexts: {
       horizontalRule: ["", "\n---\n"]
@@ -254,6 +249,13 @@ export function loadEditor(toolbar, textareaElement, uploadElement) {
   editorToolbarTooltip();
 }
 
+
+function toggleSideBySide() {
+  EasyMDE.toggleSideBySide(easymde);
+  // Wait for the screen to complete
+  setTimeout(() => hljs.highlightElement(easymde.gui.sideBySide), 1000);
+}
+
 // Image Upload
 async function insertImage(editor) {
   _uploadElement.click();
@@ -266,7 +268,6 @@ export function setEditorValue(txt) {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"'));
-
 }
 
 export function getEditorValue() {
