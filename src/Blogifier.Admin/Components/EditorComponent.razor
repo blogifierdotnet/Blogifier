@@ -1,6 +1,11 @@
+@using System.Text.RegularExpressions;
+@using System.Text;
+
 @implements IAsyncDisposable
+
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsRuntime
+@inject HttpClient _httpClient
 
 <div class="easymde-wrapper">
   <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
@@ -43,7 +48,20 @@
   {
     var module = await _taskModule;
     var content = await module.InvokeAsync<string>("getEditorValue");
-    Console.WriteLine(content);
+    var imgsMatches = StringHelper.MatchesMarkdownImgBlob(content);
+
+    if (imgsMatches.Count > 0)
+    {
+      var contentStringBuilder = new StringBuilder(content);
+      foreach (Match match in imgsMatches)
+      {
+        var imageUrl = match.Groups[1].Value;
+        var imageBytes = await _httpClient.GetByteArrayAsync(imageUrl);
+        var base64String = Convert.ToBase64String(imageBytes);
+        contentStringBuilder.Replace(imageUrl, "data:image/png;base64," + base64String);
+      }
+      content = contentStringBuilder.ToString();
+    }
     return content;
   }
 

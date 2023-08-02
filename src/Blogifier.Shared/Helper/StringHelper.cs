@@ -28,4 +28,12 @@ public static partial class StringHelper
   private static partial Regex HtmlFileGeneratedRegex();
   public static MatchCollection MatchesHtmlFile(string input) => HtmlFileGeneratedRegex().Matches(input);
 
+
+  [GeneratedRegex("!\\[[^\\]]*\\]\\((blob:[^)]+)\\)", RegexOptions.Compiled)]
+  private static partial Regex MarkdownImgBlobGeneratedRegex();
+  public static MatchCollection MatchesMarkdownImgBlob(string input) => MarkdownImgBlobGeneratedRegex().Matches(input);
+
+
+  [GeneratedRegex(@"!\[(?<filename>[^\]]+)\]\(data:image\/(?<type>.+);base64,(?<data>.+?)\)", RegexOptions.Compiled)]
+  public static partial Regex MarkdownDataImageBase64BlobGeneratedRegex();
 }

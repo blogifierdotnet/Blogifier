@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Blogifier.Storages;
 
@@ -87,6 +88,12 @@ public class StorageMinioProvider : AppProvider<Storage, int>, IStorageProvider,
     };
     await AddAsync(storage);
     return _mapper.Map<StorageDto>(storage);
+  }
+
+  public Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, byte[] bytes, string contentType)
+  {
+    using var stream = new MemoryStream(bytes);
+    return AddAsync(uploadAt, userid, path, fileName, stream, contentType);
   }
 
   private async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> callback)
