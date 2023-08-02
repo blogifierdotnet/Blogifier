@@ -281,5 +281,4 @@ export function writeFrontFile(inputElement) {
   let codemirror = easymde.codemirror;
   codemirror.selection;
   codemirror.replaceSelection(output);
-  return { fileName, url, selection: output }
 }

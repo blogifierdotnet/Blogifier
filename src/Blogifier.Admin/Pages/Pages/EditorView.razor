@@ -14,7 +14,7 @@
 
   [Parameter] public string? Slug { get; set; }
 
-  protected FrontPostEditorDto Post { get; set; } = new FrontPostEditorDto
+  protected PostEditorDto Post { get; set; } = new PostEditorDto
     {
       Title = string.Empty,
       Description = string.Empty,
@@ -28,7 +28,7 @@
   {
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = (await _httpClient.GetFromJsonAsync<FrontPostEditorDto>($"api/post/byslug/{Slug}"))!;
+      Post = (await _httpClient.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
       if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
     }
   }

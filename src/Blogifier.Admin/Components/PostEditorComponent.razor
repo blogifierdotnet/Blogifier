@@ -78,13 +78,13 @@
 
 @code {
 
-  [Parameter] public FrontPostEditorDto Post { get; set; } = default!;
-  [Parameter] public EventCallback<FrontPostEditorDto> OnSaveCallback { get; set; }
+  [Parameter] public PostEditorDto Post { get; set; } = default!;
+  [Parameter] public EventCallback<PostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
 
   private EditorComponent _editorComponent = default!;
 
-  public async Task SetPostInfoAsync(FrontPostEditorDto post)
+  public async Task SetPostInfoAsync(PostEditorDto post)
   {
     var headTitle = _localizer["edit"] + " - " + post.Title;
     await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
@@ -93,7 +93,7 @@
 
   protected async Task SaveCoreAsync(PostState postState)
   {
-    var (content, frontFiles) = await _editorComponent.GetValueAsync();
+    var content = await _editorComponent.GetValueAsync();
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(content))
     {
       _toaster.Error(_localizer["title-content-required"]);
@@ -105,7 +105,6 @@
     if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
     Post.State = postState;
-    Post.Files = frontFiles;
     await OnSaveCallback.InvokeAsync(Post);
   }
 

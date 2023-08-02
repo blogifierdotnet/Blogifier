@@ -16,7 +16,7 @@
 
   private PostEditorComponent _postEditorComponent = default!;
 
-  protected FrontPostEditorDto Post { get; set; } = new FrontPostEditorDto
+  protected PostEditorDto Post { get; set; } = new PostEditorDto
     {
       Title = string.Empty,
       Description = string.Empty,
@@ -26,36 +26,21 @@
       Categories = new List<CategoryDto>(),
     };
 
-
   protected override async Task OnParametersSetAsync()
   {
     if (!string.IsNullOrEmpty(Slug))
     {
-      Post = (await _httpClient.GetFromJsonAsync<FrontPostEditorDto>($"api/post/byslug/{Slug}"))!;
+      Post = (await _httpClient.GetFromJsonAsync<PostEditorDto>($"api/post/byslug/{Slug}"))!;
       if (Post.Categories == null) Post.Categories = new List<CategoryDto>();
       await _postEditorComponent.SetPostInfoAsync(Post);
     }
   }
 
-  protected async Task OnSaveAsync(FrontPostEditorDto post)
+  protected async Task OnSaveAsync(PostEditorDto post)
   {
-    var postData = JsonSerializer.Serialize<FrontPostEditorDto>(post);
-
-    var from = new MultipartFormDataContent();
-    from.Add(new StringContent(postData, Encoding.UTF8, "application/json"), "post");
-
-    if (post.Files != null)
-    {
-      foreach (var file in post.Files)
-      {
-        var fileBytes = await _httpClient.GetByteArrayAsync(file.Url);
-        from.Add(new ByteArrayContent(fileBytes), file.Url);
-      }
-    }
-
     if (post.Id == 0)
     {
-      var response = await _httpClient.PostAsync($"api/post/add", from);
+      var response = await _httpClient.PostAsJsonAsync($"api/post/add", post);
       if (_toasterService.CheckResponse(response))
       {
         var slug = await response.Content.ReadAsStringAsync();
@@ -64,7 +49,7 @@
     }
     else
     {
-      var response = await _httpClient.PutAsync($"api/post/update", from);
+      var response = await _httpClient.PutAsJsonAsync($"api/post/update", post);
       _toasterService.CheckResponse(response);
     }
   }

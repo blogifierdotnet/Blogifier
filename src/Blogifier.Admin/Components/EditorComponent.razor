@@ -14,7 +14,6 @@
   private ValueTask<IJSObjectReference> _taskModule;
   private ElementReference? _textareaReference;
   private InputFile? _inputFileReference;
-  private List<FrontFileDto> _frontFiles = new List<FrontFileDto>();
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
@@ -31,8 +30,7 @@
   {
     var module = await _taskModule;
     var element = _inputFileReference?.Element;
-    var file = await module.InvokeAsync<FrontFileDto>("writeFrontFile", element);
-    _frontFiles.Add(file);
+    await module.InvokeVoidAsync("writeFrontFile", element);
   }
 
   public async ValueTask SetValueAsync(string value)
@@ -41,11 +39,11 @@
     await module.InvokeVoidAsync("setEditorValue", value);
   }
 
-  public async ValueTask<(string?, List<FrontFileDto>)> GetValueAsync()
+  public async ValueTask<string?> GetValueAsync()
   {
     var module = await _taskModule;
     var content = await module.InvokeAsync<string>("getEditorValue");
-    return (content, _frontFiles);
+    return content;
   }
 
   async ValueTask IAsyncDisposable.DisposeAsync()
