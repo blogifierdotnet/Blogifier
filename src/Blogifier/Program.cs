@@ -92,8 +92,6 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-app.UseSerilogRequestLogging();
-
 if (app.Environment.IsDevelopment())
 {
   app.UseDeveloperExceptionPage();

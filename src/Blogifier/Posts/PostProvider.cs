@@ -5,6 +5,7 @@ using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using ReverseMarkdown.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,15 +58,15 @@ public class PostProvider : AppProvider<Post, int>
 
     var olderQuery = _dbContext.Posts
       .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
-      .OrderByDescending(p => p.PublishedAt);
+      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
+      .OrderBy(p => p.PublishedAt);
 
     var older = await _mapper.ProjectTo<PostItemDto>(olderQuery).FirstOrDefaultAsync();
 
     var newerQuery = _dbContext.Posts
       .AsNoTracking()
-      .Where(m => m.State >= PostState.Release && m.PublishedAt > post.PublishedAt)
-      .OrderBy(p => p.PublishedAt);
+      .Where(m => m.State >= PostState.Release && m.PublishedAt < post.PublishedAt)
+      .OrderByDescending(p => p.PublishedAt);
 
     var newer = await _mapper.ProjectTo<PostItemDto>(newerQuery).FirstOrDefaultAsync();
 
@@ -129,7 +130,7 @@ public class PostProvider : AppProvider<Post, int>
       PublishedStatus.Featured |
       PublishedStatus.Published => query.Where(p => p.State >= PostState.Release).OrderByDescending(p => p.PublishedAt),
       PublishedStatus.Drafts => query.Where(p => p.State == PostState.Draft).OrderByDescending(p => p.Id),
-      _ => query.OrderByDescending(p => p.Id),
+      _ => query.OrderByDescending(p => p.PublishedAt).ThenByDescending(p => p.CreatedAt),
     };
 
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();

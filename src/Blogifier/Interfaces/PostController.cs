@@ -46,7 +46,7 @@ public class PostController : ControllerBase
   }
 
   [HttpPut("update")]
-  public async Task UpdateAsync(PostEditorDto post)
+  public async Task UpdateAsync([FromForm] PostEditorDto post)
   {
     var userId = User.FirstUserId();
     await _postProvider.UpdateAsync(post, userId);
