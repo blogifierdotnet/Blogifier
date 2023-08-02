@@ -256,8 +256,8 @@ public class PostProvider : AppProvider<Post, int>
   {
     var slug = await GetSlugFromTitle(postInput.Title);
     var postCategories = await CheckPostCategories(postInput.Categories);
-    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
-    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    var contentFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Description));
     var publishedAt = GetPublishedAt(postInput.PublishedAt, postInput.State);
     var post = new Post
     {
@@ -316,8 +316,8 @@ public class PostProvider : AppProvider<Post, int>
 
     post.Slug = postInput.Slug!;
     post.Title = postInput.Title;
-    var contentFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Content));
-    var descriptionFiltr = StringHelper.RemoveImgTags(StringHelper.RemoveScriptTags(postInput.Description));
+    var contentFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Content));
+    var descriptionFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Description));
     post.Description = descriptionFiltr;
     post.Content = contentFiltr;
     post.Cover = postInput.Cover;
