@@ -89,6 +89,12 @@ public class StorageMinioProvider : AppProvider<Storage, int>, IStorageProvider,
     return _mapper.Map<StorageDto>(storage);
   }
 
+  public Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, byte[] bytes, string contentType)
+  {
+    using var stream = new MemoryStream(bytes);
+    return AddAsync(uploadAt, userid, path, fileName, stream, contentType);
+  }
+
   private async Task<ObjectStat> GetObjectAsync(string objectName, Func<Stream, CancellationToken, Task> callback)
   {
     var args = new GetObjectArgs().WithBucket(_bucketName).WithObject(objectName).WithCallbackStream(callback);

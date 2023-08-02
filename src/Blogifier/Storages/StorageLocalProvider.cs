@@ -79,6 +79,25 @@ public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
     return _mapper.Map<StorageDto>(storage);
   }
 
+  public async Task<StorageDto> AddAsync(DateTime uploadAt, int userid, string path, string fileName, byte[] bytes, string contentType)
+  {
+    var storage = new Storage
+    {
+      UploadAt = uploadAt,
+      UserId = userid,
+      Name = fileName,
+      Path = path,
+      Length = bytes.Length,
+      ContentType = contentType,
+      Slug = await WriteAsync(path, bytes),
+      Type = StorageType.Local
+    };
+    await AddAsync(storage);
+    return _mapper.Map<StorageDto>(storage);
+  }
+
+
+
   private void Delete(string path)
   {
     var storagePath = Path.Combine(_pathLocalRoot, path);
@@ -104,5 +123,18 @@ public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
     _logger.LogInformation("file Write: {storagePath} => {virtualPath}", storagePath, virtualPath);
     return virtualPath;
   }
+
+
+  private async Task<string> WriteAsync(string path, byte[] bytes)
+  {
+    var storagePath = Path.Combine(_pathLocalRoot, path);
+    var directoryPath = Path.GetDirectoryName(storagePath)!;
+    if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+    await File.WriteAllBytesAsync(storagePath, bytes);
+    var virtualPath = $"{BlogifierConstant.StorageLocalPhysicalRoot}/{path}";
+    _logger.LogInformation("file Write: {storagePath} => {virtualPath}", storagePath, virtualPath);
+    return virtualPath;
+  }
+
 
 }

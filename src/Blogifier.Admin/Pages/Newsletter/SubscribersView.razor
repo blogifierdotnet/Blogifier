@@ -17,8 +17,8 @@
       {
         <li class="list-item">
           @{
-            string title = $"{item.Email} / {item.Country} / {item.Region} / {item.Ip}";
-            string pubDate = item.CreatedAt.ToFriendlyDateTimeString();
+            var title = $"{item.Email} / {item.Country} / {item.Region} / {item.Ip}";
+            var pubDate = DateTimeHelper.ToFriendlyShortDateString(item.CreatedAt);
           }
           <span class="list-title">@title</span>
           <span class="list-text">@pubDate</span>
