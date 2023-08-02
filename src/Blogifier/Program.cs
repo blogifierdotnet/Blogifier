@@ -11,6 +11,7 @@ using Blogifier.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -42,6 +43,8 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 builder.Services.AddAuthorization();
 
 builder.Services.AddStorageStaticFiles(builder.Configuration);
+
+builder.Services.AddSingleton<IContentTypeProvider, FileExtensionContentTypeProvider>();
 
 builder.Services.AddScoped<MarkdigProvider>();
 builder.Services.AddScoped<ReverseProvider>();
@@ -91,8 +94,6 @@ builder.Services.AddRazorPages().AddViewLocalization();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
-
-app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {

@@ -2,16 +2,38 @@ using System.Text.RegularExpressions;
 
 namespace Blogifier.Helper;
 
-public static class StringHelper
+public static partial class StringHelper
 {
-  private static Regex _regexScript = new("<script[^>]*>[\\s\\S]*?</script>", RegexOptions.Compiled);
-  private static Regex _regexImg = new("<img[^>]*>[\\s\\S]*?>", RegexOptions.Compiled);
-  private static Regex _regexImgTags = new("<img[^>]*?src\\s*=\\s*[\"']?([^'\" >]+?)[ '\"][^>]*?>", RegexOptions.IgnoreCase);
-  private static Regex _regexImgSrc = new("<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-  private static Regex _regexFile = new(@"(?i)<a\b[^>]*?>(?<text>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-  public static string RemoveScriptTags(string input) => _regexScript.Replace(input, string.Empty);
-  public static string RemoveImgTags(string input) => _regexImg.Replace(input, string.Empty);
-  public static MatchCollection MatchesImgTags(string input) => _regexImgTags.Matches(input);
-  public static Match MatchImgSrc(string input) => _regexImgSrc.Match(input);
-  public static MatchCollection MatchesFile(string input) => _regexFile.Matches(input);
+
+  [GeneratedRegex("<script[^>]*>[\\s\\S]*?</script>", RegexOptions.Compiled)]
+  private static partial Regex HtmlScriptGeneratedRegex();
+  public static string RemoveHtmlScriptTags(string input) => HtmlScriptGeneratedRegex().Replace(input, string.Empty);
+
+
+  [GeneratedRegex("<img[^>]*>[\\s\\S]*?>", RegexOptions.Compiled)]
+  private static partial Regex HtmlImgGeneratedRegex();
+  public static string RemoveHtmlImgTags(string input) => HtmlImgGeneratedRegex().Replace(input, string.Empty);
+
+
+  [GeneratedRegex("<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.Compiled)]
+  private static partial Regex HtmlImgSrcGeneratedRegex();
+  public static Match MatchHtmlImgSrc(string input) => HtmlImgSrcGeneratedRegex().Match(input);
+
+  [GeneratedRegex("<img[^>]*?src\\s*=\\s*[\"']?([^'\" >]+?)[ '\"][^>]*?>", RegexOptions.Compiled)]
+  private static partial Regex HtmlImgTagsGeneratedRegex();
+  public static MatchCollection MatchesHtmlImgTags(string input) => HtmlImgTagsGeneratedRegex().Matches(input);
+
+
+  [GeneratedRegex("(?i)<a\\b[^>]*?>(?<text>.*?)</a>", RegexOptions.Compiled)]
+  private static partial Regex HtmlFileGeneratedRegex();
+  public static MatchCollection MatchesHtmlFile(string input) => HtmlFileGeneratedRegex().Matches(input);
+
+
+  [GeneratedRegex("!\\[[^\\]]*\\]\\((blob:[^)]+)\\)", RegexOptions.Compiled)]
+  private static partial Regex MarkdownImgBlobGeneratedRegex();
+  public static MatchCollection MatchesMarkdownImgBlob(string input) => MarkdownImgBlobGeneratedRegex().Matches(input);
+
+
+  [GeneratedRegex(@"!\[(?<filename>[^\]]+)\]\(data:image\/(?<type>.+);base64,(?<data>.+?)\)", RegexOptions.Compiled)]
+  public static partial Regex MarkdownDataImageBase64BlobGeneratedRegex();
 }
