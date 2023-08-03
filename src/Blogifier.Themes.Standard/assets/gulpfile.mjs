@@ -4,7 +4,6 @@ import { deleteAsync } from 'del';
 
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import notify from 'gulp-notify';
 import size from 'gulp-size';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
@@ -24,6 +23,8 @@ const sass = gulpSass(dartSass);
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
+
+import sprite from 'gulp-svg-sprite';
 
 const { src, dest, watch, series, parallel } = gulp;
 
@@ -83,11 +84,8 @@ const rollupJs = () => {
   if (mode !== 'Debug') {
     // JS Minify
     stream = stream.pipe(buffer())
-    stream = stream.pipe(size())
     stream = stream.pipe(plumber())
     stream = stream.pipe(uglify())
-    stream = stream.on('error', notify.onError())
-    stream = stream.pipe(size())
   }
   return stream.pipe(dest('dist/js'));
 }
@@ -101,24 +99,34 @@ const scss = () => {
   }
 
   stream = stream.pipe(
-    sass({
+    sass.sync({
       outputStyle: mode === 'Debug' ? 'expanded' : 'compressed',
       errLogToConsole: false,
       includePaths: ['node_modules', 'bower_components', 'scss', '.'],
-    })
+    }).on('error', sass.logError)
   )
-  stream = stream.on('error', notify.onError());
 
   if (mode === 'Debug') {
     stream = stream.pipe(sourcemaps.write())
   } else {
-    stream = stream.pipe(size())
     stream = stream.pipe(plumber())
     stream = stream.pipe(postcss([autoprefixer(), cssnano()]))
-    stream = stream.on('error', notify.onError())
-    stream = stream.pipe(size())
   }
   return stream.pipe(dest('dist/css'));
+}
+
+const svgSprite = () => {
+  let stream = src("./svg/**/*.svg");
+  stream = stream.pipe(
+    sprite({
+      mode: {
+        symbol: {
+          sprite: '../icon-sprites.svg',
+        },
+      }
+    })
+  );
+  return stream.pipe(dest('dist/images'));
 }
 
 const watcher = () => {
@@ -130,6 +138,7 @@ export default series(
   parallel(
     scss,
     rollupJs,
+    svgSprite,
     watcher
   )
 );
@@ -138,7 +147,8 @@ const build = series(
   clean,
   parallel(
     scss,
-    rollupJs
+    rollupJs,
+    svgSprite,
   )
 );
 

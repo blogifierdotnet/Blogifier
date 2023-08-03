@@ -32,6 +32,7 @@
     "gulp-sass": "^5.1.0",
     "gulp-size": "^4.0.1",
     "gulp-sourcemaps": "^3.0.0",
+    "gulp-svg-sprite": "^2.0.3",
     "gulp-uglify": "^3.0.2",
     "rollup": "^3.23.1",
     "rtlcss": "^3.3.0",

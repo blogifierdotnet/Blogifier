@@ -10,7 +10,9 @@
     <div class="dropdown me-auto me-md-0">
       <button class="header-nav-link" type="button" id="mainNav" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="me-1">@_localizer["categories"]</span>
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgCategoriesPath"></object>
+        <svg width="16" height="16" class="bi bi-chevron-down">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#categories"></use>
+        </svg>
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mainNav">
         @{
@@ -28,34 +30,46 @@
   <ul class="social d-flex ms-2" aria-label="@_localizer["social-accounts"]">
     <li>
       <a class="social-link-github header-nav-button" href="https://github.com/" target="_blank" aria-label="@_localizer["github"]">
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgGithubPath"></object>
+        <svg width="16" height="16" class="bi bi-github">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#github"></use>
+        </svg>
       </a>
     </li>
     <li>
       <a class="social-link-twitter header-nav-button" href="https://twitter.com/" target="_blank" aria-label="@_localizer["twitter"]">
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgTwitterPath"></object>
+        <svg width="16" height="16" class="bi bi-twitter">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#twitter"></use>
+        </svg>
       </a>
     </li>
     <li>
       <a class="social-link-facebook header-nav-button" href="https://facebook.com" target="_blank" aria-label="@_localizer["facebook"]">
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgFacebookPath"></object>
+        <svg width="16" height="16" class="bi bi-facebook">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#facebook"></use>
+        </svg>
       </a>
     </li>
     <li>
       <a class="social-link-youtube header-nav-button" href="https://youtube.com/" target="_blank" aria-label="@_localizer["youtube"]">
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgYoutubePath"></object>
+        <svg width="16" height="16" class="bi bi-youtube">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#youtube"></use>
+        </svg>
       </a>
     </li>
     <li>
       <a class="social-link-instagram header-nav-button" href="https://instagram.com/" target="_blank" aria-label="@_localizer["instagram"]">
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgInstagramPath"></object>
+        <svg width="16" height="16" class="bi bi-instagram">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#instagram"></use>
+        </svg>
       </a>
     </li>
   </ul>
   <!--/social -->
   <!-- Search button -->
   <button aria-label="@_localizer["search"]" class="header-nav-button d-none d-md-block" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
-    <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgSearchPath"></object>
+    <svg width="16" height="16" class="bi bi-search">
+      <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#search"></use>
+    </svg>
   </button>
   <!--/Search button -->
   <!-- Admin Menu -->
@@ -65,7 +79,9 @@
       <button class="header-nav-link -login ms-4" title="@_localizer["login"]" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Admin Menu - John">
         <span class="me-1 d-none d-md-inline">@Model.Main.Claims.NickName</span>
-        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgChevronDownPath"></object>
+        <svg width="16" height="16" class="bi bi-chevron-down">
+          <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#chevron-down"></use>
+        </svg>
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         <li><a class="dropdown-item" href="~/admin/">@_localizer["dashboard"]</a></li>
@@ -83,7 +99,9 @@
   else
   {
     <a class="header-nav-button -login ms-4" href="~/account" title="@_localizer["login"]" aria-label="@_localizer["login"]" role="button">
-      <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgBoxArrowInRightPath"></object>
+      <svg width="20" height="20" class="bi bi-box-arrow-in-right">
+        <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/images/icon-sprites.svg#box-arrow-in-right"></use>
+      </svg>
     </a>
   }
   <!--/Admin Menu -->
