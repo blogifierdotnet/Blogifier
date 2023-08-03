@@ -46,8 +46,8 @@ const release = (done) => {
   done();
 };
 
-// Rollup.js
-const rollupJs = () => {
+// blogifier js
+const blogifierJs = () => {
   let outputOptions = {
     sourcemap: true,
     format: 'iife'
@@ -87,7 +87,51 @@ const rollupJs = () => {
     stream = stream.pipe(plumber())
     stream = stream.pipe(uglify())
   }
-  return stream.pipe(dest('dist/js'));
+  return stream.pipe(dest('dist/admin/js'));
+}
+
+// editor js
+const editorJs = () => {
+  let outputOptions = {
+    sourcemap: true,
+    format: 'es'
+  }
+
+  if (mode !== 'Debug') {
+    outputOptions.sourcemap = false;
+    outputOptions.minifyInternalExports = true;
+    outputOptions.plugins = [terser()];
+  }
+
+  let stream = rollupStream({
+    input: 'js/editor.js',
+    output: outputOptions,
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env'],
+        babelHelpers: 'bundled',
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+        exclude: [],
+        sourceMap: mode === 'Debug',
+      }),
+    ],
+  })
+
+  stream = stream.pipe(source('editor.js'));
+  if (mode !== 'Debug') {
+    // JS Minify
+    stream = stream.pipe(buffer())
+    stream = stream.pipe(plumber())
+    stream = stream.pipe(uglify())
+  }
+  return stream.pipe(dest('dist/admin/js'));
 }
 
 // sass
@@ -112,33 +156,20 @@ const scss = () => {
     stream = stream.pipe(plumber())
     stream = stream.pipe(postcss([autoprefixer(), cssnano()]))
   }
-  return stream.pipe(dest('dist/css'));
-}
-
-const svgSprite = () => {
-  let stream = src("./svg/**/*.svg");
-  stream = stream.pipe(
-    sprite({
-      mode: {
-        symbol: {
-          sprite: '../icon-sprites.svg',
-        },
-      }
-    })
-  );
-  return stream.pipe(dest('dist/images'));
+  return stream.pipe(dest('dist/admin/css'));
 }
 
 const watcher = () => {
-  watch('./js/**/*.js', series(rollupJs));
+  watch('./js/**/*.js', series(blogifierJs));
+  watch('./scss/**/*.scss', series(scss));
 };
 
 export default series(
   clean,
   parallel(
     scss,
-    rollupJs,
-    svgSprite,
+    blogifierJs,
+    editorJs,
     watcher
   )
 );
@@ -146,8 +177,8 @@ export default series(
 const build = series(
   clean,
   scss,
-  rollupJs,
-  svgSprite,
+  blogifierJs,
+  editorJs,
 );
 
 export { debug, release, build };

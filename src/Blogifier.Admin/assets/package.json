@@ -4,27 +4,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run watch-rollup | npm run watch-sass ",
-    "rtl": "rtlcss dist/admin/css/styles.css css/styles.rtl.css",
-    "sass": "sass",
-    "rollup": "rollup",
-    "watch-sass": "sass --watch scss:dist/admin/css",
-    "watch-rollup": "rollup -w --config rollup.config.dev.mjs",
-    "sass:Debug": "sass scss:dist/admin/css",
-    "rollup:Debug": "rollup --config rollup.config.dev.mjs",
-    "build:Debug": "npm run sass:Debug && npm run rollup:Debug",
-    "sass:Release": "sass scss:dist/admin/css --style=compressed --no-source-map",
-    "rollup:Release": "rollup --config rollup.config.mjs",
-    "build:Release": "npm run sass:Release && npm run rollup:Release"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.0",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "@rollup/plugin-terser": "^0.4.3",
-    "glob": "^10.2.6",
-    "rollup": "^3.23.1",
-    "rtlcss": "^3.3.0",
-    "sass": "~1.32.12"
+    "start": "gulp",
+    "build": "gulp build",
+    "build:Debug": "gulp build",
+    "build:Release": "gulp release build"
   },
   "dependencies": {
     "bootstrap": "~5.1.0",
@@ -32,5 +15,31 @@
     "chart.js": "~2.9.4",
     "easymde": "^2.18.0",
     "highlight.js": "~10.7.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/stream": "^3.0.0",
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "del": "^7.0.0",
+    "gulp": "^4.0.2",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-size": "^4.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-svg-sprite": "^2.0.3",
+    "gulp-uglify": "^3.0.2",
+    "rollup": "^3.23.1",
+    "rtlcss": "^3.3.0",
+    "sass": "~1.32.12",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
