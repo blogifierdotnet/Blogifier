@@ -10,9 +10,8 @@
     <div class="dropdown me-auto me-md-0">
       <button class="header-nav-link" type="button" id="mainNav" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="me-1">@_localizer["categories"]</span>
-        @Html.Raw(Assets.SvgCategories)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgCategoriesPath"></object>
       </button>
-
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mainNav">
         @{
           var categoryUrl = Url.Content("~/category");
@@ -29,34 +28,34 @@
   <ul class="social d-flex ms-2" aria-label="@_localizer["social-accounts"]">
     <li>
       <a class="social-link-github header-nav-button" href="https://github.com/" target="_blank" aria-label="@_localizer["github"]">
-        @Html.Raw(Assets.SvgGithub)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgGithubPath"></object>
       </a>
     </li>
     <li>
       <a class="social-link-twitter header-nav-button" href="https://twitter.com/" target="_blank" aria-label="@_localizer["twitter"]">
-        @Html.Raw(Assets.SvgTwitter)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgTwitterPath"></object>
       </a>
     </li>
     <li>
       <a class="social-link-facebook header-nav-button" href="https://facebook.com" target="_blank" aria-label="@_localizer["facebook"]">
-        @Html.Raw(Assets.SvgFacebook)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgFacebookPath"></object>
       </a>
     </li>
     <li>
       <a class="social-link-youtube header-nav-button" href="https://youtube.com/" target="_blank" aria-label="@_localizer["youtube"]">
-        @Html.Raw(Assets.SvgYoutube)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgYoutubePath"></object>
       </a>
     </li>
     <li>
       <a class="social-link-instagram header-nav-button" href="https://instagram.com/" target="_blank" aria-label="@_localizer["instagram"]">
-        @Html.Raw(Assets.SvgInstagram)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgInstagramPath"></object>
       </a>
     </li>
   </ul>
   <!--/social -->
   <!-- Search button -->
   <button aria-label="@_localizer["search"]" class="header-nav-button d-none d-md-block" type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
-    @Html.Raw(Assets.SvgSearch)
+    <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgSearchPath"></object>
   </button>
   <!--/Search button -->
   <!-- Admin Menu -->
@@ -66,7 +65,7 @@
       <button class="header-nav-link -login ms-4" title="@_localizer["login"]" id="dropdownMenuButton"
               data-bs-toggle="dropdown" aria-expanded="false" aria-label="Admin Menu - John">
         <span class="me-1 d-none d-md-inline">@Model.Main.Claims.NickName</span>
-        @Html.Raw(Assets.SvgChevronDown)
+        <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgChevronDownPath"></object>
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         <li><a class="dropdown-item" href="~/admin/">@_localizer["dashboard"]</a></li>
@@ -84,7 +83,7 @@
   else
   {
     <a class="header-nav-button -login ms-4" href="~/account" title="@_localizer["login"]" aria-label="@_localizer["login"]" role="button">
-      @Html.Raw(Assets.SvgBoxArrowInRight)
+      <object type="image/svg+xml" data="@SharedRCLConstant.AssetsSvgBoxArrowInRightPath"></object>
     </a>
   }
   <!--/Admin Menu -->

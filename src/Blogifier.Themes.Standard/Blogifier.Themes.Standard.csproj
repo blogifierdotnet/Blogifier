@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blogifier.Shared.RCL\Blogifier.Shared.RCL.csproj" />
     <ProjectReference Include="..\Blogifier.Shared\Blogifier.Shared.csproj" />
   </ItemGroup>
 
