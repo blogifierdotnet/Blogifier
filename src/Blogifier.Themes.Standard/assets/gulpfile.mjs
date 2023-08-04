@@ -23,6 +23,8 @@ import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 
+import sprite from 'gulp-svg-sprite';
+
 const { src, dest, watch, series, parallel } = gulp;
 
 // Clear shell screen
