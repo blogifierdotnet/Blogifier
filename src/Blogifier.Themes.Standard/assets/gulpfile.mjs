@@ -112,6 +112,19 @@ const scss = () => {
   return stream.pipe(dest('dist/css'));
 }
 
+const svgSprite = () => {
+  let stream = src("./svg/**/*.svg");
+  stream = stream.pipe(
+    sprite({
+      mode: {
+        symbol: {
+          sprite: '../icon-sprites.svg',
+        },
+      }
+    })
+  );
+  return stream.pipe(dest('dist/img'));
+}
 
 const watcher = () => {
   watch('./js/**/*.js', series(rollupJs));
@@ -123,6 +136,7 @@ export default series(
   parallel(
     scss,
     rollupJs,
+    svgSprite,
     watcher
   )
 );
@@ -131,6 +145,7 @@ const build = series(
   clean,
   scss,
   rollupJs,
+  svgSprite,
 );
 
 export { debug, release, build };
