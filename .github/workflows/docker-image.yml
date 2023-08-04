@@ -5,6 +5,7 @@ on:
     branches:
       - 'preview'
   pull_request:
+    branches:
       - 'preview'
 
 jobs:
