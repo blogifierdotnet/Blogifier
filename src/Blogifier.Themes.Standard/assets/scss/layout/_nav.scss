@@ -24,6 +24,7 @@
       color: #000;
       background-color: var(--bs-light);
     }
+
     > .bi,
     > img {
       transform: translateY(-0.1rem);
@@ -33,11 +34,13 @@
   &-link {
     padding: 0 1rem;
     font-weight: 500;
+
     .bi-chevron-down {
       width: 0.75rem;
       height: 0.75rem;
     }
   }
+
   &-button {
     padding: 0;
     width: 2.5rem;
@@ -45,6 +48,7 @@
 
   .-login {
     position: relative;
+
     &::after {
       content: "";
       width: 1px;
@@ -56,15 +60,21 @@
       background-color: rgba(#000, 0.1);
       display: block;
     }
+
     .bi-box-arrow-in-right {
       transform: translateX(-0.125rem);
     }
   }
+
   @media (max-width: 767px) {
     border-bottom: 1px solid rgba(#000, 0.03);
     border-top: 1px solid rgba(#000, 0.03);
     padding: 0.25rem 0.75rem;
     margin: 0 -1.5rem 1rem;
+
+    &-link {
+      padding: 0 0 0 1rem;
+    }
   }
 }
 

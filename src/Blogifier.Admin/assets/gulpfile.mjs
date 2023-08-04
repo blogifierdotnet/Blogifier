@@ -160,7 +160,7 @@ const scss = () => {
 }
 
 const watcher = () => {
-  watch('./js/**/*.js', series(blogifierJs));
+  watch('./js/**/*.js', series(blogifierJs, editorJs));
   watch('./scss/**/*.scss', series(scss));
 };
 

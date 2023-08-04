@@ -4,7 +4,6 @@ import { deleteAsync } from 'del';
 
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import size from 'gulp-size';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 
@@ -126,11 +125,12 @@ const svgSprite = () => {
       }
     })
   );
-  return stream.pipe(dest('dist/images'));
+  return stream.pipe(dest('dist/img'));
 }
 
 const watcher = () => {
   watch('./js/**/*.js', series(rollupJs));
+  watch('./scss/**/*.scss', series(scss));
 };
 
 export default series(
