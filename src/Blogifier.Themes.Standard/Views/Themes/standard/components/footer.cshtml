@@ -1,13 +1,11 @@
 @inject IStringLocalizer<Resource> _localizer
 @model MainModel
 
-<div class="modal fade search-modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel"
-     aria-hidden="true">
+<div class="modal fade search-modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
   <div class="modal-dialog mt-5">
     <div class="modal-content">
       <form id="searchForm" class="search-form" asp-controller="search" asp-action="" method="post">
-        <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg border-0 shadow-none"
-               placeholder="@_localizer["search"]..." autocomplete="off" autofocus>
+        <input type="search" id="searchFormInput" name="term" class="form-control form-control-lg border-0 shadow-none" placeholder="@_localizer["search"]..." autocomplete="off" autofocus>
       </form>
     </div>
   </div>

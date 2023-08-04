@@ -84,4 +84,5 @@
       <Output TaskParameter="Assets" ItemName="StaticWebAsset" />
     </DefineStaticWebAssets>
   </Target>
+
 </Project>

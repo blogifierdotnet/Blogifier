@@ -4,6 +4,7 @@ using Blogifier.Data;
 using Blogifier.Extensions;
 using Blogifier.Helper;
 using Blogifier.Shared;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using ReverseMarkdown.Converters;
 using System;
@@ -241,8 +242,7 @@ public class PostProvider : AppProvider<Post, int>
   public async Task StateInternalAsynct(IQueryable<Post> query, PostState state)
   {
     await query.ExecuteUpdateAsync(setters =>
-        setters.SetProperty(b => b.State, state)
-        .SetProperty(b => b.PublishedAt, b => GetPublishedAt(b.PublishedAt, state)));
+        setters.SetProperty(b => b.State, state));
   }
 
   public async Task<string> AddAsync(PostEditorDto postInput, int userId)
