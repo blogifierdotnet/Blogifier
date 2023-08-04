@@ -126,11 +126,13 @@ const svgSprite = () => {
       }
     })
   );
-  return stream.pipe(dest('dist/images'));
+  return stream.pipe(dest('dist/img'));
 }
 
 const watcher = () => {
   watch('./js/**/*.js', series(rollupJs));
+  watch('./scss/**/*.scss', series(scss));
+  watch('./svg/**/*.svg', series(svgSprite));
 };
 
 export default series(
