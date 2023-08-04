@@ -2,6 +2,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-preview-alpine as sdk
 # TOTO zh-CH
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add --no-cache npm
+# VOLUME ["/root/.nuget","/root/.local/share/NuGet","/root/.npm"]
+# TOTO zh-CH
+CMD [ "npm config set registry http://mirrors.cloud.tencent.com/npm" ]
 # Copy everything else and build
 COPY ./ /opt/blogifier
 WORKDIR /opt/blogifier
