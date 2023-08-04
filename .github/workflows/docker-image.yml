@@ -1,8 +1,11 @@
 name: build release docker
 
 on:
+  push:
+    branches:
+      - 'preview'
   pull_request:
-    branches: [ "preview" ]
+      - 'preview'
 
 jobs:
   build:
