@@ -41,14 +41,14 @@
         }
         <button class="post-meta-btn ms-auto" type="button" data-bs-toggle="modal" data-bs-target="#shareModal" aria-label="@_localizer["share"]">
           <svg width="16" height="16" class="bi bi-share">
-            <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/img/icon-sprites.svg#bi-share"></use>
+            <use xlink:href="/_content/@SharedRclConstant.AssemblyName/img/icon-sprites.svg#bi-share"></use>
           </svg>
         </button>
         @if (User.Identity != null && User.Identity.IsAuthenticated)
         {
           <a class="post-meta-btn ms-2" href="~/admin/blogs/editor/@Model.PostSlug.Post.Slug" role="button" aria-label="@_localizer["edit-post"]">
             <svg width="16" height="16" class="bi bi-pencil">
-              <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/img/icon-sprites.svg#bi-pencil"></use>
+              <use xlink:href="/_content/@SharedRclConstant.AssemblyName/img/icon-sprites.svg#bi-pencil"></use>
             </svg>
           </a>
         }

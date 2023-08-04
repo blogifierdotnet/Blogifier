@@ -4,7 +4,6 @@ import { deleteAsync } from 'del';
 
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import size from 'gulp-size';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 
@@ -23,8 +22,6 @@ const sass = gulpSass(dartSass);
 import postcss from 'gulp-postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
-
-import sprite from 'gulp-svg-sprite';
 
 const { src, dest, watch, series, parallel } = gulp;
 
@@ -115,24 +112,10 @@ const scss = () => {
   return stream.pipe(dest('dist/css'));
 }
 
-const svgSprite = () => {
-  let stream = src("./svg/**/*.svg");
-  stream = stream.pipe(
-    sprite({
-      mode: {
-        symbol: {
-          sprite: '../icon-sprites.svg',
-        },
-      }
-    })
-  );
-  return stream.pipe(dest('dist/img'));
-}
 
 const watcher = () => {
   watch('./js/**/*.js', series(rollupJs));
   watch('./scss/**/*.scss', series(scss));
-  watch('./svg/**/*.svg', series(svgSprite));
 };
 
 export default series(
@@ -140,7 +123,6 @@ export default series(
   parallel(
     scss,
     rollupJs,
-    svgSprite,
     watcher
   )
 );
@@ -149,7 +131,6 @@ const build = series(
   clean,
   scss,
   rollupJs,
-  svgSprite,
 );
 
 export { debug, release, build };
