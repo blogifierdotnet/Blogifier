@@ -456,4 +456,52 @@
   <data name="page-not-found" xml:space="preserve">
     <value>页面不存在</value>
   </data>
+  <data name="basic" xml:space="preserve">
+    <value>基本</value>
+  </data>
+  <data name="customize" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="menus" xml:space="preserve">
+    <value>菜单</value>
+  </data>
+  <data name="scripts" xml:space="preserve">
+    <value>脚本</value>
+  </data>
+  <data name="widgets" xml:space="preserve">
+    <value>小部件</value>
+  </data>
+  <data name="basic-settings" xml:space="preserve">
+    <value>基础设置</value>
+  </data>
+  <data name="default-cover" xml:space="preserve">
+    <value>默认背景图</value>
+  </data>
+  <data name="script-footer" xml:space="preserve">
+    <value>尾部脚本</value>
+  </data>
+  <data name="script-header" xml:space="preserve">
+    <value>头部脚本</value>
+  </data>
+  <data name="script-settings" xml:space="preserve">
+    <value>脚本设置</value>
+  </data>
+  <data name="users-settings" xml:space="preserve">
+    <value>用户设置</value>
+  </data>
+  <data name="read-more" xml:space="preserve">
+    <value>阅读更多</value>
+  </data>
+  <data name="next-post" xml:space="preserve">
+    <value>下一篇</value>
+  </data>
+  <data name="previous-post" xml:space="preserve">
+    <value>上一篇</value>
+  </data>
+  <data name="related-posts" xml:space="preserve">
+    <value>推荐博客</value>
+  </data>
+  <data name="view-all" xml:space="preserve">
+    <value>查看所有</value>
+  </data>
 </root>

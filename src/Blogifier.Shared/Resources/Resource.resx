@@ -774,4 +774,16 @@
   <data name="page-not-found-message" xml:space="preserve">
     <value>The Page you are looking for doesn't exist, or error occurred.</value>
   </data>
+  <data name="next-post" xml:space="preserve">
+    <value>Next Post</value>
+  </data>
+  <data name="previous-post" xml:space="preserve">
+    <value>Previous Post</value>
+  </data>
+  <data name="related-posts" xml:space="preserve">
+    <value>Related Posts</value>
+  </data>
+  <data name="view-all" xml:space="preserve">
+    <value>View All</value>
+  </data>
 </root>
