@@ -489,4 +489,19 @@
   <data name="users-settings" xml:space="preserve">
     <value>用户设置</value>
   </data>
+  <data name="read-more" xml:space="preserve">
+    <value>阅读更多</value>
+  </data>
+  <data name="next-post" xml:space="preserve">
+    <value>下一篇</value>
+  </data>
+  <data name="previous-post" xml:space="preserve">
+    <value>上一篇</value>
+  </data>
+  <data name="related-posts" xml:space="preserve">
+    <value>推荐博客</value>
+  </data>
+  <data name="view-all" xml:space="preserve">
+    <value>查看所有</value>
+  </data>
 </root>

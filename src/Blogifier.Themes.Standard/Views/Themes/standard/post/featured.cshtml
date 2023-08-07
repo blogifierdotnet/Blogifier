@@ -1,5 +1,7 @@
 @model PostPagerModel
 
+@inject IStringLocalizer<Resource> _localizer
+
 @{
   var featured = Model.Pager.Items.Where(p => p.State == PostState.Featured).Take(3).ToList();
 }
@@ -56,7 +58,7 @@
                   @item.Description
                 </p>
                 <a class="featured-more" href="~/post/@item.Slug">
-                  Read More
+                  @_localizer["read-more"]
                   <svg width="16" height="16" class="bi bi-arrow-right">
                     <use xlink:href="/_content/@ThemesStandardConstant.AssemblyName/img/icon-sprites.svg#bi-arrow-right"></use>
                   </svg>
@@ -69,11 +71,15 @@
     </div>
     <button class="carousel-control-prev featured-prev d-none d-xl-block" type="button" data-bs-target="#carouselFeatured" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <span class="visually-hidden">
+        @_localizer["previous"]
+      </span>
     </button>
     <button class="carousel-control-next featured-next d-none d-xl-block" type="button" data-bs-target="#carouselFeatured" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <span class="visually-hidden">
+        @_localizer["next"]
+      </span>
     </button>
   </div>
 }
