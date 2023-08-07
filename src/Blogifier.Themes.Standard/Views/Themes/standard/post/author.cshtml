@@ -2,7 +2,7 @@
 
 <section class="post-author d-md-flex align-items-md-center text-center text-md-start">
   <figure class="post-author-cover mb-3 mb-md-0">
-    <img class="post-author-img" width="96" height="96" src="@UserHelper.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)" alt="@Model.PostSlug.Post.User.NickName" />
+    <img class="post-author-img" width="96" height="96" src="@PageHelper.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)" alt="@Model.PostSlug.Post.User.NickName" />
   </figure>
   <div class="post-author-details">
     <h5 class="post-author-name">@Model.PostSlug.Post.User.NickName</h5>

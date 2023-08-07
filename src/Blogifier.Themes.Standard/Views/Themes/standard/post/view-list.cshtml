@@ -7,7 +7,7 @@
   {
     <article class="post-list d-flex">
       <figure class="post-list-cover">
-        <img class="post-list-img" src="~/@post.Cover" alt="@post.Title">
+        <img class="post-list-img" src="@PageHelper.CheckGetCoverrUrl(post.Cover)" alt="@post.Title">
       </figure>
       <section class="post-list-details">
         <h2 class="post-list-title">
@@ -15,7 +15,7 @@
         </h2>
         <div class="post-list-meta d-flex">
           <div class="post-list-meta-item post-list-author">
-            <img class="post-list-author-img" src="@UserHelper.CheckGetAvatarUrl(post.User.Avatar)" width="16" height="16"
+            <img class="post-list-author-img" src="@PageHelper.CheckGetAvatarUrl(post.User.Avatar)" width="16" height="16"
                  alt="@post.User.NickName">
             <span class="post-list-author-name">@post.User.NickName</span>
           </div>

@@ -8,13 +8,13 @@
 <main class="post-detail">
   <article class="post">
     <figure class="post-cover">
-      <img class="post-cover-img" src="~/@Model.PostSlug.Post.Cover" alt="@Model.PostSlug.Post.Title" aria-hidden="true">
+      <img class="post-cover-img" src="@PageHelper.CheckGetCoverrUrl(Model.PostSlug.Post.Cover)" alt="@Model.PostSlug.Post.Title" aria-hidden="true">
     </figure>
     <header class="post-header post-container">
       <h1 class="post-title">@Model.PostSlug.Post.Title</h1>
       <div class="post-meta d-flex align-items-center">
         <div class="post-meta-item post-meta-author">
-          <img class="post-meta-author-img d-none d-md-block" width="32" height="32" src="@UserHelper.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)"
+          <img class="post-meta-author-img d-none d-md-block" width="32" height="32" src="@PageHelper.CheckGetAvatarUrl(Model.PostSlug.Post.User.Avatar)"
                alt="@Model.PostSlug.Post.User.NickName" aria-hidden="true" />
           <div class="post-meta-author-details">
             <span class="post-meta-label">@_localizer["author"]</span>

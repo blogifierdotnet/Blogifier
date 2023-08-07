@@ -5,7 +5,7 @@
 
 <div class="bfeditor">
   <div class="bfeditor-header">
-    <img class="bfeditor-cover" src="@Post.Cover" alt="@_localizer["cover"]" id="postCover">
+    <img class="bfeditor-cover" src="@PageHelper.CheckGetCoverrUrl(Post.Cover)" alt="@_localizer["cover"]">
     <div class="bfeditor-actions">
       <div class="container d-flex">
         @if (string.IsNullOrEmpty(Post.Slug))
@@ -64,7 +64,7 @@
                 <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
               </li>
               <li>
-                <button class="dropdown-item" type="button" @onclick="() => ResetCoverAsync()">@_localizer["reset"]</button>
+                <button class="dropdown-item" type="button" @onclick="() => RemoveCoverAsync()">@_localizer["reset"]</button>
               </li>
             </ul>
           </div>
@@ -100,9 +100,9 @@
       return;
     }
     Post.Content = content;
-    Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
-    Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
-    if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
+    //Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
+    //Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
+    //if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
     Post.State = postState;
     await OnSaveCallback.InvokeAsync(Post);
@@ -131,16 +131,11 @@
     }
   }
 
-  protected async Task ResetCoverAsync()
-  {
-    Post.Cover = BlogifierSharedConstant.DefaultCover;
-    await SaveAsync();
-  }
-
-  protected async Task RemoveCoverAsync()
+  protected  Task RemoveCoverAsync()
   {
     Post.Cover = null;
-    await SaveAsync();
+    StateHasChanged();
+    return Task.CompletedTask;
   }
 
 }
