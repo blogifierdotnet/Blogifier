@@ -5,7 +5,7 @@
   &-cover {
     margin: 0;
     max-height: 100%;
-    min-height: 100%;
+    min-height: 311.375px;
     overflow: hidden;
     position: relative;
     border-radius: $radius-var;
@@ -113,7 +113,7 @@
   &-more {
     font-weight: 500;
     font-size: 0.875rem;
-    color: $color;
+    color: #555;
     text-decoration: none;
     &:hover {
       color: #000;
