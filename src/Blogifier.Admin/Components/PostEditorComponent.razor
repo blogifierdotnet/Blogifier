@@ -1,13 +1,12 @@
 @using System.Text.RegularExpressions;
 @using System.Text;
 
-@implements IAsyncDisposable
-
 @inject IStringLocalizer<Resource> _localizer
 @inject IJSRuntime _jsRuntime
 @inject NavigationManager _navigation
 @inject IToaster _toaster
 @inject HttpClient _httpClient
+@inject EditorJsInterop _editorJsInterop
 
 <div class="bfeditor">
   <div class="bfeditor-header">
@@ -66,8 +65,8 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="coverDropdown">
               <li>
-                <button class="dropdown-item" onclick="return fileManager.uploadClick('@UploadType.PostCover', @Post.Id);" type="button">@_localizer["change"]</button>
-                <input type="hidden" class="txt-upload" @bind="Post.Cover" name="cover" id="cover" readonly />
+                <button class="dropdown-item" type="button" @onclick="() => ChangeCoverAsync()">@_localizer["change"]</button>
+                <InputFile @ref="_inputCovereference" OnChange="@LoadCovereFile" style="display:none;" accept="image/*" />
               </li>
               <li>
                 <button class="dropdown-item" type="button" @onclick="() => RemoveCoverAsync()">@_localizer["reset"]</button>
@@ -91,18 +90,16 @@
   [Parameter] public EventCallback<PostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
 
-  private ValueTask<IJSObjectReference> _taskModule;
   private ElementReference? _textareaReference;
   private InputFile? _inputFileReference;
+  private InputFile? _inputCovereference;
 
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
     if (firstRender)
     {
-      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
-      var module = await _taskModule;
       var element = _inputFileReference?.Element;
-      await module.InvokeVoidAsync("loadEditor", "fullToolbar", _textareaReference, element);
+      await _editorJsInterop.LoadEditorAsync(_textareaReference, element);
     }
   }
 
@@ -110,21 +107,12 @@
   {
     var headTitle = _localizer["edit"] + " - " + post.Title;
     await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
-    var module = await _taskModule;
-    await module.InvokeVoidAsync("setEditorValue", post.Content);
-  }
-
-  protected async Task LoadImageFiles(InputFileChangeEventArgs args)
-  {
-    var module = await _taskModule;
-    var element = _inputFileReference?.Element;
-    await module.InvokeVoidAsync("writeFrontFile", element);
+    await _editorJsInterop.SetEditorValueAsync(post.Content);
   }
 
   async ValueTask<string?> GetValueAsync()
   {
-    var module = await _taskModule;
-    var content = await module.InvokeAsync<string>("getEditorValue");
+    var content = await _editorJsInterop.GetEditorValueAsync();
     var imgsMatches = StringHelper.MatchesMarkdownImgBlob(content);
 
     if (imgsMatches.Count > 0)
@@ -140,6 +128,12 @@
       content = contentStringBuilder.ToString();
     }
     return content;
+  }
+
+  protected async Task LoadImageFiles(InputFileChangeEventArgs args)
+  {
+    var element = _inputFileReference?.Element;
+    await _editorJsInterop.WriteFrontFileAsync(element);
   }
 
   protected async Task SaveCoreAsync(PostState postState)
@@ -182,17 +176,20 @@
     }
   }
 
-  protected  Task RemoveCoverAsync()
+  protected async Task ChangeCoverAsync()
+  {
+    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.triggerClick", _inputCovereference?.Element);
+  }
+
+  protected async Task LoadCovereFile(InputFileChangeEventArgs args)
+  {
+
+  }
+
+  protected Task RemoveCoverAsync()
   {
     Post.Cover = null;
     StateHasChanged();
     return Task.CompletedTask;
   }
-
-  async ValueTask IAsyncDisposable.DisposeAsync()
-  {
-    var module = await _taskModule;
-    await module.DisposeAsync();
-  }
-
 }

@@ -5,6 +5,9 @@ import { Tooltip } from 'bootstrap'
 import "chart.js"
 
 window.commonJsFunctions = {
+  triggerClick: function (element) {
+    element.click();
+  },
   setTitle: function (title) {
     document.title = title + " - Blogifier";
   },
@@ -67,7 +70,6 @@ window.commonJsFunctions = {
     var clock = document.getElementById('clock');
     var clockDay = document.getElementById('clock-day');
     var clockMonth = document.getElementById('clock-month');
-
     function time() {
       var date = new Date();
       var hours = date.getHours();
