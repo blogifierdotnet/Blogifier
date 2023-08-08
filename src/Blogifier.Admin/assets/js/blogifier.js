@@ -42,7 +42,6 @@ window.commonJsFunctions = {
     }, 500);
   },
   writeCookie: function (name, value, days) {
-
     var expires;
     if (days) {
       var date = new Date();
@@ -88,6 +87,7 @@ window.commonJsFunctions = {
     time();
     setInterval(time, 60 * 1000);
   }
+
 };
 
 window.DataService = function () {

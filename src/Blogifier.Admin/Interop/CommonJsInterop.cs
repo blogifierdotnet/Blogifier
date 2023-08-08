@@ -10,8 +10,7 @@ public class CommonJsInterop : IAsyncDisposable
 
   public CommonJsInterop(IJSRuntime jsRuntime)
   {
-    moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-        "import", "./_content/RazorClassLibrary1/exampleJsInterop.js").AsTask());
+    moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/common.js").AsTask());
   }
 
   public async ValueTask DisposeAsync()
