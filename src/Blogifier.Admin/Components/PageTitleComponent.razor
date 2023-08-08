@@ -5,7 +5,6 @@
 
   protected override async Task OnInitializedAsync()
   {
-    await SetTitleAsync();
+    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title);
   }
-  private async Task SetTitleAsync() => await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title);
 }

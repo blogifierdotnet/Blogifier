@@ -1,7 +1,13 @@
+@using System.Text.RegularExpressions;
+@using System.Text;
+
+@implements IAsyncDisposable
+
 @inject IStringLocalizer<Resource> _localizer
-@inject IJSRuntime _jsruntime
+@inject IJSRuntime _jsRuntime
 @inject NavigationManager _navigation
 @inject IToaster _toaster
+@inject HttpClient _httpClient
 
 <div class="bfeditor">
   <div class="bfeditor-header">
@@ -73,7 +79,10 @@
       </div>
     </div>
   </div>
-  <EditorComponent @ref="_editorComponent" Toolbar="fullToolbar" />
+  <div class="easymde-wrapper">
+    <textarea @ref="_textareaReference" tabindex="2" class="visually-hidden" placeholder="@_localizer["type-here"]"></textarea>
+    <InputFile @ref="_inputFileReference" OnChange="@LoadImageFiles" style="display:none;" accept="image/*" />
+  </div>
 </div>
 
 @code {
@@ -82,18 +91,60 @@
   [Parameter] public EventCallback<PostEditorDto> OnSaveCallback { get; set; }
   [Parameter] public EventCallback<int> OnRemoveCallback { get; set; }
 
-  private EditorComponent _editorComponent = default!;
+  private ValueTask<IJSObjectReference> _taskModule;
+  private ElementReference? _textareaReference;
+  private InputFile? _inputFileReference;
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      _taskModule = _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js");
+      var module = await _taskModule;
+      var element = _inputFileReference?.Element;
+      await module.InvokeVoidAsync("loadEditor", "fullToolbar", _textareaReference, element);
+    }
+  }
 
   public async Task SetPostInfoAsync(PostEditorDto post)
   {
     var headTitle = _localizer["edit"] + " - " + post.Title;
-    await _jsruntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
-    await _editorComponent.SetValueAsync(post.Content);
+    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+    var module = await _taskModule;
+    await module.InvokeVoidAsync("setEditorValue", post.Content);
+  }
+
+  protected async Task LoadImageFiles(InputFileChangeEventArgs args)
+  {
+    var module = await _taskModule;
+    var element = _inputFileReference?.Element;
+    await module.InvokeVoidAsync("writeFrontFile", element);
+  }
+
+  async ValueTask<string?> GetValueAsync()
+  {
+    var module = await _taskModule;
+    var content = await module.InvokeAsync<string>("getEditorValue");
+    var imgsMatches = StringHelper.MatchesMarkdownImgBlob(content);
+
+    if (imgsMatches.Count > 0)
+    {
+      var contentStringBuilder = new StringBuilder(content);
+      foreach (Match match in imgsMatches)
+      {
+        var imageUrl = match.Groups[1].Value;
+        var imageBytes = await _httpClient.GetByteArrayAsync(imageUrl);
+        var base64String = Convert.ToBase64String(imageBytes);
+        contentStringBuilder.Replace(imageUrl, "data:image/png;base64," + base64String);
+      }
+      content = contentStringBuilder.ToString();
+    }
+    return content;
   }
 
   protected async Task SaveCoreAsync(PostState postState)
   {
-    var content = await _editorComponent.GetValueAsync();
+    var content = await GetValueAsync();
     if (string.IsNullOrEmpty(Post.Title) || string.IsNullOrEmpty(content))
     {
       _toaster.Error(_localizer["title-content-required"]);
@@ -125,7 +176,7 @@
 
   protected async Task RemoveAsync(int id)
   {
-    if (await _jsruntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
+    if (await _jsRuntime.InvokeAsync<bool>("confirm", _localizer["confirm-delete"]))
     {
       await OnRemoveCallback.InvokeAsync(id);
     }
@@ -136,6 +187,12 @@
     Post.Cover = null;
     StateHasChanged();
     return Task.CompletedTask;
+  }
+
+  async ValueTask IAsyncDisposable.DisposeAsync()
+  {
+    var module = await _taskModule;
+    await module.DisposeAsync();
   }
 
 }
