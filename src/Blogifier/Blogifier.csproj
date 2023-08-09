@@ -30,7 +30,7 @@
     <PackageReference Include="Minio" Version="5.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="ReverseMarkdown" Version="3.25.0" />
-    <PackageReference Include="Markdig" Version="0.31.0" />
+    <PackageReference Include="Markdig" Version="0.32.0" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="8.0.0-preview.6.23329.7" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
