@@ -114,7 +114,7 @@
   async ValueTask<string?> GetValueAsync()
   {
     var content = await _editorJsInterop.GetEditorValueAsync();
-    var imgsMatches = StringHelper.MatchesMarkdownImgBlob(content);
+    var imgsMatches = StringHelper.MarkdownImgBlobGeneratedRegex().Matches(content);
 
     if (imgsMatches.Count > 0)
     {
@@ -179,12 +179,14 @@
 
   protected async Task ChangeCoverAsync()
   {
-    await _commonJsInterop.TriggerClickAsync();
+    await _commonJsInterop.TriggerClickAsync(_inputCovereference?.Element);
   }
 
   protected async Task LoadCovereFile(InputFileChangeEventArgs args)
   {
-
+    var element = _inputCovereference?.Element;
+    var blobInfo = await _commonJsInterop.GetInputFileBlobInfoAsync(element);
+    Post.Cover = blobInfo.Url;
   }
 
   protected Task RemoveCoverAsync()

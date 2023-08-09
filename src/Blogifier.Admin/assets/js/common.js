@@ -45,7 +45,7 @@ export function writeCookie() {
   document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-export function setTooltip(){
+export function setTooltip() {
   setTimeout(function () {
     let options = { "trigger": "hover", fallbackPlacements: ['bottom'] };
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -76,4 +76,11 @@ export function startClock() {
   }
   time();
   setInterval(time, 60 * 1000);
+}
+
+export function getInputFileBlobInfo(inputElement) {
+  const file = inputElement.files[0];
+  const fileName = file.name;
+  const url = URL.createObjectURL(file);
+  return { fileName, url };
 }

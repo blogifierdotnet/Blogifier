@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
@@ -25,10 +26,16 @@ public class CommonJsInterop : IAsyncDisposable
     await module.InvokeVoidAsync("setTitle", content);
   }
 
-  public async ValueTask TriggerClickAsync()
+  public async ValueTask TriggerClickAsync(ElementReference? element)
   {
     var module = await moduleTask.Value;
-    await module.InvokeVoidAsync("triggerClick");
+    await module.InvokeVoidAsync("triggerClick", element);
+  }
+
+  public async ValueTask<FrontBlobInfo> GetInputFileBlobInfoAsync(ElementReference? inputUpload)
+  {
+    var module = await moduleTask.Value;
+    return await module.InvokeAsync<FrontBlobInfo>("getInputFileBlobInfo", inputUpload);
   }
 
   public async ValueTask DisposeAsync()
