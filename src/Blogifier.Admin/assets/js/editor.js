@@ -204,7 +204,7 @@ function editorToolbarTooltip() {
     buttons[i].setAttribute('data-bs-placement', 'bottom');
   }
   // TODO: remove this later:
-  commonJsFunctions.setTooltip();
+  //commonJsFunctions.setTooltip();
 }
 
 let easymde;
