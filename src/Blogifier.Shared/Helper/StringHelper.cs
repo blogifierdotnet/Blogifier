@@ -26,4 +26,7 @@ public static partial class StringHelper
 
   [GeneratedRegex(@"!\[(?<filename>[^\]]+)\]\(data:image\/(?<type>.+);base64,(?<data>.+?)\)", RegexOptions.Compiled)]
   public static partial Regex MarkdownDataImageBase64BlobGeneratedRegex();
+
+  [GeneratedRegex(@"blob:(https?://[^/]+/\S+)", RegexOptions.Compiled)]
+  public static partial Regex BlobUrlGeneratedRegex();
 }

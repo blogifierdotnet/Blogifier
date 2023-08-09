@@ -209,7 +209,6 @@ const watcher = () => {
 };
 
 export default series(
-  clean,
   parallel(
     scss,
     blogifierJs,

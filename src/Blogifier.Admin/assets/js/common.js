@@ -82,5 +82,6 @@ export function getInputFileBlobInfo(inputElement) {
   const file = inputElement.files[0];
   const fileName = file.name;
   const url = URL.createObjectURL(file);
+  console.log(url);
   return { fileName, url };
 }
