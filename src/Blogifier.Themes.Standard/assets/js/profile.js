@@ -1,9 +1,6 @@
-import "bootstrap";
-
-
 
 // copy input
-function copyInput(elm) {
+function test(elm) {
   var copyText = document.getElementById(elm);
   var copyTextStore = copyText.dataset.link;
   copyText.select();
@@ -16,4 +13,3 @@ function copyInput(elm) {
     copyText.classList.remove("copied");
   }, 500);
 }
-

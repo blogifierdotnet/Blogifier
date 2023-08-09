@@ -4,11 +4,15 @@
 }
 @inject IStringLocalizer<Resource> _localizer
 
-@section HeadMeta{
-  <title>@_localizer["edit-profile"]</title>
+@section HeaderScript{
+  <title>@_localizer["account-profile"]</title>
 }
 
-<h1 class="section-title">@_localizer["edit-profile"]</h1>
+@section FooterScript {
+  <script src="~/_content/@ThemesStandardConstant.AssemblyName/js/profile.js"></script>
+}
+
+<h1 class="section-title">@_localizer["account-profile"]</h1>
 <div class="section-content -half">
   @if (!string.IsNullOrEmpty(Model.Error))
   {
@@ -19,7 +23,7 @@
     <input type="hidden" asp-for="IsProfile" />
     <input type="hidden" asp-for="Avatar" />
     <div class="form-item">
-      <label class="form-label mb-1">@_localizer["profile-picture"]</label>
+      <label class="form-label mb-1">@_localizer["avatar"]</label>
       <div class="d-flex">
         <img src="@PageHelper.CheckGetAvatarUrl(Model.Avatar)" width="39" height="39" class="profilePicture rounded me-3" alt="@Model.NickName" />
         <button class="btn btn-link" onclick="return fileManager.uploadClick('@UploadType.Avatar');" type="button" title="@_localizer["upload"]" data-bs-toggle="tooltip">

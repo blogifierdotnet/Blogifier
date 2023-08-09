@@ -786,4 +786,7 @@
   <data name="view-all" xml:space="preserve">
     <value>View All</value>
   </data>
+  <data name="account-profile" xml:space="preserve">
+    <value>Account Profile</value>
+  </data>
 </root>
