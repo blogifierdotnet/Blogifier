@@ -171,6 +171,24 @@ public class StorageManager
     return content;
   }
 
+  public async Task<string> UploadImagesBase64(DateTime uploadAt, int userid, string dataOrUrl)
+  {
+    var match = StringHelper.DataImageBase64GeneratedRegex().Match(dataOrUrl);
+    if (match.Success)
+    {
+      var imageType = match.Groups["type"].Value;
+      var base64Data = match.Groups["data"].Value;
+      var imageDataBytes = Convert.FromBase64String(base64Data);
+      var fileName = Guid.NewGuid().ToString() + "." + imageType;
+      var path = $"{userid}/{uploadAt.Year}{uploadAt.Month}/{fileName}";
+      if (!_contentTypeProvider.TryGetContentType(fileName, out var contentType))
+        contentType = "text/html";
+      var storage = await _storageProvider.AddAsync(uploadAt, userid, path, fileName, imageDataBytes, contentType);
+      return storage.Slug;
+    }
+    return dataOrUrl;
+  }
+
   private bool InvalidFileName(string fileName)
   {
     var fileExtensions = _fileExtensions ?? BlogifierConstant.FileExtensions;

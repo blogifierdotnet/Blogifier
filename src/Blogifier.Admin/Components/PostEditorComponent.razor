@@ -148,26 +148,20 @@
     Post.Content = content;
     if (!string.IsNullOrEmpty(Post.Cover))
     {
-      Console.WriteLine(Post.Cover);
       var coverMatche = StringHelper.BlobUrlGeneratedRegex().Match(Post.Cover);
-      Console.WriteLine(coverMatche.Success);
       if (coverMatche.Success)
       {
         var imageUrl = coverMatche.Value;
         var imageBytes = await _httpClient.GetByteArrayAsync(imageUrl);
         var base64String = Convert.ToBase64String(imageBytes);
         var dataString = "data:image/png;base64," + base64String;
-        Post.Cover = dataString;
         Console.WriteLine(dataString);
+        Post.Cover = dataString;
       }
     }
-
-    //Post.Cover = await _jsruntime.InvokeAsync<string>("commonJsFunctions.getSrcValue", "postCover");
-    //Post.Cover = Post.Cover.Replace(_navigation.BaseUri, "");
-    //if (string.IsNullOrEmpty(Post.Cover)) Post.Cover = BlogifierSharedConstant.DefaultCover;
     if (string.IsNullOrEmpty(Post.Description)) Post.Description = Post.Title;
     Post.State = postState;
-    //await OnSaveCallback.InvokeAsync(Post);
+    await OnSaveCallback.InvokeAsync(Post);
   }
 
   protected async Task SaveAsync()

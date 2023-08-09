@@ -5,12 +5,10 @@ namespace Blogifier.Helper;
 public static partial class StringHelper
 {
   [GeneratedRegex("<script[^>]*>[\\s\\S]*?</script>", RegexOptions.Compiled)]
-  private static partial Regex HtmlScriptGeneratedRegex();
-  public static string RemoveHtmlScriptTags(string input) => HtmlScriptGeneratedRegex().Replace(input, string.Empty);
+  public static partial Regex HtmlScriptGeneratedRegex();
 
   [GeneratedRegex("<img[^>]*>[\\s\\S]*?>", RegexOptions.Compiled)]
-  private static partial Regex HtmlImgGeneratedRegex();
-  public static string RemoveHtmlImgTags(string input) => HtmlImgGeneratedRegex().Replace(input, string.Empty);
+  public static partial Regex HtmlImgGeneratedRegex();
 
   [GeneratedRegex("<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.Compiled)]
   public static partial Regex HtmlImgSrcGeneratedRegex();
@@ -24,9 +22,12 @@ public static partial class StringHelper
   [GeneratedRegex("!\\[[^\\]]*\\]\\((blob:[^)]+)\\)", RegexOptions.Compiled)]
   public static partial Regex MarkdownImgBlobGeneratedRegex();
 
-  [GeneratedRegex(@"!\[(?<filename>[^\]]+)\]\(data:image\/(?<type>.+);base64,(?<data>.+?)\)", RegexOptions.Compiled)]
+  [GeneratedRegex(@"!\[(?<filename>[^\]]+)\]\(data:image\/(?<type>.+);base64,(?<data>.*)\)", RegexOptions.Compiled)]
   public static partial Regex MarkdownDataImageBase64BlobGeneratedRegex();
 
   [GeneratedRegex(@"blob:(https?://[^/]+/\S+)", RegexOptions.Compiled)]
   public static partial Regex BlobUrlGeneratedRegex();
+
+  [GeneratedRegex(@"data:image\/(?<type>.+);base64,(?<data>.*)", RegexOptions.Compiled)]
+  public static partial Regex DataImageBase64GeneratedRegex();
 }
