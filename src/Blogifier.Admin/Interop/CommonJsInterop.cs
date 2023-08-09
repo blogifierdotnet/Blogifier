@@ -13,6 +13,24 @@ public class CommonJsInterop : IAsyncDisposable
     moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/common.js").AsTask());
   }
 
+  public async ValueTask SetTooltipAsync()
+  {
+    var module = await moduleTask.Value;
+    await module.InvokeVoidAsync("setTooltip");
+  }
+
+  public async ValueTask SetTitleAsync(string content)
+  {
+    var module = await moduleTask.Value;
+    await module.InvokeVoidAsync("setTitle", content);
+  }
+
+  public async ValueTask TriggerClickAsync()
+  {
+    var module = await moduleTask.Value;
+    await module.InvokeVoidAsync("triggerClick");
+  }
+
   public async ValueTask DisposeAsync()
   {
     if (moduleTask.IsValueCreated)

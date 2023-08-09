@@ -3,6 +3,7 @@
 @inject AuthenticationStateProvider _stateProvider
 @inject IJSRuntime _jsRuntime
 @inject IStringLocalizer<Resource> _localizer
+@inject CommonJsInterop _commonJsInterop
 
 @code {
 
@@ -20,7 +21,7 @@
   {
     if (firstRender)
     {
-      await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
+      await _commonJsInterop.SetTooltipAsync();
     }
   }
 }

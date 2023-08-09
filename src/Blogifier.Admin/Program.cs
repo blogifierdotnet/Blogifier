@@ -32,4 +32,5 @@ builder.Services.AddToaster(config =>
 });
 builder.Services.AddScoped<ToasterService>();
 builder.Services.AddScoped<EditorJsInterop>();
+builder.Services.AddScoped<CommonJsInterop>();
 await builder.Build().RunAsync();

@@ -7,6 +7,7 @@
 @inject IToaster _toaster
 @inject HttpClient _httpClient
 @inject EditorJsInterop _editorJsInterop
+@inject CommonJsInterop _commonJsInterop
 
 <div class="bfeditor">
   <div class="bfeditor-header">
@@ -106,7 +107,7 @@
   public async Task SetPostInfoAsync(PostEditorDto post)
   {
     var headTitle = _localizer["edit"] + " - " + post.Title;
-    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", headTitle);
+    await _commonJsInterop.SetTitleAsync(headTitle);
     await _editorJsInterop.SetEditorValueAsync(post.Content);
   }
 
@@ -178,7 +179,7 @@
 
   protected async Task ChangeCoverAsync()
   {
-    await _jsRuntime.InvokeVoidAsync("commonJsFunctions.triggerClick", _inputCovereference?.Element);
+    await _commonJsInterop.TriggerClickAsync();
   }
 
   protected async Task LoadCovereFile(InputFileChangeEventArgs args)

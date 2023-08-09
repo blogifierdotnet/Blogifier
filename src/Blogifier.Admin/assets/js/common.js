@@ -1,3 +1,4 @@
+import { Tooltip } from 'bootstrap';
 
 export function triggerClick(element) {
   element.click();
