@@ -1,11 +1,11 @@
 @inject IJSRuntime _jsRuntime;
+@inject CommonJsInterop _commonJsInterop
 
 @code {
   [Parameter] public string Title { get; set; } = default!;
 
   protected override async Task OnInitializedAsync()
   {
-    await SetTitleAsync();
+    await _commonJsInterop.SetTitleAsync(Title);
   }
-  private async Task SetTitleAsync() => await _jsRuntime.InvokeVoidAsync("commonJsFunctions.setTitle", Title);
 }

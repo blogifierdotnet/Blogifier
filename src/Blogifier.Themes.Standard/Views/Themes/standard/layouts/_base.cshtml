@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  @await RenderSectionAsync("HeadMeta",false)
   <!-- TODO: These variables comes from customfiedls -->
   <style>
     :root {
@@ -24,12 +23,12 @@
       --bf-radius: .5rem;
     }
   </style>
-  <link rel="stylesheet" href="~/_content/@ThemesStandardConstant.AssemblyName/css/blogifier.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/_content/@ThemesStandardConstant.AssemblyName/css/base.css">
+  @await RenderSectionAsync("HeaderScript", required: false)
 </head>
 
 <body>
   @RenderBody()
-  <script src="~/_content/@ThemesStandardConstant.AssemblyName/js/blogifier.js" asp-append-version="true"></script>
 </body>
 
 </html>

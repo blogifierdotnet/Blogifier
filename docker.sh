@@ -1,3 +1,3 @@
 # docker
-docker build -t dorthl/blogifier:latest .
-docker push dorthl/blogifier:latest
+docker build -t dorthl/blogifier:preview .
+docker push dorthl/blogifier:preview

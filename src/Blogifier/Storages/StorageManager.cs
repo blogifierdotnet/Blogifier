@@ -5,11 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -108,14 +104,15 @@ public class StorageManager
 
   public async Task<string> UploadImagesFoHtml(DateTime uploadAt, int userid, Uri baseAddress, string content)
   {
-    var matches = StringHelper.MatchesHtmlImgTags(content);
+    var matches = StringHelper.HtmlImgTagsGeneratedRegex().Matches(content);
     if (matches.Any())
     {
       var contentBuilder = new StringBuilder(content);
+      var htmlImgSrcRegex = StringHelper.HtmlImgSrcGeneratedRegex();
       foreach (Match match in matches.Cast<Match>())
       {
         var tag = match.Value;
-        var matchUrl = StringHelper.MatchHtmlImgSrc(tag);
+        var matchUrl = htmlImgSrcRegex.Match(tag);
         var urlString = matchUrl.Groups[1].Value;
         var storage = await UploadAsync(uploadAt, userid, baseAddress, urlString);
         var uploadTag = $"![{storage.Name}]({storage.Slug})";
@@ -128,7 +125,7 @@ public class StorageManager
 
   public async Task<string> UploadFilesFoHtml(DateTime uploadAt, int userid, Uri baseAddress, string content)
   {
-    var matches = StringHelper.MatchesHtmlFile(content);
+    var matches = StringHelper.HtmlFileGeneratedRegex().Matches(content);
     if (matches.Any())
     {
       var contentBuilder = new StringBuilder(content);
@@ -172,6 +169,24 @@ public class StorageManager
       content = contentStringBuilder.ToString();
     }
     return content;
+  }
+
+  public async Task<string> UploadImagesBase64(DateTime uploadAt, int userid, string dataOrUrl)
+  {
+    var match = StringHelper.DataImageBase64GeneratedRegex().Match(dataOrUrl);
+    if (match.Success)
+    {
+      var imageType = match.Groups["type"].Value;
+      var base64Data = match.Groups["data"].Value;
+      var imageDataBytes = Convert.FromBase64String(base64Data);
+      var fileName = Guid.NewGuid().ToString() + "." + imageType;
+      var path = $"{userid}/{uploadAt.Year}{uploadAt.Month}/{fileName}";
+      if (!_contentTypeProvider.TryGetContentType(fileName, out var contentType))
+        contentType = "text/html";
+      var storage = await _storageProvider.AddAsync(uploadAt, userid, path, fileName, imageDataBytes, contentType);
+      return storage.Slug;
+    }
+    return dataOrUrl;
   }
 
   private bool InvalidFileName(string fileName)

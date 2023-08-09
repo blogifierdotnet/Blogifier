@@ -45,8 +45,8 @@ const release = (done) => {
   done();
 };
 
-// Rollup.js
-const rollupJs = () => {
+// blogifier.js
+const blogifierJs = () => {
   let outputOptions = {
     sourcemap: true,
     format: 'iife'
@@ -80,6 +80,140 @@ const rollupJs = () => {
   })
 
   stream = stream.pipe(source('blogifier.js'));
+  if (mode !== 'Debug') {
+    // JS Minify
+    stream = stream.pipe(buffer())
+    stream = stream.pipe(plumber())
+    stream = stream.pipe(uglify())
+  }
+  return stream.pipe(dest('dist/js'));
+}
+
+// highlight.js
+const highlightJs = () => {
+  let outputOptions = {
+    sourcemap: true,
+    format: 'iife'
+  }
+
+  if (mode !== 'Debug') {
+    outputOptions.sourcemap = false;
+    outputOptions.minifyInternalExports = true;
+    outputOptions.plugins = [terser()];
+  }
+
+  let stream = rollupStream({
+    input: 'js/highlight.js',
+    output: outputOptions,
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env'],
+        babelHelpers: 'bundled',
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+        exclude: [],
+        sourceMap: mode === 'Debug',
+      }),
+    ],
+  })
+
+  stream = stream.pipe(source('highlight.js'));
+  if (mode !== 'Debug') {
+    // JS Minify
+    stream = stream.pipe(buffer())
+    stream = stream.pipe(plumber())
+    stream = stream.pipe(uglify())
+  }
+  return stream.pipe(dest('dist/js'));
+}
+
+
+// main.js
+const mainJs = () => {
+  let outputOptions = {
+    sourcemap: true,
+    format: 'iife'
+  }
+
+  if (mode !== 'Debug') {
+    outputOptions.sourcemap = false;
+    outputOptions.minifyInternalExports = true;
+    outputOptions.plugins = [terser()];
+  }
+
+  let stream = rollupStream({
+    input: 'js/main.js',
+    output: outputOptions,
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env'],
+        babelHelpers: 'bundled',
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+        exclude: [],
+        sourceMap: mode === 'Debug',
+      }),
+    ],
+  })
+
+  stream = stream.pipe(source('main.js'));
+  if (mode !== 'Debug') {
+    // JS Minify
+    stream = stream.pipe(buffer())
+    stream = stream.pipe(plumber())
+    stream = stream.pipe(uglify())
+  }
+  return stream.pipe(dest('dist/js'));
+}
+
+
+// profile.js
+const profileJs = () => {
+  let outputOptions = {
+    sourcemap: true,
+    format: 'iife'
+  }
+
+  if (mode !== 'Debug') {
+    outputOptions.sourcemap = false;
+    outputOptions.minifyInternalExports = true;
+    outputOptions.plugins = [terser()];
+  }
+
+  let stream = rollupStream({
+    input: 'js/profile.js',
+    output: outputOptions,
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env'],
+        babelHelpers: 'bundled',
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+        exclude: [],
+        sourceMap: mode === 'Debug',
+      }),
+    ],
+  })
+
+  stream = stream.pipe(source('profile.js'));
   if (mode !== 'Debug') {
     // JS Minify
     stream = stream.pipe(buffer())
@@ -129,15 +263,22 @@ const svgSprite = () => {
 }
 
 const watcher = () => {
-  watch('./js/**/*.js', series(rollupJs));
+  watch('./js/**/*.js', series(
+    blogifierJs,
+    highlightJs,
+    mainJs,
+    profileJs,
+  ));
   watch('./scss/**/*.scss', series(scss));
 };
 
 export default series(
-  clean,
   parallel(
     scss,
-    rollupJs,
+    blogifierJs,
+    highlightJs,
+    mainJs,
+    profileJs,
     svgSprite,
     watcher
   )
@@ -146,7 +287,10 @@ export default series(
 const build = series(
   clean,
   scss,
-  rollupJs,
+  blogifierJs,
+  highlightJs,
+  mainJs,
+  profileJs,
   svgSprite,
 );
 
