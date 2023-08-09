@@ -522,4 +522,7 @@
   <data name="register" xml:space="preserve">
     <value>注册</value>
   </data>
+  <data name="account-profile" xml:space="preserve">
+    <value>用户信息</value>
+  </data>
 </root>
