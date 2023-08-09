@@ -3,6 +3,7 @@
 @inject AuthenticationStateProvider _stateProvider
 @inject IJSRuntime _jsRuntime
 @inject IStringLocalizer<Resource> _localizer
+@inject CommonJsInterop _commonJsInterop
 
 @code {
 
@@ -20,7 +21,7 @@
   {
     if (firstRender)
     {
-      await _jsRuntime.InvokeAsync<string>("commonJsFunctions.setTooltip", "");
+      await _commonJsInterop.SetTooltipAsync();
     }
   }
 }
@@ -88,7 +89,7 @@
       {
         <li class="menu-item dropdown" title="@_claims.NickName" data-bs-toggle="tooltip">
           <NavLink class="menu-link" href="/admin/profile/" role="button" id="profileDropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-            <img class="rounded-circle profilePicture" width="32" height="32" src="@UserHelper.CheckGetAvatarUrl(_claims.Avatar)" alt="@_claims.NickName">
+            <img class="rounded-circle profilePicture" width="32" height="32" src="@PageHelper.CheckGetAvatarUrl(_claims.Avatar)" alt="@_claims.NickName">
           </NavLink>
           <div class="user-nav dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdownMenu">
             <div class="user-nav-info">

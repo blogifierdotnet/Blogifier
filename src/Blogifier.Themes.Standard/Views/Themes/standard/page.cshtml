@@ -10,7 +10,7 @@
 <main class="post-detail">
   <article class="post">
     <figure class="post-cover">
-      <img class="post-cover-img" src="~/@Model.PostSlug.Post.Cover" alt="@Model.PostSlug.Post.Title">
+      <img class="post-cover-img" src="@PageHelper.CheckGetCoverrUrl(Model.PostSlug.Post.Cover)" alt="@Model.PostSlug.Post.Title">
     </figure>
     <header class="post-header post-container">
       <h1 class="post-title">@Model.PostSlug.Post.Title</h1>

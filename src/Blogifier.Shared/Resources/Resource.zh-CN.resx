@@ -504,4 +504,13 @@
   <data name="view-all" xml:space="preserve">
     <value>查看所有</value>
   </data>
+  <data name="actions" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="change" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
 </root>

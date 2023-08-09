@@ -10,7 +10,7 @@
       <div class="col">
         <article class="post-grid d-flex flex-column">
           <figure class="post-grid-cover">
-            <img class="post-grid-img" src="~/@post.Cover" alt="@post.Title">
+            <img class="post-grid-img" src="@PageHelper.CheckGetCoverrUrl(post.Cover)" alt="@post.Title">
           </figure>
           @if (post.Categories != null)
           {
@@ -27,7 +27,7 @@
           <p class="post-grid-desc">@Html.Raw(post.Description)</p>
           <div class="post-grid-meta d-flex">
             <div class="post-grid-author">
-              <img class="post-grid-author-img" src="@UserHelper.CheckGetAvatarUrl(post.User.Avatar)" width="16" height="16" alt="@post.User.NickName">
+              <img class="post-grid-author-img" src="@PageHelper.CheckGetAvatarUrl(post.User.Avatar)" width="16" height="16" alt="@post.User.NickName">
               <span class="post-grid-author-name">@post.User.NickName</span>
             </div>
             <div class="post-grid-date">

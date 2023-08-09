@@ -2,6 +2,7 @@ using Blogifier.Extensions;
 using Blogifier.Identity;
 using Blogifier.Shared;
 using Blogifier.Storages;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ public class ImportManager
 
       var publishedAt = post.PublishedAt!.Value.ToUniversalTime();
       var baseAddress = new Uri(post.Slug!);
-      if (post.Cover != null && !post.Cover.Equals(BlogifierSharedConstant.DefaultCover, StringComparison.OrdinalIgnoreCase))
+      if (!string.IsNullOrEmpty(post.Cover))
         await _storageManager.UploadAsync(publishedAt, user.Id, baseAddress, post.Cover);
 
       var uploadeContent = await _storageManager.UploadsFoHtmlAsync(publishedAt, user.Id, baseAddress, post.Content);

@@ -22,7 +22,6 @@
       Description = string.Empty,
       Content = string.Empty,
       PostType = PostType.Post,
-      Cover = BlogifierSharedConstant.DefaultCover,
       Categories = new List<CategoryDto>(),
     };
 
@@ -59,22 +58,6 @@
     var result = await _httpClient.DeleteAsync($"api/post/{id}");
     if (result.IsSuccessStatusCode) _toaster.Success(_localizer["completed"]);
     else _toaster.Error(_localizer["generic-error"]);
-    _navigation.NavigateTo($"admin");
+    _navigation.NavigateTo("admin");
   }
-
-  //protected async Task OnFileUploadAsync(FrontFilePreviewDto file)
-  //{
-  //  using var fileContent = new StreamContent(file.BrowserFile.OpenReadStream());
-  //  fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.BrowserFile.ContentType);
-  //  using var content = new MultipartFormDataContent();
-  //  content.Add(content: fileContent, name: "\"file\"", fileName: file.BrowserFile.Name);
-  //  var response = await _httpClient.PostAsync("api/storage/upload", content);
-  //  if (response.IsSuccessStatusCode)
-  //  {
-  //    var stream = await response.Content.ReadAsStreamAsync();
-  //    var storage = JsonSerializer.Deserialize<StorageDto>(stream, BlogifierSharedConstant.DefaultJsonSerializerOptions)!;
-  //    await _postEditorComponent.ReplaceSelectionAsync(file, storage);
-  //  }
-  //}
-
 }
