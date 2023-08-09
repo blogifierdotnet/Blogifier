@@ -5,10 +5,10 @@ hljs.initHighlightingOnLoad();
 const form = document.getElementById("newsletter");
 const form_email = document.getElementById("newsletter_email");
 const form_status = document.getElementById("newsletter_status");
-const newsletterSucessMsg = form_status.dataset.success, newsletterErrorMsg = form_status.dataset.error;
 
 // Success, Loading and Error functions
 function successNewsletter() {
+  const newsletterSucessMsg = form_status.dataset.success, newsletterErrorMsg = form_status.dataset.error;
   form_status.innerHTML = `<div class="newsletter-msg bg-success"><div class="m-auto"> ${newsletterSucessMsg} </div></div>`;
   setTimeout(resetNewsletter, 2000);
 }

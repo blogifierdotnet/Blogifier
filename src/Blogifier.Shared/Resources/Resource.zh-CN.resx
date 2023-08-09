@@ -513,4 +513,13 @@
   <data name="reset" xml:space="preserve">
     <value>重置</value>
   </data>
+  <data name="edit-profile" xml:space="preserve">
+    <value>编辑配置</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>退出登陆</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>注册</value>
+  </data>
 </root>
