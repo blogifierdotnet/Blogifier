@@ -1,7 +1,5 @@
 import "bootstrap";
 
-
-
 // copy input
 function copyInput(elm) {
   var copyText = document.getElementById(elm);
