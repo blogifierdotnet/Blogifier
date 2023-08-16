@@ -18,8 +18,10 @@
         <NavLink class="sidebar-link" href="/admin/blogs/" Match="NavLinkMatch.All">@_localizer["posts"]</NavLink>
         <NavLink class="sidebar-link" href="/admin/blogs/category/">@_localizer["categories"]</NavLink>
         <NavLink class="sidebar-link" href="/admin/blogs/import/">@_localizer["import"]</NavLink>
-        <hr>
-        <NavLink class="sidebar-link" href="/admin/blogs/settings/">@_localizer["settings"]</NavLink>
+        <AuthorizeView Policy="@BlogifierSharedConstant.PolicyAdminName">
+          <hr>
+          <NavLink class="sidebar-link" href="/admin/blogs/settings/">@_localizer["settings"]</NavLink>
+        </AuthorizeView>
       </div>
     </div>
     <div class="page-content flex-grow-1">
