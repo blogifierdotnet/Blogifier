@@ -134,6 +134,50 @@ const editorJs = () => {
   return stream.pipe(dest('dist/admin/js'));
 }
 
+const commonJs = () => {
+  let outputOptions = {
+    sourcemap: true,
+    format: 'es'
+  }
+
+  if (mode !== 'Debug') {
+    outputOptions.sourcemap = false;
+    outputOptions.minifyInternalExports = true;
+    outputOptions.plugins = [terser()];
+  }
+
+  let stream = rollupStream({
+    input: 'js/common.js',
+    output: outputOptions,
+    plugins: [
+      babel({
+        exclude: 'node_modules/**',
+        presets: ['@babel/preset-env'],
+        babelHelpers: 'bundled',
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
+      commonjs({
+        include: ['node_modules/**'],
+        exclude: [],
+        sourceMap: mode === 'Debug',
+      }),
+    ],
+  })
+
+  stream = stream.pipe(source('common.js'));
+  if (mode !== 'Debug') {
+    // JS Minify
+    stream = stream.pipe(buffer())
+    stream = stream.pipe(plumber())
+    stream = stream.pipe(uglify())
+  }
+  return stream.pipe(dest('dist/admin/js'));
+}
+
+
 // sass
 const scss = () => {
   let stream = src("./scss/**/*.scss")
@@ -165,11 +209,11 @@ const watcher = () => {
 };
 
 export default series(
-  clean,
   parallel(
     scss,
     blogifierJs,
     editorJs,
+    commonJs,
     watcher
   )
 );
@@ -179,6 +223,7 @@ const build = series(
   scss,
   blogifierJs,
   editorJs,
+  commonJs,
 );
 
 export { debug, release, build };

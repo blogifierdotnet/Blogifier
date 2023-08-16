@@ -102,7 +102,10 @@ $form-floating-padding-y: .875rem;
 $form-floating-label-opacity: .65;
 $form-floating-label-transform: scale(.8) translateY(-.325rem) translateX(.15rem);
 
-@import "helpers/bootstrap";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/root";
+
 @import "layout/sidebar";
 @import "include/buttons";
 @import "include/forms";
@@ -142,12 +145,4 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-// shared/MainLayout.razor
-.content {
-}
-
-// Components/NavMenuComponent.razor
-.menu {
 }

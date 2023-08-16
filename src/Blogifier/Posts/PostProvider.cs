@@ -256,8 +256,12 @@ public class PostProvider : AppProvider<Post, int>
   {
     var slug = await GetSlugFromTitle(postInput.Title);
     var postCategories = await CheckPostCategories(postInput.Categories);
-    var contentFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Content));
-    var descriptionFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Description));
+
+    var contentScriptFiltr = StringHelper.HtmlScriptGeneratedRegex().Replace(postInput.Content, string.Empty);
+    var descriptionScriptFiltr = StringHelper.HtmlScriptGeneratedRegex().Replace(postInput.Description, string.Empty);
+    var contentFiltr = StringHelper.HtmlImgGeneratedRegex().Replace(contentScriptFiltr, string.Empty);
+    var descriptionFiltr = StringHelper.HtmlImgGeneratedRegex().Replace(descriptionScriptFiltr, string.Empty);
+
     var publishedAt = GetPublishedAt(postInput.PublishedAt, postInput.State);
     var post = new Post
     {
@@ -316,8 +320,12 @@ public class PostProvider : AppProvider<Post, int>
 
     post.Slug = postInput.Slug!;
     post.Title = postInput.Title;
-    var contentFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Content));
-    var descriptionFiltr = StringHelper.RemoveHtmlImgTags(StringHelper.RemoveHtmlScriptTags(postInput.Description));
+
+    var contentScriptFiltr = StringHelper.HtmlScriptGeneratedRegex().Replace(postInput.Content, string.Empty);
+    var descriptionScriptFiltr = StringHelper.HtmlScriptGeneratedRegex().Replace(postInput.Description, string.Empty);
+    var contentFiltr = StringHelper.HtmlImgGeneratedRegex().Replace(contentScriptFiltr, string.Empty);
+    var descriptionFiltr = StringHelper.HtmlImgGeneratedRegex().Replace(descriptionScriptFiltr, string.Empty);
+
     post.Description = descriptionFiltr;
     post.Content = contentFiltr;
     post.Cover = postInput.Cover;

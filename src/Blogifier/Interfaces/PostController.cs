@@ -46,6 +46,11 @@ public class PostController : ControllerBase
   {
     var userId = User.FirstUserId();
     var uploadAt = DateTime.UtcNow;
+    if (!string.IsNullOrEmpty(post.Cover))
+    {
+      var coverUrl = await storageManager.UploadImagesBase64(uploadAt, userId, post.Cover);
+      post.Cover = coverUrl;
+    }
     var uploadContent = await storageManager.UploadImagesBase64FoHtml(uploadAt, userId, post.Content);
     post.Content = uploadContent;
     return await _postProvider.AddAsync(post, userId);
@@ -57,6 +62,11 @@ public class PostController : ControllerBase
   {
     var userId = User.FirstUserId();
     var uploadAt = DateTime.UtcNow;
+    if (!string.IsNullOrEmpty(post.Cover))
+    {
+      var coverUrl = await storageManager.UploadImagesBase64(uploadAt, userId, post.Cover);
+      post.Cover = coverUrl;
+    }
     var uploadContent = await storageManager.UploadImagesBase64FoHtml(uploadAt, userId, post.Content);
     post.Content = uploadContent;
     await _postProvider.UpdateAsync(post, userId);
