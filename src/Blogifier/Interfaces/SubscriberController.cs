@@ -2,6 +2,7 @@ using Blogifier.Newsletters;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,8 +34,15 @@ public class SubscriberController : ControllerBase
   }
 
   [HttpPost("apply")]
-  public async Task Apply([FromForm] SubscriberApplyDto subscriber)
+  public async Task<IActionResult> ApplyAsync([FromBody] SubscriberApplyDto input)
   {
-    await _subscriberProvider.ApplyAsync(subscriber);
+    var res =  await _subscriberProvider.ApplyAsync(input);
+
+    if(res == 1)
+    {
+      return Ok();
+    }
+
+    return BadRequest();
   }
 }
