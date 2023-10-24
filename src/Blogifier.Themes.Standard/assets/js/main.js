@@ -4,17 +4,21 @@ const form_email = document.getElementById("newsletter_email");
 const form_status = document.getElementById("newsletter_status");
 
 // Success, Loading and Error functions
-function successNewsletter() {
-  const newsletterSucessMsg = form_status.dataset.success, newsletterErrorMsg = form_status.dataset.error;
-  form_status.innerHTML = `<div class="newsletter-msg bg-success"><div class="m-auto"> ${newsletterSucessMsg} </div></div>`;
-  setTimeout(resetNewsletter, 2000);
+function successNewsletter(message) {
+  form_status.innerHTML = `<div class="newsletter-msg bg-success"><div class="m-auto">${message}</div></div>`;
+  setTimeout(() => {
+    resetNewsletter();
+  }, 2000);
 }
+
 function loadingNewsletter() {
-  form_status.innerHTML = '<div class="newsletter-msg"><div class="m-auto spinner-border" role="status"></div></div>'
+  form_status.innerHTML = '<div class="newsletter-msg"><div class="m-auto spinner-border" role="status"></div></div>';
 }
-function errorNewsletter(msg) {
-  form_status.innerHTML = `<div class="newsletter-msg bg-danger"><div class="m-auto">${newsletterErrorMsg} <br> ${msg}</div></div>`;
+
+function errorNewsletter(message) {
+  form_status.innerHTML = `<div class="newsletter-msg bg-danger"><div class="m-auto">${message}</div></div>`;
 }
+
 function resetNewsletter() {
   form.reset();
   form_status.innerHTML = "";
@@ -25,20 +29,20 @@ function subscribeNewsletter(url, data) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
-  }
+  };
+
   fetch(url, options)
     .then((response) => {
-      if (response.status == 200) {
-        return response.json();
+      if (response.status === 200) {
+        successNewsletter('Đăng ký nhận thông báo mới cho email này thành công!');
+      } else if (response.status === 400) {
+        errorNewsletter('Email này đã tồn tại trong danh sách đăng ký.');
       } else {
-        throw new Error('The Newsletter is not working!');
+        errorNewsletter('Lỗi không xác định.');
       }
     })
-    .then(() => {
-      successNewsletter();
-    })
     .catch((err) => {
-      errorNewsletter(err);
+      errorNewsletter(err.message);
     });
 }
 
@@ -51,23 +55,8 @@ form.addEventListener("submit", function (e) {
     Country: "unknown",
     Region: "unknown"
   };
-  fetch('https://ipapi.co/json/')
-    .then((response) => {
-      if (response.status == 200) {
-        return response.json();
-      } else {
-        throw new Error('Not sure where you are!');
-      }
-    })
-    .then((loc) => {
-      subscriber_data.Ip = loc.ip;
-      subscriber_data.Country = loc.country_name;
-      subscriber_data.Region = loc.region;
-      subscribeNewsletter(form.action, subscriber_data);
-    })
-    .catch((err) => {
-      subscribeNewsletter(form.action, subscriber_data);
-    });
+
+  subscribeNewsletter(form.action, subscriber_data);
 });
 
 // search modal auto focus
