@@ -1,6 +1,7 @@
 using Blogifier.Data;
 using Blogifier.Shared;
 using Microsoft.EntityFrameworkCore;
+using ReverseMarkdown.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,17 @@ public class CategoryProvider : AppProvider<Category, int>
 
   public async Task<List<CategoryItemDto>> GetItemsAsync()
   {
+    if (!_dbContext.Categories.Any())
+      return new();
+
     return await _dbContext.Categories
-      .Include(pc => pc.PostCategories)
       .GroupBy(m => new { m.Id, m.Content, m.Description })
       .Select(m => new CategoryItemDto
       {
         Id = m.Key.Id,
         Category = m.Key.Content,
         Description = m.Key.Description,
-        PostCount = m.Sum(p => p.PostCategories!.Count())
+        PostCount = _dbContext.PostCategories.Count(s => s.CategoryId == m.Key.Id)
       })
       .AsNoTracking()
       .ToListAsync();

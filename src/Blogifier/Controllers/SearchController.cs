@@ -21,7 +21,7 @@ public class SearchController : Controller
   }
 
   [HttpPost]
-  public async Task<IActionResult> Post([FromQuery] string term, [FromQuery] int page = 1)
+  public async Task<IActionResult> Post([FromForm] string term, [FromForm] int page = 1)
   {
     if (!string.IsNullOrEmpty(term))
     {
