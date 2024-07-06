@@ -9,13 +9,9 @@ namespace Blogifier.Interfaces;
 [Route("api/analytics")]
 [ApiController]
 [Authorize]
-public class AnalyticsController : ControllerBase
+public class AnalyticsController(AnalyticsProvider analyticsProvider) : ControllerBase
 {
-  private readonly AnalyticsProvider _analyticsProvider;
-  public AnalyticsController(AnalyticsProvider analyticsProvider)
-  {
-    _analyticsProvider = analyticsProvider;
-  }
+  private readonly AnalyticsProvider _analyticsProvider = analyticsProvider;
 
   [HttpGet]
   public async Task<AnalyticsDto> GetAnalytics()

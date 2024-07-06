@@ -10,13 +10,8 @@ public class DateTimetValueGenerator : ValueGenerator<DateTime>
 {
   public override bool GeneratesTemporaryValues => false;
 
-  public override DateTime Next(EntityEntry entry)
-  {
-    return DateTime.UtcNow;
-  }
+  public override DateTime Next(EntityEntry entry) => DateTime.UtcNow;
 
-  public override ValueTask<DateTime> NextAsync(EntityEntry entry, CancellationToken cancellationToken = default)
-  {
-    return ValueTask.FromResult(DateTime.UtcNow);
-  }
+  public override ValueTask<DateTime> NextAsync(EntityEntry entry, CancellationToken cancellationToken = default) =>
+    ValueTask.FromResult(DateTime.UtcNow);
 }

@@ -8,21 +8,14 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-public class ErrorController : Controller
+public class ErrorController(
+  ILogger<ErrorController> logger,
+  IMapper mapper,
+  MainMamager mainMamager) : Controller
 {
-  protected readonly ILogger _logger;
-  protected readonly IMapper _mapper;
-  protected readonly MainMamager _mainMamager;
-
-  public ErrorController(
-    ILogger<ErrorController> logger,
-    IMapper mapper,
-    MainMamager mainMamager)
-  {
-    _logger = logger;
-    _mapper = mapper;
-    _mainMamager = mainMamager;
-  }
+  protected readonly ILogger _logger = logger;
+  protected readonly IMapper _mapper = mapper;
+  protected readonly MainMamager _mainMamager = mainMamager;
 
   [Route("404")]
   public async Task<IActionResult> Error404()

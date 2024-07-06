@@ -41,10 +41,7 @@ public class StorageMinioProvider : AppProvider<Storage, int>, IStorageProvider,
   }
 
   // 判断 minio 中文件是否存在
-  public Task<bool> ExistsAsync(string slug)
-  {
-    throw new NotImplementedException();
-  }
+  public Task<bool> ExistsAsync(string slug) => throw new NotImplementedException();
 
   public async Task<StorageDto?> GetAsync(string slug, Func<Stream, CancellationToken, Task> callback)
   {

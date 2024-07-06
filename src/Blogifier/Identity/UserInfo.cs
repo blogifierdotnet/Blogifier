@@ -12,10 +12,7 @@ public class UserInfo : IdentityUser<int>
 
   }
 
-  public UserInfo(string userName) : base()
-  {
-    UserName = userName;
-  }
+  public UserInfo(string userName) : base() => UserName = userName;
 
   public DateTime CreatedAt { get; set; }
   public DateTime UpdatedAt { get; set; }

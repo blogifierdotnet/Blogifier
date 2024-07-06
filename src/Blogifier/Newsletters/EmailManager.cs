@@ -15,33 +15,22 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Newsletters;
 
-public class EmailManager
+public class EmailManager(
+  ILogger<EmailManager> logger,
+  IMapper mapper,
+  MarkdigProvider markdigProvider,
+  OptionProvider optionProvider,
+  PostProvider postProvider,
+  NewsletterProvider newsletterProvider,
+  SubscriberProvider subscriberProvider)
 {
-  private readonly ILogger _logger;
-  private readonly IMapper _mapper;
-  private readonly MarkdigProvider _markdigProvider;
-  private readonly OptionProvider _optionProvider;
-  private readonly PostProvider _postProvider;
-  private readonly NewsletterProvider _newsletterProvider;
-  private readonly SubscriberProvider _subscriberProvider;
-
-  public EmailManager(
-    ILogger<EmailManager> logger,
-    IMapper mapper,
-    MarkdigProvider markdigProvider,
-    OptionProvider optionProvider,
-    PostProvider postProvider,
-    NewsletterProvider newsletterProvider,
-    SubscriberProvider subscriberProvider)
-  {
-    _logger = logger;
-    _mapper = mapper;
-    _markdigProvider = markdigProvider;
-    _optionProvider = optionProvider;
-    _postProvider = postProvider;
-    _newsletterProvider = newsletterProvider;
-    _subscriberProvider = subscriberProvider;
-  }
+  private readonly ILogger _logger = logger;
+  private readonly IMapper _mapper = mapper;
+  private readonly MarkdigProvider _markdigProvider = markdigProvider;
+  private readonly OptionProvider _optionProvider = optionProvider;
+  private readonly PostProvider _postProvider = postProvider;
+  private readonly NewsletterProvider _newsletterProvider = newsletterProvider;
+  private readonly SubscriberProvider _subscriberProvider = subscriberProvider;
 
   public async Task<SendNewsletterState> SendNewsletter(int postId)
   {

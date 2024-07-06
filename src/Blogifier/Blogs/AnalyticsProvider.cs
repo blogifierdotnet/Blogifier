@@ -12,10 +12,7 @@ public class AnalyticsProvider
 {
   private readonly AppDbContext _dbContext;
 
-  public AnalyticsProvider(AppDbContext dbContext)
-  {
-    _dbContext = dbContext;
-  }
+  public AnalyticsProvider(AppDbContext dbContext) => _dbContext = dbContext;
 
   public async Task<IEnumerable<BlogSumDto>> GetPostSummaryAsync()
   {

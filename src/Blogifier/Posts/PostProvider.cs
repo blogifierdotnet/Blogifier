@@ -15,14 +15,9 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class PostProvider : AppProvider<Post, int>
+public class PostProvider(IMapper mapper, AppDbContext dbContext) : AppProvider<Post, int>(dbContext)
 {
-  private readonly IMapper _mapper;
-
-  public PostProvider(IMapper mapper, AppDbContext dbContext) : base(dbContext)
-  {
-    _mapper = mapper;
-  }
+  private readonly IMapper _mapper = mapper;
 
   public async Task<PostDto> FirstAsync(int id)
   {
@@ -95,6 +90,7 @@ public class PostProvider : AppProvider<Post, int>
     var total = await query.CountAsync();
     query = query.OrderByDescending(m => m.CreatedAt).Skip(skip).Take(pageSize);
     var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+
     return new PostPagerDto(items, total, page, pageSize);
   }
 
@@ -107,6 +103,7 @@ public class PostProvider : AppProvider<Post, int>
       //.Include(m => m.StorageReferences!.Where(s => s.Type == StorageReferenceType.Post))
       .AsSingleQuery()
       .Where(p => p.Slug == slug);
+
     return await _mapper.ProjectTo<PostEditorDto>(query).FirstAsync();
   }
 
@@ -117,6 +114,7 @@ public class PostProvider : AppProvider<Post, int>
       .Include(m => m.PostCategories)!
       .ThenInclude(m => m.Category)
       .Where(p => titles.Contains(p.Title));
+
     return await _mapper.ProjectTo<PostEditorDto>(query).ToListAsync();
   }
 
@@ -214,6 +212,7 @@ public class PostProvider : AppProvider<Post, int>
     var total = await query.CountAsync();
     query = query.Skip(skip).Take(pageSize);
     var items = await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
+
     return new PostPagerDto(items, total, page, pageSize);
   }
 
@@ -222,6 +221,7 @@ public class PostProvider : AppProvider<Post, int>
     var query = _dbContext.Posts.AsNoTracking();
     if ("*".Equals(term, StringComparison.Ordinal))
       query = query.Where(p => p.Title.ToLower().Contains(term.ToLower()));
+
     return await _mapper.ProjectTo<PostItemDto>(query).ToListAsync();
   }
 
@@ -229,6 +229,7 @@ public class PostProvider : AppProvider<Post, int>
   {
     var query = _dbContext.Posts
       .Where(p => p.Id == id);
+
     return StateInternalAsynct(query, state);
   }
 
@@ -236,19 +237,20 @@ public class PostProvider : AppProvider<Post, int>
   {
     var query = _dbContext.Posts
      .Where(p => ids.Contains(p.Id));
+
     return StateInternalAsynct(query, state);
   }
 
-  public async Task StateInternalAsynct(IQueryable<Post> query, PostState state)
-  {
+  public async Task StateInternalAsynct(IQueryable<Post> query, PostState state)=>
     await query.ExecuteUpdateAsync(setters =>
         setters.SetProperty(b => b.State, state));
-  }
+  
 
   public async Task<string> AddAsync(PostEditorDto postInput, int userId)
   {
     var post = await AddInternalAsync(postInput, userId);
     await _dbContext.SaveChangesAsync();
+
     return post.Slug;
   }
 

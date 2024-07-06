@@ -9,12 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class AppDbContext : IdentityUserContext<UserInfo, int>
+public class AppDbContext(DbContextOptions options) : IdentityUserContext<UserInfo, int>(options)
 {
-  public AppDbContext(DbContextOptions options) : base(options)
-  {
-
-  }
   public DbSet<OptionInfo> Options { get; set; } = default!;
   public DbSet<Post> Posts { get; set; } = default!;
   public DbSet<Category> Categories { get; set; } = default!;

@@ -8,14 +8,9 @@ using System.Xml.Linq;
 
 namespace Blogifier.Controllers;
 
-public class SitemapController : ControllerBase
+public class SitemapController(PostProvider postProvider) : ControllerBase
 {
-  private readonly PostProvider _postProvider;
-
-  public SitemapController(PostProvider postProvider)
-  {
-    _postProvider = postProvider;
-  }
+  private readonly PostProvider _postProvider = postProvider;
 
   [Route("sitemap")]
   [Produces("text/xml")]

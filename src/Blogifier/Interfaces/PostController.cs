@@ -13,32 +13,20 @@ namespace Blogifier.Interfaces;
 [ApiController]
 [Authorize]
 [Route("api/post")]
-public class PostController : ControllerBase
+public class PostController(PostProvider postProvider) : ControllerBase
 {
-  private readonly PostProvider _postProvider;
-
-  public PostController(PostProvider postProvider)
-  {
-    _postProvider = postProvider;
-  }
+  private readonly PostProvider _postProvider = postProvider;
 
   [HttpGet("items/{filter}/{postType}")]
-  public async Task<IEnumerable<PostItemDto>> GetItemsAsync([FromRoute] PublishedStatus filter, [FromRoute] PostType postType)
-  {
-    return await _postProvider.GetAsync(filter, postType);
-  }
+  public async Task<IEnumerable<PostItemDto>> GetItemsAsync([FromRoute] PublishedStatus filter, [FromRoute] PostType postType) =>
+    await _postProvider.GetAsync(filter, postType);
 
   [HttpGet("items/search/{term}")]
-  public async Task<IEnumerable<PostItemDto>> GetSearchAsync([FromRoute] string term)
-  {
-    return await _postProvider.GetSearchAsync(term);
-  }
+  public async Task<IEnumerable<PostItemDto>> GetSearchAsync([FromRoute] string term) =>
+    await _postProvider.GetSearchAsync(term);
 
   [HttpGet("byslug/{slug}")]
-  public async Task<PostEditorDto> GetPostBySlug(string slug)
-  {
-    return await _postProvider.GetEditorAsync(slug);
-  }
+  public async Task<PostEditorDto> GetPostBySlug(string slug) => await _postProvider.GetEditorAsync(slug);
 
   [HttpPost("add")]
   [RequestSizeLimit(128 * 1024 * 1024)]

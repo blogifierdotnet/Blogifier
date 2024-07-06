@@ -12,24 +12,16 @@ using System.Xml;
 
 namespace Blogifier.Controllers;
 
-public class FeedController : Controller
+public class FeedController(
+  ILogger<FeedController> logger,
+  BlogManager blogManager,
+  PostProvider postProvider,
+  MarkdigProvider markdigProvider) : Controller
 {
-  private readonly ILogger _logger;
-  private readonly BlogManager _blogManager;
-  private readonly PostProvider _postProvider;
-  private readonly MarkdigProvider _markdigProvider;
-
-  public FeedController(
-    ILogger<FeedController> logger,
-    BlogManager blogManager,
-    PostProvider postProvider,
-    MarkdigProvider markdigProvider)
-  {
-    _logger = logger;
-    _blogManager = blogManager;
-    _postProvider = postProvider;
-    _markdigProvider = markdigProvider;
-  }
+  private readonly ILogger _logger = logger;
+  private readonly BlogManager _blogManager = blogManager;
+  private readonly PostProvider _postProvider = postProvider;
+  private readonly MarkdigProvider _markdigProvider = markdigProvider;
 
   [ResponseCache(Duration = 1200)]
   [HttpGet("feed")]

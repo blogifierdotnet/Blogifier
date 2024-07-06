@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-public class StorageController : ControllerBase
+public class StorageController(
+  IStorageProvider storageProvider) : ControllerBase
 {
-  private readonly IStorageProvider _storageProvider;
-
-  public StorageController(
-    IStorageProvider storageProvider)
-  {
-    _storageProvider = storageProvider;
-  }
+  private readonly IStorageProvider _storageProvider = storageProvider;
 
   [HttpGet($"{BlogifierConstant.StorageRowPhysicalRoot}/{{**slug}}")]
   [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]

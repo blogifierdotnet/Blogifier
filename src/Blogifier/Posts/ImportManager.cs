@@ -10,24 +10,16 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class ImportManager
+public class ImportManager(
+  UserProvider userProvider,
+  ReverseProvider reverseProvider,
+  PostProvider postProvider,
+  StorageManager storageManager)
 {
-  private readonly UserProvider _userProvider;
-  private readonly ReverseProvider _reverseProvider;
-  private readonly PostProvider _postProvider;
-  private readonly StorageManager _storageManager;
-
-  public ImportManager(
-    UserProvider userProvider,
-    ReverseProvider reverseProvider,
-    PostProvider postProvider,
-    StorageManager storageManager)
-  {
-    _userProvider = userProvider;
-    _reverseProvider = reverseProvider;
-    _postProvider = postProvider;
-    _storageManager = storageManager;
-  }
+  private readonly UserProvider _userProvider = userProvider;
+  private readonly ReverseProvider _reverseProvider = reverseProvider;
+  private readonly PostProvider _postProvider = postProvider;
+  private readonly StorageManager _storageManager = storageManager;
 
   public async Task<IEnumerable<PostEditorDto>> WriteAsync(ImportDto request, int userId)
   {

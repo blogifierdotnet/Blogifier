@@ -9,23 +9,16 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
 [Route("page")]
-public class PageController : Controller
+public class PageController(
+  ILogger<PageController> logger,
+  IMapper mapper,
+  MainMamager mainMamager,
+  PostManager postManager) : Controller
 {
-  protected readonly ILogger _logger;
-  protected readonly IMapper _mapper;
-  protected readonly MainMamager _mainMamager;
-  protected readonly PostManager _postManager;
-  public PageController(
-    ILogger<PageController> logger,
-    IMapper mapper,
-    MainMamager mainMamager,
-    PostManager postManager)
-  {
-    _logger = logger;
-    _mapper = mapper;
-    _mainMamager = mainMamager;
-    _postManager = postManager;
-  }
+  protected readonly ILogger _logger = logger;
+  protected readonly IMapper _mapper = mapper;
+  protected readonly MainMamager _mainMamager = mainMamager;
+  protected readonly PostManager _postManager = postManager;
 
   [HttpGet("{slug}")]
   public async Task<IActionResult> GetAsync([FromRoute] string slug)

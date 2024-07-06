@@ -10,30 +10,17 @@ namespace Blogifier.Interfaces;
 [Route("api/newsletter")]
 [ApiController]
 [Authorize]
-public class NewsletterController : ControllerBase
+public class NewsletterController(NewsletterProvider newsletterProvider) : ControllerBase
 {
-  private readonly NewsletterProvider _newsletterProvider;
-
-  public NewsletterController(NewsletterProvider newsletterProvider)
-  {
-    _newsletterProvider = newsletterProvider;
-  }
+  private readonly NewsletterProvider _newsletterProvider = newsletterProvider;
 
   [HttpGet("items")]
-  public async Task<IEnumerable<NewsletterDto>> GetItemsAsync()
-  {
-    return await _newsletterProvider.GetItemsAsync();
-  }
+  public async Task<IEnumerable<NewsletterDto>> GetItemsAsync() => await _newsletterProvider.GetItemsAsync();
 
   [HttpDelete("{id:int}")]
-  public async Task DeleteAsync([FromRoute] int id)
-  {
-    await _newsletterProvider.DeleteAsync(id);
-  }
+  public async Task DeleteAsync([FromRoute] int id) => await _newsletterProvider.DeleteAsync(id);
 
   [HttpGet("send/{postId:int}")]
-  public async Task SendNewsletter([FromRoute] int postId, [FromServices] EmailManager emailManager)
-  {
+  public async Task SendNewsletter([FromRoute] int postId, [FromServices] EmailManager emailManager) =>
     await emailManager.SendNewsletter(postId);
-  }
 }

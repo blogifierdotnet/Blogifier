@@ -8,12 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class SqlServerDbContext : AppDbContext
+public class SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : AppDbContext(options)
 {
-  public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options)
-  {
-  }
-
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);

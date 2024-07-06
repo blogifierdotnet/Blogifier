@@ -7,17 +7,12 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Admin;
 
-public class BlogAuthStateProvider : AuthenticationStateProvider
+public class BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger,
+  HttpClient httpClient) : AuthenticationStateProvider
 {
-  private readonly ILogger _logger;
-  protected readonly HttpClient _httpClient;
+  private readonly ILogger _logger = logger;
+  protected readonly HttpClient _httpClient = httpClient;
   protected AuthenticationState? _state;
-
-  public BlogAuthStateProvider(ILogger<BlogAuthStateProvider> logger, HttpClient httpClient)
-  {
-    _logger = logger;
-    _httpClient = httpClient;
-  }
 
   public override async Task<AuthenticationState> GetAuthenticationStateAsync()
   {

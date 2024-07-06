@@ -11,14 +11,9 @@ namespace Blogifier.Interfaces;
 [Route("api/category")]
 [Authorize]
 [ApiController]
-public class CategoryController : ControllerBase
+public class CategoryController(CategoryProvider categoryProvider) : ControllerBase
 {
-  private readonly CategoryProvider _categoryProvider;
-
-  public CategoryController(CategoryProvider categoryProvider)
-  {
-    _categoryProvider = categoryProvider;
-  }
+  private readonly CategoryProvider _categoryProvider = categoryProvider;
 
   [HttpGet("items")]
   public async Task<IEnumerable<CategoryItemDto>> GetItemsAsync()

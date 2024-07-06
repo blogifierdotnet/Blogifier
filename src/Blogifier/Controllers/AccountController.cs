@@ -10,24 +10,16 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
 [Route("account")]
-public class AccountController : Controller
+public class AccountController(
+  ILogger<AccountController> logger,
+  UserManager userManager,
+  SignInManager signInManager,
+  BlogManager blogManager) : Controller
 {
-  protected readonly ILogger _logger;
-  protected readonly UserManager _userManager;
-  protected readonly SignInManager _signInManager;
-  protected readonly BlogManager _blogManager;
-
-  public AccountController(
-    ILogger<AccountController> logger,
-    UserManager userManager,
-    SignInManager signInManager,
-    BlogManager blogManager)
-  {
-    _logger = logger;
-    _userManager = userManager;
-    _signInManager = signInManager;
-    _blogManager = blogManager;
-  }
+  protected readonly ILogger _logger = logger;
+  protected readonly UserManager _userManager = userManager;
+  protected readonly SignInManager _signInManager = signInManager;
+  protected readonly BlogManager _blogManager = blogManager;
 
   [HttpGet]
   [HttpPost]

@@ -9,10 +9,8 @@ public class CommonJsInterop : IAsyncDisposable
 {
   private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
-  public CommonJsInterop(IJSRuntime jsRuntime)
-  {
+  public CommonJsInterop(IJSRuntime jsRuntime) =>
     moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/common.js").AsTask());
-  }
 
   public async ValueTask SetTooltipAsync()
   {
