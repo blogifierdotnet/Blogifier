@@ -5,15 +5,10 @@ using System.Net.Http;
 
 namespace Blogifier.Admin.Services;
 
-public class ToasterService
+public class ToasterService(IToaster toaster, IStringLocalizer<Resource> localizer)
 {
-  private readonly IToaster _toaster;
-  private readonly IStringLocalizer<Resource> _localizer;
-  public ToasterService(IToaster toaster, IStringLocalizer<Resource> localizer)
-  {
-    _toaster = toaster;
-    _localizer = localizer;
-  }
+  private readonly IToaster _toaster = toaster;
+  private readonly IStringLocalizer<Resource> _localizer = localizer;
 
   public bool CheckResponse(HttpResponseMessage response)
   {

@@ -9,13 +9,9 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Newsletters;
 
-public class SubscriberProvider : AppProvider<Subscriber, int>
+public class SubscriberProvider(IMapper mapper, AppDbContext dbContext) : AppProvider<Subscriber, int>(dbContext)
 {
-  private readonly IMapper _mapper;
-  public SubscriberProvider(IMapper mapper, AppDbContext dbContext) : base(dbContext)
-  {
-    _mapper = mapper;
-  }
+  private readonly IMapper _mapper = mapper;
 
   public async Task<IEnumerable<SubscriberDto>> GetItemsAsync()
   {

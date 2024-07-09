@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Identity;
 
-public class UserProvider
+public class UserProvider(IMapper mapper, AppDbContext dbContext)
 {
-  private readonly IMapper _mapper;
-  private readonly AppDbContext _dbContext;
-
-  public UserProvider(IMapper mapper, AppDbContext dbContext)
-  {
-    _mapper = mapper;
-    _dbContext = dbContext;
-  }
+  private readonly IMapper _mapper = mapper;
+  private readonly AppDbContext _dbContext = dbContext;
 
   public async Task<UserInfo> FindAsync(int id)
   {

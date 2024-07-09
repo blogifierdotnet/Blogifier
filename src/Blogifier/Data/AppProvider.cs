@@ -10,10 +10,7 @@ public class AppProvider<T, TKey> where T : AppEntity<TKey> where TKey : IEquata
 {
   protected readonly AppDbContext _dbContext;
 
-  protected AppProvider(AppDbContext dbContext)
-  {
-    _dbContext = dbContext;
-  }
+  protected AppProvider(AppDbContext dbContext) => _dbContext = dbContext;
 
   protected async Task AddAsync(T entity)
   {

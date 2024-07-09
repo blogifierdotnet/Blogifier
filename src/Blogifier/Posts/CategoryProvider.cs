@@ -8,15 +8,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class CategoryProvider : AppProvider<Category, int>
+public class CategoryProvider(AppDbContext dbContext) : AppProvider<Category, int>(dbContext)
 {
-  public CategoryProvider(AppDbContext dbContext) : base(dbContext)
-  {
-  }
-
-  public async Task<List<CategoryItemDto>> GetItemsAsync()
-  {
-    return await _dbContext.Categories
+  public async Task<List<CategoryItemDto>> GetItemsAsync() =>
+    await _dbContext.Categories
       .Include(pc => pc.PostCategories)
       .GroupBy(m => new { m.Id, m.Content, m.Description })
       .Select(m => new CategoryItemDto
@@ -28,11 +23,9 @@ public class CategoryProvider : AppProvider<Category, int>
       })
       .AsNoTracking()
       .ToListAsync();
-  }
 
-  public async Task<List<CategoryItemDto>> GetItemsExistPostAsync()
-  {
-    return await _dbContext.PostCategories
+  public async Task<List<CategoryItemDto>> GetItemsExistPostAsync() =>
+    await _dbContext.PostCategories
       .Include(pc => pc.Category)
       .GroupBy(m => new { m.Category.Id, m.Category.Content, m.Category.Description })
       .Select(m => new CategoryItemDto
@@ -44,7 +37,6 @@ public class CategoryProvider : AppProvider<Category, int>
       })
       .AsNoTracking()
       .ToListAsync();
-  }
 
   public async Task<List<CategoryItemDto>> SearchCategories(string term)
   {
@@ -56,22 +48,18 @@ public class CategoryProvider : AppProvider<Category, int>
     return cats.Where(c => c.Category.ToLower().Contains(term.ToLower())).ToList();
   }
 
-  public async Task<Category> GetCategory(int categoryId)
-  {
-    return await _dbContext.Categories
+  public async Task<Category> GetCategory(int categoryId) =>
+    await _dbContext.Categories
       .AsNoTracking()
       .Where(c => c.Id == categoryId)
       .FirstAsync();
-  }
 
-  public async Task<IEnumerable<Category>> GetPostCategories(int postId)
-  {
-    return await _dbContext.Posts
+  public async Task<IEnumerable<Category>> GetPostCategories(int postId) =>
+    await _dbContext.Posts
         .AsNoTracking()
         .Where(pc => pc.Id == postId)
         .SelectMany(pc => pc.PostCategories!, (parent, child) => child.Category)
         .ToListAsync();
-  }
 
   public async Task<bool> SaveCategory(Category category)
   {

@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
 [Route("search")]
-public class SearchController : Controller
+public class SearchController(
+  MainMamager mainMamager,
+  PostProvider postProvider) : Controller
 {
-  private readonly MainMamager _mainMamager;
-  private readonly PostProvider _postProvider;
-
-  public SearchController(
-    MainMamager mainMamager,
-    PostProvider postProvider)
-  {
-    _mainMamager = mainMamager;
-    _postProvider = postProvider;
-  }
+  private readonly MainMamager _mainMamager = mainMamager;
+  private readonly PostProvider _postProvider = postProvider;
 
   [HttpPost]
   public async Task<IActionResult> Post([FromQuery] string term, [FromQuery] int page = 1)

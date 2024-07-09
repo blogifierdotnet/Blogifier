@@ -6,8 +6,5 @@ namespace Blogifier.Profiles;
 
 public class NewsletterProfile : Profile
 {
-  public NewsletterProfile()
-  {
-    CreateMap<Newsletter, NewsletterDto>();
-  }
+  public NewsletterProfile() => CreateMap<Newsletter, NewsletterDto>();
 }

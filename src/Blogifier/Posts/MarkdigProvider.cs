@@ -7,13 +7,11 @@ public class MarkdigProvider
   private readonly MarkdownPipeline _markdownPipeline;
 
 
-  public MarkdigProvider()
-  {
+  public MarkdigProvider() =>
     _markdownPipeline = new MarkdownPipelineBuilder()
         .UsePipeTables()
         .UseAdvancedExtensions()
         .Build();
-  }
 
   public string ToHtml(string markdown)
   {

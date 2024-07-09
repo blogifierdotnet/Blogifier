@@ -4,18 +4,12 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Posts;
 
-public class PostManager
+public class PostManager(
+  PostProvider postProvider,
+  MarkdigProvider markdigProvider)
 {
-  private readonly PostProvider _postProvider;
-  private readonly MarkdigProvider _markdigProvider;
-
-  public PostManager(
-    PostProvider postProvider,
-    MarkdigProvider markdigProvider)
-  {
-    _postProvider = postProvider;
-    _markdigProvider = markdigProvider;
-  }
+  private readonly PostProvider _postProvider = postProvider;
+  private readonly MarkdigProvider _markdigProvider = markdigProvider;
 
   public async Task<PostSlugDto> GetToHtmlAsync(string slug)
   {

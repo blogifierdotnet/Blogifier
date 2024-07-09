@@ -8,21 +8,14 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
 
-public class HomeController : Controller
+public class HomeController(
+  ILogger<HomeController> logger,
+  MainMamager mainMamager,
+  PostProvider postProvider) : Controller
 {
-  private readonly ILogger _logger;
-  private readonly MainMamager _mainMamager;
-  private readonly PostProvider _postProvider;
-
-  public HomeController(
-    ILogger<HomeController> logger,
-    MainMamager mainMamager,
-    PostProvider postProvider)
-  {
-    _logger = logger;
-    _mainMamager = mainMamager;
-    _postProvider = postProvider;
-  }
+  private readonly ILogger _logger = logger;
+  private readonly MainMamager _mainMamager = mainMamager;
+  private readonly PostProvider _postProvider = postProvider;
 
   [HttpGet]
   public async Task<IActionResult> Index([FromQuery] int page = 1)

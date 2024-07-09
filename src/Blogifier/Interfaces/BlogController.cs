@@ -13,16 +13,10 @@ namespace Blogifier.Interfaces;
 [ApiController]
 [Authorize]
 [Route("api/blog")]
-public class BlogController : ControllerBase
+public class BlogController(IMapper mapper, BlogManager blogManager) : ControllerBase
 {
-  private readonly IMapper _mapper;
-  private readonly BlogManager _blogManager;
-
-  public BlogController(IMapper mapper, BlogManager blogManager)
-  {
-    _mapper = mapper;
-    _blogManager = blogManager;
-  }
+  private readonly IMapper _mapper = mapper;
+  private readonly BlogManager _blogManager = blogManager;
 
   [HttpGet]
   public async Task<BlogEitorDto> GetAsync()

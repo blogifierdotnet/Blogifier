@@ -12,32 +12,20 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Storages;
 
-public class StorageLocalProvider : AppProvider<Storage, int>, IStorageProvider
+public class StorageLocalProvider(
+  ILogger<StorageLocalProvider> logger,
+  IMapper mapper,
+  AppDbContext dbContext,
+  IHostEnvironment hostEnvironment) : AppProvider<Storage, int>(dbContext), IStorageProvider
 {
-  private readonly ILogger _logger;
-  private readonly IMapper _mapper;
-  private readonly string _pathLocalRoot;
+  private readonly ILogger _logger = logger;
+  private readonly IMapper _mapper = mapper;
+  private readonly string _pathLocalRoot = Path.Combine(hostEnvironment.ContentRootPath, BlogifierConstant.StorageLocalRoot);
 
-  public StorageLocalProvider(
-    ILogger<StorageLocalProvider> logger,
-    IMapper mapper,
-    AppDbContext dbContext,
-    IHostEnvironment hostEnvironment) : base(dbContext)
-  {
-    _logger = logger;
-    _mapper = mapper;
-    _pathLocalRoot = Path.Combine(hostEnvironment.ContentRootPath, BlogifierConstant.StorageLocalRoot);
-  }
+  public Task<bool> ExistsAsync(string slug) => throw new NotImplementedException();
 
-  public Task<bool> ExistsAsync(string slug)
-  {
+  public Task<StorageDto?> GetAsync(string slug, Func<Stream, CancellationToken, Task> callback) =>
     throw new NotImplementedException();
-  }
-
-  public Task<StorageDto?> GetAsync(string slug, Func<Stream, CancellationToken, Task> callback)
-  {
-    throw new NotImplementedException();
-  }
 
   public async Task<StorageDto?> GetCheckStoragAsync(string path)
   {

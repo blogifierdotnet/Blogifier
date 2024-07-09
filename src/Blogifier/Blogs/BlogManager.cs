@@ -9,22 +9,15 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Blogs;
 
-public class BlogManager
+public class BlogManager(
+  ILogger<BlogManager> logger,
+  IDistributedCache distributedCache,
+  OptionProvider optionProvider)
 {
-  private readonly ILogger _logger;
-  private readonly IDistributedCache _distributedCache;
-  private readonly OptionProvider _optionProvider;
+  private readonly ILogger _logger = logger;
+  private readonly IDistributedCache _distributedCache = distributedCache;
+  private readonly OptionProvider _optionProvider = optionProvider;
   private BlogData? _blogData;
-
-  public BlogManager(
-    ILogger<BlogManager> logger,
-    IDistributedCache distributedCache,
-    OptionProvider optionProvider)
-  {
-    _logger = logger;
-    _distributedCache = distributedCache;
-    _optionProvider = optionProvider;
-  }
 
   public async Task<BlogData> GetAsync()
   {

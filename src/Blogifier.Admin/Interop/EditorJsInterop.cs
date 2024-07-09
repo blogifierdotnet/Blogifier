@@ -5,14 +5,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Admin.Interop;
 
-public class EditorJsInterop : IAsyncDisposable
+public class EditorJsInterop(IJSRuntime jsRuntime) : IAsyncDisposable
 {
-  private readonly Lazy<Task<IJSObjectReference>> moduleTask;
-
-  public EditorJsInterop(IJSRuntime jsRuntime)
-  {
-    moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js").AsTask());
-  }
+  private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() =>
+   jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/editor.js").AsTask());
 
   public async ValueTask LoadEditorAsync(ElementReference? textarea, ElementReference? imageUpload, string toolbar = "fullToolbar")
   {

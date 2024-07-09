@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 namespace Blogifier.Controllers;
 
 [Route("category")]
-public class CategoryController : Controller
+public class CategoryController(
+  MainMamager mainMamager,
+  PostProvider postProvider) : Controller
 {
-  private readonly MainMamager _mainMamager;
-  private readonly PostProvider _postProvider;
-
-  public CategoryController(
-    MainMamager mainMamager,
-    PostProvider postProvider)
-  {
-    _mainMamager = mainMamager;
-    _postProvider = postProvider;
-  }
+  private readonly MainMamager _mainMamager = mainMamager;
+  private readonly PostProvider _postProvider = postProvider;
 
   [HttpGet("{category}")]
   public async Task<IActionResult> Category([FromRoute] string category, [FromQuery] int page = 1)

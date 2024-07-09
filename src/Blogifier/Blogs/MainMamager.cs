@@ -13,26 +13,18 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Blogs;
 
-public class MainMamager
+public class MainMamager(
+  IMapper mapper,
+  IDistributedCache distributedCache,
+  IHttpContextAccessor httpContextAccessor,
+  BlogManager blogManager,
+  CategoryProvider categoryProvider)
 {
-  private readonly IMapper _mapper;
-  private readonly IDistributedCache _distributedCache;
-  private readonly IHttpContextAccessor _httpContextAccessor;
-  private readonly BlogManager _blogManager;
-  private readonly CategoryProvider _categoryProvider;
-  public MainMamager(
-    IMapper mapper,
-    IDistributedCache distributedCache,
-    IHttpContextAccessor httpContextAccessor,
-    BlogManager blogManager,
-    CategoryProvider categoryProvider)
-  {
-    _mapper = mapper;
-    _distributedCache = distributedCache;
-    _httpContextAccessor = httpContextAccessor;
-    _blogManager = blogManager;
-    _categoryProvider = categoryProvider;
-  }
+  private readonly IMapper _mapper = mapper;
+  private readonly IDistributedCache _distributedCache = distributedCache;
+  private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+  private readonly BlogManager _blogManager = blogManager;
+  private readonly CategoryProvider _categoryProvider = categoryProvider;
 
   public async Task<MainDto> GetAsync()
   {

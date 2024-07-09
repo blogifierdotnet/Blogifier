@@ -39,17 +39,13 @@ public static class StringExtensions
     return Markdown.ToHtml(str, mpl);
   }
 
-  public static bool Contains(this string source, string toCheck, StringComparison comp)
-  {
-    return source.IndexOf(toCheck, comp) >= 0;
-  }
+  public static bool Contains(this string source, string toCheck, StringComparison comp) =>
+    source.IndexOf(toCheck, comp) >= 0;
 
   private static readonly Regex RegexStripHtml = new Regex("<[^>]*>", RegexOptions.Compiled);
 
-  public static string StripHtml(this string str)
-  {
-    return string.IsNullOrWhiteSpace(str) ? string.Empty : RegexStripHtml.Replace(str, string.Empty).Trim();
-  }
+  public static string StripHtml(this string str) =>
+    string.IsNullOrWhiteSpace(str) ? string.Empty : RegexStripHtml.Replace(str, string.Empty).Trim();
 
   /// <summary>
   /// Should extract title (file name) from file path or Url

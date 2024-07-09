@@ -9,26 +9,15 @@ namespace Blogifier.Interfaces;
 
 [Route("api/user")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(UserProvider userProvider) : ControllerBase
 {
-  private readonly UserProvider _userProvider;
-
-  public UserController(UserProvider userProvider)
-  {
-    _userProvider = userProvider;
-  }
+  private readonly UserProvider _userProvider = userProvider;
 
   [HttpGet("items")]
-  public async Task<IEnumerable<UserInfoDto>> GetItemsAsync()
-  {
-    return await _userProvider.GetAsync();
-  }
+  public async Task<IEnumerable<UserInfoDto>> GetItemsAsync() => await _userProvider.GetAsync();
 
   [HttpGet("{id:int}")]
-  public async Task<UserInfoDto?> GetAsync([FromRoute] int id)
-  {
-    return await _userProvider.GetAsync(id);
-  }
+  public async Task<UserInfoDto?> GetAsync([FromRoute] int id) => await _userProvider.GetAsync(id);
 
   [HttpPut("{id:int?}")]
   public async Task<IActionResult> EditorAsync([FromRoute] int? id, [FromBody] UserEditorDto input, [FromServices] UserManager userManager)

@@ -10,14 +10,9 @@ namespace Blogifier.Interfaces;
 [Route("api/import")]
 [Authorize]
 [ApiController]
-public class ImportController : ControllerBase
+public class ImportController(ImportManager importManager) : ControllerBase
 {
-  private readonly ImportManager _importManager;
-
-  public ImportController(ImportManager importManager)
-  {
-    _importManager = importManager;
-  }
+  private readonly ImportManager _importManager = importManager;
 
   [HttpGet("rss")]
   public ImportDto Rss([FromQuery] ImportRssDto request, [FromServices] ImportRssProvider importRssProvider)

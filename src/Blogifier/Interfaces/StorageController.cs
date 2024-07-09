@@ -11,18 +11,12 @@ namespace Blogifier.Interfaces;
 [Route("api/storage")]
 [ApiController]
 [Authorize]
-public class StorageController : ControllerBase
+public class StorageController(
+  IStorageProvider storageProvider,
+  StorageManager storageManager) : ControllerBase
 {
-  private readonly IStorageProvider _storageProvider;
-  private readonly StorageManager _storageManager;
-
-  public StorageController(
-    IStorageProvider storageProvider,
-    StorageManager storageManager)
-  {
-    _storageProvider = storageProvider;
-    _storageManager = storageManager;
-  }
+  private readonly IStorageProvider _storageProvider = storageProvider;
+  private readonly StorageManager _storageManager = storageManager;
 
   [HttpPut("exists")]
   public async Task<ActionResult> ExistsAsync([FromBody] string slug)

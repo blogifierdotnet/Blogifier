@@ -8,12 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blogifier.Data;
 
-public class PostgresDbContext : AppDbContext
+public class PostgresDbContext(DbContextOptions options) : AppDbContext(options)
 {
-  public PostgresDbContext(DbContextOptions options) : base(options)
-  {
-  }
-
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);

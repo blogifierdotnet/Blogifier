@@ -10,8 +10,5 @@ public static class DateTimeHelper
     return ToFriendlyShortDateString(date.Value);
   }
 
-  public static string ToFriendlyShortDateString(DateTime date)
-  {
-    return $"{date:MMM dd}, {date.Year}";
-  }
+  public static string ToFriendlyShortDateString(DateTime date) => $"{date:MMM dd}, {date.Year}";
 }
