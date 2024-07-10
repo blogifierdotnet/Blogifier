@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace Blogifier.Admin.Interop;
 
-public class CommonJsInterop : IAsyncDisposable
+public class CommonJsInterop(IJSRuntime jsRuntime) : IAsyncDisposable
 {
-  private readonly Lazy<Task<IJSObjectReference>> moduleTask;
-
-  public CommonJsInterop(IJSRuntime jsRuntime) =>
-    moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/common.js").AsTask());
+  private readonly Lazy<Task<IJSObjectReference>> moduleTask = new(() =>
+    jsRuntime.InvokeAsync<IJSObjectReference>("import", "./admin/js/common.js").AsTask());
 
   public async ValueTask SetTooltipAsync()
   {

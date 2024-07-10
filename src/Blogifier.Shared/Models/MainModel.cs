@@ -1,11 +1,6 @@
 namespace Blogifier.Shared;
 
-public class MainModel
+public class MainModel(MainDto main)
 {
-  public MainDto Main { get; set; }
-
-  public MainModel(MainDto main)
-  {
-    Main = main;
-  }
+  public MainDto Main { get; set; } = main;
 }

@@ -1,8 +1,5 @@
 namespace Blogifier.Shared;
 
-public class SearchModel : PostPagerModel
+public class SearchModel(PostPagerDto pager, MainDto main) : PostPagerModel(pager, main)
 {
-  public SearchModel(PostPagerDto pager, MainDto main) : base(pager, main)
-  {
-  }
 }

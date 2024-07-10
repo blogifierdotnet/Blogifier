@@ -1,9 +1,6 @@
 using Blogifier.Shared;
 namespace Blogifier.Models;
 
-public class IndexModel : PostPagerModel
+public class IndexModel(PostPagerDto pager, MainDto main) : PostPagerModel(pager, main)
 {
-  public IndexModel(PostPagerDto pager, MainDto main) : base(pager, main)
-  {
-  }
 }

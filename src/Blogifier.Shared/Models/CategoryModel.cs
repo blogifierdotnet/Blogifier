@@ -1,11 +1,6 @@
 namespace Blogifier.Shared;
 
-public class CategoryModel : PostPagerModel
+public class CategoryModel(string category, PostPagerDto pager, MainDto main) : PostPagerModel(pager, main)
 {
-  public string Category { get; set; }
-
-  public CategoryModel(string category, PostPagerDto pager, MainDto main) : base(pager, main)
-  {
-    Category = category;
-  }
+  public string Category { get; set; } = category;
 }
