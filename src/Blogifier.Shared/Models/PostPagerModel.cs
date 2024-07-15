@@ -1,10 +1,6 @@
 namespace Blogifier.Shared;
 
-public class PostPagerModel : MainModel
+public class PostPagerModel(PostPagerDto pager, MainDto main) : MainModel(main)
 {
-  public PostPagerModel(PostPagerDto pager, MainDto main) : base(main)
-  {
-    Pager = pager;
-  }
-  public PostPagerDto Pager { get; }
+  public PostPagerDto Pager { get; } = pager;
 }

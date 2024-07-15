@@ -1,12 +1,7 @@
 namespace Blogifier.Shared;
 
-public class PostModel : MainModel
+public class PostModel(PostSlugDto postSlug, string categoriesUrl, MainDto main) : MainModel(main)
 {
-  public PostModel(PostSlugDto postSlug, string categoriesUrl, MainDto main) : base(main)
-  {
-    PostSlug = postSlug;
-    CategoriesUrl = categoriesUrl;
-  }
-  public PostSlugDto PostSlug { get; set; }
-  public string CategoriesUrl { get; set; }
+  public PostSlugDto PostSlug { get; set; } = postSlug;
+  public string CategoriesUrl { get; set; } = categoriesUrl;
 }
