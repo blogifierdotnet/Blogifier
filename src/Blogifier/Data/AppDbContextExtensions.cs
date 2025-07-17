@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Blogifier.Data;
 
@@ -27,20 +28,45 @@ public static class AppDbContextExtensions
       var dataSourcePath = Path.Combine(environment.ContentRootPath, sonnectionStringBuilder.DataSource);
       var dataSourceDirectory = Path.GetDirectoryName(dataSourcePath);
       if (!string.IsNullOrEmpty(dataSourceDirectory) && !Directory.Exists(dataSourceDirectory)) Directory.CreateDirectory(dataSourceDirectory);
-      services.AddDbContext<AppDbContext, SqliteDbContext>(o => o.UseSqlite(sonnectionStringBuilder.ToString()));
+      services.AddDbContext<AppDbContext, SqliteDbContext>(o =>
+      {
+        o.UseSqlite(sonnectionStringBuilder.ToString());
+        o.ConfigureWarnings(w =>
+          w.Ignore(RelationalEventId.NonTransactionalMigrationOperationWarning));
+        o.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+      });
     }
     else if ("SqlServer".Equals(provider, StringComparison.OrdinalIgnoreCase))
     {
-      services.AddDbContext<AppDbContext, SqlServerDbContext>(o => o.UseSqlServer(connectionString));
+      services.AddDbContext<AppDbContext, SqlServerDbContext>(o =>
+      {
+        o.UseSqlServer(connectionString);
+        o.ConfigureWarnings(w =>
+          w.Ignore(RelationalEventId.NonTransactionalMigrationOperationWarning));
+        o.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+
+      });
     }
     else if ("MySql".Equals(provider, StringComparison.OrdinalIgnoreCase))
     {
       var version = ServerVersion.AutoDetect(connectionString);
-      services.AddDbContext<AppDbContext, MySqlDbContext>(o => o.UseMySql(connectionString, version));
+      services.AddDbContext<AppDbContext, MySqlDbContext>(o =>
+      {
+        o.UseMySql(connectionString, version);
+        o.ConfigureWarnings(w =>
+          w.Ignore(RelationalEventId.NonTransactionalMigrationOperationWarning));
+        o.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+      });
     }
     else if ("Postgres".Equals(provider, StringComparison.OrdinalIgnoreCase))
     {
-      services.AddDbContext<AppDbContext, PostgresDbContext>(o => o.UseNpgsql(connectionString));
+      services.AddDbContext<AppDbContext, PostgresDbContext>(o =>
+      {
+        o.UseNpgsql(connectionString);
+        o.ConfigureWarnings(w =>
+          w.Ignore(RelationalEventId.NonTransactionalMigrationOperationWarning));
+        o.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+      });
     }
     else
     {

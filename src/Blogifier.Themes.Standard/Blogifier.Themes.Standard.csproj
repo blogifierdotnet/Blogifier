@@ -1,13 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
     <ClientAssetsRestoreCommand>npm i</ClientAssetsRestoreCommand>
     <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
+    <!-- CompressionEnabled set to false, this is a workarround to resolve
+     issue: https://github.com/dotnet/aspnetcore/issues/59291 -->
+    <CompressionEnabled>false</CompressionEnabled>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <!-- <BlazorEnableCompression>false</BlazorEnableCompression> -->
     <!--<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
@@ -8,13 +8,16 @@
     <ClientAssetsDirectory>assets\</ClientAssetsDirectory>
     <ClientAssetsRestoreCommand>npm i</ClientAssetsRestoreCommand>
     <ClientAssetsBuildCommand>npm run build:$(Configuration)</ClientAssetsBuildCommand>
+    <!-- CompressionEnabled set to false, this is a workarround to resolve
+     issue: https://github.com/dotnet/aspnetcore/issues/59291 -->
+    <CompressionEnabled>false</CompressionEnabled>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.2" />
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
   </ItemGroup>
 
