@@ -4,6 +4,7 @@ using Blogifier.Posts;
 using Blogifier.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Blogifier.Controllers;
@@ -25,12 +26,14 @@ public class PageController(
   {
     var main = await _mainMamager.GetAsync();
     var postSlug = await _postManager.GetToHtmlAsync(slug);
+    var controllerName = HttpContext.Request.RouteValues["controller"] as string;
     if (postSlug.Post.State == PostState.Draft)
     {
       if (User.Identity == null || User.FirstUserId() != postSlug.Post.User.Id)
         return Redirect("~/404");
     }
-    else if (postSlug.Post.PostType == PostType.Page)
+    else if (postSlug.Post.PostType == PostType.Page &&
+      !string.Equals(controllerName, "page", StringComparison.OrdinalIgnoreCase))
     {
       return Redirect($"~/page/{postSlug.Post.Slug}");
     }
